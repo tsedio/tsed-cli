@@ -1,0 +1,30 @@
+{
+  "name": "@tsed/cli",
+  "version": "1.0.0",
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "dependencies": {
+    "@tsed/core": "5.44.3",
+    "@tsed/di": "5.44.3",
+    "@tsed/logger": "5.4.1",
+    "@tsed/cli-core": "1.0.0",
+    "change-case": "4.1.1"
+  },
+  "devDependencies": {
+    "@types/change-case": "2.3.1"
+  },
+  "scripts": {
+    "start:help": "ts-node -r tsconfig-paths/register src/bin/tsed.ts -h",
+    "start:version": "ts-node -r tsconfig-paths/register src/bin/tsed.ts --version",
+    "start:init:help": "ts-node -r tsconfig-paths/register src/bin/tsed.ts init -h",
+    "start:init:run": "ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp",
+    "start:generate:help": "ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
+    "start:generate:run": "ts-node -r tsconfig-paths/register src/bin/tsed.ts generate --project-root ./.tmp"
+  },
+  "bin": "bin/tsed.js",
+  "files": [
+    "bin/tsed.js",
+    "bin",
+    "lib"
+  ]
+}
