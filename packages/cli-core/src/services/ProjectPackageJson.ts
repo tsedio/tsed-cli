@@ -12,7 +12,7 @@ export function ProjectPackageJson() {
 registerProvider({
   provide: ProjectPackageJson,
   deps: [Configuration],
-  async useFactory(configuration: Configuration) {
+  useFactory(configuration: Configuration) {
     const result = readPkgUp.sync({
       cwd: configuration.project?.root
     });

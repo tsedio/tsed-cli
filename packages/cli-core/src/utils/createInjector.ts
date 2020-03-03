@@ -1,3 +1,4 @@
+import {ProjectPackageJson} from "@tsed/cli-core";
 import {GlobalProviders, IDIConfigurationOptions, IDILogger, InjectorService} from "@tsed/di";
 import {CliConfiguration} from "../services/CliConfiguration";
 import {Logger} from "../services/Logger";
@@ -6,6 +7,8 @@ export function createInjector(settings: Partial<IDIConfigurationOptions> = {}) 
   const injector = new InjectorService();
   injector.settings = createConfiguration(injector);
   injector.logger = createLogger(injector);
+
+  createProjectPackageJson(injector);
 
   // @ts-ignore
   injector.settings.set(settings);
@@ -32,6 +35,15 @@ function createLogger(injector: InjectorService): IDILogger {
 
   provider.instance = injector.invoke<Logger>(provider.useClass);
   injector.addProvider(Logger, provider);
+
+  return provider.instance as any;
+}
+
+function createProjectPackageJson(injector: InjectorService): IDILogger {
+  const provider = GlobalProviders.get(ProjectPackageJson)!.clone();
+  injector.addProvider(ProjectPackageJson, provider);
+
+  provider.instance = injector.invoke<ProjectPackageJson>(provider);
 
   return provider.instance as any;
 }

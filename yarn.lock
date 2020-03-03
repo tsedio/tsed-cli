@@ -1171,6 +1171,15 @@
     source-map-support "0.5.16"
     tslib "1.10.0"
 
+"@tsed/core@5.44.4", "@tsed/core@^5.44.3":
+  version "5.44.4"
+  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-5.44.4.tgz#20f74eb1ea4deb81bfe2388c36330dfaf24e2346"
+  integrity sha512-DoDQ1EdqGUu+LTGJjSWPwviyigGj9UYzn3DcDsIW55Lsk6DigoKZvLGbF+I678EszxegUymDLHg5E5EBd8kr4w==
+  dependencies:
+    reflect-metadata "^0.1.13"
+    source-map-support "0.5.16"
+    tslib "1.10.0"
+
 "@tsed/di@5.44.3":
   version "5.44.3"
   resolved "https://registry.yarnpkg.com/@tsed/di/-/di-5.44.3.tgz#ab69aa865faca6e41dee2aa333671fdcd809f346"
@@ -1180,7 +1189,16 @@
     chalk "3.0.0"
     tslib "1.10.0"
 
-"@tsed/logger@5.4.1", "@tsed/logger@latest":
+"@tsed/di@^5.44.3":
+  version "5.44.4"
+  resolved "https://registry.yarnpkg.com/@tsed/di/-/di-5.44.4.tgz#610126c78f310e72ce42efd04bab5f65b32909eb"
+  integrity sha512-RXGvTvx2H9k/YMkmFWPiMitQm5rA+o53ZNK/q0o/R3QE2RoEkl5nY6x4bxM3n04JrMzGJzhLPpmL0YLFw4N6ig==
+  dependencies:
+    "@tsed/core" "5.44.4"
+    chalk "3.0.0"
+    tslib "1.10.0"
+
+"@tsed/logger@5.4.1", "@tsed/logger@^5.4.1", "@tsed/logger@latest":
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/@tsed/logger/-/logger-5.4.1.tgz#20f68cb9032594dd7846cfe4a9a0ee26c20dd908"
   integrity sha512-6ZDy49L0tQDdtQe/Tj8dT7MXgVst2nlYjLTczJIcpCXxBrhf3anwxqB9DURyHrOgHtON44wn9xSxDh0QDB75XQ==

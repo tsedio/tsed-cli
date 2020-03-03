@@ -1,11 +1,15 @@
-import {Store} from "@tsed/core";
+import {classOf} from "@tsed/core";
 import {Injectable, InjectorService, Provider} from "@tsed/di";
 import {Command} from "commander";
 import * as Inquirer from "inquirer";
+import * as Listr from "listr";
+import {CommandStoreKeys} from "../domains/CommandStoreKeys";
 import {ICommand} from "../interfaces/ICommand";
-import {ICommandOptions, ICommandParameters} from "../interfaces/ICommandParameters";
+import {ICommandMetadata} from "../interfaces/ICommandMetadata";
+import {ICommandOptions} from "../interfaces/ICommandParameters";
 import {PROVIDER_TYPE_COMMAND} from "../registries/CommandRegistry";
 import {createCommandSummary} from "../utils/createCommandSummary";
+import {getCommandMetadata} from "../utils/getCommandMetadata";
 import {mapArgs} from "../utils/mapArgs";
 import {mapArgsDescription} from "../utils/mapArgsDescription";
 import {parseOption} from "../utils/parseOption";
@@ -16,6 +20,8 @@ import {CliPackageJson} from "./CliPackageJson";
 @Injectable()
 export class CliService {
   readonly program = new Command();
+
+  private commands = new Map();
 
   constructor(@CliPackageJson() private pkg: CliPackageJson, private injector: InjectorService) {}
 
@@ -35,23 +41,52 @@ export class CliService {
     program.parse(argv);
   }
 
-  /**
-   * Build command and sub-commands
-   * @param provider
-   */
-  private build(provider: Provider<any>) {
-    const {name, args = {}, description, options = {}} = Store.from(provider.useClass)?.get("command") as ICommandParameters;
+  public async callHook(hookName: string, cmd: string, ...args: any[]) {
+    const providers = this.injector.getProviders();
+    let results: any = [];
 
-    if (name) {
-      const subCommand = this.program
-        .command(createCommandSummary(name, args))
-        .description(description, mapArgsDescription(args))
-        .action((...commanderArgs: any[]) => this.runAction(provider, mapArgs(args, commanderArgs)));
+    for (const provider of providers) {
+      if (provider.useClass) {
+        const instance: any = this.injector.get(provider.token)!;
 
-      if (options) {
-        this.buildOption(subCommand as any, options);
+        if (provider.store.has(hookName)) {
+          const props = provider.store.get(hookName)[cmd];
+          for (const propertyKey of props) {
+            results = results.concat(await instance[propertyKey](...args));
+          }
+        }
       }
     }
+
+    return results.filter((o: any) => o !== undefined);
+  }
+
+  /**
+   * Run action lifecycle
+   * @param cmdName
+   * @param data
+   */
+  public async runAction(cmdName: string, data: any) {
+    const provider = this.commands.get(cmdName);
+    const instance = this.injector.get<ICommand>(provider.useClass)!;
+
+    if (instance.$prompt) {
+      const questions = [
+        ...((await instance.$prompt(data)) as any[]),
+        ...(await this.callHook(CommandStoreKeys.PROMPT_HOOKS, cmdName, data))
+      ];
+
+      if (questions.length) {
+        data = {
+          ...data,
+          ...((await Inquirer.prompt(questions)) as any)
+        };
+      }
+    }
+
+    const tasks = [...(await instance.$exec(data)), ...(await this.callHook(CommandStoreKeys.EXEC_HOOKS, cmdName, data))];
+
+    await new Listr(tasks).run(data);
   }
 
   /**
@@ -59,7 +94,7 @@ export class CliService {
    * @param subCommand
    * @param options
    */
-  private buildOption(subCommand: Command, options: {[key: string]: ICommandOptions}) {
+  public buildOption(subCommand: Command, options: {[key: string]: ICommandOptions}) {
     Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
       const fn = (v: any) => parseOption(v, options);
 
@@ -75,27 +110,37 @@ export class CliService {
     subCommand.option("-r, --project-root <path>", "Project root directory");
   }
 
-  /**
-   * Run action lifecycle
-   * @param provider
-   * @param data
-   */
-  private async runAction(provider: Provider<any>, data: any) {
-    const instance = this.injector.get<ICommand>(provider.useClass)!;
+  public createCommand(metadata: ICommandMetadata) {
+    const {args, name, description} = metadata;
 
-    if (instance.$prompt) {
-      const questions = await instance.$prompt(data);
-
-      await this.injector.emit("$onPrompt", questions);
-
-      if (questions) {
-        data = {
-          ...data,
-          ...(await Inquirer.prompt(questions))
-        };
-      }
+    if (this.commands.has(name)) {
+      return this.commands.get(name).command;
     }
 
-    await instance.$exec(data);
+    return this.program
+      .command(createCommandSummary(name, args))
+      .description(description, mapArgsDescription(args))
+      .action((...commanderArgs: any[]) => this.runAction(name, mapArgs(args, commanderArgs)));
+  }
+
+  /**
+   * Build command and sub-commands
+   * @param provider
+   */
+  private build(provider: Provider<any>) {
+    const {name, options} = getCommandMetadata(provider.useClass);
+
+    if (name) {
+      if (this.commands.has(name)) {
+        throw Error(`The ${name} command is already registered. Change your command name used by the class ${classOf(provider.useClass)}`);
+      }
+
+      provider.command = this.createCommand(getCommandMetadata(provider.useClass));
+      this.commands.set(name, provider);
+
+      if (options) {
+        this.buildOption(provider.command as any, options);
+      }
+    }
   }
 }
