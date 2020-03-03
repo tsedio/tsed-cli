@@ -2,7 +2,7 @@
   "flow": "gflow",
   "remote": "origin",
   "develop": "master",
-  "production": "production",
+  "production": "master",
   "ignores": [],
   "syncAfterFinish": false,
   "postFinish": "",

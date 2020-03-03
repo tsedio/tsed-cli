@@ -41,6 +41,6 @@ export class CreateProjectCmd implements ICommand {
   }
 
   async $exec(options: ICreateProjectCmdOptions) {
-    console.log("Parsed ", options);
+    return [];
   }
 }

@@ -1,6 +1,5 @@
-import {Command, ICommand, QuestionOptions, RenderService} from "@tsed/cli-core";
-import {paramCase, pascalCase} from "change-case";
-import {basename, dirname, join} from "path";
+import {ClassNamePipe, Command, ICommand, OutputFilePathPipe, QuestionOptions, RenderService, RoutePipe} from "@tsed/cli-core";
+import {Inject} from "@tsed/di";
 
 export interface IGenerateCmdOptions {
   type: string;
@@ -23,6 +22,15 @@ export interface IGenerateCmdOptions {
   }
 })
 export class GenerateCmd implements ICommand {
+  @Inject(ClassNamePipe)
+  classNamePipe: ClassNamePipe;
+
+  @Inject(OutputFilePathPipe)
+  outputFilePathPipe: OutputFilePathPipe;
+
+  @Inject(RoutePipe)
+  routePipe: RoutePipe;
+
   constructor(private renderService: RenderService) {}
 
   $prompt(initialOptions: any): QuestionOptions {
@@ -90,31 +98,29 @@ export class GenerateCmd implements ICommand {
         when(state: any) {
           return state.type === "controller";
         },
-        default(state: IGenerateCmdOptions) {
-          return `/${paramCase(state.name)}`;
+        default: (state: IGenerateCmdOptions) => {
+          return this.routePipe.transform(state.name);
         }
       }
     ];
   }
 
-  async $exec(options: IGenerateCmdOptions): Promise<void> {
+  async $exec(options: IGenerateCmdOptions) {
     const {outputFile, ...data} = this.mapOptions(options);
 
-    await this.renderService.render(`generate/${options.type}.hbs`, data, outputFile);
+    return [
+      {
+        title: `Generate ${options.type} file to '${outputFile}'`,
+        task: () => this.renderService.render(`generate/${options.type}.hbs`, data, outputFile)
+      }
+    ];
   }
 
   mapOptions(options: IGenerateCmdOptions) {
-    const name = basename(options.name);
-    const dir = dirname(options.name);
-    const className = pascalCase(name + " " + options.type);
-
     return {
-      route: options.route
-        ?.split("/")
-        .map(v => paramCase(v))
-        .join("/"),
-      className,
-      outputFile: join(dir, `${options.type}s`, `${className}.ts`)
+      route: options.route ? this.routePipe.transform(options.route) : "",
+      className: this.classNamePipe.transform(options),
+      outputFile: `${this.outputFilePathPipe.transform(options)}.ts`
     };
   }
 }

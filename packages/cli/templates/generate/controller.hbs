@@ -2,5 +2,8 @@ import {Controller} from "@tsed/common";
 
 @Controller("{{route}}")
 export class {{className}} {
-
+  @Get("/")
+  get() {
+    return "hello"
+  }
 }
