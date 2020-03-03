@@ -9,6 +9,10 @@ export class OutputFilePathPipe {
   transform(options: {name: string; type: string}) {
     const dir = dirname(options.name);
 
+    if (options.type === "server") {
+      return join(dir, this.classNamePipe.transform(options));
+    }
+
     return join(`${options.type}s`, dir, this.classNamePipe.transform(options));
   }
 }

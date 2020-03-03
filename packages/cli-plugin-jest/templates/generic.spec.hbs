@@ -1,0 +1,11 @@
+import { TestContext } from "@tsed/testing";
+import { {{className}} } from "./{{className}}";
+
+describe("{{className}}", () => {
+  beforeEach(TestContext.create);
+  afterEach(TestContext.reset);
+
+  it("should do something", TestContext.inject([{{className}}], (controller: {{className}}) => {
+    expect(controller).toBeInstanceOf({{className}})
+  }));
+});

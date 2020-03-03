@@ -1,0 +1,19 @@
+import { PlatformApplication } from "@tsed/common";
+import { TestContext } from "@tsed/testing";
+import * as SuperTest from "supertest";
+import { {{className}} } from "./{{className}}";
+
+describe("{{className}}", () => {
+  let request: SuperTest.SuperTest<SuperTest.Test>;
+
+  beforeEach(TestContext.bootstrap({{className}}));
+  beforeEach(TestContext.inject([PlatformApplication], (app: PlatformApplication) => {
+    request = SuperTest(app.raw);
+  }));
+
+  afterEach(TestContext.reset);
+
+  it("should call GET {{route}}", async () => {
+     const response = await request.get("{{route}}").expect(404);
+  });
+});

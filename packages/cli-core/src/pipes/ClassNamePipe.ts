@@ -6,6 +6,8 @@ import {basename} from "path";
 export class ClassNamePipe {
   transform(options: {name: string; type: string}) {
     const name = basename(options.name);
-    return pascalCase(name + " " + options.type);
+    const postfix = pascalCase(options.type);
+
+    return (pascalCase(name) + postfix).replace(postfix + postfix, postfix);
   }
 }

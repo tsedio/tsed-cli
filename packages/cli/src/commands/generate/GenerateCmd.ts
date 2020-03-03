@@ -1,5 +1,6 @@
 import {ClassNamePipe, Command, ICommand, OutputFilePathPipe, QuestionOptions, RenderService, RoutePipe} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
+import {pascalCase} from "change-case";
 
 export interface IGenerateCmdOptions {
   type: string;
@@ -77,10 +78,6 @@ export class GenerateCmd implements ICommand {
           {
             name: "Server",
             value: "server"
-          },
-          {
-            name: "Protocol with @tsed/passport",
-            value: "protocol"
           }
         ]
       },
@@ -88,7 +85,7 @@ export class GenerateCmd implements ICommand {
         type: "input",
         name: "name",
         message: "Which name ?",
-        default: initialOptions.name,
+        default: (state: any) => initialOptions.name || pascalCase(state.type),
         when: !initialOptions.name
       },
       {
@@ -96,10 +93,10 @@ export class GenerateCmd implements ICommand {
         name: "route",
         message: "Which route ?",
         when(state: any) {
-          return state.type === "controller";
+          return ["controller", "server"].includes(state.type);
         },
         default: (state: IGenerateCmdOptions) => {
-          return this.routePipe.transform(state.name);
+          return state.type === "server" ? "/rest" : this.routePipe.transform(state.name);
         }
       }
     ];
