@@ -20,7 +20,7 @@ export class Cli {
     UpdateNotifier({pkg, updateCheckInterval: 0}).notify();
   }
 
-  static async bootstrap(settings: TsED.Configuration = {}): Promise<Cli> {
+  static async bootstrap(settings: TsED.Configuration): Promise<Cli> {
     const injector = createInjector({
       ...settings,
       project: {

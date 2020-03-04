@@ -1,6 +1,7 @@
 import {ClassNamePipe, Command, ICommand, OutputFilePathPipe, QuestionOptions, RenderService, RoutePipe} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 import {pascalCase} from "change-case";
+import {ProvidersInfoService} from "../../services/ProvidersInfoService";
 
 export interface IGenerateCmdOptions {
   type: string;
@@ -32,7 +33,54 @@ export class GenerateCmd implements ICommand {
   @Inject(RoutePipe)
   routePipe: RoutePipe;
 
-  constructor(private renderService: RenderService) {}
+  constructor(private renderService: RenderService, private providersList: ProvidersInfoService) {
+    [
+      {
+        name: "Controller",
+        value: "controller"
+      },
+      {
+        name: "Middleware",
+        value: "middleware"
+      },
+      {
+        name: "Injectable",
+        value: "injectable"
+      },
+      {
+        name: "Model",
+        value: "model"
+      },
+      {
+        name: "Decorator",
+        value: "decorator"
+      },
+      {
+        name: "Module",
+        value: "module"
+      },
+      {
+        name: "Pipe",
+        value: "pipe"
+      },
+      {
+        name: "Interceptor",
+        value: "interceptor"
+      },
+      {
+        name: "Server",
+        value: "server"
+      }
+    ].forEach(info => {
+      this.providersList.add(
+        {
+          ...info,
+          template: `generate/${info.value}.hbs`
+        },
+        GenerateCmd
+      );
+    });
+  }
 
   $prompt(initialOptions: any): QuestionOptions {
     return [
@@ -42,44 +90,7 @@ export class GenerateCmd implements ICommand {
         message: "Which type of provider ?",
         default: initialOptions.type,
         when: !initialOptions.type,
-        choices: [
-          {
-            name: "Controller",
-            value: "controller"
-          },
-          {
-            name: "Middleware",
-            value: "middleware"
-          },
-          {
-            name: "Injectable",
-            value: "injectable"
-          },
-          {
-            name: "Model",
-            value: "model"
-          },
-          {
-            name: "Decorator",
-            value: "decorator"
-          },
-          {
-            name: "Module",
-            value: "module"
-          },
-          {
-            name: "Pipe",
-            value: "pipe"
-          },
-          {
-            name: "Interceptor",
-            value: "interceptor"
-          },
-          {
-            name: "Server",
-            value: "server"
-          }
-        ]
+        choices: this.providersList.toArray()
       },
       {
         type: "input",
@@ -105,12 +116,18 @@ export class GenerateCmd implements ICommand {
   async $exec(options: IGenerateCmdOptions) {
     const {outputFile, ...data} = this.mapOptions(options);
 
-    return [
-      {
-        title: `Generate ${options.type} file to '${outputFile}'`,
-        task: () => this.renderService.render(`generate/${options.type}.hbs`, data, outputFile)
-      }
-    ];
+    if (this.providersList.isMyProvider(options.type, GenerateCmd)) {
+      const info = this.providersList.get(options.type);
+      const template = info.template || `generate/${info.value}.hbs`;
+      return [
+        {
+          title: `Generate ${options.type} file to '${outputFile}'`,
+          task: () => this.renderService.render(template, data, outputFile)
+        }
+      ];
+    }
+
+    return [];
   }
 
   mapOptions(options: IGenerateCmdOptions) {
