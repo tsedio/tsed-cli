@@ -30,4 +30,8 @@ export class RenderService {
 
     return renderer;
   }
+
+  templateExists(path: string) {
+    return Fs.existsSync(join(this.templateDir, path));
+  }
 }

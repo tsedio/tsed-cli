@@ -1,0 +1,19 @@
+import {BodyParams, Req} from "@tsed/common";
+import {OnInstall, OnVerify, Protocol} from "@tsed/passport";
+import {Strategy} from "{{passportPackage}}";
+
+@Protocol({
+  name: "{{protocolName}}",
+  useStrategy: Strategy,
+  settings: {}
+})
+export class {{className}} implements OnVerify, OnInstall {
+  async $onVerify(@Req() request: Req, @Args() args: any[]) {
+    const [] = args;
+
+  }
+
+  $onInstall(strategy: Strategy): void {
+    // intercept the strategy instance to adding extra configuration
+  }
+}
