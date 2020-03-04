@@ -9,7 +9,10 @@
     "change-case": "4.1.1"
   },
   "devDependencies": {
-    "@types/change-case": "2.3.1"
+    "@types/change-case": "2.3.1",
+    "@tsed/core": "^5.44.3",
+    "@tsed/di": "^5.44.3",
+    "@tsed/cli-testing": "1.0.0"
   },
   "scripts": {
     "start:help": "ts-node -r tsconfig-paths/register src/bin/tsed.ts -h",
