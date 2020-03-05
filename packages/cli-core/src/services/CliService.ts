@@ -16,6 +16,9 @@ import {parseOption} from "../utils/parseOption";
 import "../utils/patchCommander";
 
 import {CliPackageJson} from "./CliPackageJson";
+import {ProjectPackageJson} from "./ProjectPackageJson";
+
+Inquirer.registerPrompt("autocomplete", require("inquirer-autocomplete-prompt"));
 
 @Injectable()
 export class CliService {
@@ -23,7 +26,10 @@ export class CliService {
 
   private commands = new Map();
 
-  constructor(@CliPackageJson() private pkg: CliPackageJson, private injector: InjectorService) {}
+  constructor(private injector: InjectorService,
+              @CliPackageJson() private pkg: CliPackageJson,
+              private projectPkg: ProjectPackageJson) {
+  }
 
   /**
    * Parse process.argv and run action
@@ -62,11 +68,11 @@ export class CliService {
   }
 
   /**
-   * Run action lifecycle
+   * Run lifecycle
    * @param cmdName
    * @param data
    */
-  public async runAction(cmdName: string, data: any) {
+  public async run(cmdName: string, data: any) {
     const provider = this.commands.get(cmdName);
     const instance = this.injector.get<ICommand>(provider.useClass)!;
 
@@ -84,7 +90,17 @@ export class CliService {
       }
     }
 
-    const tasks = [...(await instance.$exec(data)), ...(await this.callHook(CommandStoreKeys.EXEC_HOOKS, cmdName, data))];
+    const tasks = [
+      ...(await instance.$exec(data)),
+      ...(await this.callHook(CommandStoreKeys.EXEC_HOOKS, cmdName, data)),
+      {
+        title: "Install dependencies",
+        skip: !this.projectPkg.rewrite && !this.projectPkg.reinstall,
+        task: () => {
+          return this.projectPkg.install();
+        }
+      }
+    ];
 
     await new Listr(tasks).run(data);
   }
@@ -94,7 +110,7 @@ export class CliService {
    * @param subCommand
    * @param options
    */
-  public buildOption(subCommand: Command, options: {[key: string]: ICommandOptions}) {
+  public buildOption(subCommand: Command, options: { [key: string]: ICommandOptions }) {
     Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
       const fn = (v: any) => parseOption(v, options);
 
@@ -120,7 +136,7 @@ export class CliService {
     return this.program
       .command(createCommandSummary(name, args))
       .description(description, mapArgsDescription(args))
-      .action((...commanderArgs: any[]) => this.runAction(name, mapArgs(args, commanderArgs)));
+      .action((...commanderArgs: any[]) => this.run(name, mapArgs(args, commanderArgs)));
   }
 
   /**

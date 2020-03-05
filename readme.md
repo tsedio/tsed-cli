@@ -14,7 +14,7 @@
 
 ## Features
 
-Please refer to the [documentation](https://typedproject.github.io/tsed-cli/) for more details.
+Please refer to the [documentation](https://cli.tsed.io/) for more details.
 
 ## Installation
 

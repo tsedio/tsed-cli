@@ -4,11 +4,13 @@
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "dependencies": {
+    "@samverschueren/stream-to-observable": "0.3.0",
     "@tsed/core": "^5.44.3",
     "@tsed/di": "^5.44.3",
     "@tsed/logger": "^5.4.1",
     "commander": "5.0.0-3",
     "inquirer": "7.0.5",
+    "inquirer-autocomplete-prompt": "1.0.2",
     "chalk": "3.0.0",
     "figures": "3.2.0",
     "listr": "0.14.3",
@@ -16,7 +18,12 @@
     "consolidate": "0.15.1",
     "handlebars": "4.7.3",
     "fs-extra": "8.1.0",
-    "read-pkg-up": "7.0.1"
+    "read-pkg-up": "7.0.1",
+    "request-promise-native": "1.0.8",
+    "execa": "4.0.0",
+    "any-observable": "0.5.1",
+    "rxjs": "6.5.4",
+    "split": "1.0.1"
   },
   "devDependencies": {
     "@types/commander": "2.12.2",
@@ -26,6 +33,7 @@
     "@types/consolidate": "0.14.0",
     "@types/fs-extra": "8.1.0",
     "@types/read-pkg-up": "6.0.0",
-    "@types/inquirer": "6.5.0"
+    "@types/inquirer": "6.5.0",
+    "@types/request-promise-native": "1.0.17"
   }
 }

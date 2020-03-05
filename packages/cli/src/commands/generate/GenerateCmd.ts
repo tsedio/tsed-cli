@@ -1,4 +1,12 @@
-import {ClassNamePipe, Command, ICommand, OutputFilePathPipe, QuestionOptions, RenderService, RoutePipe} from "@tsed/cli-core";
+import {
+  ClassNamePipe,
+  Command,
+  ICommand,
+  OutputFilePathPipe,
+  QuestionOptions,
+  RenderService,
+  RoutePipe
+} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 import {pascalCase} from "change-case";
 import {ProvidersInfoService} from "../../services/ProvidersInfoService";
@@ -83,14 +91,22 @@ export class GenerateCmd implements ICommand {
   }
 
   $prompt(initialOptions: any): QuestionOptions {
+    const providers = this.providersList.toArray();
+
     return [
       {
-        type: "list",
+        type: "autocomplete",
         name: "type",
         message: "Which type of provider ?",
         default: initialOptions.type,
         when: !initialOptions.type,
-        choices: this.providersList.toArray()
+        source: async (state: any, keyword: string) => {
+          if (keyword) {
+            return providers.filter(item => item.name.toLowerCase().includes(keyword.toLowerCase()));
+          }
+
+          return providers;
+        }
       },
       {
         type: "input",
