@@ -26,10 +26,7 @@ export class CliService {
 
   private commands = new Map();
 
-  constructor(private injector: InjectorService,
-              @CliPackageJson() private pkg: CliPackageJson,
-              private projectPkg: ProjectPackageJson) {
-  }
+  constructor(private injector: InjectorService, @CliPackageJson() private pkg: CliPackageJson, private projectPkg: ProjectPackageJson) {}
 
   /**
    * Parse process.argv and run action
@@ -57,8 +54,10 @@ export class CliService {
 
         if (provider.store.has(hookName)) {
           const props = provider.store.get(hookName)[cmd];
-          for (const propertyKey of props) {
-            results = results.concat(await instance[propertyKey](...args));
+          if (props) {
+            for (const propertyKey of props) {
+              results = results.concat(await instance[propertyKey](...args));
+            }
           }
         }
       }
@@ -110,7 +109,7 @@ export class CliService {
    * @param subCommand
    * @param options
    */
-  public buildOption(subCommand: Command, options: { [key: string]: ICommandOptions }) {
+  public buildOption(subCommand: Command, options: {[key: string]: ICommandOptions}) {
     Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
       const fn = (v: any) => parseOption(v, options);
 

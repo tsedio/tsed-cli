@@ -1,3 +1,4 @@
+export * from "./commands/AddCmd";
 export * from "./interfaces";
 export * from "./pipes";
 export * from "./decorators";

@@ -19,6 +19,7 @@
     "start:version": "ts-node -r tsconfig-paths/register src/bin/tsed.ts --version",
     "start:init:help": "ts-node -r tsconfig-paths/register src/bin/tsed.ts init -h",
     "start:init:run": "ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp",
+    "start:add:run": "ts-node -r tsconfig-paths/register src/bin/tsed.ts add -r ./.tmp",
     "start:generate:help": "ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
     "start:generate:run": "ts-node -r tsconfig-paths/register src/bin/tsed.ts generate --project-root ./.tmp"
   },

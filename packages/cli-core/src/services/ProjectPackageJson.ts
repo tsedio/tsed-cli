@@ -11,8 +11,7 @@ import {CliExeca} from "./CliExeca";
 const hasYarn = require("has-yarn");
 
 function getPkgWithUndefinedVersion(deps: any) {
-  return Object
-    .entries(deps)
+  return Object.entries(deps)
     .filter(([_, version]) => !version)
     .map(([key]) => key);
 }
@@ -79,15 +78,15 @@ export class ProjectPackageJson {
     return this.raw.devDependencies;
   }
 
-  get allDependencies(): { [key: string]: string } {
+  get allDependencies(): {[key: string]: string} {
     return {
-      ...this.dependencies || {},
-      ...this.devDependencies || {}
+      ...(this.dependencies || {}),
+      ...(this.devDependencies || {})
     };
   }
 
-  addDevDependencies(pkg: string, version: string) {
-    this.devDependencies[pkg] = version;
+  addDevDependencies(pkg: string, version?: string) {
+    this.devDependencies[pkg] = version!;
     this._reinstall = true;
     this._rewrite = true;
 
@@ -124,11 +123,7 @@ export class ProjectPackageJson {
   }
 
   write() {
-    return Fs.writeFile(
-      join(this.path, 'package.json'),
-      JSON.stringify(this.raw, null, 2),
-      {encoding: "utf8"}
-    );
+    return Fs.writeFile(join(this.path, "package.json"), JSON.stringify(this.raw, null, 2), {encoding: "utf8"});
   }
 
   hasYarn() {
@@ -152,35 +147,30 @@ export class ProjectPackageJson {
     const devDeps = getPkgWithUndefinedVersion(this.devDependencies);
     const deps = getPkgWithUndefinedVersion(this.dependencies);
 
-    const errorPipe = () => catchError((error: any) => {
-      if (error.stderr.startsWith("error Your lockfile needs to be updated")) {
-        return throwError(new Error("yarn.lock file is outdated. Run yarn, commit the updated lockfile and try again."));
-      }
+    const errorPipe = () =>
+      catchError((error: any) => {
+        if (error.stderr.startsWith("error Your lockfile needs to be updated")) {
+          return throwError(new Error("yarn.lock file is outdated. Run yarn, commit the updated lockfile and try again."));
+        }
 
-      return throwError(error);
-    });
+        return throwError(error);
+      });
 
     return [
       {
         title: "Installing dependencies using Yarn",
         skip: () => !this.reinstall,
-        task: () => this.cliExeca
-          .run("yarn", ["install", "--frozen-lockfile", "--production=false"])
-          .pipe(errorPipe())
+        task: () => this.cliExeca.run("yarn", ["install", "--frozen-lockfile", "--production=false"]).pipe(errorPipe())
       },
       {
         title: "Add dependencies using Yarn",
         skip: () => !deps.length,
-        task: () => this.cliExeca
-          .run("yarn", ["add", ...deps])
-          .pipe(errorPipe())
+        task: () => this.cliExeca.run("yarn", ["add", ...deps]).pipe(errorPipe())
       },
       {
         title: "Add devDependencies using Yarn",
         skip: () => !devDeps.length,
-        task: () => this.cliExeca
-          .run("yarn", ["add", "-D", ...devDeps])
-          .pipe(errorPipe())
+        task: () => this.cliExeca.run("yarn", ["add", "-D", ...devDeps]).pipe(errorPipe())
       }
     ];
   }
