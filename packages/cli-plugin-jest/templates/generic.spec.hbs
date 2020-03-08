@@ -1,11 +1,11 @@
 import { TestContext } from "@tsed/testing";
-import { {{className}} } from "./{{className}}";
+import { {{symbolName}} } from "./{{symbolName}}";
 
-describe("{{className}}", () => {
+describe("{{symbolName}}", () => {
   beforeEach(TestContext.create);
   afterEach(TestContext.reset);
 
-  it("should do something", TestContext.inject([{{className}}], (controller: {{className}}) => {
-    expect(controller).toBeInstanceOf({{className}})
+  it("should do something", TestContext.inject([{{symbolName}}], (controller: {{symbolName}}) => {
+    expect(controller).toBeInstanceOf({{symbolName}})
   }));
 });

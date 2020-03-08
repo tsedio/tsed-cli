@@ -94,7 +94,7 @@ export class CliService {
       ...(await this.callHook(CommandStoreKeys.EXEC_HOOKS, cmdName, data)),
       {
         title: "Install dependencies",
-        skip: !this.projectPkg.rewrite && !this.projectPkg.reinstall,
+        skip: () => !this.projectPkg.rewrite && !this.projectPkg.reinstall,
         task: () => {
           return this.projectPkg.install();
         }

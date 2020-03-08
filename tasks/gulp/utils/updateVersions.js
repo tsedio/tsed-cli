@@ -9,6 +9,7 @@ exports.updateVersions = (field = {}, dependencies, char = "") => {
       if (dependencies.has(mod)) {
         const currentVersion = version.replace(/^\^/, "");
         const newVersion = dependencies.get(mod);
+
         if (semver.lt(currentVersion, newVersion)) {
           field[mod] = char + newVersion;
           log("Update", chalk.blue(mod), chalk.cyan(currentVersion), "to", chalk.cyan(char + newVersion));

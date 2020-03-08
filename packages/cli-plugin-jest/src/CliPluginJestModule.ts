@@ -1,6 +1,5 @@
-import {IGenerateCmdOptions} from "@tsed/cli";
-import {ClassNamePipe, OnExec, OutputFilePathPipe, RenderService, RoutePipe} from "@tsed/cli-core";
-import {Tasks} from "@tsed/cli-core/src/interfaces/Tasks";
+import {ClassNamePipe, IGenerateCmdOptions, OutputFilePathPipe, RoutePipe} from "@tsed/cli";
+import {OnExec, RenderService, Tasks} from "@tsed/cli-core";
 import {Inject, Module} from "@tsed/di";
 import {resolve} from "path";
 
@@ -28,8 +27,12 @@ export class CliPluginJestModule {
   @OnExec("generate")
   onGenerateExec(options: IGenerateCmdOptions): Tasks {
     const {outputFile, ...data} = this.mapOptions(options);
-    const integrationTemplate = options.type === "server" ? "server.integration.hbs" : "generic.integration.hbs";
-    const specTemplate = "generic.spec.hbs";
+
+    const type = [options.type, options.templateType].filter(Boolean).join(".");
+    const specTemplate = this.renderService.templateExists(`${type}.spec.hbs`) ? `${type}.spec.hbs` : "generic.spec.hbs";
+    const integrationTemplate = this.renderService.templateExists(`${type}.integration.hbs`)
+      ? `${type}.integration.hbs`
+      : "generic.integration.hbs";
 
     return [
       {
@@ -52,7 +55,7 @@ export class CliPluginJestModule {
   mapOptions(options: IGenerateCmdOptions) {
     return {
       route: options.route ? this.routePipe.transform(options.route) : "",
-      className: this.classNamePipe.transform(options),
+      symbolName: this.classNamePipe.transform(options),
       outputFile: this.outputFilePathPipe.transform(options)
     };
   }

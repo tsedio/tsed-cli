@@ -1,4 +1,4 @@
-import {ClassNamePipe} from "@tsed/cli-core";
+import {ClassNamePipe} from "./ClassNamePipe";
 import {OutputFilePathPipe} from "./OutputFilePathPipe";
 
 describe("OutputFilePathPipeOutputFilePathPipe", () => {

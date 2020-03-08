@@ -1,7 +1,7 @@
-import {ProjectPackageJson} from "@tsed/cli-core";
 import {GlobalProviders, IDIConfigurationOptions, IDILogger, InjectorService} from "@tsed/di";
 import {CliConfiguration} from "../services/CliConfiguration";
 import {Logger} from "../services/Logger";
+import {ProjectPackageJson} from "../services/ProjectPackageJson";
 
 export function createInjector(settings: Partial<IDIConfigurationOptions> = {}) {
   const injector = new InjectorService();

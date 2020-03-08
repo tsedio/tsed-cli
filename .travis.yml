@@ -5,14 +5,14 @@ node_js:
   - '12'
   - '10'
 
-script: yarn test && yarn travis:coveralls
+script: yarn test
 
 jobs:
   include:
     - stage: deploy
       name: 'Deploy packages'
       node_js: 12
-      if: (NOT type IN (pull_request)) AND (branch = production)
+      if: (NOT type IN (pull_request)) AND (branch = master)
       script: yarn semantic-release && yarn docs:publish
 
 branches:

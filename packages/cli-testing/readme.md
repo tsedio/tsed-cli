@@ -1,4 +1,4 @@
-# @tsed/cli 
+# @tsed/cli-testing
 
 [![Build Status](https://travis-ci.org/TypedProject/tsed-cli.svg?branch=master)](https://travis-ci.org/TypedProject/tsed-cli)
 [![TypeScript](https://badges.frapsoft.com/typescript/love/typescript.svg?v=100)](https://github.com/ellerbrock/typescript-badges/) 
@@ -9,7 +9,7 @@
 [![img](https://david-dm.org/TypedProject/tsed-cli/peer-status.svg)](https://david-dm.org/TypedProject/tsed-cli/#info=peerDependenciess)
 [![Known Vulnerabilities](https://snyk.io/test/github/TypedProject/tsed-cli/badge.svg)](https://snyk.io/test/github/TypedProject/ts-express-decorators)
 
-> CLI for the Ts.ED framework
+> Utils to test your CLI based on @tsed/cli-core framework
 
 ## Features
 
@@ -18,7 +18,7 @@ Please refer to the [documentation](https://cli.tsed.io/) for more details.
 ## Installation
 
 ```bash
-npm install -g @tsed/cli
+npm install @tsed/cli-testing
 ```
 
 ## Contributors

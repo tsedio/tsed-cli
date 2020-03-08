@@ -3,10 +3,21 @@
   "version": "1.0.0",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
+  "description": "Build your CLI with TypeScript and Decorators",
+  "keywords": [
+    "cli",
+    "typescript",
+    "framework",
+    "api",
+    "decorators",
+    "commander.js",
+    "inquirer.js",
+    "listr"
+  ],
   "dependencies": {
     "@samverschueren/stream-to-observable": "0.3.0",
-    "@tsed/core": "^5.44.3",
-    "@tsed/di": "^5.44.3",
+    "@tsed/core": "^5.44.6",
+    "@tsed/di": "^5.44.6",
     "@tsed/logger": "^5.4.1",
     "commander": "5.0.0-3",
     "inquirer": "7.0.5",
@@ -24,7 +35,8 @@
     "execa": "4.0.0",
     "any-observable": "0.5.1",
     "rxjs": "6.5.4",
-    "split": "1.0.1"
+    "split": "1.0.1",
+    "tslib": "1.11.1"
   },
   "devDependencies": {
     "@types/commander": "2.12.2",
@@ -36,5 +48,10 @@
     "@types/read-pkg-up": "6.0.0",
     "@types/inquirer": "6.5.0",
     "@types/request-promise-native": "1.0.17"
-  }
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.compile.json",
+    "build:doc": "tsc --build tsconfig.doc.json"
+  },
+  "peerDependencies": {}
 }

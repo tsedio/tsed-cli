@@ -1,14 +1,5 @@
-import {IGenerateCmdOptions, ProvidersInfoService} from "@tsed/cli";
-import {
-  ClassNamePipe,
-  OnExec,
-  OnPrompt,
-  OutputFilePathPipe,
-  ProjectPackageJson,
-  QuestionOptions,
-  RenderService,
-  RoutePipe
-} from "@tsed/cli-core";
+import {ClassNamePipe, IGenerateCmdOptions, OutputFilePathPipe, ProvidersInfoService, RoutePipe} from "@tsed/cli";
+import {OnExec, OnPrompt, ProjectPackageJson, QuestionOptions, RenderService} from "@tsed/cli-core";
 import {Tasks} from "@tsed/cli-core/src/interfaces/Tasks";
 import {Inject, Module} from "@tsed/di";
 import {paramCase} from "change-case";
@@ -56,13 +47,12 @@ export class CliPluginPassport {
   async onGeneratePrompt(initialOption: IGenerateCmdOptions): Promise<QuestionOptions> {
     this.packages = await this.passportClient.getPackages();
 
-    const list = this.packages
-      .map(item => {
-        return {
-          name: `${item.name} - ${item.description}`,
-          value: item.name
-        };
-      });
+    const list = this.packages.map(item => {
+      return {
+        name: `${item.name} - ${item.description}`,
+        value: item.name
+      };
+    });
 
     return [
       {
@@ -98,8 +88,7 @@ export class CliPluginPassport {
         },
         {
           title: `Install passport package: ${options.passportPackage}`,
-          task: () => {
-          }
+          task: () => {}
         }
       ];
     }
@@ -124,7 +113,7 @@ export class CliPluginPassport {
   }
 
   private getPassportPackageVersion(passportPackage: string) {
-    const passportPkgDetails = this.packages.find((pkg) => pkg.name === passportPackage);
+    const passportPkgDetails = this.packages.find(pkg => pkg.name === passportPackage);
 
     return passportPkgDetails ? passportPkgDetails["dist-tags"]?.latest : undefined;
   }

@@ -1,21 +1,76 @@
-import {
-  ClassNamePipe,
-  Command,
-  ICommand,
-  OutputFilePathPipe,
-  QuestionOptions,
-  RenderService,
-  RoutePipe
-} from "@tsed/cli-core";
+import {Command, ICommand, QuestionOptions, RenderService} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 import {pascalCase} from "change-case";
+import {ClassNamePipe} from "../../pipes/ClassNamePipe";
+import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
+import {RoutePipe} from "../../pipes/RoutePipe";
 import {ProvidersInfoService} from "../../services/ProvidersInfoService";
 
 export interface IGenerateCmdOptions {
   type: string;
   name: string;
   route?: string;
+  templateType?: string;
 }
+
+const DECORATOR_TYPES = [
+  {name: "Class decorator", value: "class"},
+  {name: "Ts.ED endpoint decorator", value: "endpoint"},
+  {name: "Ts.ED property decorator", value: "prop"},
+  {name: "Ts.ED parameter decorator", value: "param"},
+  {name: "Vanilla Method decorator", value: "method"},
+  {name: "Vanilla Property decorator", value: "property"},
+  {name: "Vanilla Parameter decorator", value: "parameter"}
+];
+
+const PROVIDER_TYPES = [
+  {
+    name: "Controller",
+    value: "controller"
+  },
+  {
+    name: "Middleware",
+    value: "middleware"
+  },
+  {
+    name: "Service",
+    value: "service"
+  },
+  {
+    name: "Model",
+    value: "model"
+  },
+  {
+    name: "Decorator",
+    value: "decorator"
+  },
+  {
+    name: "Module",
+    value: "module"
+  },
+  {
+    name: "Pipe",
+    value: "pipe"
+  },
+  {
+    name: "Interceptor",
+    value: "interceptor"
+  },
+  {
+    name: "Server",
+    value: "server"
+  }
+];
+
+const searchFactory = (list: any) => {
+  return async (state: any, keyword: string) => {
+    if (keyword) {
+      return list.filter((item: any) => item.name.toLowerCase().includes(keyword.toLowerCase()));
+    }
+
+    return list;
+  };
+};
 
 @Command({
   name: "generate",
@@ -42,48 +97,10 @@ export class GenerateCmd implements ICommand {
   routePipe: RoutePipe;
 
   constructor(private renderService: RenderService, private providersList: ProvidersInfoService) {
-    [
-      {
-        name: "Controller",
-        value: "controller"
-      },
-      {
-        name: "Middleware",
-        value: "middleware"
-      },
-      {
-        name: "Injectable",
-        value: "injectable"
-      },
-      {
-        name: "Model",
-        value: "model"
-      },
-      {
-        name: "Decorator",
-        value: "decorator"
-      },
-      {
-        name: "Module",
-        value: "module"
-      },
-      {
-        name: "Pipe",
-        value: "pipe"
-      },
-      {
-        name: "Interceptor",
-        value: "interceptor"
-      },
-      {
-        name: "Server",
-        value: "server"
-      }
-    ].forEach(info => {
+    PROVIDER_TYPES.forEach(info => {
       this.providersList.add(
         {
-          ...info,
-          template: `generate/${info.value}.hbs`
+          ...info
         },
         GenerateCmd
       );
@@ -100,13 +117,7 @@ export class GenerateCmd implements ICommand {
         message: "Which type of provider ?",
         default: initialOptions.type,
         when: !initialOptions.type,
-        source: async (state: any, keyword: string) => {
-          if (keyword) {
-            return providers.filter(item => item.name.toLowerCase().includes(keyword.toLowerCase()));
-          }
-
-          return providers;
-        }
+        source: searchFactory(providers)
       },
       {
         type: "input",
@@ -125,6 +136,15 @@ export class GenerateCmd implements ICommand {
         default: (state: IGenerateCmdOptions) => {
           return state.type === "server" ? "/rest" : this.routePipe.transform(state.name);
         }
+      },
+      {
+        type: "autocomplete",
+        name: "templateType",
+        message: (state: any) => `Which type of ${state.type}?`,
+        when(state: any) {
+          return ["decorator"].includes(state.type);
+        },
+        source: searchFactory(DECORATOR_TYPES)
       }
     ];
   }
@@ -133,8 +153,9 @@ export class GenerateCmd implements ICommand {
     const {outputFile, ...data} = this.mapOptions(options);
 
     if (this.providersList.isMyProvider(options.type, GenerateCmd)) {
-      const info = this.providersList.get(options.type);
-      const template = info.template || `generate/${info.value}.hbs`;
+      const type = [options.type, options.templateType].filter(Boolean).join(".");
+      const template = `generate/${type}.hbs`;
+
       return [
         {
           title: `Generate ${options.type} file to '${outputFile}'`,
@@ -149,7 +170,7 @@ export class GenerateCmd implements ICommand {
   mapOptions(options: IGenerateCmdOptions) {
     return {
       route: options.route ? this.routePipe.transform(options.route) : "",
-      className: this.classNamePipe.transform(options),
+      symbolName: this.classNamePipe.transform(options),
       outputFile: `${this.outputFilePathPipe.transform(options)}.ts`
     };
   }

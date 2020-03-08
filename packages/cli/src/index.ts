@@ -5,6 +5,7 @@ import commands from "./commands";
 export * from "./commands/create/CreateProjectCmd";
 export * from "./commands/generate/GenerateCmd";
 export * from "./services/ProvidersInfoService";
+export * from "./pipes";
 
 const pkg = require("../package.json");
 const TEMPLATE_DIR = resolve(__dirname, "..", "templates");

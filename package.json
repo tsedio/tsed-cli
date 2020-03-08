@@ -1,7 +1,7 @@
 {
   "name": "@tsed/cli-root",
-  "version": "1.0.0",
-  "description": "CLI to start you Ts.ED project",
+  "version": "0.0.0-development",
+  "description": "CLI to bootstrap your Ts.ED project",
   "private": true,
   "scripts": {
     "prepublishOnly": "gflow release post",
@@ -45,8 +45,7 @@
   },
   "homepage": "https://github.com/TypedProject/tsed-cli",
   "dependencies": {
-    "lerna": "3.18.4",
-    "@tsed/logger": "latest"
+    "lerna": "3.18.4"
   },
   "devDependencies": {
     "@typedproject/ts-doc": "4.0.6",
@@ -81,10 +80,9 @@
     "prettier": "1.19.1",
     "require-dir": "1.2.0",
     "rimraf": "3.0.2",
-    "semantic-release": "15.14.0",
+    "semantic-release": "^17.0.4",
     "sinon": "9.0.0",
     "sinon-chai": "3.5.0",
-    "source-map-support": "0.5.16",
     "ts-node": "8.6.2",
     "tslint": "6.0.0",
     "typescript": "3.8.3",

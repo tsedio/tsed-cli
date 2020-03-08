@@ -8,6 +8,11 @@ export class ClassNamePipe {
     const name = basename(options.name);
     const postfix = pascalCase(options.type);
 
-    return (pascalCase(name) + postfix).replace(postfix + postfix, postfix);
+    switch (options.type) {
+      case "decorator":
+        return pascalCase(name);
+      default:
+        return (pascalCase(name) + postfix).replace(postfix + postfix, postfix);
+    }
   }
 }

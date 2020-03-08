@@ -1,0 +1,15 @@
+import {applyDecorators} from "@tsed/core";
+import {ParamMetadata} from "@tsed/common";
+
+export interface I{{symbolName}}Options {
+
+}
+
+export function {{symbolName}}(options: I{{symbolName}}Options): ParametersDecorator {
+  return applyDecorators(
+    ParamFn((param: ParamMetadata) => {
+      param.store.set({{symbolName}})
+    })
+    // Add UsePipe decorator to invoke custom pipe on the parameter
+  );
+}

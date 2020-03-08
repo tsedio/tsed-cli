@@ -23,11 +23,10 @@ describe("GenerateCmd", () => {
 
           // THEN
           expect(result[0]).to.deep.includes({
-            choices: providersInfoService.toArray(),
             default: undefined,
             message: "Which type of provider ?",
             name: "type",
-            type: "list",
+            type: "autocomplete",
             when: true
           });
           expect(result[1].message).to.deep.equal("Which name ?");
@@ -58,11 +57,10 @@ describe("GenerateCmd", () => {
 
           // THEN
           expect(result[0]).to.deep.includes({
-            choices: providersInfoService.toArray(),
             default: "controller",
             message: "Which type of provider ?",
             name: "type",
-            type: "list",
+            type: "autocomplete",
             when: false
           });
           expect(result[1].message).to.deep.equal("Which name ?");
@@ -110,7 +108,7 @@ describe("GenerateCmd", () => {
       renderService.render.should.have.been.calledWithExactly(
         "generate/controller.hbs",
         {
-          className: "TestController",
+          symbolName: "TestController",
           route: "/test"
         },
         "controllers/TestController.ts"
@@ -147,7 +145,7 @@ describe("GenerateCmd", () => {
       renderService.render.should.have.been.calledWithExactly(
         "generate/controller.hbs",
         {
-          className: "TestController",
+          symbolName: "TestController",
           route: "/test"
         },
         "controllers/TestController.ts"

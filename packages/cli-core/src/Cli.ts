@@ -2,7 +2,6 @@ import {Module} from "@tsed/di";
 import {Command} from "commander";
 import {join, resolve} from "path";
 import * as UpdateNotifier from "update-notifier";
-import * as Pipes from "./pipes";
 import {CliConfiguration} from "./services/CliConfiguration";
 import {CliPackageJson} from "./services/CliPackageJson";
 import {CliService} from "./services/CliService";
@@ -13,7 +12,7 @@ import {loadInjector} from "./utils/loadInjector";
 import {loadPlugins} from "./utils/loadPlugins";
 
 @Module({
-  imports: [CliPackageJson, ProjectPackageJson, CliService, CliConfiguration, RenderService, ...Object.values(Pipes)]
+  imports: [CliPackageJson, ProjectPackageJson, CliService, CliConfiguration, RenderService]
 })
 export class Cli {
   constructor(@CliPackageJson() readonly pkg: CliPackageJson, private cliService: CliService) {

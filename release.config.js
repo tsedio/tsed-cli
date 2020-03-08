@@ -1,5 +1,5 @@
 module.exports = {
-  branch: 'production',
+  branch: 'master',
   verifyConditions: ['@semantic-release/github', '@semantic-release/npm'],
   analyzeCommits: ['@semantic-release/commit-analyzer'],
   verifyRelease: [],

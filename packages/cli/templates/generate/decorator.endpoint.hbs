@@ -1,0 +1,15 @@
+import {applyDecorators} from "@tsed/core";
+import {EndpointFn} from "@tsed/common";
+
+export interface I{{symbolName}}Options {
+
+}
+
+export function {{symbolName}}(options: I{{symbolName}}Options): MethodDecorator {
+  return applyDecorators(
+   EndpointFn((endpoint: EndpointMetadata) => {
+     endpoint.store.set({{symbolName}}, options);
+   })
+   // add other decorator like Use(), UseBefore, UseAuth, etc...
+  );
+}

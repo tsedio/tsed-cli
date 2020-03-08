@@ -1,4 +1,3 @@
-import {ClassNamePipe} from "@tsed/cli-core";
 import {RoutePipe} from "./RoutePipe";
 
 describe("RoutePipe", () => {

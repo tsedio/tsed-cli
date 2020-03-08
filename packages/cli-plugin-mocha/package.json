@@ -3,12 +3,17 @@
   "version": "1.0.0",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@tsed/cli-core": "1.0.0",
     "@tsed/cli": "1.0.0",
-    "@tsed/core": "^5.44.3",
-    "@tsed/di": "^5.44.3"
-  }
+    "@tsed/core": "^5.44.6",
+    "@tsed/di": "^5.44.6",
+    "tslib": "1.11.1"
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.compile.json",
+    "build:doc": "tsc --build tsconfig.doc.json"
+  },
+  "peerDependencies": {}
 }

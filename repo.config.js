@@ -1,32 +1,35 @@
 module.exports = {
-  npmScope: "@tsed",
-  npmAccess: "public",
-  versionPlaceholder: "0.0.0-PLACEHOLDER",
-  packagesDir: "./packages",
-  projectsDir: "./examples",
-  outputDir: "./dist",
+  npmScope: '@tsed',
+  npmAccess: 'public',
+  versionPlaceholder: '0.0.0-PLACEHOLDER',
+  packagesDir: './packages',
+  projectsDir: './examples',
+  outputDir: './dist',
   typescript: true,
 
-  pkgTemplate: (pkgName, {repository, bugs, author, license, gitHead, contributors}) => (json) => {
+  pkgTemplate: (pkgName, { repository, bugs, author, license, gitHead, contributors }) => (json) => {
     Object.assign(json, {
-      main: "lib/index.js",
-      typings: "lib/index.d.ts",
+      main: 'lib/index.js',
+      typings: 'lib/index.d.ts',
       repository,
       bugs,
-      homepage: `https://github.com/TypedProject/ts-log-debug/packages/${pkgName}`,
+      homepage: `https://github.com/TypedProject/tsed-cli/packages/${pkgName}`,
       author,
       contributors,
       license,
-      gitHead
-    });
+      gitHead,
+      publishConfig: {
+        'tag': 'alpha'
+      }
+    })
 
-    return json;
+    return json
   },
   doc: {
     publish: true,
-    url: "https://github.com/TypedProject/ts-log-debug.git",
-    branch: "gh-pages",
-    cname: "logger.tsed.io"
+    url: 'https://github.com/TypedProject/tsed-cli.git',
+    branch: 'gh-pages',
+    cname: 'cli.tsed.io'
   },
   tsdoc: require('./tsdoc.config.js')
-};
+}
