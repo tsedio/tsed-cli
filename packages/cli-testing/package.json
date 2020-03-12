@@ -15,15 +15,15 @@
     "decorators"
   ],
   "dependencies": {
+    "@tsed/cli-core": "1.0.0",
     "@tsed/core": "^5.44.6",
     "@tsed/di": "^5.44.6",
-    "@tsed/cli-core": "1.0.0",
     "tslib": "1.11.1"
   },
-  "devDependencies": {},
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",
     "build:doc": "tsc --build tsconfig.doc.json"
   },
+  "devDependencies": {},
   "peerDependencies": {}
 }
