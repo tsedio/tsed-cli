@@ -53,3 +53,4 @@ test/*.js.map
 
 .DS_Store
 .nyc_output
+/docs/.vuepress/dist/
