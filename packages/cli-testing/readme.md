@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/TypedProject/tsed-cli.svg?branch=master)](https://travis-ci.org/TypedProject/tsed-cli)
 [![TypeScript](https://badges.frapsoft.com/typescript/love/typescript.svg?v=100)](https://github.com/ellerbrock/typescript-badges/) 
-[![Package Quality](http://npm.packagequality.com/shield/@tsed/cli.png)](http://packagequality.com/#?package=@tsed/cli)
-[![npm version](https://badge.fury.io/js/tsed-cli.svg)](https://badge.fury.io/js/tsed-cli)
+[![Package Quality](https://npm.packagequality.com/badge/@tsed/cli.png)](https://packagequality.com/#?package=@tsed/cli)
+[![npm version](https://badge.fury.io/js/%40tsed%2Fcli.svg)](https://badge.fury.io/js/%40tsed%2Fcli)
 [![Dependencies](https://david-dm.org/TypedProject/tsed-cli.svg)](https://david-dm.org/TypedProject/tsed-cli#info=dependencies)
 [![img](https://david-dm.org/TypedProject/tsed-cli/dev-status.svg)](https://david-dm.org/TypedProject/tsed-cli/#info=devDependencies)
 [![img](https://david-dm.org/TypedProject/tsed-cli/peer-status.svg)](https://david-dm.org/TypedProject/tsed-cli/#info=peerDependenciess)
