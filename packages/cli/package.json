@@ -3,6 +3,14 @@
   "version": "1.0.1",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
+  "bin": {
+    "cli": "lib/bin/tsed.js"
+  },
+  "files": [
+    "lib/bin/tsed.js",
+    "lib/bin",
+    "lib"
+  ],
   "description": "CLI to bootstrap your Ts.ED project",
   "keywords": [
     "Ts.ED",
@@ -37,13 +45,5 @@
     "start:generate:help": "ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
     "start:generate:run": "ts-node -r tsconfig-paths/register src/bin/tsed.ts generate --project-root ./.tmp"
   },
-  "bin": {
-    "cli": "bin/tsed.js"
-  },
-  "files": [
-    "bin/tsed.js",
-    "bin",
-    "lib"
-  ],
   "peerDependencies": {}
 }
