@@ -4,7 +4,7 @@
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "bin": {
-    "cli": "lib/bin/tsed.js"
+    "tsed": "lib/bin/tsed.js"
   },
   "files": [
     "lib/bin/tsed.js",
