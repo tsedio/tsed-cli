@@ -1,17 +1,25 @@
 import {Injectable} from "@tsed/di";
-import * as Request from "request-promise-native";
+import axios, {AxiosRequestConfig} from "axios";
+
+export interface ICliHttpClientOptions extends AxiosRequestConfig {
+  qs?: {[key: string]: any};
+}
 
 @Injectable()
 export class CliHttpClient {
-  get(endpoint: string, options: Request.RequestPromiseOptions = {}) {
-    return Request.get({
-      url: endpoint,
-      json: true,
+  async get(endpoint: string, options: ICliHttpClientOptions = {}) {
+    options = {
+      params: options.params || options.qs,
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
+        ...(options.headers || {})
       },
       ...options
-    });
+    };
+
+    const {data} = await axios.get(endpoint, options);
+
+    return data;
   }
 }

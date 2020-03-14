@@ -5,21 +5,21 @@ const HOST = require("registry-url")();
 
 @Injectable()
 export class CliPlugins {
-  @Constant("scope")
-  scope: string;
+  @Constant("name")
+  name: string;
 
   constructor(private httpClient: CliHttpClient) {}
 
   async searchPlugins(keyword: string = "", options: any = {}) {
     keyword = keyword
-      .replace(this.scope, "")
+      .replace(this.name, "")
       .replace("@", "")
       .replace("/", "")
       .replace("cli-plugin-", "");
 
     const {objects: result} = await this.httpClient.get(`${HOST}-/v1/search`, {
       qs: {
-        text: `@${this.scope}/cli-plugin-${keyword}`,
+        text: `@${this.name}/cli-plugin-${keyword}`,
         size: 100,
         from: 0,
         quality: 0.65,
@@ -30,8 +30,8 @@ export class CliPlugins {
     });
 
     return result
-      .filter(({package: {name}}: any) => name.startsWith(`@${this.scope}/cli-plugin`) || name.startsWith(`${this.scope}-cli-plugin`))
-      .map(({package: {name, description, ...otherProps}}: any) => {
+      .filter(({package: {name}}: any) => name.startsWith(`@${this.name}/cli-plugin`) || name.startsWith(`${this.name}-cli-plugin`))
+      .map(({package: {name, description = "", ...otherProps}}: any) => {
         return {
           name: `${name} ${description}`,
           value: name,
