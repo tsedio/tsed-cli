@@ -38,9 +38,6 @@ export class CliService {
 
     this.injector.getProviders(PROVIDER_TYPE_COMMAND).forEach(provider => this.build(provider));
 
-    if (argv.includes("-r") || argv.includes("--project-root")) {
-    }
-
     program.parse(argv);
   }
 
@@ -72,6 +69,14 @@ export class CliService {
    * @param data
    */
   public async run(cmdName: string, data: any) {
+    this.program.commands.forEach(command => {
+      Object.entries(command)
+        .filter(([key]) => !key.startsWith("_") && !["commands", "options", "parent", "rawArgs", "args"].includes(key))
+        .forEach(([key, value]) => {
+          data[key] = value;
+        });
+    });
+
     const provider = this.commands.get(cmdName);
     const instance = this.injector.get<ICommand>(provider.useClass)!;
 
@@ -96,7 +101,7 @@ export class CliService {
         title: "Install dependencies",
         skip: () => !this.projectPkg.rewrite && !this.projectPkg.reinstall,
         task: () => {
-          return this.projectPkg.install();
+          return this.projectPkg.install({packageManager: "yarn"});
         }
       }
     ];

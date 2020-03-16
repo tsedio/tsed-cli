@@ -45,6 +45,8 @@
   },
   "homepage": "https://github.com/TypedProject/tsed-cli",
   "dependencies": {
+    "@tsed/core": "^5.44.8",
+    "@tsed/di": "^5.44.8",
     "lerna": "3.18.4"
   },
   "devDependencies": {

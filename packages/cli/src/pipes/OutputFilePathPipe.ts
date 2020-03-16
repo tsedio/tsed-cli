@@ -1,4 +1,4 @@
-import {Injectable} from "@tsed/di";
+import {Injectable} from "@tsed/cli-core";
 import {dirname, join} from "path";
 import {ClassNamePipe} from "./ClassNamePipe";
 

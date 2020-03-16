@@ -1,8 +1,8 @@
-import {CliHttpClient} from "@tsed/cli-core";
-import {Inject} from "@tsed/di";
+import {CliHttpClient, Inject, Injectable} from "@tsed/cli-core";
 
 const HOST = "http://www.passportjs.org/packages";
 
+@Injectable()
 export class PassportClient {
   @Inject(CliHttpClient)
   httpClient: CliHttpClient;

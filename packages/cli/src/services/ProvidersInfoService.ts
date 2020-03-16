@@ -1,5 +1,4 @@
-import {nameOf, Type} from "@tsed/core";
-import {Injectable} from "@tsed/di";
+import {nameOf, Type, Injectable} from "@tsed/cli-core";
 
 export interface IProviderInfo {
   name: string;

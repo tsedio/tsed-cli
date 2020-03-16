@@ -41,7 +41,7 @@ export class AddCmd implements ICommand {
   }
 
   async $exec(options: IAddCmdOptions) {
-    this.projectPackageJson.addDevDependencies(options.name);
+    this.projectPackageJson.addDevDependency(options.name);
 
     return [];
   }

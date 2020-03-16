@@ -1,4 +1,4 @@
-import {Injectable} from "@tsed/di";
+import {Injectable} from "@tsed/cli-core";
 import {pascalCase} from "change-case";
 import {basename} from "path";
 

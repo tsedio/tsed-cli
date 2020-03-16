@@ -1,5 +1,4 @@
-import {Command, ICommand, QuestionOptions, RenderService} from "@tsed/cli-core";
-import {Inject} from "@tsed/di";
+import {Inject, Command, ICommand, QuestionOptions, RenderService} from "@tsed/cli-core";
 import {pascalCase} from "change-case";
 import {ClassNamePipe} from "../../pipes/ClassNamePipe";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";

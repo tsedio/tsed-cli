@@ -1,3 +1,5 @@
+export * from "@tsed/core";
+export * from "@tsed/di";
 export * from "./commands/AddCmd";
 export * from "./interfaces";
 export * from "./decorators";

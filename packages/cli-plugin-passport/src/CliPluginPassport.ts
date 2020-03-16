@@ -1,7 +1,5 @@
 import {ClassNamePipe, IGenerateCmdOptions, OutputFilePathPipe, ProvidersInfoService, RoutePipe} from "@tsed/cli";
-import {OnExec, OnPrompt, ProjectPackageJson, QuestionOptions, RenderService} from "@tsed/cli-core";
-import {Tasks} from "@tsed/cli-core/src/interfaces/Tasks";
-import {Inject, Module} from "@tsed/di";
+import {Inject, Module, OnExec, OnPrompt, ProjectPackageJson, QuestionOptions, RenderService, Tasks} from "@tsed/cli-core";
 import {paramCase} from "change-case";
 import {resolve} from "path";
 import {PassportClient} from "./services/PassportClient";
@@ -79,7 +77,7 @@ export class CliPluginPassport {
       const {outputFile, ...data} = this.mapOptions(options);
       const {passportPackage} = options;
 
-      this.projectPackageJson.addDependencies(options.passportPackage, this.getPassportPackageVersion(passportPackage));
+      this.projectPackageJson.addDependency(options.passportPackage, this.getPassportPackageVersion(passportPackage));
 
       return [
         {

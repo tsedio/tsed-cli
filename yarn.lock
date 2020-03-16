@@ -1911,23 +1911,23 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.0.0.tgz#9c13c2574c92d4503b005feca8f2e16cc1611506"
   integrity sha512-KYyTT/T6ALPkIRd2Ge080X/BsXvy9O0hcWTtMWkPvwAwF99+vn6Dv4GzrFT/Nn1LePr+FFDbRXXlqmsy9lw2zA==
 
-"@tsed/core@5.44.6", "@tsed/core@^5.44.6":
-  version "5.44.6"
-  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-5.44.6.tgz#0fcf338f2d12b25eb188e7a92e7c6c7388b4ced5"
-  integrity sha512-/fGVCO4wooDEQblrwtKnDnD8IEsKhFlyPWZ51Ty4w5J1iAQVQv0NaV8g4ENwlwYoqlU234eUINdIfc4GXw8BxQ==
+"@tsed/core@5.44.8", "@tsed/core@^5.44.8":
+  version "5.44.8"
+  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-5.44.8.tgz#7b3df5c2f6023550e201be816e41a5c2a4a9c6f7"
+  integrity sha512-zrTAmvI86thTT+1ygPi/RPSF0Z+dI7abWrB7XcOAbulEd9ggPd4uRcZgZZg2gsWtWmdi8cd4MyytcSc8SPvf0A==
   dependencies:
     reflect-metadata "^0.1.13"
     source-map-support "0.5.16"
-    tslib "1.10.0"
+    tslib "1.11.1"
 
-"@tsed/di@^5.44.6":
-  version "5.44.6"
-  resolved "https://registry.yarnpkg.com/@tsed/di/-/di-5.44.6.tgz#e260d80d8b10c4495ce4bb56d8776983e9d34336"
-  integrity sha512-H3bowgyqZMjy/miZMrMfzTQml496WzDZ4myXVxBensL/48qArWOiCWuhm7jXYowCpSPOz0AA9Fgb/Dnp8ZTHkg==
+"@tsed/di@^5.44.8":
+  version "5.44.8"
+  resolved "https://registry.yarnpkg.com/@tsed/di/-/di-5.44.8.tgz#b8d06475f8b064f9ffcc517a2ec0e5f8ef346e37"
+  integrity sha512-fLJtEG+EuCM6eC4lY1KVp7p90Wz4YQKVHYilxljeKfdLNMT8ycAGvWSKqAXrzP0awF3ha+1qt78DZndeapW2Lw==
   dependencies:
-    "@tsed/core" "5.44.6"
+    "@tsed/core" "5.44.8"
     chalk "3.0.0"
-    tslib "1.10.0"
+    tslib "1.11.1"
 
 "@tsed/logger@^5.4.1":
   version "5.4.1"

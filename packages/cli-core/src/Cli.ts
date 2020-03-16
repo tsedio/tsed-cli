@@ -44,6 +44,7 @@ export class Cli {
 
       return resolve(join(process.cwd(), projectRoot));
     }
+
     return process.cwd();
   }
 

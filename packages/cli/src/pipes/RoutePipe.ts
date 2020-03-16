@@ -1,4 +1,4 @@
-import {Injectable} from "@tsed/di";
+import {Injectable} from "@tsed/cli-core";
 import {paramCase} from "change-case";
 
 @Injectable()

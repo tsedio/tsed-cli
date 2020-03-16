@@ -16,8 +16,8 @@
   ],
   "dependencies": {
     "@tsed/cli-core": "1.0.5",
-    "@tsed/core": "^5.44.6",
-    "@tsed/di": "^5.44.6",
+    "@tsed/core": "^5.44.8",
+    "@tsed/di": "^5.44.8",
     "tslib": "1.11.1"
   },
   "scripts": {

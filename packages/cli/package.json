@@ -30,8 +30,6 @@
   },
   "devDependencies": {
     "@tsed/cli-testing": "1.0.5",
-    "@tsed/core": "^5.44.6",
-    "@tsed/di": "^5.44.6",
     "@types/change-case": "2.3.1"
   },
   "scripts": {
@@ -40,7 +38,8 @@
     "start:help": "ts-node -r tsconfig-paths/register src/bin/tsed.ts -h",
     "start:version": "ts-node -r tsconfig-paths/register src/bin/tsed.ts --version",
     "start:init:help": "ts-node -r tsconfig-paths/register src/bin/tsed.ts init -h",
-    "start:init:run": "ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp",
+    "start:init:run": "ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default",
+    "start:init:run:name": "ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init awesome",
     "start:add:run": "ts-node -r tsconfig-paths/register src/bin/tsed.ts add -r ./.tmp",
     "start:generate:help": "ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
     "start:generate:run": "ts-node -r tsconfig-paths/register src/bin/tsed.ts generate --project-root ./.tmp"

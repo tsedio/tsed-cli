@@ -1,6 +1,5 @@
 import {ClassNamePipe, IGenerateCmdOptions, OutputFilePathPipe, RoutePipe} from "@tsed/cli";
-import {OnExec, RenderService, Tasks} from "@tsed/cli-core";
-import {Inject, Module} from "@tsed/di";
+import {Inject, Module, OnExec, RenderService, Tasks} from "@tsed/cli-core";
 import {resolve} from "path";
 
 const TEMPLATE_DIR = resolve(__dirname, "..", "templates");

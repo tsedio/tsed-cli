@@ -1,14 +1,47 @@
-import {Configuration, Injectable} from "@tsed/di";
+import {getValue} from "@tsed/core";
+import {Configuration, Inject, Injectable} from "@tsed/di";
 import * as Fs from "fs-extra";
 import * as Listr from "listr";
 import {dirname, join} from "path";
 import * as readPkgUp from "read-pkg-up";
-import {throwError} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {IPackageJson} from "../interfaces/IPackageJson";
 import {CliExeca} from "./CliExeca";
+import {NpmRegistryClient} from "./NpmRegistryClient";
 
 const hasYarn = require("has-yarn");
+
+function getEmptyPackageJson(configuration: Configuration) {
+  return {
+    name: configuration.name,
+    version: "1.0.0",
+    description: "",
+    scripts: {},
+    dependencies: {},
+    devDependencies: {}
+  };
+}
+
+function useReadPkgUp(configuration: Configuration) {
+  return !(process.argv.includes("init") && !Fs.existsSync(join(configuration.project?.root, "package.json")));
+}
+
+function getPackageJson(configuration: Configuration) {
+  if (useReadPkgUp(configuration)) {
+    const result = readPkgUp.sync({
+      cwd: configuration.project?.root
+    });
+
+    if (result && result.path) {
+      configuration.set("project.root", dirname(result.path));
+
+      return {...result.packageJson} as any;
+    }
+  }
+
+  return getEmptyPackageJson(configuration);
+}
 
 function getPkgWithUndefinedVersion(deps: any) {
   return Object.entries(deps)
@@ -16,9 +49,35 @@ function getPkgWithUndefinedVersion(deps: any) {
     .map(([key]) => key);
 }
 
+export interface IInstallOptions {
+  packageManager?: "npm" | "yarn";
+}
+
+function getPackageWithLatest(deps: any) {
+  return Object.entries(deps).filter(([_, version]) => version === "latest");
+}
+
+function sortKeys(obj: any) {
+  return Object.entries(obj)
+    .sort((k1, k2) => {
+      return k1[0] < k2[0] ? -1 : 1;
+    })
+    .reduce((obj, [key, value]) => {
+      return {
+        ...obj,
+        [key]: value
+      };
+    }, {});
+}
+
 @Injectable()
 export class ProjectPackageJson {
-  private path: string;
+  @Inject(CliExeca)
+  protected cliExeca: CliExeca;
+
+  @Inject(NpmRegistryClient)
+  protected npmRegistryClient: NpmRegistryClient;
+
   private raw: IPackageJson = {
     name: "",
     version: "1.0.0",
@@ -28,18 +87,8 @@ export class ProjectPackageJson {
     devDependencies: {}
   };
 
-  constructor(@Configuration() configuration: Configuration, private cliExeca: CliExeca) {
-    const result = readPkgUp.sync({
-      cwd: configuration.project?.root
-    });
-
-    if (result && result.path) {
-      configuration.set("project.root", dirname(result.path));
-
-      this.raw = result.packageJson as any;
-    }
-
-    this.path = configuration.project?.root;
+  constructor(@Configuration() private configuration: Configuration) {
+    this.raw = getPackageJson(configuration);
   }
 
   private _rewrite = false;
@@ -54,8 +103,27 @@ export class ProjectPackageJson {
     return this._reinstall;
   }
 
+  get path() {
+    return join(this.dir, "package.json");
+  }
+
+  get dir() {
+    return this.configuration.project?.root;
+  }
+
+  set dir(dir: string) {
+    this.configuration.project.root = dir;
+
+    this.raw = getPackageJson(this.configuration);
+  }
+
   get name() {
     return this.raw.name;
+  }
+
+  set name(name: string) {
+    this.raw.name = name;
+    this._rewrite = true;
   }
 
   get version() {
@@ -85,7 +153,7 @@ export class ProjectPackageJson {
     };
   }
 
-  addDevDependencies(pkg: string, version?: string) {
+  addDevDependency(pkg: string, version?: string) {
     this.devDependencies[pkg] = version!;
     this._reinstall = true;
     this._rewrite = true;
@@ -93,7 +161,18 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addDependencies(pkg: string, version?: string) {
+  addDevDependencies(modules: {[key: string]: string | undefined}, scope: object = {}) {
+    Object.entries(modules).forEach(([pkg, version]) => {
+      this.addDevDependency(
+        pkg,
+        (version || "").replace(/{{([\w.]+)}}/gi, (match, key) => getValue(key, scope))
+      );
+    });
+
+    return this;
+  }
+
+  addDependency(pkg: string, version?: string) {
     this.dependencies[pkg] = version!;
     this._reinstall = true;
     this._rewrite = true;
@@ -101,9 +180,28 @@ export class ProjectPackageJson {
     return this;
   }
 
+  addDependencies(modules: {[key: string]: string | undefined}, scope: object = {}) {
+    Object.entries(modules).forEach(([pkg, version]) => {
+      this.addDependency(
+        pkg,
+        (version || "").replace(/{{([\w.]+)}}/gi, (match, key) => getValue(key, scope))
+      );
+    });
+
+    return this;
+  }
+
   addScript(task: string, cmd: string) {
-    this.dependencies[task] = cmd;
+    this.scripts[task] = cmd;
     this._rewrite = true;
+
+    return this;
+  }
+
+  addScripts(scripts: {[key: string]: string}) {
+    Object.entries(scripts).forEach(([task, cmd]) => {
+      this.addScript(task, cmd);
+    });
 
     return this;
   }
@@ -123,15 +221,29 @@ export class ProjectPackageJson {
   }
 
   write() {
-    return Fs.writeFile(join(this.path, "package.json"), JSON.stringify(this.raw, null, 2), {encoding: "utf8"});
+    this.raw.devDependencies = sortKeys(this.raw.devDependencies);
+    this.raw.dependencies = sortKeys(this.raw.dependencies);
+
+    return Fs.writeFileSync(this.path, JSON.stringify(this.raw, null, 2), {encoding: "utf8"});
   }
 
   hasYarn() {
-    return hasYarn(dirname(this.path));
+    return hasYarn(this.dir);
   }
 
-  install() {
+  install(options: IInstallOptions = {}) {
+    options.packageManager = options.packageManager || (this.hasYarn() ? "yarn" : "npm");
+
+    const shouldResolve = !!getPackageWithLatest(this.allDependencies).length;
+
     return new Listr([
+      {
+        title: "Resolve versions",
+        skip: () => {
+          return !this.rewrite || !shouldResolve;
+        },
+        task: () => this.resolve()
+      },
       {
         title: "Write package.json",
         skip: () => {
@@ -139,13 +251,44 @@ export class ProjectPackageJson {
         },
         task: () => this.write()
       },
-      ...(this.hasYarn() ? this.installWithYarn() : this.installWithNpm())
+      ...(options.packageManager === "yarn" ? this.installWithYarn() : this.installWithNpm())
     ]);
   }
 
-  private installWithYarn() {
+  protected resolve() {
+    return new Observable(observer => {
+      const packages = getPackageWithLatest(this.allDependencies);
+      let completed = 0;
+
+      observer.next(`${completed}/${packages.length} resolved`);
+
+      const promises = packages.map(async ([pkg]) => {
+        const info = await this.npmRegistryClient.info(pkg);
+        const version = info["dist-tags"].latest;
+
+        if (this.raw.dependencies[pkg]) {
+          this.raw.dependencies[pkg] = version;
+        }
+
+        if (this.raw.devDependencies[pkg]) {
+          this.raw.devDependencies[pkg] = version;
+        }
+        completed++;
+        observer.next(`[${completed}/${packages.length}] Resolving packages...`);
+      });
+
+      Promise.all(promises).then(() => {
+        observer.complete();
+      });
+    });
+  }
+
+  protected installWithYarn() {
     const devDeps = getPkgWithUndefinedVersion(this.devDependencies);
     const deps = getPkgWithUndefinedVersion(this.dependencies);
+    const options = {
+      cwd: this.dir
+    };
 
     const errorPipe = () =>
       catchError((error: any) => {
@@ -160,24 +303,27 @@ export class ProjectPackageJson {
       {
         title: "Installing dependencies using Yarn",
         skip: () => !this.reinstall,
-        task: () => this.cliExeca.run("yarn", ["install", "--frozen-lockfile", "--production=false"]).pipe(errorPipe())
+        task: () => this.cliExeca.run("yarn", ["install", "--production=false"], options).pipe(errorPipe())
       },
       {
         title: "Add dependencies using Yarn",
         skip: () => !deps.length,
-        task: () => this.cliExeca.run("yarn", ["add", ...deps]).pipe(errorPipe())
+        task: () => this.cliExeca.run("yarn", ["add", ...deps], options).pipe(errorPipe())
       },
       {
         title: "Add devDependencies using Yarn",
         skip: () => !devDeps.length,
-        task: () => this.cliExeca.run("yarn", ["add", "-D", ...devDeps]).pipe(errorPipe())
+        task: () => this.cliExeca.run("yarn", ["add", "-D", ...devDeps], options).pipe(errorPipe())
       }
     ];
   }
 
-  private installWithNpm() {
+  protected installWithNpm() {
     const devDeps = getPkgWithUndefinedVersion(this.devDependencies);
     const deps = getPkgWithUndefinedVersion(this.dependencies);
+    const options = {
+      cwd: this.dir
+    };
 
     return [
       {
@@ -187,18 +333,18 @@ export class ProjectPackageJson {
           return !this.reinstall;
         },
         task: () => {
-          return this.cliExeca.run("npm", ["install", "--no-production"]);
+          return this.cliExeca.run("npm", ["install", "--no-production"], options);
         }
       },
       {
         title: "Add dependencies using npm",
         skip: () => !deps.length,
-        task: () => this.cliExeca.run("npm", ["install", "--save", ...deps])
+        task: () => this.cliExeca.run("npm", ["install", "--save", ...deps], options)
       },
       {
         title: "Add devDependencies using npm",
         skip: () => !devDeps.length,
-        task: () => this.cliExeca.run("npm", ["install", "--save-dev", ...devDeps])
+        task: () => this.cliExeca.run("npm", ["install", "--save-dev", ...devDeps], options)
       }
     ];
   }
