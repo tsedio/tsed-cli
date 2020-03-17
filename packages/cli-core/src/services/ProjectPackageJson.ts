@@ -223,6 +223,7 @@ export class ProjectPackageJson {
   write() {
     this.raw.devDependencies = sortKeys(this.raw.devDependencies);
     this.raw.dependencies = sortKeys(this.raw.dependencies);
+    this._rewrite = false;
 
     return Fs.writeFileSync(this.path, JSON.stringify(this.raw, null, 2), {encoding: "utf8"});
   }
@@ -236,23 +237,26 @@ export class ProjectPackageJson {
 
     const shouldResolve = !!getPackageWithLatest(this.allDependencies).length;
 
-    return new Listr([
-      {
-        title: "Resolve versions",
-        skip: () => {
-          return !this.rewrite || !shouldResolve;
+    return new Listr(
+      [
+        {
+          title: "Resolve versions",
+          skip: () => {
+            return !this.rewrite || !shouldResolve;
+          },
+          task: () => this.resolve()
         },
-        task: () => this.resolve()
-      },
-      {
-        title: "Write package.json",
-        skip: () => {
-          return !this.rewrite;
+        {
+          title: "Write package.json",
+          skip: () => {
+            return !this.rewrite;
+          },
+          task: () => this.write()
         },
-        task: () => this.write()
-      },
-      ...(options.packageManager === "yarn" ? this.installWithYarn() : this.installWithNpm())
-    ]);
+        ...(options.packageManager === "yarn" ? this.installWithYarn() : this.installWithNpm())
+      ],
+      {concurrent: false}
+    );
   }
 
   protected resolve() {
@@ -278,6 +282,7 @@ export class ProjectPackageJson {
       });
 
       Promise.all(promises).then(() => {
+        observer.next(`[${completed}/${packages.length}] Resolving packages...`);
         observer.complete();
       });
     });
@@ -314,6 +319,12 @@ export class ProjectPackageJson {
         title: "Add devDependencies using Yarn",
         skip: () => !devDeps.length,
         task: () => this.cliExeca.run("yarn", ["add", "-D", ...devDeps], options).pipe(errorPipe())
+      },
+      {
+        title: "Clean",
+        task() {
+          this._reinstall = false;
+        }
       }
     ];
   }
@@ -345,6 +356,12 @@ export class ProjectPackageJson {
         title: "Add devDependencies using npm",
         skip: () => !devDeps.length,
         task: () => this.cliExeca.run("npm", ["install", "--save-dev", ...devDeps], options)
+      },
+      {
+        title: "Clean",
+        task() {
+          this._reinstall = false;
+        }
       }
     ];
   }

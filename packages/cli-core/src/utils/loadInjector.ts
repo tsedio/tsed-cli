@@ -29,5 +29,7 @@ export async function loadInjector(
   // Invoke root module
   injector.invoke(rootModule);
 
+  injector.settings.loaded = true;
+
   return injector.load(container);
 }

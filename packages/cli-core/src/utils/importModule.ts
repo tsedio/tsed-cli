@@ -1,7 +1,14 @@
+import * as Fs from "fs-extra";
+import {join} from "path";
+
 export function importModule(mod: string, root: string = process.cwd()) {
-  const path = require.resolve(mod, {
-    paths: [root, __dirname]
-  });
+  let path = join(root, "node_modules", mod);
+
+  if (!Fs.existsSync(path)) {
+    path = require.resolve(mod);
+  }
+
+  // console.debug("Import " + mod + " from " + path);
 
   return import(path);
 }

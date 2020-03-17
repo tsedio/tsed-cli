@@ -1,5 +1,5 @@
 import {classOf} from "@tsed/core";
-import {Injectable, InjectorService, Provider} from "@tsed/di";
+import {Inject, Injectable, InjectorService, Provider} from "@tsed/di";
 import {Command} from "commander";
 import * as Inquirer from "inquirer";
 import * as Listr from "listr";
@@ -10,10 +10,11 @@ import {ICommandOptions} from "../interfaces/ICommandParameters";
 import {PROVIDER_TYPE_COMMAND} from "../registries/CommandRegistry";
 import {createCommandSummary} from "../utils/createCommandSummary";
 import {getCommandMetadata} from "../utils/getCommandMetadata";
-import {mapArgs} from "../utils/mapArgs";
 import {mapArgsDescription} from "../utils/mapArgsDescription";
+import {mapCommanderArgs} from "../utils/mapCommanderArgs";
+import {mapCommanderOptions} from "../utils/mapCommanderOptions";
 import {parseOption} from "../utils/parseOption";
-import "../utils/patchCommander";
+import {CliHooks} from "./CliHooks";
 
 import {CliPackageJson} from "./CliPackageJson";
 import {ProjectPackageJson} from "./ProjectPackageJson";
@@ -24,12 +25,22 @@ Inquirer.registerPrompt("autocomplete", require("inquirer-autocomplete-prompt"))
 export class CliService {
   readonly program = new Command();
 
+  @Inject()
+  protected injector: InjectorService;
+
+  @Inject()
+  protected hooks: CliHooks;
+
+  @Inject()
+  protected projectPkg: ProjectPackageJson;
+
+  @CliPackageJson()
+  protected pkg: CliPackageJson;
+
   private commands = new Map();
 
-  constructor(private injector: InjectorService, @CliPackageJson() private pkg: CliPackageJson, private projectPkg: ProjectPackageJson) {}
-
   /**
-   * Parse process.argv and run action
+   * Parse process.argv and runLifecycle action
    * @param argv
    */
   parseArgs(argv: string[]) {
@@ -41,49 +52,48 @@ export class CliService {
     program.parse(argv);
   }
 
-  public async callHook(hookName: string, cmd: string, ...args: any[]) {
-    const providers = this.injector.getProviders();
-    let results: any = [];
-
-    for (const provider of providers) {
-      if (provider.useClass) {
-        const instance: any = this.injector.get(provider.token)!;
-
-        if (provider.store.has(hookName)) {
-          const props = provider.store.get(hookName)[cmd];
-          if (props) {
-            for (const propertyKey of props) {
-              results = results.concat(await instance[propertyKey](...args));
-            }
-          }
-        }
-      }
-    }
-
-    return results.filter((o: any) => o !== undefined);
-  }
-
   /**
    * Run lifecycle
    * @param cmdName
    * @param data
    */
-  public async run(cmdName: string, data: any) {
-    this.program.commands.forEach(command => {
-      Object.entries(command)
-        .filter(([key]) => !key.startsWith("_") && !["commands", "options", "parent", "rawArgs", "args"].includes(key))
-        .forEach(([key, value]) => {
-          data[key] = value;
-        });
-    });
+  public async runLifecycle(cmdName: string, data: any = {}) {
+    data = await this.prompt(cmdName, data);
 
+    return this.exec(cmdName, data);
+  }
+
+  public async exec(cmdName: string, data: any) {
+    const tasks = await this.getTasks(cmdName, data);
+
+    return new Listr(
+      [
+        ...tasks,
+        {
+          title: "Install dependencies",
+          skip: () => !this.projectPkg.rewrite && !this.projectPkg.reinstall,
+          task: () => {
+            return this.projectPkg.install({packageManager: "yarn"});
+          }
+        }
+      ],
+      {concurrent: false}
+    ).run(data);
+  }
+
+  /**
+   * Run prompt for a given command
+   * @param cmdName
+   * @param data Initial data
+   */
+  public async prompt(cmdName: string, data: any = {}) {
     const provider = this.commands.get(cmdName);
     const instance = this.injector.get<ICommand>(provider.useClass)!;
 
     if (instance.$prompt) {
       const questions = [
         ...((await instance.$prompt(data)) as any[]),
-        ...(await this.callHook(CommandStoreKeys.PROMPT_HOOKS, cmdName, data))
+        ...(await this.hooks.emit(CommandStoreKeys.PROMPT_HOOKS, cmdName, data))
       ];
 
       if (questions.length) {
@@ -94,19 +104,19 @@ export class CliService {
       }
     }
 
-    const tasks = [
-      ...(await instance.$exec(data)),
-      ...(await this.callHook(CommandStoreKeys.EXEC_HOOKS, cmdName, data)),
-      {
-        title: "Install dependencies",
-        skip: () => !this.projectPkg.rewrite && !this.projectPkg.reinstall,
-        task: () => {
-          return this.projectPkg.install({packageManager: "yarn"});
-        }
-      }
-    ];
+    return data;
+  }
 
-    await new Listr(tasks).run(data);
+  /**
+   * Run lifecycle
+   * @param cmdName
+   * @param data
+   */
+  public async getTasks(cmdName: string, data: any) {
+    const provider = this.commands.get(cmdName);
+    const instance = this.injector.get<ICommand>(provider.useClass)!;
+
+    return [...(await instance.$exec(data)), ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, data))];
   }
 
   /**
@@ -140,7 +150,14 @@ export class CliService {
     return this.program
       .command(createCommandSummary(name, args))
       .description(description, mapArgsDescription(args))
-      .action((...commanderArgs: any[]) => this.run(name, mapArgs(args, commanderArgs)));
+      .action((...commanderArgs: any[]) => {
+        const data = {
+          ...mapCommanderArgs(args, commanderArgs),
+          ...mapCommanderOptions(this.program.commands)
+        };
+
+        this.runLifecycle(name, data);
+      });
   }
 
   /**

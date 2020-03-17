@@ -1,10 +1,10 @@
-import {mapArgs} from "./mapArgs";
+import {mapCommanderArgs} from "./mapCommanderArgs";
 
-describe("mapArgs", () => {
+describe("mapCommanderArgs", () => {
   it("should map args", () => {
     const commander = {};
 
-    mapArgs(
+    mapCommanderArgs(
       {
         arg1: {
           type: String,

@@ -28,8 +28,9 @@ describe("NpmRegistryClient", () => {
       const result = await npmRegistryClient.search("text");
 
       // THEN
-      httpClient.get.should.have.been.calledWithExactly("https://registry.npmjs.org/-/v1/search", {
+      httpClient.get.should.have.been.calledWithExactly(Sinon.match("-/v1/search"), {
         qs: {
+          text: "text",
           from: 0,
           maintenance: 0.5,
           popularity: 0.98,
@@ -62,8 +63,9 @@ describe("NpmRegistryClient", () => {
       });
 
       // THEN
-      httpClient.get.should.have.been.calledWithExactly("https://registry.npmjs.org/-/v1/search", {
+      httpClient.get.should.have.been.calledWithExactly(Sinon.match("-/v1/search"), {
         qs: {
+          text: "text",
           from: 1,
           maintenance: 1.5,
           popularity: 1.98,
@@ -92,7 +94,7 @@ describe("NpmRegistryClient", () => {
       const result = await npmRegistryClient.info("@scope/module");
 
       // THEN
-      httpClient.get.should.have.been.calledWithExactly("https://registry.npmjs.org/@scope/module");
+      httpClient.get.should.have.been.calledWithExactly(Sinon.match("%40scope%2Fmodule"));
       result.should.eq("response");
     });
   });

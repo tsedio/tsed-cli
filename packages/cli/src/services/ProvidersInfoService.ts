@@ -18,6 +18,7 @@ export class ProvidersInfoService {
    */
   add(providerInfo: IProviderInfo, owner: Type<any>) {
     this.map.set(providerInfo.value, {...providerInfo, owner: nameOf(owner)});
+
     return this;
   }
 

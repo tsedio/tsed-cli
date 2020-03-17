@@ -6,3 +6,5 @@ export * from "./decorators";
 export * from "./services";
 export * from "./utils";
 export * from "./Cli";
+
+import "./utils/patchCommander";

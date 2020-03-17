@@ -22,8 +22,6 @@ export class CliExeca {
     const stdout = streamToObservable(cp.stdout!.pipe(split()), {await: cp});
     const stderr = streamToObservable(cp.stderr!.pipe(split()), {await: cp});
 
-    return stdout
-      .pipe(merge(stderr))
-      .pipe(filter(Boolean));
-  };
+    return stdout.pipe(merge(stderr)).pipe(filter(Boolean));
+  }
 }

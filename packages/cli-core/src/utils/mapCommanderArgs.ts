@@ -21,15 +21,16 @@ function mapValue(value: any, {type, itemType}: {type?: Type<any>; itemType?: Ty
         .map(value => mapValue(value, {type: itemType}));
       break;
   }
+
   return value;
 }
 
-export function mapArgs(args: {[arg: string]: ICommandArg}, commandArgs: any[]): any {
+export function mapCommanderArgs(args: {[arg: string]: ICommandArg}, commandArgs: any[]): any {
   commandArgs = commandArgs.splice(0, commandArgs.length - 1);
   let index = 0;
 
   return Object.entries(args).reduce((options, [arg, {defaultValue, type, itemType}]) => {
-    let value = commandArgs[index] || defaultValue;
+    const value = commandArgs[index] || defaultValue;
 
     index++;
 
