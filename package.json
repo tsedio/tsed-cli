@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-root",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "CLI to bootstrap your Ts.ED project",
   "private": true,
   "scripts": {

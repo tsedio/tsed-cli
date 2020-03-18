@@ -1,11 +1,11 @@
 {
   "name": "@tsed/cli-plugin-mocha",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "devDependencies": {
-    "@tsed/cli": "1.0.5",
-    "@tsed/cli-core": "1.0.5",
+    "@tsed/cli": "1.1.0",
+    "@tsed/cli-core": "1.1.0",
     "tslib": "1.11.1"
   },
   "scripts": {
