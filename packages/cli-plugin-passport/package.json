@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-plugin-passport",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "dependencies": {
@@ -8,8 +8,8 @@
     "tslib": "1.11.1"
   },
   "devDependencies": {
-    "@tsed/cli": "1.1.0",
-    "@tsed/cli-core": "1.1.0",
+    "@tsed/cli": "1.1.1",
+    "@tsed/cli-core": "1.1.1",
     "@types/change-case": "^2.3.1"
   },
   "scripts": {
