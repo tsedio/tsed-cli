@@ -9,7 +9,8 @@
   "files": [
     "lib/bin/tsed.js",
     "lib/bin",
-    "lib"
+    "lib",
+    "templates"
   ],
   "description": "CLI to bootstrap your Ts.ED project",
   "keywords": [
