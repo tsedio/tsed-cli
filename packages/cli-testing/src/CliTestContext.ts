@@ -1,6 +1,4 @@
-import {Cli, createInjector, loadInjector} from "@tsed/cli-core";
-import {Env} from "@tsed/core";
-import {InjectorService, LocalsContainer, OnInit, TokenProvider} from "@tsed/di";
+import {Cli, createInjector, Env, InjectorService, loadInjector, LocalsContainer, OnInit, TokenProvider} from "@tsed/cli-core";
 
 export interface IInvokeOptions {
   token?: TokenProvider;

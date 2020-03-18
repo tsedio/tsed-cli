@@ -8,7 +8,5 @@ export function importModule(mod: string, root: string = process.cwd()) {
     path = require.resolve(mod);
   }
 
-  // console.debug("Import " + mod + " from " + path);
-
   return import(path);
 }

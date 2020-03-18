@@ -5,13 +5,14 @@
   "typings": "./lib/index.d.ts",
   "devDependencies": {
     "@tsed/cli": "1.1.0",
-    "@tsed/cli-core": "1.1.0",
-    "tslib": "1.11.1"
+    "@tsed/cli-core": "1.1.0"
   },
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",
     "build:doc": "tsc --build tsconfig.doc.json"
   },
-  "dependencies": {},
+  "dependencies": {
+    "tslib": "1.11.1"
+  },
   "peerDependencies": {}
 }

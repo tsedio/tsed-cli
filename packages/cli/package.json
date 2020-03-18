@@ -44,5 +44,8 @@
     "start:generate:help": "ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
     "start:generate:run": "ts-node -r tsconfig-paths/register src/bin/tsed.ts generate --project-root ./.tmp"
   },
-  "peerDependencies": {}
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=8.9"
+  }
 }
