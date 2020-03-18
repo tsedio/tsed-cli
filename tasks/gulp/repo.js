@@ -96,6 +96,7 @@ module.exports = {
     const stream = g
       .src([
         `${ packagesDir }/{${ packages }}/**`,
+        `${ packagesDir }/{${ packages }}/**/.*`,
         `${ packagesDir }/{${ packages }}/.npmignore`,
         `!${ packagesDir }/*/tsconfig.compile.json`,
         `!${ packagesDir }/*/src/**`,
