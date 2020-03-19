@@ -3,24 +3,27 @@ import {
   CliService,
   Command,
   Configuration,
+  ICliDefaultOptions,
   ICommand,
   Inject,
   ProjectPackageJson,
   QuestionOptions,
-  RenderService
+  RootRendererService,
+  SrcRendererService
 } from "@tsed/cli-core";
+import {createTasksRunner} from "@tsed/cli-core/src/utils/createTasksRunner";
 import {paramCase} from "change-case";
 import * as Fs from "fs-extra";
 import * as Listr from "listr";
 import {basename, join} from "path";
 import {Features, FeatureValue} from "../../services/Features";
 
-export interface IInitCmdOptions {
+export interface IInitCmdContext extends ICliDefaultOptions {
   root: string;
+  srcDir: string;
   projectName: string;
-  tsedVersion?: string;
-  features?: FeatureValue[];
-  srcDir?: string;
+  tsedVersion: string;
+  features: FeatureValue[];
 }
 
 @Command({
@@ -42,6 +45,9 @@ export interface IInitCmdOptions {
   }
 })
 export class InitCmd implements ICommand {
+  @Configuration()
+  protected configuration: Configuration;
+
   @Inject()
   protected cliPlugins: CliPlugins;
 
@@ -54,12 +60,13 @@ export class InitCmd implements ICommand {
   @Inject()
   protected cliService: CliService;
 
-  protected srcRenderer: RenderService;
-  protected rootRenderer: RenderService;
+  @Inject()
+  protected srcRenderer: SrcRendererService;
 
-  constructor(@Configuration() protected configuration: Configuration, protected renderService: RenderService) {}
+  @Inject()
+  protected rootRenderer: RootRendererService;
 
-  $prompt(initialOptions: IInitCmdOptions): QuestionOptions {
+  $prompt(initialOptions: Partial<IInitCmdContext>): QuestionOptions {
     return [
       {
         type: "input",
@@ -75,56 +82,60 @@ export class InitCmd implements ICommand {
     ];
   }
 
-  async $exec(options: IInitCmdOptions) {
+  $mapContext(options: Partial<IInitCmdContext>): IInitCmdContext {
     options.projectName = paramCase(options.projectName || basename(this.packageJson.dir));
 
     if (options.root !== ".") {
       this.packageJson.dir = join(this.packageJson.dir, options.projectName);
     }
 
-    this.srcRenderer = this.renderService.clone();
-    this.rootRenderer = this.renderService.clone({srcDir: ""});
+    return {
+      ...options,
+      srcDir: this.configuration.get("project:srcDir")
+    } as IInitCmdContext;
+  }
 
+  async $beforeExec(ctx: IInitCmdContext) {
     Fs.ensureDirSync(this.packageJson.dir);
 
-    this.packageJson.name = options.projectName;
-    this.addDependencies(options);
-    this.addDevDependencies(options);
-    this.addScripts(options);
-    this.addFeatures(options);
+    this.packageJson.name = ctx.projectName;
+    this.addDependencies(ctx);
+    this.addDevDependencies(ctx);
+    this.addScripts(ctx);
+    this.addFeatures(ctx);
 
-    options.srcDir = this.configuration.get("project:srcDir");
+    await createTasksRunner(
+      [
+        {
+          title: "Install plugins",
+          task: () => this.packageJson.install({packageManager: "yarn"})
+        },
+        {
+          title: "Load plugins",
+          task: () => this.cliPlugins.loadPlugins()
+        }
+      ],
+      ctx
+    );
+  }
+
+  async $exec(ctx: IInitCmdContext) {
+    const subTasks = [
+      ...(await this.cliService.getTasks("generate", {
+        type: "server",
+        name: "Server",
+        route: "/rest"
+      })),
+      ...(await this.cliService.getTasks("generate", {
+        type: "controller",
+        route: "hello-world",
+        name: "HelloWorld"
+      }))
+    ];
 
     return [
       {
-        title: "Install plugins",
-        task: (ctx: any) => {
-          ctx.subTasks = [];
-
-          return this.packageJson.install({packageManager: "yarn"});
-        }
-      },
-      {
-        title: "Load plugins",
-        task: async (ctx: any) => {
-          await this.cliPlugins.loadPlugins();
-
-          ctx.subTasks.push(
-            ...(await this.cliService.getTasks("generate", {
-              type: "server",
-              name: "Server",
-              root: "/rest"
-            })),
-            ...(await this.cliService.getTasks("generate", {
-              type: "controller",
-              route: "hello-world",
-              name: "HelloWorld"
-            }))
-          );
-        }
-      },
-      {
-        title: "Generate files",
+        title: "Generate project files",
         task: (ctx: any) => {
           return new Listr(
             [
@@ -141,16 +152,16 @@ export class InitCmd implements ICommand {
                       "init/tsconfig.compile.json.hbs",
                       "init/tsconfig.json.hbs"
                     ],
-                    options
+                    ctx
                   )
               },
               {
                 title: "Create index",
                 task: async () => {
-                  return this.srcRenderer.renderAll(["init/index.ts.hbs"], options);
+                  return this.srcRenderer.renderAll(["init/index.ts.hbs"], ctx);
                 }
               },
-              ...ctx.subTasks
+              ...subTasks
             ],
             {concurrent: false}
           );
@@ -159,7 +170,7 @@ export class InitCmd implements ICommand {
     ];
   }
 
-  addScripts(options: IInitCmdOptions) {
+  addScripts(ctx: IInitCmdContext) {
     this.packageJson.addScripts({
       build: "yarn tsc",
       tsc: "tsc --project tsconfig.compile.json",
@@ -169,13 +180,13 @@ export class InitCmd implements ICommand {
     });
   }
 
-  addDependencies(options: IInitCmdOptions) {
+  addDependencies(ctx: IInitCmdContext) {
     this.packageJson.addDependencies(
       {
-        "@tsed/common": options.tsedVersion,
-        "@tsed/core": options.tsedVersion,
-        "@tsed/di": options.tsedVersion,
-        "@tsed/ajv": options.tsedVersion,
+        "@tsed/common": ctx.tsedVersion,
+        "@tsed/core": ctx.tsedVersion,
+        "@tsed/di": ctx.tsedVersion,
+        "@tsed/ajv": ctx.tsedVersion,
         "body-parser": "latest",
         cors: "latest",
         compression: "latest",
@@ -185,37 +196,39 @@ export class InitCmd implements ICommand {
         "method-override": "latest",
         "cross-env": "latest"
       },
-      options
+      ctx
     );
   }
 
-  addDevDependencies(options: IInitCmdOptions) {
+  addDevDependencies(ctx: IInitCmdContext) {
     this.packageJson.addDevDependencies(
       {
         "@types/cors": "2.8.6",
         "@types/express": "latest",
         "@types/node": "latest",
+        "@types/compression": "latest",
+        "@types/cookie-parser": "latest",
+        "@types/method-override": "latest",
         concurrently: "latest",
         nodemon: "latest",
         "ts-node": "latest",
-        tslint: "latest",
         typescript: "latest"
       },
-      options
+      ctx
     );
   }
 
-  addFeatures(options: IInitCmdOptions) {
-    Object.entries(options)
+  addFeatures(ctx: IInitCmdContext) {
+    Object.entries(ctx)
       .filter(([key]) => key.startsWith("features"))
       .forEach(([_, value]: [string, FeatureValue | FeatureValue[]]) => {
         [].concat(value as any).forEach((item: FeatureValue) => {
           if (item.dependencies) {
-            this.packageJson.addDependencies(item.dependencies, options);
+            this.packageJson.addDependencies(item.dependencies, ctx);
           }
 
           if (item.devDependencies) {
-            this.packageJson.addDevDependencies(item.devDependencies, options);
+            this.packageJson.addDevDependencies(item.devDependencies, ctx);
           }
         });
       });

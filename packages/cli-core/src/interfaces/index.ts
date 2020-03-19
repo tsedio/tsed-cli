@@ -5,6 +5,7 @@ import {IPackageJson} from "./IPackageJson";
 export * from "./ICommand";
 export * from "./ICommandParameters";
 export * from "./ICommandMetadata";
+export * from "./ICliDefaultOptions";
 export * from "./IPackageJson";
 export * from "./Tasks";
 

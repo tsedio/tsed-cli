@@ -1,3 +1,6 @@
-import {CliPluginPassport} from "./CliPluginPassport";
+import {CliPluginPassportModule} from "./CliPluginPassportModule";
 
-export default CliPluginPassport;
+export * from "./hooks/PassportGenerateHook";
+export * from "./services/PassportClient";
+
+export default CliPluginPassportModule;

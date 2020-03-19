@@ -1,15 +1,16 @@
-import {Inject, Command, ICommand, QuestionOptions, RenderService} from "@tsed/cli-core";
+import {Command, ICommand, Inject, QuestionOptions, SrcRendererService} from "@tsed/cli-core";
 import {pascalCase} from "change-case";
 import {ClassNamePipe} from "../../pipes/ClassNamePipe";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
 import {RoutePipe} from "../../pipes/RoutePipe";
 import {ProvidersInfoService} from "../../services/ProvidersInfoService";
 
-export interface IGenerateCmdOptions {
+export interface IGenerateCmdContext {
   type: string;
   name: string;
-  route?: string;
-  templateType?: string;
+  route: string;
+  templateType: string;
+  outputFile: string;
 }
 
 const DECORATOR_TYPES = [
@@ -86,16 +87,19 @@ const searchFactory = (list: any) => {
   }
 })
 export class GenerateCmd implements ICommand {
-  @Inject(ClassNamePipe)
+  @Inject()
   classNamePipe: ClassNamePipe;
 
-  @Inject(OutputFilePathPipe)
+  @Inject()
   outputFilePathPipe: OutputFilePathPipe;
 
-  @Inject(RoutePipe)
+  @Inject()
   routePipe: RoutePipe;
 
-  constructor(private renderService: RenderService, private providersList: ProvidersInfoService) {
+  @Inject()
+  srcRenderService: SrcRendererService;
+
+  constructor(private providersList: ProvidersInfoService) {
     PROVIDER_TYPES.forEach(info => {
       this.providersList.add(
         {
@@ -106,7 +110,7 @@ export class GenerateCmd implements ICommand {
     });
   }
 
-  $prompt(initialOptions: any): QuestionOptions {
+  $prompt(initialOptions: Partial<IGenerateCmdContext>): QuestionOptions {
     const providers = this.providersList.toArray();
 
     return [
@@ -132,7 +136,7 @@ export class GenerateCmd implements ICommand {
         when(state: any) {
           return ["controller", "server"].includes(state.type);
         },
-        default: (state: IGenerateCmdOptions) => {
+        default: (state: IGenerateCmdContext) => {
           return state.type === "server" ? "/rest" : this.routePipe.transform(state.name);
         }
       },
@@ -148,8 +152,19 @@ export class GenerateCmd implements ICommand {
     ];
   }
 
-  async $exec(options: IGenerateCmdOptions) {
-    const {outputFile, ...data} = this.mapOptions(options);
+  $mapContext(ctx: Partial<IGenerateCmdContext>): IGenerateCmdContext {
+    const {name = "", type = ""} = ctx;
+
+    return {
+      ...ctx,
+      route: ctx.route ? this.routePipe.transform(ctx.route) : "",
+      symbolName: this.classNamePipe.transform({name, type}),
+      outputFile: `${this.outputFilePathPipe.transform({name, type})}.ts`
+    } as IGenerateCmdContext;
+  }
+
+  async $exec(options: IGenerateCmdContext) {
+    const {outputFile, ...data} = options;
 
     if (this.providersList.isMyProvider(options.type, GenerateCmd)) {
       const type = [options.type, options.templateType].filter(Boolean).join(".");
@@ -158,19 +173,14 @@ export class GenerateCmd implements ICommand {
       return [
         {
           title: `Generate ${options.type} file to '${outputFile}'`,
-          task: () => this.renderService.render(template, data, outputFile)
+          task: () =>
+            this.srcRenderService.render(template, data, {
+              output: outputFile
+            })
         }
       ];
     }
 
     return [];
-  }
-
-  mapOptions(options: IGenerateCmdOptions) {
-    return {
-      route: options.route ? this.routePipe.transform(options.route) : "",
-      symbolName: this.classNamePipe.transform(options),
-      outputFile: `${this.outputFilePathPipe.transform(options)}.ts`
-    };
   }
 }

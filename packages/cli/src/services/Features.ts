@@ -145,25 +145,8 @@ registerProvider({
             name: "Mocha + Chai + Sinon",
             value: {
               type: "mongoose",
-              scripts: {
-                test: "yarn clean && yarn test:lint && yarn test:coverage",
-                "test:unit": "cross-env NODE_ENV=test mocha",
-                "test:coverage": "cross-env NODE_ENV=test nyc mocha"
-              },
-              dependencies: {},
               devDependencies: {
-                "@types/chai": "latest",
-                "@types/chai-as-promised": "latest",
-                "@types/mocha": "latest",
-                "@types/sinon": "latest",
-                "@types/sinon-chai": "latest",
-                "@tsed/cli-plugin-mocha": cliVersion,
-                chai: "latest",
-                "chai-as-promised": "latest",
-                mocha: "latest",
-                nyc: "latest",
-                sinon: "latest",
-                "sinon-chai": "latest"
+                "@tsed/cli-plugin-mocha": cliVersion
               }
             }
           },
@@ -171,10 +154,8 @@ registerProvider({
             name: "Jest",
             value: {
               type: "jest",
-              dependencies: {},
               devDependencies: {
-                "@tsed/cli-plugin-jest": cliVersion,
-                jest: "latest"
+                "@tsed/cli-plugin-jest": cliVersion
               }
             }
           }

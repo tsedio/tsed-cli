@@ -24,13 +24,13 @@ function getEmptyPackageJson(configuration: Configuration) {
 }
 
 function useReadPkgUp(configuration: Configuration) {
-  return !(process.argv.includes("init") && !Fs.existsSync(join(configuration.project?.root, "package.json")));
+  return !(process.argv.includes("init") && !Fs.existsSync(join(configuration.project?.rootDir, "package.json")));
 }
 
 function getPackageJson(configuration: Configuration) {
   if (useReadPkgUp(configuration)) {
     const result = readPkgUp.sync({
-      cwd: configuration.project?.root
+      cwd: configuration.project?.rootDir
     });
 
     if (result && result.path) {
@@ -108,11 +108,11 @@ export class ProjectPackageJson {
   }
 
   get dir() {
-    return this.configuration.project?.root;
+    return this.configuration.project?.rootDir;
   }
 
   set dir(dir: string) {
-    this.configuration.project.root = dir;
+    this.configuration.project.rootDir = dir;
 
     this.raw = getPackageJson(this.configuration);
   }

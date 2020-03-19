@@ -44,7 +44,7 @@ export class CliTestContext {
         version: "1.0.0"
       },
       project: {
-        root: "./tmp",
+        rootDir: "./tmp",
         srcDir: "src",
         ...(options.project || {})
       }

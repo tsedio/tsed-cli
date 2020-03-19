@@ -7,7 +7,7 @@ import {Strategy} from "{{passportPackage}}";
   useStrategy: Strategy,
   settings: {}
 })
-export class {{className}} implements OnVerify, OnInstall {
+export class {{symbolName}} implements OnVerify, OnInstall {
   async $onVerify(@Req() request: Req, @Args() args: any[]) {
     const [] = args;
 

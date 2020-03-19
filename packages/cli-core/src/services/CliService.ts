@@ -2,13 +2,13 @@ import {classOf} from "@tsed/core";
 import {Inject, Injectable, InjectorService, Provider} from "@tsed/di";
 import {Command} from "commander";
 import * as Inquirer from "inquirer";
-import * as Listr from "listr";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
 import {ICommand} from "../interfaces/ICommand";
 import {ICommandMetadata} from "../interfaces/ICommandMetadata";
 import {ICommandOptions} from "../interfaces/ICommandParameters";
 import {PROVIDER_TYPE_COMMAND} from "../registries/CommandRegistry";
 import {createCommandSummary} from "../utils/createCommandSummary";
+import {createTasksRunner} from "../utils/createTasksRunner";
 import {getCommandMetadata} from "../utils/getCommandMetadata";
 import {mapArgsDescription} from "../utils/mapArgsDescription";
 import {mapCommanderArgs} from "../utils/mapCommanderArgs";
@@ -63,60 +63,65 @@ export class CliService {
     return this.exec(cmdName, data);
   }
 
-  public async exec(cmdName: string, data: any) {
-    const tasks = await this.getTasks(cmdName, data);
-
-    return new Listr(
-      [
-        ...tasks,
-        {
-          title: "Install dependencies",
-          skip: () => !this.projectPkg.rewrite && !this.projectPkg.reinstall,
-          task: () => {
-            return this.projectPkg.install({packageManager: "yarn"});
-          }
+  public async exec(cmdName: string, ctx: any) {
+    const tasks = [
+      ...(await this.getTasks(cmdName, ctx)),
+      {
+        title: "Install dependencies",
+        skip: () => !this.projectPkg.rewrite && !this.projectPkg.reinstall,
+        task: () => {
+          return this.projectPkg.install({packageManager: "yarn"});
         }
-      ],
-      {concurrent: false}
-    ).run(data);
+      }
+    ];
+
+    return createTasksRunner(tasks, ctx);
   }
 
   /**
    * Run prompt for a given command
    * @param cmdName
-   * @param data Initial data
+   * @param ctx Initial data
    */
-  public async prompt(cmdName: string, data: any = {}) {
+  public async prompt(cmdName: string, ctx: any = {}) {
     const provider = this.commands.get(cmdName);
     const instance = this.injector.get<ICommand>(provider.useClass)!;
 
     if (instance.$prompt) {
       const questions = [
-        ...((await instance.$prompt(data)) as any[]),
-        ...(await this.hooks.emit(CommandStoreKeys.PROMPT_HOOKS, cmdName, data))
+        ...((await instance.$prompt(ctx)) as any[]),
+        ...(await this.hooks.emit(CommandStoreKeys.PROMPT_HOOKS, cmdName, ctx))
       ];
 
       if (questions.length) {
-        data = {
-          ...data,
+        ctx = {
+          ...ctx,
           ...((await Inquirer.prompt(questions)) as any)
         };
       }
     }
 
-    return data;
+    return ctx;
   }
 
   /**
    * Run lifecycle
    * @param cmdName
-   * @param data
+   * @param ctx
    */
-  public async getTasks(cmdName: string, data: any) {
+  public async getTasks(cmdName: string, ctx: any) {
     const provider = this.commands.get(cmdName);
     const instance = this.injector.get<ICommand>(provider.useClass)!;
 
-    return [...(await instance.$exec(data)), ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, data))];
+    if (instance.$mapContext) {
+      ctx = instance.$mapContext(ctx);
+    }
+
+    if (instance.$beforeExec) {
+      await instance.$beforeExec(ctx);
+    }
+
+    return [...(await instance.$exec(ctx)), ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, ctx))];
   }
 
   /**
@@ -137,7 +142,8 @@ export class CliService {
         : subCommand.option(flags, description, fn, defaultValue);
     }, subCommand);
 
-    subCommand.option("-r, --project-root <path>", "Project root directory");
+    subCommand.option("-r, --root-dir <path>", "Project root directory");
+    subCommand.option("--verbose", "Verbose mode", () => true);
   }
 
   public createCommand(metadata: ICommandMetadata) {

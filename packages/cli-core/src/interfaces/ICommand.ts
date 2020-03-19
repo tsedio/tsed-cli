@@ -12,6 +12,18 @@ export interface ICommand {
   $prompt?<T = any>(initialOptions: any): QuestionOptions<T>;
 
   /**
+   * Hook to map options
+   * @param options
+   */
+  $mapContext?(options: any): any;
+
+  /**
+   * Run something before the exec hook
+   * @param options
+   */
+  $beforeExec?(options: any): Promise<any>;
+
+  /**
    * Run a command
    * @param options
    */

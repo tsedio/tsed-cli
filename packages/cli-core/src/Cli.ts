@@ -7,7 +7,7 @@ import {CliConfiguration} from "./services/CliConfiguration";
 import {CliPackageJson} from "./services/CliPackageJson";
 import {CliService} from "./services/CliService";
 import {ProjectPackageJson} from "./services/ProjectPackageJson";
-import {RenderService} from "./services/RenderService";
+import {Renderer} from "./services/Renderer";
 import {createInjector} from "./utils/createInjector";
 import {loadInjector} from "./utils/loadInjector";
 import {loadPlugins} from "./utils/loadPlugins";
@@ -44,7 +44,7 @@ function checkNodeVersion(wanted: string, id: string) {
 }
 
 @Module({
-  imports: [CliPackageJson, ProjectPackageJson, CliService, CliConfiguration, RenderService]
+  imports: [CliPackageJson, ProjectPackageJson, CliService, CliConfiguration, Renderer]
 })
 export class Cli {
   constructor(@CliPackageJson() readonly pkg: CliPackageJson, private cliService: CliService) {
@@ -68,8 +68,9 @@ export class Cli {
     const injector = createInjector({
       ...settings,
       project: {
-        root: this.getProjectRoot(),
+        rootDir: this.getProjectRoot(),
         srcDir: "src",
+        scriptsDir: "scripts",
         ...(settings.project || {})
       }
     });
@@ -85,7 +86,11 @@ export class Cli {
 
   static getProjectRoot(argv = process.argv) {
     if (!argv.includes("-h")) {
-      const projectRoot = new Command().option("-r, --project-root <path>", "Project root directory").parse(argv).projectRoot || "";
+      const projectRoot =
+        new Command()
+          .option("-r, --root-dir <path>", "Project root directory")
+          .option("--verbose", "Verbose mode", () => true)
+          .parse(argv).rootDir || "";
 
       return resolve(join(process.cwd(), projectRoot));
     }

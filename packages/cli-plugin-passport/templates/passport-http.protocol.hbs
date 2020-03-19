@@ -7,7 +7,7 @@ import {BasicStrategy} from "passport-http";
   useStrategy: BasicStrategy,
   settings: {}
 })
-export class {{className}} implements OnVerify, OnInstall {
+export class {{symbolName}} implements OnVerify, OnInstall {
   async $onVerify(@Req() request: Req, @BodyParams() credentials: any) {
     const {username, password} = credentials;
 

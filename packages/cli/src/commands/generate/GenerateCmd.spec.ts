@@ -1,5 +1,5 @@
 import {ProvidersInfoService} from "@tsed/cli";
-import {RenderService} from "@tsed/cli-core";
+import {SrcRendererService} from "@tsed/cli-core";
 import {CliTestContext} from "@tsed/cli-testing";
 import {expect} from "chai";
 import * as Sinon from "sinon";
@@ -83,7 +83,7 @@ describe("GenerateCmd", () => {
         render: Sinon.stub()
       };
 
-      const options = {
+      let options = {
         type: "controller",
         name: "test",
         route: "/test"
@@ -91,13 +91,14 @@ describe("GenerateCmd", () => {
 
       const command = await CliTestContext.invoke<GenerateCmd>(GenerateCmd, [
         {
-          token: RenderService,
+          token: SrcRendererService,
           use: renderService
         }
       ]);
 
       // WHEN
-      const tasks = await command.$exec(options);
+      options = command.$mapContext(options);
+      const tasks = await command.$exec(options as any);
 
       // THEN
       expect(tasks.length).to.equal(1);
@@ -108,10 +109,14 @@ describe("GenerateCmd", () => {
       renderService.render.should.have.been.calledWithExactly(
         "generate/controller.hbs",
         {
+          name: "test",
+          route: "/test",
           symbolName: "TestController",
-          route: "/test"
+          type: "controller"
         },
-        "controllers/TestController.ts"
+        {
+          output: "controllers/TestController.ts"
+        }
       );
     });
     it("should return empty tasks", async () => {
@@ -120,7 +125,7 @@ describe("GenerateCmd", () => {
         render: Sinon.stub()
       };
 
-      const options = {
+      let options = {
         type: "controller",
         name: "test",
         route: "/test"
@@ -128,13 +133,14 @@ describe("GenerateCmd", () => {
 
       const command = await CliTestContext.invoke<GenerateCmd>(GenerateCmd, [
         {
-          token: RenderService,
+          token: SrcRendererService,
           use: renderService
         }
       ]);
 
       // WHEN
-      const tasks = await command.$exec(options);
+      options = command.$mapContext(options);
+      const tasks = await command.$exec(options as any);
 
       // THEN
       expect(tasks.length).to.equal(1);
@@ -145,10 +151,14 @@ describe("GenerateCmd", () => {
       renderService.render.should.have.been.calledWithExactly(
         "generate/controller.hbs",
         {
+          name: "test",
+          route: "/test",
           symbolName: "TestController",
-          route: "/test"
+          type: "controller"
         },
-        "controllers/TestController.ts"
+        {
+          output: "controllers/TestController.ts"
+        }
       );
     });
   });

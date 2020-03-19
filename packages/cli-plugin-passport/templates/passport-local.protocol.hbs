@@ -10,7 +10,7 @@ import {IStrategyOptions, Strategy} from "passport-local";
     passwordField: "password"
   }
 })
-export class {{className}} implements OnVerify, OnInstall {
+export class {{symbolName}} implements OnVerify, OnInstall {
   async $onVerify(@Req() request: Req, @BodyParams() credentials: any) {
     const {email, password} = credentials;
 
