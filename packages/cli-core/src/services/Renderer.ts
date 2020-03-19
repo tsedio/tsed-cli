@@ -38,10 +38,14 @@ export abstract class Renderer {
         observer.next(`[${count}/${paths.length}] Rendering files...`);
       });
 
-      Promise.all(promises).then(() => {
-        observer.next(`[${count}/${paths.length}] Rendering files...`);
-        observer.complete();
-      });
+      Promise.all(promises)
+        .then(() => {
+          observer.next(`[${count}/${paths.length}] Rendering files...`);
+          observer.complete();
+        })
+        .catch(err => {
+          observer.error(err);
+        });
     });
   }
 

@@ -26,7 +26,7 @@ export class TslintInitHook {
           return this.rootRenderer.renderAll(
             [
               "init/tslint.json.hbs",
-              ctx.lintstaged && "init/.lintstagerc.hbs",
+              ctx.lintstaged && "init/.lintstagedrc.hbs",
               ctx.prettier && "init/.prettierignore.hbs",
               ctx.prettier && "init/.prettierrc.hbs"
             ],
