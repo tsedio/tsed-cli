@@ -206,6 +206,13 @@ export class ProjectPackageJson {
     return this;
   }
 
+  add(key: string, data: any) {
+    this.raw[key] = data;
+    this._rewrite = true;
+
+    return this;
+  }
+
   set(key: string, value: any) {
     this.raw[key] = value;
 

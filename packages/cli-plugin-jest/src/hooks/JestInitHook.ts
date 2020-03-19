@@ -7,17 +7,17 @@ export class JestInitHook {
   protected packageJson: ProjectPackageJson;
 
   @OnExec("init")
-  onInitExec(options: IInitCmdContext) {}
+  onInitExec(ctx: IInitCmdContext) {}
 
-  addScripts(options: IInitCmdContext) {
+  addScripts(ctx: IInitCmdContext) {
     this.packageJson.addScripts({});
   }
 
-  addDependencies(options: IInitCmdContext) {
-    this.packageJson.addDependencies({}, options);
+  addDependencies(ctx: IInitCmdContext) {
+    this.packageJson.addDependencies({}, ctx);
   }
 
-  addDevDependencies(options: IInitCmdContext) {
-    this.packageJson.addDevDependencies({}, options);
+  addDevDependencies(ctx: IInitCmdContext) {
+    this.packageJson.addDevDependencies({}, ctx);
   }
 }

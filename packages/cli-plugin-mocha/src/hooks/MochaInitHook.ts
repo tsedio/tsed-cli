@@ -26,10 +26,10 @@ export class MochaInitHook {
   protected scriptsRenderer: ScriptsRendererService;
 
   @OnExec("init")
-  onExec(options: IInitCmdContext) {
-    this.addScripts(options);
-    this.addDependencies(options);
-    this.addDevDependencies(options);
+  onExec(ctx: IInitCmdContext) {
+    this.addScripts(ctx);
+    this.addDependencies(ctx);
+    this.addDevDependencies(ctx);
 
     return [
       {
@@ -52,7 +52,7 @@ export class MochaInitHook {
     ];
   }
 
-  addScripts(options: IInitCmdContext) {
+  addScripts(ctx: IInitCmdContext) {
     this.packageJson.addScripts({
       test: "yarn clean && yarn test:lint && yarn test:coverage",
       "test:unit": "cross-env NODE_ENV=test mocha",
@@ -60,11 +60,11 @@ export class MochaInitHook {
     });
   }
 
-  addDependencies(options: IInitCmdContext) {
-    this.packageJson.addDependencies({}, options);
+  addDependencies(ctx: IInitCmdContext) {
+    this.packageJson.addDependencies({}, ctx);
   }
 
-  addDevDependencies(options: IInitCmdContext) {
+  addDevDependencies(ctx: IInitCmdContext) {
     this.packageJson.addDevDependencies(
       {
         "@types/chai": "latest",
@@ -80,7 +80,7 @@ export class MochaInitHook {
         "sinon-chai": "latest",
         "tsconfig-paths": "latest"
       },
-      options
+      ctx
     );
   }
 }

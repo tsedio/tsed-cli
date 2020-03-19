@@ -17,6 +17,10 @@ export function Features() {
   return Inject(Features);
 }
 
+function hasFeature(feature: string, ctx: {features: FeatureValue[]}) {
+  return ctx.features.find(item => item.type === feature);
+}
+
 registerProvider({
   provide: Features,
   deps: [CliPackageJson],
@@ -57,6 +61,9 @@ registerProvider({
               type: "passportjs",
               dependencies: {
                 "@tsed/passport": "{{tsedVersion}}"
+              },
+              devDependencies: {
+                "@tsed/cli-plugin-passport": cliVersion
               }
             }
           },
@@ -85,8 +92,8 @@ registerProvider({
               type: "testing",
               dependencies: {},
               devDependencies: {
-                "@types/supertest": "latest",
                 "@tsed/testing": "{{tsedVersion}}",
+                "@types/supertest": "latest",
                 supertest: "latest"
               }
             }
@@ -104,7 +111,7 @@ registerProvider({
         type: "list",
         name: "featuresDB",
         when(ctx: {features: FeatureValue[]}) {
-          return ctx.features.find(item => item.type === "db");
+          return hasFeature("db", ctx);
         },
         choices: [
           {
@@ -138,13 +145,13 @@ registerProvider({
         type: "list",
         name: "featuresTesting",
         when(ctx: {features: FeatureValue[]}) {
-          return ctx.features.find(item => item.type === "testing");
+          return hasFeature("testing", ctx);
         },
         choices: [
           {
             name: "Mocha + Chai + Sinon",
             value: {
-              type: "mongoose",
+              type: "mocha",
               devDependencies: {
                 "@tsed/cli-plugin-mocha": cliVersion
               }
@@ -157,46 +164,44 @@ registerProvider({
               devDependencies: {
                 "@tsed/cli-plugin-jest": cliVersion
               }
-            }
+            },
+            disabled: true
           }
         ]
       },
       {
         message: "Choose linter tools",
-        type: "list",
+        type: "checkbox",
         name: "featuresLinter",
         when(ctx: {features: FeatureValue[]}) {
-          return ctx.features.find(item => item.type === "linter");
+          return hasFeature("linter", ctx);
         },
         choices: [
           {
             name: "TsLint",
+            checked: true,
             value: {
               type: "tslint",
-              scripts: {
-                "test:lint": "tslint --project tsconfig.json",
-                "test:lint:fix": "tslint --project tsconfig.json --fix"
-              },
-              dependencies: {},
               devDependencies: {
-                "lint-staged": "latest",
-                tslint: "latest"
+                "@tsed/cli-plugin-tslint": cliVersion
               }
             }
           },
           {
-            name: "TsLint + Prettier",
+            name: "Prettier",
             value: {
               type: "tslint:prettier",
-              scripts: {
-                "test:lint": "tslint --project tsconfig.json",
-                "test:lint:fix": "tslint --project tsconfig.json --fix"
-              },
-              dependencies: {},
               devDependencies: {
-                "lint-staged": "latest",
-                tslint: "latest",
-                prettier: "latest"
+                "@tsed/cli-plugin-tslint": cliVersion
+              }
+            }
+          },
+          {
+            name: "Lint on commit",
+            value: {
+              type: "tslint:lintstaged",
+              devDependencies: {
+                "@tsed/cli-plugin-tslint": cliVersion
               }
             }
           }

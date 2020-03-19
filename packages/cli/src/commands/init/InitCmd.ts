@@ -12,7 +12,7 @@ import {
   RootRendererService,
   SrcRendererService
 } from "@tsed/cli-core";
-import {paramCase} from "change-case";
+import {camelCase, paramCase} from "change-case";
 import * as Fs from "fs-extra";
 import * as Listr from "listr";
 import {basename, join} from "path";
@@ -24,6 +24,8 @@ export interface IInitCmdContext extends ICliDefaultOptions {
   projectName: string;
   tsedVersion: string;
   features: FeatureValue[];
+
+  [key: string]: any;
 }
 
 @Command({
@@ -82,15 +84,31 @@ export class InitCmd implements ICommand {
     ];
   }
 
-  $mapContext(options: Partial<IInitCmdContext>): IInitCmdContext {
-    options.projectName = paramCase(options.projectName || basename(this.packageJson.dir));
+  $mapContext(ctx: Partial<IInitCmdContext>): IInitCmdContext {
+    ctx.projectName = paramCase(ctx.projectName || basename(this.packageJson.dir));
 
-    if (options.root !== ".") {
-      this.packageJson.dir = join(this.packageJson.dir, options.projectName);
+    if (ctx.root !== ".") {
+      this.packageJson.dir = join(this.packageJson.dir, ctx.projectName);
     }
 
+    const features: FeatureValue[] = [];
+
+    Object.entries(ctx)
+      .filter(([key]) => key.startsWith("features"))
+      .forEach(([key, value]: any[]) => {
+        delete ctx[key];
+        features.push(...[].concat(value));
+      });
+
+    features.forEach(feature => {
+      feature.type.split(":").forEach(type => {
+        ctx[camelCase(type)] = true;
+      });
+    });
+
     return {
-      ...options,
+      ...ctx,
+      features,
       srcDir: this.configuration.get("project:srcDir")
     } as IInitCmdContext;
   }
@@ -219,18 +237,14 @@ export class InitCmd implements ICommand {
   }
 
   addFeatures(ctx: IInitCmdContext) {
-    Object.entries(ctx)
-      .filter(([key]) => key.startsWith("features"))
-      .forEach(([_, value]: [string, FeatureValue | FeatureValue[]]) => {
-        [].concat(value as any).forEach((item: FeatureValue) => {
-          if (item.dependencies) {
-            this.packageJson.addDependencies(item.dependencies, ctx);
-          }
+    ctx.features.forEach(feature => {
+      if (feature.dependencies) {
+        this.packageJson.addDependencies(feature.dependencies, ctx);
+      }
 
-          if (item.devDependencies) {
-            this.packageJson.addDevDependencies(item.devDependencies, ctx);
-          }
-        });
-      });
+      if (feature.devDependencies) {
+        this.packageJson.addDevDependencies(feature.devDependencies, ctx);
+      }
+    });
   }
 }

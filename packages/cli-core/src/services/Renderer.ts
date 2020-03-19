@@ -31,7 +31,7 @@ export abstract class Renderer {
     return new Observable(observer => {
       observer.next(`[${count}/${paths.length}] Rendering files...`);
 
-      const promises = paths.map(async path => {
+      const promises = paths.filter(Boolean).map(async path => {
         await this.render(path, data, options);
 
         count++;
