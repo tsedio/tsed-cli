@@ -1,11 +1,11 @@
 {
   "name": "@tsed/cli-plugin-mocha",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "devDependencies": {
-    "@tsed/cli": "1.2.0",
-    "@tsed/cli-core": "1.2.0"
+    "@tsed/cli": "1.2.1",
+    "@tsed/cli-core": "1.2.1"
   },
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",
