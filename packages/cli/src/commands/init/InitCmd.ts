@@ -109,7 +109,7 @@ export class InitCmd implements ICommand {
     return {
       ...ctx,
       features,
-      srcDir: this.configuration.get("project:srcDir")
+      srcDir: this.configuration.project?.srcDir
     } as IInitCmdContext;
   }
 
