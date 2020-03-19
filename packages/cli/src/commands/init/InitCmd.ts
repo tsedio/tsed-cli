@@ -3,6 +3,7 @@ import {
   CliService,
   Command,
   Configuration,
+  createTasksRunner,
   ICliDefaultOptions,
   ICommand,
   Inject,
@@ -11,7 +12,6 @@ import {
   RootRendererService,
   SrcRendererService
 } from "@tsed/cli-core";
-import {createTasksRunner} from "@tsed/cli-core/src/utils/createTasksRunner";
 import {paramCase} from "change-case";
 import * as Fs from "fs-extra";
 import * as Listr from "listr";
