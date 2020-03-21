@@ -7,11 +7,12 @@ export class MochaGenerateHook {
   @Inject()
   srcRenderService: SrcRendererService;
 
-  constructor() {}
+  constructor() {
+  }
 
   @OnExec("generate")
   onExec(ctx: IGenerateCmdContext): Tasks {
-    const {symbolPath, ...otherProps} = ctx;
+    const {symbolPath} = ctx;
     const {specTemplate, integrationTemplate} = this.mapOptions(ctx);
 
     return [
@@ -21,7 +22,7 @@ export class MochaGenerateHook {
           return ctx.type !== "server";
         },
         task: () =>
-          this.srcRenderService.render(specTemplate, otherProps, {
+          this.srcRenderService.render(specTemplate, ctx, {
             output: `${symbolPath}.spec.ts`,
             templateDir: TEMPLATE_DIR
           })
@@ -32,7 +33,7 @@ export class MochaGenerateHook {
           return ["controller", "server"].includes(ctx.type);
         },
         task: () =>
-          this.srcRenderService.render(integrationTemplate, otherProps, {
+          this.srcRenderService.render(integrationTemplate, ctx, {
             output: `${symbolPath}.integration.spec.ts`,
             templateDir: TEMPLATE_DIR
           })

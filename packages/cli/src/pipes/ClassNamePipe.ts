@@ -1,8 +1,8 @@
-import {ProvidersInfoService} from "@tsed/cli";
 import {Injectable} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 import {paramCase, pascalCase} from "change-case";
 import {basename} from "path";
+import {ProvidersInfoService} from "../services/ProvidersInfoService";
 
 @Injectable()
 export class ClassNamePipe {

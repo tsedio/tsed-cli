@@ -13,6 +13,7 @@ export interface IGenerateCmdContext {
   templateType: string;
   symbolName: string;
   symbolPath: string;
+  symbolPathBasename: string;
 }
 
 const DECORATOR_TYPES = [
@@ -118,28 +119,27 @@ export class GenerateCmd implements ICommand {
   $mapContext(ctx: Partial<IGenerateCmdContext>): IGenerateCmdContext {
     const {name = "", type = ""} = ctx;
 
-    const file = this.outputFilePathPipe.transform({name, type});
-
     return {
       ...ctx,
       route: ctx.route ? this.routePipe.transform(ctx.route) : "",
       symbolName: this.classNamePipe.transform({name, type}),
-      symbolPath: file
+      symbolPath: this.outputFilePathPipe.transform({name, type}),
+      symbolPathBasename: this.classNamePipe.transform({name, type})
     } as IGenerateCmdContext;
   }
 
-  async $exec(options: IGenerateCmdContext) {
-    const {symbolPath, ...data} = options;
+  async $exec(ctx: IGenerateCmdContext) {
+    const {symbolPath} = ctx;
 
-    if (this.providersList.isMyProvider(options.type, GenerateCmd)) {
-      const type = [options.type, options.templateType].filter(Boolean).join(".");
+    if (this.providersList.isMyProvider(ctx.type, GenerateCmd)) {
+      const type = [ctx.type, ctx.templateType].filter(Boolean).join(".");
       const template = `generate/${type}.hbs`;
 
       return [
         {
-          title: `Generate ${options.type} file to '${symbolPath}.ts'`,
+          title: `Generate ${ctx.type} file to '${symbolPath}.ts'`,
           task: () =>
-            this.srcRenderService.render(template, data, {
+            this.srcRenderService.render(template, ctx, {
               output: `${symbolPath}.ts`
             })
         }

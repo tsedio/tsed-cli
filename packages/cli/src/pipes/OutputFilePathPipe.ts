@@ -1,7 +1,7 @@
-import {ProvidersInfoService} from "@tsed/cli";
 import {Injectable} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 import {dirname, join} from "path";
+import {ProvidersInfoService} from "../services/ProvidersInfoService";
 import {ClassNamePipe} from "./ClassNamePipe";
 
 @Injectable()

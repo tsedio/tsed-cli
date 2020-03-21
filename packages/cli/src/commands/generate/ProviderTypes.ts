@@ -47,7 +47,7 @@ export const PROVIDER_TYPES = [
   },
   {
     name: "Async Factory",
-    value: "async.c",
+    value: "async.factory",
     baseDir: "services",
     model: "{{symbolName}}.factory?"
   },

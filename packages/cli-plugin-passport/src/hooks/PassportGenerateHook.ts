@@ -65,8 +65,8 @@ export class PassportGenerateHook {
   @OnExec("generate")
   onGenerateExec(ctx: IPassportGenerationOptions): Tasks {
     if (this.providersInfoService.isMyProvider(ctx.type, PassportGenerateHook)) {
-      const {symbolPath, ...data} = this.mapOptions(ctx);
-      const {passportPackage} = ctx;
+      ctx = this.mapOptions(ctx);
+      const {passportPackage, symbolPath} = ctx;
 
       this.projectPackageJson.addDependency(ctx.passportPackage, this.getPassportPackageVersion(passportPackage));
 
@@ -74,7 +74,7 @@ export class PassportGenerateHook {
         {
           title: `Generate ${ctx.type} file to '${symbolPath}.ts'`,
           task: () =>
-            this.srcRenderService.render(this.getTemplate(passportPackage), data, {
+            this.srcRenderService.render(this.getTemplate(passportPackage), ctx, {
               output: `${symbolPath}.ts`,
               templateDir: TEMPLATE_DIR
             })

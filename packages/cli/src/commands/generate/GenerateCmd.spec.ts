@@ -102,7 +102,7 @@ describe("GenerateCmd", () => {
 
       // THEN
       expect(tasks.length).to.equal(1);
-      expect(tasks[0].title).to.equal("Generate controller file to 'controllers/TestController.ts'");
+      expect(tasks[0].title).to.equal("Generate controller file to 'controllers/Test.ts'");
 
       await tasks[0].task();
 
@@ -111,11 +111,13 @@ describe("GenerateCmd", () => {
         {
           name: "test",
           route: "/test",
-          symbolName: "TestController",
+          symbolName: "Test",
+          symbolPath: "controllers/Test",
+          symbolPathBasename: "Test",
           type: "controller"
         },
         {
-          output: "controllers/TestController.ts"
+          output: "controllers/Test.ts"
         }
       );
     });
@@ -144,7 +146,7 @@ describe("GenerateCmd", () => {
 
       // THEN
       expect(tasks.length).to.equal(1);
-      expect(tasks[0].title).to.equal("Generate controller file to 'controllers/TestController.ts'");
+      expect(tasks[0].title).to.equal("Generate controller file to 'controllers/Test.ts'");
 
       await tasks[0].task();
 
@@ -153,11 +155,13 @@ describe("GenerateCmd", () => {
         {
           name: "test",
           route: "/test",
-          symbolName: "TestController",
+          symbolName: "Test",
+          symbolPath: "controllers/Test",
+          symbolPathBasename: "Test",
           type: "controller"
         },
         {
-          output: "controllers/TestController.ts"
+          output: "controllers/Test.ts"
         }
       );
     });
