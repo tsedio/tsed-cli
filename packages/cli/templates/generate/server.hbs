@@ -16,7 +16,10 @@ const rootDir = __dirname;
     "{{route}}": [
       `${rootDir}/controllers/**/*.ts`
     ]
-  }
+  },
+  exclude: [
+    "**/*.spec.ts"
+  ]
 })
 export class {{symbolName}} extends ServerLoader {
   $beforeRoutesInit() {
