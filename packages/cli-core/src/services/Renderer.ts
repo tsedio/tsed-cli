@@ -77,9 +77,7 @@ export class RootRendererService extends Renderer {
     return this.configuration.project?.rootDir;
   }
 
-  set rootDir(path: string) {
-    console.trace("====");
-  }
+  set rootDir(path: string) {}
 }
 
 @Injectable()
