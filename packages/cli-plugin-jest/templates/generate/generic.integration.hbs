@@ -21,6 +21,6 @@ describe("{{symbolName}}", () => {
   it("should call GET {{route}}", async () => {
      const response = await request.get("{{route}}").expect(200);
 
-     expect(response.text).toEqual("hello")
+     expect(response.text).toEqual("hello");
   });
 });
