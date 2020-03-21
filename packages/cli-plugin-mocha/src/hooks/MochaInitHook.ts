@@ -54,7 +54,7 @@ export class MochaInitHook {
 
   addScripts(ctx: IInitCmdContext) {
     this.packageJson.addScripts({
-      test: "yarn clean && yarn test:lint && yarn test:coverage",
+      test: "yarn test:lint && yarn test:coverage",
       "test:unit": "cross-env NODE_ENV=test mocha",
       "test:coverage": "cross-env NODE_ENV=test nyc mocha"
     });
