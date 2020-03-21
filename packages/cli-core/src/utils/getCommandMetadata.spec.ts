@@ -4,9 +4,11 @@ import {getCommandMetadata} from "./getCommandMetadata";
 
 @Command({
   name: "name",
-  description: "description"
+  description: "description",
+  alias: "g"
 })
-class TestCmd {}
+class TestCmd {
+}
 
 describe("getCommandMetadata", () => {
   it("should return command metadata", () => {
@@ -14,6 +16,7 @@ describe("getCommandMetadata", () => {
       args: {},
       description: "description",
       name: "name",
+      alias: "g",
       options: {}
     });
   });

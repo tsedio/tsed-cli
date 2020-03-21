@@ -129,7 +129,7 @@ export class CliService {
    * @param subCommand
    * @param options
    */
-  public buildOption(subCommand: Command, options: {[key: string]: ICommandOptions}) {
+  public buildOption(subCommand: Command, options: { [key: string]: ICommandOptions }) {
     Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
       const fn = (v: any) => parseOption(v, options);
 
@@ -147,14 +147,19 @@ export class CliService {
   }
 
   public createCommand(metadata: ICommandMetadata) {
-    const {args, name, description} = metadata;
+    const {args, name, description, alias} = metadata;
 
     if (this.commands.has(name)) {
       return this.commands.get(name).command;
     }
 
-    return this.program
-      .command(createCommandSummary(name, args))
+    let cmd = this.program.command(createCommandSummary(name, args));
+
+    if (alias) {
+      cmd = cmd.alias(alias);
+    }
+
+    return cmd
       .description(description, mapArgsDescription(args))
       .action((...commanderArgs: any[]) => {
         const data = {

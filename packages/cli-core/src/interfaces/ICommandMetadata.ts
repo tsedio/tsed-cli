@@ -5,6 +5,8 @@ export interface ICommandMetadata {
    * name commands
    */
   name: string;
+
+  alias?: string;
   /**
    * Command description
    */

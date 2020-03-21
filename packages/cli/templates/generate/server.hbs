@@ -4,6 +4,10 @@ import * as compress from "compression";
 import * as cookieParser from "cookie-parser";
 import * as methodOverride from "method-override";
 import * as cors from "cors";
+import "@tsed/ajv";
+{{#if swagger}}import "@tsed/swagger";{{/if}}
+{{#if mongoose}}import "@tsed/mongoose";{{/if}}
+{{#if typeorm}}import "@tsed/typeorm";{{/if}}
 
 const rootDir = __dirname;
 
@@ -17,6 +21,13 @@ const rootDir = __dirname;
       `${rootDir}/controllers/**/*.ts`
     ]
   },
+  {{#if swagger}}
+  swagger: [
+    {
+      path: "/docs"
+    }
+  ],
+  {{/if}}
   exclude: [
     "**/*.spec.ts"
   ]

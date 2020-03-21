@@ -38,6 +38,7 @@ const searchFactory = (list: any) => {
 
 @Command({
   name: "generate",
+  alias: "g",
   description: "Generate a new provider class",
   args: {
     type: {
@@ -90,7 +91,9 @@ export class GenerateCmd implements ICommand {
         type: "input",
         name: "name",
         message: "Which name ?",
-        default: (state: any) => initialOptions.name || pascalCase(state.type),
+        default: (state: any) => {
+          return initialOptions.name || pascalCase(state.type || initialOptions.type);
+        },
         when: !initialOptions.name
       },
       {
