@@ -1,16 +1,18 @@
-import {Command, ICommand, Inject, QuestionOptions, SrcRendererService} from "@tsed/cli-core";
+import {Command, ICommand, Inject, SrcRendererService} from "@tsed/cli-core";
 import {pascalCase} from "change-case";
 import {ClassNamePipe} from "../../pipes/ClassNamePipe";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
 import {RoutePipe} from "../../pipes/RoutePipe";
 import {ProvidersInfoService} from "../../services/ProvidersInfoService";
+import {PROVIDER_TYPES} from "./ProviderTypes";
 
 export interface IGenerateCmdContext {
   type: string;
   name: string;
   route: string;
   templateType: string;
-  outputFile: string;
+  symbolName: string;
+  symbolPath: string;
 }
 
 const DECORATOR_TYPES = [
@@ -21,45 +23,6 @@ const DECORATOR_TYPES = [
   {name: "Vanilla Method decorator", value: "method"},
   {name: "Vanilla Property decorator", value: "property"},
   {name: "Vanilla Parameter decorator", value: "parameter"}
-];
-
-const PROVIDER_TYPES = [
-  {
-    name: "Controller",
-    value: "controller"
-  },
-  {
-    name: "Middleware",
-    value: "middleware"
-  },
-  {
-    name: "Service",
-    value: "service"
-  },
-  {
-    name: "Model",
-    value: "model"
-  },
-  {
-    name: "Decorator",
-    value: "decorator"
-  },
-  {
-    name: "Module",
-    value: "module"
-  },
-  {
-    name: "Pipe",
-    value: "pipe"
-  },
-  {
-    name: "Interceptor",
-    value: "interceptor"
-  },
-  {
-    name: "Server",
-    value: "server"
-  }
 ];
 
 const searchFactory = (list: any) => {
@@ -155,16 +118,18 @@ export class GenerateCmd implements ICommand {
   $mapContext(ctx: Partial<IGenerateCmdContext>): IGenerateCmdContext {
     const {name = "", type = ""} = ctx;
 
+    const file = this.outputFilePathPipe.transform({name, type});
+
     return {
       ...ctx,
       route: ctx.route ? this.routePipe.transform(ctx.route) : "",
       symbolName: this.classNamePipe.transform({name, type}),
-      outputFile: `${this.outputFilePathPipe.transform({name, type})}.ts`
+      symbolPath: file
     } as IGenerateCmdContext;
   }
 
   async $exec(options: IGenerateCmdContext) {
-    const {outputFile, ...data} = options;
+    const {symbolPath, ...data} = options;
 
     if (this.providersList.isMyProvider(options.type, GenerateCmd)) {
       const type = [options.type, options.templateType].filter(Boolean).join(".");
@@ -172,10 +137,10 @@ export class GenerateCmd implements ICommand {
 
       return [
         {
-          title: `Generate ${options.type} file to '${outputFile}'`,
+          title: `Generate ${options.type} file to '${symbolPath}.ts'`,
           task: () =>
             this.srcRenderService.render(template, data, {
-              output: outputFile
+              output: `${symbolPath}.ts`
             })
         }
       ];

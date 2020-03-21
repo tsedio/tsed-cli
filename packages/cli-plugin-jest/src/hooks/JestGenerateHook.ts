@@ -11,29 +11,29 @@ export class JestGenerateHook {
 
   @OnExec("generate")
   onGenerateExec(ctx: IGenerateCmdContext): Tasks {
-    const {outputFile, ...otherProps} = ctx;
+    const {symbolPath, ...otherProps} = ctx;
     const {specTemplate, integrationTemplate} = this.mapOptions(ctx);
 
     return [
       {
-        title: `Generate ${ctx.type} spec file to '${outputFile}.spec.ts'`,
+        title: `Generate ${ctx.type} spec file to '${symbolPath}.spec.ts'`,
         enabled() {
           return ctx.type !== "server";
         },
         task: () =>
           this.srcRenderService.render(specTemplate, otherProps, {
-            output: `${outputFile}.spec.ts`,
+            output: `${symbolPath}.spec.ts`,
             templateDir: TEMPLATE_DIR
           })
       },
       {
-        title: `Generate ${ctx.type} integration file '${outputFile}.integration.spec.ts'`,
+        title: `Generate ${ctx.type} integration file '${symbolPath}.integration.spec.ts'`,
         enabled() {
           return ["controller", "server"].includes(ctx.type);
         },
         task: () =>
           this.srcRenderService.render(integrationTemplate, otherProps, {
-            output: `${outputFile}.integration.spec.ts`,
+            output: `${symbolPath}.integration.spec.ts`,
             templateDir: TEMPLATE_DIR
           })
       }

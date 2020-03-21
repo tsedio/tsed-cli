@@ -1,10 +1,11 @@
-import {nameOf, Type, Injectable} from "@tsed/cli-core";
+import {Injectable, nameOf, Type} from "@tsed/cli-core";
 
 export interface IProviderInfo {
   name: string;
   value: string;
+  model?: string;
+  baseDir?: string;
   owner?: string;
-  template?: string;
 }
 
 @Injectable()
@@ -16,8 +17,11 @@ export class ProvidersInfoService {
    * @param providerInfo
    * @param owner
    */
-  add(providerInfo: IProviderInfo, owner: Type<any>) {
-    this.map.set(providerInfo.value, {...providerInfo, owner: nameOf(owner)});
+  add(providerInfo: IProviderInfo, owner?: Type<any>) {
+    this.map.set(providerInfo.value, {
+      ...providerInfo,
+      owner: nameOf(owner)
+    });
 
     return this;
   }
