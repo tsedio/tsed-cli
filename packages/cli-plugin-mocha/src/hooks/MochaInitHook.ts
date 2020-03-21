@@ -77,8 +77,7 @@ export class MochaInitHook {
         mocha: "latest",
         nyc: "latest",
         sinon: "latest",
-        "sinon-chai": "latest",
-        "tsconfig-paths": "latest"
+        "sinon-chai": "latest"
       },
       ctx
     );
