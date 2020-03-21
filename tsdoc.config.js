@@ -10,7 +10,7 @@ module.exports = {
   jsonOutputDir: '<rootDir>/docs/.vuepress/public',
   scope: '@tsed',
   modules: {
+    'cli-core': 'cli-core',
     'cli': 'cli',
-    'cli-config': 'cli-config'
   }
 }

@@ -19,7 +19,7 @@ module.exports = {
       license,
       gitHead,
       publishConfig: {
-        'tag': 'alpha'
+        'tag': 'beta'
       }
     })
 
