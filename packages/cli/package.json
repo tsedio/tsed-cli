@@ -43,7 +43,7 @@
     "start:init:run:name": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init awesome --verbose",
     "start:add:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts add -r ./.tmp",
     "start:generate:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
-    "start:generate:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -r ./.tmp"
+    "start:generate:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -r ./.tmp/init/awesome"
   },
   "engines": {
     "node": ">=8.9"
