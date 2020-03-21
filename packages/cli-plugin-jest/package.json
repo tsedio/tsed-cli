@@ -1,11 +1,11 @@
 {
   "name": "@tsed/cli-plugin-jest",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "devDependencies": {
-    "@tsed/cli": "1.4.0",
-    "@tsed/cli-core": "1.4.0"
+    "@tsed/cli": "1.4.1",
+    "@tsed/cli-core": "1.4.1"
   },
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",
