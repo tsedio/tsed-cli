@@ -110,7 +110,7 @@ export class GenerateCmd implements ICommand {
     });
   }
 
-  $prompt(initialOptions: Partial<IGenerateCmdContext>): QuestionOptions {
+  $prompt(initialOptions: Partial<IGenerateCmdContext>) {
     const providers = this.providersList.toArray();
 
     return [

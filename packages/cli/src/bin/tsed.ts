@@ -1,7 +1,20 @@
 #!/usr/bin/env node
-import {bootstrap} from "../index";
+import {AddCmd, Cli} from "@tsed/cli-core";
+import {resolve} from "path";
+import commands from "../commands";
 
-// WRITE SOMETHING HERE
-bootstrap().then(cli => {
+const pkg = require("../../package.json");
+const TEMPLATE_DIR = resolve(__dirname, "..", "..", "templates");
+
+async function bootstrap() {
+  const cli = await Cli.bootstrap({
+    name: "tsed",
+    pkg,
+    templateDir: TEMPLATE_DIR,
+    commands: [AddCmd, ...commands]
+  });
+
   cli.parseArgs();
-});
+}
+
+bootstrap();
