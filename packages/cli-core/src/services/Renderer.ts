@@ -71,13 +71,15 @@ export class RootRendererService extends Renderer {
     return this.configuration.templateDir;
   }
 
-  set templateDir(path: string) {}
+  set templateDir(path: string) {
+  }
 
   get rootDir() {
     return this.configuration.project?.rootDir;
   }
 
-  set rootDir(path: string) {}
+  set rootDir(path: string) {
+  }
 }
 
 @Injectable()
@@ -89,13 +91,15 @@ export class SrcRendererService extends Renderer {
     return this.configuration.templateDir;
   }
 
-  set templateDir(path: string) {}
+  set templateDir(path: string) {
+  }
 
   get rootDir() {
     return join(...[this.configuration.project?.rootDir, this.configuration.project?.srcDir].filter(Boolean));
   }
 
-  set rootDir(path: string) {}
+  set rootDir(path: string) {
+  }
 }
 
 @Injectable()
@@ -107,11 +111,13 @@ export class ScriptsRendererService extends Renderer {
     return this.configuration.templateDir;
   }
 
-  set templateDir(template: string) {}
+  set templateDir(template: string) {
+  }
 
   get rootDir() {
     return join(...[this.configuration.project?.rootDir, this.configuration.project?.scriptsDir].filter(Boolean));
   }
 
-  set rootDir(template: string) {}
+  set rootDir(template: string) {
+  }
 }

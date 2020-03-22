@@ -75,7 +75,7 @@ export class CliService {
       }
     ];
 
-    return createTasksRunner(tasks, ctx);
+    return createTasksRunner(tasks, this.mapContext(cmdName, ctx));
   }
 
   /**
@@ -113,15 +113,16 @@ export class CliService {
     const provider = this.commands.get(cmdName);
     const instance = this.injector.get<ICommand>(provider.useClass)!;
 
-    if (instance.$mapContext) {
-      ctx = instance.$mapContext(ctx);
-    }
+    ctx = this.mapContext(cmdName, ctx);
 
     if (instance.$beforeExec) {
       await instance.$beforeExec(ctx);
     }
 
-    return [...(await instance.$exec(ctx)), ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, ctx))];
+    return [
+      ...(await instance.$exec(ctx)),
+      ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, ctx))
+    ];
   }
 
   /**
@@ -169,6 +170,17 @@ export class CliService {
 
         this.runLifecycle(name, data);
       });
+  }
+
+  private mapContext(cmdName: string, ctx: any) {
+    const provider = this.commands.get(cmdName);
+    const instance = this.injector.get<ICommand>(provider.useClass)!;
+
+    if (instance.$mapContext) {
+      ctx = instance.$mapContext(JSON.parse(JSON.stringify(ctx)));
+    }
+
+    return ctx;
   }
 
   /**
