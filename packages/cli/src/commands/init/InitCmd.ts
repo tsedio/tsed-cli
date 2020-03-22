@@ -205,6 +205,7 @@ export class InitCmd implements ICommand {
         "@tsed/core": ctx.tsedVersion,
         "@tsed/di": ctx.tsedVersion,
         "@tsed/ajv": ctx.tsedVersion,
+        "ajv": "latest",
         "body-parser": "latest",
         cors: "latest",
         compression: "latest",
