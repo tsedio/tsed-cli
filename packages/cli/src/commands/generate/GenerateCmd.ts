@@ -101,7 +101,7 @@ export class GenerateCmd implements ICommand {
         name: "route",
         message: "Which route ?",
         when(state: any) {
-          return ["controller", "server"].includes(state.type);
+          return ["controller", "server"].includes(state.type || initialOptions.type);
         },
         default: (state: IGenerateCmdContext) => {
           return state.type === "server" ? "/rest" : this.routePipe.transform(state.name);
@@ -112,7 +112,7 @@ export class GenerateCmd implements ICommand {
         name: "templateType",
         message: (state: any) => `Which type of ${state.type}?`,
         when(state: any) {
-          return ["decorator"].includes(state.type);
+          return ["decorator"].includes(state.type || initialOptions.type);
         },
         source: searchFactory(DECORATOR_TYPES)
       }
