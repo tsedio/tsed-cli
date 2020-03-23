@@ -52,5 +52,5 @@ npm start # or yarn start
 
 ::: tip
 The `tsed init` command will generate the project with the selected choices. Out-of-the-box, CLI support
-Mocha, TSLint, Prettier, Passport, etc...
+Mocha, Jest, TSLint, Prettier, Passport, etc...
 :::

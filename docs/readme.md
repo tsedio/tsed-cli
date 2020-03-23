@@ -20,7 +20,7 @@ features:
 - title: tsed generate
   details: Generate provider, controllers, services and pipes with a simple command. The CLI will also create simple test shells for all of these.
 - title: tsed add
-  details: Install a CLI plugins to extend the CLI capabilities. Out-of-the-box support tslint, prettier, mocha, passport, etc...
+  details: Install a CLI plugins to extend the CLI capabilities. Out-of-the-box support tslint, prettier, mocha, jest, passport, etc...
 contributors:
  title : Our<br /><b>Contributors</b>
  button:
