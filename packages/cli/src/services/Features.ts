@@ -164,8 +164,7 @@ registerProvider({
               devDependencies: {
                 "@tsed/cli-plugin-jest": cliVersion
               }
-            },
-            disabled: true
+            }
           }
         ]
       },
