@@ -110,7 +110,7 @@ export class GenerateCmd implements ICommand {
       {
         type: "autocomplete",
         name: "templateType",
-        message: (state: any) => `Which type of ${state.type}?`,
+        message: (state: any) => `Which type of ${state.type || initialOptions.type}?`,
         when(state: any) {
           return ["decorator"].includes(state.type || initialOptions.type);
         },
