@@ -8,7 +8,7 @@ export interface I{{symbolName}}Options {
 export function {{symbolName}}(options: I{{symbolName}}Options): ParameterDecorator {
   return applyDecorators(
     ParamFn((param: ParamMetadata) => {
-      param.store.set({{symbolName}})
+      param.store.set({{symbolName}}, options)
     })
     // Add UsePipe decorator to invoke custom pipe on the parameter
   );
