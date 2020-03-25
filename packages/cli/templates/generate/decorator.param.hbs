@@ -1,11 +1,11 @@
 import {applyDecorators} from "@tsed/core";
-import {ParamMetadata} from "@tsed/common";
+import {ParamMetadata, ParamFn} from "@tsed/common";
 
 export interface I{{symbolName}}Options {
 
 }
 
-export function {{symbolName}}(options: I{{symbolName}}Options): ParametersDecorator {
+export function {{symbolName}}(options: I{{symbolName}}Options): ParameterDecorator {
   return applyDecorators(
     ParamFn((param: ParamMetadata) => {
       param.store.set({{symbolName}})
