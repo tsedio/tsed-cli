@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-core",
-  "version": "1.6.3",
+  "version": "1.7.0",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "description": "Build your CLI with TypeScript and Decorators",
@@ -31,9 +31,9 @@
     "handlebars-helpers": "0.10.0",
     "inquirer": "7.0.5",
     "inquirer-autocomplete-prompt": "1.0.2",
-    "normalize-path": "3.0.0",
     "listr": "0.14.3",
     "module-alias": "2.2.2",
+    "normalize-path": "3.0.0",
     "read-pkg-up": "7.0.1",
     "registry-url": "5.1.0",
     "rxjs": "6.5.4",
