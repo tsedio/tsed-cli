@@ -29,6 +29,7 @@ export class TypeORMInitHook {
         title: `Generate TypeORM connection file`,
         skip: !!database,
         task: async () => this.cliTypeORM.generateConnection("default", {
+          symbolPath: "DefaultConnection",
           symbolName: "DefaultConnection"
         })
       },

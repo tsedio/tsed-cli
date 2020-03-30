@@ -141,6 +141,7 @@ export class InitCmd implements ICommand {
   async $exec(ctx: IInitCmdContext) {
     const subTasks = [
       ...(await this.cliService.getTasks("generate", {
+        ...ctx,
         type: "server",
         name: "Server",
         route: "/rest"

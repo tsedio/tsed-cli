@@ -1,12 +1,13 @@
 import * as Fs from "fs-extra";
 import {join} from "path";
 
-export function importModule(mod: string, root: string = process.cwd()) {
+export async function importModule(mod: string, root: string = process.cwd()) {
   try {
     if (process.env.NODE_ENV === "development") {
-      return import(mod);
+      return await import(mod);
     }
-  } catch (er) {}
+  } catch (er) {
+  }
 
   let path = join(root, "node_modules", mod);
 

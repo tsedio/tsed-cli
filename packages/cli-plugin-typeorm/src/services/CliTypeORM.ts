@@ -1,6 +1,6 @@
 import {CliExeca, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
-import {paramCase} from "change-case";
+import {constantCase} from "change-case";
 import {basename, join} from "path";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
@@ -25,16 +25,18 @@ export class CliTypeORM {
   async generateConnection(name: string, options: any = {}) {
     return this.srcRenderer
       .render("connection.hbs", {
-        connectionName: name,
-        ...options
+        ...options,
+        symbolName: constantCase(options.symbolName),
+        connectionName: name
       }, {
         templateDir: TEMPLATE_DIR,
-        rootDir: join(this.srcRenderer.rootDir, "services/connections")
+        output: `${options.symbolPath}.ts`,
+        rootDir: join(this.srcRenderer.rootDir, "services", "connections")
       });
   }
 
   async writeOrmConfigTemplate(name: string, database: string) {
-    const {InitCommand} = await this.projectPackageJson.importModule("typeorm/commands/InitCommand");
+    const {InitCommand} = await this.projectPackageJson.importModule("typeorm/commands/InitCommand.js");
 
     const content = JSON.parse(await InitCommand.getOrmConfigTemplate(database));
 
@@ -73,7 +75,8 @@ export class CliTypeORM {
         configs
       }, {
         templateDir: TEMPLATE_DIR,
-        rootDir: join(this.srcRenderer.rootDir, "config")
+        output: "index.ts",
+        rootDir: join(this.srcRenderer.rootDir, "config", "typeorm")
       });
   }
 }
