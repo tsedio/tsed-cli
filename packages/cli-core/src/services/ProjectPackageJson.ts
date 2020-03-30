@@ -297,10 +297,14 @@ export class ProjectPackageJson {
         observer.next(`[${completed}/${packages.length}] Resolving packages...`);
       });
 
-      Promise.all(promises).then(() => {
-        observer.next(`[${completed}/${packages.length}] Resolving packages...`);
-        observer.complete();
-      });
+      Promise.all(promises)
+        .then(() => {
+          observer.next(`[${completed}/${packages.length}] Resolving packages...`);
+          observer.complete();
+        })
+        .catch(err => {
+          observer.error(err);
+        });
     });
   }
 
