@@ -1,11 +1,11 @@
 {
   "name": "@tsed/cli-plugin-tslint",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "devDependencies": {
-    "@tsed/cli": "1.7.3",
-    "@tsed/cli-core": "1.7.3"
+    "@tsed/cli": "1.7.4",
+    "@tsed/cli-core": "1.7.4"
   },
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",
