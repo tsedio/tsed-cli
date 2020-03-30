@@ -1,0 +1,6 @@
+// @tsed/cli do not edit
+export default [
+{{#forEach configs}}
+  require("./{{name}}.config.json"){{#unless isLast}}, {{/unless}}
+{{/forEach}}
+]

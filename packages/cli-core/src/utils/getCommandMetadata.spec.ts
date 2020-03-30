@@ -14,6 +14,7 @@ describe("getCommandMetadata", () => {
   it("should return command metadata", () => {
     expect(getCommandMetadata(TestCmd)).to.deep.eq({
       args: {},
+      allowUnknownOption: false,
       description: "description",
       name: "name",
       alias: "g",

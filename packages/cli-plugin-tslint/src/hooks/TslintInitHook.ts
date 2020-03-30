@@ -46,7 +46,7 @@ export class TslintInitHook {
       "test:lint:fix": "tslint --project tsconfig.json --fix"
     });
 
-    if (ctx.pressttier) {
+    if (ctx.prettier) {
       this.packageJson.addScripts({
         prettier: "prettier '{src,test}/**/*.ts' --write"
       });

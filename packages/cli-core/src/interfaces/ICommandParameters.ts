@@ -73,5 +73,7 @@ export interface ICommandParameters {
     [key: string]: ICommandOptions;
   };
 
+  allowUnknownOption?: boolean;
+
   [key: string]: any;
 }

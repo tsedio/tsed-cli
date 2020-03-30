@@ -1,8 +1,13 @@
 import {Configuration, Injectable} from "@tsed/di";
 import * as Consolidate from "consolidate";
 import * as Fs from "fs-extra";
+import * as globby from "globby";
 import {basename, dirname, join} from "path";
 import {Observable} from "rxjs";
+
+const normalizePath = require("normalize-path");
+
+require("handlebars-helpers")();
 
 export interface IRenderOptions {
   templateDir?: string;
@@ -18,11 +23,7 @@ export abstract class Renderer {
     const {output, templateDir, rootDir} = this.mapOptions(path, options);
     const content = await Consolidate.handlebars(join(templateDir, path), data);
 
-    const outputFile = join(...[rootDir, output].filter(Boolean));
-
-    await Fs.ensureDir(dirname(outputFile));
-
-    return Fs.writeFile(outputFile, content, {encoding: "utf8"});
+    return this.write(content, {output, rootDir});
   }
 
   async renderAll(paths: string[], data: any, options: IRenderOptions = {}) {
@@ -49,10 +50,25 @@ export abstract class Renderer {
     });
   }
 
+  async write(content: string, options: any) {
+    const {output, rootDir = this.rootDir} = options;
+    const outputFile = join(...[rootDir, output].filter(Boolean));
+    await Fs.ensureDir(dirname(outputFile));
+
+    return Fs.writeFile(outputFile, content, {encoding: "utf8"});
+  }
+
   templateExists(path: string, options: IRenderOptions = {}) {
     const {templateDir} = this.mapOptions(path, options);
 
     return Fs.existsSync(join(templateDir, path));
+  }
+
+  scan(pattern: string[], options: any = {}) {
+    return globby(pattern.map((s: string) => normalizePath(s)), {
+      ...options,
+      cwd: this.rootDir
+    });
   }
 
   protected mapOptions(path: string, options: IRenderOptions) {

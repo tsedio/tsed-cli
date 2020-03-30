@@ -59,6 +59,7 @@
     "figures": "3.2.0",
     "fs-extra": "8.1.0",
     "handlebars": "4.7.3",
+    "handlebars-helpers": "0.10.0",
     "inquirer": "7.0.5",
     "inquirer-autocomplete-prompt": "1.0.2",
     "listr": "0.14.3",

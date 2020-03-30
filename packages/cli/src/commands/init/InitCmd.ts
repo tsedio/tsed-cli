@@ -24,6 +24,7 @@ export interface IInitCmdContext extends ICliDefaultOptions {
   projectName: string;
   tsedVersion: string;
   features: FeatureValue[];
+  featuresTypeORM?: FeatureValue;
 
   [key: string]: any;
 }

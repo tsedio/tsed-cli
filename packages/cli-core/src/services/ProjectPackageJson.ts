@@ -7,6 +7,7 @@ import * as readPkgUp from "read-pkg-up";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {IPackageJson} from "../interfaces/IPackageJson";
+import {importModule} from "../utils/importModule";
 import {CliExeca} from "./CliExeca";
 import {NpmRegistryClient} from "./NpmRegistryClient";
 
@@ -146,7 +147,7 @@ export class ProjectPackageJson {
     return this.raw.devDependencies;
   }
 
-  get allDependencies(): {[key: string]: string} {
+  get allDependencies(): { [key: string]: string } {
     return {
       ...(this.dependencies || {}),
       ...(this.devDependencies || {})
@@ -161,7 +162,7 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addDevDependencies(modules: {[key: string]: string | undefined}, scope: object = {}) {
+  addDevDependencies(modules: { [key: string]: string | undefined }, scope: object = {}) {
     Object.entries(modules).forEach(([pkg, version]) => {
       this.addDevDependency(
         pkg,
@@ -180,7 +181,7 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addDependencies(modules: {[key: string]: string | undefined}, scope: object = {}) {
+  addDependencies(modules: { [key: string]: string | undefined }, scope: object = {}) {
     Object.entries(modules).forEach(([pkg, version]) => {
       this.addDependency(
         pkg,
@@ -198,7 +199,7 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addScripts(scripts: {[key: string]: string}) {
+  addScripts(scripts: { [key: string]: string }) {
     Object.entries(scripts).forEach(([task, cmd]) => {
       this.addScript(task, cmd);
     });
@@ -264,6 +265,14 @@ export class ProjectPackageJson {
       ],
       {concurrent: false}
     );
+  }
+
+  /**
+   * Import a module from the project workspace
+   * @param mod
+   */
+  async importModule(mod: string) {
+    return importModule(mod, this.dir);
   }
 
   protected resolve() {

@@ -5,7 +5,7 @@ import {paramCase} from "change-case";
 import {PassportClient} from "../services/PassportClient";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
-export interface IPassportGenerationOptions extends IGenerateCmdContext {
+export interface IPassportGenerateOptions extends IGenerateCmdContext {
   passportPackage: string;
 }
 
@@ -26,7 +26,8 @@ export class PassportGenerateHook {
     providersInfoService.add(
       {
         name: "Protocol",
-        value: "protocol"
+        value: "protocol",
+        model: "{{symbolName}}.protocol"
       },
       PassportGenerateHook
     );
@@ -63,7 +64,7 @@ export class PassportGenerateHook {
   }
 
   @OnExec("generate")
-  onGenerateExec(ctx: IPassportGenerationOptions): Tasks {
+  onGenerateExec(ctx: IPassportGenerateOptions): Tasks {
     if (this.providersInfoService.isMyProvider(ctx.type, PassportGenerateHook)) {
       ctx = this.mapOptions(ctx);
       const {passportPackage, symbolPath} = ctx;
@@ -85,7 +86,7 @@ export class PassportGenerateHook {
     return [];
   }
 
-  private mapOptions(options: IPassportGenerationOptions) {
+  private mapOptions(options: IPassportGenerateOptions) {
     return {
       ...options,
       protocolName: paramCase(options.name),

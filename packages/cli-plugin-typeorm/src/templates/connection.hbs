@@ -1,0 +1,17 @@
+import {Configuration, registerProvider} from "@tsed/di";
+import {createConnection} from "@tsed/typeorm";
+import {Connection, ConnectionOptions} from "typeorm";
+
+export const {{symbolName}} = Symbol.for("{{symbolName}}");
+export type {{symbolName}} = Connection;
+
+registerProvider({
+    provide: {{symbolName}},
+    deps: [Configuration],
+    async useAsyncFactory(configuration: Configuration) {
+       const settings = configuration.get<ConnectionOptions[]>("typeorm")!;
+       const connectionOptions = settings.find(o => o.name === "{{connectionName}}");
+
+       return createConnection(connectionOptions!);
+    }
+});

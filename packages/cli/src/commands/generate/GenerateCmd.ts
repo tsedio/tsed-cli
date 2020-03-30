@@ -1,4 +1,4 @@
-import {Command, ICommand, Inject, SrcRendererService} from "@tsed/cli-core";
+import {Command, ICliDefaultOptions, ICommand, Inject, SrcRendererService} from "@tsed/cli-core";
 import {pascalCase} from "change-case";
 import {ClassNamePipe} from "../../pipes/ClassNamePipe";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
@@ -6,7 +6,7 @@ import {RoutePipe} from "../../pipes/RoutePipe";
 import {ProvidersInfoService} from "../../services/ProvidersInfoService";
 import {PROVIDER_TYPES} from "./ProviderTypes";
 
-export interface IGenerateCmdContext {
+export interface IGenerateCmdContext extends ICliDefaultOptions {
   type: string;
   name: string;
   route: string;

@@ -1,4 +1,4 @@
-import {classOf} from "@tsed/core";
+import {classOf, isArray} from "@tsed/core";
 import {Inject, Injectable, InjectorService, Provider} from "@tsed/di";
 import {Command} from "commander";
 import * as Inquirer from "inquirer";
@@ -129,8 +129,9 @@ export class CliService {
    * Build sub-command options
    * @param subCommand
    * @param options
+   * @param allowUnknownOptions
    */
-  public buildOption(subCommand: Command, options: { [key: string]: ICommandOptions }) {
+  public buildOption(subCommand: Command, options: { [key: string]: ICommandOptions }, allowUnknownOptions: boolean) {
     Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
       const fn = (v: any) => parseOption(v, options);
 
@@ -145,6 +146,10 @@ export class CliService {
 
     subCommand.option("-r, --root-dir <path>", "Project root directory");
     subCommand.option("--verbose", "Verbose mode", () => true);
+
+    if (allowUnknownOptions) {
+      subCommand.allowUnknownOption(true);
+    }
   }
 
   public createCommand(metadata: ICommandMetadata) {
@@ -165,7 +170,10 @@ export class CliService {
       .action((...commanderArgs: any[]) => {
         const data = {
           ...mapCommanderArgs(args, commanderArgs),
-          ...mapCommanderOptions(this.program.commands)
+          ...mapCommanderOptions(this.program.commands),
+          rawArgs: commanderArgs
+            .filter(isArray)
+            .reduce((arg, current) => arg.concat(current), [])
         };
 
         this.runLifecycle(name, data);
@@ -188,7 +196,7 @@ export class CliService {
    * @param provider
    */
   private build(provider: Provider<any>) {
-    const {name, options} = getCommandMetadata(provider.useClass);
+    const {name, options, allowUnknownOption} = getCommandMetadata(provider.useClass);
 
     if (name) {
       if (this.commands.has(name)) {
@@ -199,7 +207,7 @@ export class CliService {
       this.commands.set(name, provider);
 
       if (options) {
-        this.buildOption(provider.command as any, options);
+        this.buildOption(provider.command as any, options, allowUnknownOption);
       }
     }
   }

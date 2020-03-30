@@ -31,12 +31,12 @@ function checkNodeVersion(wanted: string, id: string) {
     console.log(
       chalk.red(
         "You are using Node " +
-          process.version +
-          ", but this version of " +
-          id +
-          " requires Node " +
-          wanted +
-          ".\nPlease upgrade your Node version."
+        process.version +
+        ", but this version of " +
+        id +
+        " requires Node " +
+        wanted +
+        ".\nPlease upgrade your Node version."
       )
     );
     process.exit(1);
@@ -74,7 +74,6 @@ export class Cli {
         ...(settings.project || {})
       }
     });
-
     await loadPlugins(injector);
 
     await loadInjector(injector, Cli);
@@ -90,6 +89,7 @@ export class Cli {
         new Command()
           .option("-r, --root-dir <path>", "Project root directory")
           .option("--verbose", "Verbose mode", () => true)
+          .allowUnknownOption(true)
           .parse(argv).rootDir || "";
 
       return resolve(join(process.cwd(), projectRoot));

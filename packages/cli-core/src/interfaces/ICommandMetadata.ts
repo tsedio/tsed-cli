@@ -23,4 +23,6 @@ export interface ICommandMetadata {
   options: {
     [key: string]: ICommandOptions;
   };
+
+  allowUnknownOption?: boolean;
 }
