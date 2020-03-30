@@ -1,6 +1,6 @@
-import {CliExeca, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
+import {CliExeca, CliYaml, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
-import {constantCase} from "change-case";
+import {constantCase, snakeCase} from "change-case";
 import {basename, join} from "path";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 

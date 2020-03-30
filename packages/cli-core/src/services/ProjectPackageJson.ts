@@ -280,7 +280,7 @@ export class ProjectPackageJson {
       const packages = getPackageWithLatest(this.allDependencies);
       let completed = 0;
 
-      observer.next(`${completed}/${packages.length} resolved`);
+      observer.next(`${completed}/${packages.length} resolved - ${packages.map(([pkg]) => pkg).join(",")}`);
 
       const promises = packages.map(async ([pkg]) => {
         const info = await this.npmRegistryClient.info(pkg);

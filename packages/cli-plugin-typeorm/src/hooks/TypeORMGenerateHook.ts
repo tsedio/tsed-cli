@@ -1,5 +1,14 @@
 import {FEATURES_TYPEORM_CONNECTION_TYPES, IGenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
-import {Inject, OnExec, OnPrompt, ProjectPackageJson, QuestionOptions, SrcRendererService, Tasks} from "@tsed/cli-core";
+import {
+  CliDockerComposeYaml,
+  Inject,
+  OnExec,
+  OnPrompt,
+  ProjectPackageJson,
+  QuestionOptions,
+  SrcRendererService,
+  Tasks
+} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {paramCase} from "change-case";
 import {CliTypeORM} from "../services/CliTypeORM";
@@ -19,8 +28,9 @@ export class TypeORMGenerateHook {
 
   @Inject()
   cliTypeORM: CliTypeORM;
-
   packages: any[];
+  @Inject()
+  protected cliDockerComposeYaml: CliDockerComposeYaml;
 
   constructor(private providersInfoService: ProvidersInfoService) {
     providersInfoService.add(
@@ -72,6 +82,8 @@ export class TypeORMGenerateHook {
         this.projectPackageJson.addDependencies(connection?.value.dependencies || {});
       }
 
+      const database = ctx.typeormConnection.split(":")[1];
+
       return [
         {
           title: `Generate TypeORM connection file to '${symbolPath}.ts'`,
@@ -81,7 +93,11 @@ export class TypeORMGenerateHook {
         {
           title: `Generate TypeORM configuration file to '${ctx.connectionName}.config.json'`,
           task: () =>
-            this.cliTypeORM.writeOrmConfigTemplate(ctx.connectionName, ctx.typeormConnection.split(":")[1])
+            this.cliTypeORM.writeOrmConfigTemplate(ctx.connectionName, database)
+        },
+        {
+          title: "Generate docker-compose configuration",
+          task: async () => this.cliDockerComposeYaml.addDatabaseService(ctx.name, database)
         }
       ];
     }
