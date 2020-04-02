@@ -228,7 +228,8 @@ registerProvider({
             value: {
               type: "mongoose",
               dependencies: {
-                "@tsed/mongoose": "{{tsedVersion}}"
+                "@tsed/mongoose": "{{tsedVersion}}",
+                "mongoose": "latest"
               },
               devDependencies: {
                 // "@tsed/cli-plugin-mongoose": cliVersion
