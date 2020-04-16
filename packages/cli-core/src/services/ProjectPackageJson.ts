@@ -243,6 +243,10 @@ export class ProjectPackageJson {
   install(options: IInstallOptions = {}) {
     options.packageManager = options.packageManager || (this.hasYarn() ? "yarn" : "npm");
 
+    if (options.packageManager === "yarn" && !this.hasYarn()) {
+      options.packageManager = "npm";
+    }
+
     const shouldResolve = !!getPackageWithLatest(this.allDependencies).length;
 
     return new Listr(
