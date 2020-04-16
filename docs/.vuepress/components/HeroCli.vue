@@ -13,7 +13,7 @@
           <div class="console__dot console__dot--green"></div>
         </div>
         <div class="console__body">
-          <kbd class="console__prompt">npm install -g @tsed/cli@beta</kbd>
+          <kbd class="console__prompt">npm install -g @tsed/cli</kbd>
           <kbd class="console__prompt">tsed init .</kbd>
           <kbd class="console__prompt">npm start</kbd>
         </div>

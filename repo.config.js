@@ -17,10 +17,7 @@ module.exports = {
       author,
       contributors,
       license,
-      gitHead,
-      publishConfig: {
-        'tag': 'beta'
-      }
+      gitHead
     })
 
     return json

@@ -30,7 +30,7 @@ Plugins can be included as part of your project creation process or added into t
 Install the CLI using the npm package manager: 
 
 ```bash
-npm install -g @tsed/cli@beta
+npm install -g @tsed/cli
 ```
 
 ## Basic workflow
