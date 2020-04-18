@@ -1,12 +1,12 @@
 {
   "name": "@tsed/cli-plugin-tslint",
-  "version": "1.8.2",
+  "version": "1.9.0",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "description": "Ts.ED CLI plugin. Add TsLint support",
   "devDependencies": {
-    "@tsed/cli": "1.8.2",
-    "@tsed/cli-core": "1.8.2"
+    "@tsed/cli": "1.9.0",
+    "@tsed/cli-core": "1.9.0"
   },
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",
