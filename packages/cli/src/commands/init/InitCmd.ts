@@ -88,7 +88,7 @@ export class InitCmd implements ICommand {
   $mapContext(ctx: Partial<IInitCmdContext>): IInitCmdContext {
     ctx.projectName = paramCase(ctx.projectName || basename(this.packageJson.dir));
 
-    if (ctx.root !== ".") {
+    if (ctx.root && ctx.root !== "." && !this.packageJson.dir.endsWith(ctx.root)) {
       this.packageJson.dir = join(this.packageJson.dir, ctx.projectName);
     }
 
