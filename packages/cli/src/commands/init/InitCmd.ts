@@ -127,7 +127,7 @@ export class InitCmd implements ICommand {
       [
         {
           title: "Install plugins",
-          task: () => this.packageJson.install({packageManager: "yarn"})
+          task: () => this.packageJson.install({packageManager: "yarn", force: true})
         },
         {
           title: "Load plugins",

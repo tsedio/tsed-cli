@@ -24,4 +24,8 @@ export class CliExeca {
 
     return stdout.pipe(merge(stderr)).pipe(filter(Boolean));
   }
+
+  runSync(cmd: string, args: string[], opts?: execa.SyncOptions) {
+    return this.raw.sync(cmd, args, opts);
+  }
 }

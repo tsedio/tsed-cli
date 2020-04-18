@@ -52,6 +52,7 @@ function getPkgWithUndefinedVersion(deps: any) {
 
 export interface IInstallOptions {
   packageManager?: "npm" | "yarn";
+  force?: boolean;
 }
 
 function getPackageWithLatest(deps: any) {
@@ -236,14 +237,24 @@ export class ProjectPackageJson {
     return Fs.writeFileSync(this.path, JSON.stringify(this.raw, null, 2), {encoding: "utf8"});
   }
 
-  hasYarn() {
+  hasYarn(force: boolean = false) {
+    if (force) {
+      try {
+        this.cliExeca.runSync("yarn", ["--version"]);
+
+        return true;
+      } catch (er) {
+        return false;
+      }
+    }
+
     return hasYarn(this.dir);
   }
 
   install(options: IInstallOptions = {}) {
     options.packageManager = options.packageManager || (this.hasYarn() ? "yarn" : "npm");
 
-    if (options.packageManager === "yarn" && !this.hasYarn()) {
+    if (options.packageManager === "yarn" && !this.hasYarn(options.force)) {
       options.packageManager = "npm";
     }
 
