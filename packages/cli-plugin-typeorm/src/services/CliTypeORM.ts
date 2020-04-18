@@ -1,6 +1,6 @@
-import {CliExeca, CliYaml, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
+import {CliExeca, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
-import {constantCase, snakeCase} from "change-case";
+import {constantCase} from "change-case";
 import {basename, join} from "path";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
@@ -35,7 +35,7 @@ export class CliTypeORM {
       });
   }
 
-  async writeOrmConfigTemplate(name: string, database: string) {
+  async writeConfig(name: string, database: string) {
     const {InitCommand} = await this.projectPackageJson.importModule("typeorm/commands/InitCommand.js");
 
     const content = JSON.parse(await InitCommand.getOrmConfigTemplate(database));
@@ -56,10 +56,10 @@ export class CliTypeORM {
 
     await this.srcRenderer.write(JSON.stringify(content, null, 2), {output: `config/typeorm/${name}.config.json`});
 
-    this.regenerateTypeORMIndexConfig();
+    return this.regenerateIndexConfig();
   }
 
-  async regenerateTypeORMIndexConfig() {
+  async regenerateIndexConfig() {
     const list = await this.srcRenderer.scan([
       "config/typeorm/*.config.json"
     ]);

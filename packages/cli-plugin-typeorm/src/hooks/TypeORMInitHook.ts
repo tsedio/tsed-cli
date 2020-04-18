@@ -18,6 +18,7 @@ function getDatabase(ctx: IInitCmdContext) {
 export class TypeORMInitHook {
   @Inject()
   cliTypeORM: CliTypeORM;
+
   @Inject()
   protected packageJson: ProjectPackageJson;
 
@@ -52,7 +53,7 @@ export class TypeORMInitHook {
       },
       {
         title: "Generate TypeORM configuration",
-        task: async () => this.cliTypeORM.writeOrmConfigTemplate("default", database)
+        task: async () => this.cliTypeORM.writeConfig("default", database)
       },
       {
         title: "Generate docker-compose configuration",

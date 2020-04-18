@@ -1,15 +1,6 @@
-# @tsed/cli 
+# @tsed/cli-plugin-typeorm 
 
-[![Build Status](https://travis-ci.org/TypedProject/tsed-cli.svg?branch=master)](https://travis-ci.org/TypedProject/tsed-cli)
-[![TypeScript](https://badges.frapsoft.com/typescript/love/typescript.svg?v=100)](https://github.com/ellerbrock/typescript-badges/) 
-[![Package Quality](http://npm.packagequality.com/shield/@tsed/cli.png)](http://packagequality.com/#?package=@tsed/cli)
-[![npm version](https://badge.fury.io/js/%40tsed%2Fcli.svg)](https://badge.fury.io/js/%40tsed%2Fcli)
-[![Dependencies](https://david-dm.org/TypedProject/tsed-cli.svg)](https://david-dm.org/TypedProject/tsed-cli#info=dependencies)
-[![img](https://david-dm.org/TypedProject/tsed-cli/dev-status.svg)](https://david-dm.org/TypedProject/tsed-cli/#info=devDependencies)
-[![img](https://david-dm.org/TypedProject/tsed-cli/peer-status.svg)](https://david-dm.org/TypedProject/tsed-cli/#info=peerDependenciess)
-[![Known Vulnerabilities](https://snyk.io/test/github/TypedProject/tsed-cli/badge.svg)](https://snyk.io/test/github/TypedProject/tsed-cli)
-
-> CLI for the Ts.ED framework
+> Ts.ED CLI plugin. Add TypeORM support
 
 ## Features
 
@@ -18,7 +9,7 @@ Please refer to the [documentation](https://cli.tsed.io/) for more details.
 ## Installation
 
 ```bash
-npm install -g @tsed/cli
+npm install -g @tsed/cli-plugin-typeorm
 ```
 
 ## Contributors

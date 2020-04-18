@@ -93,7 +93,7 @@ export class TypeORMGenerateHook {
         {
           title: `Generate TypeORM configuration file to '${ctx.connectionName}.config.json'`,
           task: () =>
-            this.cliTypeORM.writeOrmConfigTemplate(ctx.connectionName, database)
+            this.cliTypeORM.writeConfig(ctx.connectionName, database)
         },
         {
           title: "Generate docker-compose configuration",
