@@ -7,7 +7,9 @@ import * as cors from "cors";
 import "@tsed/ajv";{{#if swagger}}
 import "@tsed/swagger";{{/if}}{{#if mongoose}}
 import "@tsed/mongoose";{{/if}}{{#if typeorm}}
-import "@tsed/typeorm";
+import "@tsed/typeorm";{{/if}}{{#if mongoose}}
+  import * as mongooseConfig from "./config/mongoose";
+{{/if}}{{#if typeorm}}
 import typeormConfig from "./config/typeorm";
 {{/if}}
 
@@ -32,6 +34,9 @@ const rootDir = __dirname;
   {{/if}}
   {{#if typeorm}}
   typeorm: typeormConfig,
+  {{/if}}
+  {{#if typeorm}}
+  mongoose: mongooseConfig,
   {{/if}}
   exclude: [
     "**/*.spec.ts"

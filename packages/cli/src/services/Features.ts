@@ -233,7 +233,7 @@ registerProvider({
                 "mongoose": "latest"
               },
               devDependencies: {
-                // "@tsed/cli-plugin-mongoose": cliVersion
+                "@tsed/cli-plugin-mongoose": cliVersion
               }
             }
           },

@@ -1,0 +1,7 @@
+export const {{name}} = {
+  url: process.env.{{symbolName}}_URL || "mongodb://localhost:27017/{{name}}",
+  connectionOptions: {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+}
