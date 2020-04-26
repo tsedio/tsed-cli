@@ -1,5 +1,11 @@
 import {applyDecorators, StoreSet} from "@tsed/core";
-import {Middleware, Req, Res, Context} from "@tsed/common";
+import {
+  Middleware,
+  Req,
+  Res,
+  Context,
+  {{#eq middlewarePosition "before"}}UseBefore{{/eq}}{{#eq middlewarePosition "after"}}UseAfter{{/eq}}
+} from "@tsed/common";
 
 export interface I{{symbolName}}Options {
 
@@ -8,7 +14,7 @@ export interface I{{symbolName}}Options {
 @Middleware()
 export class {{symbolName}}Middleware {
   use(@Req() req: Req, @Res() res: Res, @Context() context: Context) {
-    const {}: I{{symbolName}}Options = context.endpoint.get({{symbolName}}Middleware);{{#eq middlewareType "after"}}
+    const {}: I{{symbolName}}Options = context.endpoint.get({{symbolName}}Middleware);{{#eq middlewarePosition "after"}}
     const data = context.data;
     // do something with data and return data
     return data{{/eq}}
@@ -18,6 +24,6 @@ export class {{symbolName}}Middleware {
 export function {{symbolName}}(options: I{{symbolName}}Options): MethodDecorator {
   return applyDecorators(
     StoreSet({{symbolName}}Middleware, options),
-    {{#eq middlewareType "before"}}UseBefore(){{/eq}}{{#eq middlewareType "after"}}UseAfter({{symbolName}}Middleware){{/eq}}
+    {{#eq middlewarePosition "before"}}UseBefore(){{/eq}}{{#eq middlewarePosition "after"}}UseAfter({{symbolName}}Middleware){{/eq}}
   );
 }
