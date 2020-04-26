@@ -18,6 +18,7 @@ export interface IGenerateCmdContext extends ICliDefaultOptions {
 
 const DECORATOR_TYPES = [
   {name: "Class decorator", value: "class"},
+  {name: "Ts.ED middleware and his decorator", value: "middleware"},
   {name: "Ts.ED endpoint decorator", value: "endpoint"},
   {name: "Ts.ED property decorator", value: "prop"},
   {name: "Ts.ED parameter decorator", value: "param"},
@@ -115,6 +116,18 @@ export class GenerateCmd implements ICommand {
           return ["decorator"].includes(state.type || initialOptions.type);
         },
         source: searchFactory(DECORATOR_TYPES)
+      },
+      {
+        type: "list",
+        name: "middlewarePosition",
+        message: (state: any) => `The middleware should be called:`,
+        choices: [
+          {name: "Before the endpoint", value: "before"},
+          {name: "After the endpoint", value: "after"}
+        ],
+        when(state: any) {
+          return ["decorator"].includes(state.type || initialOptions.type) && ["middleware"].includes(state.templateType);
+        }
       }
     ];
   }
