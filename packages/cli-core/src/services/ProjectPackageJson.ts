@@ -182,11 +182,13 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addDependencies(modules: { [key: string]: string | undefined }, scope: object = {}) {
+  addDependencies(modules: { [key: string]: string | undefined }, ctx: any = {}) {
     Object.entries(modules).forEach(([pkg, version]) => {
       this.addDependency(
         pkg,
-        (version || "").replace(/{{([\w.]+)}}/gi, (match, key) => getValue(key, scope))
+        (version || "")
+          .replace("{{tsedVersion}}", ctx.tsedVersion)
+          .replace(/{{([\w.]+)}}/gi, (match, key) => getValue(key, ctx))
       );
     });
 

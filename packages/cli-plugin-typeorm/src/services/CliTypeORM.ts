@@ -1,6 +1,6 @@
 import {CliExeca, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
-import {constantCase} from "change-case";
+import {camelCase, constantCase} from "change-case";
 import {basename, join} from "path";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
@@ -38,7 +38,11 @@ export class CliTypeORM {
   async writeConfig(name: string, database: string) {
     const {InitCommand} = await this.projectPackageJson.importModule("typeorm/commands/InitCommand.js");
 
-    const content = JSON.parse(await InitCommand.getOrmConfigTemplate(database));
+    const content = {
+      name,
+      ...JSON.parse(await InitCommand.getOrmConfigTemplate(database))
+    };
+
 
     function replace(path: string | undefined) {
       return path && path.replace("src/", "${rootDir}/");
@@ -65,8 +69,11 @@ export class CliTypeORM {
     ]);
 
     const configs = list.map((file) => {
+      const name = basename(file).replace(/\.config\.json/gi, "");
+
       return {
-        name: basename(file).replace(/\.config\.json/gi, "")
+        name,
+        symbolName: camelCase(name)
       };
     });
 
