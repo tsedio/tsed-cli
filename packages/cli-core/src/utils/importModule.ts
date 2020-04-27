@@ -9,11 +9,16 @@ export async function importModule(mod: string, root: string = process.cwd()) {
   } catch (er) {
   }
 
-  let path = join(root, "node_modules", mod);
+  const path = [
+    join(root, "node_modules", mod),
+    join(root, "..", "node_modules", mod),
+    join(root, "..", "..", "node_modules", mod),
+    join(root, "..", "..", "..", "node_modules", mod)
+  ].find((path) => Fs.existsSync(path));
 
-  if (!Fs.existsSync(path)) {
-    path = require.resolve(mod);
+  if (path) {
+    return import(path);
   }
 
-  return import(path);
+  return import(mod);
 }
