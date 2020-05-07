@@ -64,19 +64,23 @@ export class CliService {
   }
 
   public async exec(cmdName: string, ctx: any) {
-    const tasks = [
-      ...(await this.getTasks(cmdName, ctx)),
-      {
-        title: "Install dependencies",
-        skip: () => !this.projectPkg.rewrite && !this.projectPkg.reinstall,
-        task: () => {
-          return this.projectPkg.install({packageManager: "yarn"});
-        }
-      },
-      ...(await this.getPostInstallTasks(cmdName, ctx))
-    ];
+    const tasks = [];
 
-    return createTasksRunner(tasks, this.mapContext(cmdName, ctx));
+    tasks.push(...(await this.getTasks(cmdName, ctx)));
+
+    tasks.push({
+      title: "Install dependencies",
+      skip: () => !this.projectPkg.rewrite && !this.projectPkg.reinstall,
+      task: () => this.projectPkg.install({packageManager: "yarn"})
+    });
+
+    const mappedCtx = this.mapContext(cmdName, ctx);
+
+    await createTasksRunner(tasks, mappedCtx);
+
+    const postTasks = await this.getPostInstallTasks(cmdName, ctx);
+
+    await createTasksRunner(postTasks, mappedCtx);
   }
 
   /**
