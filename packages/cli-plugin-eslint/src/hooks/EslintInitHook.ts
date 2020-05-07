@@ -42,7 +42,7 @@ export class EslintInitHook {
 
   @OnPostInstall("init")
   onPostInstall(ctx: IInitCmdContext) {
-    if (!ctx.esLint) {
+    if (!ctx.eslint) {
       return [];
     }
 

@@ -42,7 +42,7 @@ export class TslintInitHook {
 
   @OnPostInstall("init")
   onPostInstall(ctx: IInitCmdContext) {
-    if (!ctx.tsLint) {
+    if (!ctx.tslint) {
       return [];
     }
 

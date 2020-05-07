@@ -306,7 +306,7 @@ registerProvider({
             }
           },
           {
-            name: "TsLint",
+            name: "TsLint (deprecated)",
             checked: true,
             value: {
               type: "tslint",
