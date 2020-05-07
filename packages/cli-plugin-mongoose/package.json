@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-plugin-mongoose",
-  "version": "1.10.2",
+  "version": "1.11.0",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "description": "Ts.ED CLI plugin. Add Mongoose support",
@@ -9,8 +9,8 @@
     "tslib": "1.11.1"
   },
   "devDependencies": {
-    "@tsed/cli": "1.10.2",
-    "@tsed/cli-core": "1.10.2"
+    "@tsed/cli": "1.11.0",
+    "@tsed/cli-core": "1.11.0"
   },
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",
