@@ -319,7 +319,7 @@ registerProvider({
       },
       {
         message: "Choose extra linter tools",
-        type: "list",
+        type: "checkbox",
         name: "featuresExtraLinter",
         when(ctx: { features: FeatureValue[] }) {
           return hasFeature("linter", ctx);
