@@ -4,7 +4,7 @@ import * as Fs from "fs-extra";
 import * as Listr from "listr";
 import {dirname, join} from "path";
 import * as readPkgUp from "read-pkg-up";
-import {Observable, throwError} from "rxjs";
+import {EMPTY, Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {IPackageJson} from "../interfaces/IPackageJson";
 import {importModule} from "../utils/importModule";
@@ -290,6 +290,24 @@ export class ProjectPackageJson {
    */
   async importModule(mod: string) {
     return importModule(mod, this.dir);
+  }
+
+  public runScript(npmTask: string, ignoreError: boolean = false) {
+    const options = {
+      cwd: this.dir
+    };
+    const errorPipe = () =>
+      catchError((error: any) => {
+        if (ignoreError) {
+          return EMPTY;
+        }
+
+        return throwError(error);
+      });
+
+    return this.cliExeca
+      .run("npm", ["run", npmTask], options)
+      .pipe(errorPipe());
   }
 
   protected resolve() {

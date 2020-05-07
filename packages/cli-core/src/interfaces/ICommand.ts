@@ -28,4 +28,10 @@ export interface ICommand {
    * @param options
    */
   $exec(options: any): Tasks | Promise<Tasks>;
+
+  /**
+   * Run commands after the npm/yarn install
+   * @param options
+   */
+  $postInstall?(options: any): Tasks | Promise<Tasks>;
 }

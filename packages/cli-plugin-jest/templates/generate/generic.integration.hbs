@@ -9,7 +9,7 @@ describe("{{symbolName}}", () => {
 
   beforeEach(TestContext.bootstrap(Server, {
     mount: {
-      "/": {{symbolName}}
+      "/": [{{symbolName}}]
     }
   }));
   beforeEach(TestContext.inject([PlatformApplication], (app: PlatformApplication) => {

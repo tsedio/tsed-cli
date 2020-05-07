@@ -72,7 +72,8 @@ export class CliService {
         task: () => {
           return this.projectPkg.install({packageManager: "yarn"});
         }
-      }
+      },
+      ...(await this.getPostInstallTasks(cmdName, ctx))
     ];
 
     return createTasksRunner(tasks, this.mapContext(cmdName, ctx));
@@ -122,6 +123,18 @@ export class CliService {
     return [
       ...(await instance.$exec(ctx)),
       ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, ctx))
+    ];
+  }
+
+  public async getPostInstallTasks(cmdName: string, ctx: any) {
+    const provider = this.commands.get(cmdName);
+    const instance = this.injector.get<ICommand>(provider.useClass)!;
+
+    ctx = this.mapContext(cmdName, ctx);
+
+    return [
+      ...(instance.$postInstall ? await instance.$postInstall(ctx) : []),
+      ...(await this.hooks.emit(CommandStoreKeys.POST_INSTALL_HOOKS, cmdName, ctx))
     ];
   }
 

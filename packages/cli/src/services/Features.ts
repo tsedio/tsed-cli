@@ -288,13 +288,23 @@ registerProvider({
         ]
       },
       {
-        message: "Choose linter tools",
-        type: "checkbox",
+        message: "Choose linter tools framework",
+        type: "list",
         name: "featuresLinter",
         when(ctx: { features: FeatureValue[] }) {
           return hasFeature("linter", ctx);
         },
         choices: [
+          {
+            name: "EsLint",
+            checked: true,
+            value: {
+              type: "eslint",
+              devDependencies: {
+                "@tsed/cli-plugin-eslint": cliVersion
+              }
+            }
+          },
           {
             name: "TsLint",
             checked: true,
@@ -304,23 +314,27 @@ registerProvider({
                 "@tsed/cli-plugin-tslint": cliVersion
               }
             }
-          },
+          }
+        ]
+      },
+      {
+        message: "Choose extra linter tools",
+        type: "list",
+        name: "featuresExtraLinter",
+        when(ctx: { features: FeatureValue[] }) {
+          return hasFeature("linter", ctx);
+        },
+        choices: [
           {
             name: "Prettier",
             value: {
-              type: "tslint:prettier",
-              devDependencies: {
-                "@tsed/cli-plugin-tslint": cliVersion
-              }
+              type: "prettier"
             }
           },
           {
             name: "Lint on commit",
             value: {
-              type: "tslint:lintstaged",
-              devDependencies: {
-                "@tsed/cli-plugin-tslint": cliVersion
-              }
+              type: "lintstaged"
             }
           }
         ]

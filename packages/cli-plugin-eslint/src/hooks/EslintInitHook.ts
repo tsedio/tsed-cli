@@ -3,7 +3,7 @@ import {Inject, Injectable, OnExec, OnPostInstall, ProjectPackageJson, RootRende
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
 @Injectable()
-export class TslintInitHook {
+export class EslintInitHook {
   @Inject()
   protected packageJson: ProjectPackageJson;
 
@@ -12,7 +12,7 @@ export class TslintInitHook {
 
   @OnExec("init")
   onExec(ctx: IInitCmdContext) {
-    if (!ctx.tslint) {
+    if (!ctx.eslint) {
       return [];
     }
     this.addScripts(ctx);
@@ -21,11 +21,11 @@ export class TslintInitHook {
 
     return [
       {
-        title: "Generate files for tslint",
+        title: "Generate files for eslint",
         task: (ctx: any) => {
           return this.rootRenderer.renderAll(
             [
-              "init/tslint.json.hbs",
+              "init/.eslintrc.hbs",
               ctx.lintstaged && "init/.lintstagedrc.hbs",
               ctx.prettier && "init/.prettierignore.hbs",
               ctx.prettier && "init/.prettierrc.hbs"
@@ -42,7 +42,7 @@ export class TslintInitHook {
 
   @OnPostInstall("init")
   onPostInstall(ctx: IInitCmdContext) {
-    if (!ctx.tsLint) {
+    if (!ctx.esLint) {
       return [];
     }
 
@@ -58,8 +58,8 @@ export class TslintInitHook {
 
   addScripts(ctx: IInitCmdContext) {
     this.packageJson.addScripts({
-      "test:lint": "tslint --project tsconfig.json",
-      "test:lint:fix": "tslint --project tsconfig.json --fix"
+      "test:lint": "eslint src --ext .ts",
+      "test:lint:fix": "eslint src --ext .ts --fix"
     });
 
     if (ctx.prettier) {
@@ -76,7 +76,11 @@ export class TslintInitHook {
   addDevDependencies(ctx: IInitCmdContext) {
     this.packageJson.addDevDependencies(
       {
-        tslint: "latest"
+        "eslint": "latest",
+        "eslint-config-prettier": "latest",
+        "eslint-plugin-prettier": "latest",
+        "@typescript-eslint/parser": "latest",
+        "@typescript-eslint/eslint-plugin": "latest"
       },
       ctx
     );
