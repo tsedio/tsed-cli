@@ -1,11 +1,7 @@
 import {Cli, createInjector, Env, InjectorService, loadInjector, LocalsContainer, OnInit, TokenProvider} from "@tsed/cli-core";
 
-export interface IInvokeOptions {
-  token?: TokenProvider;
-  /**
-   * @deprecated
-   */
-  provide?: TokenProvider;
+export interface InvokeOptions {
+  token: TokenProvider;
   use: any;
 }
 
@@ -14,7 +10,7 @@ export class CliTestContext {
 
   static get injector(): InjectorService {
     if (this._injector) {
-      return this._injector!;
+      return this._injector;
     }
 
     /* istanbul ignore next */
@@ -93,10 +89,10 @@ export class CliTestContext {
     };
   }
 
-  static invoke<T = any>(target: TokenProvider, providers: IInvokeOptions[]): T | Promise<T> {
+  static invoke<T = any>(target: TokenProvider, providers: InvokeOptions[]): T | Promise<T> {
     const locals = new LocalsContainer();
     providers.forEach(p => {
-      locals.set(p.token || p.provide, p.use);
+      locals.set(p.token, p.use);
     });
 
     const instance: OnInit = CliTestContext.injector.invoke(target, locals, {rebuild: true});

@@ -23,9 +23,7 @@ export class CliDockerComposeYaml {
       case "mariadb":
         dockerCompose.services[snakeCase(name)] = {
           image: database === "mysql" ? "mysql:5.7.10" : "mariadb:10.1.16",
-          ports: [
-            "3306:3306"
-          ],
+          ports: ["3306:3306"],
           environment: {
             MYSQL_ROOT_PASSWORD: "admin",
             MYSQL_USER: "test",
@@ -37,9 +35,7 @@ export class CliDockerComposeYaml {
       case "postgres":
         dockerCompose.services[snakeCase(name)] = {
           image: "postgres:9.6.1",
-          ports: [
-            "5432:5432"
-          ],
+          ports: ["5432:5432"],
           environment: {
             POSTGRES_USER: "test",
             POSTGRES_PASSWORD: "test",
@@ -51,18 +47,14 @@ export class CliDockerComposeYaml {
         dockerCompose.services[snakeCase(name)] = {
           image: "cockroachdb/cockroach:v2.1.4",
           command: "start --insecure",
-          ports: [
-            "26257:26257"
-          ]
+          ports: ["26257:26257"]
         };
         break;
       case "mssql":
         dockerCompose.services[snakeCase(name)] = {
           image: "microsoft/mssql-server-linux:rc2",
           command: "start --insecure",
-          ports: [
-            "1433:1433"
-          ],
+          ports: ["1433:1433"],
           environment: {
             SA_PASSWORD: "Admin12345",
             ACCEPT_EULA: "Y"
@@ -72,9 +64,7 @@ export class CliDockerComposeYaml {
       case "mongodb":
         dockerCompose.services[snakeCase(name)] = {
           image: "mongo:4.1",
-          ports: [
-            "27017:27017"
-          ]
+          ports: ["27017:27017"]
         };
         break;
     }

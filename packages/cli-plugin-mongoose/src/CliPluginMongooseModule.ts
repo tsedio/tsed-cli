@@ -6,5 +6,4 @@ import {CliMongoose} from "./services/CliMongoose";
 @Module({
   imports: [MongooseInitHook, MongooseGenerateHook, CliMongoose]
 })
-export class CliPluginMongooseModule {
-}
+export class CliPluginMongooseModule {}

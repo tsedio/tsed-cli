@@ -1,4 +1,4 @@
-export interface IPackageJson {
+export interface PackageJson {
   name: string;
   version: string;
   description: string;
@@ -9,7 +9,7 @@ export interface IPackageJson {
   [key: string]: any;
 }
 
-export interface IPackageInfo {
+export interface PackageInfo {
   _id: string;
   _rev: string;
   name: string;
@@ -17,7 +17,7 @@ export interface IPackageInfo {
     [key: string]: string;
   };
   versions: {
-    [key: string]: IPackageJson;
+    [key: string]: PackageJson;
   };
   time: {
     [key: string]: string;

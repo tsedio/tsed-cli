@@ -6,5 +6,4 @@ import {TypeORMInitHook} from "./hooks/TypeORMInitHook";
 @Module({
   imports: [TypeORMInitHook, TypeORMGenerateHook, TypeORMCmd]
 })
-export class CliPluginTypeORMModule {
-}
+export class CliPluginTypeORMModule {}

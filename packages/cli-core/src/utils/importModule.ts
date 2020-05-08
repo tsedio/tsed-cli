@@ -6,15 +6,14 @@ export async function importModule(mod: string, root: string = process.cwd()) {
     if (process.env.NODE_ENV === "development") {
       return await import(mod);
     }
-  } catch (er) {
-  }
+  } catch (er) {}
 
   const path = [
     join(root, "node_modules", mod),
     join(root, "..", "node_modules", mod),
     join(root, "..", "..", "node_modules", mod),
     join(root, "..", "..", "..", "node_modules", mod)
-  ].find((path) => Fs.existsSync(path));
+  ].find(path => Fs.existsSync(path));
 
   if (path) {
     return import(path);

@@ -1,7 +1,7 @@
 import {Configuration, Inject, registerProvider} from "@tsed/di";
-import {IPackageJson} from "../interfaces/IPackageJson";
+import {PackageJson} from "../interfaces/PackageJson";
 
-export interface CliPackageJson extends IPackageJson {}
+export type CliPackageJson = PackageJson;
 
 export function CliPackageJson() {
   return Inject(CliPackageJson);

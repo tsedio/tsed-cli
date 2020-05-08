@@ -21,7 +21,7 @@ export class CliPlugins {
   @Inject()
   private injector: InjectorService;
 
-  async searchPlugins(keyword: string = "", options: any = {}) {
+  async searchPlugins(keyword = "", options: any = {}) {
     const result = await this.npmRegistryClient.search(this.getKeyword(keyword), options);
 
     return result

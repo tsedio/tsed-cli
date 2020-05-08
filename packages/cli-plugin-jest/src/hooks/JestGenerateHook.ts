@@ -1,4 +1,4 @@
-import {IGenerateCmdContext} from "@tsed/cli";
+import {GenerateCmdContext} from "@tsed/cli";
 import {Inject, Injectable, OnExec, SrcRendererService, Tasks} from "@tsed/cli-core";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
@@ -7,10 +7,8 @@ export class JestGenerateHook {
   @Inject()
   srcRenderService: SrcRendererService;
 
-  constructor() {}
-
   @OnExec("generate")
-  onGenerateExec(ctx: IGenerateCmdContext): Tasks {
+  onGenerateExec(ctx: GenerateCmdContext): Tasks {
     const {symbolPath} = ctx;
     const {specTemplate, integrationTemplate} = this.mapOptions(ctx);
 
@@ -40,7 +38,7 @@ export class JestGenerateHook {
     ];
   }
 
-  private mapOptions(options: IGenerateCmdContext) {
+  private mapOptions(options: GenerateCmdContext) {
     const type = [options.type, options.templateType].filter(Boolean).join(".");
 
     const specTemplate = this.srcRenderService.templateExists(`generate/${type}.spec.hbs`, {templateDir: TEMPLATE_DIR})

@@ -13,7 +13,7 @@ import {Injectable} from "@tsed/di";
 import {paramCase} from "change-case";
 import {CliTypeORM} from "../services/CliTypeORM";
 
-export interface ITypeORMGenerateOptions extends IGenerateCmdContext {
+export interface TypeORMGenerateOptions extends IGenerateCmdContext {
   typeormConnection: string;
   connectionName: string;
 }
@@ -44,8 +44,8 @@ export class TypeORMGenerateHook {
   }
 
   @OnPrompt("generate")
-  async onGeneratePrompt(initialOption: IGenerateCmdContext): Promise<QuestionOptions> {
-    const list = FEATURES_TYPEORM_CONNECTION_TYPES.map((item) => {
+  async onGeneratePrompt(): Promise<QuestionOptions> {
+    const list = FEATURES_TYPEORM_CONNECTION_TYPES.map(item => {
       return {
         name: item.name,
         value: item.value.type
@@ -72,7 +72,7 @@ export class TypeORMGenerateHook {
   }
 
   @OnExec("generate")
-  onGenerateExec(ctx: ITypeORMGenerateOptions): Tasks {
+  onGenerateExec(ctx: TypeORMGenerateOptions): Tasks {
     if (this.providersInfoService.isMyProvider(ctx.type, TypeORMGenerateHook)) {
       ctx = this.mapOptions(ctx);
       const {typeormConnection, symbolPath} = ctx;
@@ -87,13 +87,11 @@ export class TypeORMGenerateHook {
       return [
         {
           title: `Generate TypeORM connection file to '${symbolPath}.ts'`,
-          task: () =>
-            this.cliTypeORM.generateConnection(ctx.name, ctx)
+          task: () => this.cliTypeORM.generateConnection(ctx.name, ctx)
         },
         {
           title: `Generate TypeORM configuration file to '${ctx.connectionName}.config.json'`,
-          task: () =>
-            this.cliTypeORM.writeConfig(ctx.connectionName, database)
+          task: () => this.cliTypeORM.writeConfig(ctx.connectionName, database)
         },
         {
           title: "Generate docker-compose configuration",
@@ -105,7 +103,7 @@ export class TypeORMGenerateHook {
     return [];
   }
 
-  private mapOptions(options: ITypeORMGenerateOptions) {
+  private mapOptions(options: TypeORMGenerateOptions) {
     return {
       ...options,
       connectionName: paramCase(options.name).replace("-connection", "")

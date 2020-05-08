@@ -175,7 +175,7 @@ async function bootstrap() {
     pkg,
     templateDir: TEMPLATE_DIR,
     commands: [
-      AddCmd, // Command to install a plugin
+      AddCmd, // CommandProvider to install a plugin
       // then add you commands
     ]
   });

@@ -7,8 +7,7 @@ import {getCommandMetadata} from "./getCommandMetadata";
   description: "description",
   alias: "g"
 })
-class TestCmd {
-}
+class TestCmd {}
 
 describe("getCommandMetadata", () => {
   it("should return command metadata", () => {

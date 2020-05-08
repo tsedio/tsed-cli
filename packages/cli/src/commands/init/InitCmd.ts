@@ -4,8 +4,8 @@ import {
   Command,
   Configuration,
   createTasksRunner,
-  ICliDefaultOptions,
-  ICommand,
+  CliDefaultOptions,
+  CommandProvider,
   Inject,
   ProjectPackageJson,
   QuestionOptions,
@@ -18,7 +18,7 @@ import * as Listr from "listr";
 import {basename, join} from "path";
 import {Features, FeatureValue} from "../../services/Features";
 
-export interface IInitCmdContext extends ICliDefaultOptions {
+export interface InitCmdContext extends CliDefaultOptions {
   root: string;
   srcDir: string;
   projectName: string;
@@ -47,7 +47,7 @@ export interface IInitCmdContext extends ICliDefaultOptions {
     }
   }
 })
-export class InitCmd implements ICommand {
+export class InitCmd implements CommandProvider {
   @Configuration()
   protected configuration: Configuration;
 
@@ -69,7 +69,7 @@ export class InitCmd implements ICommand {
   @Inject()
   protected rootRenderer: RootRendererService;
 
-  $prompt(initialOptions: Partial<IInitCmdContext>): QuestionOptions {
+  $prompt(initialOptions: Partial<InitCmdContext>): QuestionOptions {
     return [
       {
         type: "input",
@@ -85,7 +85,7 @@ export class InitCmd implements ICommand {
     ];
   }
 
-  $mapContext(ctx: Partial<IInitCmdContext>): IInitCmdContext {
+  $mapContext(ctx: Partial<InitCmdContext>): InitCmdContext {
     ctx.projectName = paramCase(ctx.projectName || basename(this.packageJson.dir));
 
     if (ctx.root && ctx.root !== "." && !this.packageJson.dir.endsWith(ctx.root)) {
@@ -111,16 +111,16 @@ export class InitCmd implements ICommand {
       ...ctx,
       features,
       srcDir: this.configuration.project?.srcDir
-    } as IInitCmdContext;
+    } as InitCmdContext;
   }
 
-  async $beforeExec(ctx: IInitCmdContext) {
+  async $beforeExec(ctx: InitCmdContext) {
     Fs.ensureDirSync(this.packageJson.dir);
 
     this.packageJson.name = ctx.projectName;
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);
-    this.addScripts(ctx);
+    this.addScripts();
     this.addFeatures(ctx);
 
     await createTasksRunner(
@@ -138,7 +138,7 @@ export class InitCmd implements ICommand {
     );
   }
 
-  async $exec(ctx: IInitCmdContext) {
+  async $exec(ctx: InitCmdContext) {
     const subTasks = [
       ...(await this.cliService.getTasks("generate", {
         ...ctx,
@@ -190,24 +190,24 @@ export class InitCmd implements ICommand {
     ];
   }
 
-  addScripts(ctx: IInitCmdContext) {
+  addScripts() {
     this.packageJson.addScripts({
       build: "yarn tsc",
       tsc: "tsc --project tsconfig.compile.json",
       "tsc:w": "tsc --project tsconfig.json -w",
-      start: "nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
+      start: 'nodemon --watch "src/**/*.ts" --ignore "node_modules/**/*" --exec ts-node src/index.ts',
       "start:prod": "cross-env NODE_ENV=production node dist/index.js"
     });
   }
 
-  addDependencies(ctx: IInitCmdContext) {
+  addDependencies(ctx: InitCmdContext) {
     this.packageJson.addDependencies(
       {
         "@tsed/common": ctx.tsedVersion,
         "@tsed/core": ctx.tsedVersion,
         "@tsed/di": ctx.tsedVersion,
         "@tsed/ajv": ctx.tsedVersion,
-        "ajv": "latest",
+        ajv: "latest",
         "body-parser": "latest",
         cors: "latest",
         compression: "latest",
@@ -221,7 +221,7 @@ export class InitCmd implements ICommand {
     );
   }
 
-  addDevDependencies(ctx: IInitCmdContext) {
+  addDevDependencies(ctx: InitCmdContext) {
     this.packageJson.addDevDependencies(
       {
         "@types/cors": "2.8.6",
@@ -239,7 +239,7 @@ export class InitCmd implements ICommand {
     );
   }
 
-  addFeatures(ctx: IInitCmdContext) {
+  addFeatures(ctx: InitCmdContext) {
     ctx.features.forEach(feature => {
       if (feature.dependencies) {
         this.packageJson.addDependencies(feature.dependencies, ctx);

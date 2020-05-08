@@ -31,12 +31,12 @@ function checkNodeVersion(wanted: string, id: string) {
     console.log(
       chalk.red(
         "You are using Node " +
-        process.version +
-        ", but this version of " +
-        id +
-        " requires Node " +
-        wanted +
-        ".\nPlease upgrade your Node version."
+          process.version +
+          ", but this version of " +
+          id +
+          " requires Node " +
+          wanted +
+          ".\nPlease upgrade your Node version."
       )
     );
     process.exit(1);

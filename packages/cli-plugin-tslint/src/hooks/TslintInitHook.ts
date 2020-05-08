@@ -1,4 +1,4 @@
-import {IInitCmdContext} from "@tsed/cli";
+import {InitCmdContext} from "@tsed/cli";
 import {Inject, Injectable, OnExec, OnPostInstall, ProjectPackageJson, RootRendererService} from "@tsed/cli-core";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
@@ -11,7 +11,7 @@ export class TslintInitHook {
   protected rootRenderer: RootRendererService;
 
   @OnExec("init")
-  onExec(ctx: IInitCmdContext) {
+  onExec(ctx: InitCmdContext) {
     if (!ctx.tslint) {
       return [];
     }
@@ -41,7 +41,7 @@ export class TslintInitHook {
   }
 
   @OnPostInstall("init")
-  onPostInstall(ctx: IInitCmdContext) {
+  onPostInstall(ctx: InitCmdContext) {
     if (!ctx.tslint) {
       return [];
     }
@@ -56,7 +56,7 @@ export class TslintInitHook {
     ];
   }
 
-  addScripts(ctx: IInitCmdContext) {
+  addScripts(ctx: InitCmdContext) {
     this.packageJson.addScripts({
       "test:lint": "tslint --project tsconfig.json",
       "test:lint:fix": "tslint --project tsconfig.json --fix"
@@ -69,11 +69,11 @@ export class TslintInitHook {
     }
   }
 
-  addDependencies(ctx: IInitCmdContext) {
+  addDependencies(ctx: InitCmdContext) {
     this.packageJson.addDependencies({}, ctx);
   }
 
-  addDevDependencies(ctx: IInitCmdContext) {
+  addDevDependencies(ctx: InitCmdContext) {
     this.packageJson.addDevDependencies(
       {
         tslint: "latest"

@@ -4,8 +4,7 @@ import {OnPostInstall} from "./onPostInstall";
 
 class Test {
   @OnPostInstall("cmd")
-  test() {
-  }
+  test() {}
 }
 
 describe("@OnPostIntall", () => {
@@ -13,7 +12,7 @@ describe("@OnPostIntall", () => {
     Store.from(Test)
       .get(CommandStoreKeys.POST_INSTALL_HOOKS)
       .should.deep.eq({
-      cmd: ["test"]
-    });
+        cmd: ["test"]
+      });
   });
 });

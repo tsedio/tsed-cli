@@ -1,16 +1,9 @@
-import {IInitCmdContext} from "@tsed/cli";
-import {
-  CliDockerComposeYaml,
-  Inject,
-  OnExec,
-  ProjectPackageJson,
-  RootRendererService,
-  SrcRendererService
-} from "@tsed/cli-core";
+import {InitCmdContext} from "@tsed/cli";
+import {CliDockerComposeYaml, Inject, OnExec, ProjectPackageJson, RootRendererService, SrcRendererService} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {CliTypeORM} from "../services/CliTypeORM";
 
-function getDatabase(ctx: IInitCmdContext) {
+function getDatabase(ctx: InitCmdContext) {
   return ctx.features.find(({type}) => type.includes("typeorm:"))?.type.split(":")[1] || "";
 }
 
@@ -32,8 +25,8 @@ export class TypeORMInitHook {
   protected cliDockerComposeYaml: CliDockerComposeYaml;
 
   @OnExec("init")
-  onExec(ctx: IInitCmdContext) {
-    this.addScripts(ctx);
+  onExec(ctx: InitCmdContext) {
+    this.addScripts();
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);
 
@@ -46,10 +39,11 @@ export class TypeORMInitHook {
     return [
       {
         title: `Generate TypeORM connection file`,
-        task: async () => this.cliTypeORM.generateConnection("default", {
-          symbolPath: "DefaultConnection",
-          symbolName: "DefaultConnection"
-        })
+        task: async () =>
+          this.cliTypeORM.generateConnection("default", {
+            symbolPath: "DefaultConnection",
+            symbolName: "DefaultConnection"
+          })
       },
       {
         title: "Generate TypeORM configuration",
@@ -62,20 +56,17 @@ export class TypeORMInitHook {
     ];
   }
 
-  addScripts(ctx: IInitCmdContext) {
+  addScripts() {
     this.packageJson.addScripts({
-      "typeorm": "tsed typeorm"
+      typeorm: "tsed typeorm"
     });
   }
 
-  addDependencies(ctx: IInitCmdContext) {
+  addDependencies(ctx: InitCmdContext) {
     this.packageJson.addDependencies({}, ctx);
   }
 
-  addDevDependencies(ctx: IInitCmdContext) {
-    this.packageJson.addDevDependencies(
-      {},
-      ctx
-    );
+  addDevDependencies(ctx: InitCmdContext) {
+    this.packageJson.addDevDependencies({}, ctx);
   }
 }

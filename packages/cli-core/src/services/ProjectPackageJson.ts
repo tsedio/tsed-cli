@@ -6,7 +6,7 @@ import {dirname, join} from "path";
 import * as readPkgUp from "read-pkg-up";
 import {EMPTY, Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
-import {IPackageJson} from "../interfaces/IPackageJson";
+import {PackageJson} from "../interfaces/PackageJson";
 import {importModule} from "../utils/importModule";
 import {CliExeca} from "./CliExeca";
 import {NpmRegistryClient} from "./NpmRegistryClient";
@@ -46,17 +46,17 @@ function getPackageJson(configuration: Configuration) {
 
 function getPkgWithUndefinedVersion(deps: any) {
   return Object.entries(deps)
-    .filter(([_, version]) => !version)
+    .filter(([, version]) => !version)
     .map(([key]) => key);
 }
 
-export interface IInstallOptions {
+export interface InstallOptions {
   packageManager?: "npm" | "yarn";
   force?: boolean;
 }
 
 function getPackageWithLatest(deps: any) {
-  return Object.entries(deps).filter(([_, version]) => version === "latest");
+  return Object.entries(deps).filter(([, version]) => version === "latest");
 }
 
 function sortKeys(obj: any) {
@@ -80,7 +80,7 @@ export class ProjectPackageJson {
   @Inject(NpmRegistryClient)
   protected npmRegistryClient: NpmRegistryClient;
 
-  private raw: IPackageJson = {
+  private raw: PackageJson = {
     name: "",
     version: "1.0.0",
     description: "",
@@ -148,7 +148,7 @@ export class ProjectPackageJson {
     return this.raw.devDependencies;
   }
 
-  get allDependencies(): { [key: string]: string } {
+  get allDependencies(): {[key: string]: string} {
     return {
       ...(this.dependencies || {}),
       ...(this.devDependencies || {})
@@ -163,7 +163,7 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addDevDependencies(modules: { [key: string]: string | undefined }, scope: object = {}) {
+  addDevDependencies(modules: {[key: string]: string | undefined}, scope: object = {}) {
     Object.entries(modules).forEach(([pkg, version]) => {
       this.addDevDependency(
         pkg,
@@ -182,13 +182,11 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addDependencies(modules: { [key: string]: string | undefined }, ctx: any = {}) {
+  addDependencies(modules: {[key: string]: string | undefined}, ctx: any = {}) {
     Object.entries(modules).forEach(([pkg, version]) => {
       this.addDependency(
         pkg,
-        (version || "")
-          .replace("{{tsedVersion}}", ctx.tsedVersion)
-          .replace(/{{([\w.]+)}}/gi, (match, key) => getValue(key, ctx))
+        (version || "").replace("{{tsedVersion}}", ctx.tsedVersion).replace(/{{([\w.]+)}}/gi, (match, key) => getValue(key, ctx))
       );
     });
 
@@ -202,7 +200,7 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addScripts(scripts: { [key: string]: string }) {
+  addScripts(scripts: {[key: string]: string}) {
     Object.entries(scripts).forEach(([task, cmd]) => {
       this.addScript(task, cmd);
     });
@@ -239,7 +237,7 @@ export class ProjectPackageJson {
     return Fs.writeFileSync(this.path, JSON.stringify(this.raw, null, 2), {encoding: "utf8"});
   }
 
-  hasYarn(force: boolean = false) {
+  hasYarn(force = false) {
     if (force) {
       try {
         this.cliExeca.runSync("yarn", ["--version"]);
@@ -253,7 +251,7 @@ export class ProjectPackageJson {
     return hasYarn(this.dir);
   }
 
-  install(options: IInstallOptions = {}) {
+  install(options: InstallOptions = {}) {
     options.packageManager = options.packageManager || (this.hasYarn() ? "yarn" : "npm");
 
     if (options.packageManager === "yarn" && !this.hasYarn(options.force)) {
@@ -292,7 +290,7 @@ export class ProjectPackageJson {
     return importModule(mod, this.dir);
   }
 
-  public runScript(npmTask: string, ignoreError: boolean = false) {
+  public runScript(npmTask: string, ignoreError = false) {
     const options = {
       cwd: this.dir
     };
@@ -305,9 +303,7 @@ export class ProjectPackageJson {
         return throwError(error);
       });
 
-    return this.cliExeca
-      .run("npm", ["run", npmTask], options)
-      .pipe(errorPipe());
+    return this.cliExeca.run("npm", ["run", npmTask], options).pipe(errorPipe());
   }
 
   protected resolve() {

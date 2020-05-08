@@ -1,4 +1,4 @@
-import {IInitCmdContext} from "@tsed/cli";
+import {InitCmdContext} from "@tsed/cli";
 import {Inject, Injectable, OnExec, OnPostInstall, ProjectPackageJson, RootRendererService} from "@tsed/cli-core";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
@@ -11,7 +11,7 @@ export class EslintInitHook {
   protected rootRenderer: RootRendererService;
 
   @OnExec("init")
-  onExec(ctx: IInitCmdContext) {
+  onExec(ctx: InitCmdContext) {
     if (!ctx.eslint) {
       return [];
     }
@@ -41,7 +41,7 @@ export class EslintInitHook {
   }
 
   @OnPostInstall("init")
-  onPostInstall(ctx: IInitCmdContext) {
+  onPostInstall(ctx: InitCmdContext) {
     if (!ctx.eslint) {
       return [];
     }
@@ -56,7 +56,7 @@ export class EslintInitHook {
     ];
   }
 
-  addScripts(ctx: IInitCmdContext) {
+  addScripts(ctx: InitCmdContext) {
     this.packageJson.addScripts({
       "test:lint": "eslint src --ext .ts",
       "test:lint:fix": "eslint src --ext .ts --fix"
@@ -69,14 +69,14 @@ export class EslintInitHook {
     }
   }
 
-  addDependencies(ctx: IInitCmdContext) {
+  addDependencies(ctx: InitCmdContext) {
     this.packageJson.addDependencies({}, ctx);
   }
 
-  addDevDependencies(ctx: IInitCmdContext) {
+  addDevDependencies(ctx: InitCmdContext) {
     this.packageJson.addDevDependencies(
       {
-        "eslint": "latest",
+        eslint: "latest",
         "eslint-config-prettier": "latest",
         "eslint-plugin-prettier": "latest",
         "@typescript-eslint/parser": "latest",

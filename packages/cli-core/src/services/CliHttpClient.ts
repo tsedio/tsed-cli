@@ -1,13 +1,13 @@
 import {Injectable} from "@tsed/di";
 import axios, {AxiosRequestConfig} from "axios";
 
-export interface ICliHttpClientOptions extends AxiosRequestConfig {
+export interface CliHttpClientOptions extends AxiosRequestConfig {
   qs?: {[key: string]: any};
 }
 
 @Injectable()
 export class CliHttpClient {
-  async get(endpoint: string, options: ICliHttpClientOptions = {}) {
+  async get(endpoint: string, options: CliHttpClientOptions = {}) {
     options = {
       params: options.params || options.qs,
       headers: {

@@ -1,4 +1,4 @@
-import {IInitCmdContext} from "@tsed/cli";
+import {InitCmdContext} from "@tsed/cli";
 import {
   Inject,
   Injectable,
@@ -26,8 +26,8 @@ export class JestInitHook {
   protected scriptsRenderer: ScriptsRendererService;
 
   @OnExec("init")
-  onInitExec(ctx: IInitCmdContext) {
-    this.addScripts(ctx);
+  onInitExec(ctx: InitCmdContext) {
+    this.addScripts();
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);
 
@@ -35,9 +35,7 @@ export class JestInitHook {
       {
         title: "Generate files for mocha",
         task: (ctx: any) => {
-          return this.rootRenderer.renderAll([
-            "init/jest.config.js.hbs"
-          ], ctx, {
+          return this.rootRenderer.renderAll(["init/jest.config.js.hbs"], ctx, {
             templateDir: TEMPLATE_DIR
           });
         }
@@ -45,19 +43,16 @@ export class JestInitHook {
       {
         title: "Generate scripts files for mocha",
         task: (ctx: any) => {
-          return this.scriptsRenderer.renderAll(
-            [
-              "init/setup.jest.js.hbs"
-            ], ctx, {
-              templateDir: TEMPLATE_DIR,
-              rootDir: join(this.scriptsRenderer.rootDir, "jest")
-            });
+          return this.scriptsRenderer.renderAll(["init/setup.jest.js.hbs"], ctx, {
+            templateDir: TEMPLATE_DIR,
+            rootDir: join(this.scriptsRenderer.rootDir, "jest")
+          });
         }
       }
     ];
   }
 
-  addScripts(ctx: IInitCmdContext) {
+  addScripts() {
     this.packageJson.addScripts({
       test: "yarn test:lint && yarn test:coverage",
       "test:unit": "cross-env NODE_ENV=test jest",
@@ -65,15 +60,18 @@ export class JestInitHook {
     });
   }
 
-  addDependencies(ctx: IInitCmdContext) {
+  addDependencies(ctx: InitCmdContext) {
     this.packageJson.addDependencies({}, ctx);
   }
 
-  addDevDependencies(ctx: IInitCmdContext) {
-    this.packageJson.addDevDependencies({
-      "@types/jest": "latest",
-      "jest": "latest",
-      "ts-jest": "latest"
-    }, ctx);
+  addDevDependencies(ctx: InitCmdContext) {
+    this.packageJson.addDevDependencies(
+      {
+        "@types/jest": "latest",
+        jest: "latest",
+        "ts-jest": "latest"
+      },
+      ctx
+    );
   }
 }

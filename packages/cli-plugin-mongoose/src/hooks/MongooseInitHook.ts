@@ -1,18 +1,7 @@
-import {IInitCmdContext} from "@tsed/cli";
-import {
-  CliDockerComposeYaml,
-  Inject,
-  OnExec,
-  ProjectPackageJson,
-  RootRendererService,
-  SrcRendererService
-} from "@tsed/cli-core";
+import {InitCmdContext} from "@tsed/cli";
+import {CliDockerComposeYaml, Inject, OnExec, ProjectPackageJson, RootRendererService, SrcRendererService} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {CliMongoose} from "../services/CliMongoose";
-
-function getDatabase(ctx: IInitCmdContext) {
-  return ctx.features.find(({type}) => type.includes("typeorm:"))?.type.split(":")[1] || "";
-}
 
 @Injectable()
 export class MongooseInitHook {
@@ -32,7 +21,7 @@ export class MongooseInitHook {
   protected cliDockerComposeYaml: CliDockerComposeYaml;
 
   @OnExec("init")
-  onExec(ctx: IInitCmdContext) {
+  onExec(ctx: InitCmdContext) {
     this.addScripts(ctx);
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);
@@ -40,9 +29,10 @@ export class MongooseInitHook {
     return [
       {
         title: "Generate Mongoose configuration",
-        task: async () => this.cliMongoose.writeConfig("default", {
-          symbolName: "MONGOOSE_DEFAULT"
-        })
+        task: async () =>
+          this.cliMongoose.writeConfig("default", {
+            symbolName: "MONGOOSE_DEFAULT"
+          })
       },
       {
         title: "Generate docker-compose configuration",
@@ -51,18 +41,15 @@ export class MongooseInitHook {
     ];
   }
 
-  addScripts(ctx: IInitCmdContext) {
+  addScripts() {
     this.packageJson.addScripts({});
   }
 
-  addDependencies(ctx: IInitCmdContext) {
+  addDependencies(ctx: InitCmdContext) {
     this.packageJson.addDependencies({}, ctx);
   }
 
-  addDevDependencies(ctx: IInitCmdContext) {
-    this.packageJson.addDevDependencies(
-      {},
-      ctx
-    );
+  addDevDependencies(ctx: InitCmdContext) {
+    this.packageJson.addDevDependencies({}, ctx);
   }
 }

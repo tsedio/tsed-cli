@@ -1,4 +1,4 @@
-import {Command, ICliDefaultOptions, ICommand, Inject, SrcRendererService} from "@tsed/cli-core";
+import {Command, CliDefaultOptions, CommandProvider, Inject, SrcRendererService} from "@tsed/cli-core";
 import {pascalCase} from "change-case";
 import {ClassNamePipe} from "../../pipes/ClassNamePipe";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
@@ -6,7 +6,7 @@ import {RoutePipe} from "../../pipes/RoutePipe";
 import {ProvidersInfoService} from "../../services/ProvidersInfoService";
 import {PROVIDER_TYPES} from "./ProviderTypes";
 
-export interface IGenerateCmdContext extends ICliDefaultOptions {
+export interface GenerateCmdContext extends CliDefaultOptions {
   type: string;
   name: string;
   route: string;
@@ -52,7 +52,7 @@ const searchFactory = (list: any) => {
     }
   }
 })
-export class GenerateCmd implements ICommand {
+export class GenerateCmd implements CommandProvider {
   @Inject()
   classNamePipe: ClassNamePipe;
 
@@ -76,7 +76,7 @@ export class GenerateCmd implements ICommand {
     });
   }
 
-  $prompt(initialOptions: Partial<IGenerateCmdContext>) {
+  $prompt(initialOptions: Partial<GenerateCmdContext>) {
     const providers = this.providersList.toArray();
 
     return [
@@ -104,7 +104,7 @@ export class GenerateCmd implements ICommand {
         when(state: any) {
           return ["controller", "server"].includes(state.type || initialOptions.type);
         },
-        default: (state: IGenerateCmdContext) => {
+        default: (state: GenerateCmdContext) => {
           return state.type === "server" ? "/rest" : this.routePipe.transform(state.name);
         }
       },
@@ -120,7 +120,7 @@ export class GenerateCmd implements ICommand {
       {
         type: "list",
         name: "middlewarePosition",
-        message: (state: any) => `The middleware should be called:`,
+        message: () => `The middleware should be called:`,
         choices: [
           {name: "Before the endpoint", value: "before"},
           {name: "After the endpoint", value: "after"}
@@ -132,7 +132,7 @@ export class GenerateCmd implements ICommand {
     ];
   }
 
-  $mapContext(ctx: Partial<IGenerateCmdContext>): IGenerateCmdContext {
+  $mapContext(ctx: Partial<GenerateCmdContext>): GenerateCmdContext {
     const {name = "", type = ""} = ctx;
 
     return {
@@ -141,10 +141,10 @@ export class GenerateCmd implements ICommand {
       symbolName: this.classNamePipe.transform({name, type}),
       symbolPath: this.outputFilePathPipe.transform({name, type}),
       symbolPathBasename: this.classNamePipe.transform({name, type})
-    } as IGenerateCmdContext;
+    } as GenerateCmdContext;
   }
 
-  async $exec(ctx: IGenerateCmdContext) {
+  async $exec(ctx: GenerateCmdContext) {
     const {symbolPath} = ctx;
 
     if (this.providersList.isMyProvider(ctx.type, GenerateCmd)) {

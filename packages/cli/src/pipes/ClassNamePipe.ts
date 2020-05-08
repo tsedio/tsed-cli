@@ -9,34 +9,28 @@ export class ClassNamePipe {
   @Inject()
   providers: ProvidersInfoService;
 
-  transform(options: { name: string; type: string, format?: "tsed" | "angular" }) {
+  transform(options: {name: string; type: string; format?: "tsed" | "angular"}) {
     const format = options.format || "tsed";
     const symbolName = paramCase(basename(options.name)).replace(/-/gi, ".");
     const meta = this.providers.get(options.type)?.model || "{{symbolName}}.{{symbolType}}?";
 
-    const names = meta
-      .split(".")
-      .reduce((acc: string[], key: string) => {
-        key = key
-          .replace(/{{symbolName}}/gi, symbolName)
-          .replace(/{{symbolType}}/gi, options.type);
+    const names = meta.split(".").reduce((acc: string[], key: string) => {
+      key = key.replace(/{{symbolName}}/gi, symbolName).replace(/{{symbolType}}/gi, options.type);
 
-        key
-          .split(".")
-          .forEach((value) => {
-            if (format === "tsed" && value.endsWith("?")) {
-              return;
-            }
+      key.split(".").forEach(value => {
+        if (format === "tsed" && value.endsWith("?")) {
+          return;
+        }
 
-            value = value.replace(/\?$/, "").toLowerCase();
+        value = value.replace(/\?$/, "").toLowerCase();
 
-            if (!acc.includes(value)) {
-              acc.push(value);
-            }
-          });
+        if (!acc.includes(value)) {
+          acc.push(value);
+        }
+      });
 
-        return acc;
-      }, []);
+      return acc;
+    }, []);
 
     if (format === "tsed") {
       return pascalCase(names.join("."));

@@ -4,7 +4,7 @@ import {Command} from "commander";
 const helpInformation = Command.prototype.helpInformation;
 
 function colorizeSection(str: any, section: string) {
-  // tslint:disable-next-line:prefer-const
+  // eslint-disable-next-line prefer-const
   let [before, after] = str.split(section);
   after = after
     .split("\n")

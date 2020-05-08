@@ -1,5 +1,5 @@
 import {Inject, Injectable} from "@tsed/di";
-import {IPackageInfo} from "../interfaces/IPackageJson";
+import {PackageInfo} from "../interfaces/PackageJson";
 import {CliHttpClient} from "./CliHttpClient";
 
 const HOST = require("registry-url")();
@@ -30,7 +30,7 @@ export class NpmRegistryClient {
     return result;
   }
 
-  async info(packageName: string): Promise<IPackageInfo> {
+  async info(packageName: string): Promise<PackageInfo> {
     try {
       return await this.httpClient.get(`${HOST}${encodeURIComponent(packageName)}`);
     } catch (er) {

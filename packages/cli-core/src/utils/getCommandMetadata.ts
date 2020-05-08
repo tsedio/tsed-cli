@@ -1,10 +1,12 @@
 import {Store} from "@tsed/core";
 import {Type} from "@tsed/core/lib/interfaces";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
-import {ICommandParameters} from "../interfaces/ICommandParameters";
+import {CommandParameters} from "../interfaces/CommandParameters";
 
 export function getCommandMetadata(token: Type<any>) {
-  const {name, alias, args = {}, allowUnknownOption, description, options = {}, ...props} = Store.from(token)?.get(CommandStoreKeys.COMMAND) as ICommandParameters;
+  const {name, alias, args = {}, allowUnknownOption, description, options = {}} = Store.from(token)?.get(
+    CommandStoreKeys.COMMAND
+  ) as CommandParameters;
 
   return {
     name,

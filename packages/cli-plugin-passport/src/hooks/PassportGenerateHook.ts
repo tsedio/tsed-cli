@@ -1,11 +1,11 @@
-import {IGenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
+import {GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
 import {Inject, OnExec, OnPrompt, ProjectPackageJson, QuestionOptions, SrcRendererService, Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {paramCase} from "change-case";
 import {PassportClient} from "../services/PassportClient";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
-export interface IPassportGenerateOptions extends IGenerateCmdContext {
+export interface PassportGenerateOptions extends GenerateCmdContext {
   passportPackage: string;
 }
 
@@ -34,7 +34,7 @@ export class PassportGenerateHook {
   }
 
   @OnPrompt("generate")
-  async onGeneratePrompt(initialOption: IGenerateCmdContext): Promise<QuestionOptions> {
+  async onGeneratePrompt(): Promise<QuestionOptions> {
     this.packages = await this.passportClient.getPackages();
 
     const list = this.packages.map(item => {
@@ -64,7 +64,7 @@ export class PassportGenerateHook {
   }
 
   @OnExec("generate")
-  onGenerateExec(ctx: IPassportGenerateOptions): Tasks {
+  onGenerateExec(ctx: PassportGenerateOptions): Tasks {
     if (this.providersInfoService.isMyProvider(ctx.type, PassportGenerateHook)) {
       ctx = this.mapOptions(ctx);
       const {passportPackage, symbolPath} = ctx;
@@ -86,7 +86,7 @@ export class PassportGenerateHook {
     return [];
   }
 
-  private mapOptions(options: IPassportGenerateOptions) {
+  private mapOptions(options: PassportGenerateOptions) {
     return {
       ...options,
       protocolName: paramCase(options.name),

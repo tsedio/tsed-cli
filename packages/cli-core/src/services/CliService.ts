@@ -3,9 +3,9 @@ import {Inject, Injectable, InjectorService, Provider} from "@tsed/di";
 import {Command} from "commander";
 import * as Inquirer from "inquirer";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
-import {ICommand} from "../interfaces/ICommand";
-import {ICommandMetadata} from "../interfaces/ICommandMetadata";
-import {ICommandOptions} from "../interfaces/ICommandParameters";
+import {CommandProvider} from "../interfaces/CommandProvider";
+import {CommandMetadata} from "../interfaces/CommandMetadata";
+import {CommandOptions} from "../interfaces/CommandParameters";
 import {PROVIDER_TYPE_COMMAND} from "../registries/CommandRegistry";
 import {createCommandSummary} from "../utils/createCommandSummary";
 import {createTasksRunner} from "../utils/createTasksRunner";
@@ -86,7 +86,7 @@ export class CliService {
    */
   public async prompt(cmdName: string, ctx: any = {}) {
     const provider = this.commands.get(cmdName);
-    const instance = this.injector.get<ICommand>(provider.useClass)!;
+    const instance = this.injector.get<CommandProvider>(provider.useClass)!;
 
     if (instance.$prompt) {
       const questions = [
@@ -112,7 +112,7 @@ export class CliService {
    */
   public async getTasks(cmdName: string, ctx: any) {
     const provider = this.commands.get(cmdName);
-    const instance = this.injector.get<ICommand>(provider.useClass)!;
+    const instance = this.injector.get<CommandProvider>(provider.useClass)!;
 
     ctx = this.mapContext(cmdName, ctx);
 
@@ -120,15 +120,12 @@ export class CliService {
       await instance.$beforeExec(ctx);
     }
 
-    return [
-      ...(await instance.$exec(ctx)),
-      ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, ctx))
-    ];
+    return [...(await instance.$exec(ctx)), ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, ctx))];
   }
 
   public async getPostInstallTasks(cmdName: string, ctx: any) {
     const provider = this.commands.get(cmdName);
-    const instance = this.injector.get<ICommand>(provider.useClass)!;
+    const instance = this.injector.get<CommandProvider>(provider.useClass)!;
 
     ctx = this.mapContext(cmdName, ctx);
 
@@ -144,7 +141,8 @@ export class CliService {
    * @param options
    * @param allowUnknownOptions
    */
-  public buildOption(subCommand: Command, options: { [key: string]: ICommandOptions }, allowUnknownOptions: boolean) {
+  public buildOption(subCommand: CommandProvider, options: {[key: string]: CommandOptions}, allowUnknownOptions: boolean) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
       const fn = (v: any) => parseOption(v, options);
 
@@ -165,7 +163,7 @@ export class CliService {
     }
   }
 
-  public createCommand(metadata: ICommandMetadata) {
+  public createCommand(metadata: CommandMetadata) {
     const {args, name, description, alias} = metadata;
 
     if (this.commands.has(name)) {
@@ -178,24 +176,20 @@ export class CliService {
       cmd = cmd.alias(alias);
     }
 
-    return cmd
-      .description(description, mapArgsDescription(args))
-      .action((...commanderArgs: any[]) => {
-        const data = {
-          ...mapCommanderArgs(args, commanderArgs),
-          ...mapCommanderOptions(this.program.commands),
-          rawArgs: commanderArgs
-            .filter(isArray)
-            .reduce((arg, current) => arg.concat(current), [])
-        };
+    return cmd.description(description, mapArgsDescription(args)).action((...commanderArgs: any[]) => {
+      const data = {
+        ...mapCommanderArgs(args, commanderArgs),
+        ...mapCommanderOptions(this.program.commands),
+        rawArgs: commanderArgs.filter(isArray).reduce((arg, current) => arg.concat(current), [])
+      };
 
-        this.runLifecycle(name, data);
-      });
+      this.runLifecycle(name, data);
+    });
   }
 
   private mapContext(cmdName: string, ctx: any) {
     const provider = this.commands.get(cmdName);
-    const instance = this.injector.get<ICommand>(provider.useClass)!;
+    const instance = this.injector.get<CommandProvider>(provider.useClass)!;
 
     if (instance.$mapContext) {
       ctx = instance.$mapContext(JSON.parse(JSON.stringify(ctx)));

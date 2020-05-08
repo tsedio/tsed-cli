@@ -3,8 +3,8 @@ import {getValue} from "@tsed/core";
 
 export interface FeatureValue {
   type: string;
-  dependencies?: { [key: string]: string };
-  devDependencies?: { [key: string]: string };
+  dependencies?: {[key: string]: string};
+  devDependencies?: {[key: string]: string};
 }
 
 export interface Feature {
@@ -18,7 +18,7 @@ export function Features() {
   return Inject(Features);
 }
 
-function hasFeature(feature: string, ctx: { features: FeatureValue[] }) {
+function hasFeature(feature: string, ctx: {features: FeatureValue[]}) {
   return ctx.features.find(item => item.type === feature);
 }
 
@@ -28,7 +28,7 @@ export const FEATURES_TYPEORM_CONNECTION_TYPES = [
     value: {
       type: "typeorm:mysql",
       dependencies: {
-        "mysql": "latest"
+        mysql: "latest"
       }
     }
   },
@@ -37,7 +37,7 @@ export const FEATURES_TYPEORM_CONNECTION_TYPES = [
     value: {
       type: "typeorm:mariadb",
       dependencies: {
-        "mariadb": "latest"
+        mariadb: "latest"
       }
     }
   },
@@ -46,7 +46,7 @@ export const FEATURES_TYPEORM_CONNECTION_TYPES = [
     value: {
       type: "typeorm:postgres",
       dependencies: {
-        "pg": "latest"
+        pg: "latest"
       }
     }
   },
@@ -55,7 +55,7 @@ export const FEATURES_TYPEORM_CONNECTION_TYPES = [
     value: {
       type: "typeorm:postgres",
       dependencies: {
-        "cockroachdb": "latest"
+        cockroachdb: "latest"
       }
     }
   },
@@ -64,7 +64,7 @@ export const FEATURES_TYPEORM_CONNECTION_TYPES = [
     value: {
       type: "typeorm:sqlite",
       dependencies: {
-        "sqlite3": "latest"
+        sqlite3: "latest"
       }
     }
   },
@@ -85,7 +85,7 @@ export const FEATURES_TYPEORM_CONNECTION_TYPES = [
     value: {
       type: "typeorm:oracle",
       dependencies: {
-        "oracledb": "latest"
+        oracledb: "latest"
       }
     }
   },
@@ -94,7 +94,7 @@ export const FEATURES_TYPEORM_CONNECTION_TYPES = [
     value: {
       type: "typeorm:mssql",
       dependencies: {
-        "mssql": "latest"
+        mssql: "latest"
       }
     }
   },
@@ -103,7 +103,7 @@ export const FEATURES_TYPEORM_CONNECTION_TYPES = [
     value: {
       type: "typeorm:mongodb",
       dependencies: {
-        "mongodb": "latest"
+        mongodb: "latest"
       }
     }
   },
@@ -219,7 +219,7 @@ registerProvider({
         message: "Choose a ORM manager",
         type: "list",
         name: "featuresDB",
-        when(ctx: { features: FeatureValue[] }) {
+        when(ctx: {features: FeatureValue[]}) {
           return hasFeature("db", ctx);
         },
         choices: [
@@ -230,7 +230,7 @@ registerProvider({
               dependencies: {
                 "@tsed/mongoose": "{{tsedVersion}}",
                 "@types/mongoose": "latest",
-                "mongoose": "latest"
+                mongoose: "latest"
               },
               devDependencies: {
                 "@tsed/cli-plugin-mongoose": cliVersion
@@ -243,7 +243,7 @@ registerProvider({
               type: "typeorm",
               dependencies: {
                 "@tsed/typeorm": "{{tsedVersion}}",
-                "typeorm": "latest"
+                typeorm: "latest"
               },
               devDependencies: {
                 "@tsed/cli-plugin-typeorm": cliVersion
@@ -263,7 +263,7 @@ registerProvider({
         message: "Choose unit framework",
         type: "list",
         name: "featuresTesting",
-        when(ctx: { features: FeatureValue[] }) {
+        when(ctx: {features: FeatureValue[]}) {
           return hasFeature("testing", ctx);
         },
         choices: [
@@ -291,7 +291,7 @@ registerProvider({
         message: "Choose linter tools framework",
         type: "list",
         name: "featuresLinter",
-        when(ctx: { features: FeatureValue[] }) {
+        when(ctx: {features: FeatureValue[]}) {
           return hasFeature("linter", ctx);
         },
         choices: [
@@ -321,7 +321,7 @@ registerProvider({
         message: "Choose extra linter tools",
         type: "checkbox",
         name: "featuresExtraLinter",
-        when(ctx: { features: FeatureValue[] }) {
+        when(ctx: {features: FeatureValue[]}) {
           return hasFeature("linter", ctx);
         },
         choices: [

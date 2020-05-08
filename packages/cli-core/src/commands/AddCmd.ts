@@ -1,10 +1,10 @@
 import {Inject} from "@tsed/di";
 import {Command} from "../decorators/command";
-import {ICommand, QuestionOptions} from "../interfaces/ICommand";
+import {CommandProvider, QuestionOptions} from "../interfaces/CommandProvider";
 import {CliPlugins} from "../services/CliPlugins";
 import {ProjectPackageJson} from "../services/ProjectPackageJson";
 
-export interface IAddCmdOptions {
+export interface AddCmdOptions {
   name: string;
 }
 
@@ -18,7 +18,7 @@ export interface IAddCmdOptions {
     }
   }
 })
-export class AddCmd implements ICommand {
+export class AddCmd implements CommandProvider {
   @Inject(CliPlugins)
   cliPlugins: CliPlugins;
 
@@ -40,7 +40,7 @@ export class AddCmd implements ICommand {
     ];
   }
 
-  async $exec(options: IAddCmdOptions) {
+  async $exec(options: AddCmdOptions) {
     this.projectPackageJson.addDevDependency(options.name);
 
     return [];

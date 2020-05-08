@@ -1,6 +1,6 @@
 import {Injectable, nameOf, Type} from "@tsed/cli-core";
 
-export interface IProviderInfo {
+export interface ProviderInfo {
   name: string;
   value: string;
   model?: string;
@@ -10,14 +10,14 @@ export interface IProviderInfo {
 
 @Injectable()
 export class ProvidersInfoService {
-  readonly map: Map<string, IProviderInfo> = new Map();
+  readonly map: Map<string, ProviderInfo> = new Map();
 
   /**
    *
    * @param providerInfo
    * @param owner
    */
-  add(providerInfo: IProviderInfo, owner?: Type<any>) {
+  add(providerInfo: ProviderInfo, owner?: Type<any>) {
     this.map.set(providerInfo.value, {
       ...providerInfo,
       owner: nameOf(owner)

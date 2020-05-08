@@ -9,7 +9,7 @@ const normalizePath = require("normalize-path");
 
 require("handlebars-helpers")();
 
-export interface IRenderOptions {
+export interface RenderOptions {
   templateDir?: string;
   rootDir?: string;
   output?: string;
@@ -19,14 +19,14 @@ export abstract class Renderer {
   templateDir: string;
   rootDir: string;
 
-  async render(path: string, data: any, options: IRenderOptions = {}) {
+  async render(path: string, data: any, options: RenderOptions = {}) {
     const {output, templateDir, rootDir} = this.mapOptions(path, options);
     const content = await Consolidate.handlebars(join(templateDir, path), data);
 
     return this.write(content, {output, rootDir});
   }
 
-  async renderAll(paths: string[], data: any, options: IRenderOptions = {}) {
+  async renderAll(paths: string[], data: any, options: RenderOptions = {}) {
     let count = 0;
 
     return new Observable(observer => {
@@ -58,20 +58,23 @@ export abstract class Renderer {
     return Fs.writeFile(outputFile, content, {encoding: "utf8"});
   }
 
-  templateExists(path: string, options: IRenderOptions = {}) {
+  templateExists(path: string, options: RenderOptions = {}) {
     const {templateDir} = this.mapOptions(path, options);
 
     return Fs.existsSync(join(templateDir, path));
   }
 
   scan(pattern: string[], options: any = {}) {
-    return globby(pattern.map((s: string) => normalizePath(s)), {
-      ...options,
-      cwd: this.rootDir
-    });
+    return globby(
+      pattern.map((s: string) => normalizePath(s)),
+      {
+        ...options,
+        cwd: this.rootDir
+      }
+    );
   }
 
-  protected mapOptions(path: string, options: IRenderOptions) {
+  protected mapOptions(path: string, options: RenderOptions) {
     const {output = basename(path).replace(/\.hbs$/, ""), templateDir = this.templateDir, rootDir = this.rootDir} = options;
 
     return {output, templateDir, rootDir};
@@ -87,15 +90,15 @@ export class RootRendererService extends Renderer {
     return this.configuration.templateDir;
   }
 
-  set templateDir(path: string) {
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  set templateDir(path: string) {}
 
   get rootDir() {
     return this.configuration.project?.rootDir;
   }
 
-  set rootDir(path: string) {
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  set rootDir(path: string) {}
 }
 
 @Injectable()
@@ -107,15 +110,15 @@ export class SrcRendererService extends Renderer {
     return this.configuration.templateDir;
   }
 
-  set templateDir(path: string) {
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  set templateDir(path: string) {}
 
   get rootDir() {
     return join(...[this.configuration.project?.rootDir, this.configuration.project?.srcDir].filter(Boolean));
   }
 
-  set rootDir(path: string) {
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  set rootDir(path: string) {}
 }
 
 @Injectable()
@@ -127,13 +130,13 @@ export class ScriptsRendererService extends Renderer {
     return this.configuration.templateDir;
   }
 
-  set templateDir(template: string) {
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  set templateDir(template: string) {}
 
   get rootDir() {
     return join(...[this.configuration.project?.rootDir, this.configuration.project?.scriptsDir].filter(Boolean));
   }
 
-  set rootDir(template: string) {
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  set rootDir(template: string) {}
 }

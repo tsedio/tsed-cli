@@ -1,6 +1,6 @@
 import {Type} from "@tsed/core";
 
-export interface ICommandArg {
+export interface CommandArg {
   /**
    * Description of the argument
    */
@@ -23,7 +23,7 @@ export interface ICommandArg {
   required?: boolean;
 }
 
-export interface ICommandOptions {
+export interface CommandOptions {
   /**
    * Description of the commander.option()
    */
@@ -51,26 +51,26 @@ export interface ICommandOptions {
   customParser?: (value: any) => any;
 }
 
-export interface ICommandParameters {
+export interface CommandParameters {
   /**
    * name commands
    */
   name: string;
   /**
-   * Command description
+   * CommandProvider description
    */
   description: string;
   /**
-   * Command arguments
+   * CommandProvider arguments
    */
   args?: {
-    [key: string]: ICommandArg;
+    [key: string]: CommandArg;
   };
   /**
-   * Command options
+   * CommandProvider options
    */
   options?: {
-    [key: string]: ICommandOptions;
+    [key: string]: CommandOptions;
   };
 
   allowUnknownOption?: boolean;

@@ -3,7 +3,7 @@ import {Tasks} from "./Tasks";
 
 export type QuestionOptions<T = any> = Inquirer.QuestionCollection<T>;
 
-export interface ICommand {
+export interface CommandProvider {
   /**
    * Hook to create the main prompt for the command
    * See https://github.com/enquirer/enquirer for more detail on question configuration.

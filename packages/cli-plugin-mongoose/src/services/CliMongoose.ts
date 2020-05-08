@@ -12,39 +12,42 @@ export class CliMongoose {
   protected srcRenderer: SrcRendererService;
 
   async writeConfig(name: string, options: any = {}) {
-
-    await this.srcRenderer
-      .render("config.hbs", {
+    await this.srcRenderer.render(
+      "config.hbs",
+      {
         ...options,
         symbolName: constantCase(name),
         name: camelCase(name)
-      }, {
+      },
+      {
         output: `${paramCase(name)}.config.ts`,
         rootDir: join(this.srcRenderer.rootDir, "config", "mongoose"),
         templateDir: TEMPLATE_DIR
-      });
+      }
+    );
 
     return this.regenerateIndexConfig();
   }
 
   async regenerateIndexConfig() {
-    const list = await this.srcRenderer.scan([
-      "config/mongoose/*.config.ts"
-    ]);
+    const list = await this.srcRenderer.scan(["config/mongoose/*.config.ts"]);
 
-    const configs = list.map((file) => {
+    const configs = list.map(file => {
       return {
         name: basename(file).replace(/\.config\.ts/gi, "")
       };
     });
 
-    return this.srcRenderer
-      .render("index.hbs", {
+    return this.srcRenderer.render(
+      "index.hbs",
+      {
         configs
-      }, {
+      },
+      {
         templateDir: TEMPLATE_DIR,
         output: "index.ts",
         rootDir: join(this.srcRenderer.rootDir, "config", "mongoose")
-      });
+      }
+    );
   }
 }

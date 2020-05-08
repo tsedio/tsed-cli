@@ -1,14 +1,15 @@
 import {Type} from "@tsed/core";
-import {ICommand} from "./ICommand";
-import {IPackageJson} from "./IPackageJson";
+import {CommandProvider} from "./CommandProvider";
+import {PackageJson} from "./PackageJson";
 
-export * from "./ICommand";
-export * from "./ICommandParameters";
-export * from "./ICommandMetadata";
-export * from "./ICliDefaultOptions";
-export * from "./IPackageJson";
+export * from "./CommandProvider";
+export * from "./CommandParameters";
+export * from "./CommandMetadata";
+export * from "./CliDefaultOptions";
+export * from "./PackageJson";
 export * from "./Tasks";
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace TsED {
   interface Configuration {
     /**
@@ -18,11 +19,11 @@ declare namespace TsED {
     /**
      *
      */
-    commands: Type<ICommand>[];
+    commands: Type<CommandProvider>[];
     /**
      *
      */
-    pkg: IPackageJson;
+    pkg: PackageJson;
     /**
      *
      */

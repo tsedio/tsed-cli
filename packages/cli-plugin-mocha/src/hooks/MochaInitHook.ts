@@ -1,4 +1,4 @@
-import {IInitCmdContext} from "@tsed/cli";
+import {InitCmdContext} from "@tsed/cli";
 import {
   Inject,
   Injectable,
@@ -26,8 +26,8 @@ export class MochaInitHook {
   protected scriptsRenderer: ScriptsRendererService;
 
   @OnExec("init")
-  onExec(ctx: IInitCmdContext) {
-    this.addScripts(ctx);
+  onExec(ctx: InitCmdContext) {
+    this.addScripts();
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);
 
@@ -52,7 +52,7 @@ export class MochaInitHook {
     ];
   }
 
-  addScripts(ctx: IInitCmdContext) {
+  addScripts() {
     this.packageJson.addScripts({
       test: "yarn test:lint && yarn test:coverage",
       "test:unit": "cross-env NODE_ENV=test mocha",
@@ -60,11 +60,11 @@ export class MochaInitHook {
     });
   }
 
-  addDependencies(ctx: IInitCmdContext) {
+  addDependencies(ctx: InitCmdContext) {
     this.packageJson.addDependencies({}, ctx);
   }
 
-  addDevDependencies(ctx: IInitCmdContext) {
+  addDevDependencies(ctx: InitCmdContext) {
     this.packageJson.addDevDependencies(
       {
         "@types/chai": "latest",

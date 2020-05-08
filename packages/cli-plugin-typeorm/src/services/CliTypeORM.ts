@@ -23,16 +23,19 @@ export class CliTypeORM {
   }
 
   async generateConnection(name: string, options: any = {}) {
-    return this.srcRenderer
-      .render("connection.hbs", {
+    return this.srcRenderer.render(
+      "connection.hbs",
+      {
         ...options,
         symbolName: constantCase(options.symbolName),
         connectionName: name
-      }, {
+      },
+      {
         templateDir: TEMPLATE_DIR,
         output: `${options.symbolPath}.ts`,
         rootDir: join(this.srcRenderer.rootDir, "services", "connections")
-      });
+      }
+    );
   }
 
   async writeConfig(name: string, database: string) {
@@ -42,7 +45,6 @@ export class CliTypeORM {
       name,
       ...JSON.parse(await InitCommand.getOrmConfigTemplate(database))
     };
-
 
     function replace(path: string | undefined) {
       return path && path.replace("src/", "${rootDir}/");
@@ -64,11 +66,9 @@ export class CliTypeORM {
   }
 
   async regenerateIndexConfig() {
-    const list = await this.srcRenderer.scan([
-      "config/typeorm/*.config.json"
-    ]);
+    const list = await this.srcRenderer.scan(["config/typeorm/*.config.json"]);
 
-    const configs = list.map((file) => {
+    const configs = list.map(file => {
       const name = basename(file).replace(/\.config\.json/gi, "");
 
       return {
@@ -77,13 +77,16 @@ export class CliTypeORM {
       };
     });
 
-    return this.srcRenderer
-      .render("index.hbs", {
+    return this.srcRenderer.render(
+      "index.hbs",
+      {
         configs
-      }, {
+      },
+      {
         templateDir: TEMPLATE_DIR,
         output: "index.ts",
         rootDir: join(this.srcRenderer.rootDir, "config", "typeorm")
-      });
+      }
+    );
   }
 }

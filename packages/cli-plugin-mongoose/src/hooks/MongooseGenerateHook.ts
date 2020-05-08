@@ -1,14 +1,5 @@
-import {IGenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
-import {
-  CliDockerComposeYaml,
-  Inject,
-  OnExec,
-  OnPrompt,
-  ProjectPackageJson,
-  QuestionOptions,
-  SrcRendererService,
-  Tasks
-} from "@tsed/cli-core";
+import {GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
+import {CliDockerComposeYaml, Inject, OnExec, ProjectPackageJson, SrcRendererService, Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {paramCase} from "change-case";
 import {CliMongoose} from "../services/CliMongoose";
@@ -38,20 +29,13 @@ export class MongooseGenerateHook {
     );
   }
 
-  @OnPrompt("generate")
-  async onGeneratePrompt(initialOptions: IGenerateCmdContext): Promise<QuestionOptions> {
-    return [];
-  }
-
   @OnExec("generate")
-  onGenerateExec(ctx: IGenerateCmdContext): Tasks {
+  onGenerateExec(ctx: GenerateCmdContext): Tasks {
     if (this.providersInfoService.isMyProvider(ctx.type, MongooseGenerateHook)) {
-
       return [
         {
           title: `Generate Mongoose configuration file to '${paramCase(ctx.name)}.config.ts'`,
-          task: () =>
-            this.cliMongoose.writeConfig(ctx.name, ctx)
+          task: () => this.cliMongoose.writeConfig(ctx.name, ctx)
         },
         {
           title: "Generate docker-compose configuration",

@@ -1,7 +1,7 @@
-import {Command, ICliDefaultOptions, ICommand, Inject} from "@tsed/cli-core";
+import {Command, CliDefaultOptions, CommandProvider, Inject} from "@tsed/cli-core";
 import {CliTypeORM} from "../services/CliTypeORM";
 
-export interface ITypeORMContext extends ICliDefaultOptions {
+export interface TypeORMContext extends CliDefaultOptions {
   command: string;
 }
 
@@ -18,11 +18,11 @@ export interface ITypeORMContext extends ICliDefaultOptions {
   options: {},
   allowUnknownOption: true
 })
-export class TypeORMCmd implements ICommand {
+export class TypeORMCmd implements CommandProvider {
   @Inject()
   cliTypeORM: CliTypeORM;
 
-  async $exec(ctx: ITypeORMContext) {
+  async $exec(ctx: TypeORMContext) {
     return [
       {
         title: `Run TypeORM CLI ${ctx.command}`,

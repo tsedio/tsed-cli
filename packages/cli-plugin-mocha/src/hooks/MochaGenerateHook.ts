@@ -1,4 +1,4 @@
-import {IGenerateCmdContext} from "@tsed/cli";
+import {GenerateCmdContext} from "@tsed/cli";
 import {Inject, Injectable, OnExec, SrcRendererService, Tasks} from "@tsed/cli-core";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
@@ -7,11 +7,8 @@ export class MochaGenerateHook {
   @Inject()
   srcRenderService: SrcRendererService;
 
-  constructor() {
-  }
-
   @OnExec("generate")
-  onExec(ctx: IGenerateCmdContext): Tasks {
+  onExec(ctx: GenerateCmdContext): Tasks {
     const {symbolPath} = ctx;
     const {specTemplate, integrationTemplate} = this.mapOptions(ctx);
 
@@ -41,7 +38,7 @@ export class MochaGenerateHook {
     ];
   }
 
-  private mapOptions(options: IGenerateCmdContext) {
+  private mapOptions(options: GenerateCmdContext) {
     const type = [options.type, options.templateType].filter(Boolean).join(".");
 
     const specTemplate = this.srcRenderService.templateExists(`generate/${type}.spec.hbs`, {templateDir: TEMPLATE_DIR})

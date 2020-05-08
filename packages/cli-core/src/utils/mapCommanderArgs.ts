@@ -1,7 +1,7 @@
 import {isClass, Type, isArray} from "@tsed/core";
-import {ICommandArg} from "../interfaces/ICommandParameters";
+import {CommandArg} from "../interfaces/CommandParameters";
 
-function mapValue(value: any, {type, itemType}: { type?: Type<any>; itemType?: Type<any> }) {
+function mapValue(value: any, {type, itemType}: {type?: Type<any>; itemType?: Type<any>}) {
   if (!value) {
     return value;
   }
@@ -25,10 +25,8 @@ function mapValue(value: any, {type, itemType}: { type?: Type<any>; itemType?: T
   return value;
 }
 
-export function mapCommanderArgs(args: { [arg: string]: ICommandArg }, commandArgs: any[]): any {
-  commandArgs = commandArgs
-    .filter((arg) => !isClass(arg))
-    .filter((arg) => !isArray(arg));
+export function mapCommanderArgs(args: {[arg: string]: CommandArg}, commandArgs: any[]): any {
+  commandArgs = commandArgs.filter(arg => !isClass(arg)).filter(arg => !isArray(arg));
   let index = 0;
 
   return Object.entries(args).reduce((options, [arg, {defaultValue, type, itemType}]) => {

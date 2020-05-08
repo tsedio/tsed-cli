@@ -2,7 +2,7 @@ import {Injectable} from "@tsed/di";
 import * as execa from "execa";
 import {filter, merge} from "rxjs/operators";
 
-require("any-observable/register/rxjs-all"); // eslint-disable-line import/no-unassigned-import
+require("any-observable/register/rxjs-all");
 const streamToObservable = require("@samverschueren/stream-to-observable");
 
 const split = require("split");

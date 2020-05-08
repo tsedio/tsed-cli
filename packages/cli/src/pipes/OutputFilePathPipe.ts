@@ -9,10 +9,9 @@ export class OutputFilePathPipe {
   @Inject()
   providers: ProvidersInfoService;
 
-  constructor(private classNamePipe: ClassNamePipe) {
-  }
+  constructor(private classNamePipe: ClassNamePipe) {}
 
-  transform(options: { name: string; type: string, baseDir?: string, format?: "tsed" | "angular" }) {
+  transform(options: {name: string; type: string; baseDir?: string; format?: "tsed" | "angular"}) {
     const dir = dirname(options.name);
 
     if (options.type === "server") {
