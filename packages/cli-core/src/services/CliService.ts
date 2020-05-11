@@ -141,7 +141,7 @@ export class CliService {
    * @param options
    * @param allowUnknownOptions
    */
-  public buildOption(subCommand: CommandProvider, options: {[key: string]: CommandOptions}, allowUnknownOptions: boolean) {
+  public buildOption(subCommand: Command, options: {[key: string]: CommandOptions}, allowUnknownOptions: boolean) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
       const fn = (v: any) => parseOption(v, options);
