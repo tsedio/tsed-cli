@@ -33,8 +33,11 @@ export class CliMongoose {
     const list = await this.srcRenderer.scan(["config/mongoose/*.config.ts"]);
 
     const configs = list.map(file => {
+      const name = basename(file).replace(/\.config\.ts/gi, "");
+
       return {
-        name: basename(file).replace(/\.config\.ts/gi, "")
+        name,
+        symbolName: camelCase(name)
       };
     });
 

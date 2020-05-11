@@ -1,5 +1,10 @@
 // @tsed/cli do not edit
 {{#forEach configs}}
-  export * from "./{{name}}.config";
+import {{symbolName}}Config from "./{{name}}.config.json";
 {{/forEach}}
 
+export default [
+{{#forEach configs}}
+  {{symbolName}}Config{{#unless isLast}}, {{/unless}}
+{{/forEach}}
+];

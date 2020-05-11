@@ -28,7 +28,9 @@ export class TypeORMGenerateHook {
 
   @Inject()
   cliTypeORM: CliTypeORM;
+
   packages: any[];
+
   @Inject()
   protected cliDockerComposeYaml: CliDockerComposeYaml;
 
