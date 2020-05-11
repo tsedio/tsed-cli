@@ -14,7 +14,7 @@ export class CliYaml {
     const file = findUpFile(this.projectPackageJson.dir, path);
 
     if (file) {
-      const content = await Fs.readFile(join(this.projectPackageJson.dir, path), {encoding: "utf8"});
+      const content = await Fs.readFile(file, {encoding: "utf8"});
 
       return JsYaml.safeLoad(content);
     }

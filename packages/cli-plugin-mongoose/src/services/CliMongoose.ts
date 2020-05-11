@@ -17,7 +17,7 @@ export class CliMongoose {
       {
         ...options,
         symbolName: constantCase(name),
-        name: camelCase(name)
+        name: paramCase(name)
       },
       {
         output: `${paramCase(name)}.config.ts`,
