@@ -22,7 +22,7 @@ export class MongooseInitHook {
 
   @OnExec("init")
   onExec(ctx: InitCmdContext) {
-    this.addScripts(ctx);
+    this.addScripts();
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);
 

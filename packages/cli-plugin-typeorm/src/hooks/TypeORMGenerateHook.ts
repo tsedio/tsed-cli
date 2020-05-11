@@ -1,4 +1,4 @@
-import {FEATURES_TYPEORM_CONNECTION_TYPES, IGenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
+import {FEATURES_TYPEORM_CONNECTION_TYPES, GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
 import {
   CliDockerComposeYaml,
   Inject,
@@ -13,7 +13,7 @@ import {Injectable} from "@tsed/di";
 import {paramCase} from "change-case";
 import {CliTypeORM} from "../services/CliTypeORM";
 
-export interface TypeORMGenerateOptions extends IGenerateCmdContext {
+export interface TypeORMGenerateOptions extends GenerateCmdContext {
   typeormConnection: string;
   connectionName: string;
 }
