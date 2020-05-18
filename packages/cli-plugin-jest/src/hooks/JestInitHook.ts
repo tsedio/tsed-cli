@@ -1,4 +1,3 @@
-import {InitCmdContext} from "@tsed/cli";
 import {
   Inject,
   Injectable,
@@ -26,11 +25,7 @@ export class JestInitHook {
   protected scriptsRenderer: ScriptsRendererService;
 
   @OnExec("init")
-  onInitExec(ctx: InitCmdContext) {
-    this.addScripts();
-    this.addDependencies(ctx);
-    this.addDevDependencies(ctx);
-
+  onInitExec() {
     return [
       {
         title: "Generate files for mocha",
@@ -50,28 +45,5 @@ export class JestInitHook {
         }
       }
     ];
-  }
-
-  addScripts() {
-    this.packageJson.addScripts({
-      test: "yarn test:lint && yarn test:coverage",
-      "test:unit": "cross-env NODE_ENV=test jest",
-      "test:coverage": "yarn test:unit"
-    });
-  }
-
-  addDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDependencies({}, ctx);
-  }
-
-  addDevDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDevDependencies(
-      {
-        "@types/jest": "latest",
-        jest: "latest",
-        "ts-jest": "latest"
-      },
-      ctx
-    );
   }
 }

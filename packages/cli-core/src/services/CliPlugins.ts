@@ -1,6 +1,8 @@
 import {Constant, Inject, Injectable, InjectorService} from "@tsed/di";
 import {loadPlugins} from "../utils/loadPlugins";
+import {CliHooks} from "./CliHooks";
 import {NpmRegistryClient} from "./NpmRegistryClient";
+import {ProjectPackageJson} from "./ProjectPackageJson";
 
 function mapPlugins({package: {name, description = "", ...otherProps}}: any) {
   return {
@@ -21,16 +23,28 @@ export class CliPlugins {
   @Inject()
   private injector: InjectorService;
 
+  @Inject()
+  private cliHooks: CliHooks;
+
+  @Inject()
+  private packageJson: ProjectPackageJson;
+
   async searchPlugins(keyword = "", options: any = {}) {
     const result = await this.npmRegistryClient.search(this.getKeyword(keyword), options);
 
-    return result
-      .filter(({package: {name}}: any) => name.startsWith(`@${this.name}/cli-plugin`) || name.startsWith(`${this.name}-cli-plugin`))
-      .map(mapPlugins);
+    return result.filter(({package: {name}}: any) => this.isPlugin(name)).map(mapPlugins);
   }
 
   async loadPlugins() {
     return loadPlugins(this.injector);
+  }
+
+  async addPluginsDependencies(plugins?: string[]) {
+    if (!plugins) {
+      plugins = Object.keys(this.packageJson.devDependencies).filter(name => this.isPlugin(name));
+    }
+
+    plugins.map(plugin => this.cliHooks.emit("add", plugin));
   }
 
   protected getKeyword(keyword: string) {
@@ -43,5 +57,9 @@ export class CliPlugins {
       .replace("@", "")
       .replace("/", "")
       .replace("cli-plugin-", "");
+  }
+
+  private isPlugin(name: any) {
+    return name.startsWith(`@${this.name}/cli-plugin`) || name.startsWith(`${this.name}-cli-plugin`);
   }
 }

@@ -1,9 +1,9 @@
 import {StoreMerge} from "@tsed/core";
 
-export function On(hookName: string, cmdName: string): MethodDecorator {
+export function On(hookName: string, name: string): MethodDecorator {
   return (target, propertyKey) => {
     StoreMerge(hookName, {
-      [cmdName]: [propertyKey]
+      [name]: [propertyKey]
     })(target);
   };
 }

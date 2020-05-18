@@ -1,4 +1,3 @@
-import {InitCmdContext} from "@tsed/cli";
 import {
   Inject,
   Injectable,
@@ -26,11 +25,7 @@ export class MochaInitHook {
   protected scriptsRenderer: ScriptsRendererService;
 
   @OnExec("init")
-  onExec(ctx: InitCmdContext) {
-    this.addScripts();
-    this.addDependencies(ctx);
-    this.addDevDependencies(ctx);
-
+  onExec() {
     return [
       {
         title: "Generate files for mocha",
@@ -50,36 +45,5 @@ export class MochaInitHook {
         }
       }
     ];
-  }
-
-  addScripts() {
-    this.packageJson.addScripts({
-      test: "yarn test:lint && yarn test:coverage",
-      "test:unit": "cross-env NODE_ENV=test mocha",
-      "test:coverage": "cross-env NODE_ENV=test nyc mocha"
-    });
-  }
-
-  addDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDependencies({}, ctx);
-  }
-
-  addDevDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDevDependencies(
-      {
-        "@types/chai": "latest",
-        "@types/chai-as-promised": "latest",
-        "@types/mocha": "latest",
-        "@types/sinon": "latest",
-        "@types/sinon-chai": "latest",
-        chai: "latest",
-        "chai-as-promised": "latest",
-        mocha: "latest",
-        nyc: "latest",
-        sinon: "latest",
-        "sinon-chai": "latest"
-      },
-      ctx
-    );
   }
 }
