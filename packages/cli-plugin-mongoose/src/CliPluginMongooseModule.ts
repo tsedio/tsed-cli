@@ -14,7 +14,7 @@ export class CliPluginMongooseModule {
   @OnAdd("@tsed/cli-plugin-mongoose")
   install() {
     this.packageJson.addDependencies({
-      "@tsed/mongoose": "{{tsedVersion}}",
+      "@tsed/mongoose": this.packageJson.dependencies["@tsed/common"],
       mongoose: "latest"
     });
 

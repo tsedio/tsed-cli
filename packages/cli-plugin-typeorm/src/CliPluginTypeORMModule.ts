@@ -14,7 +14,7 @@ export class CliPluginTypeORMModule {
   @OnAdd("@tsed/cli-plugin-typeorm")
   install() {
     this.packageJson.addDependencies({
-      "@tsed/typeorm": "{{tsedVersion}}",
+      "@tsed/typeorm": this.packageJson.dependencies["@tsed/common"],
       typeorm: "latest"
     });
   }
