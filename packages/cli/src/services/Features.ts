@@ -168,9 +168,6 @@ registerProvider({
             name: "Passport.js",
             value: {
               type: "passportjs",
-              dependencies: {
-                "@tsed/passport": "{{tsedVersion}}"
-              },
               devDependencies: {
                 "@tsed/cli-plugin-passport": cliVersion
               }
@@ -227,11 +224,6 @@ registerProvider({
             name: "Mongoose",
             value: {
               type: "mongoose",
-              dependencies: {
-                "@tsed/mongoose": "{{tsedVersion}}",
-                "@types/mongoose": "latest",
-                mongoose: "latest"
-              },
               devDependencies: {
                 "@tsed/cli-plugin-mongoose": cliVersion
               }
@@ -241,10 +233,6 @@ registerProvider({
             name: "TypeORM",
             value: {
               type: "typeorm",
-              dependencies: {
-                "@tsed/typeorm": "{{tsedVersion}}",
-                typeorm: "latest"
-              },
               devDependencies: {
                 "@tsed/cli-plugin-typeorm": cliVersion
               }
