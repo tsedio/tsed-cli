@@ -70,7 +70,7 @@ export class CliService {
         title: "Install dependencies",
         skip: () => !this.projectPkg.rewrite && !this.projectPkg.reinstall,
         task: () => {
-          return this.projectPkg.install({packageManager: "yarn"});
+          return this.projectPkg.install();
         }
       },
       ...(await this.getPostInstallTasks(cmdName, ctx))
