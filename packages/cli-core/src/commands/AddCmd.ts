@@ -1,7 +1,6 @@
-import {createTasksRunner} from "../utils/createTasksRunner";
-import {CliDefaultOptions} from "../interfaces/CliDefaultOptions";
 import {Inject} from "@tsed/di";
 import {Command} from "../decorators/command";
+import {CliDefaultOptions} from "../interfaces/CliDefaultOptions";
 import {CommandProvider, QuestionOptions} from "../interfaces/CommandProvider";
 import {CliPlugins} from "../services/CliPlugins";
 import {ProjectPackageJson} from "../services/ProjectPackageJson";
@@ -42,29 +41,25 @@ export class AddCmd implements CommandProvider {
     ];
   }
 
-  async $beforeExec(ctx: AddCmdOptions) {
+  async $exec(ctx: AddCmdOptions) {
     this.packageJson.addDevDependency(ctx.name);
 
-    await createTasksRunner(
-      [
-        {
-          title: "Install plugins",
-          task: () => this.packageJson.install({packageManager: "yarn", force: true})
-        },
-        {
-          title: "Load plugins",
-          task: () => this.cliPlugins.loadPlugins()
-        },
-        {
-          title: "Add plugins dependencies",
-          task: () => this.cliPlugins.addPluginsDependencies([ctx.name])
+    return [
+      {
+        title: "Install plugins",
+        task: () => this.packageJson.install({packageManager: "yarn", force: true})
+      },
+      {
+        title: "Load plugins",
+        task: () => this.cliPlugins.loadPlugins()
+      },
+      {
+        title: "Install plugins dependencies",
+        task: () => {
+          this.cliPlugins.addPluginsDependencies();
+          return this.packageJson.install({packageManager: "yarn", force: true});
         }
-      ],
-      ctx
-    );
-  }
-
-  async $exec() {
-    return [];
+      }
+    ];
   }
 }

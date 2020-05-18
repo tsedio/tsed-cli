@@ -1,11 +1,11 @@
 import {
+  CliDefaultOptions,
   CliPlugins,
   CliService,
   Command,
+  CommandProvider,
   Configuration,
   createTasksRunner,
-  CliDefaultOptions,
-  CommandProvider,
   Inject,
   ProjectPackageJson,
   QuestionOptions,
@@ -134,8 +134,11 @@ export class InitCmd implements CommandProvider {
           task: () => this.cliPlugins.loadPlugins()
         },
         {
-          title: "Add plugins dependencies",
-          task: () => this.cliPlugins.addPluginsDependencies()
+          title: "Install plugins dependencies",
+          task: () => {
+            this.cliPlugins.addPluginsDependencies();
+            return this.packageJson.install({packageManager: "yarn", force: true});
+          }
         }
       ],
       ctx
