@@ -1,4 +1,5 @@
 import {Constant, Inject, Injectable, InjectorService} from "@tsed/di";
+import {CommandStoreKeys} from "../domains/CommandStoreKeys";
 import {loadPlugins} from "../utils/loadPlugins";
 import {CliHooks} from "./CliHooks";
 import {NpmRegistryClient} from "./NpmRegistryClient";
@@ -44,7 +45,7 @@ export class CliPlugins {
       plugins = Object.keys(this.packageJson.devDependencies).filter(name => this.isPlugin(name));
     }
 
-    plugins.map(plugin => this.cliHooks.emit("add", plugin));
+    plugins.map(plugin => this.cliHooks.emit(CommandStoreKeys.ADD, plugin));
   }
 
   protected getKeyword(keyword: string) {

@@ -11,6 +11,7 @@ export class CliPluginPassportModule {
 
   @OnAdd("@tsed/cli-plugin-passport")
   install() {
+    console.log("==================================");
     this.packageJson.addDependencies({
       passport: "latest"
     });

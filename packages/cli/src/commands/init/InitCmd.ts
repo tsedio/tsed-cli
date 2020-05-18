@@ -134,10 +134,6 @@ export class InitCmd implements CommandProvider {
           task: () => this.cliPlugins.loadPlugins()
         },
         {
-          title: "Load plugins",
-          task: () => this.cliPlugins.loadPlugins()
-        },
-        {
           title: "Add plugins dependencies",
           task: () => this.cliPlugins.addPluginsDependencies()
         }
