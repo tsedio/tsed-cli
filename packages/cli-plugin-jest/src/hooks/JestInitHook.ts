@@ -28,7 +28,7 @@ export class JestInitHook {
   onInitExec() {
     return [
       {
-        title: "Generate files for mocha",
+        title: "Generate files for jest",
         task: (ctx: any) => {
           return this.rootRenderer.renderAll(["init/jest.config.js.hbs"], ctx, {
             templateDir: TEMPLATE_DIR
@@ -36,7 +36,7 @@ export class JestInitHook {
         }
       },
       {
-        title: "Generate scripts files for mocha",
+        title: "Generate scripts files for jest",
         task: (ctx: any) => {
           return this.scriptsRenderer.renderAll(["init/setup.jest.js.hbs"], ctx, {
             templateDir: TEMPLATE_DIR,
