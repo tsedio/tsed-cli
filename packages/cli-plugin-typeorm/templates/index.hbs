@@ -1,6 +1,6 @@
 // @tsed/cli do not edit
 {{#forEach configs}}
-import {{symbolName}}Config from "./{{name}}.config.json";
+import * as {{symbolName}}Config from "./{{name}}.config.json";
 {{/forEach}}
 
 export default [
