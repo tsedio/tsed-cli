@@ -1,4 +1,5 @@
-import {GlobalAcceptMimesMiddleware, ServerLoader, ServerSettings} from "@tsed/common";
+import {PlatformApplication, Configuration} from "@tsed/common";
+import {GlobalAcceptMimesMiddleware} from "@tsed/platform-express";
 import * as bodyParser from "body-parser";
 import * as compress from "compression";
 import * as cookieParser from "cookie-parser";
@@ -15,7 +16,7 @@ import typeormConfig from "./config/typeorm";
 
 const rootDir = __dirname;
 
-@ServerSettings({
+@Configuration({
   rootDir,
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
@@ -42,9 +43,15 @@ const rootDir = __dirname;
     "**/*.spec.ts"
   ]
 })
-export class {{symbolName}} extends ServerLoader {
+export class {{symbolName}} {
+  @Inject()
+  app: PlatformApplication;
+
+  @Configuration()
+  settings: Configuration;
+
   $beforeRoutesInit() {
-    this
+    this.app
       .use(cors())
       .use(GlobalAcceptMimesMiddleware)
       .use(cookieParser())
