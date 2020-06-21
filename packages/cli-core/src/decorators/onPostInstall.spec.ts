@@ -9,10 +9,10 @@ class Test {
 
 describe("@OnPostIntall", () => {
   it("should store metadata", () => {
-    Store.from(Test)
-      .get(CommandStoreKeys.POST_INSTALL_HOOKS)
-      .should.deep.eq({
-        cmd: ["test"]
-      });
+    const result = Store.from(Test).get(CommandStoreKeys.POST_INSTALL_HOOKS);
+
+    expect(result).toEqual({
+      cmd: ["test"]
+    });
   });
 });

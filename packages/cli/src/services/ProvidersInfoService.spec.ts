@@ -1,5 +1,4 @@
-import {ProvidersInfoService} from "@tsed/cli";
-import {expect} from "chai";
+import {ProvidersInfoService} from "./ProvidersInfoService";
 
 describe("ProvidersInfoService", () => {
   it("should add a provider info", () => {
@@ -15,12 +14,12 @@ describe("ProvidersInfoService", () => {
       Self
     );
 
-    expect(providers.get("provider")).to.deep.eq({
+    expect(providers.get("provider")).toEqual({
       name: "Provider",
       value: "provider",
       owner: "Self"
     });
-    expect(providers.toArray()).to.deep.eq([
+    expect(providers.toArray()).toEqual([
       {
         name: "Provider",
         value: "provider",

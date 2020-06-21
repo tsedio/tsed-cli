@@ -1,8 +1,8 @@
 import {RoutePipe} from "./RoutePipe";
 
 describe("RoutePipe", () => {
-  it("should return the outputfile", () => {
+  it("should return the output file", () => {
     const pipe = new RoutePipe();
-    pipe.transform("/test/Path-les").should.deep.eq("/test/path-les");
+    expect(pipe.transform("/test/Path-les")).toEqual("/test/path-les");
   });
 });

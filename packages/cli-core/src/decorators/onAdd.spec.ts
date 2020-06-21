@@ -9,10 +9,9 @@ class Test {
 
 describe("@OnAdd", () => {
   it("should store metadata", () => {
-    Store.from(Test)
-      .get(CommandStoreKeys.ADD)
-      .should.deep.eq({
-        "@tsed/cli-plugin": ["test"]
-      });
+    const result = Store.from(Test).get(CommandStoreKeys.ADD);
+    expect(result).toEqual({
+      "@tsed/cli-plugin": ["test"]
+    });
   });
 });

@@ -1,7 +1,5 @@
 import {SrcRendererService} from "@tsed/cli-core";
 import {CliTestContext} from "@tsed/cli-testing";
-import {expect} from "chai";
-import * as Sinon from "sinon";
 import {GenerateCmd} from "./GenerateCmd";
 
 describe("GenerateCmd", () => {
@@ -19,22 +17,22 @@ describe("GenerateCmd", () => {
         const result: any[] = (await command.$prompt(options)) as any[];
 
         // THEN
-        expect(result[0]).to.deep.includes({
+        expect(result[0]).toEqual({
           default: undefined,
           message: "Which type of provider ?",
           name: "type",
           type: "autocomplete",
           when: true
         });
-        expect(result[1].message).to.deep.equal("Which name ?");
-        expect(result[1].default({type: "name"})).to.deep.equal("Name");
-        expect(result[1].when).to.deep.equal(true);
-        expect(result[2].message).to.deep.equal("Which route ?");
-        expect(result[2].when({type: "controller"})).to.deep.equal(true);
-        expect(result[2].when({type: "server"})).to.deep.equal(true);
-        expect(result[2].when({type: "pipe"})).to.deep.equal(false);
-        expect(result[2].default({type: "server"})).to.deep.equal("/rest");
-        expect(result[2].default({type: "other", name: "test"})).to.deep.equal("/test");
+        expect(result[1].message).toEqual("Which name ?");
+        expect(result[1].default({type: "name"})).toEqual("Name");
+        expect(result[1].when).toEqual(true);
+        expect(result[2].message).toEqual("Which route ?");
+        expect(result[2].when({type: "controller"})).toEqual(true);
+        expect(result[2].when({type: "server"})).toEqual(true);
+        expect(result[2].when({type: "pipe"})).toEqual(false);
+        expect(result[2].default({type: "server"})).toEqual("/rest");
+        expect(result[2].default({type: "other", name: "test"})).toEqual("/test");
       })
     );
     it(
@@ -50,22 +48,22 @@ describe("GenerateCmd", () => {
         const result: any[] = (await command.$prompt(options)) as any[];
 
         // THEN
-        expect(result[0]).to.deep.includes({
+        expect(result[0]).toEqual({
           default: "controller",
           message: "Which type of provider ?",
           name: "type",
           type: "autocomplete",
           when: false
         });
-        expect(result[1].message).to.deep.equal("Which name ?");
-        expect(result[1].default({type: "name"})).to.deep.equal("Name");
-        expect(result[1].when).to.deep.equal(false);
-        expect(result[2].message).to.deep.equal("Which route ?");
-        expect(result[2].when({type: "controller"})).to.deep.equal(true);
-        expect(result[2].when({type: "server"})).to.deep.equal(true);
-        expect(result[2].when({type: "pipe"})).to.deep.equal(false);
-        expect(result[2].default({type: "server"})).to.deep.equal("/rest");
-        expect(result[2].default({type: "other", name: "test"})).to.deep.equal("/test");
+        expect(result[1].message).toEqual("Which name ?");
+        expect(result[1].default({type: "name"})).toEqual("Name");
+        expect(result[1].when).toEqual(false);
+        expect(result[2].message).toEqual("Which route ?");
+        expect(result[2].when({type: "controller"})).toEqual(true);
+        expect(result[2].when({type: "server"})).toEqual(true);
+        expect(result[2].when({type: "pipe"})).toEqual(false);
+        expect(result[2].default({type: "server"})).toEqual("/rest");
+        expect(result[2].default({type: "other", name: "test"})).toEqual("/test");
       })
     );
   });
@@ -73,7 +71,7 @@ describe("GenerateCmd", () => {
     it("should return tasks", async () => {
       // GIVEN
       const renderService = {
-        render: Sinon.stub()
+        render: jest.fn()
       };
 
       let options = {
@@ -94,12 +92,12 @@ describe("GenerateCmd", () => {
       const tasks = await command.$exec(options as any);
 
       // THEN
-      expect(tasks.length).to.equal(1);
-      expect(tasks[0].title).to.equal("Generate controller file to 'controllers/Test.ts'");
+      expect(tasks.length).toEqual(1);
+      expect(tasks[0].title).toEqual("Generate controller file to 'controllers/Test.ts'");
 
       await tasks[0].task();
 
-      renderService.render.should.have.been.calledWithExactly(
+      expect(renderService.render).toHaveBeenCalledWith(
         "generate/controller.hbs",
         {
           name: "test",
@@ -117,7 +115,7 @@ describe("GenerateCmd", () => {
     it("should return empty tasks", async () => {
       // GIVEN
       const renderService = {
-        render: Sinon.stub()
+        render: jest.fn()
       };
 
       let options = {
@@ -138,12 +136,12 @@ describe("GenerateCmd", () => {
       const tasks = await command.$exec(options as any);
 
       // THEN
-      expect(tasks.length).to.equal(1);
-      expect(tasks[0].title).to.equal("Generate controller file to 'controllers/Test.ts'");
+      expect(tasks.length).toEqual(1);
+      expect(tasks[0].title).toEqual("Generate controller file to 'controllers/Test.ts'");
 
       await tasks[0].task();
 
-      renderService.render.should.have.been.calledWithExactly(
+      expect(renderService.render).toHaveBeenCalledWith(
         "generate/controller.hbs",
         {
           name: "test",

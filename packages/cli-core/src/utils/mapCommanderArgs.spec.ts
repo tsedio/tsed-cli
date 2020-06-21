@@ -4,7 +4,7 @@ describe("mapCommanderArgs", () => {
   it("should map args", () => {
     const commander = {};
 
-    mapCommanderArgs(
+    const result = mapCommanderArgs(
       {
         arg1: {
           type: String,
@@ -35,7 +35,9 @@ describe("mapCommanderArgs", () => {
         }
       },
       ["hello", "1", "true", "false", "1,2,3", commander]
-    ).should.deep.eq({
+    );
+
+    expect(result).toEqual({
       arg1: "hello",
       arg2: 1,
       arg3: true,

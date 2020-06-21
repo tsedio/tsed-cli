@@ -1,20 +1,16 @@
-import {CliHttpClient} from "@tsed/cli-core";
 import {CliTestContext} from "@tsed/cli-testing";
-import * as Sinon from "sinon";
+import {CliHttpClient} from "./CliHttpClient";
 import {NpmRegistryClient} from "./NpmRegistryClient";
-
-const sandbox = Sinon.createSandbox();
 
 describe("NpmRegistryClient", () => {
   beforeEach(CliTestContext.create);
   afterEach(CliTestContext.reset);
-  afterEach(() => sandbox.restore());
 
   describe("search()", () => {
     it("should search packages", async () => {
       // GIVEN
       const httpClient = {
-        get: sandbox.stub().resolves({objects: "response"})
+        get: jest.fn().mockReturnValue(Promise.resolve({objects: "response"}))
       };
 
       const npmRegistryClient = await CliTestContext.invoke<NpmRegistryClient>(NpmRegistryClient, [
@@ -28,7 +24,7 @@ describe("NpmRegistryClient", () => {
       const result = await npmRegistryClient.search("text");
 
       // THEN
-      httpClient.get.should.have.been.calledWithExactly(Sinon.match("-/v1/search"), {
+      expect(httpClient.get).toHaveBeenCalledWith(expect.stringContaining("-/v1/search"), {
         qs: {
           text: "text",
           from: 0,
@@ -38,12 +34,12 @@ describe("NpmRegistryClient", () => {
           size: 100
         }
       });
-      result.should.eq("response");
+      expect(result).toEqual("response");
     });
     it("should search packages with some options", async () => {
       // GIVEN
       const httpClient = {
-        get: sandbox.stub().resolves({objects: "response"})
+        get: jest.fn().mockReturnValue(Promise.resolve({objects: "response"}))
       };
 
       const npmRegistryClient = await CliTestContext.invoke<NpmRegistryClient>(NpmRegistryClient, [
@@ -63,7 +59,7 @@ describe("NpmRegistryClient", () => {
       });
 
       // THEN
-      httpClient.get.should.have.been.calledWithExactly(Sinon.match("-/v1/search"), {
+      expect(httpClient.get).toHaveBeenCalledWith(expect.stringContaining("-/v1/search"), {
         qs: {
           text: "text",
           from: 1,
@@ -73,14 +69,14 @@ describe("NpmRegistryClient", () => {
           size: 90
         }
       });
-      result.should.eq("response");
+      expect(result).toEqual("response");
     });
   });
   describe("info()", () => {
     it("should get package info", async () => {
       // GIVEN
       const httpClient = {
-        get: sandbox.stub().resolves("response")
+        get: jest.fn().mockReturnValue(Promise.resolve("response"))
       };
 
       const npmRegistryClient: NpmRegistryClient = await CliTestContext.invoke<NpmRegistryClient>(NpmRegistryClient, [
@@ -94,8 +90,8 @@ describe("NpmRegistryClient", () => {
       const result = await npmRegistryClient.info("@scope/module");
 
       // THEN
-      httpClient.get.should.have.been.calledWithExactly(Sinon.match("%40scope%2Fmodule"));
-      result.should.eq("response");
+      expect(httpClient.get).toHaveBeenCalledWith(expect.stringContaining("%40scope%2Fmodule"));
+      expect(result).toEqual("response");
     });
   });
 });

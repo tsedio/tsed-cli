@@ -17,8 +17,8 @@ describe("OutputFilePathPipe", () => {
     const pipe = new OutputFilePathPipe(classPipe);
     pipe.providers = providers;
 
-    pipe.transform({type: "controller", name: "test"}).should.deep.eq("controllers/TestController");
-    pipe.transform({type: "controller", name: "test", baseDir: "other"}).should.deep.eq("other/TestController");
-    pipe.transform({type: "server", name: "server"}).should.deep.eq("Server");
+    expect(pipe.transform({type: "controller", name: "test"})).toEqual("controllers/TestController");
+    expect(pipe.transform({type: "controller", name: "test", baseDir: "other"})).toEqual("other/TestController");
+    expect(pipe.transform({type: "server", name: "server"})).toEqual("Server");
   });
 });

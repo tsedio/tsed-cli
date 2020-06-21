@@ -1,5 +1,4 @@
 import {Command} from "@tsed/cli-core";
-import {expect} from "chai";
 import {getCommandMetadata} from "./getCommandMetadata";
 
 @Command({
@@ -11,7 +10,7 @@ class TestCmd {}
 
 describe("getCommandMetadata", () => {
   it("should return command metadata", () => {
-    expect(getCommandMetadata(TestCmd)).to.deep.eq({
+    expect(getCommandMetadata(TestCmd)).toEqual({
       args: {},
       allowUnknownOption: false,
       description: "description",

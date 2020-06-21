@@ -2,18 +2,19 @@ import {parseOption} from "./parseOption";
 
 describe("parseOptions", () => {
   it("should parse string --path <path>", () => {
-    parseOption("string", {type: String}).should.eq("string");
+    expect(parseOption("string", {type: String})).toEqual("string");
   });
   it("should parse number --count <nb>", () => {
-    parseOption("9", {type: Number}).should.eq(9);
+    expect(parseOption("9", {type: Number})).toEqual(9);
   });
   it("should parse boolean --use-db", () => {
-    parseOption("", {type: Boolean}).should.eq(true);
+    expect(parseOption("", {type: Boolean})).toEqual(true);
   });
   it("should parse array --list <values-with-comma>", () => {
-    parseOption("1,2,3", {
+    const result = parseOption("1,2,3", {
       type: Array,
       itemType: Number
-    }).should.deep.eq([1, 2, 3]);
+    });
+    expect(result).toEqual([1, 2, 3]);
   });
 });

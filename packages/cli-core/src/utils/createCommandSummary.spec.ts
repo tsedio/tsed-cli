@@ -2,7 +2,7 @@ import {createCommandSummary} from "./createCommandSummary";
 
 describe("createCommandSummary", () => {
   it("should return the command summary", () => {
-    createCommandSummary("cmd", {
+    const result = createCommandSummary("cmd", {
       arg1: {
         description: "test",
         required: true
@@ -10,6 +10,8 @@ describe("createCommandSummary", () => {
       arg2: {
         description: "test"
       }
-    }).should.eq("cmd <arg1> [arg2]");
+    });
+
+    expect(result).toEqual("cmd <arg1> [arg2]");
   });
 });

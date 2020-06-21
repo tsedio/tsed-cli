@@ -18,8 +18,12 @@ export function Features() {
   return Inject(Features);
 }
 
-function hasFeature(feature: string, ctx: {features: FeatureValue[]}) {
-  return ctx.features.find(item => item.type === feature);
+export function hasFeature(feature: string) {
+  return (ctx: any): boolean => !!ctx.features.find((item: any) => item.type === feature);
+}
+
+export function hasValue(expression: string, value: any) {
+  return (ctx: any) => getValue(expression, ctx) === value;
 }
 
 export const FEATURES_TYPEORM_CONNECTION_TYPES = [
@@ -198,7 +202,6 @@ registerProvider({
               type: "testing",
               dependencies: {},
               devDependencies: {
-                "@tsed/testing": "{{tsedVersion}}",
                 "@types/supertest": "latest",
                 supertest: "latest"
               }
@@ -216,9 +219,7 @@ registerProvider({
         message: "Choose a ORM manager",
         type: "list",
         name: "featuresDB",
-        when(ctx: {features: FeatureValue[]}) {
-          return hasFeature("db", ctx);
-        },
+        when: hasFeature("db"),
         choices: [
           {
             name: "Mongoose",
@@ -245,15 +246,13 @@ registerProvider({
         name: "featuresTypeORM",
         message: "Which TypeORM you want to install?",
         choices: FEATURES_TYPEORM_CONNECTION_TYPES,
-        when: (ctx: any) => getValue("featuresDB.type", ctx) === "typeorm"
+        when: hasValue("featuresDB.type", "typeorm")
       },
       {
         message: "Choose unit framework",
         type: "list",
         name: "featuresTesting",
-        when(ctx: {features: FeatureValue[]}) {
-          return hasFeature("testing", ctx);
-        },
+        when: hasFeature("testing"),
         choices: [
           {
             name: "Mocha + Chai + Sinon",
@@ -279,9 +278,7 @@ registerProvider({
         message: "Choose linter tools framework",
         type: "list",
         name: "featuresLinter",
-        when(ctx: {features: FeatureValue[]}) {
-          return hasFeature("linter", ctx);
-        },
+        when: hasFeature("linter"),
         choices: [
           {
             name: "EsLint",
@@ -309,9 +306,7 @@ registerProvider({
         message: "Choose extra linter tools",
         type: "checkbox",
         name: "featuresExtraLinter",
-        when(ctx: {features: FeatureValue[]}) {
-          return hasFeature("linter", ctx);
-        },
+        when: hasFeature("linter"),
         choices: [
           {
             name: "Prettier",

@@ -1,4 +1,4 @@
-import {Command, CliDefaultOptions, CommandProvider, Inject, SrcRendererService} from "@tsed/cli-core";
+import {CliDefaultOptions, Command, CommandProvider, Inject, SrcRendererService} from "@tsed/cli-core";
 import {pascalCase} from "change-case";
 import {ClassNamePipe} from "../../pipes/ClassNamePipe";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
