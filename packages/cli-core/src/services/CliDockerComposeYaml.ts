@@ -52,7 +52,7 @@ export class CliDockerComposeYaml {
         break;
       case "mssql":
         dockerCompose.services[snakeCase(name)] = {
-          image: "microsoft/mssql-server-linux:rc2",
+          image: "mcr.microsoft.com/mssql/server:2017-latest",
           command: "start --insecure",
           ports: ["1433:1433"],
           environment: {
