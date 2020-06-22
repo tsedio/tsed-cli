@@ -18,7 +18,7 @@ export interface GenerateCmdContext extends CliDefaultOptions {
 
 const DECORATOR_TYPES = [
   {name: "Class decorator", value: "class"},
-  {name: "Ts.ED middleware and his decorator", value: "middleware"},
+  {name: "Ts.ED middleware and its decorator", value: "middleware"},
   {name: "Ts.ED endpoint decorator", value: "endpoint"},
   {name: "Ts.ED property decorator", value: "prop"},
   {name: "Ts.ED parameter decorator", value: "param"},
