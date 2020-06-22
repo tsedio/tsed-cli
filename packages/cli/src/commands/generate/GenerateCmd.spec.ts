@@ -65,7 +65,7 @@ describe("GenerateCmd", () => {
         expect(result[2].when({type: "server"})).toEqual(true);
         expect(result[2].when({type: "pipe"})).toEqual(false);
         expect(result[2].default({type: "server"})).toEqual("/rest");
-        expect(result[2].default({type: "other", name: "test"})).toEqual("/test");
+        expect(result[2].default({type: "other", name: "test"})).toEqual("/name");
       })
     );
   });

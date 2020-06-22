@@ -79,7 +79,8 @@ export class GenerateCmd implements CommandProvider {
 
   $prompt(initialOptions: Partial<GenerateCmdContext>) {
     const providers = this.providersList.toArray();
-    const getName = (state: any) => initialOptions.name || pascalCase(state.type || initialOptions.type);
+    const getName = (state: any) =>
+      initialOptions.name || pascalCase(state.name || initialOptions.name || state.type || initialOptions.type);
 
     return [
       {
@@ -105,7 +106,7 @@ export class GenerateCmd implements CommandProvider {
           return ["controller", "server"].includes(state.type || initialOptions.type);
         },
         default: (state: GenerateCmdContext) => {
-          return state.type === "server" ? "/rest" : this.routePipe.transform(getName(state.name));
+          return state.type === "server" ? "/rest" : this.routePipe.transform(getName(state));
         }
       },
       {
