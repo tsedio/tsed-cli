@@ -7,7 +7,7 @@ export class FakeCliHttpClient extends CliHttpClient implements OnDestroy {
   async get(endpoint: string, options: CliHttpClientOptions = {}): Promise<any> {
     const key = endpoint + ":" + JSON.stringify(options);
 
-    if (key.includes("https://registry.npmjs.org/")) {
+    if (key.includes("https://registry.")) {
       return {
         "dist-tags": {
           latest: "1.0.0"
