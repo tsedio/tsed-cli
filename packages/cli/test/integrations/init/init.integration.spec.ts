@@ -1,16 +1,16 @@
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {readFileSync} from "fs";
 import {resolve} from "path";
-import {CliService, ProjectPackageJson} from "../../../cli-core/src/services";
-import {InitCmd} from "../../src";
+import {CliService, ProjectPackageJson} from "@tsed/cli-core";
+import {InitCmd} from "../../../src";
 
-const TEMPLATE_DIR = resolve(__dirname, "..", "..", "templates");
+const TEMPLATE_DIR = resolve(__dirname, "..", "..", "..", "templates");
 
 function readFile(file: string) {
   return readFileSync(`${__dirname}/${file}`, {encoding: "utf8"});
 }
 
-describe("Generate cmd", () => {
+describe("Init cmd", () => {
   beforeEach(() =>
     CliPlatformTest.bootstrap({
       templateDir: TEMPLATE_DIR,

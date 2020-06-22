@@ -7,7 +7,7 @@ import {
   {{#eq middlewarePosition "before"}}UseBefore{{/eq}}{{#eq middlewarePosition "after"}}UseAfter{{/eq}}
 } from "@tsed/common";
 
-export interface I{{symbolName}}Options {
+export interface {{symbolName}}Options {
 
 }
 
@@ -21,7 +21,7 @@ export class {{symbolName}}Middleware {
   }
 }
 
-export function {{symbolName}}(options: I{{symbolName}}Options): MethodDecorator {
+export function {{symbolName}}(options: {{symbolName}}Options): MethodDecorator {
   return applyDecorators(
     StoreSet({{symbolName}}Middleware, options),
     {{#eq middlewarePosition "before"}}UseBefore(){{/eq}}{{#eq middlewarePosition "after"}}UseAfter({{symbolName}}Middleware){{/eq}}

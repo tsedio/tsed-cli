@@ -1,11 +1,11 @@
 import {applyDecorators} from "@tsed/core";
 import {EndpointFn, EndpointMetadata} from "@tsed/common";
 
-export interface I{{symbolName}}Options {
+export interface {{symbolName}}Options {
 
 }
 
-export function {{symbolName}}(options: I{{symbolName}}Options): MethodDecorator {
+export function {{symbolName}}(options: {{symbolName}}Options): MethodDecorator {
   return applyDecorators(
    EndpointFn((endpoint: EndpointMetadata) => {
      endpoint.store.set({{symbolName}}, options);

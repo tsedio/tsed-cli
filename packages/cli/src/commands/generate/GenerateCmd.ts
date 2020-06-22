@@ -24,7 +24,8 @@ const DECORATOR_TYPES = [
   {name: "Ts.ED parameter decorator", value: "param"},
   {name: "Vanilla Method decorator", value: "method"},
   {name: "Vanilla Property decorator", value: "property"},
-  {name: "Vanilla Parameter decorator", value: "parameter"}
+  {name: "Vanilla Parameter decorator", value: "parameter"},
+  {name: "Generic decorator", value: "generic"}
 ];
 
 const searchFactory = (list: any) => {

@@ -1,0 +1,19 @@
+import {DecoratorTypes, UnsupportedDecoratorType, decoratorTypeOf} from "@tsed/core";
+
+export interface {{symbolName}}Options {
+
+}
+
+export function {{symbolName}}(options: {{symbolName}}Options): any {
+  return (...args: DecoratorParameters): any => {
+    switch(decoratorTypeOf(args)) {
+      case DecoratorTypes.CLASS:
+      case DecoratorTypes.PROP:
+        console.log("do something")
+        break;
+
+      default:
+        throw new UnsupportedDecoratorType({{symbolName}}, args);
+    }
+  };
+}

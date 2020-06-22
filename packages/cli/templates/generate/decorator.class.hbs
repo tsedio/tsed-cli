@@ -1,5 +1,14 @@
-export function {{symbolName}}(): ClassDecorator {
-  return (target: Function) => {
 
+export interface {{symbolName}}Options {
+
+}
+
+export function {{symbolName}}(options: {{symbolName}}Options): ClassDecorator {
+  return (target: any): any => {
+    return class extends target {
+      constructor(...args: any[]) {
+        super(...args);
+      }
+    };
   };
 }

@@ -1,4 +1,8 @@
-export function {{symbolName}}(): ParameterDecorator {
+export interface {{symbolName}}Options {
+
+}
+
+export function {{symbolName}}(options: {{symbolName}}Options): ParameterDecorator {
   return (target: Object, propertyKey: string | symbol, index: number) => {
 
   };

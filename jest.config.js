@@ -17,7 +17,7 @@ module.exports = {
 
   // moduleDirectories: ["node_modules", "packages"],
   // An array of regexp pattern strings used to skip coverage collection
-  coveragePathIgnorePatterns: ["index.ts", "/node_modules/"],
+  coveragePathIgnorePatterns: ["index.ts", "/node_modules/", "cli-testing/src"],
   moduleNameMapper: {
     "^@tsed/cli(.*)$": "<rootDir>/packages/cli$1/src"
   },
