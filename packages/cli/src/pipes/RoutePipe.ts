@@ -6,7 +6,15 @@ export class RoutePipe {
   transform(route: string) {
     return `/${route
       .split("/")
-      .map(v => paramCase(v))
+      .reduce((paths, path) => {
+        const word = paramCase(path);
+
+        if (path.includes(`${word}s`)) {
+          return paths;
+        }
+
+        return [...paths, paramCase(path)];
+      }, [])
       .join("/")}`.replace(/\/\//gi, "/");
   }
 }

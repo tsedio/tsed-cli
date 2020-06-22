@@ -255,20 +255,20 @@ registerProvider({
         when: hasFeature("testing"),
         choices: [
           {
-            name: "Mocha + Chai + Sinon",
-            value: {
-              type: "mocha",
-              devDependencies: {
-                "@tsed/cli-plugin-mocha": cliVersion
-              }
-            }
-          },
-          {
             name: "Jest",
             value: {
               type: "jest",
               devDependencies: {
                 "@tsed/cli-plugin-jest": cliVersion
+              }
+            }
+          },
+          {
+            name: "Mocha + Chai + Sinon",
+            value: {
+              type: "mocha",
+              devDependencies: {
+                "@tsed/cli-plugin-mocha": cliVersion
               }
             }
           }

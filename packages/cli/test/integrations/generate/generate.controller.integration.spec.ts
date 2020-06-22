@@ -19,7 +19,7 @@ describe("Generate Controller", () => {
   );
   afterEach(() => CliPlatformTest.reset());
 
-  it("should generate the template with the right options", async () => {
+  it("should generate the template with the right options (simple path)", async () => {
     const cliService = CliPlatformTest.get<CliService>(CliService);
     const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
     // @ts-ignore
@@ -48,5 +48,35 @@ describe("Generate Controller", () => {
     expect(result).toContain("import {Controller, Get} from \"@tsed/common\";");
     expect(result).toContain("@Controller(\"/tests\")");
     expect(result).toContain("TestController");
+  });
+  it("should generate the template with the right options (complex path)", async () => {
+    const cliService = CliPlatformTest.get<CliService>(CliService);
+    const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
+    // @ts-ignore
+    projectPackageJson.raw = {
+      name: "",
+      version: "1.0.0",
+      description: "",
+      scripts: {},
+      dependencies: {},
+      devDependencies: {}
+    };
+
+    await cliService.exec("generate", {
+      rootDir: "./project-data",
+      type: "controller",
+      name: "users/User",
+      route: "/users"
+    });
+
+    expect(FakeCliFs.getKeys()).toEqual([
+      "project-name/src/controllers/users",
+      "project-name/src/controllers/users/UserController.ts"
+    ]);
+
+    const result = FakeCliFs.entries.get("project-name/src/controllers/users/UserController.ts");
+    expect(result).toContain("import {Controller, Get} from \"@tsed/common\";");
+    expect(result).toContain("@Controller(\"/users\")");
+    expect(result).toContain("UserController");
   });
 });

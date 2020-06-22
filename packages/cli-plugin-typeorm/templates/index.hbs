@@ -5,6 +5,6 @@ import * as {{symbolName}}Config from "./{{name}}.config.json";
 
 export default [
 {{#forEach configs}}
-  {{symbolName}}Config{{#unless isLast}}, {{/unless}}
+  {{symbolName}}Config as any{{#unless isLast}}, {{/unless}}
 {{/forEach}}
 ];
