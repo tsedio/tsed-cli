@@ -7,8 +7,8 @@ import * as readPkgUp from "read-pkg-up";
 import {EMPTY, Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {PackageJson} from "../interfaces/PackageJson";
-import {importModule} from "../utils/importModule";
 import {CliExeca} from "./CliExeca";
+import {CliFs} from "./CliFs";
 import {NpmRegistryClient} from "./NpmRegistryClient";
 
 function getEmptyPackageJson(configuration: Configuration) {
@@ -76,6 +76,9 @@ export class ProjectPackageJson {
 
   @Inject(NpmRegistryClient)
   protected npmRegistryClient: NpmRegistryClient;
+
+  @Inject(CliFs)
+  protected fs: CliFs;
 
   private raw: PackageJson = {
     name: "",
@@ -231,7 +234,7 @@ export class ProjectPackageJson {
     this.raw.dependencies = sortKeys(this.raw.dependencies);
     this._rewrite = false;
 
-    return Fs.writeFileSync(this.path, JSON.stringify(this.raw, null, 2), {encoding: "utf8"});
+    return this.fs.writeFileSync(this.path, JSON.stringify(this.raw, null, 2), {encoding: "utf8"});
   }
 
   hasYarn() {
@@ -280,7 +283,7 @@ export class ProjectPackageJson {
    * @param mod
    */
   async importModule(mod: string) {
-    return importModule(mod, this.dir);
+    return this.fs.importModule(mod, this.dir);
   }
 
   public runScript(npmTask: string, ignoreError = false) {

@@ -1,9 +1,10 @@
-import {Configuration, Injectable} from "@tsed/di";
+import {Configuration, Inject, Injectable} from "@tsed/di";
 import * as Consolidate from "consolidate";
 import * as Fs from "fs-extra";
 import * as globby from "globby";
 import {basename, dirname, join} from "path";
 import {Observable} from "rxjs";
+import {CliFs} from "./CliFs";
 
 const normalizePath = require("normalize-path");
 
@@ -18,6 +19,9 @@ export interface RenderOptions {
 export abstract class Renderer {
   templateDir: string;
   rootDir: string;
+
+  @Inject()
+  fs: CliFs;
 
   async render(path: string, data: any, options: RenderOptions = {}) {
     const {output, templateDir, rootDir} = this.mapOptions(path, options);
@@ -53,9 +57,9 @@ export abstract class Renderer {
   async write(content: string, options: any) {
     const {output, rootDir = this.rootDir} = options;
     const outputFile = join(...[rootDir, output].filter(Boolean));
-    await Fs.ensureDir(dirname(outputFile));
+    await this.fs.ensureDir(dirname(outputFile));
 
-    return Fs.writeFile(outputFile, content, {encoding: "utf8"});
+    return this.fs.writeFile(outputFile, content, {encoding: "utf8"});
   }
 
   templateExists(path: string, options: RenderOptions = {}) {

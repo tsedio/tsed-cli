@@ -1,5 +1,6 @@
 import {
   CliDefaultOptions,
+  CliFs,
   CliPlugins,
   CliService,
   Command,
@@ -13,7 +14,6 @@ import {
   SrcRendererService
 } from "@tsed/cli-core";
 import {camelCase, paramCase} from "change-case";
-import * as Fs from "fs-extra";
 import * as Listr from "listr";
 import {basename, join} from "path";
 import {Features, FeatureValue} from "../../services/Features";
@@ -69,6 +69,9 @@ export class InitCmd implements CommandProvider {
   @Inject()
   protected rootRenderer: RootRendererService;
 
+  @Inject()
+  protected fs: CliFs;
+
   $prompt(initialOptions: Partial<InitCmdContext>): QuestionOptions {
     return [
       {
@@ -115,7 +118,7 @@ export class InitCmd implements CommandProvider {
   }
 
   async $beforeExec(ctx: InitCmdContext) {
-    Fs.ensureDirSync(this.packageJson.dir);
+    this.fs.ensureDirSync(this.packageJson.dir);
 
     this.packageJson.name = ctx.projectName;
     this.addDependencies(ctx);

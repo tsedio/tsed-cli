@@ -1,15 +1,15 @@
 import {SrcRendererService} from "@tsed/cli-core";
-import {CliTestContext} from "@tsed/cli-testing";
+import {CliPlatformTest} from "@tsed/cli-testing";
 import {GenerateCmd} from "./GenerateCmd";
 
 describe("GenerateCmd", () => {
-  beforeEach(CliTestContext.create);
-  afterEach(CliTestContext.reset);
+  beforeEach(CliPlatformTest.create);
+  afterEach(CliPlatformTest.reset);
 
   describe("$prompt", () => {
     it(
       "should return prompts dialog",
-      CliTestContext.inject([GenerateCmd], async (command: GenerateCmd) => {
+      CliPlatformTest.inject([GenerateCmd], async (command: GenerateCmd) => {
         // GIVEN
         const options = {};
 
@@ -21,6 +21,7 @@ describe("GenerateCmd", () => {
           default: undefined,
           message: "Which type of provider ?",
           name: "type",
+          source: expect.any(Function),
           type: "autocomplete",
           when: true
         });
@@ -37,7 +38,7 @@ describe("GenerateCmd", () => {
     );
     it(
       "should return prompts dialog (with initial options)",
-      CliTestContext.inject([GenerateCmd], async (command: GenerateCmd) => {
+      CliPlatformTest.inject([GenerateCmd], async (command: GenerateCmd) => {
         // GIVEN
         const options = {
           type: "controller",
@@ -51,6 +52,7 @@ describe("GenerateCmd", () => {
         expect(result[0]).toEqual({
           default: "controller",
           message: "Which type of provider ?",
+          source: expect.any(Function),
           name: "type",
           type: "autocomplete",
           when: false
@@ -80,7 +82,7 @@ describe("GenerateCmd", () => {
         route: "/test"
       };
 
-      const command = await CliTestContext.invoke<GenerateCmd>(GenerateCmd, [
+      const command = await CliPlatformTest.invoke<GenerateCmd>(GenerateCmd, [
         {
           token: SrcRendererService,
           use: renderService
@@ -124,7 +126,7 @@ describe("GenerateCmd", () => {
         route: "/test"
       };
 
-      const command = await CliTestContext.invoke<GenerateCmd>(GenerateCmd, [
+      const command = await CliPlatformTest.invoke<GenerateCmd>(GenerateCmd, [
         {
           token: SrcRendererService,
           use: renderService

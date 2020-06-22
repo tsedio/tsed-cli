@@ -1,12 +1,12 @@
-import {CliTestContext} from "@tsed/cli-testing";
+import {CliPlatformTest} from "@tsed/cli-testing";
 import {Features, hasFeature, hasValue} from "./Features";
 
 describe("Features", () => {
-  beforeEach(CliTestContext.create);
-  afterEach(CliTestContext.reset);
+  beforeEach(CliPlatformTest.create);
+  afterEach(CliPlatformTest.reset);
 
   it("should add a provider info", async () => {
-    const features = await CliTestContext.invoke(Features, []);
+    const features = await CliPlatformTest.invoke(Features, []);
 
     expect(features).toBeInstanceOf(Array);
   });

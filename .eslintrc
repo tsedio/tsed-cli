@@ -6,13 +6,13 @@
     "plugin:prettier/recommended"
   ],
   "parserOptions": {
-  "ecmaVersion": 2018,
+    "ecmaVersion": 2018,
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
   "env": {
-   "node": true,
-   "es6": true
+    "node": true,
+    "es6": true
   },
   "rules": {
     "@typescript-eslint/no-unused-vars": 2,
@@ -23,6 +23,8 @@
     "@typescript-eslint/no-empty-function": 0
   },
   "ignorePatterns": [
-    "**/lib/**/*.ts"
+    "**/lib/**/*.ts",
+    "**/test/**/*.ts",
+    "**/node_modules/**/*.ts"
   ]
 }

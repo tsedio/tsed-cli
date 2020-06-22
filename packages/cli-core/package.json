@@ -16,9 +16,9 @@
   ],
   "dependencies": {
     "@samverschueren/stream-to-observable": "0.3.0",
-    "@tsed/core": "^5.44.10",
-    "@tsed/di": "^5.44.10",
-    "@tsed/logger": "^5.4.1",
+    "@tsed/core": "^5.58.1",
+    "@tsed/di": "^5.58.1",
+    "@tsed/logger": "^5.5.0",
     "any-observable": "0.5.1",
     "axios": "0.19.2",
     "chalk": "3.0.0",

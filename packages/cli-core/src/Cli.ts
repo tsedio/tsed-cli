@@ -51,7 +51,7 @@ export class Cli {
     UpdateNotifier({pkg, updateCheckInterval: 0}).notify();
   }
 
-  static async bootstrap(settings: TsED.Configuration): Promise<Cli> {
+  static async bootstrap(settings: Partial<TsED.Configuration>): Promise<Cli> {
     checkSettings(settings);
 
     if (settings.pkg.engines?.node) {

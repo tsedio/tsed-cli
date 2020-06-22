@@ -39,7 +39,11 @@ module.exports = {
   testEnvironment: "node",
 
   // The glob patterns Jest uses to detect test files
-  testMatch: ["**/packages/*/src/**/__tests__/**/*.[jt]s?(x)", "**/packages/*/src/**/?(*.)+(spec|test).[tj]s?(x)"],
+  testMatch: [
+    "**/packages/*/src/**/__tests__/**/*.[jt]s?(x)",
+    "**/packages/*/src/**/?(*.)+(spec|test).[tj]s?(x)",
+    "**/packages/*/test/**/?(*.)+(spec|test).[tj]s?(x)"
+  ],
   // A map from regular expressions to paths to transformers
   transform: {
     "\\.(ts)$": "ts-jest"

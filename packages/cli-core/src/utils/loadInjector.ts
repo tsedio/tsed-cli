@@ -1,7 +1,7 @@
 import {constructorOf, Type} from "@tsed/core";
 import {Container, GlobalProviders, InjectorService, LocalsContainer} from "@tsed/di";
 
-function createContainer(rootModule?: any) {
+export function createContainer(rootModule?: any) {
   const container = new Container(GlobalProviders.entries());
 
   if (rootModule) {

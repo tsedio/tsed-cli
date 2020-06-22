@@ -47,9 +47,13 @@ export class CliService {
     const {program} = this;
     program.version(this.pkg.version);
 
-    this.injector.getProviders(PROVIDER_TYPE_COMMAND).forEach(provider => this.build(provider));
+    this.load();
 
     program.parse(argv);
+  }
+
+  private load() {
+    this.injector.getProviders(PROVIDER_TYPE_COMMAND).forEach(provider => this.build(provider));
   }
 
   /**
@@ -112,7 +116,7 @@ export class CliService {
    */
   public async getTasks(cmdName: string, ctx: any) {
     const provider = this.commands.get(cmdName);
-    const instance = this.injector.get<CommandProvider>(provider.useClass)!;
+    const instance = this.injector.get<CommandProvider>(provider.token)!;
 
     ctx = this.mapContext(cmdName, ctx);
 
@@ -210,7 +214,7 @@ export class CliService {
         throw Error(`The ${name} command is already registered. Change your command name used by the class ${classOf(provider.useClass)}`);
       }
 
-      provider.command = this.createCommand(getCommandMetadata(provider.useClass));
+      provider.command = this.createCommand(getCommandMetadata(provider.token));
       this.commands.set(name, provider);
 
       if (options) {

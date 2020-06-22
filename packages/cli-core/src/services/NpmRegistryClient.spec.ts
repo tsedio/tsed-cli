@@ -1,10 +1,10 @@
-import {CliTestContext} from "@tsed/cli-testing";
+import {CliPlatformTest} from "@tsed/cli-testing";
 import {CliHttpClient} from "./CliHttpClient";
 import {NpmRegistryClient} from "./NpmRegistryClient";
 
 describe("NpmRegistryClient", () => {
-  beforeEach(CliTestContext.create);
-  afterEach(CliTestContext.reset);
+  beforeEach(CliPlatformTest.create);
+  afterEach(CliPlatformTest.reset);
 
   describe("search()", () => {
     it("should search packages", async () => {
@@ -13,7 +13,7 @@ describe("NpmRegistryClient", () => {
         get: jest.fn().mockReturnValue(Promise.resolve({objects: "response"}))
       };
 
-      const npmRegistryClient = await CliTestContext.invoke<NpmRegistryClient>(NpmRegistryClient, [
+      const npmRegistryClient = await CliPlatformTest.invoke<NpmRegistryClient>(NpmRegistryClient, [
         {
           token: CliHttpClient,
           use: httpClient
@@ -42,7 +42,7 @@ describe("NpmRegistryClient", () => {
         get: jest.fn().mockReturnValue(Promise.resolve({objects: "response"}))
       };
 
-      const npmRegistryClient = await CliTestContext.invoke<NpmRegistryClient>(NpmRegistryClient, [
+      const npmRegistryClient = await CliPlatformTest.invoke<NpmRegistryClient>(NpmRegistryClient, [
         {
           token: CliHttpClient,
           use: httpClient
@@ -79,7 +79,7 @@ describe("NpmRegistryClient", () => {
         get: jest.fn().mockReturnValue(Promise.resolve("response"))
       };
 
-      const npmRegistryClient: NpmRegistryClient = await CliTestContext.invoke<NpmRegistryClient>(NpmRegistryClient, [
+      const npmRegistryClient: NpmRegistryClient = await CliPlatformTest.invoke<NpmRegistryClient>(NpmRegistryClient, [
         {
           token: CliHttpClient,
           use: httpClient

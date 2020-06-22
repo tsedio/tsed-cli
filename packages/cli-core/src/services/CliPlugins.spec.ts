@@ -1,14 +1,14 @@
-import {CliTestContext} from "@tsed/cli-testing";
+import {CliPlatformTest} from "@tsed/cli-testing";
 import {CliPlugins} from "./CliPlugins";
 import {NpmRegistryClient} from "./NpmRegistryClient";
 
 describe("CliPlugins", () => {
   beforeEach(() =>
-    CliTestContext.create({
+    CliPlatformTest.create({
       name: "tsed"
     })
   );
-  afterEach(CliTestContext.reset);
+  afterEach(CliPlatformTest.reset);
 
   describe("searchPlugins()", () => {
     it("should search plugins", async () => {
@@ -35,7 +35,7 @@ describe("CliPlugins", () => {
         search: jest.fn().mockReturnValue(Promise.resolve(response))
       };
 
-      const cliPlugins = await CliTestContext.invoke<CliPlugins>(CliPlugins, [
+      const cliPlugins = await CliPlatformTest.invoke<CliPlugins>(CliPlugins, [
         {
           token: NpmRegistryClient,
           use: npmClient
@@ -47,7 +47,7 @@ describe("CliPlugins", () => {
 
       // THEN
       expect(npmClient.search).toHaveBeenCalledWith("@tsed/cli-plugin-mongo", {});
-      result.should.deep.eq([
+      expect(result).toEqual([
         {
           name: "@tsed/cli-plugin-mongoose description",
           value: "@tsed/cli-plugin-mongoose"

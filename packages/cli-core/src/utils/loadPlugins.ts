@@ -1,6 +1,6 @@
 import {GlobalProviders, InjectorService} from "@tsed/di";
+import {CliFs} from "../services/CliFs";
 import {ProjectPackageJson} from "../services/ProjectPackageJson";
-import {importModule} from "./importModule";
 
 const all = (promises: any[]) => Promise.all(promises);
 
@@ -11,11 +11,12 @@ export async function loadPlugins(injector: InjectorService) {
   } = injector.settings;
 
   const projectPackageJson = injector.invoke<ProjectPackageJson>(ProjectPackageJson);
+  const fs = injector.invoke<CliFs>(CliFs);
 
   const promises = Object.keys(projectPackageJson.allDependencies)
     .filter(mod => mod.startsWith(`@${name}/cli-plugin`) || mod.startsWith(`${name}-cli-plugin`))
     .map(async mod => {
-      const {default: plugin} = await importModule(mod, rootDir);
+      const {default: plugin} = await fs.importModule(mod, rootDir);
 
       if (!injector.has(plugin)) {
         const provider = GlobalProviders.get(plugin)?.clone();

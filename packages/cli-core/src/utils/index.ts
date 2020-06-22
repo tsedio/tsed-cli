@@ -1,7 +1,6 @@
 export * from "./createCommandSummary";
 export * from "./createInjector";
 export * from "./getCommandMetadata";
-export * from "./importModule";
 export * from "./loadInjector";
 export * from "./loadPlugins";
 export * from "./mapCommanderArgs";

@@ -3,6 +3,7 @@ export * from "./CliService";
 export * from "./CliPackageJson";
 export * from "./CliHttpClient";
 export * from "./CliPlugins";
+export * from "./CliFs";
 export * from "./ProjectPackageJson";
 export * from "./Renderer";
 export * from "./Logger";
