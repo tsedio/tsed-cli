@@ -3,7 +3,7 @@ import {getValue} from "@tsed/core";
 import * as semver from "semver";
 
 export interface UpdateCmdContext extends CliDefaultOptions {
-  tsedVersion: string;
+  version: string;
 
   [key: string]: any;
 }
@@ -23,9 +23,8 @@ function isGreaterThan(a: any, b: string) {
   description: "Update all Ts.ED packages used by your project",
   args: {},
   options: {
-    "-t, --tsed-version <version>": {
+    "--version <version>": {
       type: String,
-      defaultValue: "latest",
       description: "Use a specific version of Ts.ED (format: 5.x.x)"
     }
   }
@@ -40,7 +39,7 @@ export class UpdateCmd {
   private versions: any;
 
   async $prompt(initialOptions: Partial<UpdateCmdContext>): Promise<QuestionOptions> {
-    if (initialOptions.tsedVersion) {
+    if (initialOptions.version) {
       return [];
     }
 
@@ -51,8 +50,8 @@ export class UpdateCmd {
         type: "list",
         name: "tsedVersion",
         message: "Select a Ts.ED version",
-        default: initialOptions.tsedVersion,
-        when: !initialOptions.tsedVersion,
+        default: initialOptions.version,
+        when: !initialOptions.version,
         choices: versions
       }
     ];
@@ -61,7 +60,7 @@ export class UpdateCmd {
   async $exec(ctx: UpdateCmdContext) {
     const update = (pkg: string) => {
       if (pkg.includes("@tsed") && !pkg.includes("@tsed/cli") && pkg !== "@tsed/logger") {
-        this.projectPackage.addDependency(pkg, ctx.tsedVersion);
+        this.projectPackage.addDependency(pkg, ctx.version);
       }
     };
 
@@ -78,14 +77,14 @@ export class UpdateCmd {
     const projectLoggerVersion = this.projectPackage.dependencies["@tsed/logger"];
 
     if (projectLoggerVersion) {
-      const loggerVersion = getValue("dependencies.@tsed/logger", this.versions[ctx.tsedVersion], "");
+      const loggerVersion = getValue("dependencies.@tsed/logger", this.versions[ctx.version], "");
 
       if (loggerVersion && isGreaterThan(loggerVersion, projectLoggerVersion)) {
         this.projectPackage.addDependency("@tsed/logger", loggerVersion);
       }
     }
 
-    const cliVersion = await this.getEligibleCliVersion(ctx.tsedVersion);
+    const cliVersion = await this.getEligibleCliVersion(ctx.version);
 
     if (cliVersion) {
       Object.entries(this.projectPackage.devDependencies).forEach(([pkg, version]) => {

@@ -28,4 +28,12 @@ export class CliExeca {
   runSync(cmd: string, args: string[], opts?: execa.SyncOptions) {
     return this.raw.sync(cmd, args, opts);
   }
+
+  async getAsync(cmd: string, args: string[], opts?: execa.SyncOptions) {
+    return (await this.raw(cmd, args, opts)).stdout;
+  }
+
+  get(cmd: string, args: string[], opts?: execa.SyncOptions) {
+    return this.raw.sync(cmd, args, opts).stdout;
+  }
 }

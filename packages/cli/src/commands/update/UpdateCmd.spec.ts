@@ -108,7 +108,7 @@ describe("UpdateCmd", () => {
         }
       ]);
       const context = {
-        tsedVersion: "5.50.0"
+        version: "5.50.0"
       };
 
       const result = await command.$prompt(context);
@@ -177,7 +177,7 @@ describe("UpdateCmd", () => {
       command.versions = versions;
 
       await command.$exec({
-        tsedVersion: "5.58.0",
+        version: "5.58.0",
         verbose: false,
         rawArgs: []
       });

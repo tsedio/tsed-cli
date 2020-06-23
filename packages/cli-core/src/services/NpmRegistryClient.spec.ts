@@ -1,3 +1,4 @@
+import {CliExeca} from "@tsed/cli-core";
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {CliHttpClient} from "./CliHttpClient";
 import {NpmRegistryClient} from "./NpmRegistryClient";
@@ -75,23 +76,28 @@ describe("NpmRegistryClient", () => {
   describe("info()", () => {
     it("should get package info", async () => {
       // GIVEN
-      const httpClient = {
-        get: jest.fn().mockReturnValue(Promise.resolve("response"))
+      const cli = {
+        getAsync: jest.fn().mockReturnValue(
+          Promise.resolve(
+            JSON.stringify({
+              version: "5.0.0"
+            })
+          )
+        )
       };
 
       const npmRegistryClient: NpmRegistryClient = await CliPlatformTest.invoke<NpmRegistryClient>(NpmRegistryClient, [
         {
-          token: CliHttpClient,
-          use: httpClient
+          token: CliExeca,
+          use: cli
         }
       ]);
 
       // WHEN
-      const result = await npmRegistryClient.info("@scope/module");
+      const result = await npmRegistryClient.info("@tsed/cli-core");
 
       // THEN
-      expect(httpClient.get).toHaveBeenCalledWith(expect.stringContaining("%40scope%2Fmodule"));
-      expect(result).toEqual("response");
+      expect(result).toEqual({version: "5.0.0"});
     });
   });
 });
