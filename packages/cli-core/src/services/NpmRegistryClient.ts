@@ -1,6 +1,5 @@
 import {Inject, Injectable} from "@tsed/di";
 import {PackageInfo} from "../interfaces/PackageJson";
-import {CliExeca} from "./CliExeca";
 import {CliHttpClient} from "./CliHttpClient";
 
 const HOST = require("registry-url")();
@@ -9,9 +8,6 @@ const HOST = require("registry-url")();
 export class NpmRegistryClient {
   @Inject(CliHttpClient)
   private httpClient: CliHttpClient;
-
-  @Inject()
-  private cli: CliExeca;
 
   /**
    * Search a module on npm registry
@@ -36,9 +32,7 @@ export class NpmRegistryClient {
 
   async info(packageName: string): Promise<PackageInfo> {
     try {
-      const result = await this.cli.getAsync("npm", ["view", packageName, "--json"]);
-
-      return JSON.parse(result);
+      return await this.httpClient.get(`${HOST}${packageName.replace(/\//gi, "%2f")}`);
     } catch (er) {
       const [{package: pkg}] = await this.search(packageName);
 
@@ -46,6 +40,14 @@ export class NpmRegistryClient {
         ...pkg,
         "dist-tags": {
           latest: pkg.version
+        },
+        versions: {
+          [pkg.version]: {
+            name: packageName,
+            version: pkg.version,
+            dependencies: {},
+            devDependencies: {}
+          }
         }
       };
     }
