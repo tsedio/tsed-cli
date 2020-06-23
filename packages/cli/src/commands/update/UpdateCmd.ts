@@ -93,6 +93,8 @@ export class UpdateCmd {
         }
       });
     }
+
+    return [];
   }
 
   private async getAvailableVersions() {
