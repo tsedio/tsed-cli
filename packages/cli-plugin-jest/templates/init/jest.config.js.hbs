@@ -51,10 +51,5 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     '\\.(ts)$': 'ts-jest'
-  },
-
-  // The paths to modules that run some code to configure or set up the testing environment before each test
-  setupFiles: [
-    '<rootDir>/scripts/jest/setup.jest.js'
-  ]
+  }
 }
