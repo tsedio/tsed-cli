@@ -10,3 +10,4 @@ export * from "./Logger";
 export * from "./CliExeca";
 export * from "./CliYaml";
 export * from "./CliDockerComposeYaml";
+export * from "./NpmRegistryClient";

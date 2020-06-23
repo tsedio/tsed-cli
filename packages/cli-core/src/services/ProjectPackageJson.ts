@@ -71,15 +71,15 @@ function sortKeys(obj: any) {
 
 @Injectable()
 export class ProjectPackageJson {
+  public rewrite = false;
+  public reinstall = false;
+
   @Inject(CliExeca)
   protected cliExeca: CliExeca;
-
   @Inject(NpmRegistryClient)
   protected npmRegistryClient: NpmRegistryClient;
-
   @Inject(CliFs)
   protected fs: CliFs;
-
   private raw: PackageJson = {
     name: "",
     version: "1.0.0",
@@ -91,18 +91,6 @@ export class ProjectPackageJson {
 
   constructor(@Configuration() private configuration: Configuration) {
     this.raw = getPackageJson(configuration);
-  }
-
-  private _rewrite = false;
-
-  get rewrite(): boolean {
-    return this._rewrite;
-  }
-
-  private _reinstall = false;
-
-  get reinstall(): boolean {
-    return this._reinstall;
   }
 
   get path() {
@@ -125,7 +113,7 @@ export class ProjectPackageJson {
 
   set name(name: string) {
     this.raw.name = name;
-    this._rewrite = true;
+    this.rewrite = true;
   }
 
   get version() {
@@ -157,8 +145,8 @@ export class ProjectPackageJson {
 
   addDevDependency(pkg: string, version?: string) {
     this.devDependencies[pkg] = version!;
-    this._reinstall = true;
-    this._rewrite = true;
+    this.reinstall = true;
+    this.rewrite = true;
 
     return this;
   }
@@ -176,8 +164,8 @@ export class ProjectPackageJson {
 
   addDependency(pkg: string, version?: string) {
     this.dependencies[pkg] = version!;
-    this._reinstall = true;
-    this._rewrite = true;
+    this.reinstall = true;
+    this.rewrite = true;
 
     return this;
   }
@@ -195,7 +183,7 @@ export class ProjectPackageJson {
 
   addScript(task: string, cmd: string) {
     this.scripts[task] = cmd;
-    this._rewrite = true;
+    this.rewrite = true;
 
     return this;
   }
@@ -210,7 +198,7 @@ export class ProjectPackageJson {
 
   add(key: string, data: any) {
     this.raw[key] = data;
-    this._rewrite = true;
+    this.rewrite = true;
 
     return this;
   }
@@ -218,10 +206,10 @@ export class ProjectPackageJson {
   set(key: string, value: any) {
     this.raw[key] = value;
 
-    this._rewrite = true;
+    this.rewrite = true;
 
     if (["dependencies", "devDependencies", "peerDependencies"].includes(key)) {
-      this._reinstall = true;
+      this.reinstall = true;
     }
   }
 
@@ -232,7 +220,7 @@ export class ProjectPackageJson {
   write() {
     this.raw.devDependencies = sortKeys(this.raw.devDependencies);
     this.raw.dependencies = sortKeys(this.raw.dependencies);
-    this._rewrite = false;
+    this.rewrite = false;
 
     return this.fs.writeFileSync(this.path, JSON.stringify(this.raw, null, 2), {encoding: "utf8"});
   }
@@ -370,7 +358,7 @@ export class ProjectPackageJson {
       {
         title: "Clean",
         task() {
-          this._reinstall = false;
+          this.reinstall = false;
         }
       }
     ];
@@ -407,7 +395,7 @@ export class ProjectPackageJson {
       {
         title: "Clean",
         task() {
-          this._reinstall = false;
+          this.reinstall = false;
         }
       }
     ];

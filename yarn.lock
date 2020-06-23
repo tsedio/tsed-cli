@@ -2339,17 +2339,6 @@
     streamroller "^1.0.3"
     tslib "1.10.0"
 
-"@tsed/logger@^5.4.1":
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/@tsed/logger/-/logger-5.4.1.tgz#20f68cb9032594dd7846cfe4a9a0ee26c20dd908"
-  integrity sha512-6ZDy49L0tQDdtQe/Tj8dT7MXgVst2nlYjLTczJIcpCXxBrhf3anwxqB9DURyHrOgHtON44wn9xSxDh0QDB75XQ==
-  dependencies:
-    colors "^1.3.3"
-    date-format "^2.0.0"
-    semver "^5.6.0"
-    streamroller "^1.0.3"
-    tslib "1.10.0"
-
 "@typedproject/ts-doc@4.0.6":
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/@typedproject/ts-doc/-/ts-doc-4.0.6.tgz#e22b304ab05305616515fa03c0283a8b1995409d"
@@ -2594,6 +2583,13 @@
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/@types/retry/-/retry-0.12.0.tgz#2b35eccfcee7d38cd72ad99232fbd58bffb3c84d"
   integrity sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==
+
+"@types/semver@7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.2.0.tgz#0d72066965e910531e1db4621c15d0ca36b8d83b"
+  integrity sha512-TbB0A8ACUWZt3Y6bQPstW9QNbhNeebdgLX4T/ZfkrswAfUzRiXrgd9seol+X379Wa589Pu4UEx9Uok0D4RjRCQ==
+  dependencies:
+    "@types/node" "*"
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
