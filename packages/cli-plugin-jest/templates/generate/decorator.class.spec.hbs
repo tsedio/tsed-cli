@@ -1,13 +1,12 @@
-import { expect } from "chai";
 import { {{symbolName}} } from "./{{symbolPathBasename}}";
 
 describe("{{symbolName}}", () => {
   it("should do something", () => {
-    @{{symbolName}}()
+    @{{symbolName}}({})
     class Test {
     }
 
     expect(typeof {{symbolName}}).toBe("function")
     expect(typeof {{symbolName}}()).toBe("function")
-  }));
+  });
 });

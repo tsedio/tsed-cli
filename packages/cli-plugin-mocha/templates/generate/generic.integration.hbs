@@ -1,6 +1,5 @@
 import { expect } from "chai";
-import { PlatformApplication, ServerLoader } from "@tsed/common";
-import { TestContext } from "@tsed/testing";
+import { PlatformApplication, PlatformTest } from "@tsed/common";
 import * as SuperTest from "supertest";
 import { {{symbolName}} } from "./{{symbolPathBasename}}";
 import { Server } from "../Server";
@@ -8,16 +7,16 @@ import { Server } from "../Server";
 describe("{{symbolName}}", () => {
   let request: SuperTest.SuperTest<SuperTest.Test>;
 
-  beforeEach(TestContext.bootstrap(Server, {
+  beforeEach(PlatformTest.bootstrap(Server, {
     mount: {
       "/": {{symbolName}}
     }
   }));
-  beforeEach(TestContext.inject([PlatformApplication], (app: PlatformApplication) => {
-    request = SuperTest(app.raw);
-  }));
+  beforeEach(() => {
+    request = SuperTest(PlatformTest.callback());
+  });
 
-  afterEach(TestContext.reset);
+  afterEach(PlatformTest.reset);
 
   it("should call GET {{route}}", async () => {
      const response = await request.get("{{route}}").expect(200);

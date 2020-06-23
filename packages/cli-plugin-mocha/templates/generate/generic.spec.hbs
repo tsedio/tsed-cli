@@ -1,10 +1,10 @@
 import { expect } from "chai";
-import { TestContext } from "@tsed/testing";
+import { PlatformTest } from "@tsed/common";
 import { {{symbolName}} } from "./{{symbolPathBasename}}";
 
 describe("{{symbolName}}", () => {
-  beforeEach(TestContext.create);
-  afterEach(TestContext.reset);
+  beforeEach(PlatformTest.create);
+  afterEach(PlatformTest.reset);
 
   it("should do something", TestContext.inject([{{symbolName}}], (controller: {{symbolName}}) => {
     expect(controller).to.be.instanceof({{symbolName}});

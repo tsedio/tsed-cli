@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { Store } from "@tsed/core";
 import { {{symbolName}} } from "./{{symbolPathBasename}}";
 
@@ -12,5 +11,5 @@ describe("{{symbolName}}", () => {
     const store = Store.from(Test, "property");
 
     expect(store.get({{symbolName}})).toEqual({options: "options"});
-  }));
+  });
 });
