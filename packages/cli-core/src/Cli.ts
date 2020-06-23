@@ -84,7 +84,7 @@ export class Cli {
   }
 
   static getProjectRoot(argv = process.argv) {
-    if (!argv.includes("-h")) {
+    if (!(argv.includes("-h") || argv.includes("--help"))) {
       const projectRoot =
         new Command()
           .option("-r, --root-dir <path>", "Project root directory")
