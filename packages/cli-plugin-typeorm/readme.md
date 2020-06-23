@@ -12,6 +12,19 @@ Please refer to the [documentation](https://cli.tsed.io/) for more details.
 npm install -g @tsed/cli-plugin-typeorm
 ```
 
+## Additional Commands
+
+This plugin adds the following commands:
+
+```
+tsed typeorm <subcommand>
+tsed typeorm entity:create -n User
+tsed typeorm subscriber:create -n UserSubscriber
+tsed typeorm migration:create -n UserMigration
+```
+
+See [TypeORM commands](https://github.com/typeorm/typeorm/blob/master/docs/using-cli.md) for more details.
+
 ## Contributors
 Please read [contributing guidelines here](https://tsed.io/CONTRIBUTING.html)
 

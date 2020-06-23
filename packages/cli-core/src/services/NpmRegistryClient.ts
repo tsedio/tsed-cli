@@ -30,26 +30,34 @@ export class NpmRegistryClient {
     return result;
   }
 
-  async info(packageName: string): Promise<PackageInfo> {
+  async info(packageName: string, retry = 0): Promise<PackageInfo> {
     try {
       return await this.httpClient.get(`${HOST}${packageName.replace(/\//gi, "%2f")}`);
     } catch (er) {
-      const [{package: pkg}] = await this.search(packageName);
+      if (retry > 0) {
+        return this.info(packageName, retry - 1);
+      }
 
-      return {
-        ...pkg,
-        "dist-tags": {
-          latest: pkg.version
-        },
-        versions: {
-          [pkg.version]: {
-            name: packageName,
-            version: pkg.version,
-            dependencies: {},
-            devDependencies: {}
-          }
-        }
-      };
+      return this.fallback(packageName);
     }
+  }
+
+  private async fallback(packageName: string) {
+    const [{package: pkg}] = await this.search(packageName);
+
+    return {
+      ...pkg,
+      "dist-tags": {
+        latest: pkg.version
+      },
+      versions: {
+        [pkg.version]: {
+          name: packageName,
+          version: pkg.version,
+          dependencies: {},
+          devDependencies: {}
+        }
+      }
+    };
   }
 }

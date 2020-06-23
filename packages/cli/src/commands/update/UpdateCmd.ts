@@ -48,7 +48,7 @@ export class UpdateCmd {
     return [
       {
         type: "list",
-        name: "tsedVersion",
+        name: "version",
         message: "Select a Ts.ED version",
         default: initialOptions.version,
         when: !initialOptions.version,
@@ -96,7 +96,7 @@ export class UpdateCmd {
   }
 
   private async getAvailableVersions() {
-    const {versions} = await this.npmRegistryClient.info("@tsed/common");
+    const {versions} = await this.npmRegistryClient.info("@tsed/common", 10);
     this.versions = versions;
 
     return Object.keys(versions)
@@ -106,12 +106,14 @@ export class UpdateCmd {
   }
 
   private async getEligibleCliVersion(tsedVersion: string) {
-    const {versions} = await this.npmRegistryClient.info("@tsed/cli-core");
+    const {versions} = await this.npmRegistryClient.info("@tsed/cli-core", 10);
 
     return Object.keys(versions)
       .sort((a, b) => (isGreaterThan(a, b) ? -1 : 1))
       .find(pkg => {
-        return isGreaterThan(tsedVersion, versions[pkg].dependencies["@tsed/core"]);
+        if (versions[pkg].dependencies["@tsed/core"]) {
+          return isGreaterThan(tsedVersion, versions[pkg].dependencies["@tsed/core"]);
+        }
       });
   }
 }

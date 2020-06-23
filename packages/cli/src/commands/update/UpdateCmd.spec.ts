@@ -59,7 +59,7 @@ describe("UpdateCmd", () => {
           choices: ["5.58.0", "5.57.0", "5.56.0", "5.55.0"],
           default: undefined,
           message: "Select a Ts.ED version",
-          name: "tsedVersion",
+          name: "version",
           type: "list",
           when: true
         }
