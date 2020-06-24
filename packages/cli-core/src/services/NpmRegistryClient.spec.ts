@@ -25,6 +25,10 @@ describe("NpmRegistryClient", () => {
 
       // THEN
       expect(httpClient.get).toHaveBeenCalledWith(expect.stringContaining("-/v1/search"), {
+        headers: {
+          Accept: "application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*",
+          "Accept-Encoding": "gzip"
+        },
         qs: {
           text: "text",
           from: 0,
@@ -60,6 +64,10 @@ describe("NpmRegistryClient", () => {
 
       // THEN
       expect(httpClient.get).toHaveBeenCalledWith(expect.stringContaining("-/v1/search"), {
+        headers: {
+          Accept: "application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*",
+          "Accept-Encoding": "gzip"
+        },
         qs: {
           text: "text",
           from: 1,
@@ -76,7 +84,10 @@ describe("NpmRegistryClient", () => {
     it("should get package info", async () => {
       // GIVEN
       const httpClient = {
-        get: jest.fn().mockReturnValue(Promise.resolve("response"))
+        get: jest
+          .fn()
+          .mockRejectedValueOnce(new Error("Not found"))
+          .mockResolvedValueOnce("response")
       };
 
       const npmRegistryClient: NpmRegistryClient = await CliPlatformTest.invoke<NpmRegistryClient>(NpmRegistryClient, [
@@ -87,10 +98,27 @@ describe("NpmRegistryClient", () => {
       ]);
 
       // WHEN
-      const result = await npmRegistryClient.info("@scope/module");
+      const result = await npmRegistryClient.info("@tsed/cli", 5);
 
       // THEN
-      expect(httpClient.get).toHaveBeenCalledWith(expect.stringContaining("@scope%2fmodule"));
+      expect(httpClient.get).toHaveBeenCalledWith(expect.stringContaining("@tsed/cli"), {
+        headers: {
+          Accept: "application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*",
+          "Accept-Encoding": "gzip"
+        },
+        retry: 5,
+        unfiltered: false
+      });
+
+      expect(httpClient.get).toHaveBeenCalledWith(expect.stringContaining("@tsed%2fcli"), {
+        headers: {
+          Accept: "application/json",
+          "Accept-Encoding": "gzip"
+        },
+        retry: 4,
+        unfiltered: true
+      });
+
       expect(result).toEqual("response");
     });
   });
