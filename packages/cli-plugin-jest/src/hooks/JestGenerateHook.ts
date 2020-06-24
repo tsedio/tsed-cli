@@ -10,7 +10,7 @@ export class JestGenerateHook {
   @OnExec("generate")
   onGenerateExec(ctx: GenerateCmdContext): Tasks {
     const {symbolPath} = ctx;
-    const {specTemplate, integrationTemplate} = this.mapOptions(ctx);
+    const {specTemplate, integrationTemplate, relativeSrcPath} = this.mapOptions(ctx);
 
     return [
       {
@@ -19,10 +19,14 @@ export class JestGenerateHook {
           return !(ctx.type === "server" || ctx.type.includes(":connection"));
         },
         task: () =>
-          this.srcRenderService.render(specTemplate, ctx, {
-            output: `${symbolPath}.spec.ts`,
-            templateDir: TEMPLATE_DIR
-          })
+          this.srcRenderService.render(
+            specTemplate,
+            {...ctx, relativeSrcPath},
+            {
+              output: `${symbolPath}.spec.ts`,
+              templateDir: TEMPLATE_DIR
+            }
+          )
       },
       {
         title: `Generate ${ctx.type} integration file '${symbolPath}.integration.spec.ts'`,
@@ -30,10 +34,14 @@ export class JestGenerateHook {
           return ["controller", "server"].includes(ctx.type);
         },
         task: () =>
-          this.srcRenderService.render(integrationTemplate, ctx, {
-            output: `${symbolPath}.integration.spec.ts`,
-            templateDir: TEMPLATE_DIR
-          })
+          this.srcRenderService.render(
+            integrationTemplate,
+            {...ctx, relativeSrcPath},
+            {
+              output: `${symbolPath}.integration.spec.ts`,
+              templateDir: TEMPLATE_DIR
+            }
+          )
       }
     ];
   }
