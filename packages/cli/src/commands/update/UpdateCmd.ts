@@ -125,8 +125,10 @@ export class UpdateCmd {
     return Object.keys(versions)
       .sort((a, b) => (isGreaterThan(a, b) ? -1 : 1))
       .find(pkg => {
-        if (versions[pkg].devDependencies["@tsed/core"]) {
-          return isGreaterThan(tsedVersion, versions[pkg].devDependencies["@tsed/core"]);
+        const tsedCore = versions[pkg].devDependencies["@tsed/core"] || versions[pkg].dependencies["@tsed/core"];
+
+        if (tsedCore) {
+          return isGreaterThan(tsedVersion, tsedCore);
         }
       });
   }
