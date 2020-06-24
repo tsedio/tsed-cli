@@ -1,4 +1,4 @@
-import { PlatformApplication, PlatformTest } from "@tsed/common";
+import { PlatformTest } from "@tsed/common";
 import * as SuperTest from "supertest";
 import { {{symbolName}} } from "./{{symbolPathBasename}}";
 
@@ -13,6 +13,8 @@ describe("{{symbolName}}", () => {
   afterEach(PlatformTest.reset);
 
   it("should call GET {{route}}", async () => {
-     await request.get("{{route}}").expect(404);
+     const response = await request.get("{{route}}").expect(404);
+
+     expect(response.text).to.equal("Not found");
   });
 });
