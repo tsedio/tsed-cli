@@ -6,10 +6,10 @@ export class RoutePipe {
   transform(route: string) {
     return `/${route
       .split("/")
-      .reduce((paths, path) => {
+      .reduce((paths: string[], path) => {
         const word = paramCase(path);
 
-        if (path.includes(`${word}s`)) {
+        if (paths.includes(`${word}s`) || paths.includes(word)) {
           return paths;
         }
 
