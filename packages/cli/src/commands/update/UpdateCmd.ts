@@ -1,4 +1,4 @@
-import {CliDefaultOptions, Command, Inject, NpmRegistryClient, ProjectPackageJson, QuestionOptions} from "@tsed/cli-core";
+import {CliDefaultOptions, CliPackageJson, Command, Inject, NpmRegistryClient, ProjectPackageJson, QuestionOptions} from "@tsed/cli-core";
 import {getValue} from "@tsed/core";
 import * as semver from "semver";
 
@@ -35,6 +35,9 @@ export class UpdateCmd {
 
   @Inject()
   projectPackage: ProjectPackageJson;
+
+  @CliPackageJson()
+  cliPackage: CliPackageJson;
 
   private versions: any;
 
@@ -116,20 +119,22 @@ export class UpdateCmd {
       result = await this.npmRegistryClient.info("@tsed/cli", 10);
     }
 
-    if (!result) {
-      return;
+    let version: string | undefined;
+
+    if (result) {
+      const {versions} = result;
+
+      version = Object.keys(versions)
+        .sort((a, b) => (isGreaterThan(a, b) ? -1 : 1))
+        .find(pkg => {
+          const tsedCore = versions[pkg].devDependencies["@tsed/core"] || versions[pkg].dependencies["@tsed/core"];
+
+          if (tsedCore) {
+            return isGreaterThan(tsedVersion, tsedCore);
+          }
+        });
     }
 
-    const {versions} = result;
-
-    return Object.keys(versions)
-      .sort((a, b) => (isGreaterThan(a, b) ? -1 : 1))
-      .find(pkg => {
-        const tsedCore = versions[pkg].devDependencies["@tsed/core"] || versions[pkg].dependencies["@tsed/core"];
-
-        if (tsedCore) {
-          return isGreaterThan(tsedVersion, tsedCore);
-        }
-      });
+    return version && isGreaterThan(version, this.cliPackage.version) ? version : this.cliPackage.version;
   }
 }
