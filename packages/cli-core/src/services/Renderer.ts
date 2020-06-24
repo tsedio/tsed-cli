@@ -2,7 +2,7 @@ import {Configuration, Inject, Injectable} from "@tsed/di";
 import * as Consolidate from "consolidate";
 import * as Fs from "fs-extra";
 import * as globby from "globby";
-import {basename, dirname, join} from "path";
+import {basename, dirname, join, relative} from "path";
 import {Observable} from "rxjs";
 import {CliFs} from "./CliFs";
 
@@ -76,6 +76,10 @@ export abstract class Renderer {
         cwd: this.rootDir
       }
     );
+  }
+
+  relativeFrom(path: string) {
+    return relative(dirname(join(this.rootDir, path)), this.rootDir);
   }
 
   protected mapOptions(path: string, options: RenderOptions) {

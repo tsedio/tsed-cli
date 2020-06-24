@@ -51,7 +51,8 @@ export class JestGenerateHook {
 
     return {
       specTemplate,
-      integrationTemplate
+      integrationTemplate,
+      relativeSrcPath: this.srcRenderService.relativeFrom(`${options.symbolPath}.integration.spec.ts`)
     };
   }
 }

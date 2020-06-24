@@ -51,7 +51,8 @@ export class MochaGenerateHook {
 
     return {
       specTemplate,
-      integrationTemplate
+      integrationTemplate,
+      relativeSrcPath: this.srcRenderService.relativeFrom(`${options.symbolPath}.integration.spec.ts`)
     };
   }
 }

@@ -10,7 +10,7 @@ describe("{{symbolName}}", () => {
     request = SuperTest(PlatformTest.callback());
   });
 
-  afterEach(TestContext.reset);
+  afterEach(PlatformTest.reset);
 
   it("should call GET {{route}}", async () => {
      await request.get("{{route}}").expect(404);

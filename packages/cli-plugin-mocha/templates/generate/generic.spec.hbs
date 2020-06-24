@@ -6,7 +6,10 @@ describe("{{symbolName}}", () => {
   beforeEach(PlatformTest.create);
   afterEach(PlatformTest.reset);
 
-  it("should do something", TestContext.inject([{{symbolName}}], (controller: {{symbolName}}) => {
-    expect(controller).to.be.instanceof({{symbolName}});
+  it("should do something", () => {
+    const instance = PlatformTest.get<{{symbolName}}>({{symbolName}});
+    // const instance = PlatformTest.invoke<{{symbolName}}>({{symbolName}}); // get fresh instance
+
+    expect(instance).to.be.instanceof({{symbolName}});
   }));
 });
