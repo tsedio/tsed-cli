@@ -1,12 +1,12 @@
 {
   "name": "@tsed/cli-plugin-eslint",
-  "version": "1.16.8",
+  "version": "1.16.9",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "description": "Ts.ED CLI plugin. Add EsLint support",
   "devDependencies": {
-    "@tsed/cli": "1.16.8",
-    "@tsed/cli-core": "1.16.8"
+    "@tsed/cli": "1.16.9",
+    "@tsed/cli-core": "1.16.9"
   },
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",
