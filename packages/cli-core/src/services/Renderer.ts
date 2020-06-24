@@ -8,7 +8,9 @@ import {CliFs} from "./CliFs";
 
 const normalizePath = require("normalize-path");
 
-require("handlebars-helpers")();
+require("handlebars-helpers")({
+  handlebars: require("handlebars")
+});
 
 export interface RenderOptions {
   templateDir?: string;

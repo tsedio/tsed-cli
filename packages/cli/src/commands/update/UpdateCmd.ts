@@ -108,7 +108,19 @@ export class UpdateCmd {
   }
 
   private async getEligibleCliVersion(tsedVersion: string) {
-    const {versions} = await this.npmRegistryClient.info("@tsed/cli", 10);
+    let result: any;
+
+    result = await this.npmRegistryClient.info("@tsed/cli-core", 10);
+
+    if (!result) {
+      result = await this.npmRegistryClient.info("@tsed/cli", 10);
+    }
+
+    if (!result) {
+      return;
+    }
+
+    const {versions} = result;
 
     return Object.keys(versions)
       .sort((a, b) => (isGreaterThan(a, b) ? -1 : 1))

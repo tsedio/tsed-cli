@@ -103,7 +103,7 @@ export class NpmRegistryClient {
         retry
       });
     } catch (er) {
-      return this.fallback(packageName);
+      return retry == 0 ? this.fallback(packageName) : null;
     }
   }
 

@@ -47,8 +47,8 @@
   "dependencies": {
     "lerna": "3.18.4",
     "@samverschueren/stream-to-observable": "0.3.0",
-    "@tsed/core": "5.58.1",
-    "@tsed/di": "5.58.1",
+    "@tsed/core": "^5.59.1",
+    "@tsed/di": "^5.59.1",
     "@tsed/logger": "5.5.0",
     "@typescript-eslint/eslint-plugin": "2.31.0",
     "@typescript-eslint/parser": "2.31.0",
@@ -108,8 +108,8 @@
     "ts-node": "8.6.2",
     "ts-jest": "26.1.0",
     "tslint": "6.0.0",
-    "typescript": "3.8.3",
-    "vuepress": "1.4.0",
+    "typescript": "3.9.5",
+    "vuepress": "1.5.2",
     "vue-analytics": "5.22.1",
     "vuepress-theme-tsed": "2.8.3"
   },
@@ -127,8 +127,5 @@
     "packages": [
       "packages/*"
     ]
-  },
-  "resolutions": {
-    "watchpack": "1.6.1"
   }
 }

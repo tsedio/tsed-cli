@@ -6,10 +6,6 @@ import {GenerateCmd} from "../../../src";
 
 const TEMPLATE_DIR = resolve(__dirname, "..", "..", "..", "templates");
 
-function readFile(file: string) {
-  return readFileSync(`${__dirname}/${file}`, {encoding: "utf8"});
-}
-
 describe("Generate middleware decorator", () => {
   beforeEach(() =>
     CliPlatformTest.bootstrap({
