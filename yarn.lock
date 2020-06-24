@@ -2319,6 +2319,15 @@
     source-map-support "0.5.16"
     tslib "1.11.1"
 
+"@tsed/core@5.59.1":
+  version "5.59.1"
+  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-5.59.1.tgz#131461ccc007565b323ac92696254fc12e69da68"
+  integrity sha512-3qxehnxlZzSM+BOH8TqUqug3hRvHvEyF+Q0qy8wqY7XrSrS+8cE+jd6VkJPto8hZP+zw/27yPCV+127kNYQimw==
+  dependencies:
+    reflect-metadata "^0.1.13"
+    source-map-support "0.5.16"
+    tslib "1.11.1"
+
 "@tsed/di@5.58.1", "@tsed/di@^5.58.1":
   version "5.58.1"
   resolved "https://registry.yarnpkg.com/@tsed/di/-/di-5.58.1.tgz#3a72c120d75ddbf5ee7425356808522a950a38a7"

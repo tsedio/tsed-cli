@@ -7,7 +7,8 @@ const versions = {
     version: "5.58.0",
     dependencies: {
       "@tsed/logger": "^5.5.0"
-    }
+    },
+    devDependencies: {}
   },
   "5.56.0": {
     version: "5.56.0"
@@ -120,24 +121,24 @@ describe("UpdateCmd", () => {
     it("should update dependencies", async () => {
       const npmClientRegistry = {
         info(pkg: string) {
-          if (pkg === "@tsed/cli-core") {
+          if (pkg === "@tsed/cli") {
             return {
               versions: {
                 "1.5.0": {
                   version: "1.5.0",
-                  dependencies: {
+                  devDependencies: {
                     "@tsed/core": "5.80.0"
                   }
                 },
                 "1.4.0": {
                   version: "1.4.0",
-                  dependencies: {
+                  devDependencies: {
                     "@tsed/core": "5.55.0"
                   }
                 },
                 "1.3.0": {
                   version: "1.3.0",
-                  dependencies: {
+                  devDependencies: {
                     "@tsed/core": "5.55.0"
                   }
                 }

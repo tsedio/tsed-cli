@@ -88,7 +88,7 @@ export class UpdateCmd {
 
     if (cliVersion) {
       Object.entries(this.projectPackage.devDependencies).forEach(([pkg, version]) => {
-        if (pkg.includes("@tsed/cli") && isGreaterThan(cliVersion, version)) {
+        if (pkg.includes("@tsed/cli-plugin") && isGreaterThan(cliVersion, version)) {
           this.projectPackage.addDevDependency(pkg, cliVersion);
         }
       });
@@ -108,13 +108,13 @@ export class UpdateCmd {
   }
 
   private async getEligibleCliVersion(tsedVersion: string) {
-    const {versions} = await this.npmRegistryClient.info("@tsed/cli-core", 10);
+    const {versions} = await this.npmRegistryClient.info("@tsed/cli", 10);
 
     return Object.keys(versions)
       .sort((a, b) => (isGreaterThan(a, b) ? -1 : 1))
       .find(pkg => {
-        if (versions[pkg].dependencies["@tsed/core"]) {
-          return isGreaterThan(tsedVersion, versions[pkg].dependencies["@tsed/core"]);
+        if (versions[pkg].devDependencies["@tsed/core"]) {
+          return isGreaterThan(tsedVersion, versions[pkg].devDependencies["@tsed/core"]);
         }
       });
   }
