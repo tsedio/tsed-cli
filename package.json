@@ -4,28 +4,24 @@
   "description": "CLI to bootstrap your Ts.ED project",
   "private": true,
   "scripts": {
-    "prepublishOnly": "gflow release post",
-    "gflow-release-pre": "",
-    "semantic-release": "semantic-release",
-    "semantic-release:dry-run": "semantic-release --dry-run",
-    "clean": "gulp clean:workspace",
+    "clean": "monorepo clean workspace",
     "test": "yarn test:lint && yarn test:coverage",
     "test:unit": "cross-env NODE_ENV=test jest",
     "test:coverage": "yarn test:unit",
     "test:lint": "eslint packages --ext .ts",
     "test:lint:fix": "eslint packages --ext .ts --fix",
-    "travis:deploy-once": "travis-deploy-once",
-    "travis:coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "tsc": "tsc --project tsconfig.json",
-    "build": "lerna run build --stream && gulp repo:build",
-    "publish:dryRun": "yarn build && gulp repo:publishDryRun",
-    "docs:serve": "yarn api:build && yarn vuepress:serve ",
-    "docs:build": "yarn api:build && yarn vuepress:build ",
-    "docs:publish": "yarn docs:build && gulp docs:publish",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "build": "monorepo build",
+    "sync:packages": "monorepo sync packages",
+    "docs:serve": "yarn api:build && yarn vuepress:serve",
+    "docs:build": "yarn api:build && yarn vuepress:build",
+    "docs:publish": "yarn docs:build && monorepo publish ghpages",
     "api:build": "lerna run build && ts-doc",
     "vuepress:build": "cross-env NODE_ENV=production vuepress build docs",
     "vuepress:serve": "vuepress dev docs",
-    "prettier": "prettier '{packages,test}/**/*.ts' --write"
+    "prettier": "prettier '{packages,test}/**/*.ts' --write",
+    "release": "semantic-release",
+    "release:dryRun": "semantic-release --dry-run"
   },
   "repository": {
     "type": "git",
@@ -76,32 +72,21 @@
     "update-notifier": "4.1.0"
   },
   "devDependencies": {
+    "@tsed/monorepo-utils": "1.8.3",
     "@typedproject/ts-doc": "4.0.6",
     "@types/jest": "26.0.0",
     "@types/node": "13.7.7",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-prettier": "3.1.3",
-    "chalk": "3.0.0",
     "concurrently": "5.1.0",
     "coveralls": "3.0.9",
     "cross-env": "7.0.0",
-    "fancy-log": "1.3.3",
     "gflow": "5.1.1",
-    "gulp": "4.0.2",
-    "gulp-clean": "0.4.0",
-    "gulp-exec": "4.0.0",
-    "gulp-json-editor": "2.5.4",
-    "gulp-load-plugins": "2.0.2",
-    "gulp-replace": "1.0.0",
-    "gulp-sourcemaps": "2.6.5",
-    "gulp-typescript": "^5.0.0",
     "husky": "4.2.3",
     "jest": "26.0.1",
     "lint-staged": "10.0.8",
     "prettier": "1.19.1",
-    "require-dir": "1.2.0",
-    "rimraf": "3.0.2",
     "semantic-release": "^17.0.4",
     "sinon": "9.0.0",
     "sinon-chai": "3.5.0",
@@ -127,5 +112,18 @@
     "packages": [
       "packages/*"
     ]
+  },
+  "resolutions": {
+    "watchpack": "1.6.1"
+  },
+  "monorepo": {
+    "productionBranch": "master",
+    "npmAccess": "public",
+    "ghpages": {
+      "dir": "./docs/.vuepress/dist",
+      "url": "https://github.com/TypedProject/tsed-cli.git",
+      "branch": "gh-pages",
+      "cname": "cli.tsed.io"
+    }
   }
 }
