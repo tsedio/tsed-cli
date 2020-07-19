@@ -11,7 +11,7 @@ import "@tsed/ajv";{{#if swagger}}
 import "@tsed/swagger";{{/if}}{{#if mongoose}}
 import "@tsed/mongoose";{{/if}}{{#if typeorm}}
 import "@tsed/typeorm";{{/if}}{{#if mongoose}}
-  import * as mongooseConfig from "./config/mongoose";
+import mongooseConfig from "./config/mongoose";
 {{/if}}{{#if typeorm}}
 import typeormConfig from "./config/typeorm";
 {{/if}}
