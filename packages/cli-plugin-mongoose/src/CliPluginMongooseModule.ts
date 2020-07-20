@@ -19,7 +19,8 @@ export class CliPluginMongooseModule {
     });
 
     this.packageJson.addDevDependencies({
-      "@types/mongoose": "latest"
+      "@types/mongoose": "latest",
+      "@tsed/testing-mongoose": this.packageJson.dependencies["@tsed/common"]
     });
   }
 }

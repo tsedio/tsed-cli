@@ -1,0 +1,22 @@
+import { Model, ObjectID } from "@tsed/mongoose";
+/**
+ * ## How to inject model?
+ *
+ * ```typescript
+ * import { MongooseModel } from "@tsed/mongoose";
+ * import { Injectable, Inject } from "@tsed/di";
+ *
+ * @Injectable()
+ * class MyService {
+ *   @Inject({{ collectionName }})
+ *   model: MongooseModel<{{ collectionName }}>;
+ * }
+ * ```
+ */
+@Model({
+  name: "{{ collectionName }}"
+})
+export class {{symbolName}} {
+  @ObjectID("id")
+  _id: string;
+}

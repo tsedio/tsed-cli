@@ -1,8 +1,11 @@
 import {GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
 import {CliDockerComposeYaml, Inject, OnExec, ProjectPackageJson, SrcRendererService, Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
-import {paramCase} from "change-case";
+import {camelCase, paramCase} from "change-case";
 import {CliMongoose} from "../services/CliMongoose";
+import {TEMPLATE_DIR} from "../utils/templateDir";
+
+const {plural} = require("pluralize");
 
 @Injectable()
 export class MongooseGenerateHook {
@@ -20,30 +23,79 @@ export class MongooseGenerateHook {
   protected cliDockerComposeYaml: CliDockerComposeYaml;
 
   constructor(private providersInfoService: ProvidersInfoService) {
-    providersInfoService.add(
-      {
-        name: "Mongoose connection",
-        value: "mongoose:connection"
-      },
-      MongooseGenerateHook
-    );
+    providersInfoService
+      .add(
+        {
+          name: "Mongoose model",
+          value: "mongoose:model",
+          model: "{{symbolName}}.model",
+          baseDir: "models"
+        },
+        MongooseGenerateHook
+      )
+      .add(
+        {
+          name: "Mongoose schema",
+          value: "mongoose:schema",
+          model: "{{symbolName}}.schema",
+          baseDir: "models"
+        },
+        MongooseGenerateHook
+      )
+      .add(
+        {
+          name: "Mongoose connection",
+          value: "mongoose:connection"
+        },
+        MongooseGenerateHook
+      );
   }
 
   @OnExec("generate")
   onGenerateExec(ctx: GenerateCmdContext): Tasks {
     if (this.providersInfoService.isMyProvider(ctx.type, MongooseGenerateHook)) {
-      return [
-        {
-          title: `Generate Mongoose configuration file to '${paramCase(ctx.name)}.config.ts'`,
-          task: () => this.cliMongoose.writeConfig(ctx.name, ctx)
-        },
-        {
-          title: "Generate docker-compose configuration",
-          task: async () => this.cliDockerComposeYaml.addDatabaseService(ctx.name, "mongodb")
-        }
-      ];
+      switch (ctx.type) {
+        case "mongoose:connection":
+          return this.generateConnection(ctx);
+        case "mongoose:model":
+        case "mongoose:schema":
+          return this.generateTemplate(ctx);
+      }
     }
 
     return [];
+  }
+
+  private generateTemplate(ctx: GenerateCmdContext) {
+    const {symbolPath, type, symbolName} = ctx;
+    const template = `mongoose.${type.split(":")[1]}.hbs`;
+    const newCtx = {
+      ...ctx,
+      collectionName: plural(camelCase(symbolName.replace(/Schema|Model/gi, "")))
+    };
+
+    return [
+      {
+        title: `Generate ${ctx.type} file to '${symbolPath}.ts'`,
+        task: () =>
+          this.srcRenderService.render(template, newCtx, {
+            output: `${symbolPath}.ts`,
+            templateDir: TEMPLATE_DIR
+          })
+      }
+    ];
+  }
+
+  private generateConnection(ctx: GenerateCmdContext) {
+    return [
+      {
+        title: `Generate Mongoose configuration file to '${paramCase(ctx.name)}.config.ts'`,
+        task: () => this.cliMongoose.writeConfig(ctx.name, ctx)
+      },
+      {
+        title: "Generate docker-compose configuration",
+        task: async () => this.cliDockerComposeYaml.addDatabaseService(ctx.name, "mongodb")
+      }
+    ];
   }
 }
