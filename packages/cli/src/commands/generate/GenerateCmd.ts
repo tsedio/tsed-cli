@@ -134,10 +134,13 @@ export class GenerateCmd implements CommandProvider {
   }
 
   $mapContext(ctx: Partial<GenerateCmdContext>): GenerateCmdContext {
-    const {name = "", type = ""} = ctx;
+    const {name = ""} = ctx;
+    let {type = ""} = ctx;
+    type = type.toLowerCase();
 
     return {
       ...ctx,
+      type,
       route: ctx.route ? this.routePipe.transform(ctx.route) : "",
       symbolName: this.classNamePipe.transform({name, type}),
       symbolPath: this.outputFilePathPipe.transform({name, type}),
