@@ -107,6 +107,8 @@ export class UpdateCmd {
     return Object.keys(versions)
       .filter(version => version.split(".")[0] >= "5")
       .sort((a, b) => (isGreaterThan(a, b) ? -1 : 1))
+      .filter(version => !["6.0.0"].includes(version))
+      .filter(version => !version.match(/alpha|beta/))
       .splice(0, 30);
   }
 
