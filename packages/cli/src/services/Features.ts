@@ -151,7 +151,15 @@ registerProvider({
             value: {
               type: "graphql",
               dependencies: {
-                "@tsed/graphql": "{{tsedVersion}}"
+                "@tsed/graphql": "{{tsedVersion}}",
+                "apollo-datasource": "latest",
+                "apollo-datasource-rest": "latest",
+                "apollo-server-express": "latest",
+                "type-graphql": "latest",
+                graphql: "14.7.0"
+              },
+              devDependencies: {
+                "apollo-server-testing": "latest"
               }
             }
           },
@@ -164,7 +172,11 @@ registerProvider({
             value: {
               type: "multer",
               dependencies: {
-                "@tsed/multipartfiles": "{{tsedVersion}}"
+                "@tsed/multipartfiles": "{{tsedVersion}}",
+                multer: "latest"
+              },
+              devDependencies: {
+                "@types/multer": "latest"
               }
             }
           },
