@@ -26,6 +26,10 @@ export function hasValue(expression: string, value: any) {
   return (ctx: any) => getValue(expression, ctx) === value;
 }
 
+export function isPlatform(...types: string[]) {
+  return (ctx: any) => [types].includes(ctx.platform);
+}
+
 export const FEATURES_TYPEORM_CONNECTION_TYPES = [
   {
     name: "MySQL",
@@ -168,20 +172,8 @@ registerProvider({
             value: {type: "db"}
           },
           {
-            name: "File uploading with Multer",
-            value: {
-              type: "multer",
-              dependencies: {
-                "@tsed/multipartfiles": "{{tsedVersion}}",
-                multer: "latest"
-              },
-              devDependencies: {
-                "@types/multer": "latest"
-              }
-            }
-          },
-          {
             name: "Passport.js",
+            when: isPlatform("express"),
             value: {
               type: "passportjs",
               devDependencies: {

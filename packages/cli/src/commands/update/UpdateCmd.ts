@@ -1,6 +1,7 @@
 import {CliDefaultOptions, CliPackageJson, Command, Inject, NpmRegistryClient, ProjectPackageJson, QuestionOptions} from "@tsed/cli-core";
 import {getValue} from "@tsed/core";
 import * as semver from "semver";
+import {minimalTsedVersion} from "../../contants/minimalTsedVersion";
 
 export interface UpdateCmdContext extends CliDefaultOptions {
   version: string;
@@ -104,12 +105,14 @@ export class UpdateCmd {
     const {versions} = await this.npmRegistryClient.info("@tsed/common", 10);
     this.versions = versions;
 
-    return Object.keys(versions)
-      .filter(version => version.split(".")[0] >= "5")
-      .sort((a, b) => (isGreaterThan(a, b) ? -1 : 1))
-      .filter(version => !["6.0.0"].includes(version))
-      .filter(version => !version.match(/alpha|beta/))
-      .splice(0, 30);
+    return (
+      Object.keys(versions)
+        .filter(version => version.split(".")[0] >= minimalTsedVersion)
+        .sort((a, b) => (isGreaterThan(a, b) ? -1 : 1))
+        // .filter(version => !["6.0.0"].includes(version))
+        // .filter(version => !version.match(/alpha|beta/))
+        .splice(0, 30)
+    );
   }
 
   private async getEligibleCliVersion(tsedVersion: string) {

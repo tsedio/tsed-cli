@@ -42,8 +42,8 @@
   "homepage": "https://github.com/TypedProject/tsed-cli",
   "dependencies": {
     "@samverschueren/stream-to-observable": "0.3.0",
-    "@tsed/core": "^5.65.2",
-    "@tsed/di": "^5.65.2",
+    "@tsed/core": "^6.0.0-alpha.20",
+    "@tsed/di": "^6.0.0-alpha.20",
     "@tsed/logger": "5.5.0",
     "@typescript-eslint/eslint-plugin": "2.31.0",
     "@typescript-eslint/parser": "2.31.0",
@@ -72,7 +72,7 @@
     "update-notifier": "4.1.0"
   },
   "devDependencies": {
-    "@tsed/monorepo-utils": "1.8.3",
+    "@tsed/monorepo-utils": "1.9.1",
     "@typedproject/ts-doc": "4.0.6",
     "@types/jest": "26.0.0",
     "@types/node": "13.7.7",
@@ -119,13 +119,9 @@
     "watchpack": "1.6.1"
   },
   "monorepo": {
-    "productionBranch": "master",
+    "productionBranch": "alpha",
+    "developBranch": "alpha",
     "npmAccess": "public",
-    "ghpages": {
-      "dir": "./docs/.vuepress/dist",
-      "url": "https://github.com/TypedProject/tsed-cli.git",
-      "branch": "gh-pages",
-      "cname": "cli.tsed.io"
-    }
+    "npmDistTag": "alpha"
   }
 }

@@ -11,6 +11,6 @@ module.exports = {
   scope: '@tsed',
   modules: {
     'cli-core': 'cli-core',
-    'cli': 'cli',
+    'cli': 'cli'
   }
 }

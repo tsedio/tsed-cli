@@ -2141,21 +2141,21 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
-"@tsed/core@5.65.2", "@tsed/core@^5.65.2":
-  version "5.65.2"
-  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-5.65.2.tgz#5cc9279822420b0f3049a477f89e7f44718d43d8"
-  integrity sha512-xVllUiK95BaskziWgAPqplUC/Py2AWchEoHF7oCHInd/N3bsEvppfz7YcJ4uM8MNYglklypt/XfYroW9rnpA5g==
+"@tsed/core@6.0.0", "@tsed/core@^6.0.0-alpha.20":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-6.0.0.tgz#4e84a91216dd51df064af2b2da55171725b27ca2"
+  integrity sha512-7MaZ2wwhSqd6lsmABbvA08p8AXoAGa0IHtPcaJKrvuiXLNb7ChO/+6btNwaLZBtB904jUS/gXodbP0MRaN/t/Q==
   dependencies:
     reflect-metadata "^0.1.13"
     source-map-support "0.5.19"
     tslib "1.11.0"
 
-"@tsed/di@^5.65.2":
-  version "5.65.2"
-  resolved "https://registry.yarnpkg.com/@tsed/di/-/di-5.65.2.tgz#7d661d3939cea30db02092b1c9ab37b354bf166a"
-  integrity sha512-FCoEaH2vKVc4WvqiU8wGNhsxlyXqBlJuhOqPRooWfiDPjkD+Cwv88j+/dgy2hFBI9xUN34B81ze0UI2ASOCf+Q==
+"@tsed/di@^6.0.0-alpha.20":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@tsed/di/-/di-6.0.0.tgz#e54a2d07d16d1b968132c9376915553273d9dfc0"
+  integrity sha512-rPRXSqfpU96oixJBkbAKRRGyvoR9Bd/rjSheQBrQs83UmJ1YJxl76gs1j4xDuoErXX8P6RI7B0jDZiObtBpAmA==
   dependencies:
-    "@tsed/core" "5.65.2"
+    "@tsed/core" "6.0.0"
     chalk "4.1.0"
     tslib "1.11.0"
 
@@ -2181,10 +2181,10 @@
     streamroller "^1.0.3"
     tslib "1.10.0"
 
-"@tsed/monorepo-utils@1.8.3":
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/@tsed/monorepo-utils/-/monorepo-utils-1.8.3.tgz#32a60b8286dd0ee2c2956afd428343ef2d897928"
-  integrity sha512-vW568UTdlv4Recbno8r3awU8hRIjyZDEbCB9qflEXUuLPKaxrLT+N9z+koPK3MXLjm7Jp/TTQahoG8GghVFfTg==
+"@tsed/monorepo-utils@1.9.1":
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/@tsed/monorepo-utils/-/monorepo-utils-1.9.1.tgz#950fe077d8844f4fc50cc70ddc4b55883aa7a962"
+  integrity sha512-H2p082iI+4UkTh/kcqrBjZAudeNr8mmtuzwRpa7En8rXNOBXDKGKMICk7y/u9A1dbpHiv4QUXgpFkbdUoe/CsQ==
   dependencies:
     axios "0.19.2"
     chalk "3.0.0"

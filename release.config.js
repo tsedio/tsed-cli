@@ -2,7 +2,12 @@ process.env.PRODUCTION_BRANCH = "master";
 process.env.DEVELOP_BRANCH = "master";
 
 module.exports = {
-  branch: require("./package.json").monorepo.productionBranch,
+  branches: [
+    "master",
+    {name: "alpha", prerelease: true, channel: "alpha"},
+    {name: "beta", prerelease: true, channel: "beta"},
+    {name: "rc", prerelease: true, channel: "rc"}
+  ],
   verifyConditions: ["@semantic-release/github", "@semantic-release/npm", "@tsed/monorepo-utils/semantic-release"],
   analyzeCommits: ["@semantic-release/commit-analyzer"],
   verifyRelease: [],

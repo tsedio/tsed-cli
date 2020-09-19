@@ -28,12 +28,12 @@ describe("GenerateCmd", () => {
         expect(result[1].message).toEqual("Which name ?");
         expect(result[1].default({type: "name"})).toEqual("Name");
         expect(result[1].when).toEqual(true);
-        expect(result[2].message).toEqual("Which route ?");
-        expect(result[2].when({type: "controller"})).toEqual(true);
-        expect(result[2].when({type: "server"})).toEqual(true);
-        expect(result[2].when({type: "pipe"})).toEqual(false);
-        expect(result[2].default({type: "server"})).toEqual("/rest");
-        expect(result[2].default({type: "other", name: "test"})).toEqual("/test");
+        expect(result[3].message).toEqual("Which route ?");
+        expect(result[3].when({type: "controller"})).toEqual(true);
+        expect(result[3].when({type: "server"})).toEqual(true);
+        expect(result[3].when({type: "pipe"})).toEqual(false);
+        expect(result[3].default({type: "server"})).toEqual("/rest");
+        expect(result[3].default({type: "other", name: "test"})).toEqual("/test");
       })
     );
     it(
@@ -60,12 +60,12 @@ describe("GenerateCmd", () => {
         expect(result[1].message).toEqual("Which name ?");
         expect(result[1].default({type: "name"})).toEqual("Name");
         expect(result[1].when).toEqual(false);
-        expect(result[2].message).toEqual("Which route ?");
-        expect(result[2].when({type: "controller"})).toEqual(true);
-        expect(result[2].when({type: "server"})).toEqual(true);
-        expect(result[2].when({type: "pipe"})).toEqual(false);
-        expect(result[2].default({type: "server"})).toEqual("/rest");
-        expect(result[2].default({type: "other", name: "test"})).toEqual("/name");
+        expect(result[3].message).toEqual("Which route ?");
+        expect(result[3].when({type: "controller"})).toEqual(true);
+        expect(result[3].when({type: "server"})).toEqual(true);
+        expect(result[3].when({type: "pipe"})).toEqual(false);
+        expect(result[3].default({type: "server"})).toEqual("/rest");
+        expect(result[3].default({type: "other", name: "test"})).toEqual("/name");
       })
     );
   });
@@ -107,7 +107,10 @@ describe("GenerateCmd", () => {
           symbolName: "Test",
           symbolPath: "controllers/Test",
           symbolPathBasename: "Test",
-          type: "controller"
+          type: "controller",
+          express: false,
+          koa: false,
+          platformSymbol: "PlatformUndefined"
         },
         {
           output: "controllers/Test.ts"
@@ -151,7 +154,10 @@ describe("GenerateCmd", () => {
           symbolName: "Test",
           symbolPath: "controllers/Test",
           symbolPathBasename: "Test",
-          type: "controller"
+          type: "controller",
+          express: false,
+          koa: false,
+          platformSymbol: "PlatformUndefined"
         },
         {
           output: "controllers/Test.ts"
