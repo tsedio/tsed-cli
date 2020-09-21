@@ -3,9 +3,10 @@ import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-koa"; // /!\ keep this import
 import * as bodyParser from "koa-bodyparser";
 import * as compress from "koa-compress";
-import * as methodOverride from "koa-override";
 import * as cors from "@koa/cors";
 import "@tsed/ajv";
+const methodOverride = require("koa-override");
+
 export const rootDir = __dirname;
 
 @Configuration({
@@ -35,6 +36,6 @@ export class Server {
       .use(cors())
       .use(compress())
       .use(methodOverride())
-      .use(bodyParser.json())
+      .use(bodyParser())
   }
 }

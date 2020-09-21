@@ -9,7 +9,6 @@ import * as cors from "cors";
 {{/if}}{{#if koa}}import "@tsed/platform-koa"; // /!\ keep this import
 import * as bodyParser from "koa-bodyparser";
 import * as compress from "koa-compress";
-import * as methodOverride from "koa-override";
 import * as cors from "@koa/cors";
 {{/if}}
 import "@tsed/ajv";{{#if swagger}}
@@ -19,7 +18,8 @@ import "@tsed/typeorm";{{/if}}{{#if mongoose}}
 import mongooseConfig from "./config/mongoose";
 {{/if}}{{#if typeorm}}
 import typeormConfig from "./config/typeorm";
-{{/if}}
+{{/if}}{{#if koa}}
+const methodOverride = require("koa-override");{{/if}}
 
 export const rootDir = __dirname;
 
@@ -72,6 +72,6 @@ export class {{symbolName}} {
       .use(cors())
       .use(compress())
       .use(methodOverride())
-      .use(bodyParser.json()){{/if}}
+      .use(bodyParser()){{/if}}
   }
 }
