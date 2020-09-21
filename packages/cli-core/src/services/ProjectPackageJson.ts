@@ -52,8 +52,8 @@ export interface InstallOptions {
   packageManager?: "npm" | "yarn";
 }
 
-function getPackageWithLatest(deps: any) {
-  return Object.entries(deps).filter(([, version]) => version === "latest");
+function getPackageWithTag(deps: any) {
+  return Object.entries(deps).filter(([, version]) => ["latest", "alpha", "beta", "rc"].includes(String(version)));
 }
 
 function sortKeys(obj: any) {
@@ -242,7 +242,7 @@ export class ProjectPackageJson {
       options.packageManager = "npm";
     }
 
-    const shouldResolve = !!getPackageWithLatest(this.allDependencies).length;
+    const shouldResolve = !!getPackageWithTag(this.allDependencies).length;
 
     return new Listr(
       [
@@ -292,14 +292,14 @@ export class ProjectPackageJson {
 
   protected resolve() {
     return new Observable(observer => {
-      const packages = getPackageWithLatest(this.allDependencies);
+      const packages = getPackageWithTag(this.allDependencies);
       let completed = 0;
 
       observer.next(`${completed}/${packages.length} resolved - ${packages.map(([pkg]) => pkg).join(",")}`);
 
-      const promises = packages.map(async ([pkg]) => {
+      const promises = packages.map(async ([pkg, tag]) => {
         const info = await this.npmRegistryClient.info(pkg);
-        const version = info["dist-tags"].latest;
+        const version = info["dist-tags"][String(tag)] || info["dist-tags"].latest;
 
         if (this.raw.dependencies[pkg]) {
           this.raw.dependencies[pkg] = version;

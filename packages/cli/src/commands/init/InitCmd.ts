@@ -16,6 +16,7 @@ import {
 import {camelCase, paramCase, pascalCase} from "change-case";
 import * as Listr from "listr";
 import {basename, join} from "path";
+import {DEFAULT_TSED_TAGS} from "../../constants";
 import {Features, FeatureValue} from "../../services/Features";
 
 export interface InitCmdContext extends CliDefaultOptions {
@@ -43,7 +44,7 @@ export interface InitCmdContext extends CliDefaultOptions {
   options: {
     "-t, --tsed-version <version>": {
       type: String,
-      defaultValue: "latest",
+      defaultValue: DEFAULT_TSED_TAGS,
       description: "Use a specific version of Ts.ED (format: 5.x.x)"
     }
   }
