@@ -167,7 +167,6 @@ describe("Init cmd", () => {
           "koa": "1.0.0",
           "koa-bodyparser": "1.0.0",
           "koa-compress": "1.0.0",
-          "koa-mount": "1.0.0",
           "koa-override": "1.0.0"
         },
         "description": "",
@@ -176,8 +175,6 @@ describe("Init cmd", () => {
           "@types/koa-bodyparser": "1.0.0",
           "@types/koa-compress": "1.0.0",
           "@types/koa-json": "1.0.0",
-          "@types/koa-mount": "1.0.0",
-          "@types/koa-static": "1.0.0",
           "@types/koa__cors": "1.0.0",
           "@types/koa__router": "1.0.0",
           "@types/node": "1.0.0",

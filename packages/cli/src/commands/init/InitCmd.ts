@@ -311,9 +311,7 @@ export class InitCmd implements CommandProvider {
         koa: "latest",
         "@koa/cors": "latest",
         "@koa/router": "latest",
-        "koa-mount": "latest",
         "koa-bodyparser": "latest",
-        // "koa-session": "latest",
         "koa-override": "latest",
         "koa-compress": "latest"
       },
@@ -327,10 +325,6 @@ export class InitCmd implements CommandProvider {
         "@types/koa-bodyparser": "latest",
         "@types/koa__router": "latest",
         "@types/koa-compress": "latest",
-        // "@types/koa-session": "latest",
-        // "@types/koa-views": "latest",
-        "@types/koa-static": "latest",
-        "@types/koa-mount": "latest",
         "@types/koa__cors": "latest"
       },
       ctx
