@@ -19,6 +19,7 @@ import mongooseConfig from "./config/mongoose";
 {{/if}}{{#if typeorm}}
 import typeormConfig from "./config/typeorm";
 {{/if}}{{#if koa}}
+
 const methodOverride = require("koa-override");{{/if}}
 
 export const rootDir = __dirname;

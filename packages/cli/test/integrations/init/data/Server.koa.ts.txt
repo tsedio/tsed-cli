@@ -5,6 +5,7 @@ import * as bodyParser from "koa-bodyparser";
 import * as compress from "koa-compress";
 import * as cors from "@koa/cors";
 import "@tsed/ajv";
+
 const methodOverride = require("koa-override");
 
 export const rootDir = __dirname;
