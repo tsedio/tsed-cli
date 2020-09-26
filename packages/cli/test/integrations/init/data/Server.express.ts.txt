@@ -31,7 +31,7 @@ export class Server {
   @Configuration()
   settings: Configuration;
 
-  $beforeRoutesInit() {
+  $beforeRoutesInit(): void {
     this.app
       .use(cors())
       .use(cookieParser())
