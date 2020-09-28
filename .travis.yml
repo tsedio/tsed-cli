@@ -13,7 +13,7 @@ jobs:
     - stage: deploy
       name: 'Deploy packages'
       node_js: 12
-      if: (NOT type IN (pull_request)) AND (branch = master || branch = alpha)
+      if: (NOT type IN (pull_request)) AND (branch = master || branch = alpha || branch = beta)
       script: yarn release
 
 branches:

@@ -1,6 +1,3 @@
-// process.env.PRODUCTION_BRANCH = "alpha";
-// process.env.DEVELOP_BRANCH = "alpha";
-
 module.exports = {
   branches: [
     "master",
