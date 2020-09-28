@@ -1,12 +1,12 @@
 {
   "name": "@tsed/cli-plugin-mocha",
-  "version": "2.0.0-alpha.6",
+  "version": "2.0.0-beta.1",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "description": "Ts.ED CLI plugin. Add Mocha support",
   "devDependencies": {
-    "@tsed/cli": "2.0.0-alpha.6",
-    "@tsed/cli-core": "2.0.0-alpha.6"
+    "@tsed/cli": "2.0.0-beta.1",
+    "@tsed/cli-core": "2.0.0-beta.1"
   },
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",
