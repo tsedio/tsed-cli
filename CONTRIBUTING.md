@@ -47,14 +47,13 @@ If you have any questions, create an [issue](https://github.com/TypedProject/tse
 Clone your fork of the repository
 
 ```bash
-$ git clone https://github.com/YOUR_USERNAME/tsed.git
+$ git clone https://github.com/YOUR_USERNAME/tsed-cli.git
 ```
 
 Install npm dependencies with yarn (not with NPM!):
 ```bash
 yarn
 ```
-> After installing dependencies, yarn/npm run the `postinstall` hook and mounted all packages with `npm link` (e.g. `yarn run repo:bootstrap`).
 
 Compile TypeScript:
 
@@ -86,7 +85,7 @@ npm install -g gflow
 
 ```bash
 git fetch
-git branch --no-track -b feat-branch-name origin/production  # !IMPORTANT
+git branch --no-track -b feat-branch-name origin/master  # !IMPORTANT
 yarn
 
 ## OR
@@ -95,7 +94,7 @@ gflow new feat name_of_feat
 
 ### Commit & Push a feature
 
-This command rebases your branch feature from the production branch, runs the test, and pushes your branch.
+This command rebases your branch feature from the master branch, runs the test, and pushes your branch.
 
 ```bash
 git commit -m "feat(domain): Your message"
@@ -105,7 +104,7 @@ Then:
 ```bash
 npm run test
 git fetch
-git rebase origin/production
+git rebase origin/master
 git push -f
 
 # OR using gflow (run fetch, rebase and push for you)
