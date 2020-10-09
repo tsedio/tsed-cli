@@ -239,6 +239,8 @@ export class InitCmd implements CommandProvider {
       "@tsed/di": ctx.tsedVersion,
       "@tsed/ajv": ctx.tsedVersion,
       "@tsed/exceptions": ctx.tsedVersion,
+      "@tsed/schema": ctx.tsedVersion,
+      "@tsed/json-mapper": ctx.tsedVersion,
       ajv: "latest",
       "cross-env": "latest"
     });
