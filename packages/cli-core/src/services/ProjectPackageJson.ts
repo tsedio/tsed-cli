@@ -23,7 +23,7 @@ function getEmptyPackageJson(configuration: Configuration) {
 }
 
 function useReadPkgUp(configuration: Configuration) {
-  return !(process.argv.includes("init") && !Fs.existsSync(join(configuration.project?.rootDir, "package.json")));
+  return !(process.argv.includes("init") && !Fs.existsSync(join(String(configuration.project?.rootDir), "package.json")));
 }
 
 function getPackageJson(configuration: Configuration) {
@@ -98,7 +98,7 @@ export class ProjectPackageJson {
   }
 
   get dir() {
-    return this.configuration.project?.rootDir;
+    return String(this.configuration.project?.rootDir);
   }
 
   set dir(dir: string) {
@@ -151,7 +151,7 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addDevDependencies(modules: {[key: string]: string | undefined}, scope: object = {}) {
+  addDevDependencies(modules: {[key: string]: string | undefined}, scope: any = {}) {
     Object.entries(modules).forEach(([pkg, version]) => {
       this.addDevDependency(
         pkg,

@@ -139,7 +139,7 @@ export class InitCmd implements CommandProvider {
     } as InitCmdContext;
   }
 
-  async $beforeExec(ctx: InitCmdContext) {
+  async $beforeExec(ctx: InitCmdContext): Promise<any> {
     this.fs.ensureDirSync(this.packageJson.dir);
 
     this.packageJson.name = ctx.projectName;
@@ -170,7 +170,7 @@ export class InitCmd implements CommandProvider {
     );
   }
 
-  async $exec(ctx: InitCmdContext) {
+  async $exec(ctx: InitCmdContext): Promise<any> {
     const subTasks = [
       ...(await this.cliService.getTasks("generate", {
         ...ctx,
@@ -222,7 +222,7 @@ export class InitCmd implements CommandProvider {
     ];
   }
 
-  addScripts() {
+  addScripts(): void {
     this.packageJson.addScripts({
       build: "yarn tsc",
       tsc: "tsc --project tsconfig.compile.json",

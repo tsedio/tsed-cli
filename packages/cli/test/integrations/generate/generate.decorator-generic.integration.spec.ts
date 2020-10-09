@@ -39,14 +39,11 @@ describe("Generate generic decorator", () => {
       name: "Test"
     });
 
-    expect(FakeCliFs.getKeys()).toEqual([
-      "project-name/src/decorators",
-      "project-name/src/decorators/Test.ts"
-    ]);
+    expect(FakeCliFs.getKeys()).toEqual(["project-name/src/decorators", "project-name/src/decorators/Test.ts"]);
 
     const result = FakeCliFs.entries.get("project-name/src/decorators/Test.ts");
 
-    expect(result).toContain("import {DecoratorTypes, UnsupportedDecoratorType, decoratorTypeOf} from \"@tsed/core\"");
+    expect(result).toContain('import {DecoratorTypes, UnsupportedDecoratorType, decoratorTypeOf} from "@tsed/core"');
     expect(result).toContain("export interface TestOptions {");
     expect(result).toContain("export function Test(options: TestOptions): any");
     expect(result).toContain("(...args: DecoratorParameters): any =>");

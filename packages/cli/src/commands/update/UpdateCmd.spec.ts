@@ -26,7 +26,7 @@ describe("UpdateCmd", () => {
   describe("$prompt()", () => {
     it("should return prompts", async () => {
       const projectPkg = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       projectPkg.raw = {
         name: "project",
@@ -68,7 +68,7 @@ describe("UpdateCmd", () => {
     });
     it("should return empty prompts", async () => {
       const projectPkg = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       projectPkg.raw = {
         name: "project",
@@ -154,7 +154,7 @@ describe("UpdateCmd", () => {
           use: npmClientRegistry
         }
       ]);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       command.projectPackage.raw = {
         name: "project",
@@ -173,7 +173,7 @@ describe("UpdateCmd", () => {
         }
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       command.versions = versions;
 

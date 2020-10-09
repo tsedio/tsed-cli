@@ -34,14 +34,11 @@ describe("Generate Schema", () => {
       name: "Product"
     });
 
-    expect(FakeCliFs.getKeys()).toEqual([
-      "project-name/src/models",
-      "project-name/src/models/ProductSchema.ts"
-    ]);
+    expect(FakeCliFs.getKeys()).toEqual(["project-name/src/models", "project-name/src/models/ProductSchema.ts"]);
 
     const result = FakeCliFs.entries.get("project-name/src/models/ProductSchema.ts");
-    expect(result).toContain("import { Property } from \"@tsed/common\";");
-    expect(result).toContain("import { Schema } from \"@tsed/mongoose\";");
+    expect(result).toContain('import { Property } from "@tsed/common";');
+    expect(result).toContain('import { Schema } from "@tsed/mongoose";');
     expect(result).toContain("@Schema()");
     expect(result).toContain("export class ProductSchema {");
   });

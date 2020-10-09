@@ -9,31 +9,32 @@ export * from "./CliDefaultOptions";
 export * from "./PackageJson";
 export * from "./Tasks";
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
-declare namespace TsED {
-  interface Configuration {
-    /**
-     *
-     */
-    name: string;
-    /**
-     *
-     */
-    commands: Type<CommandProvider>[];
-    /**
-     *
-     */
-    pkg: PackageJson;
-    /**
-     *
-     */
-    templateDir: string;
-    /**
-     *
-     */
-    project?: {
-      root?: string;
-      srcDir?: string;
-    };
+declare global {
+  namespace TsED {
+    interface Configuration {
+      /**
+       *
+       */
+      name: string;
+      /**
+       *
+       */
+      commands: Type<CommandProvider>[];
+      /**
+       *
+       */
+      pkg: PackageJson;
+      /**
+       *
+       */
+      templateDir: string;
+      /**
+       *
+       */
+      project: {
+        rootDir?: string;
+        srcDir?: string;
+      };
+    }
   }
 }

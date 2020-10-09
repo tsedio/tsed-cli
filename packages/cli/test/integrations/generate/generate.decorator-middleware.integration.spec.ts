@@ -36,14 +36,11 @@ describe("Generate middleware decorator", () => {
       middlewarePosition: "before"
     });
 
-    expect(FakeCliFs.getKeys()).toEqual([
-      "project-name/src/decorators",
-      "project-name/src/decorators/Test.ts"
-    ]);
+    expect(FakeCliFs.getKeys()).toEqual(["project-name/src/decorators", "project-name/src/decorators/Test.ts"]);
 
     const result = FakeCliFs.entries.get("project-name/src/decorators/Test.ts");
 
-    expect(result).toContain("import {applyDecorators, StoreSet} from \"@tsed/core\"");
+    expect(result).toContain('import {applyDecorators, StoreSet} from "@tsed/core"');
     expect(result).toContain("export interface TestOptions {");
     expect(result).toContain("@Middleware()");
     expect(result).toContain("export function Test(options: TestOptions): MethodDecorator");
@@ -72,14 +69,11 @@ describe("Generate middleware decorator", () => {
       middlewarePosition: "after"
     });
 
-    expect(FakeCliFs.getKeys()).toEqual([
-      "project-name/src/decorators",
-      "project-name/src/decorators/Test.ts"
-    ]);
+    expect(FakeCliFs.getKeys()).toEqual(["project-name/src/decorators", "project-name/src/decorators/Test.ts"]);
 
     const result = FakeCliFs.entries.get("project-name/src/decorators/Test.ts");
 
-    expect(result).toContain("import {applyDecorators, StoreSet} from \"@tsed/core\"");
+    expect(result).toContain('import {applyDecorators, StoreSet} from "@tsed/core"');
     expect(result).toContain("export interface TestOptions {");
     expect(result).toContain("@Middleware()");
     expect(result).toContain("export function Test(options: TestOptions): MethodDecorator");
