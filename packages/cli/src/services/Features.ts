@@ -195,7 +195,6 @@ registerProvider({
             value: {
               type: "swagger",
               dependencies: {
-                "@types/swagger-schema-official": "2.0.20",
                 "@tsed/swagger": "{{tsedVersion}}"
               }
             }
