@@ -1,4 +1,13 @@
-import {CliDefaultOptions, CliPackageJson, Command, Inject, NpmRegistryClient, ProjectPackageJson, QuestionOptions} from "@tsed/cli-core";
+import {
+  CliDefaultOptions,
+  CliPackageJson,
+  Command,
+  CommandProvider,
+  Inject,
+  NpmRegistryClient,
+  ProjectPackageJson,
+  QuestionOptions
+} from "@tsed/cli-core";
 import {getValue} from "@tsed/core";
 import * as semver from "semver";
 import {IGNORE_TAGS, IGNORE_VERSIONS, MINIMAL_TSED_VERSION} from "../../constants";
@@ -30,7 +39,7 @@ function isGreaterThan(a: any, b: string) {
     }
   }
 })
-export class UpdateCmd {
+export class UpdateCmd implements CommandProvider {
   @Inject()
   npmRegistryClient: NpmRegistryClient;
 

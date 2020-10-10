@@ -1,4 +1,4 @@
-import {Configuration, Inject, Injectable} from "@tsed/di";
+import {Configuration, Constant, Inject, Injectable} from "@tsed/di";
 import * as Consolidate from "consolidate";
 import * as Fs from "fs-extra";
 import * as globby from "globby";
@@ -19,11 +19,13 @@ export interface RenderOptions {
 }
 
 export abstract class Renderer {
+  @Constant("templateDir")
   templateDir: string;
-  rootDir: string;
 
   @Inject()
   fs: CliFs;
+
+  abstract get rootDir(): string;
 
   async render(path: string, data: any, options: RenderOptions = {}) {
     const {output, templateDir, rootDir} = this.mapOptions(path, options);
@@ -93,60 +95,39 @@ export abstract class Renderer {
 
 @Injectable()
 export class RootRendererService extends Renderer {
+  @Constant("templateDir")
+  templateDir: string;
+
   @Configuration()
   private configuration: Configuration;
 
-  get templateDir() {
-    return this.configuration.templateDir;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  set templateDir(path: string) {}
-
   get rootDir() {
-    return this.configuration.project?.rootDir;
+    return this.configuration.project?.rootDir as string;
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  set rootDir(path: string) {}
 }
 
 @Injectable()
 export class SrcRendererService extends Renderer {
+  @Constant("templateDir")
+  templateDir: string;
+
   @Configuration()
   private configuration: Configuration;
 
-  get templateDir() {
-    return this.configuration.templateDir;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  set templateDir(path: string) {}
-
   get rootDir() {
-    return join(...[this.configuration.project?.rootDir, this.configuration.project?.srcDir].filter(Boolean));
+    return join(...([this.configuration.project?.rootDir, this.configuration.project?.srcDir].filter(Boolean) as string[]));
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  set rootDir(path: string) {}
 }
 
 @Injectable()
 export class ScriptsRendererService extends Renderer {
+  @Constant("templateDir")
+  templateDir: string;
+
   @Configuration()
   private configuration: Configuration;
 
-  get templateDir() {
-    return this.configuration.templateDir;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  set templateDir(template: string) {}
-
   get rootDir() {
-    return join(...[this.configuration.project?.rootDir, this.configuration.project?.scriptsDir].filter(Boolean));
+    return join(...([this.configuration.project?.rootDir, this.configuration.project?.scriptsDir].filter(Boolean) as string[]));
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  set rootDir(template: string) {}
 }

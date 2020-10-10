@@ -34,6 +34,7 @@ declare global {
       project: {
         rootDir?: string;
         srcDir?: string;
+        scriptsDir?: string;
       };
     }
   }

@@ -82,7 +82,7 @@ export class CliPlatformTest {
       pkg: {
         name: "@tsed/cli-testing",
         version: "1.0.0"
-      },
+      } as any,
       project: {
         rootDir: "./tmp",
         srcDir: "src",
