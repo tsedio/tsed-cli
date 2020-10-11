@@ -68,7 +68,7 @@ export class GenerateCmd implements CommandProvider {
   srcRenderService: SrcRendererService;
 
   constructor(private providersList: ProvidersInfoService) {
-    PROVIDER_TYPES.forEach(info => {
+    PROVIDER_TYPES.forEach((info) => {
       this.providersList.add(
         {
           ...info

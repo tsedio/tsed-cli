@@ -135,7 +135,7 @@ export class CliPlatformTest {
 
   static invoke<T = any>(target: TokenProvider, providers: InvokeOptions[]): T | Promise<T> {
     const locals = new LocalsContainer();
-    providers.forEach(p => {
+    providers.forEach((p) => {
       locals.set(p.token, p.use);
     });
 

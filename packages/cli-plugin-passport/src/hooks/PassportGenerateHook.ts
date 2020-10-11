@@ -37,7 +37,7 @@ export class PassportGenerateHook {
   async onGeneratePrompt(): Promise<QuestionOptions> {
     this.packages = await this.passportClient.getPackages();
 
-    const list = this.packages.map(item => {
+    const list = this.packages.map((item) => {
       return {
         name: `${item.name} - ${item.description}`,
         value: item.name
@@ -54,7 +54,7 @@ export class PassportGenerateHook {
         },
         source: async (state: any, keyword: string) => {
           if (keyword) {
-            return list.filter(item => item.name.toLowerCase().includes(keyword.toLowerCase()));
+            return list.filter((item) => item.name.toLowerCase().includes(keyword.toLowerCase()));
           }
 
           return list;
@@ -101,7 +101,7 @@ export class PassportGenerateHook {
   }
 
   private getPassportPackageVersion(passportPackage: string) {
-    const passportPkgDetails = this.packages.find(pkg => pkg.name === passportPackage);
+    const passportPkgDetails = this.packages.find((pkg) => pkg.name === passportPackage);
 
     return passportPkgDetails ? passportPkgDetails["dist-tags"]?.latest : undefined;
   }

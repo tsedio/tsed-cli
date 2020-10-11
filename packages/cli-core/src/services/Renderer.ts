@@ -37,10 +37,10 @@ export abstract class Renderer {
   async renderAll(paths: string[], data: any, options: RenderOptions = {}) {
     let count = 0;
 
-    return new Observable(observer => {
+    return new Observable((observer) => {
       observer.next(`[${count}/${paths.length}] Rendering files...`);
 
-      const promises = paths.filter(Boolean).map(async path => {
+      const promises = paths.filter(Boolean).map(async (path) => {
         await this.render(path, data, options);
 
         count++;
@@ -52,7 +52,7 @@ export abstract class Renderer {
           observer.next(`[${count}/${paths.length}] Rendering files...`);
           observer.complete();
         })
-        .catch(err => {
+        .catch((err) => {
           observer.error(err);
         });
     });

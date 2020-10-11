@@ -68,7 +68,7 @@ export class CliTypeORM {
   async regenerateIndexConfig() {
     const list = await this.srcRenderer.scan(["config/typeorm/*.config.json"]);
 
-    const configs = list.map(file => {
+    const configs = list.map((file) => {
       const name = basename(file).replace(/\.config\.json/gi, "");
 
       return {

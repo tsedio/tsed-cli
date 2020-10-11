@@ -2,7 +2,7 @@ import * as commander from "commander";
 
 export function mapCommanderOptions(commands: commander.Command[]) {
   const options: any = {};
-  commands.forEach(command => {
+  commands.forEach((command) => {
     Object.entries(command)
       .filter(([key]) => !key.startsWith("_") && !["commands", "options", "parent", "rawArgs", "args"].includes(key))
       .forEach(([key, value]) => {

@@ -42,10 +42,10 @@ export class CliPlugins {
 
   async addPluginsDependencies(plugins?: string[]) {
     if (!plugins) {
-      plugins = Object.keys(this.packageJson.devDependencies).filter(name => this.isPlugin(name));
+      plugins = Object.keys(this.packageJson.devDependencies).filter((name) => this.isPlugin(name));
     }
 
-    plugins.map(plugin => this.cliHooks.emit(CommandStoreKeys.ADD, plugin));
+    plugins.map((plugin) => this.cliHooks.emit(CommandStoreKeys.ADD, plugin));
   }
 
   protected getKeyword(keyword: string) {

@@ -115,10 +115,10 @@ export class UpdateCmd implements CommandProvider {
     this.versions = versions;
 
     return Object.keys(versions)
-      .filter(version => version.split(".")[0] >= MINIMAL_TSED_VERSION)
+      .filter((version) => version.split(".")[0] >= MINIMAL_TSED_VERSION)
       .sort((a, b) => (isGreaterThan(a, b) ? -1 : 1))
-      .filter(version => !IGNORE_VERSIONS.includes(version))
-      .filter(version => (IGNORE_TAGS ? !version.match(IGNORE_TAGS) : true))
+      .filter((version) => !IGNORE_VERSIONS.includes(version))
+      .filter((version) => (IGNORE_TAGS ? !version.match(IGNORE_TAGS) : true))
       .splice(0, 30);
   }
 
@@ -138,7 +138,7 @@ export class UpdateCmd implements CommandProvider {
 
       version = Object.keys(versions)
         .sort((a, b) => (isGreaterThan(a, b) ? -1 : 1))
-        .find(pkg => {
+        .find((pkg) => {
           const tsedCore = versions[pkg].devDependencies["@tsed/core"] || versions[pkg].dependencies["@tsed/core"];
 
           if (tsedCore) {

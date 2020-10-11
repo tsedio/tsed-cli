@@ -123,8 +123,8 @@ export class InitCmd implements CommandProvider {
         features.push(...[].concat(value));
       });
 
-    features.forEach(feature => {
-      feature.type.split(":").forEach(type => {
+    features.forEach((feature) => {
+      feature.type.split(":").forEach((type) => {
         ctx[camelCase(type)] = true;
       });
     });
@@ -260,7 +260,7 @@ export class InitCmd implements CommandProvider {
   }
 
   addFeatures(ctx: InitCmdContext) {
-    ctx.features.forEach(feature => {
+    ctx.features.forEach((feature) => {
       if (feature.dependencies) {
         this.packageJson.addDependencies(feature.dependencies, ctx);
       }

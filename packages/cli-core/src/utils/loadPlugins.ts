@@ -14,8 +14,8 @@ export async function loadPlugins(injector: InjectorService) {
   const fs = injector.invoke<CliFs>(CliFs);
 
   const promises = Object.keys(projectPackageJson.allDependencies)
-    .filter(mod => mod.startsWith(`@${name}/cli-plugin`) || mod.startsWith(`${name}-cli-plugin`))
-    .map(async mod => {
+    .filter((mod) => mod.startsWith(`@${name}/cli-plugin`) || mod.startsWith(`${name}-cli-plugin`))
+    .map(async (mod) => {
       const {default: plugin} = await fs.importModule(mod, rootDir);
 
       if (!injector.has(plugin)) {
@@ -23,7 +23,7 @@ export async function loadPlugins(injector: InjectorService) {
 
         if (provider?.imports.length) {
           await all(
-            provider.imports.map(async token => {
+            provider.imports.map(async (token) => {
               injector.add(token, GlobalProviders.get(token)?.clone());
 
               if (injector.settings.loaded) {

@@ -291,7 +291,7 @@ export class ProjectPackageJson {
   }
 
   protected resolve() {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       const packages = getPackageWithTag(this.allDependencies);
       let completed = 0;
 
@@ -317,7 +317,7 @@ export class ProjectPackageJson {
           observer.next(`[${completed}/${packages.length}] Resolving packages...`);
           observer.complete();
         })
-        .catch(err => {
+        .catch((err) => {
           observer.error(err);
         });
     });
