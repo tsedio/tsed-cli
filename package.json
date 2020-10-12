@@ -119,10 +119,10 @@
     "watchpack": "1.6.1"
   },
   "monorepo": {
-    "productionBranch": "beta",
-    "developBranch": "beta",
+    "productionBranch": "rc",
+    "developBranch": "rc",
     "npmAccess": "public",
-    "npmDistTag": "beta",
+    "npmDistTag": "rc",
     "ghpages": {
       "dir": "./docs/.vuepress/dist",
       "url": "https://github.com/TypedProject/tsed-cli.git",
