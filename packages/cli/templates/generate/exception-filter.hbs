@@ -1,0 +1,8 @@
+import {Catch, PlatformContext, ExceptionFilterMethods} from "@tsed/common";
+
+@Catch(Error)
+export class HttpExceptionFilter implements ExceptionFilterMethods {
+   catch(exception: Exception, ctx: PlatformContext) {
+      
+   }
+}
