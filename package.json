@@ -118,10 +118,9 @@
     ]
   },
   "monorepo": {
-    "productionBranch": "rc",
-    "developBranch": "rc",
+    "productionBranch": "master",
+    "developBranch": "master",
     "npmAccess": "public",
-    "npmDistTag": "rc",
     "ghpages": {
       "dir": "./docs/.vuepress/dist",
       "url": "https://github.com/TypedProject/tsed-cli.git",
