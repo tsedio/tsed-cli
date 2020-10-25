@@ -33,7 +33,7 @@ export class CliFs {
   }
 
   findUpFile(root: string, file: string) {
-    return [join(root, file), join(root, "..", file), join(root, "..", "..", file), join(root, "..", "..", "..", file)].find(path =>
+    return [join(root, file), join(root, "..", file), join(root, "..", "..", file), join(root, "..", "..", "..", file)].find((path) =>
       this.exists(path)
     );
   }

@@ -82,7 +82,7 @@ export class CliPlatformTest {
       pkg: {
         name: "@tsed/cli-testing",
         version: "1.0.0"
-      },
+      } as any,
       project: {
         rootDir: "./tmp",
         srcDir: "src",
@@ -135,7 +135,7 @@ export class CliPlatformTest {
 
   static invoke<T = any>(target: TokenProvider, providers: InvokeOptions[]): T | Promise<T> {
     const locals = new LocalsContainer();
-    providers.forEach(p => {
+    providers.forEach((p) => {
       locals.set(p.token, p.use);
     });
 

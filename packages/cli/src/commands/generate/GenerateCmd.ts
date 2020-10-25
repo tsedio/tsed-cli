@@ -10,6 +10,7 @@ export interface GenerateCmdContext extends CliDefaultOptions {
   type: string;
   name: string;
   route: string;
+  platform: string;
   templateType: string;
   symbolName: string;
   symbolPath: string;
@@ -67,7 +68,7 @@ export class GenerateCmd implements CommandProvider {
   srcRenderService: SrcRendererService;
 
   constructor(private providersList: ProvidersInfoService) {
-    PROVIDER_TYPES.forEach(info => {
+    PROVIDER_TYPES.forEach((info) => {
       this.providersList.add(
         {
           ...info
@@ -97,6 +98,26 @@ export class GenerateCmd implements CommandProvider {
         message: "Which name ?",
         default: getName,
         when: !initialOptions.name
+      },
+      {
+        message: "Which platform:",
+        type: "list",
+        name: "platform",
+        when(state: any) {
+          return ["server"].includes(state.type || initialOptions.type);
+        },
+        choices: [
+          {
+            name: "Express.js",
+            checked: true,
+            value: "express"
+          },
+          {
+            name: "Koa.js",
+            checked: false,
+            value: "koa"
+          }
+        ]
       },
       {
         type: "input",
@@ -144,7 +165,10 @@ export class GenerateCmd implements CommandProvider {
       route: ctx.route ? this.routePipe.transform(ctx.route) : "",
       symbolName: this.classNamePipe.transform({name, type}),
       symbolPath: this.outputFilePathPipe.transform({name, type}),
-      symbolPathBasename: this.classNamePipe.transform({name, type})
+      symbolPathBasename: this.classNamePipe.transform({name, type}),
+      express: ctx.platform === "express",
+      koa: ctx.platform === "koa",
+      platformSymbol: pascalCase(`Platform ${ctx.platform}`)
     } as GenerateCmdContext;
   }
 

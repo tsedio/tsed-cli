@@ -1,11 +1,16 @@
 import {Configuration, Inject} from "@tsed/di";
 import {PlatformApplication} from "@tsed/common";
-import "@tsed/platform-express"; // /!\ keep this import
+{{#if express}}import "@tsed/platform-express"; // /!\ keep this import
 import * as bodyParser from "body-parser";
 import * as compress from "compression";
 import * as cookieParser from "cookie-parser";
 import * as methodOverride from "method-override";
 import * as cors from "cors";
+{{/if}}{{#if koa}}import "@tsed/platform-koa"; // /!\ keep this import
+import * as bodyParser from "koa-bodyparser";
+import * as compress from "koa-compress";
+import * as cors from "@koa/cors";
+{{/if}}
 import "@tsed/ajv";{{#if swagger}}
 import "@tsed/swagger";{{/if}}{{#if mongoose}}
 import "@tsed/mongoose";{{/if}}{{#if typeorm}}
@@ -13,7 +18,9 @@ import "@tsed/typeorm";{{/if}}{{#if mongoose}}
 import mongooseConfig from "./config/mongoose";
 {{/if}}{{#if typeorm}}
 import typeormConfig from "./config/typeorm";
-{{/if}}
+{{/if}}{{#if koa}}
+
+const methodOverride = require("koa-override");{{/if}}
 
 export const rootDir = __dirname;
 
@@ -51,7 +58,8 @@ export class {{symbolName}} {
   @Configuration()
   settings: Configuration;
 
-  $beforeRoutesInit() {
+  $beforeRoutesInit(): void {
+    {{#if express}}
     this.app
       .use(cors())
       .use(cookieParser())
@@ -60,8 +68,11 @@ export class {{symbolName}} {
       .use(bodyParser.json())
       .use(bodyParser.urlencoded({
         extended: true
-      }));
-
-    return null;
+      }));{{/if}}{{#if koa}}
+    this.app
+      .use(cors())
+      .use(compress())
+      .use(methodOverride())
+      .use(bodyParser()){{/if}}
   }
 }

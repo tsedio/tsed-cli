@@ -1,6 +1,16 @@
-import {CliDefaultOptions, CliPackageJson, Command, Inject, NpmRegistryClient, ProjectPackageJson, QuestionOptions} from "@tsed/cli-core";
+import {
+  CliDefaultOptions,
+  CliPackageJson,
+  Command,
+  CommandProvider,
+  Inject,
+  NpmRegistryClient,
+  ProjectPackageJson,
+  QuestionOptions
+} from "@tsed/cli-core";
 import {getValue} from "@tsed/core";
 import * as semver from "semver";
+import {IGNORE_TAGS, IGNORE_VERSIONS, MINIMAL_TSED_VERSION} from "../../constants";
 
 export interface UpdateCmdContext extends CliDefaultOptions {
   version: string;
@@ -29,7 +39,7 @@ function isGreaterThan(a: any, b: string) {
     }
   }
 })
-export class UpdateCmd {
+export class UpdateCmd implements CommandProvider {
   @Inject()
   npmRegistryClient: NpmRegistryClient;
 
@@ -105,10 +115,10 @@ export class UpdateCmd {
     this.versions = versions;
 
     return Object.keys(versions)
-      .filter(version => version.split(".")[0] >= "5")
+      .filter((version) => version.split(".")[0] >= MINIMAL_TSED_VERSION)
       .sort((a, b) => (isGreaterThan(a, b) ? -1 : 1))
-      .filter(version => !["6.0.0"].includes(version))
-      .filter(version => !version.match(/alpha|beta/))
+      .filter((version) => !IGNORE_VERSIONS.includes(version))
+      .filter((version) => (IGNORE_TAGS ? !version.match(IGNORE_TAGS) : true))
       .splice(0, 30);
   }
 
@@ -128,7 +138,7 @@ export class UpdateCmd {
 
       version = Object.keys(versions)
         .sort((a, b) => (isGreaterThan(a, b) ? -1 : 1))
-        .find(pkg => {
+        .find((pkg) => {
           const tsedCore = versions[pkg].devDependencies["@tsed/core"] || versions[pkg].dependencies["@tsed/core"];
 
           if (tsedCore) {

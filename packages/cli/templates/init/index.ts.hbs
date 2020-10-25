@@ -1,11 +1,11 @@
 import {$log} from "@tsed/common";
-import {PlatformExpress} from "@tsed/platform-express";
+import { {{platformSymbol}} } from "@tsed/platform-{{platform}}";
 import {Server} from "./Server";
 
 async function bootstrap() {
   try {
     $log.debug("Start server...");
-    const platform = await PlatformExpress.bootstrap(Server);
+    const platform = await {{platformSymbol}}.bootstrap(Server);
 
     await platform.listen();
     $log.debug("Server initialized");

@@ -38,14 +38,11 @@ describe("Generate AsyncFactory", () => {
       name: "Test"
     });
 
-    expect(FakeCliFs.getKeys()).toEqual([
-      "project-name/src/services",
-      "project-name/src/services/Test.ts"
-    ]);
+    expect(FakeCliFs.getKeys()).toEqual(["project-name/src/services", "project-name/src/services/Test.ts"]);
 
     const result = FakeCliFs.entries.get("project-name/src/services/Test.ts");
 
-    expect(result).toContain("import {Configuration, Inject, registerProvider} from \"@tsed/di\";");
+    expect(result).toContain('import {Configuration, Inject, registerProvider} from "@tsed/di";');
     expect(result).toContain("export function Test()");
     expect(result).toContain("Inject(Test)");
     expect(result).toContain("registerProvider");

@@ -13,12 +13,14 @@ import {
   RootRendererService,
   SrcRendererService
 } from "@tsed/cli-core";
-import {camelCase, paramCase} from "change-case";
+import {camelCase, paramCase, pascalCase} from "change-case";
 import * as Listr from "listr";
 import {basename, join} from "path";
+import {DEFAULT_TSED_TAGS} from "../../constants";
 import {Features, FeatureValue} from "../../services/Features";
 
 export interface InitCmdContext extends CliDefaultOptions {
+  platform: "express" | "koa";
   root: string;
   srcDir: string;
   projectName: string;
@@ -42,7 +44,7 @@ export interface InitCmdContext extends CliDefaultOptions {
   options: {
     "-t, --tsed-version <version>": {
       type: String,
-      defaultValue: "latest",
+      defaultValue: DEFAULT_TSED_TAGS,
       description: "Use a specific version of Ts.ED (format: 5.x.x)"
     }
   }
@@ -84,6 +86,23 @@ export class InitCmd implements CommandProvider {
           return paramCase(input);
         }
       },
+      {
+        message: "Choose the target platform:",
+        type: "list",
+        name: "platform",
+        choices: [
+          {
+            name: "Express.js",
+            checked: true,
+            value: "express"
+          },
+          {
+            name: "Koa.js",
+            checked: false,
+            value: "koa"
+          }
+        ]
+      },
       ...this.features
     ];
   }
@@ -104,8 +123,8 @@ export class InitCmd implements CommandProvider {
         features.push(...[].concat(value));
       });
 
-    features.forEach(feature => {
-      feature.type.split(":").forEach(type => {
+    features.forEach((feature) => {
+      feature.type.split(":").forEach((type) => {
         ctx[camelCase(type)] = true;
       });
     });
@@ -113,11 +132,14 @@ export class InitCmd implements CommandProvider {
     return {
       ...ctx,
       features,
-      srcDir: this.configuration.project?.srcDir
+      srcDir: this.configuration.project?.srcDir,
+      express: ctx.platform === "express",
+      koa: ctx.platform === "koa",
+      platformSymbol: pascalCase(`Platform ${ctx.platform}`)
     } as InitCmdContext;
   }
 
-  async $beforeExec(ctx: InitCmdContext) {
+  async $beforeExec(ctx: InitCmdContext): Promise<any> {
     this.fs.ensureDirSync(this.packageJson.dir);
 
     this.packageJson.name = ctx.projectName;
@@ -148,7 +170,7 @@ export class InitCmd implements CommandProvider {
     );
   }
 
-  async $exec(ctx: InitCmdContext) {
+  async $exec(ctx: InitCmdContext): Promise<any> {
     const subTasks = [
       ...(await this.cliService.getTasks("generate", {
         ...ctx,
@@ -200,7 +222,7 @@ export class InitCmd implements CommandProvider {
     ];
   }
 
-  addScripts() {
+  addScripts(): void {
     this.packageJson.addScripts({
       build: "yarn tsc",
       tsc: "tsc --project tsconfig.compile.json",
@@ -211,37 +233,23 @@ export class InitCmd implements CommandProvider {
   }
 
   addDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDependencies(
-      {
-        "@tsed/common": ctx.tsedVersion,
-        "@tsed/core": ctx.tsedVersion,
-        "@tsed/di": ctx.tsedVersion,
-        "@tsed/ajv": ctx.tsedVersion,
-        "@tsed/exceptions": ctx.tsedVersion,
-        "@tsed/platform-express": ctx.tsedVersion,
-        ajv: "latest",
-        "body-parser": "latest",
-        cors: "latest",
-        compression: "latest",
-        concurrently: "latest",
-        "cookie-parser": "latest",
-        express: "latest",
-        "method-override": "latest",
-        "cross-env": "latest"
-      },
-      ctx
-    );
+    this.packageJson.addDependencies({
+      "@tsed/common": ctx.tsedVersion,
+      "@tsed/core": ctx.tsedVersion,
+      "@tsed/di": ctx.tsedVersion,
+      "@tsed/ajv": ctx.tsedVersion,
+      "@tsed/exceptions": ctx.tsedVersion,
+      "@tsed/schema": ctx.tsedVersion,
+      "@tsed/json-mapper": ctx.tsedVersion,
+      ajv: "latest",
+      "cross-env": "latest"
+    });
   }
 
   addDevDependencies(ctx: InitCmdContext) {
     this.packageJson.addDevDependencies(
       {
-        "@types/cors": "2.8.6",
-        "@types/express": "latest",
         "@types/node": "latest",
-        "@types/compression": "latest",
-        "@types/cookie-parser": "latest",
-        "@types/method-override": "latest",
         concurrently: "latest",
         nodemon: "latest",
         "ts-node": "latest",
@@ -252,7 +260,7 @@ export class InitCmd implements CommandProvider {
   }
 
   addFeatures(ctx: InitCmdContext) {
-    ctx.features.forEach(feature => {
+    ctx.features.forEach((feature) => {
       if (feature.dependencies) {
         this.packageJson.addDependencies(feature.dependencies, ctx);
       }
@@ -261,5 +269,67 @@ export class InitCmd implements CommandProvider {
         this.packageJson.addDevDependencies(feature.devDependencies, ctx);
       }
     });
+
+    switch (ctx.platform) {
+      case "express":
+        this.addExpressDependencies(ctx);
+        break;
+      case "koa":
+        this.addKoaDependencies(ctx);
+        break;
+    }
+  }
+
+  private addExpressDependencies(ctx: InitCmdContext) {
+    this.packageJson.addDependencies(
+      {
+        "@tsed/platform-express": ctx.tsedVersion,
+        "body-parser": "latest",
+        cors: "latest",
+        compression: "latest",
+        "cookie-parser": "latest",
+        express: "latest",
+        "method-override": "latest"
+      },
+      ctx
+    );
+
+    this.packageJson.addDevDependencies(
+      {
+        "@types/cors": "latest",
+        "@types/express": "latest",
+        "@types/compression": "latest",
+        "@types/cookie-parser": "latest",
+        "@types/method-override": "latest"
+      },
+      ctx
+    );
+  }
+
+  private addKoaDependencies(ctx: InitCmdContext) {
+    this.packageJson.addDependencies(
+      {
+        "@tsed/platform-koa": ctx.tsedVersion,
+        koa: "latest",
+        "@koa/cors": "latest",
+        "@koa/router": "latest",
+        "koa-bodyparser": "latest",
+        "koa-override": "latest",
+        "koa-compress": "latest"
+      },
+      ctx
+    );
+
+    this.packageJson.addDevDependencies(
+      {
+        "@types/koa": "latest",
+        "@types/koa-json": "latest",
+        "@types/koa-bodyparser": "latest",
+        "@types/koa__router": "latest",
+        "@types/koa-compress": "latest",
+        "@types/koa__cors": "latest"
+      },
+      ctx
+    );
   }
 }

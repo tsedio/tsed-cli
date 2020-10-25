@@ -18,7 +18,7 @@ function mapValue(value: any, {type, itemType}: {type?: Type<any>; itemType?: Ty
     case Array:
       value = String(value)
         .split(",")
-        .map(value => mapValue(value, {type: itemType}));
+        .map((value) => mapValue(value, {type: itemType}));
       break;
   }
 
@@ -26,7 +26,7 @@ function mapValue(value: any, {type, itemType}: {type?: Type<any>; itemType?: Ty
 }
 
 export function mapCommanderArgs(args: {[arg: string]: CommandArg}, commandArgs: any[]): any {
-  commandArgs = commandArgs.filter(arg => !isClass(arg)).filter(arg => !isArray(arg));
+  commandArgs = commandArgs.filter((arg) => !isClass(arg)).filter((arg) => !isArray(arg));
   let index = 0;
 
   return Object.entries(args).reduce((options, [arg, {defaultValue, type, itemType}]) => {

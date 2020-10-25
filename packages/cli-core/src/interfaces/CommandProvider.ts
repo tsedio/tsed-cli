@@ -9,7 +9,7 @@ export interface CommandProvider {
    * See https://github.com/enquirer/enquirer for more detail on question configuration.
    * @param initialOptions
    */
-  $prompt?<T = any>(initialOptions: any): QuestionOptions<T>;
+  $prompt?<T = any>(initialOptions: any): QuestionOptions<T> | Promise<QuestionOptions<T>>;
 
   /**
    * Hook to map options

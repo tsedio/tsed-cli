@@ -17,7 +17,7 @@ export class ClassNamePipe {
     const names = meta.split(".").reduce((acc: string[], key: string) => {
       key = key.replace(/{{symbolName}}/gi, symbolName).replace(/{{symbolType}}/gi, options.type);
 
-      key.split(".").forEach(value => {
+      key.split(".").forEach((value) => {
         if (format === "tsed" && value.endsWith("?")) {
           return;
         }

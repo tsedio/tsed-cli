@@ -8,7 +8,7 @@ export class FakeCliExeca extends CliExeca {
   run(cmd: string, args: string[], opts?: any): any {
     const result = FakeCliExeca.entries.get(cmd + " " + args.join(" "));
 
-    return new Observable(observer => {
+    return new Observable((observer) => {
       observer.next(result);
       observer.complete();
     });

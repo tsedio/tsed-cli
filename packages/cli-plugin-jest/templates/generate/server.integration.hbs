@@ -15,6 +15,11 @@ describe("{{symbolName}}", () => {
   it("should call GET {{route}}", async () => {
      const response = await request.get("{{route}}").expect(404);
 
-     expect(response.text).toEqual("Not found");
+     expect(response.body).toEqual({
+       errors: [],
+       message: 'Resource "/rest" not found',
+       name: "NOT_FOUND",
+       status: 404,
+     });
   });
 });

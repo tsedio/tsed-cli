@@ -3,20 +3,20 @@ import {CliPlatformTest} from "@tsed/cli-testing";
 import {UpdateCmd} from "./UpdateCmd";
 
 const versions = {
-  "5.58.0": {
-    version: "5.58.0",
+  "6.0.0-alpha.4": {
+    version: "6.0.0-alpha.4",
     dependencies: {
       "@tsed/logger": "^5.5.0"
     },
     devDependencies: {}
   },
-  "5.56.0": {
+  "6.0.0-alpha.3": {
     version: "5.56.0"
   },
-  "5.57.0": {
+  "6.0.0-alpha.2": {
     version: "5.57.0"
   },
-  "5.55.0": {
+  "6.0.0-alpha.1": {
     version: "5.55.0"
   }
 };
@@ -26,7 +26,7 @@ describe("UpdateCmd", () => {
   describe("$prompt()", () => {
     it("should return prompts", async () => {
       const projectPkg = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       projectPkg.raw = {
         name: "project",
@@ -57,7 +57,7 @@ describe("UpdateCmd", () => {
 
       expect(result).toEqual([
         {
-          choices: ["5.58.0", "5.57.0", "5.56.0", "5.55.0"],
+          choices: ["6.0.0-alpha.4", "6.0.0-alpha.3", "6.0.0-alpha.2", "6.0.0-alpha.1"],
           default: undefined,
           message: "Select a Ts.ED version",
           name: "version",
@@ -68,7 +68,7 @@ describe("UpdateCmd", () => {
     });
     it("should return empty prompts", async () => {
       const projectPkg = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       projectPkg.raw = {
         name: "project",
@@ -84,17 +84,17 @@ describe("UpdateCmd", () => {
           if (pkg === "@tsed/common") {
             return {
               versions: {
-                "5.58.0": {
-                  version: "5.58.0"
+                "6.0.0-alpha.4": {
+                  version: "6.0.0-alpha.4"
                 },
-                "5.56.0": {
-                  version: "5.56.0"
+                "6.0.0-alpha.3": {
+                  version: "6.0.0-alpha.3"
                 },
-                "5.57.0": {
-                  version: "5.57.0"
+                "6.0.0-alpha.2": {
+                  version: "6.0.0-alpha.2"
                 },
-                "5.55.0": {
-                  version: "5.55.0"
+                "6.0.0-alpha.1": {
+                  version: "6.0.0-alpha.1"
                 }
               }
             };
@@ -154,7 +154,7 @@ describe("UpdateCmd", () => {
           use: npmClientRegistry
         }
       ]);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       command.projectPackage.raw = {
         name: "project",
@@ -173,25 +173,25 @@ describe("UpdateCmd", () => {
         }
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       command.versions = versions;
 
       await command.$exec({
-        version: "5.58.0",
+        version: "6.0.0-alpha.4",
         verbose: false,
         rawArgs: []
       });
 
       expect(command.projectPackage.dependencies).toEqual({
-        "@tsed/common": "5.58.0",
-        "@tsed/core": "5.58.0",
-        "@tsed/di": "5.58.0",
+        "@tsed/common": "6.0.0-alpha.4",
+        "@tsed/core": "6.0.0-alpha.4",
+        "@tsed/di": "6.0.0-alpha.4",
         "@tsed/logger": "^5.5.0"
       });
       expect(command.projectPackage.devDependencies).toEqual({
-        "@tsed/cli-plugin-eslint": "1.4.0",
-        "@tsed/cli-plugin-typeorm": "1.4.0"
+        "@tsed/cli-plugin-eslint": "1.5.0",
+        "@tsed/cli-plugin-typeorm": "1.5.0"
       });
     });
   });

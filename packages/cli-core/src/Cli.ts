@@ -53,16 +53,17 @@ export class Cli {
 
   static async bootstrap(settings: Partial<TsED.Configuration>): Promise<Cli> {
     checkSettings(settings);
+    const pkg = settings.pkg!;
 
-    if (settings.pkg.engines?.node) {
-      checkNodeVersion(settings.pkg.engines.node, settings.pkg.name);
+    if (pkg.engines?.node) {
+      checkNodeVersion(pkg.engines.node, pkg.name);
     }
 
     require("module-alias").addAliases({
       "@tsed/core": require.resolve("@tsed/core"),
       "@tsed/di": require.resolve("@tsed/di"),
       "@tsed/cli-core": require.resolve("@tsed/cli-core"),
-      [settings.pkg.name]: require.resolve(settings.pkg.name)
+      [pkg.name]: require.resolve(pkg.name)
     });
 
     const injector = createInjector({

@@ -34,10 +34,7 @@ describe("Generate method decorator", () => {
       name: "Test"
     });
 
-    expect(FakeCliFs.getKeys()).toEqual([
-      "project-name/src/decorators",
-      "project-name/src/decorators/Test.ts"
-    ]);
+    expect(FakeCliFs.getKeys()).toEqual(["project-name/src/decorators", "project-name/src/decorators/Test.ts"]);
 
     const result = FakeCliFs.entries.get("project-name/src/decorators/Test.ts");
 

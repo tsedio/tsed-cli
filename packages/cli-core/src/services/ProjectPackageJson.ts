@@ -23,7 +23,7 @@ function getEmptyPackageJson(configuration: Configuration) {
 }
 
 function useReadPkgUp(configuration: Configuration) {
-  return !(process.argv.includes("init") && !Fs.existsSync(join(configuration.project?.rootDir, "package.json")));
+  return !(process.argv.includes("init") && !Fs.existsSync(join(String(configuration.project?.rootDir), "package.json")));
 }
 
 function getPackageJson(configuration: Configuration) {
@@ -52,8 +52,8 @@ export interface InstallOptions {
   packageManager?: "npm" | "yarn";
 }
 
-function getPackageWithLatest(deps: any) {
-  return Object.entries(deps).filter(([, version]) => version === "latest");
+function getPackageWithTag(deps: any) {
+  return Object.entries(deps).filter(([, version]) => ["latest", "alpha", "beta", "rc"].includes(String(version)));
 }
 
 function sortKeys(obj: any) {
@@ -98,7 +98,7 @@ export class ProjectPackageJson {
   }
 
   get dir() {
-    return this.configuration.project?.rootDir;
+    return String(this.configuration.project?.rootDir);
   }
 
   set dir(dir: string) {
@@ -151,12 +151,10 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addDevDependencies(modules: {[key: string]: string | undefined}, scope: object = {}) {
+  addDevDependencies(modules: {[key: string]: string | undefined}, scope: any = {}) {
+    const replacer = (match: any, key: string) => getValue(key, scope);
     Object.entries(modules).forEach(([pkg, version]) => {
-      this.addDevDependency(
-        pkg,
-        (version || "").replace(/{{([\w.]+)}}/gi, (match, key) => getValue(key, scope))
-      );
+      this.addDevDependency(pkg, (version || "").replace(/{{([\w.]+)}}/gi, replacer));
     });
 
     return this;
@@ -171,11 +169,10 @@ export class ProjectPackageJson {
   }
 
   addDependencies(modules: {[key: string]: string | undefined}, ctx: any = {}) {
+    const replacer = (match: any, key: string) => getValue(key, ctx);
+
     Object.entries(modules).forEach(([pkg, version]) => {
-      this.addDependency(
-        pkg,
-        (version || "").replace("{{tsedVersion}}", ctx.tsedVersion).replace(/{{([\w.]+)}}/gi, (match, key) => getValue(key, ctx))
-      );
+      this.addDependency(pkg, (version || "").replace("{{tsedVersion}}", ctx.tsedVersion).replace(/{{([\w.]+)}}/gi, replacer));
     });
 
     return this;
@@ -242,7 +239,7 @@ export class ProjectPackageJson {
       options.packageManager = "npm";
     }
 
-    const shouldResolve = !!getPackageWithLatest(this.allDependencies).length;
+    const shouldResolve = !!getPackageWithTag(this.allDependencies).length;
 
     return new Listr(
       [
@@ -291,15 +288,15 @@ export class ProjectPackageJson {
   }
 
   protected resolve() {
-    return new Observable(observer => {
-      const packages = getPackageWithLatest(this.allDependencies);
+    return new Observable((observer) => {
+      const packages = getPackageWithTag(this.allDependencies);
       let completed = 0;
 
       observer.next(`${completed}/${packages.length} resolved - ${packages.map(([pkg]) => pkg).join(",")}`);
 
-      const promises = packages.map(async ([pkg]) => {
+      const promises = packages.map(async ([pkg, tag]) => {
         const info = await this.npmRegistryClient.info(pkg);
-        const version = info["dist-tags"].latest;
+        const version = info["dist-tags"][String(tag)] || info["dist-tags"].latest;
 
         if (this.raw.dependencies[pkg]) {
           this.raw.dependencies[pkg] = version;
@@ -317,7 +314,7 @@ export class ProjectPackageJson {
           observer.next(`[${completed}/${packages.length}] Resolving packages...`);
           observer.complete();
         })
-        .catch(err => {
+        .catch((err) => {
           observer.error(err);
         });
     });

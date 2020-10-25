@@ -32,7 +32,7 @@ export class CliMongoose {
   async regenerateIndexConfig() {
     const list = await this.srcRenderer.scan(["config/mongoose/*.config.ts"]);
 
-    const configs = list.map(file => {
+    const configs = list.map((file) => {
       const name = basename(file).replace(/\.config\.ts/gi, "");
 
       return {

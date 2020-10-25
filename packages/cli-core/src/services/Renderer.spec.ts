@@ -3,7 +3,7 @@ import {SrcRendererService} from "@tsed/cli-core";
 describe("Renderer", () => {
   it("relativeFrom()", () => {
     const service = new SrcRendererService();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     service.configuration = {
       project: {

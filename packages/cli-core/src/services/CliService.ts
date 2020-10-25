@@ -53,7 +53,7 @@ export class CliService {
   }
 
   private load() {
-    this.injector.getProviders(PROVIDER_TYPE_COMMAND).forEach(provider => this.build(provider));
+    this.injector.getProviders(PROVIDER_TYPE_COMMAND).forEach((provider) => this.build(provider));
   }
 
   /**

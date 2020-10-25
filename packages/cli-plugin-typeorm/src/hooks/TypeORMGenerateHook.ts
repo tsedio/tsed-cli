@@ -47,7 +47,7 @@ export class TypeORMGenerateHook {
 
   @OnPrompt("generate")
   async onGeneratePrompt(): Promise<QuestionOptions> {
-    const list = FEATURES_TYPEORM_CONNECTION_TYPES.map(item => {
+    const list = FEATURES_TYPEORM_CONNECTION_TYPES.map((item) => {
       return {
         name: item.name,
         value: item.value.type
@@ -64,7 +64,7 @@ export class TypeORMGenerateHook {
         },
         source: async (state: any, keyword: string) => {
           if (keyword) {
-            return list.filter(item => item.name.toLowerCase().includes(keyword.toLowerCase()));
+            return list.filter((item) => item.name.toLowerCase().includes(keyword.toLowerCase()));
           }
 
           return list;
@@ -78,7 +78,7 @@ export class TypeORMGenerateHook {
     if (this.providersInfoService.isMyProvider(ctx.type, TypeORMGenerateHook)) {
       ctx = this.mapOptions(ctx);
       const {typeormConnection, symbolPath} = ctx;
-      const connection = FEATURES_TYPEORM_CONNECTION_TYPES.find(item => item.value.type === typeormConnection);
+      const connection = FEATURES_TYPEORM_CONNECTION_TYPES.find((item) => item.value.type === typeormConnection);
 
       if (connection?.value?.dependencies) {
         this.projectPackageJson.addDependencies(connection?.value.dependencies || {});
