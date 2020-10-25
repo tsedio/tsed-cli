@@ -70,7 +70,8 @@
     "update-notifier": "4.1.0"
   },
   "devDependencies": {
-    "@tsed/monorepo-utils": "1.10.0",
+    "@tsed/markdown-it-symbols": "3.2.1",
+    "@tsed/monorepo-utils": "1.11.0",
     "@typedproject/ts-doc": "4.0.6",
     "@types/jest": "26.0.0",
     "@types/node": "13.7.7",
@@ -98,7 +99,7 @@
     "typescript": "4.0.3",
     "vue-analytics": "5.22.1",
     "vuepress": "1.5.2",
-    "vuepress-theme-tsed": "2.8.3"
+    "vuepress-theme-tsed": "^3.2.1"
   },
   "husky": {
     "hooks": {
@@ -114,9 +115,6 @@
     "packages": [
       "packages/*"
     ]
-  },
-  "resolutions": {
-    "watchpack": "1.6.1"
   },
   "monorepo": {
     "productionBranch": "rc",

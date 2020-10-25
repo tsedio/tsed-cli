@@ -1,8 +1,3 @@
----
-sidebar: auto
-otherTopics: true
----
-
 # Getting started
 
 ## CLI
