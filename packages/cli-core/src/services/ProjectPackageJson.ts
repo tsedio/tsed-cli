@@ -152,11 +152,9 @@ export class ProjectPackageJson {
   }
 
   addDevDependencies(modules: {[key: string]: string | undefined}, scope: any = {}) {
+    const replacer = (match: any, key: string) => getValue(key, scope);
     Object.entries(modules).forEach(([pkg, version]) => {
-      this.addDevDependency(
-        pkg,
-        (version || "").replace(/{{([\w.]+)}}/gi, (match, key) => getValue(key, scope))
-      );
+      this.addDevDependency(pkg, (version || "").replace(/{{([\w.]+)}}/gi, replacer));
     });
 
     return this;
@@ -171,11 +169,10 @@ export class ProjectPackageJson {
   }
 
   addDependencies(modules: {[key: string]: string | undefined}, ctx: any = {}) {
+    const replacer = (match: any, key: string) => getValue(key, ctx);
+
     Object.entries(modules).forEach(([pkg, version]) => {
-      this.addDependency(
-        pkg,
-        (version || "").replace("{{tsedVersion}}", ctx.tsedVersion).replace(/{{([\w.]+)}}/gi, (match, key) => getValue(key, ctx))
-      );
+      this.addDependency(pkg, (version || "").replace("{{tsedVersion}}", ctx.tsedVersion).replace(/{{([\w.]+)}}/gi, replacer));
     });
 
     return this;
