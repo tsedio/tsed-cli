@@ -4,6 +4,7 @@
   "description": "CLI to bootstrap your Ts.ED project",
   "private": true,
   "scripts": {
+    "configure": "monorepo ci configure",
     "clean": "monorepo clean workspace",
     "test": "yarn test:lint && yarn test:coverage",
     "test:unit": "cross-env NODE_ENV=test jest",

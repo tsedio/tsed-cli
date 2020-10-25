@@ -1,7 +1,7 @@
 {
-  "name": "Ts.ED",
-  "short_name": "Ts.ED",
-  "description": "A Node.js and TypeScript Framework on top of Express. It provides a lot of decorators and guidelines to write your code.",
+  "name": "Ts.ED CLI",
+  "short_name": "Ts.ED CLI",
+  "description": "A Node.js CLI to bootstrap and manage a Ts.ED project.",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
