@@ -71,7 +71,7 @@
     "update-notifier": "4.1.0"
   },
   "devDependencies": {
-    "@tsed/markdown-it-symbols": "3.2.1",
+    "@tsed/markdown-it-symbols": "3.3.0",
     "@tsed/monorepo-utils": "1.11.0",
     "@typedproject/ts-doc": "4.0.6",
     "@types/jest": "26.0.0",
@@ -100,7 +100,7 @@
     "typescript": "4.0.3",
     "vue-analytics": "5.22.1",
     "vuepress": "1.5.2",
-    "vuepress-theme-tsed": "^3.2.1"
+    "vuepress-theme-tsed": "3.3.0"
   },
   "husky": {
     "hooks": {
