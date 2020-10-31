@@ -1,3 +1,5 @@
+const url = "https://cli.tsed.io";
+
 module.exports = {
   title: 'Ts.ED CLI - CLI to bootstrap your Ts.ED project',
   description: 'A Node.js CLI to bootstrap and manage a Ts.ED project.',
