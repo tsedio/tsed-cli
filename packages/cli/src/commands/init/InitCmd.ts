@@ -278,6 +278,15 @@ export class InitCmd implements CommandProvider {
         this.addKoaDependencies(ctx);
         break;
     }
+
+    if (ctx.features.find(({type}) => type === "graphql")) {
+      this.packageJson.addDependencies(
+        {
+          ["apollo-server-" + ctx.platform]: "latest"
+        },
+        ctx
+      );
+    }
   }
 
   private addExpressDependencies(ctx: InitCmdContext) {

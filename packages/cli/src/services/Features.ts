@@ -158,9 +158,8 @@ registerProvider({
                 "@tsed/graphql": "{{tsedVersion}}",
                 "apollo-datasource": "latest",
                 "apollo-datasource-rest": "latest",
-                "apollo-server-express": "latest",
                 "type-graphql": "latest",
-                graphql: "14.7.0"
+                graphql: "latest"
               },
               devDependencies: {
                 "apollo-server-testing": "latest"
