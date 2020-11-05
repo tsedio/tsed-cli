@@ -81,6 +81,7 @@ describe("Init cmd", () => {
           cors: "1.0.0",
           "cross-env": "1.0.0",
           express: "1.0.0",
+          helmet: "1.0.0",
           "method-override": "1.0.0"
         },
         description: "",
@@ -91,6 +92,7 @@ describe("Init cmd", () => {
           "@types/express": "1.0.0",
           "@types/method-override": "1.0.0",
           "@types/node": "1.0.0",
+          "@types/helmet": "1.0.0",
           concurrently: "1.0.0",
           nodemon: "1.0.0",
           "ts-node": "1.0.0",
@@ -169,6 +171,7 @@ describe("Init cmd", () => {
           ajv: "1.0.0",
           "cross-env": "1.0.0",
           koa: "1.0.0",
+          "koa-helmet": "1.0.0",
           "koa-bodyparser": "1.0.0",
           "koa-compress": "1.0.0",
           "koa-override": "1.0.0"
@@ -182,6 +185,7 @@ describe("Init cmd", () => {
           "@types/koa__cors": "1.0.0",
           "@types/koa__router": "1.0.0",
           "@types/node": "1.0.0",
+          "@types/koa-helmet": "1.0.0",
           concurrently: "1.0.0",
           nodemon: "1.0.0",
           "ts-node": "1.0.0",

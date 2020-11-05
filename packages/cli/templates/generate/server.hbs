@@ -6,10 +6,12 @@ import * as compress from "compression";
 import * as cookieParser from "cookie-parser";
 import * as methodOverride from "method-override";
 import * as cors from "cors";
+import * as helmet from "helmet";
 {{/if}}{{#if koa}}import "@tsed/platform-koa"; // /!\ keep this import
 import * as bodyParser from "koa-bodyparser";
 import * as compress from "koa-compress";
 import * as cors from "@koa/cors";
+import * as helmet from "koa-helmet";
 {{/if}}
 import "@tsed/ajv";{{#if swagger}}
 import "@tsed/swagger";{{/if}}{{#if mongoose}}
@@ -70,6 +72,7 @@ export class {{symbolName}} {
   $beforeRoutesInit(): void {
     {{#if express}}
     this.app
+      .use(helmet())
       .use(cors())
       .use(cookieParser())
       .use(compress({}))
@@ -79,6 +82,7 @@ export class {{symbolName}} {
         extended: true
       }));{{/if}}{{#if koa}}
     this.app
+      .use(helmet())
       .use(cors())
       .use(compress())
       .use(methodOverride())
