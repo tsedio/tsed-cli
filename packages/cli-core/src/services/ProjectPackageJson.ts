@@ -257,7 +257,7 @@ export class ProjectPackageJson {
           },
           task: () => this.write()
         },
-        ...(options.packageManager === "yarn" ? this.installWithYarn() : this.installWithNpm())
+        ...(options.packageManager === "yarn" ? this.installWithYarn(options) : this.installWithNpm(options))
       ],
       {concurrent: false}
     );
@@ -320,7 +320,7 @@ export class ProjectPackageJson {
     });
   }
 
-  protected installWithYarn() {
+  protected installWithYarn({verbose}: any) {
     const devDeps = getPkgWithUndefinedVersion(this.devDependencies);
     const deps = getPkgWithUndefinedVersion(this.dependencies);
     const options = {
@@ -340,17 +340,18 @@ export class ProjectPackageJson {
       {
         title: "Installing dependencies using Yarn",
         skip: () => !this.reinstall,
-        task: () => this.cliExeca.run("yarn", ["install", "--production=false"], options).pipe(errorPipe())
+        task: () =>
+          this.cliExeca.run("yarn", ["install", "--production=false", verbose && "--verbose"].filter(Boolean), options).pipe(errorPipe())
       },
       {
         title: "Add dependencies using Yarn",
         skip: () => !deps.length,
-        task: () => this.cliExeca.run("yarn", ["add", ...deps], options).pipe(errorPipe())
+        task: () => this.cliExeca.run("yarn", ["add", verbose && "--verbose", ...deps].filter(Boolean), options).pipe(errorPipe())
       },
       {
         title: "Add devDependencies using Yarn",
         skip: () => !devDeps.length,
-        task: () => this.cliExeca.run("yarn", ["add", "-D", ...devDeps], options).pipe(errorPipe())
+        task: () => this.cliExeca.run("yarn", ["add", "-D", verbose && "--verbose", ...devDeps].filter(Boolean), options).pipe(errorPipe())
       },
       {
         title: "Clean",
@@ -361,7 +362,7 @@ export class ProjectPackageJson {
     ];
   }
 
-  protected installWithNpm() {
+  protected installWithNpm({verbose}: any) {
     const devDeps = getPkgWithUndefinedVersion(this.devDependencies);
     const deps = getPkgWithUndefinedVersion(this.dependencies);
     const options = {
@@ -376,18 +377,18 @@ export class ProjectPackageJson {
           return !this.reinstall;
         },
         task: () => {
-          return this.cliExeca.run("npm", ["install", "--no-production"], options);
+          return this.cliExeca.run("npm", ["install", "--no-production", verbose && "--verbose"].filter(Boolean), options);
         }
       },
       {
         title: "Add dependencies using npm",
         skip: () => !deps.length,
-        task: () => this.cliExeca.run("npm", ["install", "--save", ...deps], options)
+        task: () => this.cliExeca.run("npm", ["install", "--save", verbose && "--verbose", ...deps].filter(Boolean), options)
       },
       {
         title: "Add devDependencies using npm",
         skip: () => !devDeps.length,
-        task: () => this.cliExeca.run("npm", ["install", "--save-dev", ...devDeps], options)
+        task: () => this.cliExeca.run("npm", ["install", "--save-dev", verbose && "--verbose", ...devDeps].filter(Boolean), options)
       },
       {
         title: "Clean",
