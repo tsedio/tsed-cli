@@ -1,12 +1,12 @@
 {
   "name": "@tsed/cli-plugin-jest",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "description": "Ts.ED CLI plugin. Add Jest support",
   "devDependencies": {
-    "@tsed/cli": "2.1.1",
-    "@tsed/cli-core": "2.1.1"
+    "@tsed/cli": "2.1.2",
+    "@tsed/cli-core": "2.1.2"
   },
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",
