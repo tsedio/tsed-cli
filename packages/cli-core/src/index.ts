@@ -1,5 +1,23 @@
 export * from "@tsed/core";
-export * from "@tsed/di";
+export {
+  Inject,
+  registerProvider,
+  Injectable,
+  Constant,
+  Value,
+  Configuration,
+  LocalsContainer,
+  TokenProvider,
+  InvokeOptions,
+  Module,
+  Opts,
+  UseOpts,
+  OverrideProvider,
+  InjectorService,
+  OnDestroy,
+  OnInit,
+  Container
+} from "@tsed/di";
 export * from "./commands/AddCmd";
 export * from "./interfaces";
 export * from "./decorators";
