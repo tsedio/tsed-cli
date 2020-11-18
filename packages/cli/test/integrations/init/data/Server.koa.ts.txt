@@ -4,7 +4,6 @@ import "@tsed/platform-koa"; // /!\ keep this import
 import * as bodyParser from "koa-bodyparser";
 import * as compress from "koa-compress";
 import * as cors from "@koa/cors";
-import * as helmet from "koa-helmet";
 import "@tsed/ajv";
 
 const methodOverride = require("koa-override");
@@ -35,7 +34,6 @@ export class Server {
   $beforeRoutesInit(): void {
 
     this.app
-      .use(helmet())
       .use(cors())
       .use(compress())
       .use(methodOverride())

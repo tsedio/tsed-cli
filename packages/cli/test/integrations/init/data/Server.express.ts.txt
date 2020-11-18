@@ -6,7 +6,6 @@ import * as compress from "compression";
 import * as cookieParser from "cookie-parser";
 import * as methodOverride from "method-override";
 import * as cors from "cors";
-import * as helmet from "helmet";
 import "@tsed/ajv";
 
 export const rootDir = __dirname;
@@ -34,7 +33,6 @@ export class Server {
 
   $beforeRoutesInit(): void {
     this.app
-      .use(helmet())
       .use(cors())
       .use(cookieParser())
       .use(compress({}))
