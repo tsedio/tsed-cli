@@ -35,7 +35,7 @@ function getPackageJson(configuration: Configuration) {
     if (result && result.path) {
       configuration.set("project.root", dirname(result.path));
 
-      return {...result.packageJson} as any;
+      return {...getEmptyPackageJson(configuration), ...result.packageJson} as any;
     }
   }
 
