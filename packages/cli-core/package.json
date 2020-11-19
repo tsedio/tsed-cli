@@ -30,6 +30,7 @@
     "globby": "11.0.0",
     "handlebars": "4.7.3",
     "handlebars-helpers": "0.10.0",
+    "highlight.js": "9.18.3",
     "inquirer": "7.0.5",
     "inquirer-autocomplete-prompt": "1.0.2",
     "js-yaml": "3.13.1",
