@@ -213,6 +213,30 @@ export class InitCmd implements CommandProvider {
                   return this.srcRenderer.renderAll(["init/index.ts.hbs"], ctx);
                 }
               },
+              {
+                title: "Create Views",
+                enabled() {
+                  return ctx.swagger;
+                },
+                task: async () => {
+                  return this.rootRenderer.render("init/index.ejs.hbs", ctx, {
+                    ...ctx,
+                    rootDir: `${this.rootRenderer.rootDir}/views`
+                  });
+                }
+              },
+              {
+                title: "Create HomeCtrl",
+                enabled() {
+                  return ctx.swagger;
+                },
+                task: async () => {
+                  return this.srcRenderer.renderAll(["init/IndexCtrl.ts.hbs"], ctx, {
+                    ...ctx,
+                    rootDir: `${this.srcRenderer.rootDir}/controllers/pages`
+                  });
+                }
+              },
               ...subTasks
             ],
             {concurrent: false}

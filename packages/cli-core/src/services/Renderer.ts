@@ -61,6 +61,7 @@ export abstract class Renderer {
   async write(content: string, options: any) {
     const {output, rootDir = this.rootDir} = options;
     const outputFile = join(...[rootDir, output].filter(Boolean));
+
     await this.fs.ensureDir(dirname(outputFile));
 
     return this.fs.writeFile(outputFile, content, {encoding: "utf8"});
@@ -88,7 +89,6 @@ export abstract class Renderer {
 
   protected mapOptions(path: string, options: RenderOptions) {
     const {output = basename(path).replace(/\.hbs$/, ""), templateDir = this.templateDir, rootDir = this.rootDir} = options;
-
     return {output, templateDir, rootDir};
   }
 }

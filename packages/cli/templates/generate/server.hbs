@@ -18,6 +18,8 @@ import "@tsed/typeorm";{{/if}}{{#if mongoose}}
 import mongooseConfig from "./config/mongoose";
 {{/if}}{{#if typeorm}}
 import typeormConfig from "./config/typeorm";
+{{/if}}{{#if swagger}}
+import { IndexCtrl } from "./controllers/pages/IndexCtrl";
 {{/if}}{{#if koa}}
 
 const methodOverride = require("koa-override");{{/if}}
@@ -32,14 +34,24 @@ export const rootDir = __dirname;
   mount: {
     "{{route}}": [
       `${rootDir}/controllers/**/*.ts`
-    ]
+    ]{{#if swagger}},
+    "/": [IndexCtrl]{{/if}}
   },
   {{#if swagger}}
-  swagger: [
+  swagger: swagger: [
     {
-      path: "/docs"
+      path: "/v2/docs",
+      specVersion: "2.0"
+    },
+    {
+      path: "/v3/docs",
+      specVersion: "3.0.1"
     }
   ],
+  views: {
+    root: `${rootDir}/../views`,
+    viewEngine: "ejs"
+  },
   {{/if}}
   {{#if typeorm}}
   typeorm: typeormConfig,
