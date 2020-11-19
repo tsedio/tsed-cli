@@ -24,7 +24,7 @@ export const rootDir = __dirname;
     ],
     "/": [IndexCtrl]
   },
-  swagger: swagger: [
+  swagger: [
     {
       path: "/v2/docs",
       specVersion: "2.0"
