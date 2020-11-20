@@ -72,9 +72,9 @@ export class CliService {
       ...(await this.getTasks(cmdName, ctx)),
       {
         title: "Install dependencies",
-        skip: () => !this.projectPkg.rewrite && !this.projectPkg.reinstall,
+        when: () => this.projectPkg.rewrite || this.projectPkg.reinstall,
         task: () => {
-          return this.projectPkg.install();
+          return this.projectPkg.install(ctx);
         }
       },
       ...(await this.getPostInstallTasks(cmdName, ctx))

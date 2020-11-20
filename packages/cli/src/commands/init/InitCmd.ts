@@ -27,6 +27,7 @@ export interface InitCmdContext extends CliDefaultOptions {
   tsedVersion: string;
   features: FeatureValue[];
   featuresTypeORM?: FeatureValue;
+  packageManager?: "yarn" | "npm";
 
   [key: string]: any;
 }
@@ -103,7 +104,27 @@ export class InitCmd implements CommandProvider {
           }
         ]
       },
-      ...this.features
+      ...this.features,
+      {
+        message: "Choose the package manager:",
+        type: "list",
+        name: "packageManager",
+        when: () => {
+          return this.packageJson.hasYarn();
+        },
+        choices: [
+          {
+            name: "Yarn",
+            checked: true,
+            value: "yarn"
+          },
+          {
+            name: "NPM",
+            checked: false,
+            value: "npm"
+          }
+        ]
+      }
     ];
   }
 
@@ -152,7 +173,7 @@ export class InitCmd implements CommandProvider {
       [
         {
           title: "Install plugins",
-          task: () => this.packageJson.install()
+          task: () => this.packageJson.install(ctx)
         },
         {
           title: "Load plugins",
@@ -162,7 +183,7 @@ export class InitCmd implements CommandProvider {
           title: "Install plugins dependencies",
           task: () => {
             this.cliPlugins.addPluginsDependencies();
-            return this.packageJson.install();
+            return this.packageJson.install(ctx);
           }
         }
       ],
