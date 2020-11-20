@@ -11,6 +11,10 @@ export class CliHttpClient {
   @Inject()
   cliProxyAgent: CliProxyAgent;
 
+  async $onInit() {
+    await this.cliProxyAgent.resolveProxySettings();
+  }
+
   async get(endpoint: string, options: CliHttpClientOptions = {}) {
     options = {
       params: options.params || options.qs,

@@ -21,6 +21,26 @@ Please refer to the [documentation](https://cli.tsed.io/) for more details.
 npm install -g @tsed/cli
 ```
 
+## Proxy configuration
+
+Ts.ED CLI uses the npm proxy configuration.
+Use these commands to configure the proxy:
+
+```sh
+npm config set proxy http://username:password@host:port
+npm config set https-proxy http://username:password@host:port
+```
+
+Or you can edit directly your ~/.npmrc file:
+
+```
+proxy=http://username:password@host:port
+https-proxy=http://username:password@host:port
+https_proxy=http://username:password@host:port
+```
+
+> Note: The following environment variables can be also used to configure the proxy `HTTPS_PROXY`, `HTTP_PROXY` and `NODE_TLS_REJECT_UNAUTHORIZED`.
+
 ## Contributors
 Please read [contributing guidelines here](https://tsed.io/CONTRIBUTING.html)
 
