@@ -1,99 +1,95 @@
-import tunnel from "tunnel";
-import {Inject, Injectable} from "@tsed/di";
+import * as tunnel from "tunnel";
+import {Configuration, Inject, Injectable, Value} from "@tsed/di";
 import {CliExeca} from "./CliExeca";
+import {camelCase} from "change-case";
+
+export interface CliProxySettings {
+  url: string;
+  strictSsl: boolean;
+}
+
+function cast(value: any) {
+  if (["undefined"].includes(value)) {
+    return undefined;
+  }
+  if (["null"].includes(value)) {
+    return null;
+  }
+
+  if (["false"].includes(value)) {
+    return false;
+  }
+
+  if (["true"].includes(value)) {
+    return false;
+  }
+
+  return value;
+}
 
 @Injectable()
+@Configuration({
+  proxy: {
+    url: process.env.HTTPS_PROXY || process.env.HTTP_PROXY,
+    strictSsl: process.env.NODE_TLS_REJECT_UNAUTHORIZED !== undefined ? process.env.NODE_TLS_REJECT_UNAUTHORIZED !== "0" : true
+  }
+})
 export class CliProxyAgent {
+  @Value("proxy")
+  proxySettings: CliProxySettings;
+
   @Inject()
   protected cliExeca: CliExeca;
 
-  protected proxyUrl: string | null;
-
-  async $onInit() {
-    await this.getProxyUrl();
-  }
-
   hasProxy() {
-    return !!this.proxyUrl;
+    return !!this.proxySettings.url;
   }
 
   get(type: "http" | "https") {
-    if (this.proxyUrl) {
-      const url = new URL(this.proxyUrl);
+    if (this.hasProxy()) {
+      const {strictSsl = true} = this.proxySettings;
+      const url = new URL(this.proxySettings.url);
+      const protocol = url.protocol.replace(":", "");
+
       const options = {
         proxy: {
-          host: url.host,
-          port: (url.port ? +url.port : undefined) as any
+          host: url.hostname,
+          port: (url.port ? +url.port : undefined) as any,
+          proxyAuth: `${url.username}:${url.password}`,
+          rejectUnauthorized: strictSsl
         }
       };
 
-      if (url.protocol === "http" && type == "https") {
-        return tunnel.httpsOverHttp(options);
-      }
+      const method = camelCase([type, "over", protocol].join(" "));
 
-      if (url.protocol === "https" && type == "https") {
-        return tunnel.httpsOverHttps(options);
-      }
-
-      if (url.protocol === "http" && type == "https") {
-        return tunnel.httpOverHttps(options);
-      }
-
-      if (url.protocol === "http" && type == "http") {
-        return tunnel.httpOverHttp(options);
+      if ((tunnel as any)[method]) {
+        return (tunnel as any)[method](options);
       }
     }
 
     return null;
   }
 
-  protected async getProxyUrl() {
-    if (this.proxyUrl !== undefined) {
-      return this.proxyUrl;
+  async resolveProxySettings(): Promise<void> {
+    if (this.hasProxy()) {
+      return;
     }
 
-    const {HTTP_PROXY, HTTPS_PROXY} = process.env;
+    const result = await Promise.all([
+      this.cliExeca.getAsync("npm", ["config", "get", "proxy"]),
+      this.cliExeca.getAsync("npm", ["config", "get", "http-proxy"]),
+      this.cliExeca.getAsync("npm", ["config", "get", "https-proxy"]),
+      this.cliExeca.getAsync("npm", ["config", "get", "strict-ssl"])
+    ]);
 
-    if (HTTP_PROXY || HTTPS_PROXY) {
-      return HTTP_PROXY || HTTPS_PROXY;
-    }
+    const [proxy, httpProxy, httpsProxy, strictSsl] = result.map(cast);
+    const url = httpsProxy || httpProxy || proxy;
 
-    if (this.hasYarn()) {
-      const url = await this.getBestProxyUrl("yarn");
-      if (url) {
-        this.proxyUrl = url;
-        return url;
-      }
-    }
-
-    this.proxyUrl = await this.getBestProxyUrl("npm");
-
-    return this.proxyUrl;
-  }
-
-  protected getProxy() {}
-
-  private hasYarn() {
-    try {
-      this.cliExeca.runSync("yarn", ["--version"]);
-
-      return true;
-    } catch (er) {
-      return false;
-    }
-  }
-
-  protected async getBestProxyUrl(packageManager: string): Promise<string | null> {
-    try {
-      const [proxy, httpProxy, httpsProxy] = await Promise.all([
-        this.cliExeca.getAsync(packageManager, ["config", "get", "proxy"]),
-        this.cliExeca.getAsync(packageManager, ["config", "get", "http-proxy"]),
-        this.cliExeca.getAsync(packageManager, ["config", "get", "https-proxy"])
-      ]);
-
-      return httpsProxy || httpProxy || proxy;
-    } catch (er) {
-      return null;
+    if (url) {
+      this.proxySettings = {
+        url,
+        strictSsl: cast(strictSsl) !== false
+      };
     }
   }
 }

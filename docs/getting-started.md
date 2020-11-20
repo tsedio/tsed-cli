@@ -49,3 +49,25 @@ npm start # or yarn start
 The `tsed init` command will generate the project with the selected choices. Out-of-the-box, CLI support
 Mocha, Jest, TSLint, Prettier, Passport, etc...
 :::
+
+## Proxy configuration
+
+Ts.ED CLI uses the npm proxy configuration.
+Use these commands to configure the proxy:
+
+```sh
+npm config set proxy http://username:password@host:port
+npm config set https-proxy http://username:password@host:port
+```
+
+Or you can edit directly your ~/.npmrc file:
+
+```
+proxy=http://username:password@host:port
+https-proxy=http://username:password@host:port
+https_proxy=http://username:password@host:port
+```
+
+::: tip
+The following environment variables can be also used to configure the proxy `HTTPS_PROXY`, `HTTP_PROXY` and `NODE_TLS_REJECT_UNAUTHORIZED`.
+:::
