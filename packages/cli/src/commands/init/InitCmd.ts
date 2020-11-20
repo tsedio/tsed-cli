@@ -339,7 +339,6 @@ export class InitCmd implements CommandProvider {
       {
         "@tsed/platform-express": ctx.tsedVersion,
         "body-parser": "latest",
-        helmet: "latest",
         cors: "latest",
         compression: "latest",
         "cookie-parser": "latest",
@@ -352,7 +351,6 @@ export class InitCmd implements CommandProvider {
     this.packageJson.addDevDependencies(
       {
         "@types/cors": "latest",
-        "@types/helmet": "latest",
         "@types/express": "latest",
         "@types/compression": "latest",
         "@types/cookie-parser": "latest",
@@ -371,8 +369,7 @@ export class InitCmd implements CommandProvider {
         "@koa/router": "latest",
         "koa-bodyparser": "latest",
         "koa-override": "latest",
-        "koa-compress": "latest",
-        "koa-helmet": "latest"
+        "koa-compress": "latest"
       },
       ctx
     );
@@ -384,7 +381,6 @@ export class InitCmd implements CommandProvider {
         "@types/koa-bodyparser": "latest",
         "@types/koa__router": "latest",
         "@types/koa-compress": "latest",
-        "@types/koa-helmet": "latest",
         "@types/koa__cors": "latest"
       },
       ctx

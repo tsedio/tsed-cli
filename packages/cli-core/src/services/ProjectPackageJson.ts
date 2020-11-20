@@ -372,7 +372,6 @@ export class ProjectPackageJson {
     return [
       {
         title: "Installing dependencies using npm",
-        enabled: () => !this.hasYarn(),
         skip: () => {
           return !this.reinstall;
         },
