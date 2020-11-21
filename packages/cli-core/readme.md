@@ -1,6 +1,10 @@
 # @tsed/cli-core
 
-[![Build Status](https://travis-ci.org/TypedProject/tsed-cli.svg?branch=master)](https://travis-ci.org/TypedProject/tsed-cli)
+<p style="text-align: center" align="center">
+ <a href="https://tsed.io" target="_blank"><img src="https://tsed.io/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
+</p>
+
+[![Build & Release](https://github.com/TypedProject/tsed-cli/workflows/Build%20&%20Release/badge.svg?branch=master)](https://github.com/TypedProject/tsed-cli/actions?query=workflow%3A%22Build+%26+Release%22)
 [![TypeScript](https://badges.frapsoft.com/typescript/love/typescript.svg?v=100)](https://github.com/ellerbrock/typescript-badges/) 
 [![Package Quality](http://npm.packagequality.com/shield/@tsed/cli.png)](http://packagequality.com/#?package=@tsed/cli)
 [![npm version](https://badge.fury.io/js/%40tsed%2Fcli.svg)](https://badge.fury.io/js/%40tsed%2Fcli)

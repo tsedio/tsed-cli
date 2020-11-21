@@ -1,5 +1,11 @@
 # @tsed/cli-testing
 
+<p style="text-align: center" align="center">
+ <a href="https://tsed.io" target="_blank"><img src="https://tsed.io/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
+</p>
+
+[![Build & Release](https://github.com/TypedProject/tsed-cli/workflows/Build%20&%20Release/badge.svg?branch=master)](https://github.com/TypedProject/tsed-cli/actions?query=workflow%3A%22Build+%26+Release%22)
+
 > Utils to test your CLI based on @tsed/cli-core framework
 
 ## Features
