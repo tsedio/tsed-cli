@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "@tsed/cli-core": "2.4.1",
-    "tslib": "1.11.1"
+    "tslib": "2.0.3"
   },
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",

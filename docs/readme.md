@@ -2,8 +2,6 @@
 layout: Home
 sidebar: false
 meta:
- - name: description
-   content: 
  - name: keywords
    content: Ts.ED cli nodejs express typescript javascript es6 decorators
 gettingStartedText: Getting started
@@ -18,7 +16,7 @@ features:
 - title: tsed add
   details: Install a CLI plugins to extend the CLI capabilities. Out-of-the-box support tslint, prettier, mocha, jest, passport, etc...
 contributors:
-  classes: bg-gray-lighter
+  classes: bg-gray-lighter mb-10
   title: Our awesome <b>contributors</b>
   cta:
     label: Become contributor
@@ -27,24 +25,36 @@ contributors:
     width: 45
     bgColor: white
 backers:
- type: cols
- title: Our <b>Backers</b>
- description: Thank you to all our backers who contributes to our project! 🙏
  cta:
-   label: Become Backers
+   label: Become backer
    url: https://opencollective.com/tsed#backers
 sponsors:
- type: cols
  classes:
- title: Our <b>Sponsors / Partners</b>
- description: Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
- image:
-   src: /sponsors.svg
-   href: http://www.freepik.com
-   title: Designed by pch.vector / Freepik
+ title: Support us
+ description: Ts.ED is under MIT-license and is an open-source project. Many thanks to our sponsors, partners and backers who contribute to promote and support our project!
  cta:
-   label: Become a sponsor
-   url: /support.html
+   label: Become sponsor
+   url: /support.html 
+ items:
+  - title: Sponsors
+    class: w-1/2 sm:w-1/6 px-5 py-3
+    style:
+      maxHeight: 150px
+    items:
+      - title: Medayo
+        href: https://www.medayo.com
+        src: https://images.opencollective.com/medayo/1ef2d6b/logo/256.png
+  - title: They use it
+    class: w-1/3 sm:w-1/6 px-5 py-3
+    style:
+      maxHeight: 80px
+    items:
+      - title: Artips
+        href: https://artips.fr
+        src: https://artips.fr/resources/img/artips/artips.png
+      - title: Yumi.us
+        src: https://yumi.us/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F6bc09fed-4612-4aa0-9192-225a0b3c7a30%2FYumi-logo-circle.png?table=block&id=1a875820-287a-4a97-aa40-ba3c8f3de9ae&width=250&userId=&cache=v2
+        href: https://yumi.us/
 frameworks:
 - title: TypeScript
   href: https://www.typescriptlang.org/
@@ -111,18 +121,10 @@ Why <span class="text-blue">Ts</span>.ED?
 :::
 
 ::: slot testimonial-content
-Ts.ED is a Node.js and TypeScript Framework on top of Express/Koa.js. Ts.ED is a framework on top of Express/Koa to write your application with TypeScript (or ES6). 
-It provides a lot of decorators and guideline to make your code more readable and less error-prone.
+Ts.ED is a Node.js Framework on top of Express/Koa.js. Written in Typescript, it helps you build your server-side application easily and quickly. 
+If you want to start a complete out-of-the-box project or fully customize it yourself, Ts.ED will guide you there !
 
 <Button href="https://tsed.io" class="mt-8" rounded="medium">See more on Ts.ED</Button>
 :::
 
-<div class="w-full max-w-site mx-auto px-5 py-5 md:py-10">
-
-<p class="text-center font-normal text-xl m-auto max-w-lg">There are some of the libraries and the technologies that we use or supports with this <strong>framework</strong></p>
-
-<div class="mt-5 pt-5">
-<Frameworks />
-</div>
-
-</div>
+<HomeBody />
