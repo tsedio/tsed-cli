@@ -109,9 +109,6 @@ export class InitCmd implements CommandProvider {
         message: "Choose the package manager:",
         type: "list",
         name: "packageManager",
-        when: () => {
-          return this.packageJson.hasYarn();
-        },
         choices: [
           {
             name: "Yarn",
