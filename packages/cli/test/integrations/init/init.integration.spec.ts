@@ -78,29 +78,10 @@ describe("Init cmd", () => {
           "@tsed/exceptions": "5.58.1",
           "@tsed/platform-express": "5.58.1",
           "@tsed/schema": "5.58.1",
-          "@tsed/json-mapper": "5.58.1",
-          ajv: "1.0.0",
-          "body-parser": "1.0.0",
-          compression: "1.0.0",
-          "cookie-parser": "1.0.0",
-          cors: "1.0.0",
-          "cross-env": "1.0.0",
-          express: "1.0.0",
-          "method-override": "1.0.0"
+          "@tsed/json-mapper": "5.58.1"
         },
         description: "",
-        devDependencies: {
-          "@types/compression": "1.0.0",
-          "@types/cookie-parser": "1.0.0",
-          "@types/cors": "1.0.0",
-          "@types/express": "1.0.0",
-          "@types/method-override": "1.0.0",
-          "@types/node": "1.0.0",
-          concurrently: "1.0.0",
-          nodemon: "1.0.0",
-          "ts-node": "1.0.0",
-          typescript: "1.0.0"
-        },
+        devDependencies: {},
         name: "project-data",
         scripts: {
           build: "yarn tsc",
@@ -172,29 +153,10 @@ describe("Init cmd", () => {
           "@tsed/exceptions": "5.58.1",
           "@tsed/platform-express": "5.58.1",
           "@tsed/schema": "5.58.1",
-          "@tsed/json-mapper": "5.58.1",
-          ajv: "1.0.0",
-          "body-parser": "1.0.0",
-          compression: "1.0.0",
-          "cookie-parser": "1.0.0",
-          cors: "1.0.0",
-          "cross-env": "1.0.0",
-          express: "1.0.0",
-          "method-override": "1.0.0"
+          "@tsed/json-mapper": "5.58.1"
         },
         description: "",
-        devDependencies: {
-          "@types/compression": "1.0.0",
-          "@types/cookie-parser": "1.0.0",
-          "@types/cors": "1.0.0",
-          "@types/express": "1.0.0",
-          "@types/method-override": "1.0.0",
-          "@types/node": "1.0.0",
-          concurrently: "1.0.0",
-          nodemon: "1.0.0",
-          "ts-node": "1.0.0",
-          typescript: "1.0.0"
-        },
+        devDependencies: {},
         name: "project-data",
         scripts: {
           build: "yarn tsc",
@@ -257,8 +219,6 @@ describe("Init cmd", () => {
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toEqual({
         dependencies: {
-          "@koa/cors": "1.0.0",
-          "@koa/router": "1.0.0",
           "@tsed/ajv": "5.58.1",
           "@tsed/common": "5.58.1",
           "@tsed/core": "5.58.1",
@@ -266,28 +226,10 @@ describe("Init cmd", () => {
           "@tsed/exceptions": "5.58.1",
           "@tsed/platform-koa": "5.58.1",
           "@tsed/schema": "5.58.1",
-          "@tsed/json-mapper": "5.58.1",
-          ajv: "1.0.0",
-          "cross-env": "1.0.0",
-          koa: "1.0.0",
-          "koa-bodyparser": "1.0.0",
-          "koa-compress": "1.0.0",
-          "koa-override": "1.0.0"
+          "@tsed/json-mapper": "5.58.1"
         },
         description: "",
-        devDependencies: {
-          "@types/koa": "1.0.0",
-          "@types/koa-bodyparser": "1.0.0",
-          "@types/koa-compress": "1.0.0",
-          "@types/koa-json": "1.0.0",
-          "@types/koa__cors": "1.0.0",
-          "@types/koa__router": "1.0.0",
-          "@types/node": "1.0.0",
-          concurrently: "1.0.0",
-          nodemon: "1.0.0",
-          "ts-node": "1.0.0",
-          typescript: "1.0.0"
-        },
+        devDependencies: {},
         name: "project-data",
         scripts: {
           build: "yarn tsc",

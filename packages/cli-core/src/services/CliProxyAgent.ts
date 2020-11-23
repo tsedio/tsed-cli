@@ -55,7 +55,7 @@ export class CliProxyAgent {
         proxy: {
           host: url.hostname,
           port: (url.port ? +url.port : undefined) as any,
-          proxyAuth: `${url.username}:${url.password}`,
+          proxyAuth: url.username && url.password ? `${url.username}:${url.password}` : undefined,
           rejectUnauthorized: strictSsl
         }
       };

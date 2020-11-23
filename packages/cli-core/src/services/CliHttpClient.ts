@@ -29,13 +29,14 @@ export class CliHttpClient {
     const url = new URL(endpoint);
 
     if (this.cliProxyAgent.hasProxy()) {
-      switch (url.protocol) {
+      const protocol = url.protocol.replace(":", "");
+      switch (protocol) {
         case "https":
-          options.httpsAgent = this.cliProxyAgent.get(url.protocol);
+          options.httpsAgent = this.cliProxyAgent.get(protocol);
           options.proxy = false;
           break;
         case "http":
-          options.httpAgent = this.cliProxyAgent.get(url.protocol);
+          options.httpAgent = this.cliProxyAgent.get(protocol);
           options.proxy = false;
           break;
         default:
