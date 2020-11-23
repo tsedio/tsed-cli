@@ -4,12 +4,16 @@ import * as Fs from "fs-extra";
 import * as Listr from "listr";
 import {dirname, join} from "path";
 import * as readPkgUp from "read-pkg-up";
-import {EMPTY, Observable, throwError} from "rxjs";
+import * as semver from "semver";
+import {EMPTY, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {PackageJson} from "../interfaces/PackageJson";
 import {CliExeca} from "./CliExeca";
 import {CliFs} from "./CliFs";
-import {NpmRegistryClient} from "./NpmRegistryClient";
+
+export interface InstallOptions {
+  packageManager?: "npm" | "yarn";
+}
 
 function getEmptyPackageJson(configuration: Configuration) {
   return {
@@ -42,18 +46,14 @@ function getPackageJson(configuration: Configuration) {
   return getEmptyPackageJson(configuration);
 }
 
-function getPkgWithUndefinedVersion(deps: any) {
+function mapPackagesWithInvalidVersion(deps: any) {
+  const toString = (info: [string, string]) => {
+    return info[1] === "latest" ? info[0] : info.join("@");
+  };
+
   return Object.entries(deps)
-    .filter(([, version]) => !version)
-    .map(([key]) => key);
-}
-
-export interface InstallOptions {
-  packageManager?: "npm" | "yarn";
-}
-
-function getPackageWithTag(deps: any) {
-  return Object.entries(deps).filter(([, version]) => ["latest", "alpha", "beta", "rc"].includes(String(version)));
+    .filter(([, version]) => !semver.valid(version as string))
+    .map(toString);
 }
 
 function sortKeys(obj: any) {
@@ -69,6 +69,19 @@ function sortKeys(obj: any) {
     }, {});
 }
 
+function mapPackagesWithValidVersion(deps: any) {
+  return Object.entries(deps).reduce((deps, [key, version]: [string, string]) => {
+    if (semver.valid(version)) {
+      return {
+        ...deps,
+        [key]: version
+      };
+    }
+
+    return deps;
+  }, {});
+}
+
 @Injectable()
 export class ProjectPackageJson {
   public rewrite = false;
@@ -76,10 +89,10 @@ export class ProjectPackageJson {
 
   @Inject(CliExeca)
   protected cliExeca: CliExeca;
-  @Inject(NpmRegistryClient)
-  protected npmRegistryClient: NpmRegistryClient;
+
   @Inject(CliFs)
   protected fs: CliFs;
+
   private raw: PackageJson = {
     name: "",
     version: "1.0.0",
@@ -90,7 +103,7 @@ export class ProjectPackageJson {
   };
 
   constructor(@Configuration() private configuration: Configuration) {
-    this.raw = getPackageJson(configuration);
+    this.read();
   }
 
   get path() {
@@ -104,7 +117,7 @@ export class ProjectPackageJson {
   set dir(dir: string) {
     this.configuration.project.rootDir = dir;
 
-    this.raw = getPackageJson(this.configuration);
+    this.read();
   }
 
   get name() {
@@ -141,6 +154,14 @@ export class ProjectPackageJson {
       ...(this.dependencies || {}),
       ...(this.devDependencies || {})
     };
+  }
+
+  toJSON() {
+    return this.raw;
+  }
+
+  read() {
+    this.raw = getPackageJson(this.configuration);
   }
 
   addDevDependency(pkg: string, version?: string) {
@@ -219,7 +240,17 @@ export class ProjectPackageJson {
     this.raw.dependencies = sortKeys(this.raw.dependencies);
     this.rewrite = false;
 
-    return this.fs.writeFileSync(this.path, JSON.stringify(this.raw, null, 2), {encoding: "utf8"});
+    const json = {
+      ...this.raw,
+      dependencies: {
+        ...mapPackagesWithValidVersion(this.raw.dependencies)
+      },
+      devDependencies: {
+        ...mapPackagesWithValidVersion(this.raw.devDependencies)
+      }
+    };
+
+    return this.fs.writeFileSync(this.path, JSON.stringify(json, null, 2), {encoding: "utf8"});
   }
 
   hasYarn() {
@@ -239,25 +270,23 @@ export class ProjectPackageJson {
       options.packageManager = "npm";
     }
 
-    const shouldResolve = !!getPackageWithTag(this.allDependencies).length;
+    const tasks = options.packageManager === "yarn" ? this.installWithYarn(options) : this.installWithNpm(options);
 
     return new Listr(
       [
         {
-          title: "Resolve versions",
-          skip: () => {
-            return !this.rewrite || !shouldResolve;
-          },
-          task: () => this.resolve()
-        },
-        {
           title: "Write package.json",
-          skip: () => {
-            return !this.rewrite;
-          },
+          enabled: () => this.rewrite,
           task: () => this.write()
         },
-        ...(options.packageManager === "yarn" ? this.installWithYarn(options) : this.installWithNpm(options))
+        ...tasks,
+        {
+          title: "Clean",
+          task: () => {
+            this.reinstall = false;
+            this.read();
+          }
+        }
       ],
       {concurrent: false}
     );
@@ -287,42 +316,9 @@ export class ProjectPackageJson {
     return this.cliExeca.run("npm", ["run", npmTask], options).pipe(errorPipe());
   }
 
-  protected resolve() {
-    return new Observable((observer) => {
-      const packages = getPackageWithTag(this.allDependencies);
-      let completed = 0;
-
-      observer.next(`${completed}/${packages.length} resolved - ${packages.map(([pkg]) => pkg).join(",")}`);
-
-      const promises = packages.map(async ([pkg, tag]) => {
-        const info = await this.npmRegistryClient.info(pkg);
-        const version = info["dist-tags"][String(tag)] || info["dist-tags"].latest;
-
-        if (this.raw.dependencies[pkg]) {
-          this.raw.dependencies[pkg] = version;
-        }
-
-        if (this.raw.devDependencies[pkg]) {
-          this.raw.devDependencies[pkg] = version;
-        }
-        completed++;
-        observer.next(`[${completed}/${packages.length}] Resolving packages...`);
-      });
-
-      Promise.all(promises)
-        .then(() => {
-          observer.next(`[${completed}/${packages.length}] Resolving packages...`);
-          observer.complete();
-        })
-        .catch((err) => {
-          observer.error(err);
-        });
-    });
-  }
-
   protected installWithYarn({verbose}: any) {
-    const devDeps = getPkgWithUndefinedVersion(this.devDependencies);
-    const deps = getPkgWithUndefinedVersion(this.dependencies);
+    const devDeps = mapPackagesWithInvalidVersion(this.devDependencies);
+    const deps = mapPackagesWithInvalidVersion(this.dependencies);
     const options = {
       cwd: this.dir
     };
@@ -352,19 +348,13 @@ export class ProjectPackageJson {
         title: "Add devDependencies using Yarn",
         skip: () => !devDeps.length,
         task: () => this.cliExeca.run("yarn", ["add", "-D", verbose && "--verbose", ...devDeps].filter(Boolean), options).pipe(errorPipe())
-      },
-      {
-        title: "Clean",
-        task() {
-          this.reinstall = false;
-        }
       }
     ];
   }
 
   protected installWithNpm({verbose}: any) {
-    const devDeps = getPkgWithUndefinedVersion(this.devDependencies);
-    const deps = getPkgWithUndefinedVersion(this.dependencies);
+    const devDeps = mapPackagesWithInvalidVersion(this.devDependencies);
+    const deps = mapPackagesWithInvalidVersion(this.dependencies);
     const options = {
       cwd: this.dir
     };
@@ -388,12 +378,6 @@ export class ProjectPackageJson {
         title: "Add devDependencies using npm",
         skip: () => !devDeps.length,
         task: () => this.cliExeca.run("npm", ["install", "--save-dev", verbose && "--verbose", ...devDeps].filter(Boolean), options)
-      },
-      {
-        title: "Clean",
-        task() {
-          this.reinstall = false;
-        }
       }
     ];
   }
