@@ -45,7 +45,6 @@ describe("CliPlugins", () => {
         expect(cliProxyAgent.proxySettings).toEqual({strictSsl: false, url: "https://login:password@host:3000"});
       });
     });
-
     describe("from npm config", () => {
       it("should get proxy url from (proxy)", async () => {
         const cliExeca = {
@@ -146,6 +145,39 @@ describe("CliPlugins", () => {
           strictSsl: false
         });
       });
+      it("should get proxy url from (https-proxy) without credentials", async () => {
+        const cliExeca = {
+          getAsync: jest.fn().mockImplementation((p: string, args: string[]) => {
+            if (args.includes("https-proxy")) {
+              return Promise.resolve("https://host:3000");
+            }
+
+            if (args.includes("strict-ssl")) {
+              return Promise.resolve("true");
+            }
+
+            return Promise.resolve("null");
+          })
+        };
+
+        const cliProxyAgent = await CliPlatformTest.invoke<CliProxyAgent>(CliProxyAgent, [
+          {
+            token: CliExeca,
+            use: cliExeca
+          }
+        ]);
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        cliProxyAgent.proxySettings.url = undefined;
+
+        await cliProxyAgent.resolveProxySettings();
+
+        expect(cliProxyAgent.proxySettings).toEqual({
+          url: "https://host:3000",
+          strictSsl: false
+        });
+      });
     });
   });
 
@@ -213,7 +245,6 @@ describe("CliPlugins", () => {
         }
       });
     });
-
     it("should fetch data through a proxy (https to http)", async () => {
       const settings = CliPlatformTest.get(CliConfiguration);
 
