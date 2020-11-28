@@ -28,6 +28,8 @@ export interface InitCmdContext extends CliDefaultOptions {
   features: FeatureValue[];
   featuresTypeORM?: FeatureValue;
   packageManager?: "yarn" | "npm";
+  babel?: boolean;
+  webpack?: boolean;
 
   [key: string]: any;
 }
@@ -87,41 +89,7 @@ export class InitCmd implements CommandProvider {
           return paramCase(input);
         }
       },
-      {
-        message: "Choose the target platform:",
-        type: "list",
-        name: "platform",
-        choices: [
-          {
-            name: "Express.js",
-            checked: true,
-            value: "express"
-          },
-          {
-            name: "Koa.js",
-            checked: false,
-            value: "koa"
-          }
-        ]
-      },
-      ...this.features,
-      {
-        message: "Choose the package manager:",
-        type: "list",
-        name: "packageManager",
-        choices: [
-          {
-            name: "Yarn",
-            checked: true,
-            value: "yarn"
-          },
-          {
-            name: "NPM",
-            checked: false,
-            value: "npm"
-          }
-        ]
-      }
+      ...this.features
     ];
   }
 
@@ -163,7 +131,7 @@ export class InitCmd implements CommandProvider {
     this.packageJson.name = ctx.projectName;
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);
-    this.addScripts();
+    this.addScripts(ctx);
     this.addFeatures(ctx);
 
     await createTasksRunner(
@@ -216,12 +184,14 @@ export class InitCmd implements CommandProvider {
                     [
                       "init/.dockerignore.hbs",
                       "init/.gitignore.hbs",
+                      ctx.babel && "init/.babelrc.hbs",
+                      ctx.webpack && "init/webpack.config.js.hbs",
                       "init/docker-compose.yml.hbs",
                       "init/Dockerfile.hbs",
                       "init/README.md.hbs",
                       "init/tsconfig.compile.json.hbs",
                       "init/tsconfig.json.hbs"
-                    ],
+                    ].filter(Boolean),
                     ctx
                   )
               },
@@ -264,7 +234,7 @@ export class InitCmd implements CommandProvider {
     ];
   }
 
-  addScripts(): void {
+  addScripts(ctx: InitCmdContext): void {
     this.packageJson.addScripts({
       build: "yarn tsc",
       tsc: "tsc --project tsconfig.compile.json",
@@ -272,6 +242,20 @@ export class InitCmd implements CommandProvider {
       start: 'nodemon --watch "src/**/*.ts" --ignore "node_modules/**/*" --exec ts-node src/index.ts',
       "start:prod": "cross-env NODE_ENV=production node dist/index.js"
     });
+
+    if (ctx.babel) {
+      this.packageJson.addScripts({
+        build: 'yarn tsc && babel src --out-dir dist --extensions ".ts,.tsx" --source-maps inline',
+        start: 'nodemon --watch "src/**/*.ts" --ignore "node_modules/**/*" --exec babel-node --extensions .ts src/index.ts'
+      });
+    }
+
+    if (ctx.webpack) {
+      this.packageJson.addScripts({
+        bundle: "yarn tsc && cross-env NODE_ENV=production webpack",
+        "start:bundle": "cross-env NODE_ENV=production node dist/app.bundle.js"
+      });
+    }
   }
 
   addDependencies(ctx: InitCmdContext) {
@@ -292,6 +276,7 @@ export class InitCmd implements CommandProvider {
     this.packageJson.addDevDependencies(
       {
         "@types/node": "latest",
+        "@types/multer": "latest",
         concurrently: "latest",
         nodemon: "latest",
         "ts-node": "latest",

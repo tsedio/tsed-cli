@@ -138,6 +138,17 @@ export const FEATURES_TYPEORM_CONNECTION_TYPES = [
   }
 ];
 
+const babelDevDependencies = {
+  "@babel/cli": "latest",
+  "@babel/core": "latest",
+  "@babel/node": "latest",
+  "@babel/plugin-proposal-class-properties": "latest",
+  "@babel/plugin-proposal-decorators": "latest",
+  "@babel/preset-env": "latest",
+  "@babel/preset-typescript": "latest",
+  "babel-plugin-transform-typescript-metadata": "latest"
+};
+
 registerProvider({
   provide: Features,
   deps: [CliPackageJson],
@@ -145,6 +156,23 @@ registerProvider({
     const cliVersion = cliPackageJson.version;
 
     return [
+      {
+        message: "Choose the target platform:",
+        type: "list",
+        name: "platform",
+        choices: [
+          {
+            name: "Express.js",
+            checked: true,
+            value: "express"
+          },
+          {
+            name: "Koa.js",
+            checked: false,
+            value: "koa"
+          }
+        ]
+      },
       {
         type: "checkbox",
         name: "features",
@@ -213,6 +241,12 @@ registerProvider({
             name: "Linter",
             value: {
               type: "linter"
+            }
+          },
+          {
+            name: "Bundler",
+            value: {
+              type: "bundler"
             }
           }
         ]
@@ -321,6 +355,52 @@ registerProvider({
             value: {
               type: "lintstaged"
             }
+          }
+        ]
+      },
+      {
+        message: "Choose your bundler",
+        type: "list",
+        name: "featuresBundler",
+        when: hasFeature("bundler"),
+        choices: [
+          {
+            name: "Babel",
+            value: {
+              type: "babel",
+              devDependencies: {
+                ...babelDevDependencies
+              }
+            }
+          },
+          {
+            name: "Webpack",
+            value: {
+              type: "babel:webpack",
+              devDependencies: {
+                ...babelDevDependencies,
+                "babel-loader": "latest",
+                webpack: "latest",
+                "webpack-cli": "latest"
+              }
+            }
+          }
+        ]
+      },
+      {
+        message: "Choose the package manager:",
+        type: "list",
+        name: "packageManager",
+        choices: [
+          {
+            name: "Yarn",
+            checked: true,
+            value: "yarn"
+          },
+          {
+            name: "NPM",
+            checked: false,
+            value: "npm"
           }
         ]
       }
