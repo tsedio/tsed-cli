@@ -72,7 +72,7 @@
   },
   "devDependencies": {
     "@tsed/markdown-it-symbols": "3.3.0",
-    "@tsed/monorepo-utils": "1.11.0",
+    "@tsed/monorepo-utils": "1.12.6",
     "@typedproject/ts-doc": "4.0.12",
     "@types/jest": "26.0.0",
     "@types/node": "14.14.7",

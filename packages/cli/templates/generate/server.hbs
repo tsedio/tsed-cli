@@ -1,15 +1,15 @@
 import {Configuration, Inject} from "@tsed/di";
 import {PlatformApplication} from "@tsed/common";
 {{#if express}}import "@tsed/platform-express"; // /!\ keep this import
-import * as bodyParser from "body-parser";
-import * as compress from "compression";
-import * as cookieParser from "cookie-parser";
-import * as methodOverride from "method-override";
-import * as cors from "cors";
+import bodyParser from "body-parser";
+import compress from "compression";
+import cookieParser from "cookie-parser";
+import methodOverride from "method-override";
+import cors from "cors";
 {{/if}}{{#if koa}}import "@tsed/platform-koa"; // /!\ keep this import
-import * as bodyParser from "koa-bodyparser";
-import * as compress from "koa-compress";
-import * as cors from "@koa/cors";
+import bodyParser from "koa-bodyparser";
+import compress from "koa-compress";
+import cors from "@koa/cors";
 {{/if}}
 import "@tsed/ajv";{{#if swagger}}
 import "@tsed/swagger";{{/if}}{{#if mongoose}}
