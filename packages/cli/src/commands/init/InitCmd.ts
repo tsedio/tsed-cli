@@ -6,6 +6,7 @@ import {
   Command,
   CommandProvider,
   Configuration,
+  createTasks,
   createTasksRunner,
   Inject,
   ProjectPackageJson,
@@ -14,7 +15,6 @@ import {
   SrcRendererService
 } from "@tsed/cli-core";
 import {camelCase, paramCase, pascalCase} from "change-case";
-import * as Listr from "listr";
 import {basename, join} from "path";
 import {DEFAULT_TSED_TAGS} from "../../constants";
 import {Features, FeatureValue} from "../../services/Features";
@@ -146,10 +146,7 @@ export class InitCmd implements CommandProvider {
         },
         {
           title: "Install plugins dependencies",
-          task: () => {
-            this.cliPlugins.addPluginsDependencies();
-            return this.packageJson.install(ctx);
-          }
+          task: () => this.cliPlugins.addPluginsDependencies(ctx)
         }
       ],
       ctx
@@ -175,7 +172,7 @@ export class InitCmd implements CommandProvider {
       {
         title: "Generate project files",
         task: (ctx: any) => {
-          return new Listr(
+          return createTasks(
             [
               {
                 title: "Root files",
@@ -227,7 +224,7 @@ export class InitCmd implements CommandProvider {
               },
               ...subTasks
             ],
-            {concurrent: false}
+            {...ctx, concurrent: false}
           );
         }
       }

@@ -47,7 +47,7 @@ export class AddCmd implements CommandProvider {
     return [
       {
         title: "Install plugins",
-        task: () => this.packageJson.install()
+        task: () => this.packageJson.install(ctx as any)
       },
       {
         title: "Load plugins",
@@ -56,8 +56,7 @@ export class AddCmd implements CommandProvider {
       {
         title: "Install plugins dependencies",
         task: () => {
-          this.cliPlugins.addPluginsDependencies();
-          return this.packageJson.install();
+          return this.cliPlugins.addPluginsDependencies(ctx);
         }
       }
     ];
