@@ -74,31 +74,37 @@ frameworks:
 - title: ESLint
   href: https://eslint.org/
   src: /eslint.svg  
+- title: Babel
+  href: https://babeljs.io/
+  src: /babel.svg    
+- title: Webpack
+  href: https://webpack.js.org/
+  src: /webpack.svg  
 - title: AJV
   href: /tutorials/ajv.html
   src: https://ajv.js.org/images/ajv_logo.png
 - title: Swagger
-  href: /tutorials/swagger.html
+  href: https://tsed.io/tutorials/swagger.html
   src: /swagger.svg 
 - title: Passport
-  href: /tutorials/passport.html 
+  href: https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-passport
   src: /passportjs.png
 - title: Mongoose
-  href: /tutorials/mongoose.html
+  href: https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-mongoose
   src: /mongoose.png   
 - title: TypeORM
-  href: /tutorials/typeorm.html
+  href: https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-typeorm
   src: /typeorm.png
 - title: TypeGraphQL
-  href: /tutorials/graphql.html
+  href: https://tsed.io/tutorials/graphql.html
   src: /typegraphql.png
 - title: Socket.io
-  href: /tutorials/socketio.html
+  href: https://tsed.io/tutorials/socketio.html
   src: /socketio.svg
 - title: AWS
-  href: /tutorials/aws.html
+  href: https://tsed.io/tutorials/aws.html
   src: /aws.png
-- title: Handlerbars
+- title: Handlebars
   href: https://handlebarsjs.com/
   src: https://handlebarsjs.com/images/handlebars_logo.png
 ---
