@@ -1,3 +1,5 @@
+import {createTasks} from "../utils/createTasksRunner";
+import * as chalk from "chalk";
 import {Constant, Inject, Injectable, InjectorService} from "@tsed/di";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
 import {loadPlugins} from "../utils/loadPlugins";
@@ -40,12 +42,26 @@ export class CliPlugins {
     return loadPlugins(this.injector);
   }
 
-  async addPluginsDependencies(plugins?: string[]) {
-    if (!plugins) {
-      plugins = Object.keys(this.packageJson.devDependencies).filter((name) => this.isPlugin(name));
-    }
+  async addPluginsDependencies(ctx: any) {
+    const plugins = Object.keys(this.packageJson.devDependencies).filter((name) => this.isPlugin(name));
 
-    plugins.map((plugin) => this.cliHooks.emit(CommandStoreKeys.ADD, plugin));
+    const tasks = plugins.map((plugin) => {
+      return {
+        title: `Run plugin '${chalk.cyan(plugin)}'`,
+        task: () => this.cliHooks.emit(CommandStoreKeys.ADD, plugin)
+      };
+    });
+
+    return createTasks(
+      [
+        ...tasks,
+        {
+          title: "Install",
+          task: () => this.packageJson.install(ctx)
+        }
+      ],
+      {...ctx, concurrent: false}
+    );
   }
 
   protected getKeyword(keyword: string) {

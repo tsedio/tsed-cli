@@ -1,7 +1,6 @@
 import {getValue} from "@tsed/core";
 import {Configuration, Inject, Injectable} from "@tsed/di";
 import * as Fs from "fs-extra";
-import * as Listr from "listr";
 import {dirname, join} from "path";
 import * as readPkgUp from "read-pkg-up";
 import * as semver from "semver";
@@ -10,9 +9,12 @@ import {catchError} from "rxjs/operators";
 import {PackageJson} from "../interfaces/PackageJson";
 import {CliExeca} from "./CliExeca";
 import {CliFs} from "./CliFs";
+import {createTasks} from "../utils/createTasksRunner";
 
 export interface InstallOptions {
   packageManager?: "npm" | "yarn";
+
+  [key: string]: any;
 }
 
 function getEmptyPackageJson(configuration: Configuration) {
@@ -272,7 +274,7 @@ export class ProjectPackageJson {
 
     const tasks = options.packageManager === "yarn" ? this.installWithYarn(options) : this.installWithNpm(options);
 
-    return new Listr(
+    return createTasks(
       [
         {
           title: "Write package.json",
@@ -284,11 +286,12 @@ export class ProjectPackageJson {
           title: "Clean",
           task: () => {
             this.reinstall = false;
+            this.rewrite = false;
             this.read();
           }
         }
       ],
-      {concurrent: false}
+      {...(options as any), concurrent: false}
     );
   }
 
