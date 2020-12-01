@@ -1,5 +1,8 @@
 {
-  "presets": ["@babel/env", "@babel/typescript"],
+  "presets": [
+    ["@babel/env", {"targets": {"node": true}}],
+    "@babel/typescript"
+   ],
   "plugins": [
     "babel-plugin-transform-typescript-metadata",
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
