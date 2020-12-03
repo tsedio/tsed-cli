@@ -11,7 +11,10 @@ async function bootstrap() {
     name: "tsed",
     pkg,
     templateDir: TEMPLATE_DIR,
-    commands: [AddCmd, ...commands]
+    commands: [AddCmd, ...commands],
+    projects: {
+      reinstallAfterRun: true
+    }
   });
 
   cli.parseArgs();

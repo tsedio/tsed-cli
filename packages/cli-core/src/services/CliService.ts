@@ -1,5 +1,5 @@
 import {classOf, isArray} from "@tsed/core";
-import {Inject, Injectable, InjectorService, Provider} from "@tsed/di";
+import {Constant, Inject, Injectable, InjectorService, Provider} from "@tsed/di";
 import {Command} from "commander";
 import * as Inquirer from "inquirer";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
@@ -24,6 +24,9 @@ Inquirer.registerPrompt("autocomplete", require("inquirer-autocomplete-prompt"))
 @Injectable()
 export class CliService {
   readonly program = new Command();
+
+  @Constant("project.reinstallAfterRun", false)
+  reinstallAfterRun = false;
 
   @Inject()
   protected injector: InjectorService;
@@ -52,10 +55,6 @@ export class CliService {
     program.parse(argv);
   }
 
-  private load() {
-    this.injector.getProviders(PROVIDER_TYPE_COMMAND).forEach((provider) => this.build(provider));
-  }
-
   /**
    * Run lifecycle
    * @param cmdName
@@ -72,7 +71,7 @@ export class CliService {
       ...(await this.getTasks(cmdName, ctx)),
       {
         title: "Install dependencies",
-        when: () => this.projectPkg.rewrite || this.projectPkg.reinstall,
+        when: () => this.reinstallAfterRun && (this.projectPkg.rewrite || this.projectPkg.reinstall),
         task: () => {
           return this.projectPkg.install(ctx);
         }
@@ -189,6 +188,10 @@ export class CliService {
 
       this.runLifecycle(name, data);
     });
+  }
+
+  private load() {
+    this.injector.getProviders(PROVIDER_TYPE_COMMAND).forEach((provider) => this.build(provider));
   }
 
   private mapContext(cmdName: string, ctx: any) {
