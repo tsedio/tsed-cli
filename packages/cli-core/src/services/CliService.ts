@@ -71,7 +71,7 @@ export class CliService {
       ...(await this.getTasks(cmdName, ctx)),
       {
         title: "Install dependencies",
-        when: () => this.reinstallAfterRun && (this.projectPkg.rewrite || this.projectPkg.reinstall),
+        enabled: () => this.reinstallAfterRun && (this.projectPkg.rewrite || this.projectPkg.reinstall),
         task: () => {
           return this.projectPkg.install(ctx);
         }
