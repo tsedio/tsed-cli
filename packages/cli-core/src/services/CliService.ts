@@ -1,5 +1,5 @@
 import {classOf, isArray} from "@tsed/core";
-import {Inject, Injectable, InjectorService, Provider} from "@tsed/di";
+import {Constant, Inject, Injectable, InjectorService, Provider} from "@tsed/di";
 import {Command} from "commander";
 import * as Inquirer from "inquirer";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
@@ -24,6 +24,9 @@ Inquirer.registerPrompt("autocomplete", require("inquirer-autocomplete-prompt"))
 @Injectable()
 export class CliService {
   readonly program = new Command();
+
+  @Constant("project.reinstallAfterRun", false)
+  reinstallAfterRun = false;
 
   @Inject()
   protected injector: InjectorService;
