@@ -1,5 +1,5 @@
 import {InitCmdContext} from "@tsed/cli";
-import {Inject, Injectable, OnExec, OnPostInstall, ProjectPackageJson, RootRendererService} from "@tsed/cli-core";
+import {Inject, Injectable, OnExec, ProjectPackageJson, RootRendererService} from "@tsed/cli-core";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
 @Injectable()
@@ -35,22 +35,6 @@ export class EslintInitHook {
               templateDir: TEMPLATE_DIR
             }
           );
-        }
-      }
-    ];
-  }
-
-  @OnPostInstall("init")
-  onPostInstall(ctx: InitCmdContext) {
-    if (!ctx.eslint) {
-      return [];
-    }
-
-    return [
-      {
-        title: "Run eslint",
-        task: () => {
-          return this.packageJson.runScript("test:lint:fix", true);
         }
       }
     ];
