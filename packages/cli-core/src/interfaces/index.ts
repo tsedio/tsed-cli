@@ -35,6 +35,7 @@ declare global {
         rootDir?: string;
         srcDir?: string;
         scriptsDir?: string;
+        reinstallAfterRun?: boolean;
       };
     }
   }
