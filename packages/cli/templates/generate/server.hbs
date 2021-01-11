@@ -1,5 +1,6 @@
+import {Env} from "@tsed/core";
 import {Configuration, Inject} from "@tsed/di";
-import {PlatformApplication} from "@tsed/common";
+import {$log, PlatformApplication} from "@tsed/common";
 {{#if express}}import "@tsed/platform-express"; // /!\ keep this import
 import bodyParser from "body-parser";
 import compress from "compression";
@@ -25,12 +26,34 @@ import { IndexCtrl } from "./controllers/pages/IndexCtrl";
 const methodOverride = require("koa-override");{{/if}}
 
 export const rootDir = __dirname;
+export const isProduction = process.env.NODE_ENV === Env.PROD;
+
+if (isProduction) {
+  $log.appenders.set("stdout", {
+    type: "stdout",
+    levels: ["info", "debug"],
+    layout: {
+      type: "json"
+    }
+  });
+
+  $log.appenders.set("stderr", {
+    levels: ["trace", "fatal", "error", "warn"],
+    type: "stderr",
+    layout: {
+      type: "json"
+    }
+  });
+}
 
 @Configuration({
   rootDir,
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
+  logger: {
+    disableRoutesSummary: isProduction
+  },
   mount: {
     "{{route}}": [
       `${rootDir}/controllers/**/*.ts`
