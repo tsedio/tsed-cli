@@ -15,6 +15,7 @@ export class EslintInitHook {
     if (!ctx.eslint) {
       return [];
     }
+
     this.addScripts(ctx);
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);

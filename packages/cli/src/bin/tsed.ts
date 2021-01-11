@@ -12,7 +12,7 @@ async function bootstrap() {
     pkg,
     templateDir: TEMPLATE_DIR,
     commands: [AddCmd, ...commands],
-    projects: {
+    project: {
       reinstallAfterRun: true
     }
   });
