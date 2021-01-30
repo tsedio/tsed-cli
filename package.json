@@ -47,7 +47,7 @@
     "@tsed/di": "6.10.3",
     "@tsed/logger": "^5.5.4",
     "any-observable": "0.5.1",
-    "axios": "0.21.0",
+    "axios": "0.21.1",
     "chalk": "4.1.0",
     "commander": "5.1.0",
     "consolidate": "0.16.0",
