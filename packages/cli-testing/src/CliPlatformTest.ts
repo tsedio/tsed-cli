@@ -10,40 +10,21 @@ import {
   Env,
   InjectorService,
   loadInjector,
-  LocalsContainer,
-  OnInit,
   TokenProvider
 } from "@tsed/cli-core";
 import {FakeCliExeca} from "./FakeCliExeca";
 import {FakeCliFs} from "./FakeCliFs";
 import {FakeCliHttpClient} from "./FakeCliHttpClient";
+import {DITest} from "@tsed/di";
 
 export interface InvokeOptions {
   token: TokenProvider;
   use: any;
 }
 
-export class CliPlatformTest {
-  private static _injector: InjectorService | null = null;
-
-  static get injector(): InjectorService {
-    if (this._injector) {
-      return this._injector;
-    }
-
-    /* istanbul ignore next */
-    throw new Error(
-      "CliPlatformTest.injector is not initialized. Use CliPlatformTest.create(): Promise before CliPlatformTest.invoke() or CliPlatformTest.injector.\n" +
-        "Example:\n" +
-        "before(async () => {\n" +
-        "   await CliPlatformTest.create()\n" +
-        "   await CliPlatformTest.invoke(MyService, [])\n" +
-        "})"
-    );
-  }
-
+export class CliPlatformTest extends DITest {
   static async bootstrap(options: Partial<TsED.Configuration> = {}) {
-    CliPlatformTest._injector = CliPlatformTest.createInjector({
+    DITest.injector = CliPlatformTest.createInjector({
       name: "tsed",
       project: {
         rootDir: options.rootDir || "./project-name",
@@ -61,16 +42,16 @@ export class CliPlatformTest {
 
     // await loadPlugins(CliPlatformTest._injector);
 
-    await loadInjector(CliPlatformTest._injector, Cli, container);
+    await loadInjector(DITest.injector, Cli, container);
 
-    await CliPlatformTest._injector.emit("$onReady");
+    await DITest.injector.emit("$onReady");
 
     CliPlatformTest.get(CliService).load();
   }
 
   static async create(options: Partial<TsED.Configuration> = {}) {
-    CliPlatformTest._injector = CliPlatformTest.createInjector(options);
-    await loadInjector(CliPlatformTest._injector, Cli);
+    DITest.injector = CliPlatformTest.createInjector(options);
+    await loadInjector(DITest.injector, Cli);
   }
 
   /**
@@ -96,16 +77,6 @@ export class CliPlatformTest {
   }
 
   /**
-   * Resets the test injector of the test context, so it won't pollute your next test. Call this in your `tearDown` logic.
-   */
-  static async reset() {
-    if (CliPlatformTest._injector) {
-      await CliPlatformTest._injector.destroy();
-      CliPlatformTest._injector = null;
-    }
-  }
-
-  /**
    * It injects services into the test function where you can alter, spy on, and manipulate them.
    *
    * The inject function has two parameters
@@ -118,11 +89,11 @@ export class CliPlatformTest {
    */
   static inject<T>(targets: any[], func: (...args: any[]) => Promise<T> | T): () => Promise<T> {
     return async (): Promise<T> => {
-      if (!CliPlatformTest._injector) {
+      if (!DITest.hasInjector()) {
         await CliPlatformTest.create();
       }
 
-      const injector: InjectorService = CliPlatformTest.injector;
+      const injector: InjectorService = DITest.injector;
       const deps = [];
 
       for (const target of targets) {
@@ -131,33 +102,5 @@ export class CliPlatformTest {
 
       return await func(...deps);
     };
-  }
-
-  static invoke<T = any>(target: TokenProvider, providers: InvokeOptions[]): T | Promise<T> {
-    const locals = new LocalsContainer();
-    providers.forEach((p) => {
-      locals.set(p.token, p.use);
-    });
-
-    const instance: OnInit = CliPlatformTest.injector.invoke(target, locals, {rebuild: true});
-
-    if (instance && instance.$onInit) {
-      // await instance.$onInit();
-      const result = instance.$onInit();
-      if (result instanceof Promise) {
-        return result.then(() => instance as any);
-      }
-    }
-
-    return instance as any;
-  }
-
-  /**
-   * Return the instance from injector registry
-   * @param target
-   * @param options
-   */
-  static get<T = any>(target: TokenProvider): T {
-    return CliPlatformTest.injector.get<T>(target)!;
   }
 }
