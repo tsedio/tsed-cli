@@ -69,11 +69,7 @@ export class CliPlugins {
   }
 
   protected cleanKeyword(keyword: string) {
-    return keyword
-      .replace(this.name, "")
-      .replace("@", "")
-      .replace("/", "")
-      .replace("cli-plugin-", "");
+    return keyword.replace(this.name, "").replace("@", "").replace("/", "").replace("cli-plugin-", "");
   }
 
   private isPlugin(name: any) {

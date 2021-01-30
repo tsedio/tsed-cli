@@ -26,12 +26,12 @@
   "dependencies": {
     "@tsed/cli-core": "2.8.1",
     "@tsed/logger": "^5.5.4",
-    "change-case": "4.1.1",
-    "tslib": "2.0.3"
+    "change-case": "4.1.2",
+    "tslib": "2.1.0"
   },
   "devDependencies": {
     "@tsed/cli-testing": "2.8.1",
-    "@tsed/core": "6.10.3",
+    "@tsed/core": "6.23.3",
     "@types/change-case": "2.3.1"
   },
   "scripts": {

@@ -6,7 +6,7 @@
   "description": "Ts.ED CLI plugin. Add Passport.js support",
   "dependencies": {
     "change-case": "^4.1.1",
-    "tslib": "2.0.3"
+    "tslib": "2.1.0"
   },
   "devDependencies": {
     "@tsed/cli": "2.8.1",

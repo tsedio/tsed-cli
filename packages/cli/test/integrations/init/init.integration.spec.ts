@@ -8,7 +8,7 @@ const TEMPLATE_DIR = resolve(__dirname, "..", "..", "..", "templates");
 
 function readFile(file: string, content: string) {
   if (!existsSync(file)) {
-    writeFileSync(`${__dirname}/${file}`, content, {encoding: "utf8"})
+    writeFileSync(`${__dirname}/${file}`, content, {encoding: "utf8"});
   }
 
   return readFileSync(`${__dirname}/${file}`, {encoding: "utf8"});
@@ -62,10 +62,10 @@ describe("Init cmd", () => {
         "project-name/tsconfig.json"
       ]);
 
-      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!
-      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
-      expect(content).toContain("import \"@tsed/platform-express\"");
-      expect(content).toContain("import \"@tsed/ajv\"");
+      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
+      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
+      expect(content).toContain('import "@tsed/platform-express"');
+      expect(content).toContain('import "@tsed/ajv"');
       expect(content).toEqual(readFile("data/Server.express.ts.txt", content));
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -85,7 +85,7 @@ describe("Init cmd", () => {
         name: "project-data",
         scripts: {
           build: "yarn tsc",
-          start: "nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
+          start: 'nodemon --watch "src/**/*.ts" --ignore "node_modules/**/*" --exec ts-node src/index.ts',
           "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           tsc: "tsc --project tsconfig.compile.json",
           "tsc:w": "tsc --project tsconfig.json -w"
@@ -136,11 +136,11 @@ describe("Init cmd", () => {
         "project-name/views/index.ejs"
       ]);
 
-      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!
+      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
-      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
-      expect(content).toContain("import \"@tsed/platform-express\"");
-      expect(content).toContain("import \"@tsed/ajv\"");
+      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
+      expect(content).toContain('import "@tsed/platform-express"');
+      expect(content).toContain('import "@tsed/ajv"');
       expect(content).toEqual(readFile("data/Server.express.swagger.ts.txt", content));
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -160,7 +160,7 @@ describe("Init cmd", () => {
         name: "project-data",
         scripts: {
           build: "yarn tsc",
-          start: "nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
+          start: 'nodemon --watch "src/**/*.ts" --ignore "node_modules/**/*" --exec ts-node src/index.ts',
           "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           tsc: "tsc --project tsconfig.compile.json",
           "tsc:w": "tsc --project tsconfig.json -w"
@@ -209,11 +209,11 @@ describe("Init cmd", () => {
         "project-name/tsconfig.json"
       ]);
 
-      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!
+      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
-      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
-      expect(content).toContain("import \"@tsed/platform-koa\"");
-      expect(content).toContain("import \"@tsed/ajv\"");
+      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
+      expect(content).toContain('import "@tsed/platform-koa"');
+      expect(content).toContain('import "@tsed/ajv"');
       expect(content).toEqual(readFile("data/Server.koa.ts.txt", content));
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -233,7 +233,7 @@ describe("Init cmd", () => {
         name: "project-data",
         scripts: {
           build: "yarn tsc",
-          start: "nodemon --watch \"src/**/*.ts\" --ignore \"node_modules/**/*\" --exec ts-node src/index.ts",
+          start: 'nodemon --watch "src/**/*.ts" --ignore "node_modules/**/*" --exec ts-node src/index.ts',
           "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           tsc: "tsc --project tsconfig.compile.json",
           "tsc:w": "tsc --project tsconfig.json -w"

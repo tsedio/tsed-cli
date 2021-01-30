@@ -1,14 +1,5 @@
 import {FEATURES_TYPEORM_CONNECTION_TYPES, GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
-import {
-  CliDockerComposeYaml,
-  Inject,
-  OnExec,
-  OnPrompt,
-  ProjectPackageJson,
-  QuestionOptions,
-  SrcRendererService,
-  Tasks
-} from "@tsed/cli-core";
+import {CliDockerComposeYaml, Inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {paramCase} from "change-case";
 import {CliTypeORM} from "../services/CliTypeORM";
@@ -46,7 +37,7 @@ export class TypeORMGenerateHook {
   }
 
   @OnPrompt("generate")
-  async onGeneratePrompt(): Promise<QuestionOptions> {
+  async onGeneratePrompt() {
     const list = FEATURES_TYPEORM_CONNECTION_TYPES.map((item) => {
       return {
         name: item.name,
