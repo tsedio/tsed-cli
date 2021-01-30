@@ -47,7 +47,7 @@ export class CliTypeORM {
     };
 
     function replace(path: string | undefined) {
-      return path && path.replace("src/", "${rootDir}/");
+      return path && path.replace("src/", "${rootDir}/").replace(/\.ts/, ".{js,ts}");
     }
 
     content.entities = content.entities?.map(replace);
