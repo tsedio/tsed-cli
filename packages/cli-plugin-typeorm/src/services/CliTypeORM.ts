@@ -47,7 +47,7 @@ export class CliTypeORM {
     };
 
     function replace(path: string | undefined) {
-      return path && path.replace("src/", "${rootDir}/");
+      return path && path.replace("src/", "${rootDir}/").replace(/\.ts/, ".{js,ts}");
     }
 
     content.entities = content.entities?.map(replace);
@@ -68,7 +68,7 @@ export class CliTypeORM {
   async regenerateIndexConfig() {
     const list = await this.srcRenderer.scan(["config/typeorm/*.config.json"]);
 
-    const configs = list.map((file) => {
+    const configs = list.map((file: string) => {
       const name = basename(file).replace(/\.config\.json/gi, "");
 
       return {

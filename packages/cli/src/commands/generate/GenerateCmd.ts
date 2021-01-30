@@ -5,6 +5,7 @@ import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
 import {RoutePipe} from "../../pipes/RoutePipe";
 import {ProvidersInfoService} from "../../services/ProvidersInfoService";
 import {PROVIDER_TYPES} from "./ProviderTypes";
+const normalizePath = require("normalize-path");
 
 export interface GenerateCmdContext extends CliDefaultOptions {
   type: string;
@@ -164,8 +165,8 @@ export class GenerateCmd implements CommandProvider {
       type,
       route: ctx.route ? this.routePipe.transform(ctx.route) : "",
       symbolName: this.classNamePipe.transform({name, type}),
-      symbolPath: this.outputFilePathPipe.transform({name, type}),
-      symbolPathBasename: this.classNamePipe.transform({name, type}),
+      symbolPath: normalizePath(this.outputFilePathPipe.transform({name, type})),
+      symbolPathBasename: normalizePath(this.classNamePipe.transform({name, type})),
       express: ctx.platform === "express",
       koa: ctx.platform === "koa",
       platformSymbol: pascalCase(`Platform ${ctx.platform}`)

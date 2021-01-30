@@ -18,14 +18,14 @@ export class CliYaml {
     if (file) {
       const content = await this.fs.readFile(file, {encoding: "utf8"});
 
-      return JsYaml.safeLoad(content);
+      return JsYaml.load(content);
     }
 
     return {};
   }
 
   async write(path: string, obj: any) {
-    const content = JsYaml.safeDump(obj);
+    const content = JsYaml.dump(obj);
 
     const file = this.fs.findUpFile(this.projectPackageJson.dir, path) || join(this.projectPackageJson.dir, path);
 

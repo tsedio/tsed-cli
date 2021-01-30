@@ -38,14 +38,11 @@ describe("Generate Exception Filter", () => {
       name: "Http"
     });
 
-    expect(FakeCliFs.getKeys()).toEqual([
-      "project-name/src/filters",
-      "project-name/src/filters/HttpExceptionFilter.ts"
-    ]);
+    expect(FakeCliFs.getKeys()).toEqual(["project-name/src/filters", "project-name/src/filters/HttpExceptionFilter.ts"]);
 
     const result = FakeCliFs.entries.get("project-name/src/filters/HttpExceptionFilter.ts");
 
-    expect(result).toContain("import {Catch, PlatformContext, ExceptionFilterMethods} from \"@tsed/common\";");
+    expect(result).toContain('import {Catch, PlatformContext, ExceptionFilterMethods} from "@tsed/common";');
     expect(result).toContain("@Catch(Error)");
     expect(result).toContain("export class HttpExceptionFilter implements ExceptionFilterMethods");
     expect(result).toContain("catch(exception: Exception, ctx: PlatformContext) {");

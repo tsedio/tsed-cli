@@ -84,10 +84,7 @@ describe("NpmRegistryClient", () => {
     it("should get package info", async () => {
       // GIVEN
       const httpClient = {
-        get: jest
-          .fn()
-          .mockRejectedValueOnce(new Error("Not found"))
-          .mockResolvedValueOnce("response")
+        get: jest.fn().mockRejectedValueOnce(new Error("Not found")).mockResolvedValueOnce("response")
       };
 
       const npmRegistryClient: NpmRegistryClient = await CliPlatformTest.invoke<NpmRegistryClient>(NpmRegistryClient, [

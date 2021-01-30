@@ -1,5 +1,5 @@
 import {GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
-import {Inject, OnExec, OnPrompt, ProjectPackageJson, QuestionOptions, SrcRendererService, Tasks} from "@tsed/cli-core";
+import {Inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {paramCase} from "change-case";
 import {PassportClient} from "../services/PassportClient";
@@ -34,7 +34,7 @@ export class PassportGenerateHook {
   }
 
   @OnPrompt("generate")
-  async onGeneratePrompt(): Promise<QuestionOptions> {
+  async onGeneratePrompt() {
     this.packages = await this.passportClient.getPackages();
 
     const list = this.packages.map((item) => {
