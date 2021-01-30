@@ -73,5 +73,11 @@ export const PROVIDER_TYPES = [
     value: "exception-filter",
     baseDir: "filters",
     model: "{{symbolName}}.exception-filter"
+  },
+  {
+    name: "Response Filter",
+    value: "response-filter",
+    baseDir: "filters",
+    model: "{{symbolName}}.response-filter"
   }
 ];

@@ -1,0 +1,8 @@
+import {ResponseFilter, Context, ResponseFilterMethods} from "@tsed/common";
+
+@ResponseFilter("text/xml")
+export class XmlResponseFilter implements ResponseFilterMethods {
+  transform(data: any, ctx: Context) {
+    return jsToXML(data);
+  }
+}
