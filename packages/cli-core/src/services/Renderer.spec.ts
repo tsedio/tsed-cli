@@ -1,4 +1,5 @@
 import {SrcRendererService} from "@tsed/cli-core";
+import {normalizePath} from "@tsed/cli-testing";
 
 describe("Renderer", () => {
   it("relativeFrom()", () => {
@@ -13,6 +14,6 @@ describe("Renderer", () => {
     };
 
     expect(service.relativeFrom("/controller/users.spec.ts")).toEqual("..");
-    expect(service.relativeFrom("/controller/users/users.spec.ts")).toEqual("../..");
+    expect(normalizePath(service.relativeFrom("/controller/users/users.spec.ts"))).toEqual("../..");
   });
 });

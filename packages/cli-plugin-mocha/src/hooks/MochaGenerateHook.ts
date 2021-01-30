@@ -2,6 +2,8 @@ import {GenerateCmdContext} from "@tsed/cli";
 import {Inject, Injectable, OnExec, SrcRendererService, Tasks} from "@tsed/cli-core";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
+const normalizePath = require("normalize-path");
+
 @Injectable()
 export class MochaGenerateHook {
   @Inject()
@@ -60,7 +62,7 @@ export class MochaGenerateHook {
     return {
       specTemplate,
       integrationTemplate,
-      relativeSrcPath: this.srcRenderService.relativeFrom(`${options.symbolPath}.integration.spec.ts`)
+      relativeSrcPath: normalizePath(this.srcRenderService.relativeFrom(`${options.symbolPath}.integration.spec.ts`))
     };
   }
 }

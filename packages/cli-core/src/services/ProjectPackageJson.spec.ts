@@ -1,5 +1,6 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {CliExeca, CliFs, ProjectPackageJson} from "@tsed/cli-core";
+import {join, resolve} from "path";
 
 async function getProjectPackageJsonFixture() {
   const cliExeca = {
@@ -24,7 +25,7 @@ async function getProjectPackageJsonFixture() {
   return {projectPackageJson, cliExeca, cliFs};
 }
 
-const rootDir = __dirname + "/__mock__/";
+const rootDir = resolve(join(__dirname, "__mock__"));
 describe("ProjectPackageJson", () => {
   beforeEach(() =>
     CliPlatformTest.create({
@@ -103,7 +104,9 @@ describe("ProjectPackageJson", () => {
         _id: "@"
       };
 
-      expect(cliFs.writeFileSync).toHaveBeenCalledWith(`${rootDir}package.json`, JSON.stringify(expectedJson, null, 2), {encoding: "utf8"});
+      expect(cliFs.writeFileSync).toHaveBeenCalledWith(resolve(join(rootDir, "package.json")), JSON.stringify(expectedJson, null, 2), {
+        encoding: "utf8"
+      });
 
       expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["install", "--production=false"], {cwd: rootDir});
       expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "module1", "module2@alpha"], {cwd: rootDir});
@@ -179,7 +182,9 @@ describe("ProjectPackageJson", () => {
         _id: "@"
       };
 
-      expect(cliFs.writeFileSync).toHaveBeenCalledWith(`${rootDir}package.json`, JSON.stringify(expectedJson, null, 2), {encoding: "utf8"});
+      expect(cliFs.writeFileSync).toHaveBeenCalledWith(resolve(join(rootDir, "package.json")), JSON.stringify(expectedJson, null, 2), {
+        encoding: "utf8"
+      });
 
       expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--no-production"], {cwd: rootDir});
       expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--save", "module1", "module2@alpha"], {cwd: rootDir});
@@ -253,7 +258,9 @@ describe("ProjectPackageJson", () => {
         _id: "@"
       };
 
-      expect(cliFs.writeFileSync).toHaveBeenCalledWith(`${rootDir}package.json`, JSON.stringify(expectedJson, null, 2), {encoding: "utf8"});
+      expect(cliFs.writeFileSync).toHaveBeenCalledWith(resolve(join(rootDir, "package.json")), JSON.stringify(expectedJson, null, 2), {
+        encoding: "utf8"
+      });
 
       expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--no-production"], {cwd: rootDir});
       expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--save", "module1", "module2@alpha"], {cwd: rootDir});

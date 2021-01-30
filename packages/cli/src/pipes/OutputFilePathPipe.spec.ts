@@ -1,6 +1,7 @@
 import {ProvidersInfoService} from "@tsed/cli";
 import {ClassNamePipe} from "./ClassNamePipe";
 import {OutputFilePathPipe} from "./OutputFilePathPipe";
+import {normalizePath} from "@tsed/cli-testing";
 
 describe("OutputFilePathPipe", () => {
   it("should return the outputfile", () => {
@@ -17,8 +18,16 @@ describe("OutputFilePathPipe", () => {
     const pipe = new OutputFilePathPipe(classPipe);
     pipe.providers = providers;
 
-    expect(pipe.transform({type: "controller", name: "test"})).toEqual("controllers/TestController");
-    expect(pipe.transform({type: "controller", name: "test", baseDir: "other"})).toEqual("other/TestController");
-    expect(pipe.transform({type: "server", name: "server"})).toEqual("Server");
+    expect(normalizePath(pipe.transform({type: "controller", name: "test"}))).toEqual("controllers/TestController");
+    expect(
+      normalizePath(
+        pipe.transform({
+          type: "controller",
+          name: "test",
+          baseDir: "other"
+        })
+      )
+    ).toEqual("other/TestController");
+    expect(normalizePath(pipe.transform({type: "server", name: "server"}))).toEqual("Server");
   });
 });
