@@ -85,7 +85,7 @@ describe("Init cmd", () => {
         name: "project-data",
         scripts: {
           build: "yarn tsc",
-          start: 'nodemon --watch "src/**/*.ts" --ignore "node_modules/**/*" --exec ts-node src/index.ts',
+          start: 'tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts',
           "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           tsc: "tsc --project tsconfig.compile.json",
           "tsc:w": "tsc --project tsconfig.json -w"
@@ -160,7 +160,7 @@ describe("Init cmd", () => {
         name: "project-data",
         scripts: {
           build: "yarn tsc",
-          start: 'nodemon --watch "src/**/*.ts" --ignore "node_modules/**/*" --exec ts-node src/index.ts',
+          start: 'tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts',
           "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           tsc: "tsc --project tsconfig.compile.json",
           "tsc:w": "tsc --project tsconfig.json -w"
@@ -233,7 +233,7 @@ describe("Init cmd", () => {
         name: "project-data",
         scripts: {
           build: "yarn tsc",
-          start: 'nodemon --watch "src/**/*.ts" --ignore "node_modules/**/*" --exec ts-node src/index.ts',
+          start: 'tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts',
           "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           tsc: "tsc --project tsconfig.compile.json",
           "tsc:w": "tsc --project tsconfig.json -w"

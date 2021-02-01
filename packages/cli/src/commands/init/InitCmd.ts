@@ -236,7 +236,7 @@ export class InitCmd implements CommandProvider {
       build: "yarn tsc",
       tsc: "tsc --project tsconfig.compile.json",
       "tsc:w": "tsc --project tsconfig.json -w",
-      start: 'nodemon --watch "src/**/*.ts" --ignore "node_modules/**/*" --exec ts-node src/index.ts',
+      start: "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
       "start:prod": "cross-env NODE_ENV=production node dist/index.js"
     });
 
@@ -281,6 +281,15 @@ export class InitCmd implements CommandProvider {
       },
       ctx
     );
+
+    if (!ctx.babel) {
+      this.packageJson.addDevDependencies(
+        {
+          "ts-node-dev": "latest"
+        },
+        ctx
+      );
+    }
   }
 
   addFeatures(ctx: InitCmdContext) {
