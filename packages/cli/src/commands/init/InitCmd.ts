@@ -277,6 +277,7 @@ export class InitCmd implements CommandProvider {
         concurrently: "latest",
         nodemon: "latest",
         "ts-node": "latest",
+        "tsconfig-paths": "latest",
         typescript: "latest"
       },
       ctx
