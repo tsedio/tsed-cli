@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli",
-  "version": "2.10.0",
+  "version": "2.10.1",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "bin": {
@@ -24,14 +24,14 @@
     "decorators"
   ],
   "dependencies": {
-    "@tsed/cli-core": "2.10.0",
+    "@tsed/cli-core": "2.10.1",
     "@tsed/logger": "^5.5.4",
     "change-case": "4.1.2",
     "normalize-path": "3.0.0",
     "tslib": "2.1.0"
   },
   "devDependencies": {
-    "@tsed/cli-testing": "2.10.0",
+    "@tsed/cli-testing": "2.10.1",
     "@tsed/core": "6.23.3",
     "@types/change-case": "2.3.1"
   },
