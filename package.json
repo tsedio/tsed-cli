@@ -43,7 +43,7 @@
   "homepage": "https://github.com/TypedProject/tsed-cli",
   "dependencies": {
     "@samverschueren/stream-to-observable": "0.3.1",
-    "@tsed/core": "6.23.3",
+    "@tsed/core": "6.30.0",
     "@tsed/di": "6.23.3",
     "@tsed/logger": "^5.5.4",
     "any-observable": "0.5.1",
@@ -101,7 +101,7 @@
     "typescript": "4.1.3",
     "vue-analytics": "5.22.1",
     "vuepress": "1.8.2",
-    "vuepress-theme-tsed": "3.7.0"
+    "vuepress-theme-tsed": "^3.8.0"
   },
   "husky": {
     "hooks": {
