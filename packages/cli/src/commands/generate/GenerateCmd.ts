@@ -5,6 +5,7 @@ import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
 import {RoutePipe} from "../../pipes/RoutePipe";
 import {ProvidersInfoService} from "../../services/ProvidersInfoService";
 import {PROVIDER_TYPES} from "./ProviderTypes";
+
 const normalizePath = require("normalize-path");
 
 export interface GenerateCmdContext extends CliDefaultOptions {
@@ -80,9 +81,10 @@ export class GenerateCmd implements CommandProvider {
   }
 
   $prompt(initialOptions: Partial<GenerateCmdContext>) {
-    const providers = this.providersList.toArray();
     const getName = (state: any) =>
       initialOptions.name || pascalCase(state.name || initialOptions.name || state.type || initialOptions.type);
+
+    const proposedProviders = this.providersList.findProviders(initialOptions.type);
 
     return [
       {
@@ -90,8 +92,8 @@ export class GenerateCmd implements CommandProvider {
         name: "type",
         message: "Which type of provider ?",
         default: initialOptions.type,
-        when: !initialOptions.type,
-        source: searchFactory(providers)
+        when: () => proposedProviders.length > 1,
+        source: searchFactory(proposedProviders)
       },
       {
         type: "input",
