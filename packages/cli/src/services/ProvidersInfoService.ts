@@ -31,10 +31,29 @@ export class ProvidersInfoService {
   }
 
   isMyProvider(value: string, owner: Type<any>) {
-    return this.map.get(value)!.owner === nameOf(owner);
+    return this.map.get(value)?.owner === nameOf(owner);
   }
 
   toArray() {
     return Array.from(this.map.values());
+  }
+
+  findProviders(type: string | undefined): ProviderInfo[] {
+    const providers = this.toArray();
+    if (!type) {
+      return providers;
+    }
+
+    type = type.toLowerCase();
+
+    if (this.get(type)) {
+      return [this.get(type)];
+    }
+
+    const proposedProviders = providers.filter((provider) => {
+      return provider.name.toLowerCase().includes(type!) || provider.value.includes(type!);
+    });
+
+    return proposedProviders.length ? proposedProviders : providers;
   }
 }

@@ -23,7 +23,7 @@ describe("GenerateCmd", () => {
           name: "type",
           source: expect.any(Function),
           type: "autocomplete",
-          when: true
+          when: expect.any(Function)
         });
         expect(result[1].message).toEqual("Which name ?");
         expect(result[1].default({type: "name"})).toEqual("Name");
@@ -55,7 +55,7 @@ describe("GenerateCmd", () => {
           source: expect.any(Function),
           name: "type",
           type: "autocomplete",
-          when: false
+          when: expect.any(Function)
         });
         expect(result[1].message).toEqual("Which name ?");
         expect(result[1].default({type: "name"})).toEqual("Name");
