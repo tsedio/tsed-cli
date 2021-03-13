@@ -1,4 +1,4 @@
-import {applyDecorators} from "@tsed/core";
+import {useDecorators} from "@tsed/core";
 import {PropertyMetadata, PropertyFn} from "@tsed/common";
 
 export interface {{symbolName}}Options {
@@ -6,7 +6,7 @@ export interface {{symbolName}}Options {
 }
 
 export function {{symbolName}}(options: {{symbolName}}Options): PropertyDecorator {
-  return applyDecorators(
+  return useDecorators(
     PropertyFn((propertyMetadata: PropertyMetadata) => {
 
     })

@@ -40,7 +40,7 @@ describe("Generate middleware decorator", () => {
 
     const result = FakeCliFs.entries.get("project-name/src/decorators/Test.ts");
 
-    expect(result).toContain('import {applyDecorators, StoreSet} from "@tsed/core"');
+    expect(result).toContain('import {useDecorators, StoreSet} from "@tsed/core"');
     expect(result).toContain("export interface TestOptions {");
     expect(result).toContain("@Middleware()");
     expect(result).toContain("export function Test(options: TestOptions): MethodDecorator");
@@ -73,7 +73,7 @@ describe("Generate middleware decorator", () => {
 
     const result = FakeCliFs.entries.get("project-name/src/decorators/Test.ts");
 
-    expect(result).toContain('import {applyDecorators, StoreSet} from "@tsed/core"');
+    expect(result).toContain('import {useDecorators, StoreSet} from "@tsed/core"');
     expect(result).toContain("export interface TestOptions {");
     expect(result).toContain("@Middleware()");
     expect(result).toContain("export function Test(options: TestOptions): MethodDecorator");
