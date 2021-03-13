@@ -1,4 +1,4 @@
-import {applyDecorators, StoreSet} from "@tsed/core";
+import {useDecorators, StoreSet} from "@tsed/core";
 import {
   Middleware,
   Req,
@@ -23,7 +23,7 @@ export class {{symbolName}}Middleware {
 }
 
 export function {{symbolName}}(options: {{symbolName}}Options): MethodDecorator {
-  return applyDecorators(
+  return useDecorators(
     StoreSet({{symbolName}}Middleware, options),
     {{#eq middlewarePosition "before"}}UseBefore({{symbolName}}Middleware){{/eq}}{{#eq middlewarePosition "after"}}UseAfter({{symbolName}}Middleware){{/eq}}
   );
