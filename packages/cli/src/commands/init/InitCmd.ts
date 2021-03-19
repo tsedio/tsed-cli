@@ -9,6 +9,7 @@ import {
   createTasks,
   createTasksRunner,
   Inject,
+  InstallOptions,
   ProjectPackageJson,
   QuestionOptions,
   RootRendererService,
@@ -17,9 +18,11 @@ import {
 import {camelCase, paramCase, pascalCase} from "change-case";
 import {basename, join} from "path";
 import {DEFAULT_TSED_TAGS} from "../../constants";
+import {ProjectConvention} from "../../interfaces/ProjectConvention";
+import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
 import {Features, FeatureValue} from "../../services/Features";
 
-export interface InitCmdContext extends CliDefaultOptions {
+export interface InitCmdContext extends CliDefaultOptions, InstallOptions {
   platform: "express" | "koa";
   root: string;
   srcDir: string;
@@ -27,9 +30,9 @@ export interface InitCmdContext extends CliDefaultOptions {
   tsedVersion: string;
   features: FeatureValue[];
   featuresTypeORM?: FeatureValue;
-  packageManager?: "yarn" | "npm";
   babel?: boolean;
   webpack?: boolean;
+  convention?: ProjectConvention;
 
   [key: string]: any;
 }
@@ -73,6 +76,9 @@ export class InitCmd implements CommandProvider {
 
   @Inject()
   protected rootRenderer: RootRendererService;
+
+  @Inject()
+  protected outputFilePathPipe: OutputFilePathPipe;
 
   @Inject()
   protected fs: CliFs;
@@ -129,6 +135,10 @@ export class InitCmd implements CommandProvider {
     this.fs.ensureDirSync(this.packageJson.dir);
 
     this.packageJson.name = ctx.projectName;
+
+    ctx.packageManager && this.packageJson.setPreference("packageManager", ctx.packageManager);
+    ctx.convention && this.packageJson.setPreference("convention", ctx.convention);
+
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);
     this.addScripts(ctx);
@@ -216,9 +226,15 @@ export class InitCmd implements CommandProvider {
                   return ctx.swagger;
                 },
                 task: async () => {
-                  return this.srcRenderer.renderAll(["init/IndexCtrl.ts.hbs"], ctx, {
+                  return this.srcRenderer.render("init/IndexCtrl.ts.hbs", ctx, {
                     ...ctx,
-                    rootDir: `${this.srcRenderer.rootDir}/controllers/pages`
+                    output: `${this.outputFilePathPipe.transform({
+                      name: "Index",
+                      type: "controller",
+                      format: ctx.convention,
+                      baseDir: "/controllers/pages"
+                    })}.ts`,
+                    rootDir: this.srcRenderer.rootDir
                   });
                 }
               },
@@ -232,8 +248,10 @@ export class InitCmd implements CommandProvider {
   }
 
   addScripts(ctx: InitCmdContext): void {
+    const runner = this.packageJson.getRunCmd();
+
     this.packageJson.addScripts({
-      build: "yarn tsc",
+      build: `${runner} tsc`,
       tsc: "tsc --project tsconfig.compile.json",
       "tsc:w": "tsc --project tsconfig.json -w",
       start: "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
@@ -242,14 +260,14 @@ export class InitCmd implements CommandProvider {
 
     if (ctx.babel) {
       this.packageJson.addScripts({
-        build: 'yarn tsc && babel src --out-dir dist --extensions ".ts,.tsx" --source-maps inline',
+        build: `${runner} tsc && babel src --out-dir dist --extensions ".ts,.tsx" --source-maps inline`,
         start: 'nodemon --watch "src/**/*.ts" --ignore "node_modules/**/*" --exec babel-node --extensions .ts src/index.ts'
       });
     }
 
     if (ctx.webpack) {
       this.packageJson.addScripts({
-        bundle: "yarn tsc && cross-env NODE_ENV=production webpack",
+        bundle: `${runner} tsc && cross-env NODE_ENV=production webpack`,
         "start:bundle": "cross-env NODE_ENV=production node dist/app.bundle.js"
       });
     }

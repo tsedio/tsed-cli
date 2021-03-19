@@ -50,7 +50,10 @@ export class CliPlatformTest extends DITest {
   }
 
   static async create(options: Partial<TsED.Configuration> = {}) {
-    DITest.injector = CliPlatformTest.createInjector(options);
+    DITest.injector = CliPlatformTest.createInjector({
+      name: "tsed",
+      ...options
+    });
     await loadInjector(DITest.injector, Cli);
   }
 

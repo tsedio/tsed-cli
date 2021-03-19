@@ -17,10 +17,12 @@ export class CliPluginJestModule {
   }
 
   addScripts() {
+    const runner = this.packageJson.getRunCmd();
+
     this.packageJson.addScripts({
-      test: "yarn test:lint && yarn test:coverage",
+      test: `${runner} test:lint && ${runner} test:coverage`,
       "test:unit": "cross-env NODE_ENV=test jest",
-      "test:coverage": "yarn test:unit"
+      "test:coverage": `${runner} test:unit`
     });
   }
 

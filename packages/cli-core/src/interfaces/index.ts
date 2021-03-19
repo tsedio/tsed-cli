@@ -6,6 +6,7 @@ export * from "./CommandProvider";
 export * from "./CommandParameters";
 export * from "./CommandMetadata";
 export * from "./CliDefaultOptions";
+export * from "./ProjectPreferences";
 export * from "./PackageJson";
 export * from "./Tasks";
 
@@ -28,6 +29,11 @@ declare global {
        *
        */
       templateDir: string;
+      /**
+       *
+       * @param pkg
+       */
+      defaultProjectPreferences?: (pkg?: any) => Record<string, any>;
       /**
        *
        */

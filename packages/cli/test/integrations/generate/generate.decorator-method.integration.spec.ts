@@ -17,15 +17,14 @@ describe("Generate method decorator", () => {
   it("should generate a template with the right options", async () => {
     const cliService = CliPlatformTest.get<CliService>(CliService);
     const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-    // @ts-ignore
-    projectPackageJson.raw = {
+    projectPackageJson.setRaw({
       name: "",
       version: "1.0.0",
       description: "",
       scripts: {},
       dependencies: {},
       devDependencies: {}
-    };
+    });
 
     await cliService.exec("generate", {
       rootDir: "./project-data",

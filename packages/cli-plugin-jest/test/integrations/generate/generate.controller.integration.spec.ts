@@ -18,15 +18,14 @@ describe("Generate Controller", () => {
   it("should generate the template with the right options (simple path)", async () => {
     const cliService = CliPlatformTest.get<CliService>(CliService);
     const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-    // @ts-ignore
-    projectPackageJson.raw = {
+    projectPackageJson.setRaw({
       name: "",
       version: "1.0.0",
       description: "",
       scripts: {},
       dependencies: {},
       devDependencies: {}
-    };
+    });
 
     await cliService.exec("generate", {
       rootDir: "./project-data",
@@ -51,15 +50,14 @@ describe("Generate Controller", () => {
   it("should generate the template with the right options (complex path)", async () => {
     const cliService = CliPlatformTest.get<CliService>(CliService);
     const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-    // @ts-ignore
-    projectPackageJson.raw = {
+    projectPackageJson.setRaw({
       name: "",
       version: "1.0.0",
       description: "",
       scripts: {},
       dependencies: {},
       devDependencies: {}
-    };
+    });
 
     await cliService.exec("generate", {
       rootDir: "./project-data",

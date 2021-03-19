@@ -1,10 +1,11 @@
-import {CliDefaultOptions, Command, CommandProvider, Inject, SrcRendererService} from "@tsed/cli-core";
+import {CliDefaultOptions, Command, CommandProvider, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
 import {pascalCase} from "change-case";
 import {ClassNamePipe} from "../../pipes/ClassNamePipe";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
 import {RoutePipe} from "../../pipes/RoutePipe";
 import {ProvidersInfoService} from "../../services/ProvidersInfoService";
 import {PROVIDER_TYPES} from "./ProviderTypes";
+import {ProjectConvention} from "../../interfaces/ProjectConvention";
 
 const normalizePath = require("normalize-path");
 
@@ -17,6 +18,7 @@ export interface GenerateCmdContext extends CliDefaultOptions {
   symbolName: string;
   symbolPath: string;
   symbolPathBasename: string;
+  convention: ProjectConvention;
 }
 
 const DECORATOR_TYPES = [
@@ -68,6 +70,9 @@ export class GenerateCmd implements CommandProvider {
 
   @Inject()
   srcRenderService: SrcRendererService;
+
+  @Inject()
+  projectPackageJson: ProjectPackageJson;
 
   constructor(private providersList: ProvidersInfoService) {
     PROVIDER_TYPES.forEach((info) => {
@@ -166,12 +171,21 @@ export class GenerateCmd implements CommandProvider {
       ...ctx,
       type,
       route: ctx.route ? this.routePipe.transform(ctx.route) : "",
-      symbolName: this.classNamePipe.transform({name, type}),
-      symbolPath: normalizePath(this.outputFilePathPipe.transform({name, type})),
+      symbolName: this.classNamePipe.transform({name, type, format: ctx.convention}),
+      symbolPath: normalizePath(
+        this.outputFilePathPipe.transform({
+          name,
+          type
+        })
+      ),
       symbolPathBasename: normalizePath(this.classNamePipe.transform({name, type})),
       express: ctx.platform === "express",
       koa: ctx.platform === "koa",
-      platformSymbol: pascalCase(`Platform ${ctx.platform}`)
+      platformSymbol: pascalCase(`Platform ${ctx.platform}`),
+      indexControllerPath:
+        this.projectPackageJson.preferences.convention === ProjectConvention.ANGULAR
+          ? "./controllers/pages/index.controller"
+          : "./controllers/pages/IndexController"
     } as GenerateCmdContext;
   }
 

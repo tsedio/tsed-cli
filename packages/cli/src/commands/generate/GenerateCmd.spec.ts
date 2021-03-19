@@ -110,7 +110,8 @@ describe("GenerateCmd", () => {
           type: "controller",
           express: false,
           koa: false,
-          platformSymbol: "PlatformUndefined"
+          platformSymbol: "PlatformUndefined",
+          indexControllerPath: "./controllers/pages/IndexController"
         },
         {
           output: "controllers/Test.ts"
@@ -157,7 +158,8 @@ describe("GenerateCmd", () => {
           type: "controller",
           express: false,
           koa: false,
-          platformSymbol: "PlatformUndefined"
+          platformSymbol: "PlatformUndefined",
+          indexControllerPath: "./controllers/pages/IndexController"
         },
         {
           output: "controllers/Test.ts"

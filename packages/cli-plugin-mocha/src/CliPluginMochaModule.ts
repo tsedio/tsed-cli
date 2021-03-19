@@ -17,8 +17,10 @@ export class CliPluginMochaModule {
   }
 
   addScripts() {
+    const runner = this.packageJson.getRunCmd();
+
     this.packageJson.addScripts({
-      test: "yarn test:lint && yarn test:coverage",
+      test: `${runner} test:lint && ${runner} test:coverage`,
       "test:unit": "cross-env NODE_ENV=test mocha",
       "test:coverage": "cross-env NODE_ENV=test nyc mocha"
     });

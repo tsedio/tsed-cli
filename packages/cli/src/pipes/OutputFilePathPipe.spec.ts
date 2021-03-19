@@ -17,6 +17,9 @@ describe("OutputFilePathPipe", () => {
 
     const pipe = new OutputFilePathPipe(classPipe);
     pipe.providers = providers;
+    pipe.projectPackageJson = {
+      preferences: {}
+    } as any;
 
     expect(normalizePath(pipe.transform({type: "controller", name: "test"}))).toEqual("controllers/TestController");
     expect(

@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
 import cors from "cors";
 import "@tsed/ajv";
+import "@tsed/swagger";
+import {IndexController} from "./controllers/pages/index.controller";
 
 export const rootDir = __dirname;
 export const isProduction = process.env.NODE_ENV === Env.PROD;
@@ -41,13 +43,28 @@ if (isProduction) {
   mount: {
     "/rest": [
       `${rootDir}/controllers/**/*.ts`
-    ]
+    ],
+    "/": [IndexCtrl]
+  },
+  swagger: [
+    {
+      path: "/v2/docs",
+      specVersion: "2.0"
+    },
+    {
+      path: "/v3/docs",
+      specVersion: "3.0.1"
+    }
+  ],
+  views: {
+    root: `${rootDir}/../views`,
+    viewEngine: "ejs"
   },
   exclude: [
     "**/*.spec.ts"
   ]
 })
-export class Server {
+export class server {
   @Inject()
   app: PlatformApplication;
 
