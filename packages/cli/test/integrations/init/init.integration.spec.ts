@@ -1,8 +1,8 @@
-import {CliService, ProjectPackageJson} from "@tsed/cli-core";
+import {CliService, PackageManager, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {existsSync, readFileSync, writeFileSync} from "fs";
 import {resolve} from "path";
-import {InitCmd} from "../../../src";
+import {InitCmd, ProjectConvention} from "../../../src";
 
 const TEMPLATE_DIR = resolve(__dirname, "..", "..", "..", "templates");
 
@@ -27,15 +27,14 @@ describe("Init cmd", () => {
     it("should generate a project with the right options", async () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-      // @ts-ignore
-      projectPackageJson.raw = {
+      projectPackageJson.setRaw({
         name: "",
         version: "1.0.0",
         description: "",
         scripts: {},
         dependencies: {},
         devDependencies: {}
-      };
+      });
 
       await cliService.exec("init", {
         platform: "express",
@@ -63,9 +62,9 @@ describe("Init cmd", () => {
       ]);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
-      expect(content).toContain('import "@tsed/platform-express"');
-      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-express\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toEqual(readFile("data/Server.express.ts.txt", content));
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -84,27 +83,29 @@ describe("Init cmd", () => {
         devDependencies: {},
         name: "project-data",
         scripts: {
-          build: "yarn tsc",
-          start: 'tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts',
+          build: "yarn run tsc",
+          start: "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
           "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           tsc: "tsc --project tsconfig.compile.json",
           "tsc:w": "tsc --project tsconfig.json -w"
         },
-        version: "1.0.0"
+        version: "1.0.0",
+        tsed: {
+          packageManager: "yarn"
+        }
       });
     });
     it("should generate a project with swagger", async () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-      // @ts-ignore
-      projectPackageJson.raw = {
+      projectPackageJson.setRaw({
         name: "",
         version: "1.0.0",
         description: "",
         scripts: {},
         dependencies: {},
         devDependencies: {}
-      };
+      });
 
       await cliService.exec("init", {
         platform: "express",
@@ -128,7 +129,7 @@ describe("Init cmd", () => {
         "project-name/src/controllers",
         "project-name/src/controllers/HelloWorldController.ts",
         "project-name/src/controllers/pages",
-        "project-name/src/controllers/pages/IndexCtrl.ts",
+        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.compile.json",
         "project-name/tsconfig.json",
@@ -138,9 +139,10 @@ describe("Init cmd", () => {
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
-      expect(content).toContain('import "@tsed/platform-express"');
-      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-express\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
+      expect(content).toContain("import {IndexController} from \"./controllers/pages/IndexController\"");
       expect(content).toEqual(readFile("data/Server.express.swagger.ts.txt", content));
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -159,14 +161,145 @@ describe("Init cmd", () => {
         devDependencies: {},
         name: "project-data",
         scripts: {
-          build: "yarn tsc",
-          start: 'tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts',
+          build: "yarn run tsc",
+          start: "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
           "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           tsc: "tsc --project tsconfig.compile.json",
           "tsc:w": "tsc --project tsconfig.json -w"
         },
-        version: "1.0.0"
+        version: "1.0.0",
+        tsed: {
+          packageManager: "yarn"
+        }
       });
+    });
+    it("should generate a project with NPM", async () => {
+      const cliService = CliPlatformTest.get<CliService>(CliService);
+      const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
+      projectPackageJson.setRaw({
+        name: "",
+        version: "1.0.0",
+        description: "",
+        scripts: {},
+        dependencies: {},
+        devDependencies: {}
+      });
+
+      await cliService.exec("init", {
+        platform: "express",
+        rootDir: "./project-data",
+        projectName: "project-data",
+        tsedVersion: "5.58.1",
+        packageManager: PackageManager.NPM
+      });
+
+      expect(FakeCliFs.getKeys()).toEqual([
+        "./project-name",
+        "project-name",
+        "project-name/.dockerignore",
+        "project-name/.gitignore",
+        "project-name/Dockerfile",
+        "project-name/README.md",
+        "project-name/docker-compose.yml",
+        "project-name/package.json",
+        "project-name/src",
+        "project-name/src/Server.ts",
+        "project-name/src/controllers",
+        "project-name/src/controllers/HelloWorldController.ts",
+        "project-name/src/index.ts",
+        "project-name/tsconfig.compile.json",
+        "project-name/tsconfig.json"
+      ]);
+
+      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-express\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
+      expect(content).toEqual(readFile("data/Server.express.ts.txt", content));
+
+      const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
+      expect(pkg).toEqual({
+        dependencies: {
+          "@tsed/ajv": "5.58.1",
+          "@tsed/common": "5.58.1",
+          "@tsed/core": "5.58.1",
+          "@tsed/di": "5.58.1",
+          "@tsed/exceptions": "5.58.1",
+          "@tsed/platform-express": "5.58.1",
+          "@tsed/schema": "5.58.1",
+          "@tsed/json-mapper": "5.58.1"
+        },
+        description: "",
+        devDependencies: {},
+        name: "project-data",
+        scripts: {
+          build: "npm run tsc",
+          start: "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+          "start:prod": "cross-env NODE_ENV=production node dist/index.js",
+          tsc: "tsc --project tsconfig.compile.json",
+          "tsc:w": "tsc --project tsconfig.json -w"
+        },
+        version: "1.0.0",
+        tsed: {
+          packageManager: "npm"
+        }
+      });
+    });
+    it("should generate a project with Convention ANGULAR", async () => {
+      const cliService = CliPlatformTest.get<CliService>(CliService);
+      const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
+      projectPackageJson.setRaw = (pkg) => {
+        // @ts-ignore
+        projectPackageJson.raw = {
+          name: "",
+          version: "1.0.0",
+          description: "",
+          scripts: {},
+          dependencies: {},
+          devDependencies: {},
+          tsed: {
+            convention: "angular"
+          }
+        }
+      };
+
+      await cliService.exec("init", {
+        platform: "express",
+        rootDir: "./project-data",
+        projectName: "project-data",
+        tsedVersion: "5.58.1",
+        convention: ProjectConvention.ANGULAR,
+        swagger: true
+      });
+
+      expect(FakeCliFs.getKeys()).toEqual([
+        "./project-name",
+        "project-name",
+        "project-name/.dockerignore",
+        "project-name/.gitignore",
+        "project-name/Dockerfile",
+        "project-name/README.md",
+        "project-name/docker-compose.yml",
+        "project-name/package.json",
+        "project-name/src",
+        "project-name/src/controllers",
+        "project-name/src/controllers/hello-world.controller.ts",
+        "project-name/src/controllers/pages",
+        "project-name/src/controllers/pages/index.controller.ts",
+        "project-name/src/index.ts",
+        "project-name/src/server.ts",
+        "project-name/tsconfig.compile.json",
+        "project-name/tsconfig.json",
+        "project-name/views",
+        "project-name/views/index.ejs"
+      ]);
+
+      const content = FakeCliFs.entries.get("project-name/src/server.ts")!;
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-express\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
+      expect(content).toEqual(readFile("data/Server.express.ts.txt", content));
+      expect(content).toContain("import {IndexController} from \"./controllers/pages/index.controller\"");
     });
   });
 
@@ -174,15 +307,14 @@ describe("Init cmd", () => {
     it("should generate a project with the right options", async () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-      // @ts-ignore
-      projectPackageJson.raw = {
+      projectPackageJson.setRaw({
         name: "",
         version: "1.0.0",
         description: "",
         scripts: {},
         dependencies: {},
         devDependencies: {}
-      };
+      });
 
       await cliService.exec("init", {
         platform: "koa",
@@ -211,9 +343,9 @@ describe("Init cmd", () => {
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
-      expect(content).toContain('import "@tsed/platform-koa"');
-      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-koa\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toEqual(readFile("data/Server.koa.ts.txt", content));
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -232,13 +364,16 @@ describe("Init cmd", () => {
         devDependencies: {},
         name: "project-data",
         scripts: {
-          build: "yarn tsc",
-          start: 'tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts',
+          build: "yarn run tsc",
+          start: "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
           "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           tsc: "tsc --project tsconfig.compile.json",
           "tsc:w": "tsc --project tsconfig.json -w"
         },
-        version: "1.0.0"
+        version: "1.0.0",
+        tsed: {
+          packageManager: "yarn"
+        }
       });
     });
   });

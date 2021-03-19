@@ -20,8 +20,7 @@ import mongooseConfig from "./config/mongoose";
 {{/if}}{{#if typeorm}}
 import typeormConfig from "./config/typeorm";
 {{/if}}{{#if swagger}}
-import { IndexCtrl } from "./controllers/pages/IndexCtrl";
-{{/if}}{{#if koa}}
+import {IndexController} from "{{indexControllerPath}}";{{/if}}{{#if koa}}
 
 const methodOverride = require("koa-override");{{/if}}
 

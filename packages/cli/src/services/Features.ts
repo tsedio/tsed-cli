@@ -1,5 +1,6 @@
 import {CliPackageJson, Inject, registerProvider} from "@tsed/cli-core";
 import {getValue} from "@tsed/core";
+import {ProjectConvention} from "../interfaces/ProjectConvention";
 
 export interface FeatureValue {
   type: string;
@@ -170,6 +171,23 @@ registerProvider({
             name: "Koa.js",
             checked: false,
             value: "koa"
+          }
+        ]
+      },
+      {
+        message: "Choose the convention file styling:",
+        type: "list",
+        name: "convention",
+        choices: [
+          {
+            name: "Ts.ED",
+            checked: true,
+            value: ProjectConvention.DEFAULT
+          },
+          {
+            name: "Angular",
+            checked: false,
+            value: ProjectConvention.ANGULAR
           }
         ]
       },

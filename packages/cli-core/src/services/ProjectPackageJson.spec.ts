@@ -1,5 +1,5 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {CliExeca, CliFs, ProjectPackageJson} from "@tsed/cli-core";
+import {CliExeca, CliFs, PackageManager, ProjectPackageJson} from "@tsed/cli-core";
 import {join, resolve} from "path";
 
 async function getProjectPackageJsonFixture() {
@@ -29,6 +29,7 @@ const rootDir = resolve(join(__dirname, "__mock__"));
 describe("ProjectPackageJson", () => {
   beforeEach(() =>
     CliPlatformTest.create({
+      name: "tsed",
       project: {
         rootDir
       }
@@ -60,7 +61,7 @@ describe("ProjectPackageJson", () => {
         "dev-module3": "6.0.0"
       });
 
-      const list = projectPackageJson.install({packageManager: "yarn"});
+      const list = projectPackageJson.install({packageManager: PackageManager.YARN});
       list.setRenderer("silent");
 
       expect(projectPackageJson.toJSON()).toEqual({
@@ -81,6 +82,9 @@ describe("ProjectPackageJson", () => {
         scripts: {
           build: "echo 0"
         },
+        tsed: {
+          packageManager: "yarn"
+        },
         version: "1.0.0"
       });
 
@@ -100,8 +104,9 @@ describe("ProjectPackageJson", () => {
         devDependencies: {
           "dev-module3": "6.0.0"
         },
-        readme: "ERROR: No README data found!",
-        _id: "@"
+        tsed: {
+          packageManager: "yarn"
+        }
       };
 
       expect(cliFs.writeFileSync).toHaveBeenCalledWith(resolve(join(rootDir, "package.json")), JSON.stringify(expectedJson, null, 2), {
@@ -138,8 +143,10 @@ describe("ProjectPackageJson", () => {
         "dev-module3": "6.0.0"
       });
 
-      const list = projectPackageJson.install({packageManager: "yarn"});
+      const list = projectPackageJson.install({packageManager: PackageManager.YARN});
       list.setRenderer("silent");
+
+      expect(projectPackageJson.getPackageManager(PackageManager.YARN)).toEqual(PackageManager.NPM);
 
       expect(projectPackageJson.toJSON()).toEqual({
         _id: "@",
@@ -158,6 +165,9 @@ describe("ProjectPackageJson", () => {
         readme: "ERROR: No README data found!",
         scripts: {
           build: "echo 0"
+        },
+        tsed: {
+          packageManager: "yarn"
         },
         version: "1.0.0"
       });
@@ -178,8 +188,9 @@ describe("ProjectPackageJson", () => {
         devDependencies: {
           "dev-module3": "6.0.0"
         },
-        readme: "ERROR: No README data found!",
-        _id: "@"
+        tsed: {
+          packageManager: "yarn"
+        }
       };
 
       expect(cliFs.writeFileSync).toHaveBeenCalledWith(resolve(join(rootDir, "package.json")), JSON.stringify(expectedJson, null, 2), {
@@ -195,6 +206,8 @@ describe("ProjectPackageJson", () => {
       cliExeca.run.mockResolvedValue(undefined);
 
       jest.spyOn(projectPackageJson, "hasYarn").mockReturnValue(false);
+
+      projectPackageJson.setPreference("packageManager", PackageManager.NPM);
 
       projectPackageJson.set("name", "name");
       projectPackageJson.set("version", "1.0.0");
@@ -214,7 +227,7 @@ describe("ProjectPackageJson", () => {
         "dev-module3": "6.0.0"
       });
 
-      const list = projectPackageJson.install({packageManager: "npm"});
+      const list = projectPackageJson.install({packageManager: PackageManager.NPM});
       list.setRenderer("silent");
 
       expect(projectPackageJson.toJSON()).toEqual({
@@ -235,6 +248,9 @@ describe("ProjectPackageJson", () => {
         scripts: {
           build: "echo 0"
         },
+        tsed: {
+          packageManager: "npm"
+        },
         version: "1.0.0"
       });
 
@@ -254,8 +270,9 @@ describe("ProjectPackageJson", () => {
         devDependencies: {
           "dev-module3": "6.0.0"
         },
-        readme: "ERROR: No README data found!",
-        _id: "@"
+        tsed: {
+          packageManager: "npm"
+        }
       };
 
       expect(cliFs.writeFileSync).toHaveBeenCalledWith(resolve(join(rootDir, "package.json")), JSON.stringify(expectedJson, null, 2), {
