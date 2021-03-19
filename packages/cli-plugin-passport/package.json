@@ -5,7 +5,7 @@
   "typings": "./lib/index.d.ts",
   "description": "Ts.ED CLI plugin. Add Passport.js support",
   "dependencies": {
-    "change-case": "^4.1.1",
+    "change-case": "^4.1.2",
     "tslib": "2.1.0"
   },
   "devDependencies": {

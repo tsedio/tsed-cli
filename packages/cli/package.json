@@ -33,7 +33,7 @@
   "devDependencies": {
     "@tsed/cli-testing": "2.11.0",
     "@tsed/core": "6.33.1",
-    "@types/change-case": "2.3.1"
+    "@types/change-case": "^2.3.1"
   },
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",
