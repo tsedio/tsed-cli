@@ -77,7 +77,8 @@ describe("Init cmd", () => {
           "@tsed/exceptions": "5.58.1",
           "@tsed/platform-express": "5.58.1",
           "@tsed/schema": "5.58.1",
-          "@tsed/json-mapper": "5.58.1"
+          "@tsed/json-mapper": "5.58.1",
+          "ajv": "7.2.4"
         },
         description: "",
         devDependencies: {},
@@ -155,7 +156,8 @@ describe("Init cmd", () => {
           "@tsed/exceptions": "5.58.1",
           "@tsed/platform-express": "5.58.1",
           "@tsed/schema": "5.58.1",
-          "@tsed/json-mapper": "5.58.1"
+          "@tsed/json-mapper": "5.58.1",
+          "ajv": "7.2.4"
         },
         description: "",
         devDependencies: {},
@@ -227,7 +229,8 @@ describe("Init cmd", () => {
           "@tsed/exceptions": "5.58.1",
           "@tsed/platform-express": "5.58.1",
           "@tsed/schema": "5.58.1",
-          "@tsed/json-mapper": "5.58.1"
+          "@tsed/json-mapper": "5.58.1",
+          "ajv": "7.2.4"
         },
         description: "",
         devDependencies: {},
@@ -358,7 +361,8 @@ describe("Init cmd", () => {
           "@tsed/exceptions": "5.58.1",
           "@tsed/platform-koa": "5.58.1",
           "@tsed/schema": "5.58.1",
-          "@tsed/json-mapper": "5.58.1"
+          "@tsed/json-mapper": "5.58.1",
+          "ajv": "7.2.4"
         },
         description: "",
         devDependencies: {},
