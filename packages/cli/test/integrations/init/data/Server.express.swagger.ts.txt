@@ -9,7 +9,7 @@ import methodOverride from "method-override";
 import cors from "cors";
 import "@tsed/ajv";
 import "@tsed/swagger";
-import {IndexController} from "./controllers/pages/IndexController";
+import {IndexCtrl} from "./controllers/pages/IndexController";
 
 export const rootDir = __dirname;
 export const isProduction = process.env.NODE_ENV === Env.PROD;

@@ -171,7 +171,7 @@ export class GenerateCmd implements CommandProvider {
       ...ctx,
       type,
       route: ctx.route ? this.routePipe.transform(ctx.route) : "",
-      symbolName: this.classNamePipe.transform({name, type, format: ctx.convention}),
+      symbolName: this.classNamePipe.transform({name, type, format: ProjectConvention.DEFAULT}),
       symbolPath: normalizePath(
         this.outputFilePathPipe.transform({
           name,
