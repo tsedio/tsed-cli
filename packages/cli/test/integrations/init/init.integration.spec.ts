@@ -143,7 +143,7 @@ describe("Init cmd", () => {
       expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
       expect(content).toContain("import \"@tsed/platform-express\"");
       expect(content).toContain("import \"@tsed/ajv\"");
-      expect(content).toContain("import {IndexController} from \"./controllers/pages/IndexController\"");
+      expect(content).toContain("import {IndexCtrl} from \"./controllers/pages/IndexController\"");
       expect(content).toEqual(readFile("data/Server.express.swagger.ts.txt", content));
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -302,7 +302,8 @@ describe("Init cmd", () => {
       expect(content).toContain("import \"@tsed/platform-express\"");
       expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toEqual(readFile("data/Server.express.ts.txt", content));
-      expect(content).toContain("import {IndexController} from \"./controllers/pages/index.controller\"");
+      expect(content).toContain("import {IndexCtrl} from \"./controllers/pages/index.controller\"");
+      expect(content).toContain("export class Server {");
     });
   });
 
