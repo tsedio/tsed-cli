@@ -101,11 +101,7 @@ export class InitCmd implements CommandProvider {
   }
 
   $mapContext(ctx: Partial<InitCmdContext>): InitCmdContext {
-    ctx.projectName = paramCase(ctx.projectName || basename(this.packageJson.dir));
-
-    if (ctx.root && ctx.root !== "." && !this.packageJson.dir.endsWith(ctx.root)) {
-      this.packageJson.dir = join(this.packageJson.dir, ctx.projectName);
-    }
+    this.resolveRootDir(ctx);
 
     const features: FeatureValue[] = [];
 
@@ -251,6 +247,22 @@ export class InitCmd implements CommandProvider {
         }
       }
     ];
+  }
+
+  resolveRootDir(ctx: Partial<InitCmdContext>) {
+    const rootDirName = paramCase(ctx.projectName || basename(this.packageJson.dir));
+
+    if (this.packageJson.dir.endsWith(rootDirName)) {
+      ctx.root = ".";
+      return;
+    }
+
+    ctx.projectName = rootDirName;
+
+    if (ctx.root && ctx.root !== ".") {
+      this.packageJson.dir = join(this.packageJson.dir, rootDirName);
+      ctx.root = ".";
+    }
   }
 
   addScripts(ctx: InitCmdContext): void {
