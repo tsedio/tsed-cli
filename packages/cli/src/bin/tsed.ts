@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import {AddCmd, Cli} from "@tsed/cli-core";
+import {Cli} from "@tsed/cli-core";
 import {resolve} from "path";
 import commands from "../commands";
 import {ProjectConvention} from "../interfaces/ProjectConvention";
@@ -12,7 +12,7 @@ async function bootstrap() {
     name: "tsed",
     pkg,
     templateDir: TEMPLATE_DIR,
-    commands: [AddCmd, ...commands],
+    commands,
     defaultProjectPreferences() {
       return {
         convention: ProjectConvention.DEFAULT

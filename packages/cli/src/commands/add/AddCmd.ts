@@ -1,9 +1,5 @@
 import {Inject} from "@tsed/di";
-import {Command} from "../decorators/command";
-import {CliDefaultOptions} from "../interfaces/CliDefaultOptions";
-import {CommandProvider, QuestionOptions} from "../interfaces/CommandProvider";
-import {CliPlugins} from "../services/CliPlugins";
-import {ProjectPackageJson} from "../services/ProjectPackageJson";
+import {CliDefaultOptions, CliPlugins, Command, CommandProvider, ProjectPackageJson, QuestionOptions} from "@tsed/cli-core";
 
 export interface AddCmdOptions extends CliDefaultOptions {
   name: string;

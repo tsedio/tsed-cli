@@ -18,7 +18,6 @@ export {
   OnInit,
   Container
 } from "@tsed/di";
-export * from "./commands/AddCmd";
 export * from "./interfaces";
 export * from "./decorators";
 export * from "./services";
