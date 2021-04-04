@@ -1,6 +1,6 @@
 import {Type} from "@tsed/core";
 import {CommandProvider} from "./CommandProvider";
-import {PackageJson} from "./PackageJson";
+import {PackageJson} from "@tsed/cli-core";
 
 export * from "./CommandProvider";
 export * from "./CommandParameters";
@@ -14,28 +14,32 @@ declare global {
   namespace TsED {
     interface Configuration {
       /**
-       *
-       */
-      name: string;
-      /**
-       *
+       * Load given commands
        */
       commands: Type<CommandProvider>[];
       /**
-       *
+       * Init Cli with defined argv
        */
-      pkg: PackageJson;
+      argv?: string[];
+      /**
+       * The CLI name
+       */
+      name: string;
+      /**
+       * The CLI package.json
+       */
+      pkg?: PackageJson;
       /**
        *
        */
-      templateDir: string;
+      templateDir?: string;
       /**
        *
        * @param pkg
        */
       defaultProjectPreferences?: (pkg?: any) => Record<string, any>;
       /**
-       *
+       * Project initial settings.
        */
       project: {
         rootDir?: string;
