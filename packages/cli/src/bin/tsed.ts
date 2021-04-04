@@ -1,29 +1,20 @@
 #!/usr/bin/env node
-import {Cli} from "@tsed/cli-core";
 import {resolve} from "path";
+import {Cli} from "../Cli";
 import commands from "../commands";
-import {ProjectConvention} from "../interfaces/ProjectConvention";
+import {ProjectConvention} from "../interfaces";
 
-const pkg = require("../../package.json");
-const TEMPLATE_DIR = resolve(__dirname, "..", "..", "templates");
-
-async function bootstrap() {
-  const cli = await Cli.bootstrap({
-    name: "tsed",
-    pkg,
-    templateDir: TEMPLATE_DIR,
-    commands,
-    defaultProjectPreferences() {
-      return {
-        convention: ProjectConvention.DEFAULT
-      };
-    },
-    project: {
-      reinstallAfterRun: true
-    }
-  });
-
-  cli.parseArgs();
-}
-
-bootstrap();
+Cli.bootstrap({
+  name: "tsed",
+  pkg: require("../../package.json"),
+  templateDir: resolve(__dirname, "..", "..", "templates"),
+  commands,
+  defaultProjectPreferences() {
+    return {
+      convention: ProjectConvention.DEFAULT
+    };
+  },
+  project: {
+    reinstallAfterRun: true
+  }
+}).catch(console.error);

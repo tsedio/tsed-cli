@@ -5,7 +5,7 @@
 </p>
 
 [![Build & Release](https://github.com/TypedProject/tsed-cli/workflows/Build%20&%20Release/badge.svg?branch=master)](https://github.com/TypedProject/tsed-cli/actions?query=workflow%3A%22Build+%26+Release%22)
-[![TypeScript](https://badges.frapsoft.com/typescript/love/typescript.svg?v=100)](https://github.com/ellerbrock/typescript-badges/) 
+[![TypeScript](https://badges.frapsoft.com/typescript/love/typescript.svg?v=100)](https://github.com/ellerbrock/typescript-badges/)
 [![Package Quality](http://npm.packagequality.com/shield/@tsed/cli.png)](http://packagequality.com/#?package=@tsed/cli)
 [![npm version](https://badge.fury.io/js/%40tsed%2Fcli.svg)](https://badge.fury.io/js/%40tsed%2Fcli)
 [![Dependencies](https://david-dm.org/TypedProject/tsed-cli.svg)](https://david-dm.org/TypedProject/tsed-cli#info=dependencies)
@@ -17,10 +17,11 @@
 
 ## Goals
 
-This package help TypeScript developers to build your own CLI with class and decorators. To doing that,
-@tsed/cli-core use the Ts.ED DI and his utils to declare a new Command via decorators.
+This package help TypeScript developers to build your own CLI with class and decorators. To doing that, @tsed/cli-core
+use the Ts.ED DI and his utils to declare a new Command via decorators.
 
-@tsed/cli-core provide also a plugin ready architecture. You and your community will be able to develop your official cli-plugin and deploy it on npm registry.
+@tsed/cli-core provide also a plugin ready architecture. You and your community will be able to develop your official
+cli-plugin and deploy it on npm registry.
 
 ## Features
 
@@ -38,9 +39,11 @@ npm install @tsed/cli-core
 
 ## Getting started
 
-Create CLI require some steps like create a package.json with the right information and create a structure directory aligned with TypeScript to be compiled correctly for a npm deployment.
+Create CLI require some steps like create a package.json with the right information and create a structure directory
+aligned with TypeScript to be compiled correctly for a npm deployment.
 
 Here a structure directory example:
+
 ```
 .
 ├── lib -- Transpiled code
@@ -167,27 +170,25 @@ Create a new file according to your project name (example: `name.ts`) and add th
 
 ```typescript
 #!/usr/bin/env node
-import {AddCmd, Cli} from "@tsed/cli-core";
+import {AddCmd, CliCore} from "@tsed/cli-core";
 import {resolve} from "path";
 
 const pkg = require("../../package.json");
 const TEMPLATE_DIR = resolve(__dirname, "..", "..", "templates");
 
-async function bootstrap() {
-  const cli = await Cli.bootstrap({
-    name: "name", // replace by the cli name. This property will be used by Plugins command
-    pkg,
-    templateDir: TEMPLATE_DIR,
+CliCore
+  .bootstrap({
     commands: [
       AddCmd, // CommandProvider to install a plugin
       // then add you commands
-    ]
-  });
-
-  cli.parseArgs();
-}
-
-bootstrap();
+    ],
+    
+    // optionals
+    name: "name", // replace by the cli name. This property will be used by Plugins command
+    pkg,
+    templateDir: TEMPLATE_DIR
+  })
+  .catch(console.error)
 ```
 
 ## Create your first command
@@ -195,17 +196,17 @@ bootstrap();
 ```typescript
 import {
   Command,
-  ICommand, 
-  ClassNamePipe, 
-  OutputFilePathPipe, 
+  CommandProvider,
+  ClassNamePipe,
+  OutputFilePathPipe,
   Inject,
   RoutePipe,
   SrcRendererService
 } from "@tsed/cli-core";
 
-export interface IGenerateCmdContext {
- type: string;
- name: string;
+export interface GenerateCmdContext {
+  type: string;
+  name: string;
 }
 
 @Command({
@@ -222,7 +223,7 @@ export interface IGenerateCmdContext {
     }
   }
 })
-export class GenerateCmd implements ICommand {
+export class GenerateCmd implements CommandProvider {
   @Inject()
   classNamePipe: ClassNamePipe;
 
@@ -238,7 +239,7 @@ export class GenerateCmd implements ICommand {
   /**
    * Prompt use Inquirer.js to print questions (see Inquirer.js for more details)
    */
-  $prompt(initialOptions: Partial<IGenerateCmdContext>) {
+  $prompt(initialOptions: Partial<GenerateCmdContext>) {
     return [
       {
         type: "list",
@@ -256,11 +257,12 @@ export class GenerateCmd implements ICommand {
       }
     ];
   }
+
   /**
-   * Map context is called before $exec and map use answers. 
+   * Map context is called before $exec and map use answers.
    * This context will be given for your $exec method and will be forwarded to other plugins
    */
-  $mapContext(ctx: Partial<IGenerateCmdContext>): IGenerateCmdContext {
+  $mapContext(ctx: Partial<GenerateCmdContext>): GenerateCmdContext {
     const {name = "", type = ""} = ctx;
 
     return {
@@ -269,14 +271,15 @@ export class GenerateCmd implements ICommand {
       outputFile: `${this.outputFilePathPipe.transform({name, type})}.ts`
     } as IGenerateCmdContext;
   }
+
   /**
    * Perform action like generate files. The tasks returned by $exec method is based on Listr configuration (see Listr documentation on npm)
    */
-  async $exec(options: IGenerateCmdContext) {
+  async $exec(options: GenerateCmdContext) {
     const {outputFile, ...data} = options;
 
     const template = `generate/${options.type}.hbs`;
-    
+
     return [
       {
         title: `Generate ${options.type} file to '${outputFile}'`,
@@ -290,7 +293,7 @@ export class GenerateCmd implements ICommand {
 }
 ```
 
-Finally create a handlebars template in templates directory:
+Finally, create a handlebars template in templates directory:
 
 ```hbs
 import {Injectable} from "@tsed/di";
@@ -304,11 +307,13 @@ export class {{symbolName}} {
 ## Run command in dev mode
 
 In your package.json add the following line in scripts property:
+
 ```
 {
   "start:cmd:generate": "cross-env NODE_ENV=development ts-node -r src/bin/{{name}}.ts generate -r ./.tmp"
 }
 ```
+
 > Note: replace {{name}} by the name of you bin file located in src/bin.
 
 > Note 2: The option `-r ./.tmp` create a temporary directory to generate files with your command.
@@ -322,13 +327,11 @@ Here other commands examples:
 - Plugin example: https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-mocha
 - Mono repo CLI:  https://github.com/TypedProject/tsed-cli/tree/master
 
-
 ## Contributors
 
 Please read [contributing guidelines here](https://tsed.io/CONTRIBUTING.html)
 
 <a href="https://github.com/TypedProject/ts-express-decorators/graphs/contributors"><img src="https://opencollective.com/tsed/contributors.svg?width=890" /></a>
-
 
 ## Backers
 
@@ -336,10 +339,10 @@ Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com
 
 <a href="https://opencollective.com/tsed#backers" target="_blank"><img src="https://opencollective.com/tsed/tiers/backer.svg?width=890"></a>
 
-
 ## Sponsors
 
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/tsed#sponsor)]
+Support this project by becoming a sponsor. Your logo will show up here with a link to your
+website. [[Become a sponsor](https://opencollective.com/tsed#sponsor)]
 
 ## License
 
@@ -347,8 +350,15 @@ The MIT License (MIT)
 
 Copyright (c) 2016 - 2018 Romain Lenzotti
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
