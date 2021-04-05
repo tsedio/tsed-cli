@@ -15,6 +15,10 @@ import {loadPlugins} from "./utils/loadPlugins";
 
 const semver = require("semver");
 
+function isHelpManual(argv: string[]) {
+  return argv.includes("-h") || argv.includes("--help");
+}
+
 @Module({
   imports: [CliPackageJson, ProjectPackageJson, CliService, CliConfiguration, Renderer]
 })
@@ -24,20 +28,6 @@ export class CliCore {
 
   @Inject()
   cliService: CliService;
-
-  static checkPackage(pkg: any) {
-    if (!pkg) {
-      console.log(chalk.red(`settings.pkg is required. Require the package.json of your CLI when you bootstrap the CLI.`));
-      process.exit(1);
-    }
-  }
-
-  static checkName(name: string) {
-    if (!name) {
-      console.log(chalk.red(`settings.name is required. Add the name of your CLI.`));
-      process.exit(1);
-    }
-  }
 
   static checkNodeVersion(wanted: string, id: string) {
     if (!semver.satisfies(process.version, wanted)) {
@@ -54,22 +44,8 @@ export class CliCore {
       );
       process.exit(1);
     }
-  }
 
-  static createInjector(settings: Partial<TsED.Configuration>) {
-    const argv = settings.argv || process.argv;
-
-    return createInjector({
-      ...settings,
-      name: settings.name || "tsed",
-      argv,
-      project: {
-        rootDir: this.getProjectRoot(argv),
-        srcDir: "src",
-        scriptsDir: "scripts",
-        ...(settings.project || {})
-      }
-    });
+    return this;
   }
 
   static async bootstrap(settings: Partial<TsED.Configuration>, module: Type = CliCore): Promise<CliCore> {
@@ -87,33 +63,35 @@ export class CliCore {
     return cli;
   }
 
-  static getProjectRoot(argv: string[]) {
-    if (!(argv.includes("-h") || argv.includes("--help"))) {
+  static updateNotifier(pkg: any) {
+    UpdateNotifier({pkg, updateCheckInterval: 0}).notify();
+    return this;
+  }
+
+  protected static createInjector(settings: Partial<TsED.Configuration>) {
+    const argv = settings.argv || process.argv;
+
+    return createInjector({
+      ...settings,
+      name: settings.name || "tsed",
+      argv,
+      project: {
+        rootDir: this.getProjectRoot(argv),
+        srcDir: "src",
+        scriptsDir: "scripts",
+        ...(settings.project || {})
+      }
+    });
+  }
+
+  protected static getProjectRoot(argv: string[]) {
+    if (!isHelpManual(argv)) {
       const projectRoot =
-        new Command()
-          .option("-r, --root-dir <path>", "Project root directory")
-          .option("--verbose", "Verbose mode", () => true)
-          .allowUnknownOption(true)
-          .parse(argv).rootDir || "";
+        new Command().option("-r, --root-dir <path>", "Project root directory").allowUnknownOption(true).parse(argv).opts().rootDir || "";
 
       return resolve(join(process.cwd(), projectRoot));
     }
 
     return process.cwd();
   }
-
-  static updateNotifier(pkg: any) {
-    UpdateNotifier({pkg, updateCheckInterval: 0}).notify();
-  }
-}
-
-/**
- * @deprecated Since 2021-04-04. Use CliCore instead
- * @ignore
- */
-export class Cli extends CliCore {
-  /**
-   * @deprecated
-   */
-  parseArgs() {}
 }

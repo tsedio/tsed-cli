@@ -1,6 +1,21 @@
 import {CliCore} from "@tsed/cli-core";
+import * as chalk from "chalk";
 
 export class Cli extends CliCore {
+  static checkPackage(pkg: any) {
+    if (!pkg) {
+      console.log(chalk.red(`settings.pkg is required. Require the package.json of your CLI when you bootstrap the CLI.`));
+      process.exit(1);
+    }
+  }
+
+  static checkName(name: string) {
+    if (!name) {
+      console.log(chalk.red(`settings.name is required. Add the name of your CLI.`));
+      process.exit(1);
+    }
+  }
+
   static checkPrecondition(settings: any) {
     const {pkg} = settings;
 
