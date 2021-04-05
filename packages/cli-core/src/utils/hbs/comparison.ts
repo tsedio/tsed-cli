@@ -2,7 +2,6 @@
 
 import {isNumber} from "@tsed/core";
 
-const has = require("has-value");
 const util = require("handlebars-utils");
 export const helpers: any = {};
 
@@ -225,49 +224,6 @@ helpers.gte = function (a: any, b: any, options: any) {
 };
 
 /**
- * Block helper that renders a block if `value` has `pattern`.
- * If an inverse block is specified it will be rendered when falsy.
- *
- * @param {any} `val` The value to check.
- * @param {any} `pattern` The pattern to check for.
- * @param {Object} `options` Handlebars provided options object
- * @return {String}
- * @block
- * @api public
- */
-
-helpers.has = function (value: any, pattern: any, options: any) {
-  if (util.isOptions(value)) {
-    options = value;
-    pattern = null;
-    value = null;
-  }
-
-  if (util.isOptions(pattern)) {
-    options = pattern;
-    pattern = null;
-  }
-
-  if (value === null) {
-    return util.value(false, this, options);
-  }
-
-  if (arguments.length === 2) {
-    return util.value(has(this, value), this, options);
-  }
-
-  if ((Array.isArray(value) || util.isString(value)) && util.isString(pattern)) {
-    if (value.indexOf(pattern) > -1) {
-      return util.fn(true, this, options);
-    }
-  }
-  if (util.isObject(value) && util.isString(pattern) && pattern in value) {
-    return util.fn(true, this, options);
-  }
-  return util.inverse(false, this, options);
-};
-
-/**
  * Block helper that renders a block if `a` is **equal to** `b`.
  * If an inverse block is specified it will be rendered when falsy.
  * Similar to [eq](#eq) but does not do strict equality.
@@ -279,7 +235,6 @@ helpers.has = function (value: any, pattern: any, options: any) {
  * @block
  * @api public
  */
-
 helpers.is = function (a: any, b: any, options: any) {
   if (arguments.length === 2) {
     options = b;
