@@ -32,8 +32,11 @@ describe("RunCmd", () => {
       };
 
       await command.$exec(ctx as any);
-      expect(cliExeca.runSync).toHaveBeenCalledWith("ts-node", ["-r", "tsconfig-paths/register", "./src/bin/index.ts", "do", "-o"], {
-        env: {},
+      expect(cliExeca.runSync).toHaveBeenCalledWith("ts-node", ["-r", "tsconfig-paths/register", "src/bin/index.ts", "do", "-o"], {
+        cwd: command.projectPackageJson.dir,
+        env: {
+          ...process.env
+        },
         stdio: ["inherit"]
       });
     });
@@ -63,7 +66,9 @@ describe("RunCmd", () => {
 
       await command.$exec(ctx as any);
       expect(cliExeca.runSync).toHaveBeenCalledWith("node", ["dist/bin/index.js", "do", "-o"], {
+        cwd: command.projectPackageJson.dir,
         env: {
+          ...process.env,
           NODE_ENV: "production"
         },
         stdio: ["inherit"]
@@ -96,7 +101,9 @@ describe("RunCmd", () => {
 
       await command.$exec(ctx as any);
       expect(cliExeca.runSync).toHaveBeenCalledWith("node", ["lib/bin/index.js", "do", "-o"], {
+        cwd: command.projectPackageJson.dir,
         env: {
+          ...process.env,
           NODE_ENV: "production"
         },
         stdio: ["inherit"]
