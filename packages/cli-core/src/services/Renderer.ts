@@ -5,12 +5,9 @@ import * as globby from "globby";
 import {basename, dirname, join, relative} from "path";
 import {Observable} from "rxjs";
 import {CliFs} from "./CliFs";
+import "../utils/hbs";
 
 const normalizePath = require("normalize-path");
-
-require("handlebars-helpers")({
-  handlebars: require("handlebars")
-});
 
 export interface RenderOptions {
   templateDir?: string;
