@@ -32,29 +32,38 @@ export class RunCmd implements CommandProvider {
   execa: CliExeca;
 
   @Inject()
-  projectPackageJson: ProjectPackageJson;
-
-  @Inject()
   fs: CliFs;
 
-  getCompilePath() {
+  @Inject()
+  projectPackageJson: ProjectPackageJson;
+
+  async $exec(ctx: RunCmdContext): Promise<Tasks> {
+    const cmd = ctx.production ? "node" : "ts-node";
+    const args = ctx.production ? [] : ["-r", "tsconfig-paths/register"];
+    const path = ctx.production ? join(await this.getCompilePath(), "bin/index.js") : "./src/bin/index.ts";
+    const env: any = {};
+
+    if (ctx.production) {
+      env.NODE_ENV = "production";
+    }
+
+    this.execa.runSync(cmd, [...args, path, ctx.command, ...ctx.rawArgs], {
+      env,
+      stdio: ["inherit"]
+    });
+
+    return [];
+  }
+
+  protected async getCompilePath() {
     const {dir} = this.projectPackageJson;
     const tsConfigPath = join(dir, "tsconfig.compile.json");
 
     if (this.fs.exists(tsConfigPath)) {
-      require(tsConfigPath).compilerOptions;
+      const content = JSON.parse(await this.fs.readFile(tsConfigPath, "utf8"));
+      return content.compilerOptions.outDir;
     }
 
-    return "dist";
-  }
-
-  $exec(ctx: RunCmdContext): Tasks | Promise<Tasks> {
-    const cmd = ctx.production ? "node" : "ts-node";
-    const args = ctx.production ? [] : ["-r", "tsconfig-paths/register"];
-    const path = ctx.production ? "dist/bin/index.js" : "src/bin/index.ts";
-
-    this.execa.runSync(cmd, [...args, path, ctx.command, ...ctx.rawArgs]);
-
-    return [];
+    return "./dist";
   }
 }
