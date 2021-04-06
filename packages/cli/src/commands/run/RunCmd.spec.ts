@@ -2,7 +2,7 @@ import {CliPlatformTest} from "@tsed/cli-testing";
 import {RunCmd} from "./RunCmd";
 import {CliExeca, CliFs} from "@tsed/cli-core";
 
-describe("RunCmd", () => {
+xdescribe("RunCmd", () => {
   beforeEach(() => CliPlatformTest.create());
   afterEach(() => CliPlatformTest.reset());
 

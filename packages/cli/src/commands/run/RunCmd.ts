@@ -1,4 +1,4 @@
-import {CliExeca, CliFs, Command, CommandProvider, ProjectPackageJson, Tasks} from "@tsed/cli-core";
+import {CliFs, CliRunScript, Command, CommandProvider, ProjectPackageJson, Tasks} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 import {join} from "path";
 import {normalizePath} from "@tsed/core";
@@ -30,18 +30,18 @@ export interface RunCmdContext {
 })
 export class RunCmd implements CommandProvider {
   @Inject()
-  execa: CliExeca;
-
-  @Inject()
   fs: CliFs;
 
   @Inject()
   projectPackageJson: ProjectPackageJson;
 
+  @Inject()
+  runScript: CliRunScript;
+
   async $exec(ctx: RunCmdContext): Promise<Tasks> {
     const cmd = ctx.production ? "node" : "ts-node";
     const args = ctx.production ? [] : ["-r", "tsconfig-paths/register"];
-    const path = normalizePath(ctx.production ? join(await this.getCompilePath(), "bin/index.js") : "./src/bin/index.ts");
+    const path = normalizePath(ctx.production ? join(await this.getCompilePath(), "bin/index.js") : "src/bin/index.ts");
     const env: any = {
       ...process.env
     };
@@ -50,10 +50,8 @@ export class RunCmd implements CommandProvider {
       env.NODE_ENV = "production";
     }
 
-    this.execa.runSync(cmd, [...args, path, ctx.command, ...ctx.rawArgs], {
-      cwd: this.projectPackageJson.dir,
-      env,
-      stdio: ["inherit"]
+    this.runScript.run(cmd, [...args, path, ctx.command, ...ctx.rawArgs], {
+      env
     });
 
     return [];

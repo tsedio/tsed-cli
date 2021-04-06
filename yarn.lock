@@ -1999,7 +1999,7 @@
   dependencies:
     infer-owner "^1.0.4"
 
-"@npmcli/run-script@^1.8.2":
+"@npmcli/run-script@1.8.4", "@npmcli/run-script@^1.8.2":
   version "1.8.4"
   resolved "https://registry.yarnpkg.com/@npmcli/run-script/-/run-script-1.8.4.tgz#03ced92503a6fe948cbc0975ce39210bc5e824d6"
   integrity sha512-Yd9HXTtF1JGDXZw0+SOn+mWLYS0e7bHBHVC/2C8yqs4wUrs/k8rwBSinD7rfk+3WG/MFGRZKxjyoD34Pch2E/A==
