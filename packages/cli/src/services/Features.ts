@@ -232,7 +232,8 @@ registerProvider({
             value: {
               type: "socketio",
               dependencies: {
-                "@tsed/socketio": "{{tsedVersion}}"
+                "@tsed/socketio": "{{tsedVersion}}",
+                "socket.io": "latest"
               }
             }
           },
@@ -266,6 +267,15 @@ registerProvider({
             name: "Bundler",
             value: {
               type: "bundler"
+            }
+          },
+          {
+            name: "Commands",
+            value: {
+              type: "commands",
+              dependencies: {
+                "@tsed/cli-core": cliVersion
+              }
             }
           }
         ]

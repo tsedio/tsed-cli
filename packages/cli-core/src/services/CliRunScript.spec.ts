@@ -1,5 +1,5 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {CliRunScript} from "@tsed/cli-core";
+import {CliRunScript} from "./CliRunScript";
 
 jest.mock("@npmcli/run-script");
 

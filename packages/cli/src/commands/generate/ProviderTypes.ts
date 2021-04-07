@@ -38,11 +38,13 @@ export const PROVIDER_TYPES = [
   {
     name: "Pipe",
     value: "pipe",
+    baseDir: "pipes",
     model: "{{symbolName}}.pipe"
   },
   {
     name: "Interceptor",
     value: "interceptor",
+    baseDir: "interceptors",
     model: "{{symbolName}}.interceptor"
   },
   {
@@ -79,5 +81,11 @@ export const PROVIDER_TYPES = [
     value: "response-filter",
     baseDir: "filters",
     model: "{{symbolName}}.response-filter"
+  },
+  {
+    name: "Command",
+    value: "command",
+    baseDir: "bin",
+    model: "{{symbolName}}.command"
   }
 ];
