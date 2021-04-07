@@ -50,7 +50,7 @@ export class RunCmd implements CommandProvider {
       env.NODE_ENV = "production";
     }
 
-    this.runScript.run(cmd, [...args, path, ctx.command, ...ctx.rawArgs], {
+    await this.runScript.run(cmd, [...args, path, ctx.command, ...ctx.rawArgs], {
       env
     });
 
