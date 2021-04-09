@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-plugin-typeorm",
-  "version": "2.13.1",
+  "version": "2.13.2",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "description": "Ts.ED CLI plugin. Add TypeORM support",
@@ -9,8 +9,8 @@
     "tslib": "2.1.0"
   },
   "devDependencies": {
-    "@tsed/cli": "2.13.1",
-    "@tsed/cli-core": "2.13.1"
+    "@tsed/cli": "2.13.2",
+    "@tsed/cli-core": "2.13.2"
   },
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",
