@@ -33,7 +33,7 @@ export abstract class Renderer {
   async render(path: string, data: any, options: Partial<RenderOptions> = {}) {
     const {output, templateDir, rootDir} = this.mapOptions(path, options);
 
-    const content = await Consolidate.handlebars(join(templateDir, path), data);
+    const content = await Consolidate.handlebars(normalizePath(join(templateDir, path)), data);
 
     return this.write(content, {output, rootDir});
   }
@@ -132,11 +132,11 @@ export abstract class Renderer {
     let {output = path} = options;
 
     if (options.baseDir) {
-      output = join("/", relative(options.baseDir, path));
+      output = normalizePath(join("/", relative(options.baseDir, path)));
     }
 
     if (options.basename) {
-      output = join(dirname(output), options.basename);
+      output = normalizePath(join(dirname(output), options.basename));
     }
 
     output = output.replace(/\.hbs$/, "");

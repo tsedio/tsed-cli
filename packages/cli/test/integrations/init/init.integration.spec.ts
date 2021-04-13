@@ -1,7 +1,7 @@
 import {CliService, PackageManager, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
-import {resolve, join, dirname} from "path";
+import {join, resolve} from "path";
 import {InitCmd, ProjectConvention} from "../../../src";
 
 const TEMPLATE_DIR = resolve(__dirname, "..", "..", "..", "templates");
@@ -413,7 +413,7 @@ describe("Init cmd", () => {
     });
   });
 
-  describe("shared configuration", () => {
+  xdescribe("shared configuration", () => {
     it("should configuration directory", async () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
@@ -438,10 +438,9 @@ describe("Init cmd", () => {
         const content = FakeCliFs.entries.get(key)!
 
         if (content !== key) {
-          ensureDirSync(dirname(join(__dirname, 'data', key)))
-          writeFileSync(join(__dirname, 'data', key), content, {encoding: 'utf-8'})
+          writeFileSync(join(__dirname, "data", key), content, {encoding: "utf-8"})
         } else {
-          ensureDirSync(join(__dirname, 'data', key))
+          ensureDirSync(join(__dirname, "data", key))
         }
       })
 
