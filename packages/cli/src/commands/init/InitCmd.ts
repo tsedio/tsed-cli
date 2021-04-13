@@ -268,7 +268,7 @@ export class InitCmd implements CommandProvider {
     if (ctx.babel) {
       this.packageJson.addScripts({
         build: `${runner} tsc && babel src --out-dir dist --extensions ".ts,.tsx" --source-maps inline`,
-        start: 'nodemon --watch "src/**/*.ts" --ignore "node_modules/**/*" --exec babel-node --extensions .ts src/index.ts'
+        start: "babel-watch --extensions .ts src/index.ts"
       });
     }
 
