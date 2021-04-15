@@ -1,5 +1,6 @@
 import {CliDefaultOptions, Command, CommandProvider, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
-import {pascalCase} from "change-case";
+import {paramCase, pascalCase} from "change-case";
+import {basename} from "path";
 import {ClassNamePipe} from "../../pipes/ClassNamePipe";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
 import {RoutePipe} from "../../pipes/RoutePipe";
@@ -167,11 +168,15 @@ export class GenerateCmd implements CommandProvider {
     let {type = ""} = ctx;
     type = type.toLowerCase();
 
+    const symbolName = this.classNamePipe.transform({name, type, format: ProjectConvention.DEFAULT});
+    const symbolParamName = paramCase(symbolName);
+
     return {
       ...ctx,
       type,
       route: ctx.route ? this.routePipe.transform(ctx.route) : "",
-      symbolName: this.classNamePipe.transform({name, type, format: ProjectConvention.DEFAULT}),
+      symbolName,
+      symbolParamName,
       symbolPath: normalizePath(
         this.outputFilePathPipe.transform({
           name,
@@ -203,6 +208,25 @@ export class GenerateCmd implements CommandProvider {
             this.srcRenderService.render(template, ctx, {
               output: `${symbolPath}.ts`
             })
+        },
+        {
+          title: `Update bin/index`,
+          skip() {
+            return ctx.type !== "command";
+          },
+          task: () => {
+            return this.srcRenderService.update("bin/index.ts", [
+              {
+                type: "import",
+                content: `import {${ctx.symbolName}} from "./${basename(symbolPath)}";`
+              },
+              {
+                type: "insert-after",
+                pattern: /commands: \[/,
+                content: `  ${ctx.symbolName}`
+              }
+            ]);
+          }
         }
       ];
     }

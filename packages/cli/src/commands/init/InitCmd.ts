@@ -13,8 +13,7 @@ import {
   PackageManager,
   ProjectPackageJson,
   QuestionOptions,
-  RootRendererService,
-  SrcRendererService
+  RootRendererService
 } from "@tsed/cli-core";
 import {camelCase, paramCase, pascalCase} from "change-case";
 import {basename, join} from "path";
@@ -34,6 +33,7 @@ export interface InitCmdContext extends CliDefaultOptions, InstallOptions {
   babel?: boolean;
   webpack?: boolean;
   convention?: ProjectConvention;
+  commands?: boolean;
 
   [key: string]: any;
 }
@@ -71,9 +71,6 @@ export class InitCmd implements CommandProvider {
 
   @Inject()
   protected cliService: CliService;
-
-  @Inject()
-  protected srcRenderer: SrcRendererService;
 
   @Inject()
   protected rootRenderer: RootRendererService;
@@ -177,8 +174,23 @@ export class InitCmd implements CommandProvider {
         type: "controller",
         route: "hello-world",
         name: "HelloWorld"
-      }))
+      })),
+      ...(ctx.commands
+        ? await this.cliService.getTasks("generate", {
+            type: "command",
+            route: "hello",
+            name: "hello"
+          })
+        : [])
     ];
+
+    const indexCtrlBaseName = basename(
+      `${this.outputFilePathPipe.transform({
+        name: "Index",
+        type: "controller",
+        format: ctx.convention
+      })}.ts`
+    );
 
     return [
       {
@@ -191,54 +203,31 @@ export class InitCmd implements CommandProvider {
                 task: () =>
                   this.rootRenderer.renderAll(
                     [
-                      "init/.dockerignore.hbs",
-                      "init/.gitignore.hbs",
-                      ctx.babel && "init/.babelrc.hbs",
-                      ctx.webpack && "init/webpack.config.js.hbs",
-                      "init/docker-compose.yml.hbs",
-                      "init/Dockerfile.hbs",
-                      "init/README.md.hbs",
-                      "init/tsconfig.compile.json.hbs",
-                      "init/tsconfig.json.hbs"
+                      "/init/.dockerignore.hbs",
+                      "/init/.gitignore.hbs",
+                      ctx.babel && "/init/.babelrc.hbs",
+                      ctx.webpack && "/init/webpack.config.js.hbs",
+                      "/init/docker-compose.yml.hbs",
+                      "/init/Dockerfile.hbs",
+                      "/init/README.md.hbs",
+                      "/init/tsconfig.compile.json.hbs",
+                      "/init/tsconfig.json.hbs",
+                      "/init/src/index.ts.hbs",
+                      "/init/src/config/env/index.ts.hbs",
+                      "/init/src/config/logger/index.ts.hbs",
+                      "/init/src/config/index.ts.hbs",
+                      ctx.commands && "/init/src/bin/index.ts.hbs",
+                      ctx.swagger && "/init/views/index.ejs.hbs",
+                      ctx.swagger && {
+                        path: "/init/src/controllers/pages/IndexCtrl.ts.hbs",
+                        basename: indexCtrlBaseName
+                      }
                     ].filter(Boolean),
-                    ctx
+                    ctx,
+                    {
+                      baseDir: "/init"
+                    }
                   )
-              },
-              {
-                title: "Create index",
-                task: async () => {
-                  return this.srcRenderer.renderAll(["init/index.ts.hbs"], ctx);
-                }
-              },
-              {
-                title: "Create Views",
-                enabled() {
-                  return ctx.swagger;
-                },
-                task: async () => {
-                  return this.rootRenderer.render("init/index.ejs.hbs", ctx, {
-                    ...ctx,
-                    rootDir: `${this.rootRenderer.rootDir}/views`
-                  });
-                }
-              },
-              {
-                title: "Create HomeCtrl",
-                enabled() {
-                  return ctx.swagger;
-                },
-                task: async () => {
-                  return this.srcRenderer.render("init/IndexCtrl.ts.hbs", ctx, {
-                    ...ctx,
-                    output: `${this.outputFilePathPipe.transform({
-                      name: "Index",
-                      type: "controller",
-                      format: ctx.convention,
-                      baseDir: "/controllers/pages"
-                    })}.ts`,
-                    rootDir: this.srcRenderer.rootDir
-                  });
-                }
               },
               ...subTasks
             ],
@@ -301,7 +290,8 @@ export class InitCmd implements CommandProvider {
       "@tsed/schema": ctx.tsedVersion,
       "@tsed/json-mapper": ctx.tsedVersion,
       ajv: "7.2.4",
-      "cross-env": "latest"
+      "cross-env": "latest",
+      dotenv: "latest"
     });
   }
 

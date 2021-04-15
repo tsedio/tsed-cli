@@ -2,20 +2,23 @@ import {Configuration, Constant, Inject, Injectable} from "@tsed/di";
 import * as Consolidate from "consolidate";
 import * as Fs from "fs-extra";
 import * as globby from "globby";
-import {basename, dirname, join, relative} from "path";
+import {dirname, join, relative} from "path";
 import {Observable} from "rxjs";
 import {CliFs} from "./CliFs";
+import "../utils/hbs";
+import {isString} from "@tsed/core";
+import {insertImport} from "../utils/renderer/insertImport";
+import {insertAfter} from "../utils/renderer/insertAfter";
 
 const normalizePath = require("normalize-path");
 
-require("handlebars-helpers")({
-  handlebars: require("handlebars")
-});
-
 export interface RenderOptions {
-  templateDir?: string;
-  rootDir?: string;
-  output?: string;
+  path: string;
+  templateDir: string;
+  rootDir: string;
+  output: string;
+  baseDir: string;
+  basename: string;
 }
 
 export abstract class Renderer {
@@ -27,25 +30,40 @@ export abstract class Renderer {
 
   abstract get rootDir(): string;
 
-  async render(path: string, data: any, options: RenderOptions = {}) {
+  async render(path: string, data: any, options: Partial<RenderOptions> = {}) {
     const {output, templateDir, rootDir} = this.mapOptions(path, options);
-    const content = await Consolidate.handlebars(join(templateDir, path), data);
+
+    const content = await Consolidate.handlebars(normalizePath(join(templateDir, path)), data);
 
     return this.write(content, {output, rootDir});
   }
 
-  async renderAll(paths: string[], data: any, options: RenderOptions = {}) {
+  async renderAll(paths: (string | RenderOptions)[], data: any, options: Partial<RenderOptions> = {}) {
     let count = 0;
+
+    const mapOptions = (opts: string | RenderOptions): Partial<RenderOptions> & {path: string} => {
+      if (isString(opts)) {
+        return {...options, path: opts};
+      }
+
+      return {
+        ...options,
+        ...opts
+      };
+    };
 
     return new Observable((observer) => {
       observer.next(`[${count}/${paths.length}] Rendering files...`);
 
-      const promises = paths.filter(Boolean).map(async (path) => {
-        await this.render(path, data, options);
+      const promises = paths
+        .filter(Boolean)
+        .map(mapOptions)
+        .map(async ({path, ...opts}) => {
+          await this.render(path, data, opts);
 
-        count++;
-        observer.next(`[${count}/${paths.length}] Rendering files...`);
-      });
+          count++;
+          observer.next(`[${count}/${paths.length}] Rendering files...`);
+        });
 
       Promise.all(promises)
         .then(() => {
@@ -67,7 +85,7 @@ export abstract class Renderer {
     return this.fs.writeFile(outputFile, content, {encoding: "utf8"});
   }
 
-  templateExists(path: string, options: RenderOptions = {}) {
+  templateExists(path: string, options: Partial<RenderOptions> = {}) {
     const {templateDir} = this.mapOptions(path, options);
 
     return Fs.existsSync(join(templateDir, path));
@@ -87,8 +105,42 @@ export abstract class Renderer {
     return relative(dirname(join(this.rootDir, path)), this.rootDir);
   }
 
-  protected mapOptions(path: string, options: RenderOptions) {
-    const {output = basename(path).replace(/\.hbs$/, ""), templateDir = this.templateDir, rootDir = this.rootDir} = options;
+  async update(path: string, actions: {type?: string; content: string; pattern?: RegExp}[]) {
+    path = join(this.rootDir, path);
+    if (!this.fs.exists(path)) {
+      return;
+    }
+
+    const content: string = actions.reduce((fileContent, action) => {
+      switch (action.type) {
+        case "import":
+          return insertImport(fileContent, action.content);
+        case "insert-after":
+          return insertAfter(fileContent, action.content, action.pattern!);
+        default:
+          break;
+      }
+
+      return fileContent;
+    }, await this.fs.readFile(path, {encoding: "utf8"}));
+
+    return this.fs.writeFile(path, content, {encoding: "utf8"});
+  }
+
+  protected mapOptions(path: string, options: Partial<RenderOptions>) {
+    const {templateDir = this.templateDir, rootDir = this.rootDir} = options;
+    let {output = path} = options;
+
+    if (options.baseDir) {
+      output = normalizePath(join("/", relative(options.baseDir, path)));
+    }
+
+    if (options.basename) {
+      output = normalizePath(join(dirname(output), options.basename));
+    }
+
+    output = output.replace(/\.hbs$/, "");
+
     return {output, templateDir, rootDir};
   }
 }

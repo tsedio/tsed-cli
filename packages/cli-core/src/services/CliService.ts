@@ -15,8 +15,6 @@ import {mapCommanderArgs} from "../utils/mapCommanderArgs";
 import {mapCommanderOptions} from "../utils/mapCommanderOptions";
 import {parseOption} from "../utils/parseOption";
 import {CliHooks} from "./CliHooks";
-
-import {CliPackageJson} from "./CliPackageJson";
 import {ProjectPackageJson} from "./ProjectPackageJson";
 
 Inquirer.registerPrompt("autocomplete", require("inquirer-autocomplete-prompt"));
@@ -28,6 +26,9 @@ export class CliService {
   @Constant("project.reinstallAfterRun", false)
   reinstallAfterRun = false;
 
+  @Constant("pkg", {version: "1.0.0"})
+  protected pkg: any;
+
   @Inject()
   protected injector: InjectorService;
 
@@ -37,22 +38,20 @@ export class CliService {
   @Inject()
   protected projectPkg: ProjectPackageJson;
 
-  @CliPackageJson()
-  protected pkg: CliPackageJson;
-
   private commands = new Map();
 
   /**
    * Parse process.argv and runLifecycle action
    * @param argv
    */
-  parseArgs(argv: string[]) {
+  async parseArgs(argv: string[]): Promise<void> {
     const {program} = this;
+
     program.version(this.pkg.version);
 
     this.load();
 
-    program.parse(argv);
+    await program.parseAsync(argv);
   }
 
   /**
@@ -63,23 +62,29 @@ export class CliService {
   public async runLifecycle(cmdName: string, data: any = {}) {
     data = await this.prompt(cmdName, data);
 
-    return this.exec(cmdName, data);
+    await this.exec(cmdName, data);
+
+    await this.injector.destroy();
   }
 
   public async exec(cmdName: string, ctx: any) {
-    const tasks = [
-      ...(await this.getTasks(cmdName, ctx)),
-      {
-        title: "Install dependencies",
-        enabled: () => this.reinstallAfterRun && (this.projectPkg.rewrite || this.projectPkg.reinstall),
-        task: () => {
-          return this.projectPkg.install(ctx);
-        }
-      },
-      ...(await this.getPostInstallTasks(cmdName, ctx))
-    ];
+    const initialTasks = await this.getTasks(cmdName, ctx);
 
-    return createTasksRunner(tasks, this.mapContext(cmdName, ctx));
+    if (initialTasks.length) {
+      const tasks = [
+        ...initialTasks,
+        {
+          title: "Install dependencies",
+          enabled: () => this.reinstallAfterRun && (this.projectPkg.rewrite || this.projectPkg.reinstall),
+          task: () => {
+            return this.projectPkg.install(ctx);
+          }
+        },
+        ...(await this.getPostInstallTasks(cmdName, ctx))
+      ];
+
+      return createTasksRunner(tasks, this.mapContext(cmdName, ctx));
+    }
   }
 
   /**
@@ -186,7 +191,7 @@ export class CliService {
         rawArgs: commanderArgs.filter(isArray).reduce((arg, current) => arg.concat(current), [])
       };
 
-      this.runLifecycle(name, data);
+      return this.runLifecycle(name, data);
     });
   }
 

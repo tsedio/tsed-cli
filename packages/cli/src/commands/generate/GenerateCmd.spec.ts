@@ -94,7 +94,7 @@ describe("GenerateCmd", () => {
       const tasks = await command.$exec(options as any);
 
       // THEN
-      expect(tasks.length).toEqual(1);
+      expect(tasks.length).toEqual(2);
       expect(tasks[0].title).toEqual("Generate controller file to 'controllers/Test.ts'");
 
       await tasks[0].task();
@@ -105,6 +105,7 @@ describe("GenerateCmd", () => {
           name: "test",
           route: "/test",
           symbolName: "Test",
+          symbolParamName: "test",
           symbolPath: "controllers/Test",
           symbolPathBasename: "Test",
           type: "controller",
@@ -142,7 +143,7 @@ describe("GenerateCmd", () => {
       const tasks = await command.$exec(options as any);
 
       // THEN
-      expect(tasks.length).toEqual(1);
+      expect(tasks.length).toEqual(2);
       expect(tasks[0].title).toEqual("Generate controller file to 'controllers/Test.ts'");
 
       await tasks[0].task();
@@ -153,6 +154,7 @@ describe("GenerateCmd", () => {
           name: "test",
           route: "/test",
           symbolName: "Test",
+          symbolParamName: "test",
           symbolPath: "controllers/Test",
           symbolPathBasename: "Test",
           type: "controller",

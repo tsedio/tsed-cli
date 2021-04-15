@@ -1,7 +1,7 @@
 import {CliService, PackageManager, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {existsSync, readFileSync, writeFileSync} from "fs";
-import {resolve} from "path";
+import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
+import {join, resolve} from "path";
 import {InitCmd, ProjectConvention} from "../../../src";
 
 const TEMPLATE_DIR = resolve(__dirname, "..", "..", "..", "templates");
@@ -54,6 +54,12 @@ describe("Init cmd", () => {
         "project-name/package.json",
         "project-name/src",
         "project-name/src/Server.ts",
+        "project-name/src/config",
+        "project-name/src/config/env",
+        "project-name/src/config/env/index.ts",
+        "project-name/src/config/index.ts",
+        "project-name/src/config/logger",
+        "project-name/src/config/logger/index.ts",
         "project-name/src/controllers",
         "project-name/src/controllers/HelloWorldController.ts",
         "project-name/src/index.ts",
@@ -127,6 +133,12 @@ describe("Init cmd", () => {
         "project-name/package.json",
         "project-name/src",
         "project-name/src/Server.ts",
+        "project-name/src/config",
+        "project-name/src/config/env",
+        "project-name/src/config/env/index.ts",
+        "project-name/src/config/index.ts",
+        "project-name/src/config/logger",
+        "project-name/src/config/logger/index.ts",
         "project-name/src/controllers",
         "project-name/src/controllers/HelloWorldController.ts",
         "project-name/src/controllers/pages",
@@ -206,6 +218,12 @@ describe("Init cmd", () => {
         "project-name/package.json",
         "project-name/src",
         "project-name/src/Server.ts",
+        "project-name/src/config",
+        "project-name/src/config/env",
+        "project-name/src/config/env/index.ts",
+        "project-name/src/config/index.ts",
+        "project-name/src/config/logger",
+        "project-name/src/config/logger/index.ts",
         "project-name/src/controllers",
         "project-name/src/controllers/HelloWorldController.ts",
         "project-name/src/index.ts",
@@ -285,6 +303,12 @@ describe("Init cmd", () => {
         "project-name/docker-compose.yml",
         "project-name/package.json",
         "project-name/src",
+        "project-name/src/config",
+        "project-name/src/config/env",
+        "project-name/src/config/env/index.ts",
+        "project-name/src/config/index.ts",
+        "project-name/src/config/logger",
+        "project-name/src/config/logger/index.ts",
         "project-name/src/controllers",
         "project-name/src/controllers/hello-world.controller.ts",
         "project-name/src/controllers/pages",
@@ -338,6 +362,12 @@ describe("Init cmd", () => {
         "project-name/package.json",
         "project-name/src",
         "project-name/src/Server.ts",
+        "project-name/src/config",
+        "project-name/src/config/env",
+        "project-name/src/config/env/index.ts",
+        "project-name/src/config/index.ts",
+        "project-name/src/config/logger",
+        "project-name/src/config/logger/index.ts",
         "project-name/src/controllers",
         "project-name/src/controllers/HelloWorldController.ts",
         "project-name/src/index.ts",
@@ -382,4 +412,64 @@ describe("Init cmd", () => {
       });
     });
   });
+
+  xdescribe("shared configuration", () => {
+    it("should configuration directory", async () => {
+      const cliService = CliPlatformTest.get<CliService>(CliService);
+      const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
+      projectPackageJson.setRaw({
+        name: "",
+        version: "1.0.0",
+        description: "",
+        scripts: {},
+        dependencies: {},
+        devDependencies: {}
+      });
+
+      await cliService.exec("init", {
+        platform: "express",
+        rootDir: "./project-data",
+        projectName: "project-data",
+        tsedVersion: "5.58.1",
+        commands: true
+      });
+
+      FakeCliFs.getKeys().map((key: string) => {
+        const content = FakeCliFs.entries.get(key)!
+
+        if (content !== key) {
+          writeFileSync(join(__dirname, "data", key), content, {encoding: "utf-8"})
+        } else {
+          ensureDirSync(join(__dirname, "data", key))
+        }
+      })
+
+      expect(FakeCliFs.getKeys()).toEqual([
+        "./project-name",
+        "project-name",
+        "project-name/.dockerignore",
+        "project-name/.gitignore",
+        "project-name/Dockerfile",
+        "project-name/README.md",
+        "project-name/docker-compose.yml",
+        "project-name/package.json",
+        "project-name/src",
+        "project-name/src/Server.ts",
+        "project-name/src/bin",
+        "project-name/src/bin/HelloCommand.ts",
+        "project-name/src/bin/index.ts",
+        "project-name/src/config",
+        "project-name/src/config/env",
+        "project-name/src/config/env/index.ts",
+        "project-name/src/config/index.ts",
+        "project-name/src/config/logger",
+        "project-name/src/config/logger/index.ts",
+        "project-name/src/controllers",
+        "project-name/src/controllers/HelloWorldController.ts",
+        "project-name/src/index.ts",
+        "project-name/tsconfig.compile.json",
+        "project-name/tsconfig.json"
+      ]);
+    });
+  })
 });

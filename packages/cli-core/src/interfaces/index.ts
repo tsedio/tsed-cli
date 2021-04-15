@@ -14,28 +14,32 @@ declare global {
   namespace TsED {
     interface Configuration {
       /**
-       *
-       */
-      name: string;
-      /**
-       *
+       * Load given commands
        */
       commands: Type<CommandProvider>[];
       /**
-       *
+       * Init Cli with defined argv
        */
-      pkg: PackageJson;
+      argv?: string[];
+      /**
+       * The CLI name
+       */
+      name: string;
+      /**
+       * The CLI package.json
+       */
+      pkg?: PackageJson;
       /**
        *
        */
-      templateDir: string;
+      templateDir?: string;
       /**
        *
        * @param pkg
        */
       defaultProjectPreferences?: (pkg?: any) => Record<string, any>;
       /**
-       *
+       * Project initial settings.
        */
       project: {
         rootDir?: string;

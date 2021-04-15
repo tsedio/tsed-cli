@@ -1,6 +1,5 @@
-import {Env} from "@tsed/core";
 import {Configuration, Inject} from "@tsed/di";
-import {$log, PlatformApplication} from "@tsed/common";
+import {PlatformApplication} from "@tsed/common";
 {{#if express}}import "@tsed/platform-express"; // /!\ keep this import
 import bodyParser from "body-parser";
 import compress from "compression";
@@ -15,44 +14,17 @@ import cors from "@koa/cors";
 import "@tsed/ajv";{{#if swagger}}
 import "@tsed/swagger";{{/if}}{{#if mongoose}}
 import "@tsed/mongoose";{{/if}}{{#if typeorm}}
-import "@tsed/typeorm";{{/if}}{{#if mongoose}}
-import mongooseConfig from "./config/mongoose";
-{{/if}}{{#if typeorm}}
-import typeormConfig from "./config/typeorm";
-{{/if}}{{#if swagger}}
+import "@tsed/typeorm";{{/if}}
+import {config, rootDir} from "./config";{{#if swagger}}
 import {IndexCtrl} from "{{indexControllerPath}}";{{/if}}{{#if koa}}
 
 const methodOverride = require("koa-override");{{/if}}
 
-export const rootDir = __dirname;
-export const isProduction = process.env.NODE_ENV === Env.PROD;
-
-if (isProduction) {
-  $log.appenders.set("stdout", {
-    type: "stdout",
-    levels: ["info", "debug"],
-    layout: {
-      type: "json"
-    }
-  });
-
-  $log.appenders.set("stderr", {
-    levels: ["trace", "fatal", "error", "warn"],
-    type: "stderr",
-    layout: {
-      type: "json"
-    }
-  });
-}
-
 @Configuration({
-  rootDir,
+  ...config,
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  logger: {
-    disableRoutesSummary: isProduction
-  },
   mount: {
     "{{route}}": [
       `${rootDir}/controllers/**/*.ts`
@@ -73,21 +45,6 @@ if (isProduction) {
   views: {
     root: `${rootDir}/../views`,
     viewEngine: "ejs"
-  },
-  {{/if}}
-  {{#if typeorm}}
-  typeorm: typeormConfig,
-  {{/if}}
-  {{#if mongoose}}
-  mongoose: mongooseConfig,
-  {{/if}}
-  {{#if graphql}}
-  graphql: {
-    default: {
-      path: "/graphql",
-      buildSchemaOptions: {
-      }
-    }
   },
   {{/if}}
   exclude: [

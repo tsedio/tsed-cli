@@ -1,0 +1,31 @@
+import {join} from "path";
+import {loggerConfig} from "./logger";{{#if mongoose}}
+import mongooseConfig from "./mongoose";
+{{/if}}{{#if typeorm}}
+import typeormConfig from "./typeorm";
+{{/if}}
+
+const {version} = require("../../package.json");
+export const rootDir = join(__dirname, "..", "..");
+
+export const config: Partial<TsED.Configuration> = {
+  version,
+  rootDir,
+  logger: loggerConfig,
+  {{#if typeorm}}
+  typeorm: typeormConfig,
+  {{/if}}
+  {{#if mongoose}}
+  mongoose: mongooseConfig,
+  {{/if}}
+  {{#if graphql}}
+  graphql: {
+    default: {
+      path: "/graphql",
+        buildSchemaOptions: {
+      }
+    }
+  }
+  {{/if}}
+  // additional shared configuration
+};
