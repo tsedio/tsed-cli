@@ -31,24 +31,19 @@ export class Cli extends CliCore {
     const {pkg} = settings;
 
     this.checkPrecondition(settings);
-    this.createAliases(pkg);
+    this.createAliases();
     this.updateNotifier(pkg);
 
     return super.bootstrap(settings, Cli);
   }
 
-  static createAliases(pkg: any) {
+  static createAliases() {
     const alias = require("module-alias");
     alias.addAliases({
       "@tsed/core": require.resolve("@tsed/core"),
       "@tsed/di": require.resolve("@tsed/di"),
-      "@tsed/cli-core": require.resolve("@tsed/cli-core")
+      "@tsed/cli-core": require.resolve("@tsed/cli-core"),
+      "@tsed/cli": require.resolve("@tsed/cli")
     });
-
-    if (pkg.name) {
-      alias.addAlias({
-        [pkg.name]: require.resolve(pkg.name)
-      });
-    }
   }
 }

@@ -122,7 +122,7 @@ export abstract class Renderer {
       }
 
       return fileContent;
-    }, await this.fs.readFile(path));
+    }, await this.fs.readFile(path, {encoding: "utf8"}));
 
     return this.fs.writeFile(path, content, {encoding: "utf8"});
   }
