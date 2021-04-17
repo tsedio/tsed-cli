@@ -129,7 +129,7 @@ export class InitCmd implements CommandProvider {
 
   async $beforeExec(ctx: InitCmdContext): Promise<any> {
     this.fs.ensureDirSync(this.packageJson.dir);
-
+    console.log(ctx.projectName);
     this.packageJson.name = ctx.projectName;
 
     ctx.packageManager && this.packageJson.setPreference("packageManager", ctx.packageManager);
@@ -242,11 +242,12 @@ export class InitCmd implements CommandProvider {
     const rootDirName = paramCase(ctx.projectName || basename(this.packageJson.dir));
 
     if (this.packageJson.dir.endsWith(rootDirName)) {
+      ctx.projectName = ctx.projectName || rootDirName;
       ctx.root = ".";
       return;
     }
 
-    ctx.projectName = rootDirName;
+    ctx.projectName = ctx.projectName || rootDirName;
 
     if (ctx.root && ctx.root !== ".") {
       this.packageJson.dir = join(this.packageJson.dir, rootDirName);
