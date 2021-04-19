@@ -25,14 +25,14 @@ export class TslintInitHook {
         task: (ctx: any) => {
           return this.rootRenderer.renderAll(
             [
-              "init/tslint.json.hbs",
-              ctx.lintstaged && "init/.lintstagedrc.hbs",
-              ctx.prettier && "init/.prettierignore.hbs",
-              ctx.prettier && "init/.prettierrc.hbs"
+              "tslint.json.hbs",
+              ctx.lintstaged && ".lintstagedrc.hbs",
+              ctx.prettier && ".prettierignore.hbs",
+              ctx.prettier && ".prettierrc.hbs"
             ],
             ctx,
             {
-              templateDir: TEMPLATE_DIR
+              templateDir: `${TEMPLATE_DIR}/init`
             }
           );
         }
