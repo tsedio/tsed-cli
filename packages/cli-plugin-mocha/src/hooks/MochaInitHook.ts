@@ -30,16 +30,16 @@ export class MochaInitHook {
       {
         title: "Generate files for mocha",
         task: (ctx: any) => {
-          return this.rootRenderer.renderAll(["init/.mocharc.js.hbs", "init/.nycrc.hbs"], ctx, {
-            templateDir: TEMPLATE_DIR
+          return this.rootRenderer.renderAll([".mocharc.js.hbs", ".nycrc.hbs"], ctx, {
+            templateDir: `${TEMPLATE_DIR}/init`
           });
         }
       },
       {
         title: "Generate scripts files for mocha",
         task: (ctx: any) => {
-          return this.scriptsRenderer.renderAll(["init/register.js.hbs"], ctx, {
-            templateDir: TEMPLATE_DIR,
+          return this.scriptsRenderer.renderAll(["register.js.hbs"], ctx, {
+            templateDir: `${TEMPLATE_DIR}/init`,
             rootDir: join(this.scriptsRenderer.rootDir, "mocha")
           });
         }

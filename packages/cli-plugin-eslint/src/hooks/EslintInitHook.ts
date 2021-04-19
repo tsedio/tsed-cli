@@ -26,14 +26,14 @@ export class EslintInitHook {
         task: (ctx: any) => {
           return this.rootRenderer.renderAll(
             [
-              "init/.eslintrc.hbs",
-              ctx.lintstaged && "init/.lintstagedrc.hbs",
-              ctx.prettier && "init/.prettierignore.hbs",
-              ctx.prettier && "init/.prettierrc.hbs"
+              ".eslintrc.hbs",
+              ctx.lintstaged && ".lintstagedrc.hbs",
+              ctx.prettier && ".prettierignore.hbs",
+              ctx.prettier && ".prettierrc.hbs"
             ],
             ctx,
             {
-              templateDir: TEMPLATE_DIR
+              templateDir: `${TEMPLATE_DIR}/init`
             }
           );
         }
