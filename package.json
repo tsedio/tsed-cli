@@ -43,7 +43,7 @@
   "homepage": "https://github.com/TypedProject/tsed-cli",
   "dependencies": {
     "@samverschueren/stream-to-observable": "0.3.1",
-    "@tsed/core": "6.33.1",
+    "@tsed/core": "6.45.1",
     "@tsed/di": "6.33.1",
     "@tsed/logger": "^5.12.0",
     "any-observable": "0.5.1",
