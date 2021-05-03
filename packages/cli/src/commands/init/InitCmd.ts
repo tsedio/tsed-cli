@@ -120,7 +120,7 @@ export class InitCmd implements CommandProvider {
       features,
       srcDir: this.configuration.project?.srcDir,
       npm: ctx.packageManager === PackageManager.NPM,
-      yarn: ctx.packageManager !== PackageManager.YARN,
+      yarn: ctx.packageManager === PackageManager.YARN,
       express: ctx.platform === "express",
       koa: ctx.platform === "koa",
       platformSymbol: pascalCase(`Platform ${ctx.platform}`)
@@ -129,7 +129,7 @@ export class InitCmd implements CommandProvider {
 
   async $beforeExec(ctx: InitCmdContext): Promise<any> {
     this.fs.ensureDirSync(this.packageJson.dir);
-    console.log(ctx.projectName);
+
     this.packageJson.name = ctx.projectName;
 
     ctx.packageManager && this.packageJson.setPreference("packageManager", ctx.packageManager);
@@ -160,9 +160,6 @@ export class InitCmd implements CommandProvider {
   }
 
   async $exec(ctx: InitCmdContext): Promise<any> {
-    ctx.npm = ctx.packageManager === PackageManager.NPM;
-    ctx.yarn = ctx.packageManager !== PackageManager.NPM;
-
     const subTasks = [
       ...(await this.cliService.getTasks("generate", {
         ...ctx,
