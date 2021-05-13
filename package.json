@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TypedProject/tsed-cli.git"
+    "url": "https://github.com/tsedio/tsed-cli.git"
   },
   "keywords": [
     "ts",
@@ -38,9 +38,9 @@
   "author": "Romain Lenzotti",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TypedProject/tsed-cli/issues"
+    "url": "https://github.com/tsedio/tsed-cli/issues"
   },
-  "homepage": "https://github.com/TypedProject/tsed-cli",
+  "homepage": "https://github.com/tsedio/tsed-cli",
   "dependencies": {
     "@samverschueren/stream-to-observable": "0.3.1",
     "@tsed/core": "6.47.0",
@@ -124,7 +124,7 @@
     "npmAccess": "public",
     "ghpages": {
       "dir": "./docs/.vuepress/dist",
-      "url": "https://github.com/TypedProject/tsed-cli.git",
+      "url": "https://github.com/tsedio/tsed-cli.git",
       "branch": "gh-pages",
       "cname": "cli.tsed.io"
     }
