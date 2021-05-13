@@ -129,7 +129,6 @@ export class InitCmd implements CommandProvider {
 
   async $beforeExec(ctx: InitCmdContext): Promise<any> {
     this.fs.ensureDirSync(this.packageJson.dir);
-
     this.packageJson.name = ctx.projectName;
 
     ctx.packageManager && this.packageJson.setPreference("packageManager", ctx.packageManager);
