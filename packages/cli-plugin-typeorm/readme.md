@@ -4,7 +4,7 @@
  <a href="https://tsed.io" target="_blank"><img src="https://tsed.io/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
 </p>
 
-[![Build & Release](https://github.com/TypedProject/tsed-cli/workflows/Build%20&%20Release/badge.svg?branch=master)](https://github.com/TypedProject/tsed-cli/actions?query=workflow%3A%22Build+%26+Release%22)
+[![Build & Release](https://github.com/tsedio/tsed-cli/workflows/Build%20&%20Release/badge.svg?branch=master)](https://github.com/tsedio/tsed-cli/actions?query=workflow%3A%22Build+%26+Release%22)
 
 > Ts.ED CLI plugin. Add TypeORM support
 
@@ -34,7 +34,7 @@ See [TypeORM commands](https://github.com/typeorm/typeorm/blob/master/docs/using
 ## Contributors
 Please read [contributing guidelines here](https://tsed.io/CONTRIBUTING.html)
 
-<a href="https://github.com/TypedProject/ts-express-decorators/graphs/contributors"><img src="https://opencollective.com/tsed/contributors.svg?width=890" /></a>
+<a href="https://github.com/tsedio/ts-express-decorators/graphs/contributors"><img src="https://opencollective.com/tsed/contributors.svg?width=890" /></a>
 
 
 ## Backers

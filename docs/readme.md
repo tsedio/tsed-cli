@@ -87,13 +87,13 @@ frameworks:
   href: https://tsed.io/tutorials/swagger.html
   src: /swagger.svg 
 - title: Passport
-  href: https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-passport
+  href: https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-passport
   src: /passportjs.png
 - title: Mongoose
-  href: https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-mongoose
+  href: https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-mongoose
   src: /mongoose.png   
 - title: TypeORM
-  href: https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-typeorm
+  href: https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-typeorm
   src: /typeorm.png
 - title: TypeGraphQL
   href: https://tsed.io/tutorials/graphql.html

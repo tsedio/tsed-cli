@@ -42,8 +42,8 @@ module.exports = {
             start: '2016',
             end: new Date().getFullYear()
         },
-        repo: 'TypedProject/tsed-cli',
-        githubProxyUrl: 'https://api.tsed.io/rest/github/TypedProject/tsed-cli',
+        repo: 'tsedio/tsed-cli',
+        githubProxyUrl: 'https://api.tsed.io/rest/github/tsedio/tsed-cli',
         openCollective: 'https://api.tsed.io/rest/opencollective',
         gitterUrl: 'https://gitter.im/Tsed-io/community',
         stackoverflowUrl: 'https://stackoverflow.com/search?q=tsed',
@@ -81,31 +81,31 @@ module.exports = {
                         items: [
                             {
                                 text: 'Eslint',
-                                link: 'https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-eslint'
+                                link: 'https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-eslint'
                             },
                             {
                                 text: 'Jest',
-                                link: 'https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-jest'
+                                link: 'https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-jest'
                             },
                             {
                                 text: 'Mocha',
-                                link: 'https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-mocha'
+                                link: 'https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-mocha'
                             },
                             {
                                 text: 'Mongoose',
-                                link: 'https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-mongoose'
+                                link: 'https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-mongoose'
                             },
                             {
                                 text: 'Passport.js',
-                                link: 'https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-passport'
+                                link: 'https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-passport'
                             },
                             {
                                 text: 'TsLint',
-                                link: 'https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-tslint'
+                                link: 'https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-tslint'
                             },
                             {
                                 text: 'TypeORM',
-                                link: 'https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-typeorm'
+                                link: 'https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-typeorm'
                             }
                         ]
                     },

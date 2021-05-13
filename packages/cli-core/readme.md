@@ -4,14 +4,14 @@
  <a href="https://tsed.io" target="_blank"><img src="https://tsed.io/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
 </p>
 
-[![Build & Release](https://github.com/TypedProject/tsed-cli/workflows/Build%20&%20Release/badge.svg?branch=master)](https://github.com/TypedProject/tsed-cli/actions?query=workflow%3A%22Build+%26+Release%22)
+[![Build & Release](https://github.com/tsedio/tsed-cli/workflows/Build%20&%20Release/badge.svg?branch=master)](https://github.com/tsedio/tsed-cli/actions?query=workflow%3A%22Build+%26+Release%22)
 [![TypeScript](https://badges.frapsoft.com/typescript/love/typescript.svg?v=100)](https://github.com/ellerbrock/typescript-badges/)
 [![Package Quality](http://npm.packagequality.com/shield/@tsed/cli.png)](http://packagequality.com/#?package=@tsed/cli)
 [![npm version](https://badge.fury.io/js/%40tsed%2Fcli.svg)](https://badge.fury.io/js/%40tsed%2Fcli)
-[![Dependencies](https://david-dm.org/TypedProject/tsed-cli.svg)](https://david-dm.org/TypedProject/tsed-cli#info=dependencies)
-[![img](https://david-dm.org/TypedProject/tsed-cli/dev-status.svg)](https://david-dm.org/TypedProject/tsed-cli/#info=devDependencies)
-[![img](https://david-dm.org/TypedProject/tsed-cli/peer-status.svg)](https://david-dm.org/TypedProject/tsed-cli/#info=peerDependenciess)
-[![Known Vulnerabilities](https://snyk.io/test/github/TypedProject/tsed-cli/badge.svg)](https://snyk.io/test/github/TypedProject/ts-express-decorators)
+[![Dependencies](https://david-dm.org/tsedio/tsed-cli.svg)](https://david-dm.org/tsedio/tsed-cli#info=dependencies)
+[![img](https://david-dm.org/tsedio/tsed-cli/dev-status.svg)](https://david-dm.org/tsedio/tsed-cli/#info=devDependencies)
+[![img](https://david-dm.org/tsedio/tsed-cli/peer-status.svg)](https://david-dm.org/tsedio/tsed-cli/#info=peerDependenciess)
+[![Known Vulnerabilities](https://snyk.io/test/github/tsedio/tsed-cli/badge.svg)](https://snyk.io/test/github/tsedio/ts-express-decorators)
 
 > Create your CLI with TypeScript and decorators
 
@@ -322,16 +322,16 @@ In your package.json add the following line in scripts property:
 
 Here other commands examples:
 
-- Init a project command: https://github.com/TypedProject/tsed-cli/tree/master/packages/cli/src/commands/init/InitCmd
-- Generate command: https://github.com/TypedProject/tsed-cli/tree/master/packages/cli/src/commands/generate/GenerateCmd
-- Plugin example: https://github.com/TypedProject/tsed-cli/tree/master/packages/cli-plugin-mocha
-- Mono repo CLI:  https://github.com/TypedProject/tsed-cli/tree/master
+- Init a project command: https://github.com/tsedio/tsed-cli/tree/master/packages/cli/src/commands/init/InitCmd
+- Generate command: https://github.com/tsedio/tsed-cli/tree/master/packages/cli/src/commands/generate/GenerateCmd
+- Plugin example: https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-mocha
+- Mono repo CLI:  https://github.com/tsedio/tsed-cli/tree/master
 
 ## Contributors
 
 Please read [contributing guidelines here](https://tsed.io/CONTRIBUTING.html)
 
-<a href="https://github.com/TypedProject/ts-express-decorators/graphs/contributors"><img src="https://opencollective.com/tsed/contributors.svg?width=890" /></a>
+<a href="https://github.com/tsedio/ts-express-decorators/graphs/contributors"><img src="https://opencollective.com/tsed/contributors.svg?width=890" /></a>
 
 ## Backers
 
