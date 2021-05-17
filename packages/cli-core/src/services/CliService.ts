@@ -186,6 +186,7 @@ export class CliService {
 
     return cmd.description(description, mapArgsDescription(args)).action((...commanderArgs: any[]) => {
       const data = {
+        verbose: !!this.program.opts().verbose,
         ...mapCommanderArgs(args, commanderArgs),
         ...mapCommanderOptions(this.program.commands),
         rawArgs: commanderArgs.filter(isArray).reduce((arg, current) => arg.concat(current), [])
@@ -202,9 +203,11 @@ export class CliService {
   private mapContext(cmdName: string, ctx: any) {
     const provider = this.commands.get(cmdName);
     const instance = this.injector.get<CommandProvider>(provider.useClass)!;
+    const verbose = ctx.verbose;
 
     if (instance.$mapContext) {
       ctx = instance.$mapContext(JSON.parse(JSON.stringify(ctx)));
+      ctx.verbose = verbose;
     }
 
     return ctx;
