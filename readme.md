@@ -7,6 +7,7 @@
  
 
 [![Build & Release](https://github.com/tsedio/tsed-cli/workflows/Build%20&%20Release/badge.svg?branch=master)](https://github.com/tsedio/tsed-cli/actions?query=workflow%3A%22Build+%26+Release%22)
+[![Coverage Status](https://coveralls.io/repos/github/tsedio/tsed-cli/badge.svg?branch=master)](https://coveralls.io/github/tsedio/tsed-cli?branch=master)
 [![npm version](https://badge.fury.io/js/%40tsed%2Fcli.svg)](https://badge.fury.io/js/%40tsed%2Fcli)
 [![Known Vulnerabilities](https://snyk.io/test/github/tsedio/tsed-cli/badge.svg)](https://snyk.io/test/github/tsedio/tsed-cli)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
