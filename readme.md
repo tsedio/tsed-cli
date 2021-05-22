@@ -1,8 +1,10 @@
-# @tsed/cli 
-
 <p style="text-align: center" align="center">
  <a href="https://tsed.io" target="_blank"><img src="https://tsed.io/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
 </p>
+
+<div align="center">
+  <h1>Ts.ED CLI</h1>
+ 
 
 [![Build & Release](https://github.com/tsedio/tsed-cli/workflows/Build%20&%20Release/badge.svg?branch=master)](https://github.com/tsedio/tsed-cli/actions?query=workflow%3A%22Build+%26+Release%22)
 [![npm version](https://badge.fury.io/js/%40tsed%2Fcli.svg)](https://badge.fury.io/js/%40tsed%2Fcli)
@@ -11,7 +13,20 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![backers](https://opencollective.com/tsed/tiers/badge.svg)](https://opencollective.com/tsed)
 
-> CLI for the Ts.ED framework
+
+  <br />
+<div align="center">
+  <a href="https://cli.tsed.io/">Website</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://cli.tsed.io/getting-started.html">Getting started</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://api.tsed.io/rest/slack/tsedio/tsed">Slack</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://twitter.com/TsED_io">Twitter</a>
+</div>
+  <hr />
+</div>
+
 
 ## Features
 
@@ -48,9 +63,8 @@ https-proxy=http://username:password@host:port
 https_proxy=http://username:password@host:port
 ```
 
-::: tip
-The following environment variables can be also used to configure the proxy `HTTPS_PROXY`, `HTTP_PROXY` and `NODE_TLS_REJECT_UNAUTHORIZED`.
-:::
+
+> The following environment variables can be also used to configure the proxy `HTTPS_PROXY`, `HTTP_PROXY` and `NODE_TLS_REJECT_UNAUTHORIZED`.
 
 ## Contributors
 Please read [contributing guidelines here](https://tsed.io/CONTRIBUTING.html)
