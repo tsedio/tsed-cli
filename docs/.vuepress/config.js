@@ -35,7 +35,7 @@ module.exports = {
     shortTitle: 'Ts.ED CLI',
     htmlTitle: '<span class=\'text-blue\'>Ts</span>.ED CLI',
     version: require('../../package').version,
-    teams: require('../../teams.json'),
+    teams: require('../../team.json'),
     licenseType: 'MIT',
     author: 'Lenzotti Romain',
     copyrightDates: {
