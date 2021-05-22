@@ -6,8 +6,9 @@ meta:
    content: Ts.ED cli nodejs express typescript javascript es6 decorators
 gettingStartedText: Getting started
 gettingStartedUrl: /getting-started/
-messengerText: Gitter
-messengerUrl: https://gitter.im/Tsed-io/community
+messengerText: Discussions
+messengerIcon: bxl-slack
+messengerUrl: https://api.tsed.io/rest/slack/tsedio/tsed
 features:
 - title: tsed init
   details: The Ts.ED CLI makes it easy to create an application that already works, right out of the box. It already follows our best practices!
