@@ -168,6 +168,10 @@ export class GenerateCmd implements CommandProvider {
     let {type = ""} = ctx;
     type = type.toLowerCase();
 
+    if (ctx.name === "prisma" && ctx.name) {
+      type = "prisma.service";
+    }
+
     const symbolName = this.classNamePipe.transform({name, type, format: ProjectConvention.DEFAULT});
     const symbolParamName = paramCase(symbolName);
 
@@ -199,6 +203,7 @@ export class GenerateCmd implements CommandProvider {
 
     if (this.providersList.isMyProvider(ctx.type, GenerateCmd)) {
       const type = [ctx.type, ctx.templateType].filter(Boolean).join(".");
+
       const template = `generate/${type}.hbs`;
 
       return [
