@@ -47,6 +47,7 @@
     "start:generate:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
     "start:generate:model": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate model -r ./.tmp/init/awesome",
     "start:g:model": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts g model -r ./.tmp/init/awesome",
+    "start:g:prisma": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts g service -r ./.tmp/init/awesome prisma",
     "start:generate:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -r ./.tmp/init/awesome",
     "start:typeorm:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts typeorm entity:create -r ./.tmp/init/awesome --name User"
   },
