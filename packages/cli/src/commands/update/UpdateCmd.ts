@@ -32,12 +32,7 @@ function isGreaterThan(a: any, b: string) {
   name: "update",
   description: "Update all Ts.ED packages used by your project",
   args: {},
-  options: {
-    "--version <version>": {
-      type: String,
-      description: "Use a specific version of Ts.ED (format: 5.x.x)"
-    }
-  }
+  options: {}
 })
 export class UpdateCmd implements CommandProvider {
   @Inject()
@@ -52,10 +47,6 @@ export class UpdateCmd implements CommandProvider {
   private versions: any;
 
   async $prompt(initialOptions: Partial<UpdateCmdContext>): Promise<QuestionOptions> {
-    if (initialOptions.version) {
-      return [];
-    }
-
     const versions = await this.getAvailableVersions();
 
     return [
