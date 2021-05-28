@@ -28,6 +28,10 @@ function isGreaterThan(a: any, b: string) {
   return semver.gt(a, b) || a === b;
 }
 
+function shouldUpdate(pkg: string) {
+  return pkg.includes("@tsed") && !pkg.includes("@tsed/cli") && !pkg.includes("@tsed/logger");
+}
+
 @Command({
   name: "update",
   description: "Update all Ts.ED packages used by your project",
@@ -62,21 +66,17 @@ export class UpdateCmd implements CommandProvider {
   }
 
   async $exec(ctx: UpdateCmdContext) {
-    const update = (pkg: string) => {
-      if (pkg.includes("@tsed") && !pkg.includes("@tsed/cli") && pkg !== "@tsed/logger") {
+    Object.keys(this.projectPackage.dependencies).forEach((pkg: string) => {
+      if (shouldUpdate(pkg)) {
         this.projectPackage.addDependency(pkg, ctx.version);
       }
-    };
+    });
 
-    Object.keys(this.projectPackage.dependencies).forEach(update);
-    Object.keys(this.projectPackage.devDependencies).forEach(update);
-
-    if (this.projectPackage.dependencies["ts-log-debug"]) {
-      this.projectPackage.dependencies["@tsed/logger"] = this.projectPackage.dependencies["ts-log-debug"];
-      delete this.projectPackage.dependencies["ts-log-debug"];
-      this.projectPackage.reinstall = true;
-      this.projectPackage.rewrite = true;
-    }
+    Object.keys(this.projectPackage.devDependencies).forEach((pkg: string) => {
+      if (shouldUpdate(pkg)) {
+        this.projectPackage.addDevDependency(pkg, ctx.version);
+      }
+    });
 
     const projectLoggerVersion = this.projectPackage.dependencies["@tsed/logger"];
 
@@ -98,7 +98,14 @@ export class UpdateCmd implements CommandProvider {
       });
     }
 
-    return [];
+    return [
+      {
+        title: "Update packages",
+        task: () => {
+          return this.projectPackage.install();
+        }
+      }
+    ];
   }
 
   private async getAvailableVersions() {
