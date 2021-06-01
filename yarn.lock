@@ -2374,10 +2374,10 @@
     source-map-support "0.5.19"
     tslib "2.0.1"
 
-"@tsed/core@6.47.0":
-  version "6.47.0"
-  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-6.47.0.tgz#3d2173efee088aaaa6cf1f9a7dbcad92fce12e3e"
-  integrity sha512-NLeP3nEKi7fmWU+ZCl5ZTV4NtKI+KyyabPKhZWzw8Di4zGgVN9JKmEMgjmCVG+j4QgEKoxkX8xZoW96TP73lTA==
+"@tsed/core@6.53.0":
+  version "6.53.0"
+  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-6.53.0.tgz#b038f0d3d97bad9e2299a3245c87da873b828205"
+  integrity sha512-S20NEuecm3/8w47Nxzx+My/Wh1US9CyzEvfmDWhNISMr/j1yKlQMUR+Q4QiSglZGOzJMcfMx82EzABkkfycjjw==
   dependencies:
     normalize-path "3.0.0"
     reflect-metadata "^0.1.13"
