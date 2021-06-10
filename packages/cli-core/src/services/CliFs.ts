@@ -3,6 +3,7 @@ import {PathLike, WriteFileOptions} from "fs";
 import * as Fs from "fs-extra";
 import {EnsureOptions} from "fs-extra";
 import {join} from "path";
+import {normalizePath} from "@tsed/core";
 
 @Injectable()
 export class CliFs {
@@ -10,6 +11,10 @@ export class CliFs {
 
   exists(path: string) {
     return this.raw.existsSync(path);
+  }
+
+  join(...args: string[]) {
+    return normalizePath(join(...args));
   }
 
   async readFile(file: string | Buffer | number, encoding?: any): Promise<string> {

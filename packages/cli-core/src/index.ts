@@ -16,7 +16,8 @@ export {
   InjectorService,
   OnDestroy,
   OnInit,
-  Container
+  Container,
+  DITest
 } from "@tsed/di";
 export * from "./interfaces";
 export * from "./decorators";

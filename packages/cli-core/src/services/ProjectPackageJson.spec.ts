@@ -113,9 +113,12 @@ describe("ProjectPackageJson", () => {
         encoding: "utf8"
       });
 
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["install", "--production=false"], {cwd: rootDir});
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "module1", "module2@alpha"], {cwd: rootDir});
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "-D", "dev-module1", "dev-module2@alpha"], {cwd: rootDir});
+      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["install", "--production=false"], {cwd: rootDir, env: process.env});
+      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "module1", "module2@alpha"], {cwd: rootDir, env: process.env});
+      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "-D", "dev-module1", "dev-module2@alpha"], {
+        cwd: rootDir,
+        env: process.env
+      });
     });
   });
   describe("with NPM", () => {
@@ -197,9 +200,12 @@ describe("ProjectPackageJson", () => {
         encoding: "utf8"
       });
 
-      expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--no-production"], {cwd: rootDir});
-      expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--save", "module1", "module2@alpha"], {cwd: rootDir});
-      expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--save-dev", "dev-module1", "dev-module2@alpha"], {cwd: rootDir});
+      expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--no-production"], {cwd: rootDir, env: process.env});
+      expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--save", "module1", "module2@alpha"], {cwd: rootDir, env: process.env});
+      expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--save-dev", "dev-module1", "dev-module2@alpha"], {
+        cwd: rootDir,
+        env: process.env
+      });
     });
     it("should read package.json and add dependencies (asked for npm)", async () => {
       const {projectPackageJson, cliExeca, cliFs} = await getProjectPackageJsonFixture();
@@ -279,9 +285,12 @@ describe("ProjectPackageJson", () => {
         encoding: "utf8"
       });
 
-      expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--no-production"], {cwd: rootDir});
-      expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--save", "module1", "module2@alpha"], {cwd: rootDir});
-      expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--save-dev", "dev-module1", "dev-module2@alpha"], {cwd: rootDir});
+      expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--no-production"], {cwd: rootDir, env: process.env});
+      expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--save", "module1", "module2@alpha"], {cwd: rootDir, env: process.env});
+      expect(cliExeca.run).toHaveBeenCalledWith("npm", ["install", "--save-dev", "dev-module1", "dev-module2@alpha"], {
+        cwd: rootDir,
+        env: process.env
+      });
     });
   });
 });
