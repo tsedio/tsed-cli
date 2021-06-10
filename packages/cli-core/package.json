@@ -23,7 +23,7 @@
     "any-observable": "0.5.1",
     "axios": "0.21.1",
     "chalk": "4.1.0",
-    "commander": "5.1.0",
+    "commander": "7.2.0",
     "consolidate": "0.16.0",
     "create-frame": "1.0.0",
     "execa": "5.0.0",
