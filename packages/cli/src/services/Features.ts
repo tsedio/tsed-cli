@@ -287,6 +287,15 @@ registerProvider({
         when: hasFeature("db"),
         choices: [
           {
+            name: "Prisma",
+            value: {
+              type: "prisma",
+              devDependencies: {
+                "@tsed/cli-plugin-prisma": cliVersion
+              }
+            }
+          },
+          {
             name: "Mongoose",
             value: {
               type: "mongoose",
@@ -312,6 +321,13 @@ registerProvider({
         message: "Which TypeORM you want to install?",
         choices: FEATURES_TYPEORM_CONNECTION_TYPES,
         when: hasValue("featuresDB.type", "typeorm")
+      },
+      {
+        type: "input",
+        name: "GH_TOKEN",
+        message:
+          "Enter GH_TOKEN to use the premium @tsedio/prisma package or leave blank (see https://tsed.io/tutorials/prisma-client.html)",
+        when: hasValue("featuresDB.type", "prisma")
       },
       {
         message: "Choose unit framework",

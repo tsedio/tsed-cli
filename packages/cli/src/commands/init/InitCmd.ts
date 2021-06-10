@@ -34,6 +34,7 @@ export interface InitCmdContext extends CliDefaultOptions, InstallOptions {
   webpack?: boolean;
   convention?: ProjectConvention;
   commands?: boolean;
+  GH_TOKEN?: string;
 
   [key: string]: any;
 }
@@ -133,6 +134,7 @@ export class InitCmd implements CommandProvider {
 
     ctx.packageManager && this.packageJson.setPreference("packageManager", ctx.packageManager);
     ctx.convention && this.packageJson.setPreference("convention", ctx.convention);
+    ctx.GH_TOKEN && this.packageJson.setGhToken(ctx.GH_TOKEN);
 
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);
@@ -141,6 +143,14 @@ export class InitCmd implements CommandProvider {
 
     await createTasksRunner(
       [
+        {
+          title: "Write RC files",
+          skip: () => !ctx.GH_TOKEN,
+          task: () =>
+            this.rootRenderer.renderAll(["/init/.npmrc.hbs", "/init/.yarnrc.hbs"], ctx, {
+              baseDir: "/init"
+            })
+        },
         {
           title: "Install plugins",
           task: () => this.packageJson.install(ctx)
@@ -286,7 +296,7 @@ export class InitCmd implements CommandProvider {
       "@tsed/exceptions": ctx.tsedVersion,
       "@tsed/schema": ctx.tsedVersion,
       "@tsed/json-mapper": ctx.tsedVersion,
-      ajv: "7.2.4",
+      ajv: "latest",
       "cross-env": "latest",
       dotenv: "latest"
     });

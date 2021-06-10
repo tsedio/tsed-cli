@@ -10,13 +10,13 @@ import {
   Env,
   InjectorService,
   loadInjector,
-  TokenProvider
+  TokenProvider,
+  DITest
 } from "@tsed/cli-core";
 import {Type} from "@tsed/core";
 import {FakeCliExeca} from "./FakeCliExeca";
 import {FakeCliFs} from "./FakeCliFs";
 import {FakeCliHttpClient} from "./FakeCliHttpClient";
-import {DITest} from "@tsed/di";
 
 export interface InvokeOptions {
   token: TokenProvider;

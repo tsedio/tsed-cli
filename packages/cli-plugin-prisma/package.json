@@ -1,0 +1,20 @@
+{
+  "name": "@tsed/cli-plugin-prisma",
+  "version": "3.1.2",
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "description": "Ts.ED CLI plugin. Add TypeORM support",
+  "dependencies": {
+    "change-case": "4.1.2",
+    "tslib": "2.1.0"
+  },
+  "devDependencies": {
+    "@tsed/cli": "3.1.2",
+    "@tsed/cli-core": "3.1.2"
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.compile.json",
+    "build:doc": "tsc --build tsconfig.doc.json"
+  },
+  "peerDependencies": {}
+}

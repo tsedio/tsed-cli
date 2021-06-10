@@ -1,4 +1,4 @@
-import {GlobalProviders, IDIConfigurationOptions, IDILogger, InjectorService} from "@tsed/di";
+import {GlobalProviders, DIConfigurationOptions, DILogger, InjectorService} from "@tsed/di";
 import {CliConfiguration} from "../services/CliConfiguration";
 import {Logger} from "../services/Logger";
 import {ProjectPackageJson} from "../services/ProjectPackageJson";
@@ -12,7 +12,7 @@ function createConfiguration(injector: InjectorService): CliConfiguration & TsED
   return provider.instance as any;
 }
 
-function createLogger(injector: InjectorService): IDILogger {
+function createLogger(injector: InjectorService): DILogger {
   const provider = GlobalProviders.get(Logger)!.clone();
 
   provider.instance = injector.invoke<Logger>(provider.useClass);
@@ -21,7 +21,7 @@ function createLogger(injector: InjectorService): IDILogger {
   return provider.instance as any;
 }
 
-function createProjectPackageJson(injector: InjectorService): IDILogger {
+function createProjectPackageJson(injector: InjectorService): DILogger {
   const provider = GlobalProviders.get(ProjectPackageJson)!.clone();
   injector.addProvider(ProjectPackageJson, provider);
 
@@ -30,7 +30,7 @@ function createProjectPackageJson(injector: InjectorService): IDILogger {
   return provider.instance as any;
 }
 
-export function createInjector(settings: Partial<IDIConfigurationOptions> = {}) {
+export function createInjector(settings: Partial<DIConfigurationOptions> = {}) {
   const injector = new InjectorService();
   injector.settings = createConfiguration(injector);
   injector.logger = createLogger(injector);

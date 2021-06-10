@@ -1,5 +1,4 @@
-import {Store} from "@tsed/core";
-import {Type} from "@tsed/core/lib/interfaces";
+import {Store, Type} from "@tsed/core";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
 import {CommandParameters} from "../interfaces/CommandParameters";
 

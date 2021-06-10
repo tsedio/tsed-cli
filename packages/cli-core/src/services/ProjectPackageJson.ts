@@ -95,13 +95,12 @@ function defaultPreferences(pkg?: any): Record<string, any> {
 export class ProjectPackageJson {
   public rewrite = false;
   public reinstall = false;
+  private GH_TOKEN: string;
 
   @Inject(CliExeca)
   protected cliExeca: CliExeca;
-
   @Inject(CliFs)
   protected fs: CliFs;
-
   private raw: PackageJson;
 
   constructor(@Configuration() private configuration: Configuration) {
@@ -367,11 +366,19 @@ export class ProjectPackageJson {
     return packageManager;
   }
 
+  setGhToken(GH_TOKEN: string) {
+    this.GH_TOKEN = GH_TOKEN;
+  }
+
   protected installWithYarn({verbose}: any) {
     const devDeps = mapPackagesWithInvalidVersion(this.devDependencies);
     const deps = mapPackagesWithInvalidVersion(this.dependencies);
     const options = {
-      cwd: this.dir
+      cwd: this.dir,
+      env: {
+        ...process.env,
+        GH_TOKEN: this.GH_TOKEN
+      }
     };
 
     const errorPipe = () =>
@@ -413,7 +420,11 @@ export class ProjectPackageJson {
     const devDeps = mapPackagesWithInvalidVersion(this.devDependencies);
     const deps = mapPackagesWithInvalidVersion(this.dependencies);
     const options = {
-      cwd: this.dir
+      cwd: this.dir,
+      env: {
+        ...process.env,
+        GH_TOKEN: this.GH_TOKEN
+      }
     };
 
     return [
