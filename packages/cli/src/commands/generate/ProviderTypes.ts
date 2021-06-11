@@ -93,5 +93,11 @@ export const PROVIDER_TYPES = [
     value: "prisma.service",
     baseDir: "services",
     model: "{{symbolName}}.service"
+  },
+  {
+    name: "Repository",
+    value: "repository",
+    baseDir: "services",
+    model: "{{symbolName}}.repository"
   }
 ];
