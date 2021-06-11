@@ -2,7 +2,6 @@ import {InitCmdContext} from "@tsed/cli";
 import {CliService, createTasks, Inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {CliPrisma} from "../services/CliPrisma";
-import {catchError} from "rxjs/operators";
 
 @Injectable()
 export class PrismaInitHook {
@@ -24,7 +23,7 @@ export class PrismaInitHook {
     return [
       {
         title: "Generate Prisma schema",
-        task: () => catchError(this.cliPrisma.init())
+        task: () => this.cliPrisma.init()
       },
       {
         title: "Add Ts.ED configuration to Prisma schema",
