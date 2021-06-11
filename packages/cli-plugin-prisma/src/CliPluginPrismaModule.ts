@@ -9,11 +9,4 @@ import {PrismaInitHook} from "./hooks/PrismaInitHook";
 export class CliPluginPrismaModule {
   @Inject()
   packageJson: ProjectPackageJson;
-
-  @OnAdd("@tsed/cli-plugin-prisma")
-  install() {
-    this.packageJson.addDependencies({
-      "@tsedio/prisma": "1.1.1"
-    });
-  }
 }

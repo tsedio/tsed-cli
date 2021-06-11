@@ -50,7 +50,14 @@ export class PrismaInitHook {
   }
 
   addDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDependencies({}, ctx);
+    if (ctx.GH_TOKEN) {
+      this.packageJson.addDependencies(
+        {
+          "@tsedio/prisma": "1.1.1"
+        },
+        ctx
+      );
+    }
   }
 
   addDevDependencies(ctx: InitCmdContext) {
