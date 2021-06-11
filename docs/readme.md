@@ -83,13 +83,16 @@ frameworks:
   src: /webpack.svg  
 - title: AJV
   href: /tutorials/ajv.html
-  src: https://ajv.js.org/images/ajv_logo.png
+  src: https://ajv.js.org/img/ajv.svg
 - title: Swagger
   href: https://tsed.io/tutorials/swagger.html
   src: /swagger.svg 
 - title: Passport
   href: https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-passport
   src: /passportjs.png
+- title: Prisma
+  href: https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-prisma
+  src: https://tsed.io/prisma-3.svg
 - title: Mongoose
   href: https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-mongoose
   src: /mongoose.png   
