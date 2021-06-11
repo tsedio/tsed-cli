@@ -35,7 +35,7 @@ module.exports = {
     shortTitle: 'Ts.ED CLI',
     htmlTitle: '<span class=\'text-blue\'>Ts</span>.ED CLI',
     version: require('../../package').version,
-    teams: require('../../team.json'),
+    team: require('../../team.json'),
     licenseType: 'MIT',
     author: 'Lenzotti Romain',
     copyrightDates: {
@@ -47,7 +47,7 @@ module.exports = {
     openCollective: 'https://api.tsed.io/rest/opencollective',
     slackUrl: "https://api.tsed.io/rest/slack/tsedio/tsed",
     stackoverflowUrl: 'https://stackoverflow.com/search?q=tsed',
-    sponsorUrl: 'https://opencollective.com/tsed',
+    sponsorUrl: 'https://tsed.io/support.html',
     twitterUrl: "https://twitter.com/TsED_io",
     editLinks: true,
     docsDir: 'docs',
@@ -180,7 +180,54 @@ module.exports = {
             collapsable: true // optional, defaults to true
           }
         ],
-        otherTopics: []
+        otherTopics: [],
+        footer: {
+          sections: [
+            {
+              title: 'Discover',
+              items: [
+                {
+                  label: 'Our team',
+                  url: 'https://tsed.io/team.html'
+                },
+                {
+                  label: 'Contact us',
+                  url: 'https://form.typeform.com/to/uJLP7anG'
+                }
+              ]
+            },
+            {
+              title: 'Help',
+              items: [
+                {
+                  label: 'Resources',
+                  url: 'https://tsed.io/tutorials/index.html'
+                },
+                {
+                  label: 'Chat with us',
+                  url: 'https://api.tsed.io/rest/slack/tsedio/tsed'
+                },
+                {
+                  label: 'Contribution guide',
+                  url: '/contributing.html'
+                }
+              ]
+            },
+            {
+              title: 'Support',
+              items: [
+                {
+                  label: 'Issues',
+                  url: 'https://github.com/tsedio/tsed/issues'
+                },
+                {
+                  label: 'Sponsoring & donations',
+                  url: 'https://tsed.io/support.html'
+                }
+              ]
+            }
+          ]
+        }
       }
     },
     plugins: [
