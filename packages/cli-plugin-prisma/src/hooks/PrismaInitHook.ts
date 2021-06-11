@@ -1,7 +1,8 @@
 import {InitCmdContext} from "@tsed/cli";
-import {CliService, Inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
+import {CliService, createTasks, Inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {CliPrisma} from "../services/CliPrisma";
+import {catchError} from "rxjs/operators";
 
 @Injectable()
 export class PrismaInitHook {
@@ -15,7 +16,7 @@ export class PrismaInitHook {
   protected packageJson: ProjectPackageJson;
 
   @OnExec("init")
-  onExec(ctx: InitCmdContext) {
+  async onExec(ctx: InitCmdContext) {
     this.addScripts();
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);
@@ -23,7 +24,7 @@ export class PrismaInitHook {
     return [
       {
         title: "Generate Prisma schema",
-        task: () => this.cliPrisma.init()
+        task: () => catchError(this.cliPrisma.init())
       },
       {
         title: "Add Ts.ED configuration to Prisma schema",
@@ -33,11 +34,15 @@ export class PrismaInitHook {
       {
         title: "Generate Prisma Service",
         enabled: () => !ctx.GH_TOKEN,
-        task: () =>
-          this.cliService.getTasks("generate", {
-            type: "prisma.service",
-            name: "Prisma"
-          })
+        task: async () =>
+          createTasks(
+            await this.cliService.getTasks("generate", {
+              ...ctx,
+              type: "prisma.service",
+              name: "Prisma"
+            }),
+            {...ctx, concurrent: false}
+          )
       }
     ];
   }

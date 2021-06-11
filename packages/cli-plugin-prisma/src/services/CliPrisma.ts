@@ -19,7 +19,7 @@ export class CliPrisma {
     });
   }
 
-  async init() {
+  init() {
     return this.run("init");
   }
 
