@@ -58,6 +58,12 @@ export class PrismaInitHook {
         ctx
       );
     }
+    this.packageJson.addDependencies(
+      {
+        "@prisma/client": "latest"
+      },
+      ctx
+    );
   }
 
   addDevDependencies(ctx: InitCmdContext) {
