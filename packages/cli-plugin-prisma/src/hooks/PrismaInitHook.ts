@@ -27,12 +27,12 @@ export class PrismaInitHook {
       },
       {
         title: "Add Ts.ED configuration to Prisma schema",
-        skip: () => !ctx.GH_TOKEN,
+        enabled: () => !!ctx.GH_TOKEN,
         task: () => this.cliPrisma.patchPrismaSchema()
       },
       {
         title: "Generate Prisma Service",
-        skip: () => ctx.GH_TOKEN,
+        enabled: () => !ctx.GH_TOKEN,
         task: () =>
           this.cliService.getTasks("generate", {
             type: "prisma.service",

@@ -323,7 +323,7 @@ registerProvider({
         when: hasValue("featuresDB.type", "typeorm")
       },
       {
-        type: "input",
+        type: "password",
         name: "GH_TOKEN",
         message:
           "Enter GH_TOKEN to use the premium @tsedio/prisma package or leave blank (see https://tsed.io/tutorials/prisma-client.html)",
