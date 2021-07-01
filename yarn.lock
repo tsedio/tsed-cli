@@ -5310,15 +5310,20 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@*, commander@5.1.0, commander@^5.0.0:
-  version "5.1.0"
-  resolved "https://registry.npmjs.org/commander/-/commander-5.1.0.tgz"
-  integrity sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==
+commander@*, commander@8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-8.0.0.tgz#1da2139548caef59bd23e66d18908dfb54b02258"
+  integrity sha512-Xvf85aAtu6v22+E5hfVoLHqyul/jyxh91zvqk/ioJTQuJR7Z78n7H558vMPKanPSRgIEeZemT92I2g9Y8LPbSQ==
 
 commander@2.17.x:
   version "2.17.1"
   resolved "https://registry.npmjs.org/commander/-/commander-2.17.1.tgz"
   integrity sha512-wPMUt6FnH2yzG95SA6mzjQOEKUU3aLaDEmzs1ti+1E9h+CsrZghRlqEM/EJ4KscsQVG8uNN4uVreUeT8+drlgg==
+
+commander@5.1.0, commander@^5.0.0:
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/commander/-/commander-5.1.0.tgz"
+  integrity sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==
 
 commander@^2.12.1, commander@^2.20.0:
   version "2.20.3"
