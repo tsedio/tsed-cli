@@ -434,19 +434,32 @@ export class ProjectPackageJson {
           return !this.reinstall;
         },
         task: () => {
-          return this.cliExeca.run(PackageManager.NPM, ["install", "--no-production", verbose && "--verbose"].filter(Boolean), options);
+          return this.cliExeca.run(
+            PackageManager.NPM,
+            ["install", "--no-production", "--legacy-peer-deps", verbose && "--verbose"].filter(Boolean),
+            options
+          );
         }
       },
       {
         title: "Add dependencies using npm",
         skip: () => !deps.length,
-        task: () => this.cliExeca.run(PackageManager.NPM, ["install", "--save", verbose && "--verbose", ...deps].filter(Boolean), options)
+        task: () =>
+          this.cliExeca.run(
+            PackageManager.NPM,
+            ["install", "--save", "--legacy-peer-deps", verbose && "--verbose", ...deps].filter(Boolean),
+            options
+          )
       },
       {
         title: "Add devDependencies using npm",
         skip: () => !devDeps.length,
         task: () =>
-          this.cliExeca.run(PackageManager.NPM, ["install", "--save-dev", verbose && "--verbose", ...devDeps].filter(Boolean), options)
+          this.cliExeca.run(
+            PackageManager.NPM,
+            ["install", "--save-dev", "--legacy-peer-deps", verbose && "--verbose", ...devDeps].filter(Boolean),
+            options
+          )
       }
     ];
   }
