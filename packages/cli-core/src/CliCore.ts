@@ -1,4 +1,4 @@
-import {Inject, InjectorService, Module} from "@tsed/di";
+import {createContainer, Inject, InjectorService, Module} from "@tsed/di";
 import {Type} from "@tsed/core";
 import * as chalk from "chalk";
 import {Command} from "commander";
@@ -10,7 +10,6 @@ import {CliService} from "./services/CliService";
 import {ProjectPackageJson} from "./services/ProjectPackageJson";
 import {Renderer} from "./services/Renderer";
 import {createInjector} from "./utils/createInjector";
-import {loadInjector} from "./utils/loadInjector";
 import {loadPlugins} from "./utils/loadPlugins";
 
 const semver = require("semver");
@@ -51,8 +50,9 @@ export class CliCore {
   static async bootstrap(settings: Partial<TsED.Configuration>, module: Type = CliCore): Promise<CliCore> {
     const injector = this.createInjector(settings);
 
-    await loadPlugins(injector);
-    await loadInjector(injector, module);
+    settings.plugins && (await loadPlugins(injector));
+
+    await this.loadInjector(injector, module);
 
     await injector.emit("$onReady");
 
@@ -61,6 +61,16 @@ export class CliCore {
     await cli.cliService.parseArgs(injector.settings.argv!);
 
     return cli;
+  }
+
+  static async loadInjector(injector: InjectorService, module: Type = CliCore) {
+    await injector.emit("$beforeInit");
+
+    const container = createContainer();
+
+    await injector.load(container, module);
+
+    await injector.emit("$afterInit");
   }
 
   static updateNotifier(pkg: any) {

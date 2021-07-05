@@ -47,6 +47,10 @@ declare global {
         scriptsDir?: string;
         reinstallAfterRun?: boolean;
       };
+      /**
+       * Enable plugins loading
+       */
+      plugins: boolean;
     }
   }
 }
