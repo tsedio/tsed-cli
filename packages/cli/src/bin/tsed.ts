@@ -8,6 +8,7 @@ Cli.bootstrap({
   name: "tsed",
   pkg: require("../../package.json"),
   templateDir: resolve(__dirname, "..", "..", "templates"),
+  plugins: true,
   commands,
   defaultProjectPreferences() {
     return {
