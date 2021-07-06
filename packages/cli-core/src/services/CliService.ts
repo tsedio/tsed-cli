@@ -14,6 +14,7 @@ import {mapCommanderOptions} from "../utils/mapCommanderOptions";
 import {parseOption} from "../utils/parseOption";
 import {CliHooks} from "./CliHooks";
 import {ProjectPackageJson} from "./ProjectPackageJson";
+import {$log} from "@tsed/logger";
 
 Inquirer.registerPrompt("autocomplete", require("inquirer-autocomplete-prompt"));
 
@@ -155,6 +156,10 @@ export class CliService {
         ...mapCommanderOptions(this.program.commands),
         rawArgs: commanderArgs.filter(isArray).reduce((arg, current) => arg.concat(current), [])
       };
+
+      if (data.verbose) {
+        $log.level = "debug";
+      }
 
       return this.runLifecycle(name, data);
     };
