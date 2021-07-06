@@ -54,6 +54,8 @@ export class CliCore {
 
     await this.loadInjector(injector, module);
 
+    injector.settings.loaded = true;
+
     await injector.emit("$onReady");
 
     const cli = injector.get<CliCore>(CliCore)!;
