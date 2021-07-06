@@ -54,8 +54,6 @@ export class CliCore {
 
     await this.loadInjector(injector, module);
 
-    injector.settings.loaded = true;
-
     await injector.emit("$onReady");
 
     const cli = injector.get<CliCore>(CliCore)!;
@@ -73,6 +71,8 @@ export class CliCore {
     await injector.load(container, module);
 
     await injector.emit("$afterInit");
+
+    injector.settings.loaded = true;
   }
 
   static updateNotifier(pkg: any) {
