@@ -157,10 +157,6 @@ export class CliService {
         rawArgs: commanderArgs.filter(isArray).reduce((arg, current) => arg.concat(current), [])
       };
 
-      if (data.verbose) {
-        $log.level = "debug";
-      }
-
       return this.runLifecycle(name, data);
     };
 
@@ -194,6 +190,12 @@ export class CliService {
     if (instance.$mapContext) {
       ctx = instance.$mapContext(JSON.parse(JSON.stringify(ctx)));
       ctx.verbose = verbose;
+    }
+
+    if (ctx.verbose) {
+      $log.level = "debug";
+    } else {
+      $log.level = "info";
     }
 
     return ctx;
