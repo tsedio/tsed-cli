@@ -120,8 +120,8 @@ export class CliHttpClient extends CliHttpLogClient {
   protected mapResponse(result: any, options: CliHttpClientOptions) {
     const {withHeaders} = options;
 
-    const data = !withHeaders ? result.data : result;
+    const data = !withHeaders ? result?.data : result;
 
-    return withHeaders ? {data, headers: result.headers} : data;
+    return withHeaders ? {data, headers: result?.headers} : data;
   }
 }
