@@ -39,6 +39,7 @@
     "build": "tsc --build tsconfig.compile.json",
     "build:doc": "tsc --build tsconfig.doc.json",
     "start:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts -h",
+    "start:help:g": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
     "start:version": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts --version",
     "start:init:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -h",
     "start:init:run": "cross-env NODE_ENV=development cross-env CI=true ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default",

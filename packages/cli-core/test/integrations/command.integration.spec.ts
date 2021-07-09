@@ -36,7 +36,7 @@ describe("Command", () => {
       "command": "subcmd",
       "rawArgs": [],
       "rootDir": undefined,
-      "verbose": undefined
+      "verbose": false
     })
   })
 })

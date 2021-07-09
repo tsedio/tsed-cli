@@ -35,7 +35,7 @@ function cast(value: any) {
   }
 })
 export class CliProxyAgent {
-  @Value("proxy")
+  @Value("proxy", {})
   proxySettings: CliProxySettings;
 
   @Inject()

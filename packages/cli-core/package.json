@@ -23,7 +23,7 @@
     "any-observable": "0.5.1",
     "axios": "0.21.1",
     "chalk": "4.1.0",
-    "commander": "5.1.0",
+    "commander": "8.0.0",
     "consolidate": "0.16.0",
     "create-frame": "1.0.0",
     "execa": "5.0.0",
@@ -45,6 +45,7 @@
     "split": "1.0.1",
     "tslib": "2.1.0",
     "tunnel": "0.0.6",
+    "url-parse": "1.5.1",
     "update-notifier": "5.1.0"
   },
   "devDependencies": {
@@ -60,6 +61,7 @@
     "@types/read-pkg-up": "6.0.0",
     "@types/semver": "7.3.5",
     "@types/tunnel": "0.0.1",
+    "@types/url-parse": "^1.4.3",
     "@types/update-notifier": "5.0.0"
   },
   "scripts": {

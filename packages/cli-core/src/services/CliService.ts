@@ -1,21 +1,20 @@
 import {classOf, isArray} from "@tsed/core";
 import {Constant, Inject, Injectable, InjectorService, Provider} from "@tsed/di";
-import {Command} from "commander";
+import {Argument, Command} from "commander";
 import * as Inquirer from "inquirer";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
 import {CommandProvider} from "../interfaces/CommandProvider";
 import {CommandMetadata} from "../interfaces/CommandMetadata";
-import {CommandOptions} from "../interfaces/CommandParameters";
+import {CommandArg, CommandOptions} from "../interfaces/CommandParameters";
 import {PROVIDER_TYPE_COMMAND} from "../registries/CommandRegistry";
-import {createCommandSummary} from "../utils/createCommandSummary";
 import {createTasksRunner} from "../utils/createTasksRunner";
 import {getCommandMetadata} from "../utils/getCommandMetadata";
-import {mapArgsDescription} from "../utils/mapArgsDescription";
 import {mapCommanderArgs} from "../utils/mapCommanderArgs";
 import {mapCommanderOptions} from "../utils/mapCommanderOptions";
 import {parseOption} from "../utils/parseOption";
 import {CliHooks} from "./CliHooks";
 import {ProjectPackageJson} from "./ProjectPackageJson";
+import {$log} from "@tsed/logger";
 
 Inquirer.registerPrompt("autocomplete", require("inquirer-autocomplete-prompt"));
 
@@ -143,48 +142,14 @@ export class CliService {
     ];
   }
 
-  /**
-   * Build sub-command options
-   * @param subCommand
-   * @param options
-   * @param allowUnknownOptions
-   */
-  public buildOption(subCommand: Command, options: {[key: string]: CommandOptions}, allowUnknownOptions: boolean) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
-      const fn = (v: any) => parseOption(v, options);
-
-      if (options.type === Boolean) {
-        defaultValue = false;
-      }
-
-      return required
-        ? subCommand.requiredOption(flags, description, fn, defaultValue)
-        : subCommand.option(flags, description, fn, defaultValue);
-    }, subCommand);
-
-    subCommand.option("-r, --root-dir <path>", "Project root directory");
-    subCommand.option("--verbose", "Verbose mode", () => true);
-
-    if (allowUnknownOptions) {
-      subCommand.allowUnknownOption(true);
-    }
-  }
-
   public createCommand(metadata: CommandMetadata) {
-    const {args, name, description, alias} = metadata;
+    const {args, name, options, description, alias, allowUnknownOption} = metadata;
 
     if (this.commands.has(name)) {
       return this.commands.get(name).command;
     }
 
-    let cmd = this.program.command(createCommandSummary(name, args));
-
-    if (alias) {
-      cmd = cmd.alias(alias);
-    }
-
-    return cmd.description(description, mapArgsDescription(args)).action((...commanderArgs: any[]) => {
+    const onAction = (...commanderArgs: any[]) => {
       const data = {
         verbose: !!this.program.opts().verbose,
         ...mapCommanderArgs(args, commanderArgs),
@@ -192,8 +157,29 @@ export class CliService {
         rawArgs: commanderArgs.filter(isArray).reduce((arg, current) => arg.concat(current), [])
       };
 
+      if (data.verbose) {
+        $log.level = "debug";
+      }
+
       return this.runLifecycle(name, data);
-    });
+    };
+
+    let cmd = this.program.command(name);
+
+    if (alias) {
+      cmd = cmd.alias(alias);
+    }
+
+    cmd = cmd.description(description);
+    cmd = this.buildArguments(cmd, args);
+
+    cmd = cmd.action(onAction);
+
+    if (options) {
+      cmd = this.buildOption(cmd, options, !!allowUnknownOption);
+    }
+
+    return cmd;
   }
 
   private load() {
@@ -218,19 +204,60 @@ export class CliService {
    * @param provider
    */
   private build(provider: Provider<any>) {
-    const {name, options, allowUnknownOption} = getCommandMetadata(provider.useClass);
+    const metadata = getCommandMetadata(provider.useClass);
 
-    if (name) {
-      if (this.commands.has(name)) {
-        throw Error(`The ${name} command is already registered. Change your command name used by the class ${classOf(provider.useClass)}`);
+    if (metadata.name) {
+      if (this.commands.has(metadata.name)) {
+        throw Error(
+          `The ${metadata.name} command is already registered. Change your command name used by the class ${classOf(provider.useClass)}`
+        );
       }
 
-      provider.command = this.createCommand(getCommandMetadata(provider.token));
-      this.commands.set(name, provider);
+      provider.command = this.createCommand(metadata);
 
-      if (options) {
-        this.buildOption(provider.command as any, options, allowUnknownOption);
-      }
+      this.commands.set(metadata.name, provider);
     }
+  }
+
+  /**
+   * Build sub-command options
+   * @param subCommand
+   * @param options
+   * @param allowUnknownOptions
+   */
+  private buildOption(subCommand: Command, options: {[key: string]: CommandOptions}, allowUnknownOptions: boolean) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
+      const fn = (v: any) => parseOption(v, options);
+
+      if (options.type === Boolean) {
+        defaultValue = false;
+      }
+
+      return required
+        ? subCommand.requiredOption(flags, description, fn, defaultValue)
+        : subCommand.option(flags, description, fn, defaultValue);
+    }, subCommand);
+
+    subCommand.option("-r, --root-dir <path>", "Project root directory");
+    subCommand.option("--verbose", "Verbose mode", () => true);
+
+    if (allowUnknownOptions) {
+      subCommand.allowUnknownOption(true);
+    }
+
+    return subCommand;
+  }
+
+  private buildArguments(cmd: Command, args: Record<string, CommandArg>) {
+    return Object.entries(args).reduce((cmd, [key, {description, required, defaultValue}]) => {
+      const argument = new Argument(required ? `<${key}>` : `[${key}]`, description);
+
+      if (defaultValue !== undefined) {
+        argument.default(defaultValue);
+      }
+
+      return cmd.addArgument(argument);
+    }, cmd);
   }
 }
