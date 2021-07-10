@@ -1,9 +1,14 @@
 {
   "name": "@tsed/cli-core",
   "version": "3.4.3",
+  "description": "Build your CLI with TypeScript and Decorators",
+  "source": "./src/index.ts",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
-  "description": "Build your CLI with TypeScript and Decorators",
+  "exports": {
+    "require": "./lib/index.js",
+    "default": "./lib/index.modern.js"
+  },
   "keywords": [
     "cli",
     "typescript",
@@ -14,16 +19,20 @@
     "inquirer.js",
     "listr"
   ],
+  "scripts": {
+    "build": "microbundle --target node --no-compress --format modern,cjs --tsconfig ./tsconfig.compile.json"
+  },
   "dependencies": {
     "@npmcli/run-script": "1.8.5",
     "@samverschueren/stream-to-observable": "0.3.1",
-    "@tsed/core": "6.59.1",
-    "@tsed/di": "6.59.1",
-    "@tsed/logger": "^5.12.0",
+    "@tsed/core": "6.59.3",
+    "@tsed/di": "6.59.3",
+    "@tsed/logger": "^5.16.0",
     "any-observable": "0.5.1",
     "axios": "0.21.1",
     "chalk": "4.1.0",
     "commander": "8.0.0",
+    "change-case": "^4.1.2",
     "consolidate": "0.16.0",
     "create-frame": "1.0.0",
     "execa": "5.0.0",
@@ -63,10 +72,6 @@
     "@types/tunnel": "0.0.1",
     "@types/update-notifier": "5.0.0",
     "@types/url-parse": "^1.4.3"
-  },
-  "scripts": {
-    "build": "tsc --build tsconfig.compile.json",
-    "build:doc": "tsc --build tsconfig.doc.json"
   },
   "peerDependencies": {}
 }

@@ -38,6 +38,28 @@ export class CliService {
 
   private commands = new Map();
 
+  $onInit() {
+    if (this.injector.logger.level !== "off") {
+      this.injector.logger.appenders
+        .set("stdout", {
+          type: "stdout",
+          layout: {
+            type: "pattern",
+            pattern: "[%d{hh:mm:ss}] %m%n"
+          },
+          level: ["info", "debug"]
+        })
+        .set("stderr", {
+          type: "stderr",
+          layout: {
+            type: "pattern",
+            pattern: "[%d{hh:mm:ss}][%p] %m%n"
+          },
+          level: ["trace", "fatal", "error", "warn"]
+        });
+    }
+  }
+
   /**
    * Parse process.argv and runLifecycle action
    * @param argv
@@ -191,12 +213,10 @@ export class CliService {
       ctx.verbose = verbose;
     }
 
-    if (this.injector.logger.level) {
-      if (ctx.verbose) {
-        this.injector.logger.level = "debug";
-      } else {
-        this.injector.logger.level = "info";
-      }
+    if (ctx.verbose) {
+      this.injector.logger.level = "debug";
+    } else {
+      this.injector.logger.level = "info";
     }
 
     return ctx;

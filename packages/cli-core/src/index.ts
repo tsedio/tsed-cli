@@ -1,4 +1,5 @@
 export * from "@tsed/core";
+export * from "@tsed/logger";
 export {
   Inject,
   registerProvider,

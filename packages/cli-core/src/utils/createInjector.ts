@@ -1,7 +1,7 @@
 import {DIConfigurationOptions, DILogger, GlobalProviders, InjectorService} from "@tsed/di";
+import {$log} from "@tsed/logger";
 import {CliConfiguration} from "../services/CliConfiguration";
 import {ProjectPackageJson} from "../services/ProjectPackageJson";
-import {$log} from "@tsed/logger";
 
 function createConfiguration(injector: InjectorService): CliConfiguration & TsED.Configuration {
   const provider = GlobalProviders.get(CliConfiguration)!.clone();
@@ -31,7 +31,7 @@ export function createInjector(settings: Partial<DIConfigurationOptions> = {}) {
       type: "stdout",
       layout: {
         type: "pattern",
-        pattern: "[%d{hh:mm:ss}] %m%n"
+        pattern: "[%d{hh:mm:ss}] %j%n"
       },
       level: ["info", "debug"]
     })
@@ -39,7 +39,7 @@ export function createInjector(settings: Partial<DIConfigurationOptions> = {}) {
       type: "stderr",
       layout: {
         type: "pattern",
-        pattern: "[%d{hh:mm:ss}][%p] %m%n"
+        pattern: "[%d{hh:mm:ss}][%p] %j%n"
       },
       level: ["trace", "fatal", "error", "warn"]
     });

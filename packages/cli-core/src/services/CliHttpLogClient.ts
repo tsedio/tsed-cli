@@ -13,7 +13,7 @@ export class CliHttpLogClient {
   callee: string;
 
   @Inject()
-  logger: Logger;
+  protected logger: Logger;
 
   constructor(@Opts options: Partial<BaseLogClientOptions> = {}) {
     this.callee = options.callee || "http";
