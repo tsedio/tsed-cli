@@ -2,21 +2,13 @@ import {GlobalProviders, DIConfigurationOptions, DILogger, InjectorService} from
 import {CliConfiguration} from "../services/CliConfiguration";
 import {Logger} from "../services/Logger";
 import {ProjectPackageJson} from "../services/ProjectPackageJson";
+import {$log} from "@tsed/logger";
 
 function createConfiguration(injector: InjectorService): CliConfiguration & TsED.Configuration {
   const provider = GlobalProviders.get(CliConfiguration)!.clone();
 
   provider.instance = injector.invoke<CliConfiguration>(provider.useClass);
   injector.addProvider(CliConfiguration, provider);
-
-  return provider.instance as any;
-}
-
-function createLogger(injector: InjectorService): DILogger {
-  const provider = GlobalProviders.get(Logger)!.clone();
-
-  provider.instance = injector.invoke<Logger>(provider.useClass);
-  injector.addProvider(Logger, provider);
 
   return provider.instance as any;
 }
@@ -33,7 +25,25 @@ function createProjectPackageJson(injector: InjectorService): DILogger {
 export function createInjector(settings: Partial<DIConfigurationOptions> = {}) {
   const injector = new InjectorService();
   injector.settings = createConfiguration(injector);
-  injector.logger = createLogger(injector);
+  injector.logger = $log;
+
+  $log.appenders
+    .set("stdout", {
+      type: "stdout",
+      layout: {
+        type: "pattern",
+        pattern: "[%d{hh:mm:ss}] %m%n"
+      },
+      level: ["info", "debug"]
+    })
+    .set("stderr", {
+      type: "stderr",
+      layout: {
+        type: "pattern",
+        pattern: "[%d{hh:mm:ss}][%p] %m%n"
+      },
+      level: ["trace", "fatal", "error", "warn"]
+    });
 
   createProjectPackageJson(injector);
 

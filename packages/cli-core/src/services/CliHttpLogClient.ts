@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as querystring from "querystring";
-import {Opts} from "@tsed/di";
-import {$log} from "@tsed/logger";
+import {Inject, Opts} from "@tsed/di";
+import {Logger} from "@tsed/logger";
 import {getValue} from "@tsed/core";
 import {logToCurl} from "../utils/logToCurl";
 
@@ -12,12 +12,15 @@ export interface BaseLogClientOptions {
 export class CliHttpLogClient {
   callee: string;
 
+  @Inject()
+  logger: Logger;
+
   constructor(@Opts options: Partial<BaseLogClientOptions> = {}) {
     this.callee = options.callee || "http";
   }
 
   protected onSuccess(options: Record<string, unknown>) {
-    return $log.debug({
+    return this.logger.debug({
       ...this.formatLog(options),
       status: "OK"
     });
@@ -25,7 +28,7 @@ export class CliHttpLogClient {
 
   protected onError(error: any, options: any) {
     const origin = this.errorMapper(error);
-    $log.warn({
+    this.logger.warn({
       ...this.formatLog(options),
       status: "KO",
       callee_code: origin.code,

@@ -14,7 +14,6 @@ import {mapCommanderOptions} from "../utils/mapCommanderOptions";
 import {parseOption} from "../utils/parseOption";
 import {CliHooks} from "./CliHooks";
 import {ProjectPackageJson} from "./ProjectPackageJson";
-import {$log} from "@tsed/logger";
 
 Inquirer.registerPrompt("autocomplete", require("inquirer-autocomplete-prompt"));
 
@@ -192,10 +191,12 @@ export class CliService {
       ctx.verbose = verbose;
     }
 
-    if (ctx.verbose) {
-      $log.level = "debug";
-    } else {
-      $log.level = "info";
+    if (this.injector.logger.level) {
+      if (ctx.verbose) {
+        this.injector.logger.level = "debug";
+      } else {
+        this.injector.logger.level = "info";
+      }
     }
 
     return ctx;
