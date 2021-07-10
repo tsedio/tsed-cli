@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-core",
-  "version": "3.4.3",
+  "version": "3.4.4",
   "description": "Build your CLI with TypeScript and Decorators",
   "source": "./src/index.ts",
   "main": "./lib/index.js",
@@ -31,8 +31,8 @@
     "any-observable": "0.5.1",
     "axios": "0.21.1",
     "chalk": "4.1.0",
-    "commander": "8.0.0",
     "change-case": "^4.1.2",
+    "commander": "8.0.0",
     "consolidate": "0.16.0",
     "create-frame": "1.0.0",
     "execa": "5.0.0",
