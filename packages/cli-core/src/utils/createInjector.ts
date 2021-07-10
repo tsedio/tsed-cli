@@ -1,6 +1,5 @@
-import {GlobalProviders, DIConfigurationOptions, DILogger, InjectorService} from "@tsed/di";
+import {DIConfigurationOptions, DILogger, GlobalProviders, InjectorService} from "@tsed/di";
 import {CliConfiguration} from "../services/CliConfiguration";
-import {Logger} from "../services/Logger";
 import {ProjectPackageJson} from "../services/ProjectPackageJson";
 import {$log} from "@tsed/logger";
 
