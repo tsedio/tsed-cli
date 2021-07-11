@@ -114,6 +114,7 @@ export class CliHttpClient extends CliHttpLogClient {
       return response;
     } catch (error) {
       this.onError(error, {startTime, ...options});
+      throw error;
     }
   }
 

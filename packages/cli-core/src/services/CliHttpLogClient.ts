@@ -35,9 +35,9 @@ export class CliHttpLogClient {
       callee_error: origin.message,
       callee_request_qs: options.params && querystring.stringify(options.params),
       callee_request_headers: options.headers,
-      callee_request_body: options.body && JSON.stringify(options.body),
+      callee_request_body: options.data && JSON.stringify(options.data),
       callee_response_headers: origin.headers,
-      callee_response_body: origin.body && JSON.stringify(options.body),
+      callee_response_body: origin.body && JSON.stringify(origin.body),
       callee_response_request_id: origin.x_request_id,
       curl: logToCurl(options)
     });
