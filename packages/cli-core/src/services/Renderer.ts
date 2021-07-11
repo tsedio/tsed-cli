@@ -1,5 +1,5 @@
 import {Configuration, Constant, Inject, Injectable} from "@tsed/di";
-import * as Consolidate from "consolidate";
+import Consolidate from "consolidate";
 import {existsSync} from "fs-extra";
 import globby from "globby";
 import {dirname, join, relative} from "path";

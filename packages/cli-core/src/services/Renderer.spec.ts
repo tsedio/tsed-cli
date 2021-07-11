@@ -1,6 +1,6 @@
 import {RootRendererService, SrcRendererService} from "@tsed/cli-core";
 import {FakeCliFs, normalizePath} from "@tsed/cli-testing";
-import * as Consolidate from "consolidate";
+import Consolidate from "consolidate";
 import {TEMPLATE_DIR} from "../../../cli-plugin-jest/src/utils/templateDir";
 
 jest.mock("consolidate");

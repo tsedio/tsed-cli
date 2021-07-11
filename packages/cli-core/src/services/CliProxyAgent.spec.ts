@@ -2,7 +2,7 @@ import {CliPlatformTest} from "@tsed/cli-testing";
 import {CliProxyAgent} from "./CliProxyAgent";
 import {CliConfiguration} from "./CliConfiguration";
 import {CliExeca} from "./CliExeca";
-import * as tunnel from "tunnel";
+import tunnel from "tunnel";
 
 jest.mock("tunnel");
 

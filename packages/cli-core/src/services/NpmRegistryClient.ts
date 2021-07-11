@@ -1,5 +1,5 @@
 import {Inject, Injectable} from "@tsed/di";
-import * as url from "url";
+import url from "url";
 import {PackageInfo} from "../interfaces/PackageJson";
 import {CliHttpClient} from "./CliHttpClient";
 

@@ -1,5 +1,5 @@
 import {Injectable} from "@tsed/di";
-import * as execa from "execa";
+import execa from "execa";
 import {filter, merge} from "rxjs/operators";
 
 require("any-observable/register/rxjs-all");

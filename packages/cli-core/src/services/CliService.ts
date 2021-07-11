@@ -1,7 +1,7 @@
 import {classOf, isArray} from "@tsed/core";
 import {Constant, Inject, Injectable, InjectorService, Provider} from "@tsed/di";
 import {Argument, Command} from "commander";
-import * as Inquirer from "inquirer";
+import Inquirer from "inquirer";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
 import {CommandProvider} from "../interfaces/CommandProvider";
 import {CommandMetadata} from "../interfaces/CommandMetadata";

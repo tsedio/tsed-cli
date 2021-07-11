@@ -1,4 +1,4 @@
-import * as tunnel from "tunnel";
+import tunnel from "tunnel";
 import {Configuration, Inject, Injectable, Value} from "@tsed/di";
 import {CliExeca} from "./CliExeca";
 import {camelCase} from "change-case";
