@@ -1,5 +1,5 @@
 import {Inject, Injectable} from "@tsed/di";
-import * as JsYaml from "js-yaml";
+import JsYaml from "js-yaml";
 import {join} from "path";
 import {CliFs} from "./CliFs";
 import {ProjectPackageJson} from "./ProjectPackageJson";

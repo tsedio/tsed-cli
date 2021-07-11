@@ -1,6 +1,6 @@
 import {getValue, setValue} from "@tsed/core";
 import {Configuration, Inject, Injectable} from "@tsed/di";
-import * as Fs from "fs-extra";
+import Fs from "fs-extra";
 import {dirname, join} from "path";
 import * as readPkgUp from "read-pkg-up";
 import * as semver from "semver";

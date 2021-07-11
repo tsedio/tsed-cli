@@ -1,3 +1,3 @@
-import * as Listr from "listr";
+import Listr from "listr";
 
 export type Tasks = Listr.ListrTask<any>[];

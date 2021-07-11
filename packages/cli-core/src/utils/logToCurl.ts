@@ -1,4 +1,4 @@
-import * as parse from "url-parse";
+import parse from "url-parse";
 
 export function logToCurl({url, method, params, query, data, headers = {}}: any) {
   const request = parse(url, true);

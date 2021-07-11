@@ -1,5 +1,5 @@
 import {createTasks} from "../utils/createTasksRunner";
-import * as chalk from "chalk";
+import chalk from "chalk";
 import {Constant, Inject, Injectable, InjectorService} from "@tsed/di";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
 import {loadPlugins} from "../utils/loadPlugins";

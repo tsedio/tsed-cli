@@ -1,6 +1,6 @@
 import {Injectable} from "@tsed/di";
 import {PathLike, WriteFileOptions} from "fs";
-import * as Fs from "fs-extra";
+import Fs from "fs-extra";
 import {EnsureOptions} from "fs-extra";
 import {join} from "path";
 import {normalizePath} from "@tsed/core";

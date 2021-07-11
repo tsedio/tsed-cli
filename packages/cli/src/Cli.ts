@@ -1,5 +1,5 @@
 import {CliCore} from "@tsed/cli-core";
-import * as chalk from "chalk";
+import chalk from "chalk";
 
 export class Cli extends CliCore {
   static checkPackage(pkg: any) {

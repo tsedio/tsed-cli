@@ -1,9 +1,9 @@
 import {createContainer, Inject, InjectorService, Module} from "@tsed/di";
 import {Type} from "@tsed/core";
-import * as chalk from "chalk";
+import chalk from "chalk";
 import {Command} from "commander";
 import {join, resolve} from "path";
-import * as UpdateNotifier from "update-notifier";
+import updateNotifier from "update-notifier";
 import {CliConfiguration} from "./services/CliConfiguration";
 import {CliPackageJson} from "./services/CliPackageJson";
 import {CliService} from "./services/CliService";
@@ -76,7 +76,7 @@ export class CliCore {
   }
 
   static updateNotifier(pkg: any) {
-    UpdateNotifier({pkg, updateCheckInterval: 0}).notify();
+    updateNotifier({pkg, updateCheckInterval: 0}).notify();
     return this;
   }
 

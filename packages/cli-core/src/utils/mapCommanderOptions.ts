@@ -1,4 +1,4 @@
-import * as commander from "commander";
+import commander from "commander";
 
 export function mapCommanderOptions(commands: commander.Command[]) {
   const options: any = {};

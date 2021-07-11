@@ -1,7 +1,7 @@
 import {Configuration, Constant, Inject, Injectable} from "@tsed/di";
 import * as Consolidate from "consolidate";
-import * as Fs from "fs-extra";
-import * as globby from "globby";
+import {existsSync} from "fs-extra";
+import globby from "globby";
 import {dirname, join, relative} from "path";
 import {Observable} from "rxjs";
 import {CliFs} from "./CliFs";
@@ -88,7 +88,7 @@ export abstract class Renderer {
   templateExists(path: string, options: Partial<RenderOptions> = {}) {
     const {templateDir} = this.mapOptions(path, options);
 
-    return Fs.existsSync(join(templateDir, path));
+    return existsSync(join(templateDir, path));
   }
 
   scan(pattern: string[], options: any = {}) {

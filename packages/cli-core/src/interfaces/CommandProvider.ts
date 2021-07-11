@@ -1,4 +1,4 @@
-import * as Inquirer from "inquirer";
+import Inquirer from "inquirer";
 import {Tasks} from "./Tasks";
 
 export type QuestionOptions<T = any> = Inquirer.QuestionCollection<T>;
