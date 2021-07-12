@@ -39,8 +39,12 @@ export class CliHttpLogClient {
       callee_response_headers: origin.headers,
       callee_response_body: origin.body && JSON.stringify(origin.body),
       callee_response_request_id: origin.x_request_id,
-      curl: logToCurl(options)
+      curl: this.logToCurl(options)
     });
+  }
+
+  protected logToCurl(options: any) {
+    return logToCurl(options);
   }
 
   protected getStatusCodeFromError(error: any) {
