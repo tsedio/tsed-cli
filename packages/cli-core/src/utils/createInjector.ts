@@ -1,5 +1,5 @@
 import {DIConfigurationOptions, DILogger, GlobalProviders, InjectorService} from "@tsed/di";
-import {$log} from "@tsed/logger";
+import {Logger} from "@tsed/logger";
 import {CliConfiguration} from "../services/CliConfiguration";
 import {ProjectPackageJson} from "../services/ProjectPackageJson";
 
@@ -24,9 +24,9 @@ function createProjectPackageJson(injector: InjectorService): DILogger {
 export function createInjector(settings: Partial<DIConfigurationOptions> = {}) {
   const injector = new InjectorService();
   injector.settings = createConfiguration(injector);
-  injector.logger = $log;
+  injector.logger = new Logger(settings.name || "CLI");
 
-  $log.appenders
+  injector.logger.appenders
     .set("stdout", {
       type: "stdout",
       layout: {
