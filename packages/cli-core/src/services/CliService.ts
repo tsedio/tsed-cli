@@ -170,18 +170,18 @@ export class CliService {
       return this.commands.get(name).command;
     }
 
+    let cmd = this.program.command(name);
+
     const onAction = (...commanderArgs: any[]) => {
       const data = {
         verbose: !!this.program.opts().verbose,
         ...mapCommanderArgs(args, commanderArgs),
         ...mapCommanderOptions(this.program.commands),
-        rawArgs: commanderArgs.filter(isArray).reduce((arg, current) => arg.concat(current), [])
+        rawArgs: cmd.args
       };
 
       return this.runLifecycle(name, data);
     };
-
-    let cmd = this.program.command(name);
 
     if (alias) {
       cmd = cmd.alias(alias);
