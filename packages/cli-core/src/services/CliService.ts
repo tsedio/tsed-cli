@@ -1,4 +1,4 @@
-import {classOf, isArray} from "@tsed/core";
+import {classOf} from "@tsed/core";
 import {Constant, Inject, Injectable, InjectorService, Provider} from "@tsed/di";
 import {Argument, Command} from "commander";
 import Inquirer from "inquirer";
@@ -173,11 +173,12 @@ export class CliService {
     let cmd = this.program.command(name);
 
     const onAction = (...commanderArgs: any[]) => {
+      const [, ...rawArgs] = cmd.args;
       const data = {
         verbose: !!this.program.opts().verbose,
         ...mapCommanderArgs(args, commanderArgs),
         ...mapCommanderOptions(this.program.commands),
-        rawArgs: cmd.args
+        rawArgs
       };
 
       return this.runLifecycle(name, data);
