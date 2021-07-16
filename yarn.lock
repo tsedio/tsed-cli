@@ -3363,7 +3363,7 @@
     reflect-metadata "^0.1.13"
     tslib "2.2.0"
 
-"@tsed/di@6.59.3", "@tsed/di@^6.59.3":
+"@tsed/di@^6.59.3":
   version "6.59.3"
   resolved "https://registry.yarnpkg.com/@tsed/di/-/di-6.59.3.tgz#4f2390a021a9274b6a5a90d62cd7b421b126fb49"
   integrity sha512-zE+znFuGQ3dgSgkpWOMc8tCgbw3ZhbppRc4l/aCUkw9d2nJ7DCe8Vu+DDp/EPANIEbnx/+mFlAcqHcMmX+qp+g==
