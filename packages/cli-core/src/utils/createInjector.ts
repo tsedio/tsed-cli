@@ -26,21 +26,20 @@ export function createInjector(settings: Partial<DIConfigurationOptions> = {}) {
   injector.settings = createConfiguration(injector);
   injector.logger = new Logger(settings.name || "CLI");
 
+  const layout = {
+    type: "pattern",
+    pattern: "[%d{hh:mm:ss}][%p] %j%n"
+  };
+
   injector.logger.appenders
     .set("stdout", {
       type: "stdout",
-      layout: {
-        type: "pattern",
-        pattern: "[%d{hh:mm:ss}] %j%n"
-      },
+      layout,
       level: ["info", "debug"]
     })
     .set("stderr", {
       type: "stderr",
-      layout: {
-        type: "pattern",
-        pattern: "[%d{hh:mm:ss}][%p] %j%n"
-      },
+      layout,
       level: ["trace", "fatal", "error", "warn"]
     });
 
@@ -51,6 +50,9 @@ export function createInjector(settings: Partial<DIConfigurationOptions> = {}) {
   /* istanbul ignore next */
   if (injector.settings.env === "test") {
     injector.logger.stop();
+  } else {
+    /* istanbul ignore next */
+    injector.logger.level = injector.settings.logger?.level || "error";
   }
 
   return injector;
