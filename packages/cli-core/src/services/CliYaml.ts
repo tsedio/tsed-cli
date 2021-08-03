@@ -7,13 +7,13 @@ import {ProjectPackageJson} from "./ProjectPackageJson";
 @Injectable()
 export class CliYaml {
   @Inject()
-  projectPackageJson: ProjectPackageJson;
+  protected projectPackageJson: ProjectPackageJson;
 
   @Inject()
-  fs: CliFs;
+  protected fs: CliFs;
 
   async read(path: string) {
-    const file = this.fs.findUpFile(this.projectPackageJson.dir, path);
+    const file = !this.fs.exists(path) ? this.fs.findUpFile(this.projectPackageJson.dir, path) : path;
 
     if (file) {
       const content = await this.fs.readFile(file, {encoding: "utf8"});
