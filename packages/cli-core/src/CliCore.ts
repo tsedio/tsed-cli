@@ -11,6 +11,7 @@ import {ProjectPackageJson} from "./services/ProjectPackageJson";
 import {Renderer} from "./services/Renderer";
 import {createInjector} from "./utils/createInjector";
 import {loadPlugins} from "./utils/loadPlugins";
+import {CliError} from "./domains/CliError";
 
 const semver = require("semver");
 
@@ -58,7 +59,11 @@ export class CliCore {
 
     const cli = injector.get<CliCore>(CliCore)!;
 
-    await cli.cliService.parseArgs(injector.settings.argv!);
+    try {
+      await cli.cliService.parseArgs(injector.settings.argv!);
+    } catch (er) {
+      throw new CliError({origin: er, cli});
+    }
 
     return cli;
   }
