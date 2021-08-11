@@ -47,7 +47,7 @@ export class CliService {
             type: "pattern",
             pattern: "[%d{hh:mm:ss}] %m%n"
           },
-          level: ["info", "debug"]
+          levels: ["info", "debug"]
         })
         .set("stderr", {
           type: "stderr",
@@ -55,7 +55,7 @@ export class CliService {
             type: "pattern",
             pattern: "[%d{hh:mm:ss}][%p] %m%n"
           },
-          level: ["trace", "fatal", "error", "warn"]
+          levels: ["trace", "fatal", "error", "warn"]
         });
     }
   }
