@@ -82,8 +82,15 @@ export class CliService {
   public async runLifecycle(cmdName: string, data: any = {}) {
     data = await this.prompt(cmdName, data);
 
-    await this.exec(cmdName, data);
+    try {
+      await this.exec(cmdName, data);
+    } catch (er) {
+      await this.injector.emit("$onFinish", er);
+      await this.injector.destroy();
+      throw er;
+    }
 
+    await this.injector.emit("$onFinish");
     await this.injector.destroy();
   }
 
