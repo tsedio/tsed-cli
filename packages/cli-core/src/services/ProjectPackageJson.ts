@@ -9,7 +9,6 @@ import {catchError} from "rxjs/operators";
 import {PackageJson} from "../interfaces/PackageJson";
 import {CliExeca} from "./CliExeca";
 import {CliFs} from "./CliFs";
-import {createTasks} from "../utils/createTasksRunner";
 import {PackageManager, ProjectPreferences} from "../interfaces/ProjectPreferences";
 
 export interface InstallOptions {
@@ -95,12 +94,11 @@ function defaultPreferences(pkg?: any): Record<string, any> {
 export class ProjectPackageJson {
   public rewrite = false;
   public reinstall = false;
-  private GH_TOKEN: string;
-
   @Inject(CliExeca)
   protected cliExeca: CliExeca;
   @Inject(CliFs)
   protected fs: CliFs;
+  private GH_TOKEN: string;
   private raw: PackageJson;
 
   constructor(@Configuration() private configuration: Configuration) {
@@ -304,28 +302,24 @@ export class ProjectPackageJson {
 
   install(options: InstallOptions = {}) {
     const packageManager = this.getPackageManager(options.packageManager);
-
     const tasks = packageManager === "yarn" ? this.installWithYarn(options) : this.installWithNpm(options);
 
-    return createTasks(
-      [
-        {
-          title: "Write package.json",
-          enabled: () => this.rewrite,
-          task: () => this.write()
-        },
-        ...tasks,
-        {
-          title: "Clean",
-          task: () => {
-            this.reinstall = false;
-            this.rewrite = false;
-            this.read();
-          }
+    return [
+      {
+        title: "Write package.json",
+        enabled: () => this.rewrite,
+        task: () => this.write()
+      },
+      ...tasks,
+      {
+        title: "Clean",
+        task: () => {
+          this.reinstall = false;
+          this.rewrite = false;
+          this.read();
         }
-      ],
-      {...(options as any), concurrent: false}
-    );
+      }
+    ];
   }
 
   /**

@@ -1,5 +1,5 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {CliExeca, CliFs, PackageManager, ProjectPackageJson} from "@tsed/cli-core";
+import {CliExeca, CliFs, createSubTasks, createTasksRunner, PackageManager, ProjectPackageJson} from "@tsed/cli-core";
 import {join, resolve} from "path";
 
 async function getProjectPackageJsonFixture() {
@@ -26,6 +26,21 @@ async function getProjectPackageJsonFixture() {
 }
 
 const rootDir = resolve(join(__dirname, "__mock__"));
+
+function taskFixtureRunner(cb: any) {
+  return createTasksRunner(
+    [
+      {
+        title: "test",
+        task: createSubTasks(cb, {concurrent: false})
+      }
+    ],
+    {
+      concurrent: false
+    }
+  );
+}
+
 describe("ProjectPackageJson", () => {
   beforeEach(() =>
     CliPlatformTest.create({
@@ -61,9 +76,6 @@ describe("ProjectPackageJson", () => {
         "dev-module3": "6.0.0"
       });
 
-      const list = projectPackageJson.install({packageManager: PackageManager.YARN});
-      list.setRenderer("silent");
-
       expect(projectPackageJson.toJSON()).toEqual({
         _id: "@",
         dependencies: {
@@ -89,7 +101,7 @@ describe("ProjectPackageJson", () => {
       });
 
       // WHEN
-      await list.run();
+      await taskFixtureRunner(() => projectPackageJson.install({packageManager: PackageManager.YARN}));
 
       const expectedJson = {
         name: "name",
@@ -113,8 +125,14 @@ describe("ProjectPackageJson", () => {
         encoding: "utf8"
       });
 
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["install", "--production=false"], {cwd: rootDir, env: process.env});
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "module1", "module2@alpha"], {cwd: rootDir, env: process.env});
+      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["install", "--production=false"], {
+        cwd: rootDir,
+        env: process.env
+      });
+      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "module1", "module2@alpha"], {
+        cwd: rootDir,
+        env: process.env
+      });
       expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "-D", "dev-module1", "dev-module2@alpha"], {
         cwd: rootDir,
         env: process.env
@@ -146,9 +164,6 @@ describe("ProjectPackageJson", () => {
         "dev-module3": "6.0.0"
       });
 
-      const list = projectPackageJson.install({packageManager: PackageManager.YARN});
-      list.setRenderer("silent");
-
       expect(projectPackageJson.getPackageManager(PackageManager.YARN)).toEqual(PackageManager.NPM);
 
       expect(projectPackageJson.toJSON()).toEqual({
@@ -176,7 +191,7 @@ describe("ProjectPackageJson", () => {
       });
 
       // WHEN
-      await list.run();
+      await taskFixtureRunner(() => projectPackageJson.install({packageManager: PackageManager.YARN}));
 
       const expectedJson = {
         name: "name",
@@ -243,9 +258,6 @@ describe("ProjectPackageJson", () => {
         "dev-module3": "6.0.0"
       });
 
-      const list = projectPackageJson.install({packageManager: PackageManager.NPM});
-      list.setRenderer("silent");
-
       expect(projectPackageJson.toJSON()).toEqual({
         _id: "@",
         dependencies: {
@@ -271,7 +283,7 @@ describe("ProjectPackageJson", () => {
       });
 
       // WHEN
-      await list.run();
+      await taskFixtureRunner(() => projectPackageJson.install({packageManager: PackageManager.NPM}));
 
       const expectedJson = {
         name: "name",

@@ -1,5 +1,5 @@
 import {InitCmdContext} from "@tsed/cli";
-import {CliService, createTasks, Inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
+import {CliService, createSubTasks, Inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {CliPrisma} from "../services/CliPrisma";
 
@@ -33,15 +33,15 @@ export class PrismaInitHook {
       {
         title: "Generate Prisma Service",
         enabled: () => !ctx.GH_TOKEN,
-        task: async () =>
-          createTasks(
+        task: createSubTasks(
+          async () =>
             await this.cliService.getTasks("generate", {
               ...ctx,
               type: "prisma.service",
               name: "Prisma"
             }),
-            {...ctx, concurrent: false}
-          )
+          {...ctx, concurrent: false}
+        )
       }
     ];
   }
