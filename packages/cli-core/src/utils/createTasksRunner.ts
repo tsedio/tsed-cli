@@ -1,4 +1,4 @@
-import Listr from "listr";
+import {Listr} from "listr2";
 
 export function createTasks(tasks: any[], ctx: {concurrent?: boolean | number; verbose: boolean}) {
   const renderer = process.env.NODE_ENV === "test" ? "silent" : !ctx.verbose && !process.env.CI ? "default" : "verbose";

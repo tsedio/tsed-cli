@@ -62,7 +62,7 @@ describe("ProjectPackageJson", () => {
       });
 
       const list = projectPackageJson.install({packageManager: PackageManager.YARN});
-      list.setRenderer("silent");
+      // list.setRenderer("silent");
 
       expect(projectPackageJson.toJSON()).toEqual({
         _id: "@",
@@ -147,7 +147,7 @@ describe("ProjectPackageJson", () => {
       });
 
       const list = projectPackageJson.install({packageManager: PackageManager.YARN});
-      list.setRenderer("silent");
+      // list.setRenderer("silent");
 
       expect(projectPackageJson.getPackageManager(PackageManager.YARN)).toEqual(PackageManager.NPM);
 
@@ -244,7 +244,7 @@ describe("ProjectPackageJson", () => {
       });
 
       const list = projectPackageJson.install({packageManager: PackageManager.NPM});
-      list.setRenderer("silent");
+      // list.setRenderer("silent");
 
       expect(projectPackageJson.toJSON()).toEqual({
         _id: "@",

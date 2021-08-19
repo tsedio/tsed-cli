@@ -1,3 +1,3 @@
-import Listr from "listr";
+import {ListrTask} from "listr2";
 
-export type Tasks = Listr.ListrTask<any>[];
+export type Tasks = ListrTask<any>[];
