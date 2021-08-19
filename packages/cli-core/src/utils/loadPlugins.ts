@@ -14,7 +14,7 @@ export async function loadPlugins(injector: InjectorService) {
   const fs = injector.invoke<CliFs>(CliFs);
 
   const promises = Object.keys(projectPackageJson.allDependencies)
-    .filter((mod) => mod.startsWith(`@${name}/cli-plugin`) || mod.startsWith(`${name}-cli-plugin`))
+    .filter((mod) => mod.startsWith(`@${name}/cli-plugin`) || mod.includes(`${name}-cli-plugin`))
     .map(async (mod) => {
       const {default: plugin} = await fs.importModule(mod, rootDir);
 

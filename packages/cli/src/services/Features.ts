@@ -4,8 +4,8 @@ import {ProjectConvention, ArchitectureConvention} from "../interfaces";
 
 export interface FeatureValue {
   type: string;
-  dependencies?: {[key: string]: string};
-  devDependencies?: {[key: string]: string};
+  dependencies?: {[key: string]: string | undefined};
+  devDependencies?: {[key: string]: string | undefined};
 }
 
 export interface Feature {
@@ -151,6 +151,293 @@ const babelDevDependencies = {
   "babel-watch": "latest"
 };
 
+const platformChoices = [
+  {
+    name: "Express.js",
+    checked: true,
+    value: "express"
+  },
+  {
+    name: "Koa.js",
+    checked: false,
+    value: "koa"
+  }
+];
+
+const conventionChoices = [
+  {
+    name: "Ts.ED",
+    checked: true,
+    value: ProjectConvention.DEFAULT
+  },
+  {
+    name: "Angular",
+    checked: false,
+    value: ProjectConvention.ANGULAR
+  }
+];
+
+const featureChoices = (cliVersion: string) => [
+  {
+    name: "GraphQL",
+    value: {
+      type: "graphql",
+      dependencies: {
+        "@tsed/graphql": "{{tsedVersion}}",
+        "apollo-datasource": "latest",
+        "apollo-datasource-rest": "latest",
+        "type-graphql": "latest",
+        graphql: "latest"
+      },
+      devDependencies: {
+        "apollo-server-testing": "latest"
+      }
+    }
+  },
+  {
+    name: "Database",
+    value: {type: "db"}
+  },
+  {
+    name: "Passport.js",
+    when: isPlatform("express"),
+    value: {
+      type: "passportjs",
+      devDependencies: {
+        "@tsed/cli-plugin-passport": cliVersion
+      }
+    }
+  },
+  {
+    name: "Socket.io",
+    value: {
+      type: "socketio",
+      dependencies: {
+        "@tsed/socketio": "{{tsedVersion}}",
+        "socket.io": "latest"
+      }
+    }
+  },
+  {
+    name: "Swagger",
+    value: {
+      type: "swagger",
+      dependencies: {
+        "@tsed/swagger": "{{tsedVersion}}"
+      }
+    }
+  },
+  {
+    name: "OpenID Connect provider",
+    value: {
+      type: "oidc",
+      devDependencies: {
+        "@tsed/cli-plugin-oidc-provider": cliVersion
+      }
+    }
+  },
+  {
+    name: "Testing",
+    value: {
+      type: "testing",
+      dependencies: {},
+      devDependencies: {
+        "@types/supertest": "latest",
+        supertest: "latest"
+      }
+    }
+  },
+  {
+    name: "Linter",
+    value: {
+      type: "linter"
+    }
+  },
+  {
+    name: "Bundler",
+    value: {
+      type: "bundler"
+    }
+  },
+  {
+    name: "Commands",
+    value: {
+      type: "commands",
+      dependencies: {
+        "@tsed/cli-core": cliVersion
+      }
+    }
+  }
+];
+
+const featuresDbChoices = (cliVersion: string) => [
+  {
+    name: "Prisma",
+    value: {
+      type: "prisma",
+      devDependencies: {
+        "@tsed/cli-plugin-prisma": cliVersion
+      }
+    }
+  },
+  {
+    name: "Mongoose",
+    value: {
+      type: "mongoose",
+      devDependencies: {
+        "@tsed/cli-plugin-mongoose": cliVersion
+      }
+    }
+  },
+  {
+    name: "TypeORM",
+    value: {
+      type: "typeorm",
+      devDependencies: {
+        "@tsed/cli-plugin-typeorm": cliVersion
+      }
+    }
+  }
+];
+
+const featuresTestingChoices = (cliVersion: string) => [
+  {
+    name: "Jest",
+    value: {
+      type: "jest",
+      devDependencies: {
+        "@tsed/cli-plugin-jest": cliVersion
+      }
+    }
+  },
+  {
+    name: "Mocha + Chai + Sinon",
+    value: {
+      type: "mocha",
+      devDependencies: {
+        "@tsed/cli-plugin-mocha": cliVersion
+      }
+    }
+  }
+];
+
+const featuresLinterChoices = (cliVersion: string) => [
+  {
+    name: "EsLint",
+    checked: true,
+    value: {
+      type: "eslint",
+      devDependencies: {
+        "@tsed/cli-plugin-eslint": cliVersion
+      }
+    }
+  },
+  {
+    name: "TsLint (deprecated)",
+    checked: true,
+    value: {
+      type: "tslint",
+      devDependencies: {
+        "@tsed/cli-plugin-tslint": cliVersion
+      }
+    }
+  }
+];
+
+const featuresExtraLinterChoices = [
+  {
+    name: "Prettier",
+    value: {
+      type: "prettier"
+    }
+  },
+  {
+    name: "Lint on commit",
+    value: {
+      type: "lintstaged"
+    }
+  }
+];
+
+const featuresBundlerChoices = [
+  {
+    name: "Babel",
+    value: {
+      type: "babel",
+      devDependencies: {
+        ...babelDevDependencies
+      }
+    }
+  },
+  {
+    name: "Webpack",
+    value: {
+      type: "babel:webpack",
+      devDependencies: {
+        ...babelDevDependencies,
+        "babel-loader": "latest",
+        webpack: "latest",
+        "webpack-cli": "latest"
+      }
+    }
+  }
+];
+
+const packageManagerChoices = [
+  {
+    name: "Yarn",
+    checked: true,
+    value: "yarn"
+  },
+  {
+    name: "NPM",
+    checked: false,
+    value: "npm"
+  },
+  {
+    name: "PNPM",
+    checked: false,
+    value: "pnpm"
+  }
+];
+
+export const parseFeaturesFile = (features: Record<string, any>, cliVersion: string) => {
+  const mappedFeatures = {
+    platform: features.platform,
+    convention: features.convention,
+    features: [
+      ...featureChoices(cliVersion)
+        .map((v) => v.value)
+        .filter((v) => features.features.filter((v: string | Record<string, any>) => typeof v === "string").includes(v.type)),
+      ...features.features.filter((v: string | Record<string, any>) => typeof v === "object")
+    ],
+    featuresDB: featuresDbChoices(cliVersion).find((v) => v.value.type === features.featuresDB)?.value,
+    featuresTypeORM: FEATURES_TYPEORM_CONNECTION_TYPES.find((v) => v.value.type === features.featuresTypeORM)?.value,
+    featuresTesting: featuresTestingChoices(cliVersion).find((v) => v.value.type === features.featuresTesting)?.value,
+    featuresLinter: featuresLinterChoices(cliVersion).find((v) => v.value.type === features.featuresLinter)?.value,
+    featuresExtraLinter: featuresExtraLinterChoices.map((v) => v.value).filter((v) => features.featuresExtraLinter?.includes(v.type)),
+    featuresBundler: featuresBundlerChoices.find((v) => v.value.type === features.featuresBundlerChoices)?.value,
+    packageManager: features.packageManager
+  };
+  return mappedFeatures;
+};
+
+export const getFeaturesChoicesValues = (cliVersion: string) => {
+  const mappedFeatures = {
+    platform: platformChoices.map((v) => v.value),
+    convention: conventionChoices.map((v) => v.value),
+    features: featureChoices(cliVersion).map((v) => v.value.type),
+    featuresDB: featuresDbChoices(cliVersion).map((v) => v.value.type),
+    featuresTypeORM: FEATURES_TYPEORM_CONNECTION_TYPES.map((v) => v.value.type),
+    featuresTesting: featuresTestingChoices(cliVersion).map((v) => v.value.type),
+    featuresLinter: featuresLinterChoices(cliVersion).map((v) => v.value.type),
+    featuresExtraLinter: featuresExtraLinterChoices.map((v) => v.value.type),
+    featuresBundler: featuresBundlerChoices.map((v) => v.value.type),
+    packageManager: packageManagerChoices.map((v) => v.value)
+  };
+  return mappedFeatures;
+};
+
 registerProvider({
   provide: Features,
   deps: [CliPackageJson],
@@ -162,18 +449,7 @@ registerProvider({
         message: "Choose the target platform:",
         type: "list",
         name: "platform",
-        choices: [
-          {
-            name: "Express.js",
-            checked: true,
-            value: "express"
-          },
-          {
-            name: "Koa.js",
-            checked: false,
-            value: "koa"
-          }
-        ]
+        choices: platformChoices
       },
       {
         message: "Choose the architecture for your project:",
@@ -196,151 +472,20 @@ registerProvider({
         message: "Choose the convention file styling:",
         type: "list",
         name: "convention",
-        choices: [
-          {
-            name: "Ts.ED",
-            checked: true,
-            value: ProjectConvention.DEFAULT
-          },
-          {
-            name: "Angular",
-            checked: false,
-            value: ProjectConvention.ANGULAR
-          }
-        ]
+        choices: conventionChoices
       },
       {
         type: "checkbox",
         name: "features",
         message: "Check the features needed for your project",
-        choices: [
-          {
-            name: "GraphQL",
-            value: {
-              type: "graphql",
-              dependencies: {
-                "@tsed/typegraphql": "{{tsedVersion}}",
-                "apollo-datasource": "latest",
-                "apollo-datasource-rest": "latest",
-                "type-graphql": "latest",
-                graphql: "latest",
-                "class-validator": "latest"
-              },
-              devDependencies: {
-                "apollo-server-testing": "latest"
-              }
-            }
-          },
-          {
-            name: "Database",
-            value: {type: "db"}
-          },
-          {
-            name: "Passport.js",
-            when: isPlatform("express"),
-            value: {
-              type: "passportjs",
-              devDependencies: {
-                "@tsed/cli-plugin-passport": cliVersion
-              }
-            }
-          },
-          {
-            name: "Socket.io",
-            value: {
-              type: "socketio",
-              dependencies: {
-                "@tsed/socketio": "{{tsedVersion}}",
-                "socket.io": "latest"
-              }
-            }
-          },
-          {
-            name: "Swagger",
-            value: {
-              type: "swagger",
-              dependencies: {
-                "@tsed/swagger": "{{tsedVersion}}"
-              }
-            }
-          },
-          {
-            name: "OpenID Connect provider",
-            value: {
-              type: "oidc",
-              devDependencies: {
-                "@tsed/cli-plugin-oidc-provider": cliVersion
-              }
-            }
-          },
-          {
-            name: "Testing",
-            value: {
-              type: "testing",
-              dependencies: {},
-              devDependencies: {
-                "@types/supertest": "latest",
-                supertest: "latest"
-              }
-            }
-          },
-          {
-            name: "Linter",
-            value: {
-              type: "linter"
-            }
-          },
-          {
-            name: "Bundler",
-            value: {
-              type: "bundler"
-            }
-          },
-          {
-            name: "Commands",
-            value: {
-              type: "commands",
-              dependencies: {
-                "@tsed/cli-core": cliVersion
-              }
-            }
-          }
-        ]
+        choices: featureChoices(cliVersion)
       },
       {
         message: "Choose a ORM manager",
         type: "list",
         name: "featuresDB",
         when: hasFeature("db"),
-        choices: [
-          {
-            name: "Prisma",
-            value: {
-              type: "prisma",
-              devDependencies: {
-                "@tsed/cli-plugin-prisma": cliVersion
-              }
-            }
-          },
-          {
-            name: "Mongoose",
-            value: {
-              type: "mongoose",
-              devDependencies: {
-                "@tsed/cli-plugin-mongoose": cliVersion
-              }
-            }
-          },
-          {
-            name: "TypeORM",
-            value: {
-              type: "typeorm",
-              devDependencies: {
-                "@tsed/cli-plugin-typeorm": cliVersion
-              }
-            }
-          }
-        ]
+        choices: featuresDbChoices(cliVersion)
       },
       {
         type: "list",
@@ -361,103 +506,35 @@ registerProvider({
         type: "list",
         name: "featuresTesting",
         when: hasFeature("testing"),
-        choices: [
-          {
-            name: "Jest",
-            value: {
-              type: "jest",
-              devDependencies: {
-                "@tsed/cli-plugin-jest": cliVersion
-              }
-            }
-          },
-          {
-            name: "Mocha + Chai + Sinon",
-            value: {
-              type: "mocha",
-              devDependencies: {
-                "@tsed/cli-plugin-mocha": cliVersion
-              }
-            }
-          }
-        ]
+        choices: featuresTestingChoices(cliVersion)
       },
       {
         message: "Choose linter tools framework",
         type: "list",
         name: "featuresLinter",
         when: hasFeature("linter"),
-        choices: [
-          {
-            name: "EsLint",
-            checked: true,
-            value: {
-              type: "eslint",
-              devDependencies: {
-                "@tsed/cli-plugin-eslint": cliVersion
-              }
-            }
-          },
-          {
-            name: "TsLint (deprecated)",
-            checked: true,
-            value: {
-              type: "tslint",
-              devDependencies: {
-                "@tsed/cli-plugin-tslint": cliVersion
-              }
-            }
-          }
-        ]
+        choices: featuresLinterChoices(cliVersion)
       },
       {
         message: "Choose extra linter tools",
         type: "checkbox",
         name: "featuresExtraLinter",
         when: hasFeature("linter"),
-        choices: [
-          {
-            name: "Prettier",
-            value: {
-              type: "prettier"
-            }
-          },
-          {
-            name: "Lint on commit",
-            value: {
-              type: "lintstaged"
-            }
-          }
-        ]
+        choices: featuresExtraLinterChoices
       },
       {
         message: "Choose your bundler",
         type: "list",
         name: "featuresBundler",
         when: hasFeature("bundler"),
-        choices: [
-          {
-            name: "Babel",
-            value: {
-              type: "babel",
-              devDependencies: {
-                ...babelDevDependencies
-              }
-            }
-          },
-          {
-            name: "Webpack",
-            value: {
-              type: "babel:webpack",
-              devDependencies: {
-                ...babelDevDependencies,
-                "babel-loader": "latest",
-                webpack: "latest",
-                "webpack-cli": "latest"
-              }
-            }
-          }
-        ]
+        choices: featuresBundlerChoices
+      },
+      {
+        message: "Choose the OIDC base path server",
+        name: "oidcBasePath",
+        default: "/oidc",
+        when: hasFeature("oidc"),
+        type: "input"
       },
       {
         message: "Choose the OIDC base path server",
@@ -470,23 +547,7 @@ registerProvider({
         message: "Choose the package manager:",
         type: "list",
         name: "packageManager",
-        choices: [
-          {
-            name: "Yarn",
-            checked: true,
-            value: "yarn"
-          },
-          {
-            name: "NPM",
-            checked: false,
-            value: "npm"
-          },
-          {
-            name: "PNPM",
-            checked: false,
-            value: "pnpm"
-          }
-        ]
+        choices: packageManagerChoices
       }
     ];
   }

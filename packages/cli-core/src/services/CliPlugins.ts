@@ -70,6 +70,6 @@ export class CliPlugins {
   }
 
   private isPlugin(name: any) {
-    return name.startsWith(`@${this.name}/cli-plugin`) || name.startsWith(`${this.name}-cli-plugin`);
+    return name.startsWith(`@${this.name}/cli-plugin`) || name.includes(`${this.name}-cli-plugin`);
   }
 }

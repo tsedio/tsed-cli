@@ -5,6 +5,12 @@ export type QuestionOptions<T = any> = Inquirer.QuestionCollection<T>;
 
 export interface CommandProvider<Ctx = any> {
   /**
+   * Run a function before the main prompt. Useful for pre-loading data from the file system
+   * @param initialOptions
+   */
+  $beforePrompt?(initialOptions: Partial<Ctx>): Partial<Ctx>;
+
+  /**
    * Hook to create the main prompt for the command
    * See https://github.com/enquirer/enquirer for more detail on question configuration.
    * @param initialOptions

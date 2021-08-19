@@ -80,6 +80,7 @@ export class CliService {
    * @param data
    */
   public async runLifecycle(cmdName: string, data: any = {}) {
+    data = await this.beforePrompt(cmdName, data);
     data = await this.prompt(cmdName, data);
 
     try {
@@ -110,6 +111,23 @@ export class CliService {
 
       return createTasksRunner(tasks, this.mapContext(cmdName, ctx));
     }
+  }
+
+  /**
+   * Run prompt for a given command
+   * @param cmdName
+   * @param ctx Initial data
+   */
+  public async beforePrompt(cmdName: string, ctx: any = {}) {
+    const provider = this.commands.get(cmdName);
+    const instance = this.injector.get<CommandProvider>(provider.useClass)!;
+    const verbose = ctx.verbose;
+
+    if (instance.$beforePrompt) {
+      ctx = await instance.$beforePrompt(JSON.parse(JSON.stringify(ctx)));
+      ctx.verbose = verbose;
+    }
+    return ctx;
   }
 
   /**
