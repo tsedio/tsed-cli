@@ -1,4 +1,4 @@
-import {createTasks} from "../utils/createTasksRunner";
+import {createSubTasks} from "../utils/createTasksRunner";
 import chalk from "chalk";
 import {Constant, Inject, Injectable, InjectorService} from "@tsed/di";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
@@ -42,7 +42,7 @@ export class CliPlugins {
     return loadPlugins(this.injector);
   }
 
-  async addPluginsDependencies(ctx: any) {
+  addPluginsDependencies(ctx: any) {
     const plugins = Object.keys(this.packageJson.devDependencies).filter((name) => this.isPlugin(name));
 
     const tasks = plugins.map((plugin) => {
@@ -52,16 +52,13 @@ export class CliPlugins {
       };
     });
 
-    return createTasks(
-      [
-        ...tasks,
-        {
-          title: "Install",
-          task: () => this.packageJson.install(ctx)
-        }
-      ],
-      {...ctx, concurrent: false}
-    );
+    return [
+      ...tasks,
+      {
+        title: "Install",
+        task: createSubTasks(() => this.packageJson.install(ctx), {...ctx, concurrent: false})
+      }
+    ];
   }
 
   protected getKeyword(keyword: string) {

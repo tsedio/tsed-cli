@@ -6,7 +6,7 @@ import {
   Command,
   CommandProvider,
   Configuration,
-  createTasks,
+  createSubTasks,
   createTasksRunner,
   Inject,
   InstallOptions,
@@ -153,7 +153,7 @@ export class InitCmd implements CommandProvider {
         },
         {
           title: "Install plugins",
-          task: () => this.packageJson.install(ctx)
+          task: createSubTasks(() => this.packageJson.install(ctx), {...ctx, concurrent: false})
         },
         {
           title: "Load plugins",
@@ -161,14 +161,14 @@ export class InitCmd implements CommandProvider {
         },
         {
           title: "Install plugins dependencies",
-          task: () => this.cliPlugins.addPluginsDependencies(ctx)
+          task: createSubTasks(this.cliPlugins.addPluginsDependencies(ctx), {...ctx, concurrent: false})
         }
       ],
       ctx
     );
   }
 
-  async $exec(ctx: InitCmdContext): Promise<any> {
+  async $exec(ctx: InitCmdContext) {
     const subTasks = [
       ...(await this.cliService.getTasks("generate", {
         ...ctx,
@@ -201,45 +201,43 @@ export class InitCmd implements CommandProvider {
     return [
       {
         title: "Generate project files",
-        task: (ctx: any) => {
-          return createTasks(
-            [
-              {
-                title: "Root files",
-                task: () =>
-                  this.rootRenderer.renderAll(
-                    [
-                      "/init/.dockerignore.hbs",
-                      "/init/.gitignore.hbs",
-                      ctx.babel && "/init/.babelrc.hbs",
-                      ctx.webpack && "/init/webpack.config.js.hbs",
-                      "/init/docker-compose.yml.hbs",
-                      "/init/Dockerfile.hbs",
-                      "/init/README.md.hbs",
-                      "/init/tsconfig.compile.json.hbs",
-                      "/init/tsconfig.json.hbs",
-                      "/init/src/index.ts.hbs",
-                      "/init/src/config/env/index.ts.hbs",
-                      "/init/src/config/logger/index.ts.hbs",
-                      "/init/src/config/index.ts.hbs",
-                      ctx.commands && "/init/src/bin/index.ts.hbs",
-                      ctx.swagger && "/init/views/index.ejs.hbs",
-                      ctx.swagger && {
-                        path: "/init/src/controllers/pages/IndexCtrl.ts.hbs",
-                        basename: indexCtrlBaseName
-                      }
-                    ].filter(Boolean),
-                    ctx,
-                    {
-                      baseDir: "/init"
+        task: createSubTasks(
+          [
+            {
+              title: "Root files",
+              task: () =>
+                this.rootRenderer.renderAll(
+                  [
+                    "/init/.dockerignore.hbs",
+                    "/init/.gitignore.hbs",
+                    ctx.babel && "/init/.babelrc.hbs",
+                    ctx.webpack && "/init/webpack.config.js.hbs",
+                    "/init/docker-compose.yml.hbs",
+                    "/init/Dockerfile.hbs",
+                    "/init/README.md.hbs",
+                    "/init/tsconfig.compile.json.hbs",
+                    "/init/tsconfig.json.hbs",
+                    "/init/src/index.ts.hbs",
+                    "/init/src/config/env/index.ts.hbs",
+                    "/init/src/config/logger/index.ts.hbs",
+                    "/init/src/config/index.ts.hbs",
+                    ctx.commands && "/init/src/bin/index.ts.hbs",
+                    ctx.swagger && "/init/views/index.ejs.hbs",
+                    ctx.swagger && {
+                      path: "/init/src/controllers/pages/IndexCtrl.ts.hbs",
+                      basename: indexCtrlBaseName
                     }
-                  )
-              },
-              ...subTasks
-            ],
-            {...ctx, concurrent: false}
-          );
-        }
+                  ].filter(Boolean),
+                  ctx,
+                  {
+                    baseDir: "/init"
+                  }
+                )
+            },
+            ...subTasks
+          ],
+          {...ctx, concurrent: false}
+        )
       }
     ];
   }

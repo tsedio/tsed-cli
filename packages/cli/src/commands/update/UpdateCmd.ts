@@ -3,6 +3,7 @@ import {
   CliPackageJson,
   Command,
   CommandProvider,
+  createSubTasks,
   Inject,
   NpmRegistryClient,
   ProjectPackageJson,
@@ -101,9 +102,7 @@ export class UpdateCmd implements CommandProvider {
     return [
       {
         title: "Update packages",
-        task: () => {
-          return this.projectPackage.install();
-        }
+        task: createSubTasks(() => this.projectPackage.install(), {...ctx, concurrent: false})
       }
     ];
   }

@@ -7,7 +7,7 @@ import {CommandProvider} from "../interfaces/CommandProvider";
 import {CommandMetadata} from "../interfaces/CommandMetadata";
 import {CommandArg, CommandOptions} from "../interfaces/CommandParameters";
 import {PROVIDER_TYPE_COMMAND} from "../registries/CommandRegistry";
-import {createTasksRunner} from "../utils/createTasksRunner";
+import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner";
 import {getCommandMetadata} from "../utils/getCommandMetadata";
 import {mapCommanderArgs} from "../utils/mapCommanderArgs";
 import {mapCommanderOptions} from "../utils/mapCommanderOptions";
@@ -103,9 +103,7 @@ export class CliService {
         {
           title: "Install dependencies",
           enabled: () => this.reinstallAfterRun && (this.projectPkg.rewrite || this.projectPkg.reinstall),
-          task: () => {
-            return this.projectPkg.install(ctx);
-          }
+          task: createSubTasks(() => this.projectPkg.install(ctx), {...ctx, concurrent: false})
         },
         ...(await this.getPostInstallTasks(cmdName, ctx))
       ];

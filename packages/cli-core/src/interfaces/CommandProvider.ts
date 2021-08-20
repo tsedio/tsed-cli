@@ -27,11 +27,11 @@ export interface CommandProvider<Ctx = any> {
    * Run a command
    * @param ctx
    */
-  $exec(ctx: Ctx): Tasks | Promise<Tasks>;
+  $exec(ctx: Ctx): Tasks | Promise<Tasks> | any | Promise<any>;
 
   /**
    * Run commands after the npm/yarn install
    * @param ctx
    */
-  $postInstall?(ctx: Ctx): Tasks | Promise<Tasks>;
+  $postInstall?(ctx: Ctx): Tasks | Promise<Tasks> | any | Promise<any>;
 }
