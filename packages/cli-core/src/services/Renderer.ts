@@ -32,8 +32,15 @@ export abstract class Renderer {
 
   async render(path: string, data: any, options: Partial<RenderOptions> = {}) {
     const {output, templateDir, rootDir} = this.mapOptions(path, options);
+    let content = "";
 
-    const content = await Consolidate.handlebars(normalizePath(join(templateDir, path)), data);
+    const file = normalizePath(join(templateDir, path));
+
+    if (path.endsWith(".hbs")) {
+      content = await Consolidate.handlebars(file, data);
+    } else {
+      content = await this.fs.readFile(file, {encoding: "utf8"});
+    }
 
     return this.write(content, {output, rootDir});
   }

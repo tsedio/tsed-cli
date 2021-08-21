@@ -146,7 +146,7 @@ describe("Init cmd", () => {
         "project-name/tsconfig.compile.json",
         "project-name/tsconfig.json",
         "project-name/views",
-        "project-name/views/index.ejs"
+        "project-name/views/swagger.ejs",
       ]);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
@@ -315,7 +315,7 @@ describe("Init cmd", () => {
         "project-name/tsconfig.compile.json",
         "project-name/tsconfig.json",
         "project-name/views",
-        "project-name/views/index.ejs"
+        "project-name/views/swagger.ejs"
       ]);
 
       const content = FakeCliFs.entries.get("project-name/src/server.ts")!;

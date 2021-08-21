@@ -3,6 +3,9 @@ import {loggerConfig} from "./logger";{{#if mongoose}}
 import mongooseConfig from "./mongoose";
 {{/if}}{{#if typeorm}}
 import typeormConfig from "./typeorm";
+{{/if}}{{#if oidc}}
+import oidcConfig from "./oidc";
+import {FileSyncAdapter} from "@tsed/adapters";
 {{/if}}
 
 const {version} = require("../../package.json");
@@ -26,6 +29,12 @@ export const config: Partial<TsED.Configuration> = {
       }
     }
   }
+  {{/if}}
+  {{#if oidc}}
+  oidc: oidcConfig,
+  adapters: [
+    FileSyncAdapter
+  ]
   {{/if}}
   // additional shared configuration
 };

@@ -9,6 +9,7 @@ import {config, rootDir} from "./config";
 
 const methodOverride = require("koa-override");
 
+
 @Configuration({
   ...config,
   acceptMimes: ["application/json"],
@@ -18,6 +19,12 @@ const methodOverride = require("koa-override");
     "/rest": [
       `${rootDir}/controllers/**/*.ts`
     ]
+  },
+  views: {
+    root: `${rootDir}/views`,
+    extensions: {
+      ejs: "ejs"
+    }
   },
   exclude: [
     "**/*.spec.ts"
