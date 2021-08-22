@@ -8,6 +8,10 @@
     "build": "tsc --build tsconfig.compile.json",
     "build:doc": "tsc --build tsconfig.doc.json"
   },
+  "files": [
+    "lib",
+    "templates"
+  ],
   "dependencies": {
     "tslib": "2.1.0"
   },
