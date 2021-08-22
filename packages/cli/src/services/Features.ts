@@ -247,6 +247,15 @@ registerProvider({
             }
           },
           {
+            name: "OpenID Connect provider",
+            value: {
+              type: "oidc",
+              devDependencies: {
+                "@tsed/cli-plugin-oidc-provider": cliVersion
+              }
+            }
+          },
+          {
             name: "Testing",
             value: {
               type: "testing",
@@ -431,6 +440,13 @@ registerProvider({
             }
           }
         ]
+      },
+      {
+        message: "Choose the OIDC base path server",
+        name: "oidcBasePath",
+        default: "/oidc",
+        when: hasFeature("oidc"),
+        type: "input"
       },
       {
         message: "Choose the package manager:",

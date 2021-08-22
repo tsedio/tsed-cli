@@ -222,7 +222,7 @@ export class InitCmd implements CommandProvider {
                     "/init/src/config/logger/index.ts.hbs",
                     "/init/src/config/index.ts.hbs",
                     ctx.commands && "/init/src/bin/index.ts.hbs",
-                    ctx.swagger && "/init/views/index.ejs.hbs",
+                    ctx.swagger && "/init/views/swagger.ejs.hbs",
                     ctx.swagger && {
                       path: "/init/src/controllers/pages/IndexCtrl.ts.hbs",
                       basename: indexCtrlBaseName
