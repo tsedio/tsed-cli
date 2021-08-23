@@ -1,17 +1,21 @@
 import {CliService, PackageManager, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
-import {join, resolve} from "path";
+import {dirname, join, resolve} from "path";
 import {InitCmd, ProjectConvention} from "../../../src";
 
 const TEMPLATE_DIR = resolve(__dirname, "..", "..", "..", "templates");
 
-function readFile(file: string, content: string) {
-  if (!existsSync(file)) {
-    writeFileSync(`${__dirname}/${file}`, content, {encoding: "utf8"});
+function readFile(file: string, content: string, rewrite = true) {
+  const path = `${__dirname}/${file}`
+
+  ensureDirSync(dirname(path))
+
+  if (!existsSync(path) || rewrite) {
+    writeFileSync(path, content, {encoding: "utf8"});
   }
 
-  return readFileSync(`${__dirname}/${file}`, {encoding: "utf8"});
+  return readFileSync(path, {encoding: "utf8"});
 }
 
 describe("Init cmd", () => {
@@ -146,7 +150,7 @@ describe("Init cmd", () => {
         "project-name/tsconfig.compile.json",
         "project-name/tsconfig.json",
         "project-name/views",
-        "project-name/views/swagger.ejs",
+        "project-name/views/swagger.ejs"
       ]);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
@@ -409,7 +413,7 @@ describe("Init cmd", () => {
     });
   });
 
-  xdescribe("shared configuration", () => {
+  describe("shared configuration", () => {
     it("should configuration directory", async () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
@@ -430,15 +434,19 @@ describe("Init cmd", () => {
         commands: true
       });
 
-      FakeCliFs.getKeys().map((key: string) => {
-        const content = FakeCliFs.entries.get(key)!
+      try {
+        FakeCliFs.getKeys().map((key: string) => {
+          const content = FakeCliFs.entries.get(key)!
 
-        if (content !== key) {
-          writeFileSync(join(__dirname, "data", key), content, {encoding: "utf-8"})
-        } else {
-          ensureDirSync(join(__dirname, "data", key))
-        }
-      })
+          if (content !== key) {
+            writeFileSync(join(__dirname, "data", key), content, {encoding: "utf-8"})
+          } else {
+            ensureDirSync(join(__dirname, "data", key))
+          }
+        })
+      } catch (er) {
+      }
+
 
       expect(FakeCliFs.getKeys()).toEqual([
         "./project-name",

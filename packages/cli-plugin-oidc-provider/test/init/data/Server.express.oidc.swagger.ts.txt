@@ -8,8 +8,10 @@ import methodOverride from "method-override";
 import cors from "cors";
 import "@tsed/ajv";
 import "@tsed/swagger";
+import "@tsed/oidc-provider";
 import {config, rootDir} from "./config";
 import {IndexCtrl} from "./controllers/pages/IndexController";
+import {InteractionsCtrl} from "./controllers/oidc/InteractionsCtrl";
 
 
 @Configuration({
@@ -22,7 +24,8 @@ import {IndexCtrl} from "./controllers/pages/IndexController";
       `${rootDir}/controllers/**/*.ts`
     ],
     "/": [
-      IndexCtrl
+      IndexCtrl,
+      InteractionsCtrl
     ]
   },
   swagger: [

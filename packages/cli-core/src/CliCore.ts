@@ -61,9 +61,7 @@ export class CliCore {
 
     try {
       await cli.cliService.parseArgs(injector.settings.argv!);
-      await injector.emit("$onFinish");
     } catch (er) {
-      await injector.emit("$onFinish", er);
       throw new CliError({origin: er, cli});
     }
 

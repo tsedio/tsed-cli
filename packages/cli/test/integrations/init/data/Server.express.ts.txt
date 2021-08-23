@@ -23,7 +23,6 @@ import {IndexCtrl} from "./controllers/pages/index.controller";
     ],
     "/": [
       IndexCtrl
-      
     ]
   },
   swagger: [

@@ -18,7 +18,7 @@
   var uid = fields.state.split('|')[0]
   var form = document.createElement('form');
   form.method = 'POST';
-  form.action = '{{oidcBasePath}}/interaction/' + uid + '/federated';
+  form.action = '/interaction/' + uid + '/federated';
   Object.keys(fields).forEach((key) => {
     if (key) { // empty fragment will yield {"":""};
       var input = document.createElement('input');
