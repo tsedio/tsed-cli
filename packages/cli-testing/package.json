@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-testing",
-  "version": "3.11.1",
+  "version": "3.11.2",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "description": "Utils to test you CLI based on Ts.ED CLI",
@@ -15,7 +15,7 @@
     "decorators"
   ],
   "dependencies": {
-    "@tsed/cli-core": "3.11.1",
+    "@tsed/cli-core": "3.11.2",
     "tslib": "2.3.1"
   },
   "scripts": {
