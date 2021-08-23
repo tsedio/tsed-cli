@@ -7,7 +7,7 @@ import {LoginInteraction} from "../../interactions/LoginInteraction";
 
 @Name("Oidc")
 @Interactions({
-  path: "{{oidcBasePath}}/interaction/:uid",
+  path: "/interaction/:uid",
   children: [LoginInteraction, ConsentInteraction, CustomInteraction]
 })
 export class InteractionsCtrl {
