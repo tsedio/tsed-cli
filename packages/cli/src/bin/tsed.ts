@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-import {resolve} from "path";
 import {Cli} from "../Cli";
 import commands from "../commands";
 import {ProjectConvention} from "../interfaces";
+import {TEMPLATE_DIR} from "../constants";
 
 Cli.bootstrap({
   name: "tsed",
   pkg: require("../../package.json"),
-  templateDir: resolve(__dirname, "..", "..", "templates"),
+  templateDir: TEMPLATE_DIR,
   plugins: true,
   commands,
   defaultProjectPreferences() {

@@ -23,9 +23,6 @@ export class OidcProviderInitHook {
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);
 
-    ctx.oidcBasePath = ctx.oidcBasePath && ctx.oidcBasePath !== "/" ? ctx.oidcBasePath : "";
-    ctx.oidcConfigBasePath = ctx.oidcBasePath ? ctx.oidcBasePath : "/";
-
     return [
       {
         title: "Generate files",
@@ -39,18 +36,17 @@ export class OidcProviderInitHook {
               "/src/interactions/LoginInteraction.ts",
               "/src/models/Account.ts",
               "/src/services/Accounts.ts",
-              "/views/forms/interaction-form.ejs.hbs",
-              "/views/forms/login-form.ejs.hbs",
-              "/views/forms/select-account-form.ejs.hbs",
-              "/views/forms/select-account-form.ejs.hbs",
+              "/views/forms/interaction-form.ejs",
+              "/views/forms/login-form.ejs",
+              "/views/forms/select-account-form.ejs",
               "/views/partials/footer.ejs",
               "/views/partials/header.ejs",
-              "/views/partials/login-help.ejs.hbs",
+              "/views/partials/login-help.ejs",
               "/views/interaction.ejs",
               "/views/login.ejs",
-              "/views/repost.ejs.hbs",
-              "/views/select-account-form.ejs"
-            ].filter(Boolean),
+              "/views/repost.ejs",
+              "/views/select_account.ejs"
+            ],
             ctx,
             {
               templateDir: `${TEMPLATE_DIR}/init`
