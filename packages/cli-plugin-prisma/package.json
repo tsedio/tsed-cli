@@ -6,7 +6,7 @@
   "description": "Ts.ED CLI plugin. Add Prisma project initialisation support.",
   "dependencies": {
     "change-case": "4.1.2",
-    "tslib": "2.1.0"
+    "tslib": "2.3.1"
   },
   "devDependencies": {
     "@tsed/cli": "3.10.2",
