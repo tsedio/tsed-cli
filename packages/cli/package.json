@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@tsed/cli-testing": "3.11.2",
-    "@tsed/core": "6.62.4",
+    "@tsed/core": "6.64.1",
     "@types/change-case": "^2.3.1"
   },
   "scripts": {
