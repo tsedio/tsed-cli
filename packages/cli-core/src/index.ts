@@ -1,3 +1,4 @@
+import Inquirer from "inquirer";
 export * from "@tsed/core";
 export * from "@tsed/logger";
 export {
@@ -25,5 +26,6 @@ export * from "./decorators";
 export * from "./services";
 export * from "./utils";
 export * from "./CliCore";
+export {Inquirer};
 
 import "./utils/patchCommander";
