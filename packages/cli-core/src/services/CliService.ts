@@ -45,7 +45,7 @@ export class CliService {
           type: "stdout",
           layout: {
             type: "pattern",
-            pattern: "[%d{hh:mm:ss}] %m%n"
+            pattern: "[%d{hh:mm:ss}] %m"
           },
           levels: ["info", "debug"]
         })
@@ -53,7 +53,7 @@ export class CliService {
           type: "stderr",
           layout: {
             type: "pattern",
-            pattern: "[%d{hh:mm:ss}][%p] %m%n"
+            pattern: "[%d{hh:mm:ss}][%p] %m"
           },
           levels: ["trace", "fatal", "error", "warn"]
         });

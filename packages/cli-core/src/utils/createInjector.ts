@@ -3,6 +3,12 @@ import {Logger} from "@tsed/logger";
 import {CliConfiguration} from "../services/CliConfiguration";
 import {ProjectPackageJson} from "../services/ProjectPackageJson";
 
+let logger: Logger;
+
+export function getLogger() {
+  return logger;
+}
+
 function createConfiguration(injector: InjectorService): CliConfiguration & TsED.Configuration {
   const provider = GlobalProviders.get(CliConfiguration)!.clone();
 
@@ -24,7 +30,7 @@ function createProjectPackageJson(injector: InjectorService): DILogger {
 export function createInjector(settings: Partial<DIConfigurationOptions> = {}) {
   const injector = new InjectorService();
   injector.settings = createConfiguration(injector);
-  injector.logger = new Logger(settings.name || "CLI");
+  logger = injector.logger = new Logger(settings.name || "CLI");
 
   createProjectPackageJson(injector);
 
