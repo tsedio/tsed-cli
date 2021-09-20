@@ -2,7 +2,7 @@ import {CliPlatformTest} from "@tsed/cli-testing";
 import {CliPrisma} from "./CliPrisma";
 import {CliFs} from "@tsed/cli-core";
 import {join} from "path";
-import {normalizePath} from "@tsed/core";
+import {normalizePath} from "@tsed/components-scan";
 
 async function createServiceFixture() {
   const cliFs = {

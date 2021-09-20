@@ -1,7 +1,7 @@
 import {CliFs, CliRunScript, Command, CommandProvider, ProjectPackageJson, Tasks} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 import {join} from "path";
-import {normalizePath} from "@tsed/core";
+import {normalizePath} from "@tsed/components-scan";
 
 export interface RunCmdContext {
   production: boolean;

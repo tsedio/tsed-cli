@@ -25,8 +25,9 @@
   "dependencies": {
     "@npmcli/run-script": "1.8.5",
     "@samverschueren/stream-to-observable": "^0.3.1",
-    "@tsed/core": "^6.62.4",
-    "@tsed/di": "^6.62.4",
+    "@tsed/core": "^6.70.1",
+    "@tsed/di": "^6.70.1",
+    "@tsed/components-scan": "^6.70.1",
     "@tsed/logger": "^5.17.0",
     "any-observable": "0.5.1",
     "axios": "0.21.1",

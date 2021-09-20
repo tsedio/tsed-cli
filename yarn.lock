@@ -3354,23 +3354,32 @@
   resolved "https://registry.npmjs.org/@tootallnate/once/-/once-1.1.2.tgz"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
-"@tsed/core@6.62.4", "@tsed/core@^6.62.4":
-  version "6.62.4"
-  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-6.62.4.tgz#432672e92ab3d32d4b1f34a71d4b7ef4158ecae3"
-  integrity sha512-o2DNYrP7NQSilc230wBsFafc2FYBvZXOTTAt5eXdnZz6QDZJgpd9ZI1SzZtteivk01Na49sRXQFbp8pbRhAxbw==
+"@tsed/components-scan@^6.70.1":
+  version "6.70.1"
+  resolved "https://registry.yarnpkg.com/@tsed/components-scan/-/components-scan-6.70.1.tgz#a1691b8dfefdc4746818a347c0677bb9eeaf1ce4"
+  integrity sha512-5x0oA7vi4yFDPBfzKTeAOu07fcTVfb79wlNOZE1oTHeVCG25q6O+srW4L+O4gC22hz1BSh/lM/U1lUCQJZnt+A==
   dependencies:
+    "@tsed/core" "6.70.1"
+    "@tsed/di" "6.70.1"
+    globby "11.0.3"
     normalize-path "3.0.0"
+    tslib "2.2.0"
+
+"@tsed/core@6.70.1", "@tsed/core@^6.70.1":
+  version "6.70.1"
+  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-6.70.1.tgz#9a154c31a382aeb85c1205ce1df9ca93416e888c"
+  integrity sha512-yZtcYza1k6ruc4gSO/TSCvTjlbmOGAw6PWGT3kxBxxZM2xarN2NJjsd1ItZEJl48aOapv6oVhvYeyfD7imwg4w==
+  dependencies:
     reflect-metadata "^0.1.13"
     tslib "2.2.0"
 
-"@tsed/di@^6.62.4":
-  version "6.62.4"
-  resolved "https://registry.yarnpkg.com/@tsed/di/-/di-6.62.4.tgz#4b154c7c2086ccf95e008e544413b5190ecccd6a"
-  integrity sha512-u/URqRfybLOff6k1AC1JQ/gE/LmEkeH51SylTHcoShtMw6Wis1F1qA2uCzqY0j5KK9PqzttPqsJoQneIOeIrAw==
+"@tsed/di@6.70.1", "@tsed/di@^6.70.1":
+  version "6.70.1"
+  resolved "https://registry.yarnpkg.com/@tsed/di/-/di-6.70.1.tgz#aead38f3c2fb9493e23e602172a99f1a7fc7fa17"
+  integrity sha512-2sI4EkgaF9iQWjK9HYXPXzXzwDk0hcz3qUOnerLISKuUFDbv0W5x5rcuPOL6ClDxpNe0Sa/jXX+5C9cXMyT7jw==
   dependencies:
-    "@tsed/core" "6.62.4"
+    "@tsed/core" "6.70.1"
     chalk "4.1.0"
-    globby "11.0.3"
     tslib "2.2.0"
 
 "@tsed/logger@5.17.0", "@tsed/logger@^5.17.0":
