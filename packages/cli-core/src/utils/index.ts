@@ -6,3 +6,4 @@ export * from "./mapCommanderArgs";
 export * from "./mapCommanderOptions";
 export * from "./parseOption";
 export * from "./createTasksRunner";
+export * from "./normalizePath";

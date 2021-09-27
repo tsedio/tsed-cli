@@ -34,7 +34,7 @@ Please refer to the [documentation](https://cli.tsed.io/) for more details.
 ## Installation
 
 ```bash
-npm install @tsed/cli-core
+npm install @tsed/core @tsed/di @tsed/cli-core
 ```
 
 ## Getting started
