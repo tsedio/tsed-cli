@@ -48,7 +48,7 @@
     "@tsed/components-scan": "^6.70.1",
     "@tsed/logger": "^5.17.0",
     "any-observable": "0.5.1",
-    "axios": "0.21.1",
+    "axios": "0.21.2",
     "chalk": "4.1.0",
     "commander": "8.0.0",
     "consolidate": "0.16.0",
