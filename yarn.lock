@@ -3399,10 +3399,10 @@
   resolved "https://registry.npmjs.org/@tsed/markdown-it-symbols/-/markdown-it-symbols-2.15.0.tgz"
   integrity sha512-0l8P4k6bcRqwxzy8piMoDdS3fqgTw2gMO0xyI/woIqHm7yhbpmrleh2OAmc0bi5SJrrZv1aDUyeyeFoYP8B53g==
 
-"@tsed/markdown-it-symbols@3.8.0":
-  version "3.8.0"
-  resolved "https://registry.npmjs.org/@tsed/markdown-it-symbols/-/markdown-it-symbols-3.8.0.tgz"
-  integrity sha512-6hkbKLVSPU2Zr2DIQztwXp1Xc3vMAI6icSt3Uf93w4Q9xr8BCltMNbO97RZADjyc655wnNfPMMd/DYdweMx/bA==
+"@tsed/markdown-it-symbols@3.15.0":
+  version "3.15.0"
+  resolved "https://registry.yarnpkg.com/@tsed/markdown-it-symbols/-/markdown-it-symbols-3.15.0.tgz#ffaa21a541c20cd9f859d2c7e9c8ee13529d300b"
+  integrity sha512-WJA28BMFfX+iNYbhvCKDScb4wxvb8KXnli1ofjRlGPtOJF795trwYuTlS7huFndaGU/tIrm5LRnm2JKJ3f4FxA==
 
 "@tsed/monorepo-utils@1.17.0":
   version "1.17.0"
