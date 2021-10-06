@@ -18,6 +18,7 @@ import {
 import {camelCase, paramCase, pascalCase} from "change-case";
 import {basename, join} from "path";
 import {DEFAULT_TSED_TAGS} from "../../constants";
+import {ArchitectureConvention} from "../../interfaces/ArchitectureConvention";
 import {ProjectConvention} from "../../interfaces/ProjectConvention";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
 import {Features, FeatureValue} from "../../services/Features";
@@ -32,6 +33,7 @@ export interface InitCmdContext extends CliDefaultOptions, InstallOptions {
   featuresTypeORM?: FeatureValue;
   babel?: boolean;
   webpack?: boolean;
+  architecture?: ArchitectureConvention;
   convention?: ProjectConvention;
   commands?: boolean;
   GH_TOKEN?: string;
@@ -133,6 +135,7 @@ export class InitCmd implements CommandProvider {
     this.packageJson.name = ctx.projectName;
 
     ctx.packageManager && this.packageJson.setPreference("packageManager", ctx.packageManager);
+    ctx.architecture && this.packageJson.setPreference("architecture", ctx.architecture);
     ctx.convention && this.packageJson.setPreference("convention", ctx.convention);
     ctx.GH_TOKEN && this.packageJson.setGhToken(ctx.GH_TOKEN);
 

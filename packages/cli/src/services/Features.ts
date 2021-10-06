@@ -1,6 +1,6 @@
 import {CliPackageJson, Inject, registerProvider} from "@tsed/cli-core";
 import {getValue} from "@tsed/core";
-import {ProjectConvention} from "../interfaces/ProjectConvention";
+import {ProjectConvention, ArchitectureConvention} from "../interfaces";
 
 export interface FeatureValue {
   type: string;
@@ -172,6 +172,23 @@ registerProvider({
             name: "Koa.js",
             checked: false,
             value: "koa"
+          }
+        ]
+      },
+      {
+        message: "Choose the architecture for your project:",
+        type: "list",
+        name: "architecture",
+        choices: [
+          {
+            name: "Ts.ED",
+            checked: true,
+            value: ArchitectureConvention.DEFAULT
+          },
+          {
+            name: "feature",
+            checked: false,
+            value: ArchitectureConvention.FEATURE
           }
         ]
       },
