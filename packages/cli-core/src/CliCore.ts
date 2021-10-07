@@ -8,7 +8,6 @@ import {CliConfiguration} from "./services/CliConfiguration";
 import {CliPackageJson} from "./services/CliPackageJson";
 import {CliService} from "./services/CliService";
 import {ProjectPackageJson} from "./services/ProjectPackageJson";
-import {Renderer} from "./services/Renderer";
 import {createInjector} from "./utils/createInjector";
 import {loadPlugins} from "./utils/loadPlugins";
 import {CliError} from "./domains/CliError";
@@ -20,7 +19,7 @@ function isHelpManual(argv: string[]) {
 }
 
 @Module({
-  imports: [CliPackageJson, ProjectPackageJson, CliService, CliConfiguration, Renderer]
+  imports: [CliPackageJson, ProjectPackageJson, CliService, CliConfiguration]
 })
 export class CliCore {
   @Inject()
