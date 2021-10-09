@@ -1,15 +1,15 @@
-import { getValue, setValue } from "@tsed/core";
-import { Configuration, Inject, Injectable } from "@tsed/di";
+import {getValue, setValue} from "@tsed/core";
+import {Configuration, Inject, Injectable} from "@tsed/di";
 import Fs from "fs-extra";
-import { dirname, join } from "path";
+import {dirname, join} from "path";
 import readPkgUp from "read-pkg-up";
-import { EMPTY, throwError } from "rxjs";
-import { catchError } from "rxjs/operators";
+import {EMPTY, throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
 import semver from "semver";
-import { PackageJson } from "../interfaces/PackageJson";
-import { PackageManager, ProjectPreferences } from "../interfaces/ProjectPreferences";
-import { CliExeca } from "./CliExeca";
-import { CliFs } from "./CliFs";
+import {PackageJson} from "../interfaces/PackageJson";
+import {PackageManager, ProjectPreferences} from "../interfaces/ProjectPreferences";
+import {CliExeca} from "./CliExeca";
+import {CliFs} from "./CliFs";
 
 export interface InstallOptions {
   packageManager?: PackageManager;
@@ -41,7 +41,7 @@ function getPackageJson(configuration: Configuration) {
     if (result && result.path) {
       configuration.set("project.root", dirname(result.path));
 
-      return { ...getEmptyPackageJson(configuration), ...result.packageJson } as any;
+      return {...getEmptyPackageJson(configuration), ...result.packageJson} as any;
     }
   }
 
@@ -164,7 +164,7 @@ export class ProjectPackageJson {
     return this.raw.devDependencies;
   }
 
-  get allDependencies(): { [key: string]: string } {
+  get allDependencies(): {[key: string]: string} {
     return {
       ...(this.dependencies || {}),
       ...(this.devDependencies || {})
@@ -216,7 +216,7 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addDevDependencies(modules: { [key: string]: string | undefined }, scope: any = {}) {
+  addDevDependencies(modules: {[key: string]: string | undefined}, scope: any = {}) {
     const replacer = (match: any, key: string) => getValue(key, scope);
     Object.entries(modules).forEach(([pkg, version]) => {
       this.addDevDependency(pkg, (version || "").replace(/{{([\w.]+)}}/gi, replacer));
@@ -233,7 +233,7 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addDependencies(modules: { [key: string]: string | undefined }, ctx: any = {}) {
+  addDependencies(modules: {[key: string]: string | undefined}, ctx: any = {}) {
     const replacer = (match: any, key: string) => getValue(key, ctx);
 
     Object.entries(modules).forEach(([pkg, version]) => {
@@ -250,7 +250,7 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addScripts(scripts: { [key: string]: string }) {
+  addScripts(scripts: {[key: string]: string}) {
     Object.entries(scripts).forEach(([task, cmd]) => {
       this.addScript(task, cmd);
     });
@@ -302,7 +302,7 @@ export class ProjectPackageJson {
       _id: undefined
     };
 
-    return this.fs.writeFileSync(this.path, JSON.stringify(json, null, 2), { encoding: "utf8" });
+    return this.fs.writeFileSync(this.path, JSON.stringify(json, null, 2), {encoding: "utf8"});
   }
 
   hasYarn() {
@@ -317,7 +317,7 @@ export class ProjectPackageJson {
 
   install(options: InstallOptions = {}) {
     const packageManager = this.getPackageManager(options.packageManager);
-    let tasks: { title: string; skip: () => boolean; task: () => any; }[];
+    let tasks: {title: string; skip: () => boolean; task: () => any}[];
     switch (packageManager) {
       case "pnpm":
         tasks = this.installWithPnpm(options);
@@ -389,7 +389,7 @@ export class ProjectPackageJson {
     this.GH_TOKEN = GH_TOKEN;
   }
 
-  protected installWithYarn({ verbose }: any) {
+  protected installWithYarn({verbose}: any) {
     const devDeps = mapPackagesWithInvalidVersion(this.devDependencies);
     const deps = mapPackagesWithInvalidVersion(this.dependencies);
     const options = {
@@ -435,7 +435,7 @@ export class ProjectPackageJson {
     ];
   }
 
-  protected installWithNpm({ verbose }: any) {
+  protected installWithNpm({verbose}: any) {
     const devDeps = mapPackagesWithInvalidVersion(this.devDependencies);
     const deps = mapPackagesWithInvalidVersion(this.dependencies);
     const options = {
@@ -483,7 +483,7 @@ export class ProjectPackageJson {
     ];
   }
 
-  protected installWithPnpm({ verbose }: any) {
+  protected installWithPnpm({verbose}: any) {
     const devDeps = mapPackagesWithInvalidVersion(this.devDependencies);
     const deps = mapPackagesWithInvalidVersion(this.dependencies);
     const options = {
