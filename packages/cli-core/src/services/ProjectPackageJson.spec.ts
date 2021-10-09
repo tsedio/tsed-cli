@@ -407,11 +407,11 @@ describe("ProjectPackageJson", () => {
         cwd: rootDir,
         env: process.env
       });
-      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["install", "--prod", "module1", "module2@alpha"], {
+      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["add", "--save-prod", "module1", "module2@alpha"], {
         cwd: rootDir,
         env: process.env
       });
-      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["install", "--save-dev", "dev-module1", "dev-module2@alpha"], {
+      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["add", "--save-dev", "dev-module1", "dev-module2@alpha"], {
         cwd: rootDir,
         env: process.env
       });

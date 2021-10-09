@@ -500,20 +500,18 @@ export class ProjectPackageJson {
         skip: () => {
           return !this.reinstall;
         },
-        task: () => {
-          return this.cliExeca.run(PackageManager.PNPM, ["install", "--dev", verbose && "--verbose"].filter(Boolean), options);
-        }
+        task: () => this.cliExeca.run(PackageManager.PNPM, ["install", "--dev", verbose && "--verbose"].filter(Boolean), options)
       },
       {
         title: "Add dependencies using pnpm",
         skip: () => !deps.length,
-        task: () => this.cliExeca.run(PackageManager.PNPM, ["install", "--prod", verbose && "--verbose", ...deps].filter(Boolean), options)
+        task: () => this.cliExeca.run(PackageManager.PNPM, ["add", "--save-prod", verbose && "--verbose", ...deps].filter(Boolean), options)
       },
       {
         title: "Add devDependencies using pnpm",
         skip: () => !devDeps.length,
         task: () =>
-          this.cliExeca.run(PackageManager.PNPM, ["install", "--save-dev", verbose && "--verbose", ...devDeps].filter(Boolean), options)
+          this.cliExeca.run(PackageManager.PNPM, ["add", "--save-dev", verbose && "--verbose", ...devDeps].filter(Boolean), options)
       }
     ];
   }
