@@ -462,6 +462,11 @@ registerProvider({
             name: "NPM",
             checked: false,
             value: "npm"
+          },
+          {
+            name: "PNPM",
+            checked: false,
+            value: "pnpm"
           }
         ]
       }

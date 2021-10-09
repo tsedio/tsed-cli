@@ -120,6 +120,7 @@ export class InitCmd implements CommandProvider {
       ...ctx,
       features,
       srcDir: this.configuration.project?.srcDir,
+      pnpm: ctx.packageManager === PackageManager.PNPM,
       npm: ctx.packageManager === PackageManager.NPM,
       yarn: ctx.packageManager === PackageManager.YARN,
       express: ctx.platform === "express",

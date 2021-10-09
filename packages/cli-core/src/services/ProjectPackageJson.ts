@@ -1,15 +1,15 @@
-import {getValue, setValue} from "@tsed/core";
-import {Configuration, Inject, Injectable} from "@tsed/di";
+import { getValue, setValue } from "@tsed/core";
+import { Configuration, Inject, Injectable } from "@tsed/di";
 import Fs from "fs-extra";
-import {dirname, join} from "path";
+import { dirname, join } from "path";
 import readPkgUp from "read-pkg-up";
+import { EMPTY, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
 import semver from "semver";
-import {EMPTY, throwError} from "rxjs";
-import {catchError} from "rxjs/operators";
-import {PackageJson} from "../interfaces/PackageJson";
-import {CliExeca} from "./CliExeca";
-import {CliFs} from "./CliFs";
-import {PackageManager, ProjectPreferences} from "../interfaces/ProjectPreferences";
+import { PackageJson } from "../interfaces/PackageJson";
+import { PackageManager, ProjectPreferences } from "../interfaces/ProjectPreferences";
+import { CliExeca } from "./CliExeca";
+import { CliFs } from "./CliFs";
 
 export interface InstallOptions {
   packageManager?: PackageManager;
@@ -41,7 +41,7 @@ function getPackageJson(configuration: Configuration) {
     if (result && result.path) {
       configuration.set("project.root", dirname(result.path));
 
-      return {...getEmptyPackageJson(configuration), ...result.packageJson} as any;
+      return { ...getEmptyPackageJson(configuration), ...result.packageJson } as any;
     }
   }
 
@@ -85,8 +85,16 @@ function mapPackagesWithValidVersion(deps: any) {
 }
 
 function defaultPreferences(pkg?: any): Record<string, any> {
+  let packageManager = PackageManager.YARN;
+
+  if (getValue(pkg, "scripts.build", "").includes("npm ")) {
+    packageManager = PackageManager.NPM;
+  } else if (getValue(pkg, "scripts.build", "").includes("pnpm ")) {
+    packageManager = PackageManager.PNPM;
+  }
+
   return {
-    packageManager: getValue(pkg, "scripts.build", "").includes("npm ") ? PackageManager.NPM : PackageManager.YARN
+    packageManager
   };
 }
 
@@ -156,7 +164,7 @@ export class ProjectPackageJson {
     return this.raw.devDependencies;
   }
 
-  get allDependencies(): {[key: string]: string} {
+  get allDependencies(): { [key: string]: string } {
     return {
       ...(this.dependencies || {}),
       ...(this.devDependencies || {})
@@ -190,7 +198,14 @@ export class ProjectPackageJson {
   }
 
   getRunCmd() {
-    return this.preferences.packageManager === "npm" ? "npm run" : "yarn run";
+    switch (this.preferences.packageManager) {
+      case "npm":
+        return "npm run";
+      case "pnpm":
+        return "pnpm run";
+      default:
+        return "yarn run";
+    }
   }
 
   addDevDependency(pkg: string, version?: string) {
@@ -201,7 +216,7 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addDevDependencies(modules: {[key: string]: string | undefined}, scope: any = {}) {
+  addDevDependencies(modules: { [key: string]: string | undefined }, scope: any = {}) {
     const replacer = (match: any, key: string) => getValue(key, scope);
     Object.entries(modules).forEach(([pkg, version]) => {
       this.addDevDependency(pkg, (version || "").replace(/{{([\w.]+)}}/gi, replacer));
@@ -218,7 +233,7 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addDependencies(modules: {[key: string]: string | undefined}, ctx: any = {}) {
+  addDependencies(modules: { [key: string]: string | undefined }, ctx: any = {}) {
     const replacer = (match: any, key: string) => getValue(key, ctx);
 
     Object.entries(modules).forEach(([pkg, version]) => {
@@ -235,7 +250,7 @@ export class ProjectPackageJson {
     return this;
   }
 
-  addScripts(scripts: {[key: string]: string}) {
+  addScripts(scripts: { [key: string]: string }) {
     Object.entries(scripts).forEach(([task, cmd]) => {
       this.addScript(task, cmd);
     });
@@ -287,7 +302,7 @@ export class ProjectPackageJson {
       _id: undefined
     };
 
-    return this.fs.writeFileSync(this.path, JSON.stringify(json, null, 2), {encoding: "utf8"});
+    return this.fs.writeFileSync(this.path, JSON.stringify(json, null, 2), { encoding: "utf8" });
   }
 
   hasYarn() {
@@ -302,7 +317,17 @@ export class ProjectPackageJson {
 
   install(options: InstallOptions = {}) {
     const packageManager = this.getPackageManager(options.packageManager);
-    const tasks = packageManager === "yarn" ? this.installWithYarn(options) : this.installWithNpm(options);
+    let tasks: { title: string; skip: () => boolean; task: () => any; }[];
+    switch (packageManager) {
+      case "pnpm":
+        tasks = this.installWithPnpm(options);
+        break;
+      case "npm":
+        tasks = this.installWithNpm(options);
+        break;
+      default:
+        tasks = this.installWithYarn(options);
+    }
 
     return [
       {
@@ -364,7 +389,7 @@ export class ProjectPackageJson {
     this.GH_TOKEN = GH_TOKEN;
   }
 
-  protected installWithYarn({verbose}: any) {
+  protected installWithYarn({ verbose }: any) {
     const devDeps = mapPackagesWithInvalidVersion(this.devDependencies);
     const deps = mapPackagesWithInvalidVersion(this.dependencies);
     const options = {
@@ -410,7 +435,7 @@ export class ProjectPackageJson {
     ];
   }
 
-  protected installWithNpm({verbose}: any) {
+  protected installWithNpm({ verbose }: any) {
     const devDeps = mapPackagesWithInvalidVersion(this.devDependencies);
     const deps = mapPackagesWithInvalidVersion(this.dependencies);
     const options = {
@@ -454,6 +479,41 @@ export class ProjectPackageJson {
             ["install", "--save-dev", "--legacy-peer-deps", verbose && "--verbose", ...devDeps].filter(Boolean),
             options
           )
+      }
+    ];
+  }
+
+  protected installWithPnpm({ verbose }: any) {
+    const devDeps = mapPackagesWithInvalidVersion(this.devDependencies);
+    const deps = mapPackagesWithInvalidVersion(this.dependencies);
+    const options = {
+      cwd: this.dir,
+      env: {
+        ...process.env,
+        GH_TOKEN: this.GH_TOKEN
+      }
+    };
+
+    return [
+      {
+        title: "Installing dependencies using pnpm",
+        skip: () => {
+          return !this.reinstall;
+        },
+        task: () => {
+          return this.cliExeca.run(PackageManager.PNPM, ["install", "--dev", verbose && "--verbose"].filter(Boolean), options);
+        }
+      },
+      {
+        title: "Add dependencies using pnpm",
+        skip: () => !deps.length,
+        task: () => this.cliExeca.run(PackageManager.PNPM, ["install", "--prod", verbose && "--verbose", ...deps].filter(Boolean), options)
+      },
+      {
+        title: "Add devDependencies using pnpm",
+        skip: () => !devDeps.length,
+        task: () =>
+          this.cliExeca.run(PackageManager.PNPM, ["install", "--save-dev", verbose && "--verbose", ...devDeps].filter(Boolean), options)
       }
     ];
   }
