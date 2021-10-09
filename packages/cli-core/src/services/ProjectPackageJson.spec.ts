@@ -1,5 +1,5 @@
-import {CliPlatformTest} from "@tsed/cli-testing";
 import {CliExeca, CliFs, createSubTasks, createTasksRunner, PackageManager, ProjectPackageJson} from "@tsed/cli-core";
+import {CliPlatformTest} from "@tsed/cli-testing";
 import {join, resolve} from "path";
 
 async function getProjectPackageJsonFixture() {
@@ -139,6 +139,7 @@ describe("ProjectPackageJson", () => {
       });
     });
   });
+
   describe("with NPM", () => {
     it("should read package.json and add dependencies (asked for yarn, but fallback to npm)", async () => {
       const {projectPackageJson, cliExeca, cliFs} = await getProjectPackageJsonFixture();
@@ -323,6 +324,97 @@ describe("ProjectPackageJson", () => {
           env: process.env
         }
       );
+    });
+  });
+
+  describe("with PNPM", () => {
+    it("should read package.json and add dependencies (asked for pnpm)", async () => {
+      const {projectPackageJson, cliExeca, cliFs} = await getProjectPackageJsonFixture();
+      cliExeca.run.mockResolvedValue(undefined);
+
+      jest.spyOn(projectPackageJson, "hasYarn").mockReturnValue(false);
+
+      projectPackageJson.setPreference("packageManager", PackageManager.PNPM);
+
+      projectPackageJson.set("name", "name");
+      projectPackageJson.set("version", "1.0.0");
+      projectPackageJson.set("description", "description");
+      projectPackageJson.addScripts({
+        build: "echo 0"
+      });
+      projectPackageJson.addDependencies({
+        module1: "latest",
+        module2: "alpha",
+        module3: "6.0.0"
+      });
+
+      projectPackageJson.addDevDependencies({
+        "dev-module1": "latest",
+        "dev-module2": "alpha",
+        "dev-module3": "6.0.0"
+      });
+
+      expect(projectPackageJson.toJSON()).toEqual({
+        _id: "@",
+        dependencies: {
+          module1: "latest",
+          module2: "alpha",
+          module3: "6.0.0"
+        },
+        description: "description",
+        devDependencies: {
+          "dev-module1": "latest",
+          "dev-module2": "alpha",
+          "dev-module3": "6.0.0"
+        },
+        name: "name",
+        readme: "ERROR: No README data found!",
+        scripts: {
+          build: "echo 0"
+        },
+        tsed: {
+          packageManager: "pnpm"
+        },
+        version: "1.0.0"
+      });
+
+      // WHEN
+      await taskFixtureRunner(() => projectPackageJson.install({packageManager: PackageManager.PNPM}));
+
+      const expectedJson = {
+        name: "name",
+        version: "1.0.0",
+        description: "description",
+        scripts: {
+          build: "echo 0"
+        },
+        dependencies: {
+          module3: "6.0.0"
+        },
+        devDependencies: {
+          "dev-module3": "6.0.0"
+        },
+        tsed: {
+          packageManager: "pnpm"
+        }
+      };
+
+      expect(cliFs.writeFileSync).toHaveBeenCalledWith(resolve(join(rootDir, "package.json")), JSON.stringify(expectedJson, null, 2), {
+        encoding: "utf8"
+      });
+
+      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["install", "--dev"], {
+        cwd: rootDir,
+        env: process.env
+      });
+      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["install", "--prod", "module1", "module2@alpha"], {
+        cwd: rootDir,
+        env: process.env
+      });
+      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["install", "--save-dev", "dev-module1", "dev-module2@alpha"], {
+        cwd: rootDir,
+        env: process.env
+      });
     });
   });
 });
