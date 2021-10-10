@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import {Cli} from "../Cli";
 import commands from "../commands";
-import {ProjectConvention} from "../interfaces";
+import {ArchitectureConvention, ProjectConvention} from "../interfaces";
 import {TEMPLATE_DIR} from "../constants";
 
 Cli.bootstrap({
@@ -12,7 +12,8 @@ Cli.bootstrap({
   commands,
   defaultProjectPreferences() {
     return {
-      convention: ProjectConvention.DEFAULT
+      convention: ProjectConvention.DEFAULT,
+      architecture: ArchitectureConvention.DEFAULT
     };
   },
   project: {

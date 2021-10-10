@@ -3,7 +3,7 @@ import {Inject} from "@tsed/di";
 import {dirname, join} from "path";
 import {ProvidersInfoService} from "../services/ProvidersInfoService";
 import {ClassNamePipe} from "./ClassNamePipe";
-import {ProjectConvention} from "../interfaces/ProjectConvention";
+import {ProjectConvention, ArchitectureConvention} from "../interfaces";
 
 @Injectable()
 export class OutputFilePathPipe {
@@ -20,7 +20,7 @@ export class OutputFilePathPipe {
 
     const dir = dirname(options.name);
 
-    if (options.type === "server") {
+    if (options.type === "server" || this.projectPackageJson.preferences.architecture === ArchitectureConvention.FEATURE) {
       return join(dir, this.classNamePipe.transform(options));
     }
 
