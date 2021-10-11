@@ -1,6 +1,7 @@
 export enum PackageManager {
   YARN = "yarn",
-  NPM = "npm"
+  NPM = "npm",
+  PNPM = "pnpm"
 }
 
 declare global {

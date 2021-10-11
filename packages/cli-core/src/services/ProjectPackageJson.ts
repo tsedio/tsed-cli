@@ -3,13 +3,13 @@ import {Configuration, Inject, Injectable} from "@tsed/di";
 import Fs from "fs-extra";
 import {dirname, join} from "path";
 import readPkgUp from "read-pkg-up";
-import semver from "semver";
 import {EMPTY, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import semver from "semver";
 import {PackageJson} from "../interfaces/PackageJson";
+import {PackageManager, ProjectPreferences} from "../interfaces/ProjectPreferences";
 import {CliExeca} from "./CliExeca";
 import {CliFs} from "./CliFs";
-import {PackageManager, ProjectPreferences} from "../interfaces/ProjectPreferences";
 
 export interface InstallOptions {
   packageManager?: PackageManager;
@@ -85,8 +85,16 @@ function mapPackagesWithValidVersion(deps: any) {
 }
 
 function defaultPreferences(pkg?: any): Record<string, any> {
+  let packageManager = PackageManager.YARN;
+
+  if (getValue(pkg, "scripts.build", "").includes("pnpm ")) {
+    packageManager = PackageManager.PNPM;
+  } else if (getValue(pkg, "scripts.build", "").includes("npm ")) {
+    packageManager = PackageManager.NPM;
+  }
+
   return {
-    packageManager: getValue(pkg, "scripts.build", "").includes("npm ") ? PackageManager.NPM : PackageManager.YARN
+    packageManager
   };
 }
 
@@ -190,7 +198,14 @@ export class ProjectPackageJson {
   }
 
   getRunCmd() {
-    return this.preferences.packageManager === "npm" ? "npm run" : "yarn run";
+    switch (this.preferences.packageManager) {
+      case "npm":
+        return "npm run";
+      case "pnpm":
+        return "pnpm run";
+      default:
+        return "yarn run";
+    }
   }
 
   addDevDependency(pkg: string, version?: string) {
@@ -302,7 +317,17 @@ export class ProjectPackageJson {
 
   install(options: InstallOptions = {}) {
     const packageManager = this.getPackageManager(options.packageManager);
-    const tasks = packageManager === "yarn" ? this.installWithYarn(options) : this.installWithNpm(options);
+    let tasks: {title: string; skip: () => boolean; task: () => any}[];
+    switch (packageManager) {
+      case "pnpm":
+        tasks = this.installWithPnpm(options);
+        break;
+      case "npm":
+        tasks = this.installWithNpm(options);
+        break;
+      default:
+        tasks = this.installWithYarn(options);
+    }
 
     return [
       {
@@ -454,6 +479,39 @@ export class ProjectPackageJson {
             ["install", "--save-dev", "--legacy-peer-deps", verbose && "--verbose", ...devDeps].filter(Boolean),
             options
           )
+      }
+    ];
+  }
+
+  protected installWithPnpm({verbose}: any) {
+    const devDeps = mapPackagesWithInvalidVersion(this.devDependencies);
+    const deps = mapPackagesWithInvalidVersion(this.dependencies);
+    const options = {
+      cwd: this.dir,
+      env: {
+        ...process.env,
+        GH_TOKEN: this.GH_TOKEN
+      }
+    };
+
+    return [
+      {
+        title: "Installing dependencies using pnpm",
+        skip: () => {
+          return !this.reinstall;
+        },
+        task: () => this.cliExeca.run(PackageManager.PNPM, ["install", "--dev", verbose && "--verbose"].filter(Boolean), options)
+      },
+      {
+        title: "Add dependencies using pnpm",
+        skip: () => !deps.length,
+        task: () => this.cliExeca.run(PackageManager.PNPM, ["add", "--save-prod", verbose && "--verbose", ...deps].filter(Boolean), options)
+      },
+      {
+        title: "Add devDependencies using pnpm",
+        skip: () => !devDeps.length,
+        task: () =>
+          this.cliExeca.run(PackageManager.PNPM, ["add", "--save-dev", verbose && "--verbose", ...devDeps].filter(Boolean), options)
       }
     ];
   }
