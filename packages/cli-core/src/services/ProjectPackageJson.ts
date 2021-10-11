@@ -87,10 +87,10 @@ function mapPackagesWithValidVersion(deps: any) {
 function defaultPreferences(pkg?: any): Record<string, any> {
   let packageManager = PackageManager.YARN;
 
-  if (getValue(pkg, "scripts.build", "").includes("npm ")) {
-    packageManager = PackageManager.NPM;
-  } else if (getValue(pkg, "scripts.build", "").includes("pnpm ")) {
+  if (getValue(pkg, "scripts.build", "").includes("pnpm ")) {
     packageManager = PackageManager.PNPM;
+  } else if (getValue(pkg, "scripts.build", "").includes("npm ")) {
+    packageManager = PackageManager.NPM;
   }
 
   return {
