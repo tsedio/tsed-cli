@@ -27,10 +27,6 @@ import {IndexCtrl} from "./controllers/pages/IndexController";
   },
   swagger: [
     {
-      path: "/v2/docs",
-      specVersion: "2.0"
-    },
-    {
       path: "/v3/docs",
       specVersion: "3.0.1"
     }
