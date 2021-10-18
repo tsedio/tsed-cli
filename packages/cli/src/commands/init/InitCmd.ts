@@ -389,6 +389,7 @@ export class InitCmd implements CommandProvider {
         koa: "latest",
         "@koa/cors": "latest",
         "@koa/router": "latest",
+        "koa-qs": "latest",
         "koa-bodyparser": "latest",
         "koa-override": "latest",
         "koa-compress": "latest"
@@ -399,6 +400,7 @@ export class InitCmd implements CommandProvider {
     this.packageJson.addDevDependencies(
       {
         "@types/koa": "latest",
+        "@types/koa-qs": "latest",
         "@types/koa-json": "latest",
         "@types/koa-bodyparser": "latest",
         "@types/koa__router": "latest",
