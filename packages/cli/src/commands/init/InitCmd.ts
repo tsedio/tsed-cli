@@ -405,6 +405,7 @@ export class InitCmd implements CommandProvider {
         "@types/koa-bodyparser": "latest",
         "@types/koa__router": "latest",
         "@types/koa-compress": "latest",
+        "@types/koa-send": "latest",
         "@types/koa__cors": "latest"
       },
       ctx
