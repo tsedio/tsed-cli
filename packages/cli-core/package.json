@@ -53,7 +53,7 @@
     "tslib": "2.3.1",
     "tunnel": "0.0.6",
     "update-notifier": "5.1.0",
-    "url-parse": "1.5.1"
+    "url-parse": "1.5.3"
   },
   "devDependencies": {
     "@types/axios": "0.14.0",
