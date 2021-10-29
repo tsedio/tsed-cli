@@ -1,5 +1,5 @@
 import {useDecorators} from "@tsed/core";
-import {EndpointFn, EndpointMetadata} from "@tsed/common";
+import {JsonEntityFn, JsonEntityStore} from "@tsed/schema";
 
 export interface {{symbolName}}Options {
 
@@ -7,8 +7,8 @@ export interface {{symbolName}}Options {
 
 export function {{symbolName}}(options: {{symbolName}}Options): MethodDecorator {
   return useDecorators(
-   EndpointFn((endpoint: EndpointMetadata) => {
-     endpoint.store.set({{symbolName}}, options);
+   JsonEntityFn((entity: JsonEntityStore) => {
+     entity.store.set({{symbolName}}, options);
    })
    // add other decorator like Use(), UseBefore, UseAuth, etc...
   );

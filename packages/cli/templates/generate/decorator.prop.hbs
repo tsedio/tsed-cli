@@ -1,5 +1,5 @@
 import {useDecorators} from "@tsed/core";
-import {PropertyMetadata, PropertyFn} from "@tsed/common";
+import {JsonEntityFn, JsonEntityStore} from "@tsed/schema";
 
 export interface {{symbolName}}Options {
 
@@ -7,7 +7,7 @@ export interface {{symbolName}}Options {
 
 export function {{symbolName}}(options: {{symbolName}}Options): PropertyDecorator {
   return useDecorators(
-    PropertyFn((propertyMetadata: PropertyMetadata) => {
+    JsonEntityFn((entity: JsonEntityStore) => {
 
     })
   );

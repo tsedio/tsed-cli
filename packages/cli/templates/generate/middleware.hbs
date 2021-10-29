@@ -1,8 +1,9 @@
-import {Middleware, Req, Res, Next} from "@tsed/common";
+import {Middleware, MiddlewareMethods} from "@tsed/platform-middlewares";
+import {Context} from "@tsed/platform-params";
 
 @Middleware()
-export class {{symbolName}} {
-  use(@Req() req: Req, @Res() res: Res, @Next() next: Next) {
+export class {{symbolName}} implements MiddlewareMethods {
+  use(@Context() ctx: Context) {
 
   }
 }

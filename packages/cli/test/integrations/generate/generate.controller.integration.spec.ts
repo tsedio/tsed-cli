@@ -36,7 +36,8 @@ describe("Generate Controller", () => {
     expect(FakeCliFs.getKeys()).toEqual(["project-name/src/controllers", "project-name/src/controllers/TestController.ts"]);
 
     const result = FakeCliFs.entries.get("project-name/src/controllers/TestController.ts");
-    expect(result).toContain("import {Controller, Get} from \"@tsed/common\";");
+    expect(result).toContain("import {Controller} from \"@tsed/di\";");
+    expect(result).toContain("import {Get} from \"@tsed/schema\";");
     expect(result).toContain("@Controller(\"/tests\")");
     expect(result).toContain("TestController");
   });
@@ -62,7 +63,8 @@ describe("Generate Controller", () => {
     expect(FakeCliFs.getKeys()).toEqual(["project-name/src/controllers/users", "project-name/src/controllers/users/UserController.ts"]);
 
     const result = FakeCliFs.entries.get("project-name/src/controllers/users/UserController.ts");
-    expect(result).toContain("import {Controller, Get} from \"@tsed/common\";");
+    expect(result).toContain("import {Controller} from \"@tsed/di\";");
+    expect(result).toContain("import {Get} from \"@tsed/schema\";");
     expect(result).toContain("@Controller(\"/users\")");
     expect(result).toContain("UserController");
   });
