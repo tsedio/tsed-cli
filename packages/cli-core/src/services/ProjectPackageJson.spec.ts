@@ -125,15 +125,15 @@ describe("ProjectPackageJson", () => {
         encoding: "utf8"
       });
 
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["install", "--production=false"], {
+      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["install", "--production=false", "--ignore-engines"], {
         cwd: rootDir,
         env: process.env
       });
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "module1", "module2@alpha"], {
+      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "--ignore-engines", "module1", "module2@alpha"], {
         cwd: rootDir,
         env: process.env
       });
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "-D", "dev-module1", "dev-module2@alpha"], {
+      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "-D", "--ignore-engines", "dev-module1", "dev-module2@alpha"], {
         cwd: rootDir,
         env: process.env
       });
