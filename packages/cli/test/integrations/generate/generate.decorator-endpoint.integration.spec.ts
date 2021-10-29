@@ -38,10 +38,10 @@ describe("Generate endpoint decorator", () => {
     const result = FakeCliFs.entries.get("project-name/src/decorators/Test.ts");
 
     expect(result).toContain('import {useDecorators} from "@tsed/core"');
-    expect(result).toContain('import {EndpointFn, EndpointMetadata} from "@tsed/common"');
+    expect(result).toContain('import {JsonEntityFn, JsonEntityStore} from "@tsed/schema"');
     expect(result).toContain("export interface TestOptions {");
     expect(result).toContain("export function Test(options: TestOptions): MethodDecorator");
-    expect(result).toContain("EndpointFn((endpoint: EndpointMetadata)");
-    expect(result).toContain("endpoint.store.set(Test, options)");
+    expect(result).toContain("JsonEntityFn((entity: JsonEntityStore)");
+    expect(result).toContain("entity.store.set(Test, options)");
   });
 });

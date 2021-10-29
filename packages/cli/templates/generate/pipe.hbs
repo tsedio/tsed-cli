@@ -1,8 +1,8 @@
 import {Injectable} from "@tsed/di";
-import {HandlerContext, IPipe, ParamMetadata} from "@tsed/common";
+import {PipeMethods, ParamMetadata} from "@tsed/platform-params";
 
 @Injectable()
-export class {{symbolName}} extends IPipe {
+export class {{symbolName}} extends PipeMethods {
   transform(value: any, param: ParamMetadata) {
     return null;
   }

@@ -1,11 +1,7 @@
 import {useDecorators, StoreSet} from "@tsed/core";
-import {
-  Middleware,
-  Req,
-  Res,
-  Context,
-  {{#eq middlewarePosition "before"}}UseBefore{{/eq}}{{#eq middlewarePosition "after"}}UseAfter{{/eq}}
-} from "@tsed/common";
+import {Middleware{{#eq middlewarePosition "before"}}, UseBefore{{/eq}}{{#eq middlewarePosition "after"}}, UseAfter{{/eq}}\} from "@tsed/platform-middlewares";
+import {Context} from "@tsed/platform-params";
+import {Req, Res} from "@tsed/common";
 
 export interface {{symbolName}}Options {
 
