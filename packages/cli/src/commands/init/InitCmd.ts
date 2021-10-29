@@ -309,6 +309,7 @@ export class InitCmd implements CommandProvider {
       {
         "@types/node": "latest",
         "@types/multer": "latest",
+        tslib: "latest",
         "ts-node": "latest",
         "tsconfig-paths": "latest",
         typescript: "latest"
