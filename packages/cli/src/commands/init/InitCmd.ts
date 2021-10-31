@@ -350,7 +350,7 @@ export class InitCmd implements CommandProvider {
     if (ctx.features.find(({type}) => type === "graphql")) {
       this.packageJson.addDependencies(
         {
-          ["apollo-server-" + ctx.platform]: "latest"
+          ["apollo-server-" + ctx.platform]: "2.25.2"
         },
         ctx
       );

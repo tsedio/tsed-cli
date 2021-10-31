@@ -219,11 +219,12 @@ registerProvider({
             value: {
               type: "graphql",
               dependencies: {
-                "@tsed/graphql": "{{tsedVersion}}",
+                "@tsed/typegraphql": "{{tsedVersion}}",
                 "apollo-datasource": "latest",
                 "apollo-datasource-rest": "latest",
                 "type-graphql": "latest",
-                graphql: "latest"
+                graphql: "^15.5.0",
+                "class-validator": "latest"
               },
               devDependencies: {
                 "apollo-server-testing": "latest"
