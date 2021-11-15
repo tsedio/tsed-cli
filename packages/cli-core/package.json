@@ -72,7 +72,7 @@
     "@types/url-parse": "^1.4.3"
   },
   "peerDependencies": {
-    "@tsed/core": "^6.70.1",
-    "@tsed/di": "^6.70.1"
+    "@tsed/core": "^6.81.0",
+    "@tsed/di": "^6.81.0"
   }
 }

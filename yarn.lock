@@ -3354,32 +3354,32 @@
   resolved "https://registry.npmjs.org/@tootallnate/once/-/once-1.1.2.tgz"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
-"@tsed/components-scan@^6.70.1":
-  version "6.70.1"
-  resolved "https://registry.yarnpkg.com/@tsed/components-scan/-/components-scan-6.70.1.tgz#a1691b8dfefdc4746818a347c0677bb9eeaf1ce4"
-  integrity sha512-5x0oA7vi4yFDPBfzKTeAOu07fcTVfb79wlNOZE1oTHeVCG25q6O+srW4L+O4gC22hz1BSh/lM/U1lUCQJZnt+A==
+"@tsed/components-scan@^6.81.0":
+  version "6.81.0"
+  resolved "https://registry.yarnpkg.com/@tsed/components-scan/-/components-scan-6.81.0.tgz#dec089f18f3657ad58ca56d8c8ef400c9aa62000"
+  integrity sha512-keuJ0cvjG8oQqn0a5hn6Vq49Sj9V2SHnE2WC2llMF5SxlPJxE0PpeS2LSTRF5CjQqUd+al0BhQUmAb+YSaSv2Q==
   dependencies:
-    "@tsed/core" "6.70.1"
-    "@tsed/di" "6.70.1"
+    "@tsed/core" "6.81.0"
+    "@tsed/di" "6.81.0"
     globby "11.0.3"
     normalize-path "3.0.0"
     tslib "2.2.0"
 
-"@tsed/core@6.70.1", "@tsed/core@^6.70.1":
-  version "6.70.1"
-  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-6.70.1.tgz#9a154c31a382aeb85c1205ce1df9ca93416e888c"
-  integrity sha512-yZtcYza1k6ruc4gSO/TSCvTjlbmOGAw6PWGT3kxBxxZM2xarN2NJjsd1ItZEJl48aOapv6oVhvYeyfD7imwg4w==
+"@tsed/core@6.81.0", "@tsed/core@^6.81.0":
+  version "6.81.0"
+  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-6.81.0.tgz#1e5970cab7e463b76ec564e89baf49c0ae60c94e"
+  integrity sha512-6ecNOtGOSJF8vRr/GVGbh/PE7yFPBUR0POieDA8kLLFnfTfvBc5vdV0eUOzCMWU1tzatC86LCMOWj2OqlgYG4w==
   dependencies:
     reflect-metadata "^0.1.13"
     tslib "2.2.0"
 
-"@tsed/di@6.70.1", "@tsed/di@^6.70.1":
-  version "6.70.1"
-  resolved "https://registry.yarnpkg.com/@tsed/di/-/di-6.70.1.tgz#aead38f3c2fb9493e23e602172a99f1a7fc7fa17"
-  integrity sha512-2sI4EkgaF9iQWjK9HYXPXzXzwDk0hcz3qUOnerLISKuUFDbv0W5x5rcuPOL6ClDxpNe0Sa/jXX+5C9cXMyT7jw==
+"@tsed/di@6.81.0", "@tsed/di@^6.81.0":
+  version "6.81.0"
+  resolved "https://registry.yarnpkg.com/@tsed/di/-/di-6.81.0.tgz#070368474b794d0faf08ecba52fbcc65933a55f8"
+  integrity sha512-7k31hW37zNgzW3c1vpQ/GNCEoo8W49eD1z7CjWt4/2w7CJieHDF5NXpWlmw8eNpgw2rDCTzzyPZCwi+s9sOHtg==
   dependencies:
-    "@tsed/core" "6.70.1"
-    chalk "4.1.0"
+    "@tsed/core" "6.81.0"
+    "@tsed/schema" "6.81.0"
     tslib "2.2.0"
 
 "@tsed/logger@5.17.0", "@tsed/logger@^5.17.0":
@@ -3425,6 +3425,23 @@
     normalize-path "3.0.0"
     read-package-json "2.1.1"
     semver "7.3.2"
+
+"@tsed/openspec@6.81.0":
+  version "6.81.0"
+  resolved "https://registry.yarnpkg.com/@tsed/openspec/-/openspec-6.81.0.tgz#b6e1f363e2e79333b941b3799707e3a95b7ad060"
+  integrity sha512-m5AMFyd2e0ScOjMqcKxzaIkN6oUTnGjG6Zq7pLS1pE26QW4WPkW9t2jnpSz//EPlMC78ZgEFrFPjORhlwq0uOQ==
+
+"@tsed/schema@6.81.0":
+  version "6.81.0"
+  resolved "https://registry.yarnpkg.com/@tsed/schema/-/schema-6.81.0.tgz#08d209fc34921b53c11480e4e4c5aa42bddce57b"
+  integrity sha512-Hk5qRUvWyZeeL847GLeLZtUOd6DSfVf+Ks2Rhp8hFu56ctpsbCUjxwhNmoMOKCH5temjXSodZv9/uKGYAwwbVQ==
+  dependencies:
+    "@tsed/core" "6.81.0"
+    "@tsed/openspec" "6.81.0"
+    camel-case "4.1.2"
+    micromatch "4.0.2"
+    pascal-case "3.1.2"
+    tslib "2.2.0"
 
 "@tsed/vuepress-common@3.14.3":
   version "3.14.3"
@@ -5802,9 +5819,9 @@ camel-case@3.0.x:
     no-case "^2.2.0"
     upper-case "^1.1.1"
 
-camel-case@^4.1.1, camel-case@^4.1.2:
+camel-case@4.1.2, camel-case@^4.1.1, camel-case@^4.1.2:
   version "4.1.2"
-  resolved "https://registry.npmjs.org/camel-case/-/camel-case-4.1.2.tgz"
+  resolved "https://registry.yarnpkg.com/camel-case/-/camel-case-4.1.2.tgz#9728072a954f805228225a6deea6b38461e1bd5a"
   integrity sha512-gxGWBrTT1JuMx6R+o5PTXMmUnhnVzLQ9SNutD4YqKtI6ap897t3tKECYla6gCWEkplXnlNybEkZg9GEGxKFCgw==
   dependencies:
     pascal-case "^3.1.2"
@@ -12613,6 +12630,14 @@ microbundle@0.13.0:
     tslib "^2.0.3"
     typescript "^4.1.3"
 
+micromatch@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.2.tgz#4fcb0999bf9fbc2fcbdd212f6d629b9a56c39259"
+  integrity sha512-y7FpHSbMUMoyPbYUSzO6PaZ6FyRnQOpHuKwbo1G+Knck95XVU4QAiKdGEnj5wwoS7PlOgthX/09u5iFJ+aYf5Q==
+  dependencies:
+    braces "^3.0.1"
+    picomatch "^2.0.5"
+
 micromatch@^3.1.10, micromatch@^3.1.4:
   version "3.1.10"
   resolved "https://registry.npmjs.org/micromatch/-/micromatch-3.1.10.tgz"
@@ -14126,7 +14151,7 @@ parseurl@~1.3.2, parseurl@~1.3.3:
   resolved "https://registry.npmjs.org/parseurl/-/parseurl-1.3.3.tgz"
   integrity sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==
 
-pascal-case@^3.1.1, pascal-case@^3.1.2:
+pascal-case@3.1.2, pascal-case@^3.1.1, pascal-case@^3.1.2:
   version "3.1.2"
   resolved "https://registry.npmjs.org/pascal-case/-/pascal-case-3.1.2.tgz"
   integrity sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==
@@ -14260,7 +14285,7 @@ picomatch@^2.0.4:
   resolved "https://registry.npmjs.org/picomatch/-/picomatch-2.2.2.tgz"
   integrity sha512-q0M/9eZHzmr0AulXyPwNfZjtwZ/RBZlbN3K3CErVrk50T2ASYI7Bye0EvekFY3IP1Nt2DHu0re+V2ZHIpMkuWg==
 
-picomatch@^2.2.1, picomatch@^2.2.2, picomatch@^2.2.3:
+picomatch@^2.0.5, picomatch@^2.2.1, picomatch@^2.2.2, picomatch@^2.2.3:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.3.0.tgz#f1f061de8f6a4bf022892e2d128234fb98302972"
   integrity sha512-lY1Q/PiJGC2zOv/z391WOTD+Z02bCgsFfvxoXXf6h7kv9o+WmsmzYqrAwY63sNgOxE4xEdq0WyUnXfKeBrSvYw==
