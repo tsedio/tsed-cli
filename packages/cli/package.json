@@ -25,9 +25,9 @@
   ],
   "dependencies": {
     "@tsed/cli-core": "3.15.0",
-    "@tsed/core": "^6.81.0",
-    "@tsed/di": "^6.81.0",
-    "@tsed/logger": "5.17.0",
+    "@tsed/core": ">=6.95.1",
+    "@tsed/di": ">=6.95.1",
+    "@tsed/logger": ">=6.0.0",
     "change-case": "4.1.2",
     "normalize-path": "3.0.0",
     "tslib": "2.3.1"

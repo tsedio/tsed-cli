@@ -223,7 +223,7 @@ registerProvider({
                 "apollo-datasource": "latest",
                 "apollo-datasource-rest": "latest",
                 "type-graphql": "latest",
-                graphql: "^15.5.0",
+                graphql: "latest",
                 "class-validator": "latest"
               },
               devDependencies: {
