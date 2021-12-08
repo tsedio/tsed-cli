@@ -267,9 +267,8 @@ export class InitCmd implements CommandProvider {
     const runner = this.packageJson.getRunCmd();
 
     this.packageJson.addScripts({
-      build: `${runner} tsc`,
-      tsc: "tsc --project tsconfig.compile.json",
-      "tsc:w": "tsc --project tsconfig.json -w",
+      build: `${runner} tsc --project tsconfig.compile.json`,
+      "build:w": "tsc --project tsconfig.compile.json -w",
       start: "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
       "start:prod": "cross-env NODE_ENV=production node dist/index.js"
     });

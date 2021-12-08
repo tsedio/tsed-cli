@@ -15,18 +15,12 @@ function createConfiguration(injector: InjectorService): CliConfiguration & TsED
   return injector.invoke<CliConfiguration & TsED.Configuration>(CliConfiguration);
 }
 
-function createProjectPackageJson(injector: InjectorService): ProjectPackageJson {
-  injector.addProvider(ProjectPackageJson);
-
-  return injector.invoke<ProjectPackageJson>(ProjectPackageJson);
-}
-
 export function createInjector(settings: Partial<DIConfigurationOptions> = {}) {
   const injector = new InjectorService();
   injector.settings = createConfiguration(injector);
   logger = injector.logger = new Logger(settings.name || "CLI");
 
-  createProjectPackageJson(injector);
+  injector.addProvider(ProjectPackageJson);
 
   injector.settings.set(settings);
 

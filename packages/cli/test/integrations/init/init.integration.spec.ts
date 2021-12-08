@@ -93,11 +93,10 @@ describe("Init cmd", () => {
         devDependencies: {},
         name: "project-data",
         scripts: {
-          build: "yarn run tsc",
-          start: "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
-          "start:prod": "cross-env NODE_ENV=production node dist/index.js",
-          tsc: "tsc --project tsconfig.compile.json",
-          "tsc:w": "tsc --project tsconfig.json -w"
+          "build": "yarn run tsc --project tsconfig.compile.json",
+          "build:w": "tsc --project tsconfig.compile.json -w",
+          "start": "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+          "start:prod": "cross-env NODE_ENV=production node dist/index.js"
         },
         version: "1.0.0",
         tsed: {
@@ -177,11 +176,10 @@ describe("Init cmd", () => {
         devDependencies: {},
         name: "project-data",
         scripts: {
-          build: "yarn run tsc",
-          start: "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
-          "start:prod": "cross-env NODE_ENV=production node dist/index.js",
-          tsc: "tsc --project tsconfig.compile.json",
-          "tsc:w": "tsc --project tsconfig.json -w"
+          "build": "yarn run tsc --project tsconfig.compile.json",
+          "build:w": "tsc --project tsconfig.compile.json -w",
+          "start": "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+          "start:prod": "cross-env NODE_ENV=production node dist/index.js"
         },
         version: "1.0.0",
         tsed: {
@@ -255,11 +253,10 @@ describe("Init cmd", () => {
         devDependencies: {},
         name: "project-data",
         scripts: {
-          build: "npm run tsc",
-          start: "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
-          "start:prod": "cross-env NODE_ENV=production node dist/index.js",
-          tsc: "tsc --project tsconfig.compile.json",
-          "tsc:w": "tsc --project tsconfig.json -w"
+          "build": "npm run tsc --project tsconfig.compile.json",
+          "build:w": "tsc --project tsconfig.compile.json -w",
+          "start": "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+          "start:prod": "cross-env NODE_ENV=production node dist/index.js"
         },
         version: "1.0.0",
         tsed: {
@@ -399,11 +396,10 @@ describe("Init cmd", () => {
         devDependencies: {},
         name: "project-data",
         scripts: {
-          build: "yarn run tsc",
-          start: "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
-          "start:prod": "cross-env NODE_ENV=production node dist/index.js",
-          tsc: "tsc --project tsconfig.compile.json",
-          "tsc:w": "tsc --project tsconfig.json -w"
+          "build": "yarn run tsc --project tsconfig.compile.json",
+          "build:w": "tsc --project tsconfig.compile.json -w",
+          "start": "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+          "start:prod": "cross-env NODE_ENV=production node dist/index.js"
         },
         version: "1.0.0",
         tsed: {

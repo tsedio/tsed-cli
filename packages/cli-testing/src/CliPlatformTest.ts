@@ -4,12 +4,11 @@ import {
   CliFs,
   CliHttpClient,
   CliService,
-  Container,
   createInjector,
+  DITest,
   Env,
   InjectorService,
-  TokenProvider,
-  DITest
+  TokenProvider
 } from "@tsed/cli-core";
 import {Type} from "@tsed/core";
 import {FakeCliExeca} from "./FakeCliExeca";
@@ -23,7 +22,7 @@ export interface InvokeOptions {
 }
 
 export class CliPlatformTest extends DITest {
-  static async bootstrap(options: Partial<TsED.Configuration> = {}, rootModule: Type = CliCore) {
+  static async bootstrap(options: Partial<TsED.Configuration> = {}) {
     DITest.injector = CliPlatformTest.createInjector({
       name: "tsed",
       project: {
@@ -35,15 +34,19 @@ export class CliPlatformTest extends DITest {
       ...options
     });
 
-    const container: Container = createContainer();
-    container.getProvider(CliHttpClient)!.useClass = FakeCliHttpClient;
-    container.getProvider(CliFs)!.useClass = FakeCliFs;
-    container.getProvider(CliExeca)!.useClass = FakeCliExeca;
+    DITest.injector
+      .addProvider(CliHttpClient, {
+        useClass: FakeCliHttpClient
+      })
+      .addProvider(CliFs, {
+        useClass: FakeCliFs
+      })
+      .addProvider(CliExeca, {
+        useClass: FakeCliExeca
+      })
+      .addProvider(CliCore);
 
-    // await loadPlugins(CliPlatformTest._injector);
-
-    await DITest.injector.load(container, rootModule);
-
+    await DITest.injector.load();
     await DITest.injector.emit("$onReady");
 
     CliPlatformTest.get(CliService).load();
