@@ -15,17 +15,17 @@ export class OutputFilePathPipe {
 
   constructor(private classNamePipe: ClassNamePipe) {}
 
-  transform(options: {name: string; type: string; baseDir?: string; format?: ProjectConvention}) {
+  transform(options: {name: string; type: string; subDir?: string; baseDir?: string; format?: ProjectConvention}) {
     options.format = options.format || this.projectPackageJson.preferences.convention || ProjectConvention.DEFAULT;
 
-    const dir = dirname(options.name);
+    const featureDir = dirname(options.name);
 
     if (options.type === "server" || this.projectPackageJson.preferences.architecture === ArchitectureConvention.FEATURE) {
-      return join(dir, this.classNamePipe.transform(options));
+      return join(options.subDir || "", featureDir, this.classNamePipe.transform(options));
     }
 
     const baseDir = options.baseDir || this.providers.get(options.type)?.baseDir || `${options.type}s`;
 
-    return join(baseDir, dir, this.classNamePipe.transform(options));
+    return join(baseDir, options.subDir || "", featureDir, this.classNamePipe.transform(options));
   }
 }

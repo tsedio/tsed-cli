@@ -9,26 +9,41 @@
 ##                                                                           ##
 ## description     : Dockerfile for TsED Application                         ##
 ## author          : TsED team                                               ##
-## date            : 2021-04-14                                              ##
-## version         : 1.2                                                     ##
+## date            : 2022-03-05                                              ##
+## version         : 2.0                                                     ##
 ##                                                                           ##
 ###############################################################################
 ###############################################################################
-FROM node:14-alpine
+ARG NODE_VERSION=16.13.1
 
-RUN apk update && apk add build-base git python3
+FROM node:${NODE_VERSION}-alpine as build
+WORKDIR /opt
 
-COPY package.json .
-COPY yarn.lock .
+COPY package.json yarn.lock tsconfig.json tsconfig.compile.json .barrelsby.json ./
 
-RUN yarn install --production
+RUN yarn install --pure-lockfile
 
 COPY ./src ./src
-COPY ./dist ./dist{{#or swagger oidc}}
+
+RUN yarn build
+
+FROM node:${NODE_VERSION}-alpine as runtime
+ENV WORKDIR /opt
+WORKDIR $WORKDIR
+
+RUN apk update && apk add build-base git curl
+RUN npm install -g pm2
+
+COPY --from=build /opt .
+
+RUN yarn install --pure-lockfile --production
+{{#if prisma}}
+COPY ./prisma ./prisma{{/if}}{{#or swagger oidc}}
 COPY ./views ./views{{/or}}
+COPY processes.config.js .
 
 EXPOSE 8081
 ENV PORT 8081
 ENV NODE_ENV production
 
-CMD ["yarn", "start:prod"]
+CMD ["pm2-runtime", "start", "processes.config.js", "--env", "production"]

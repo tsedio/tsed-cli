@@ -1,3 +1,4 @@
+import {join} from "path";
 import {Configuration, Inject} from "@tsed/di";
 import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-koa"; // /!\ keep this import
@@ -5,23 +6,30 @@ import bodyParser from "koa-bodyparser";
 import compress from "koa-compress";
 import cors from "@koa/cors";
 import "@tsed/ajv";
-import {config, rootDir} from "./config";
+import {config} from "./config";
+import * as rest from "./controllers/rest";
 
 const methodOverride = require("koa-override");
-
 
 @Configuration({
   ...config,
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
+  componentsScan: false,
   mount: {
     "/rest": [
-      `${rootDir}/controllers/**/*.ts`
+      ...Object.values(rest)
     ]
   },
+  middlewares: [
+    cors(),
+    compress({}),
+    methodOverride(),
+    bodyParser()
+  ],
   views: {
-    root: `${rootDir}/views`,
+    root: join(process.cwd(), "../views"),
     extensions: {
       ejs: "ejs"
     }
@@ -32,17 +40,8 @@ const methodOverride = require("koa-override");
 })
 export class Server {
   @Inject()
-  app: PlatformApplication;
+  protected app: PlatformApplication;
 
   @Configuration()
-  settings: Configuration;
-
-  $beforeRoutesInit(): void {
-
-    this.app
-      .use(cors())
-      .use(compress())
-      .use(methodOverride())
-      .use(bodyParser())
-  }
+  protected settings: Configuration;
 }

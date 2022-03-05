@@ -1,5 +1,5 @@
-import {PlatformLoggerSettings, $log} from "@tsed/common";
-import {isProduction} from "../env";
+import {$log, PlatformLoggerSettings} from "@tsed/common";
+import {isProduction} from "../envs";
 
 if (isProduction) {
   $log.appenders.set("stdout", {
@@ -19,6 +19,6 @@ if (isProduction) {
   });
 }
 
-export const loggerConfig: Partial<PlatformLoggerSettings> = {
+export default <PlatformLoggerSettings> {
   disableRoutesSummary: isProduction
 };

@@ -19,16 +19,16 @@ describe("GenerateCmd", () => {
         // THEN
         expect(result[0]).toEqual({
           default: undefined,
-          message: "Which type of provider ?",
+          message: "Which type of provider?",
           name: "type",
           source: expect.any(Function),
           type: "autocomplete",
           when: expect.any(Function)
         });
-        expect(result[1].message).toEqual("Which name ?");
+        expect(result[1].message).toEqual("Which name?");
         expect(result[1].default({type: "name"})).toEqual("Name");
         expect(result[1].when).toEqual(true);
-        expect(result[3].message).toEqual("Which route ?");
+        expect(result[3].message).toEqual("Which route?");
         expect(result[3].when({type: "controller"})).toEqual(true);
         expect(result[3].when({type: "server"})).toEqual(true);
         expect(result[3].when({type: "pipe"})).toEqual(false);
@@ -51,16 +51,16 @@ describe("GenerateCmd", () => {
         // THEN
         expect(result[0]).toEqual({
           default: "controller",
-          message: "Which type of provider ?",
+          message: "Which type of provider?",
           source: expect.any(Function),
           name: "type",
           type: "autocomplete",
           when: expect.any(Function)
         });
-        expect(result[1].message).toEqual("Which name ?");
+        expect(result[1].message).toEqual("Which name?");
         expect(result[1].default({type: "name"})).toEqual("Name");
         expect(result[1].when).toEqual(false);
-        expect(result[3].message).toEqual("Which route ?");
+        expect(result[3].message).toEqual("Which route?");
         expect(result[3].when({type: "controller"})).toEqual(true);
         expect(result[3].when({type: "server"})).toEqual(true);
         expect(result[3].when({type: "pipe"})).toEqual(false);

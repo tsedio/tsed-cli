@@ -1,3 +1,4 @@
+import {join} from "path";
 import {Configuration, Inject} from "@tsed/di";
 import {PlatformApplication} from "@tsed/common";
 {{#if express}}import "@tsed/platform-express"; // /!\ keep this import
@@ -16,35 +17,51 @@ import "@tsed/swagger";{{/if}}{{#if mongoose}}
 import "@tsed/mongoose";{{/if}}{{#if typeorm}}
 import "@tsed/typeorm";{{/if}}{{#if oidc}}
 import "@tsed/oidc-provider";{{/if}}
-import {config, rootDir} from "./config";{{#if swagger}}
-import {IndexCtrl} from "{{indexControllerPath}}";{{/if}}{{#if oidc}}
-import {InteractionsCtrl} from "./controllers/oidc/InteractionsCtrl";{{/if}}{{#if koa}}
+import {config} from "./config";
+import * as rest from "./controllers/rest";{{#if swagger}}
+import * as pages from "./controllers/pages";{{/if}}{{#if oidc}}
+import {InteractionsController} from "./controllers/oidc/InteractionsController";{{/if}}{{#if koa}}
 
 const methodOverride = require("koa-override");{{/if}}
-
 
 @Configuration({
   ...config,
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
+  componentsScan: false,
   mount: {
     "{{route}}": [
-      `${rootDir}/controllers/**/*.ts`
+      ...Object.values(rest)
     ]{{#or swagger oidc}},
     "/": [{{#if swagger}}
-      IndexCtrl{{/if}}{{#and swagger oidc}},{{/and}}{{#if oidc}}
-      InteractionsCtrl{{/if}}
+      ...Object.values(pages){{/if}}{{#and swagger oidc}},{{/and}}{{#if oidc}}
+      InteractionsController{{/if}}
     ]{{/or}}
   },{{#if swagger}}
   swagger: [
     {
-      path: "/v3/docs",
+      path: "/doc",
       specVersion: "3.0.1"
     }
   ],{{/if}}
+  middlewares: [{{#if express}}
+    cors(),
+    cookieParser(),
+    compress({}),
+    methodOverride(),
+    bodyParser.json(),
+    bodyParser.urlencoded({
+      extended: true
+    }){{/if}}{{#if koa}}
+    cors(),
+    compress({}),
+    methodOverride(),
+    bodyParser()
+    {{/if}}
+  ],
   views: {
-    root: `${rootDir}/views`,
+    root: join(process.cwd(), "../views"),
     extensions: {
       ejs: "ejs"
     }
@@ -55,26 +72,8 @@ const methodOverride = require("koa-override");{{/if}}
 })
 export class {{symbolName}} {
   @Inject()
-  app: PlatformApplication;
+  protected app: PlatformApplication;
 
   @Configuration()
-  settings: Configuration;
-
-  $beforeRoutesInit(): void {
-    {{#if express}}
-    this.app
-      .use(cors())
-      .use(cookieParser())
-      .use(compress({}))
-      .use(methodOverride())
-      .use(bodyParser.json())
-      .use(bodyParser.urlencoded({
-        extended: true
-      }));{{/if}}{{#if koa}}
-    this.app
-      .use(cors())
-      .use(compress())
-      .use(methodOverride())
-      .use(bodyParser()){{/if}}
-  }
+  protected settings: Configuration;
 }

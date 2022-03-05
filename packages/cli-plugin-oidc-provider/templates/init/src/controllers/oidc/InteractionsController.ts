@@ -10,7 +10,7 @@ import {LoginInteraction} from "../../interactions/LoginInteraction";
   path: "/interaction/:uid",
   children: [LoginInteraction, ConsentInteraction, CustomInteraction]
 })
-export class InteractionsCtrl {
+export class InteractionsController {
   @Get("/")
   async promptInteraction(@OidcCtx() oidcCtx: OidcCtx) {
     return oidcCtx.runInteraction();

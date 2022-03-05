@@ -50,12 +50,14 @@ describe("Init cmd", () => {
       expect(FakeCliFs.getKeys()).toEqual([
         "./project-name",
         "project-name",
+        "project-name/.barrelsby.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
         "project-name/Dockerfile",
         "project-name/README.md",
         "project-name/docker-compose.yml",
         "project-name/package.json",
+        "project-name/processes.config.js",
         "project-name/src",
         "project-name/src/Server.ts",
         "project-name/src/config",
@@ -64,8 +66,8 @@ describe("Init cmd", () => {
         "project-name/src/config/index.ts",
         "project-name/src/config/logger",
         "project-name/src/config/logger/index.ts",
-        "project-name/src/controllers",
-        "project-name/src/controllers/HelloWorldController.ts",
+        "project-name/src/controllers/rest",
+        "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.compile.json",
         "project-name/tsconfig.json"
@@ -79,7 +81,7 @@ describe("Init cmd", () => {
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toEqual({
-        dependencies: {
+        "dependencies": {
           "@tsed/ajv": "5.58.1",
           "@tsed/common": "5.58.1",
           "@tsed/core": "5.58.1",
@@ -96,19 +98,19 @@ describe("Init cmd", () => {
           "@tsed/platform-views": "5.58.1",
           "@tsed/schema": "5.58.1"
         },
-        description: "",
-        devDependencies: {},
-        name: "project-data",
-        scripts: {
-          "build": "yarn run tsc --project tsconfig.compile.json",
-          "build:w": "tsc --project tsconfig.compile.json -w",
-          "start": "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+        "description": "",
+        "devDependencies": {},
+        "name": "project-data",
+        "scripts": {
+          "barrels": "barrelsby --config .barrelsby.json",
+          "build": "yarn run barrels && yarn run tsc --project tsconfig.compile.json",
+          "start": "yarn run barrels && tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
           "start:prod": "cross-env NODE_ENV=production node dist/index.js"
         },
-        version: "1.0.0",
-        tsed: {
-          packageManager: "yarn"
-        }
+        "tsed": {
+          "packageManager": "yarn"
+        },
+        "version": "1.0.0"
       });
     });
     it("should generate a project with swagger", async () => {
@@ -134,12 +136,14 @@ describe("Init cmd", () => {
       expect(FakeCliFs.getKeys()).toEqual([
         "./project-name",
         "project-name",
+        "project-name/.barrelsby.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
         "project-name/Dockerfile",
         "project-name/README.md",
         "project-name/docker-compose.yml",
         "project-name/package.json",
+        "project-name/processes.config.js",
         "project-name/src",
         "project-name/src/Server.ts",
         "project-name/src/config",
@@ -148,10 +152,10 @@ describe("Init cmd", () => {
         "project-name/src/config/index.ts",
         "project-name/src/config/logger",
         "project-name/src/config/logger/index.ts",
-        "project-name/src/controllers",
-        "project-name/src/controllers/HelloWorldController.ts",
         "project-name/src/controllers/pages",
         "project-name/src/controllers/pages/IndexController.ts",
+        "project-name/src/controllers/rest",
+        "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.compile.json",
         "project-name/tsconfig.json",
@@ -164,12 +168,12 @@ describe("Init cmd", () => {
       expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
       expect(content).toContain("import \"@tsed/platform-express\"");
       expect(content).toContain("import \"@tsed/ajv\"");
-      expect(content).toContain("import {IndexCtrl} from \"./controllers/pages/IndexController\"");
+      expect(content).toContain("import * as pages from \"./controllers/pages\"");
       expect(content).toEqual(readFile("data/Server.express.swagger.ts.txt", content));
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toEqual({
-        dependencies: {
+        "dependencies": {
           "@tsed/ajv": "5.58.1",
           "@tsed/common": "5.58.1",
           "@tsed/core": "5.58.1",
@@ -186,19 +190,19 @@ describe("Init cmd", () => {
           "@tsed/platform-views": "5.58.1",
           "@tsed/schema": "5.58.1"
         },
-        description: "",
-        devDependencies: {},
-        name: "project-data",
-        scripts: {
-          "build": "yarn run tsc --project tsconfig.compile.json",
-          "build:w": "tsc --project tsconfig.compile.json -w",
-          "start": "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+        "description": "",
+        "devDependencies": {},
+        "name": "project-data",
+        "scripts": {
+          "barrels": "barrelsby --config .barrelsby.json",
+          "build": "yarn run barrels && yarn run tsc --project tsconfig.compile.json",
+          "start": "yarn run barrels && tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
           "start:prod": "cross-env NODE_ENV=production node dist/index.js"
         },
-        version: "1.0.0",
-        tsed: {
-          packageManager: "yarn"
-        }
+        "tsed": {
+          "packageManager": "yarn"
+        },
+        "version": "1.0.0"
       });
     });
     it("should generate a project with NPM", async () => {
@@ -224,12 +228,14 @@ describe("Init cmd", () => {
       expect(FakeCliFs.getKeys()).toEqual([
         "./project-name",
         "project-name",
+        "project-name/.barrelsby.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
         "project-name/Dockerfile",
         "project-name/README.md",
         "project-name/docker-compose.yml",
         "project-name/package.json",
+        "project-name/processes.config.js",
         "project-name/src",
         "project-name/src/Server.ts",
         "project-name/src/config",
@@ -238,8 +244,8 @@ describe("Init cmd", () => {
         "project-name/src/config/index.ts",
         "project-name/src/config/logger",
         "project-name/src/config/logger/index.ts",
-        "project-name/src/controllers",
-        "project-name/src/controllers/HelloWorldController.ts",
+        "project-name/src/controllers/rest",
+        "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.compile.json",
         "project-name/tsconfig.json"
@@ -253,7 +259,7 @@ describe("Init cmd", () => {
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toEqual({
-        dependencies: {
+        "dependencies": {
           "@tsed/ajv": "5.58.1",
           "@tsed/common": "5.58.1",
           "@tsed/core": "5.58.1",
@@ -270,19 +276,19 @@ describe("Init cmd", () => {
           "@tsed/platform-views": "5.58.1",
           "@tsed/schema": "5.58.1"
         },
-        description: "",
-        devDependencies: {},
-        name: "project-data",
-        scripts: {
-          "build": "npm run tsc --project tsconfig.compile.json",
-          "build:w": "tsc --project tsconfig.compile.json -w",
-          "start": "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+        "description": "",
+        "devDependencies": {},
+        "name": "project-data",
+        "scripts": {
+          "barrels": "barrelsby --config .barrelsby.json",
+          "build": "npm run barrels && npm run tsc --project tsconfig.compile.json",
+          "start": "npm run barrels && tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
           "start:prod": "cross-env NODE_ENV=production node dist/index.js"
         },
-        version: "1.0.0",
-        tsed: {
-          packageManager: "npm"
-        }
+        "tsed": {
+          "packageManager": "npm"
+        },
+        "version": "1.0.0"
       });
     });
     it("should generate a project with Convention ANGULAR", async () => {
@@ -315,12 +321,14 @@ describe("Init cmd", () => {
       expect(FakeCliFs.getKeys()).toEqual([
         "./project-name",
         "project-name",
+        "project-name/.barrelsby.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
         "project-name/Dockerfile",
         "project-name/README.md",
         "project-name/docker-compose.yml",
         "project-name/package.json",
+        "project-name/processes.config.js",
         "project-name/src",
         "project-name/src/config",
         "project-name/src/config/env",
@@ -328,10 +336,10 @@ describe("Init cmd", () => {
         "project-name/src/config/index.ts",
         "project-name/src/config/logger",
         "project-name/src/config/logger/index.ts",
-        "project-name/src/controllers",
-        "project-name/src/controllers/hello-world.controller.ts",
         "project-name/src/controllers/pages",
         "project-name/src/controllers/pages/index.controller.ts",
+        "project-name/src/controllers/rest",
+        "project-name/src/controllers/rest/hello-world.controller.ts",
         "project-name/src/index.ts",
         "project-name/src/server.ts",
         "project-name/tsconfig.compile.json",
@@ -345,7 +353,7 @@ describe("Init cmd", () => {
       expect(content).toContain("import \"@tsed/platform-express\"");
       expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toEqual(readFile("data/Server.express.ts.txt", content));
-      expect(content).toContain("import {IndexCtrl} from \"./controllers/pages/index.controller\"");
+      expect(content).toContain("import * as pages from \"./controllers/pages\"");
       expect(content).toContain("export class Server {");
     });
   });
@@ -373,12 +381,14 @@ describe("Init cmd", () => {
       expect(FakeCliFs.getKeys()).toEqual([
         "./project-name",
         "project-name",
+        "project-name/.barrelsby.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
         "project-name/Dockerfile",
         "project-name/README.md",
         "project-name/docker-compose.yml",
         "project-name/package.json",
+        "project-name/processes.config.js",
         "project-name/src",
         "project-name/src/Server.ts",
         "project-name/src/config",
@@ -387,8 +397,8 @@ describe("Init cmd", () => {
         "project-name/src/config/index.ts",
         "project-name/src/config/logger",
         "project-name/src/config/logger/index.ts",
-        "project-name/src/controllers",
-        "project-name/src/controllers/HelloWorldController.ts",
+        "project-name/src/controllers/rest",
+        "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.compile.json",
         "project-name/tsconfig.json"
@@ -403,7 +413,7 @@ describe("Init cmd", () => {
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toEqual({
-        dependencies: {
+        "dependencies": {
           "@tsed/ajv": "5.58.1",
           "@tsed/common": "5.58.1",
           "@tsed/core": "5.58.1",
@@ -420,19 +430,19 @@ describe("Init cmd", () => {
           "@tsed/platform-views": "5.58.1",
           "@tsed/schema": "5.58.1"
         },
-        description: "",
-        devDependencies: {},
-        name: "project-data",
-        scripts: {
-          "build": "yarn run tsc --project tsconfig.compile.json",
-          "build:w": "tsc --project tsconfig.compile.json -w",
-          "start": "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+        "description": "",
+        "devDependencies": {},
+        "name": "project-data",
+        "scripts": {
+          "barrels": "barrelsby --config .barrelsby.json",
+          "build": "yarn run barrels && yarn run tsc --project tsconfig.compile.json",
+          "start": "yarn run barrels && tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
           "start:prod": "cross-env NODE_ENV=production node dist/index.js"
         },
-        version: "1.0.0",
-        tsed: {
-          packageManager: "yarn"
-        }
+        "tsed": {
+          "packageManager": "yarn"
+        },
+        "version": "1.0.0"
       });
     });
   });
@@ -475,12 +485,14 @@ describe("Init cmd", () => {
       expect(FakeCliFs.getKeys()).toEqual([
         "./project-name",
         "project-name",
+        "project-name/.barrelsby.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
         "project-name/Dockerfile",
         "project-name/README.md",
         "project-name/docker-compose.yml",
         "project-name/package.json",
+        "project-name/processes.config.js",
         "project-name/src",
         "project-name/src/Server.ts",
         "project-name/src/bin",
@@ -492,8 +504,8 @@ describe("Init cmd", () => {
         "project-name/src/config/index.ts",
         "project-name/src/config/logger",
         "project-name/src/config/logger/index.ts",
-        "project-name/src/controllers",
-        "project-name/src/controllers/HelloWorldController.ts",
+        "project-name/src/controllers/rest",
+        "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.compile.json",
         "project-name/tsconfig.json"

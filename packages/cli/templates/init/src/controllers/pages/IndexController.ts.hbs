@@ -6,9 +6,9 @@ import {Hidden, Get, Returns} from "@tsed/schema";
 
 @Hidden()
 @Controller("/")
-export class IndexCtrl {
+export class IndexController {
   @Constant("swagger")
-  swagger: SwaggerSettings[];
+  private swagger: SwaggerSettings[];
 
   @Get("/")
   @View("swagger.ejs")

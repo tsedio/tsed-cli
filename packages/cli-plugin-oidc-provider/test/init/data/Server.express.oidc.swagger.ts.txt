@@ -1,3 +1,4 @@
+import {join} from "path";
 import {Configuration, Inject} from "@tsed/di";
 import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\ keep this import
@@ -9,33 +10,43 @@ import cors from "cors";
 import "@tsed/ajv";
 import "@tsed/swagger";
 import "@tsed/oidc-provider";
-import {config, rootDir} from "./config";
-import {IndexCtrl} from "./controllers/pages/IndexController";
-import {InteractionsCtrl} from "./controllers/oidc/InteractionsCtrl";
-
+import {config} from "./config";
+import * as rest from "./controllers/rest";
+import * as pages from "./controllers/pages";
+import {InteractionsController} from "./controllers/oidc/InteractionsController";
 
 @Configuration({
   ...config,
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
+  componentsScan: false,
   mount: {
     "/rest": [
-      `${rootDir}/controllers/**/*.ts`
+      ...Object.values(rest)
     ],
     "/": [
-      IndexCtrl,
-      InteractionsCtrl
+      ...Object.values(pages),
+      InteractionsController
     ]
   },
   swagger: [
     {
-      path: "/v3/docs",
+      path: "/doc",
       specVersion: "3.0.1"
     }
   ],
+  middlewares: [
+    cors(),
+    cookieParser(),
+    compress({}),
+    methodOverride(),
+    bodyParser.json(),
+    bodyParser.urlencoded({
+      extended: true
+    })  ],
   views: {
-    root: `${rootDir}/views`,
+    root: join(process.cwd(), "../views"),
     extensions: {
       ejs: "ejs"
     }
@@ -46,20 +57,8 @@ import {InteractionsCtrl} from "./controllers/oidc/InteractionsCtrl";
 })
 export class Server {
   @Inject()
-  app: PlatformApplication;
+  protected app: PlatformApplication;
 
   @Configuration()
-  settings: Configuration;
-
-  $beforeRoutesInit(): void {
-    this.app
-      .use(cors())
-      .use(cookieParser())
-      .use(compress({}))
-      .use(methodOverride())
-      .use(bodyParser.json())
-      .use(bodyParser.urlencoded({
-        extended: true
-      }));
-  }
+  protected settings: Configuration;
 }

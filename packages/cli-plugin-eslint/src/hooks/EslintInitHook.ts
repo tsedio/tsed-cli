@@ -27,7 +27,12 @@ export class EslintInitHook {
           return this.rootRenderer.renderAll(
             [
               ".eslintrc.hbs",
-              ctx.lintstaged && ".lintstagedrc.hbs",
+              ctx.lintstaged && ".husky/_/.gitignore.hbs",
+              ctx.lintstaged && ".husky/_/husky.sh.hbs",
+              ctx.lintstaged && ".husky/.gitignore.hbs",
+              ctx.lintstaged && ".husky/post-commit.hbs",
+              ctx.lintstaged && ".husky/pre-commit.hbs",
+              ctx.lintstaged && "lint-staged.config.js.hbs",
               ctx.prettier && ".prettierignore.hbs",
               ctx.prettier && ".prettierrc.hbs"
             ],
@@ -43,13 +48,14 @@ export class EslintInitHook {
 
   addScripts(ctx: InitCmdContext) {
     this.packageJson.addScripts({
-      "test:lint": "eslint src --ext .ts",
-      "test:lint:fix": "eslint src --ext .ts --fix"
+      "test:lint": "eslint '**/*.{ts,js}'",
+      "test:lint:fix": "eslint '**/*.{ts,js}' --fix"
     });
 
     if (ctx.prettier) {
       this.packageJson.addScripts({
-        prettier: "prettier '{src,test}/**/*.ts' --write"
+        prettier: "prettier '**/*.{ts,js,json,md,yml,yaml}' --write",
+        prepare: "is-ci || husky install"
       });
     }
   }
@@ -73,18 +79,12 @@ export class EslintInitHook {
     if (ctx.lintstaged) {
       this.packageJson.addDevDependencies(
         {
+          "is-ci": "latest",
           husky: "latest",
           "lint-staged": "latest"
         },
         ctx
       );
-
-      this.packageJson.add("husky", {
-        hooks: {
-          "pre-commit": "lint-staged",
-          "post-commit": "git update-index --again"
-        }
-      });
     }
 
     if (ctx.prettier) {
