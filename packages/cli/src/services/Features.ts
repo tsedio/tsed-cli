@@ -497,13 +497,13 @@ registerProvider({
         choices: FEATURES_TYPEORM_CONNECTION_TYPES,
         when: hasValue("featuresDB.type", "typeorm")
       },
-      {
-        type: "password",
-        name: "GH_TOKEN",
-        message:
-          "Enter GH_TOKEN to use the premium @tsedio/prisma package or leave blank (see https://tsed.io/tutorials/prisma-client.html)",
-        when: hasValue("featuresDB.type", "prisma")
-      },
+      // {
+      //   type: "password",
+      //   name: "GH_TOKEN",
+      //   message:
+      //     "Enter GH_TOKEN to use the premium @tsedio/prisma package or leave blank (see https://tsed.io/tutorials/prisma-client.html)",
+      //   when: hasValue("featuresDB.type", "prisma")
+      // },
       {
         message: "Choose unit framework",
         type: "list",
