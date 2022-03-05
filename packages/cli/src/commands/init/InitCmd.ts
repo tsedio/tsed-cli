@@ -1,5 +1,6 @@
 import {
   CliDefaultOptions,
+  CliExeca,
   CliFs,
   CliPlugins,
   CliService,
@@ -84,6 +85,9 @@ export class InitCmd implements CommandProvider {
 
   @Inject()
   protected outputFilePathPipe: OutputFilePathPipe;
+
+  @Inject()
+  protected execa: CliExeca;
 
   @Inject()
   protected fs: CliFs;
@@ -199,7 +203,8 @@ export class InitCmd implements CommandProvider {
       ...(await this.cliService.getTasks("generate", {
         type: "controller",
         route: "hello-world",
-        name: "HelloWorld"
+        name: "HelloWorld",
+        directory: "rest"
       })),
       ...(ctx.commands
         ? await this.cliService.getTasks("generate", {
@@ -230,6 +235,8 @@ export class InitCmd implements CommandProvider {
                   [
                     "/init/.dockerignore.hbs",
                     "/init/.gitignore.hbs",
+                    "/init/.barrelsby.json.hbs",
+                    "/init/processes.config.js.hbs",
                     ctx.babel && "/init/.babelrc.hbs",
                     ctx.webpack && "/init/webpack.config.js.hbs",
                     "/init/docker-compose.yml.hbs",
@@ -244,7 +251,7 @@ export class InitCmd implements CommandProvider {
                     ctx.commands && "/init/src/bin/index.ts.hbs",
                     ctx.swagger && "/init/views/swagger.ejs.hbs",
                     ctx.swagger && {
-                      path: "/init/src/controllers/pages/IndexCtrl.ts.hbs",
+                      path: "/init/src/controllers/pages/IndexController.ts.hbs",
                       basename: indexCtrlBaseName
                     }
                   ].filter(Boolean),
@@ -260,6 +267,11 @@ export class InitCmd implements CommandProvider {
         )
       }
     ];
+  }
+
+  async $postInstall() {
+    await this.packageJson.runScript("barrels");
+    return [];
   }
 
   resolveRootDir(ctx: Partial<InitCmdContext>) {
@@ -283,9 +295,9 @@ export class InitCmd implements CommandProvider {
     const runner = this.packageJson.getRunCmd();
 
     this.packageJson.addScripts({
-      build: `${runner} tsc --project tsconfig.compile.json`,
-      "build:w": "tsc --project tsconfig.compile.json -w",
-      start: "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+      build: `${runner} barrels && ${runner} tsc --project tsconfig.compile.json`,
+      barrels: "barrelsby --config .barrelsby.json",
+      start: `${runner} barrels && tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts`,
       "start:prod": "cross-env NODE_ENV=production node dist/index.js"
     });
 
@@ -324,8 +336,11 @@ export class InitCmd implements CommandProvider {
       "@tsed/logger-file": "latest",
       "@tsed/engines": "latest",
       ajv: "latest",
+      barrelsby: "latest",
       "cross-env": "latest",
-      dotenv: "latest"
+      dotenv: "latest",
+      "dotenv-expand": "latest",
+      "dotenv-flow": "latest"
     });
   }
 

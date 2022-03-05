@@ -30,7 +30,7 @@ export class OidcProviderInitHook {
           this.rootRenderer.renderAll(
             [
               "/src/config/oidc/index.ts.hbs",
-              "/src/controllers/oidc/InteractionsCtrl.ts",
+              "/src/controllers/oidc/InteractionsController.ts",
               "/src/interactions/ConsentInteraction.ts",
               "/src/interactions/CustomInteraction.ts",
               "/src/interactions/LoginInteraction.ts",

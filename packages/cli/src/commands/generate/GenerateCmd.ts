@@ -1,6 +1,7 @@
 import {CliDefaultOptions, Command, CommandProvider, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
 import {paramCase, pascalCase} from "change-case";
-import {basename} from "path";
+import {basename, dirname, join} from "path";
+import globby from "globby";
 import {ClassNamePipe} from "../../pipes/ClassNamePipe";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
 import {RoutePipe} from "../../pipes/RoutePipe";
@@ -14,6 +15,7 @@ export interface GenerateCmdContext extends CliDefaultOptions {
   type: string;
   name: string;
   route: string;
+  directory: string;
   platform: string;
   templateType: string;
   symbolName: string;
@@ -96,7 +98,7 @@ export class GenerateCmd implements CommandProvider {
       {
         type: "autocomplete",
         name: "type",
-        message: "Which type of provider ?",
+        message: "Which type of provider?",
         default: initialOptions.type,
         when: () => proposedProviders.length > 1,
         source: searchFactory(proposedProviders)
@@ -104,12 +106,12 @@ export class GenerateCmd implements CommandProvider {
       {
         type: "input",
         name: "name",
-        message: "Which name ?",
+        message: "Which name?",
         default: getName,
         when: !initialOptions.name
       },
       {
-        message: "Which platform:",
+        message: "Which platform?",
         type: "list",
         name: "platform",
         when(state: any) {
@@ -131,13 +133,22 @@ export class GenerateCmd implements CommandProvider {
       {
         type: "input",
         name: "route",
-        message: "Which route ?",
+        message: "Which route?",
         when(state: any) {
           return ["controller", "server"].includes(state.type || initialOptions.type);
         },
         default: (state: GenerateCmdContext) => {
           return state.type === "server" ? "/rest" : this.routePipe.transform(getName(state));
         }
+      },
+      {
+        type: "list",
+        name: "directory",
+        message: "Which directory?",
+        when(state: any) {
+          return ["controller"].includes(state.type || initialOptions.type);
+        },
+        choices: this.getDirectories("controllers")
       },
       {
         type: "autocomplete",
@@ -184,7 +195,8 @@ export class GenerateCmd implements CommandProvider {
       symbolPath: normalizePath(
         this.outputFilePathPipe.transform({
           name,
-          type
+          type,
+          subDir: ctx.directory
         })
       ),
       symbolPathBasename: normalizePath(this.classNamePipe.transform({name, type})),
@@ -237,5 +249,22 @@ export class GenerateCmd implements CommandProvider {
     }
 
     return [];
+  }
+
+  getDirectories(dir: string) {
+    const directories = globby.sync("**/*", {
+      cwd: join(this.srcRenderService.rootDir, dir),
+      ignore: ["__*"]
+    });
+
+    const set = new Set(
+      directories.map((dir) => {
+        return dirname(dir);
+      })
+    );
+
+    set.delete(".");
+
+    return [...set];
   }
 }

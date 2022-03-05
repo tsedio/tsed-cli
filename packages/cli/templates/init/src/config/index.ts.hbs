@@ -1,5 +1,6 @@
 import {join} from "path";
-import {loggerConfig} from "./logger";{{#if mongoose}}
+import {readFileSync} from "fs";
+import loggerConfig from "./logger";{{#if mongoose}}
 import mongooseConfig from "./mongoose";
 {{/if}}{{#if typeorm}}
 import typeormConfig from "./typeorm";
@@ -8,12 +9,11 @@ import oidcConfig from "./oidc";
 import {FileSyncAdapter} from "@tsed/adapters";
 {{/if}}
 
-const {version} = require("../../package.json");
-export const rootDir = join(__dirname, "..");
+const pkg = JSON.parse(readFileSync("./package.json", {encoding: "utf8"}));
 
 export const config: Partial<TsED.Configuration> = {
-  version,
-  rootDir,
+  version: pkg.version,
+  envs,
   logger: loggerConfig,
   {{#if typeorm}}
   typeorm: typeormConfig,

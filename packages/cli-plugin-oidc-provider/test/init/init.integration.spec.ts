@@ -50,12 +50,14 @@ describe("Init OIDC Provider project", () => {
     expect(FakeCliFs.getKeys()).toEqual([
       "./project-name",
       "project-name",
+      "project-name/.barrelsby.json",
       "project-name/.dockerignore",
       "project-name/.gitignore",
       "project-name/Dockerfile",
       "project-name/README.md",
       "project-name/docker-compose.yml",
       "project-name/package.json",
+      "project-name/processes.config.js",
       "project-name/src",
       "project-name/src/Server.ts",
       "project-name/src/config",
@@ -66,10 +68,10 @@ describe("Init OIDC Provider project", () => {
       "project-name/src/config/logger/index.ts",
       "project-name/src/config/oidc",
       "project-name/src/config/oidc/index.ts",
-      "project-name/src/controllers",
-      "project-name/src/controllers/HelloWorldController.ts",
       "project-name/src/controllers/oidc",
-      "project-name/src/controllers/oidc/InteractionsCtrl.ts",
+      "project-name/src/controllers/oidc/InteractionsController.ts",
+      "project-name/src/controllers/rest",
+      "project-name/src/controllers/rest/HelloWorldController.ts",
       "project-name/src/index.ts",
       "project-name/src/interactions",
       "project-name/src/interactions/ConsentInteraction.ts",
@@ -99,7 +101,7 @@ describe("Init OIDC Provider project", () => {
     const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
     expect(content).toContain("import \"@tsed/oidc-provider\"");
-    expect(content).toContain("import {InteractionsCtrl} from \"./controllers/oidc/InteractionsCtrl\";");
+    expect(content).toContain("import {InteractionsController} from \"./controllers/oidc/InteractionsController\";");
     expect(content).toEqual(readFile("data/Server.express.oidc.ts.txt", content));
 
     const configContent = FakeCliFs.entries.get("project-name/src/config/oidc/index.ts")!;
@@ -131,12 +133,14 @@ describe("Init OIDC Provider project", () => {
     expect(FakeCliFs.getKeys()).toEqual([
       "./project-name",
       "project-name",
+      "project-name/.barrelsby.json",
       "project-name/.dockerignore",
       "project-name/.gitignore",
       "project-name/Dockerfile",
       "project-name/README.md",
       "project-name/docker-compose.yml",
       "project-name/package.json",
+      "project-name/processes.config.js",
       "project-name/src",
       "project-name/src/Server.ts",
       "project-name/src/config",
@@ -147,12 +151,12 @@ describe("Init OIDC Provider project", () => {
       "project-name/src/config/logger/index.ts",
       "project-name/src/config/oidc",
       "project-name/src/config/oidc/index.ts",
-      "project-name/src/controllers",
-      "project-name/src/controllers/HelloWorldController.ts",
       "project-name/src/controllers/oidc",
-      "project-name/src/controllers/oidc/InteractionsCtrl.ts",
+      "project-name/src/controllers/oidc/InteractionsController.ts",
       "project-name/src/controllers/pages",
       "project-name/src/controllers/pages/IndexController.ts",
+      "project-name/src/controllers/rest",
+      "project-name/src/controllers/rest/HelloWorldController.ts",
       "project-name/src/index.ts",
       "project-name/src/interactions",
       "project-name/src/interactions/ConsentInteraction.ts",
@@ -183,7 +187,7 @@ describe("Init OIDC Provider project", () => {
     const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
     expect(content).toContain("import \"@tsed/oidc-provider\"");
-    expect(content).toContain("import {InteractionsCtrl} from \"./controllers/oidc/InteractionsCtrl\";");
+    expect(content).toContain("import {InteractionsController} from \"./controllers/oidc/InteractionsController\";");
     expect(content).toEqual(readFile("data/Server.express.oidc.swagger.ts.txt", content));
 
     const configContent = FakeCliFs.entries.get("project-name/src/config/oidc/index.ts")!;
