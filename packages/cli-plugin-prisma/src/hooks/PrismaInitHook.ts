@@ -1,5 +1,5 @@
 import {InitCmdContext} from "@tsed/cli";
-import {CliService, createSubTasks, Inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
+import {CliService, Inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {CliPrisma} from "../services/CliPrisma";
 
@@ -27,21 +27,7 @@ export class PrismaInitHook {
       },
       {
         title: "Add Ts.ED configuration to Prisma schema",
-        enabled: () => !!ctx.GH_TOKEN,
         task: () => this.cliPrisma.patchPrismaSchema()
-      },
-      {
-        title: "Generate Prisma Service",
-        enabled: () => !ctx.GH_TOKEN,
-        task: createSubTasks(
-          async () =>
-            await this.cliService.getTasks("generate", {
-              ...ctx,
-              type: "prisma.service",
-              name: "Prisma"
-            }),
-          {...ctx, concurrent: false}
-        )
       }
     ];
   }
@@ -54,16 +40,9 @@ export class PrismaInitHook {
   }
 
   addDependencies(ctx: InitCmdContext) {
-    if (ctx.GH_TOKEN) {
-      this.packageJson.addDependencies(
-        {
-          "@tsedio/prisma": "1.1.1"
-        },
-        ctx
-      );
-    }
     this.packageJson.addDependencies(
       {
+        "@tsed/prisma": "latest",
         "@prisma/client": "latest"
       },
       ctx
