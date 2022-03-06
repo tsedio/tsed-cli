@@ -73,7 +73,7 @@
   },
   "devDependencies": {
     "@tsed/markdown-it-symbols": "3.15.0",
-    "@tsed/monorepo-utils": "1.17.0",
+    "@tsed/monorepo-utils": "1.20.2",
     "@typedproject/ts-doc": "4.0.13",
     "@types/jest": "26.0.20",
     "@types/node": "16.10.2",
@@ -124,11 +124,11 @@
     "productionBranch": "master",
     "developBranch": "master",
     "npmAccess": "public",
-    "ghpages": {
+    "ghpages": [{
       "dir": "./docs/.vuepress/dist",
       "url": "https://github.com/tsedio/tsed-cli.git",
       "branch": "gh-pages",
       "cname": "cli.tsed.io"
-    }
+    }]
   }
 }
