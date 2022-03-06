@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-root",
-  "version": "3.19.2",
+  "version": "3.19.3",
   "description": "CLI to bootstrap your Ts.ED project",
   "private": true,
   "scripts": {
@@ -124,11 +124,13 @@
     "productionBranch": "master",
     "developBranch": "master",
     "npmAccess": "public",
-    "ghpages": [{
-      "dir": "./docs/.vuepress/dist",
-      "url": "https://github.com/tsedio/tsed-cli.git",
-      "branch": "gh-pages",
-      "cname": "cli.tsed.io"
-    }]
+    "ghpages": [
+      {
+        "dir": "./docs/.vuepress/dist",
+        "url": "https://github.com/tsedio/tsed-cli.git",
+        "branch": "gh-pages",
+        "cname": "cli.tsed.io"
+      }
+    ]
   }
 }
