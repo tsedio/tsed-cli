@@ -245,7 +245,7 @@ export class InitCmd implements CommandProvider {
                     "/init/tsconfig.compile.json.hbs",
                     "/init/tsconfig.json.hbs",
                     "/init/src/index.ts.hbs",
-                    "/init/src/config/env/index.ts.hbs",
+                    "/init/src/config/envs/index.ts.hbs",
                     "/init/src/config/logger/index.ts.hbs",
                     "/init/src/config/index.ts.hbs",
                     ctx.commands && "/init/src/bin/index.ts.hbs",
