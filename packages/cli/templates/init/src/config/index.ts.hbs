@@ -1,5 +1,6 @@
 import {join} from "path";
 import {readFileSync} from "fs";
+import {envs} from "./envs";
 import loggerConfig from "./logger";{{#if mongoose}}
 import mongooseConfig from "./mongoose";
 {{/if}}{{#if typeorm}}
