@@ -1,7 +1,7 @@
 {
   "directory": [
-    "./src/controllers/rest",
-    "./src/controllers/pages"
+    "./src/controllers/rest"{{#or swagger oidc}},
+    "./src/controllers/pages"{{/or}}
   ],
   "exclude": [
     "__mock__",

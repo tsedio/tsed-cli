@@ -1,8 +1,6 @@
 import {getValue, setValue} from "@tsed/core";
 import {Configuration, Inject, Injectable} from "@tsed/di";
-import Fs from "fs-extra";
-import {dirname, join} from "path";
-import readPkgUp from "read-pkg-up";
+import {join} from "path";
 import {EMPTY, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import semver from "semver";
@@ -10,42 +8,13 @@ import {PackageJson} from "../interfaces/PackageJson";
 import {PackageManager, ProjectPreferences} from "../interfaces/ProjectPreferences";
 import {CliExeca} from "./CliExeca";
 import {CliFs} from "./CliFs";
+import {isValidVersion} from "../utils/isValidVersion";
+import {getPackageJson} from "../utils/getPackageJson";
 
 export interface InstallOptions {
   packageManager?: PackageManager;
 
   [key: string]: any;
-}
-
-function getEmptyPackageJson(configuration: Configuration) {
-  return {
-    name: configuration.name,
-    version: "1.0.0",
-    description: "",
-    scripts: {},
-    dependencies: {},
-    devDependencies: {}
-  };
-}
-
-function useReadPkgUp(configuration: Configuration) {
-  return !(process.argv.includes("init") && !Fs.existsSync(join(String(configuration.project?.rootDir), "package.json")));
-}
-
-function getPackageJson(configuration: Configuration) {
-  if (useReadPkgUp(configuration)) {
-    const result = readPkgUp.sync({
-      cwd: configuration.project?.rootDir
-    });
-
-    if (result && result.path) {
-      configuration.set("project.root", dirname(result.path));
-
-      return {...getEmptyPackageJson(configuration), ...result.packageJson} as any;
-    }
-  }
-
-  return getEmptyPackageJson(configuration);
 }
 
 function mapPackagesWithInvalidVersion(deps: any) {
@@ -73,7 +42,7 @@ function sortKeys(obj: any) {
 
 function mapPackagesWithValidVersion(deps: any) {
   return Object.entries(deps).reduce((deps, [key, version]: [string, string]) => {
-    if (semver.valid(version)) {
+    if (isValidVersion(version)) {
       return {
         ...deps,
         [key]: version
@@ -102,10 +71,13 @@ function defaultPreferences(pkg?: any): Record<string, any> {
 export class ProjectPackageJson {
   public rewrite = false;
   public reinstall = false;
+
   @Inject(CliExeca)
   protected cliExeca: CliExeca;
+
   @Inject(CliFs)
   protected fs: CliFs;
+
   private GH_TOKEN: string;
   private raw: PackageJson;
 
@@ -180,7 +152,10 @@ export class ProjectPackageJson {
   }
 
   read() {
-    this.setRaw(getPackageJson(this.configuration));
+    const pkg = this.getPackageJson();
+
+    this.setRaw(pkg);
+    return this;
   }
 
   setRaw(pkg: any) {
@@ -286,23 +261,32 @@ export class ProjectPackageJson {
   }
 
   write() {
-    this.raw.devDependencies = sortKeys(this.raw.devDependencies);
-    this.raw.dependencies = sortKeys(this.raw.dependencies);
+    const originalPkg = this.getPackageJson();
+
     this.rewrite = false;
 
-    const json = {
+    this.raw = {
+      ...originalPkg,
       ...this.raw,
-      dependencies: {
+      scripts: {
+        ...(originalPkg.scripts || {}),
+        ...(this.raw.scripts || {})
+      },
+      dependencies: sortKeys({
+        ...originalPkg.dependencies,
         ...mapPackagesWithValidVersion(this.raw.dependencies)
-      },
-      devDependencies: {
+      }),
+      devDependencies: sortKeys({
+        ...originalPkg.devDependencies,
         ...mapPackagesWithValidVersion(this.raw.devDependencies)
-      },
+      }),
       readme: undefined,
       _id: undefined
     };
 
-    return this.fs.writeFileSync(this.path, JSON.stringify(json, null, 2), {encoding: "utf8"});
+    this.fs.writeFileSync(this.path, JSON.stringify(this.raw, null, 2), {encoding: "utf8"});
+
+    return this;
   }
 
   hasYarn() {
@@ -333,7 +317,9 @@ export class ProjectPackageJson {
       {
         title: "Write package.json",
         enabled: () => this.rewrite,
-        task: () => this.write()
+        task: () => {
+          this.write();
+        }
       },
       ...tasks,
       {
@@ -520,5 +506,9 @@ export class ProjectPackageJson {
           this.cliExeca.run(PackageManager.PNPM, ["add", "--save-dev", verbose && "--verbose", ...devDeps].filter(Boolean), options)
       }
     ];
+  }
+
+  protected getPackageJson() {
+    return getPackageJson(this.configuration);
   }
 }

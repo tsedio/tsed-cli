@@ -42,14 +42,14 @@ function taskFixtureRunner(cb: any) {
 }
 
 describe("ProjectPackageJson", () => {
-  beforeEach(() =>
-    CliPlatformTest.create({
+  beforeEach(() => {
+    return CliPlatformTest.create({
       name: "tsed",
       project: {
         rootDir
       }
-    })
-  );
+    });
+  });
   afterEach(() => CliPlatformTest.reset());
 
   describe("with Yarn", () => {
@@ -77,7 +77,6 @@ describe("ProjectPackageJson", () => {
       });
 
       expect(projectPackageJson.toJSON()).toEqual({
-        _id: "@",
         dependencies: {
           module1: "latest",
           module2: "alpha",
@@ -90,7 +89,6 @@ describe("ProjectPackageJson", () => {
           "dev-module3": "6.0.0"
         },
         name: "name",
-        readme: "ERROR: No README data found!",
         scripts: {
           build: "echo 0"
         },
@@ -168,7 +166,6 @@ describe("ProjectPackageJson", () => {
       expect(projectPackageJson.getPackageManager(PackageManager.YARN)).toEqual(PackageManager.NPM);
 
       expect(projectPackageJson.toJSON()).toEqual({
-        _id: "@",
         dependencies: {
           module1: "latest",
           module2: "alpha",
@@ -181,7 +178,6 @@ describe("ProjectPackageJson", () => {
           "dev-module3": "6.0.0"
         },
         name: "name",
-        readme: "ERROR: No README data found!",
         scripts: {
           build: "echo 0"
         },
@@ -260,7 +256,6 @@ describe("ProjectPackageJson", () => {
       });
 
       expect(projectPackageJson.toJSON()).toEqual({
-        _id: "@",
         dependencies: {
           module1: "latest",
           module2: "alpha",
@@ -273,7 +268,6 @@ describe("ProjectPackageJson", () => {
           "dev-module3": "6.0.0"
         },
         name: "name",
-        readme: "ERROR: No README data found!",
         scripts: {
           build: "echo 0"
         },
@@ -355,7 +349,6 @@ describe("ProjectPackageJson", () => {
       });
 
       expect(projectPackageJson.toJSON()).toEqual({
-        _id: "@",
         dependencies: {
           module1: "latest",
           module2: "alpha",
@@ -368,7 +361,6 @@ describe("ProjectPackageJson", () => {
           "dev-module3": "6.0.0"
         },
         name: "name",
-        readme: "ERROR: No README data found!",
         scripts: {
           build: "echo 0"
         },

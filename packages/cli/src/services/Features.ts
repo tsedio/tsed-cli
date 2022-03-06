@@ -334,16 +334,6 @@ const featuresLinterChoices = (cliVersion: string) => [
         "@tsed/cli-plugin-eslint": cliVersion
       }
     }
-  },
-  {
-    name: "TsLint (deprecated)",
-    checked: true,
-    value: {
-      type: "tslint",
-      devDependencies: {
-        "@tsed/cli-plugin-tslint": cliVersion
-      }
-    }
   }
 ];
 
@@ -405,7 +395,7 @@ const packageManagerChoices = [
 ];
 
 export const parseFeaturesFile = (features: Record<string, any>, cliVersion: string) => {
-  const mappedFeatures = {
+  return {
     platform: features.platform,
     convention: features.convention,
     features: [
@@ -422,11 +412,10 @@ export const parseFeaturesFile = (features: Record<string, any>, cliVersion: str
     featuresBundler: featuresBundlerChoices.find((v) => v.value.type === features.featuresBundlerChoices)?.value,
     packageManager: features.packageManager
   };
-  return mappedFeatures;
 };
 
 export const getFeaturesChoicesValues = (cliVersion: string) => {
-  const mappedFeatures = {
+  return {
     platform: platformChoices.map((v) => v.value),
     convention: conventionChoices.map((v) => v.value),
     features: featureChoices(cliVersion).map((v) => v.value.type),
@@ -438,7 +427,6 @@ export const getFeaturesChoicesValues = (cliVersion: string) => {
     featuresBundler: featuresBundlerChoices.map((v) => v.value.type),
     packageManager: packageManagerChoices.map((v) => v.value)
   };
-  return mappedFeatures;
 };
 
 registerProvider({

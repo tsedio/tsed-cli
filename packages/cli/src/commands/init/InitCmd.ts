@@ -270,7 +270,12 @@ export class InitCmd implements CommandProvider {
   }
 
   async $postInstall() {
-    await this.packageJson.runScript("barrels");
+    try {
+      await this.packageJson.runScript("barrels");
+    } catch (er) {
+      const runner = this.packageJson.getRunCmd();
+      console.warn(`Fail to run tasks: '${runner} barrels'. Please run '${runner} start'`);
+    }
     return [];
   }
 

@@ -3,6 +3,7 @@ import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
 import {dirname, join, resolve} from "path";
 import {InitCmd, ProjectConvention} from "../../../src";
+import {getPackageJson} from "@tsed/cli-core/src/utils/getPackageJson";
 
 const TEMPLATE_DIR = resolve(__dirname, "..", "..", "..", "templates");
 
@@ -19,11 +20,12 @@ function readFile(file: string, content: string, rewrite = true) {
 }
 
 describe("Init cmd", () => {
-  beforeEach(() =>
-    CliPlatformTest.bootstrap({
-      templateDir: TEMPLATE_DIR,
-      commands: [InitCmd]
-    })
+  beforeEach(() => {
+      return CliPlatformTest.bootstrap({
+        templateDir: TEMPLATE_DIR,
+        commands: [InitCmd]
+      });
+    }
   );
   afterEach(() => CliPlatformTest.reset());
 
@@ -31,6 +33,13 @@ describe("Init cmd", () => {
     it("should generate a project with the right options", async () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
+
+      jest.spyOn(projectPackageJson as any, 'getPackageJson').mockReturnValue({
+        dependencies: {},
+        devDependencies: {},
+        scripts: {}
+      });
+
       projectPackageJson.setRaw({
         name: "",
         version: "1.0.0",
@@ -116,6 +125,13 @@ describe("Init cmd", () => {
     it("should generate a project with swagger", async () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
+
+      jest.spyOn(projectPackageJson as any, 'getPackageJson').mockReturnValue({
+        dependencies: {},
+        devDependencies: {},
+        scripts: {}
+      });
+
       projectPackageJson.setRaw({
         name: "",
         version: "1.0.0",
@@ -208,6 +224,13 @@ describe("Init cmd", () => {
     it("should generate a project with NPM", async () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
+
+      jest.spyOn(projectPackageJson as any, 'getPackageJson').mockReturnValue({
+        dependencies: {},
+        devDependencies: {},
+        scripts: {}
+      });
+
       projectPackageJson.setRaw({
         name: "",
         version: "1.0.0",
@@ -294,6 +317,13 @@ describe("Init cmd", () => {
     it("should generate a project with Convention ANGULAR", async () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
+
+      jest.spyOn(projectPackageJson as any, 'getPackageJson').mockReturnValue({
+        dependencies: {},
+        devDependencies: {},
+        scripts: {}
+      });
+
       projectPackageJson.setRaw = (pkg) => {
         // @ts-ignore
         projectPackageJson.raw = {
@@ -362,6 +392,13 @@ describe("Init cmd", () => {
     it("should generate a project with the right options", async () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
+
+      jest.spyOn(projectPackageJson as any, 'getPackageJson').mockReturnValue({
+        dependencies: {},
+        devDependencies: {},
+        scripts: {}
+      });
+
       projectPackageJson.setRaw({
         name: "",
         version: "1.0.0",
@@ -451,6 +488,13 @@ describe("Init cmd", () => {
     it("should configuration directory", async () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
+
+      jest.spyOn(projectPackageJson as any, 'getPackageJson').mockReturnValue({
+        dependencies: {},
+        devDependencies: {},
+        scripts: {}
+      });
+
       projectPackageJson.setRaw({
         name: "",
         version: "1.0.0",

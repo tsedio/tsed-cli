@@ -1,5 +1,5 @@
 import {InitCmdContext} from "@tsed/cli";
-import {Inject, Injectable, OnExec, ProjectPackageJson, RootRendererService} from "@tsed/cli-core";
+import {Inject, Injectable, OnExec, OnPostInstall, ProjectPackageJson, RootRendererService} from "@tsed/cli-core";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
 @Injectable()
@@ -50,6 +50,26 @@ export class EslintInitHook {
     ];
   }
 
+  @OnPostInstall("init")
+  onPostInstall(ctx: InitCmdContext) {
+    return [
+      {
+        title: "Add husky prepare task",
+        when: () => ctx.lintstaged,
+        task: async () => {
+          this.packageJson
+            .read()
+            .addScripts({
+              prepare: "is-ci || husky install"
+            })
+            .write();
+
+          await this.packageJson.runScript("prepare");
+        }
+      }
+    ];
+  }
+
   addScripts(ctx: InitCmdContext) {
     this.packageJson.addScripts({
       "test:lint": "eslint '**/*.{ts,js}'",
@@ -58,8 +78,7 @@ export class EslintInitHook {
 
     if (ctx.prettier) {
       this.packageJson.addScripts({
-        prettier: "prettier '**/*.{ts,js,json,md,yml,yaml}' --write",
-        prepare: "is-ci || husky install"
+        prettier: "prettier '**/*.{ts,js,json,md,yml,yaml}' --write"
       });
     }
   }
