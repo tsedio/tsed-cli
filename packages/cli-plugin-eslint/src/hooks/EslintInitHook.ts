@@ -16,10 +16,6 @@ export class EslintInitHook {
       return [];
     }
 
-    this.addScripts(ctx);
-    this.addDependencies(ctx);
-    this.addDevDependencies(ctx);
-
     return [
       {
         title: "Generate files for eslint",
@@ -41,6 +37,14 @@ export class EslintInitHook {
               templateDir: `${TEMPLATE_DIR}/init`
             }
           );
+        }
+      },
+      {
+        title: "Add dependencies",
+        task: () => {
+          this.addScripts(ctx);
+          this.addDependencies(ctx);
+          this.addDevDependencies(ctx);
         }
       }
     ];
