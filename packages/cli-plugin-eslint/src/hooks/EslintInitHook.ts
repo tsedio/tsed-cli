@@ -55,7 +55,7 @@ export class EslintInitHook {
     return [
       {
         title: "Add husky prepare task",
-        when: () => ctx.lintstaged,
+        skip: !ctx.lintstaged,
         task: async () => {
           this.packageJson
             .read()
