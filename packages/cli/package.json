@@ -48,7 +48,7 @@
     "@tsed/cli-core": "3.20.16",
     "@tsed/core": ">=6.114.6",
     "@tsed/di": ">=6.114.6",
-    "@tsed/logger": ">=6.0.0",
+    "@tsed/logger": ">=6.1.0",
     "@tsed/schema": ">=6.114.6",
     "change-case": "4.1.2",
     "normalize-path": "3.0.0",
