@@ -42,6 +42,7 @@ export class Cli extends CliCore {
     alias.addAliases({
       "@tsed/core": require.resolve("@tsed/core"),
       "@tsed/di": require.resolve("@tsed/di"),
+      "@tsed/schema": require.resolve("@tsed/schema"),
       "@tsed/cli-core": require.resolve("@tsed/cli-core"),
       "@tsed/cli": require.resolve("@tsed/cli")
     });
