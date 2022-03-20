@@ -1,16 +1,15 @@
+import {isString} from "@tsed/core";
 import {Configuration, Constant, Inject, Injectable} from "@tsed/di";
 import Consolidate from "consolidate";
 import {existsSync} from "fs-extra";
+import normalizePath from "normalize-path";
 import globby from "globby";
 import {dirname, join, relative} from "path";
 import {Observable} from "rxjs";
 import {CliFs} from "./CliFs";
 import "../utils/hbs";
-import {isString} from "@tsed/core";
 import {insertImport} from "../utils/renderer/insertImport";
 import {insertAfter} from "../utils/renderer/insertAfter";
-
-const normalizePath = require("normalize-path");
 
 export interface RenderOptions {
   path: string;
@@ -101,14 +100,17 @@ export abstract class Renderer {
     return existsSync(join(templateDir, path));
   }
 
-  scan(pattern: string[], options: any = {}) {
-    return globby(
+  async scan(pattern: string[], options: any = {}): Promise<string[]> {
+    const result = await globby(
       pattern.map((s: string) => normalizePath(s)),
       {
         ...options,
+        objectMode: true,
         cwd: this.rootDir
       }
     );
+
+    return result.map((entry) => entry.path);
   }
 
   relativeFrom(path: string) {

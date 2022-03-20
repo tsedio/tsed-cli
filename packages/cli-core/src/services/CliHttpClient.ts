@@ -1,7 +1,7 @@
 import {Inject, Injectable} from "@tsed/di";
 import axios, {AxiosRequestConfig, Method} from "axios";
 import {cleanObject} from "@tsed/core";
-import querystring from "querystring";
+import {stringify} from "querystring";
 import {CliProxyAgent} from "./CliProxyAgent";
 import {CliHttpLogClient} from "./CliHttpLogClient";
 
@@ -18,7 +18,7 @@ export class CliHttpClient extends CliHttpLogClient {
   protected host: string;
 
   static getParamsSerializer(params: any) {
-    return querystring.stringify(cleanObject(params));
+    return stringify(cleanObject(params));
   }
 
   async $onInit() {
@@ -28,7 +28,7 @@ export class CliHttpClient extends CliHttpLogClient {
   async head<T = Record<string, any>>(endpoint: string, options: CliHttpClientOptions = {}): Promise<T> {
     const {headers} = await axios(this.getRequestParameters("HEAD", endpoint, options));
 
-    return headers;
+    return headers as any;
   }
 
   async get<T = unknown>(endpoint: string, options: CliHttpClientOptions = {}): Promise<T> {
