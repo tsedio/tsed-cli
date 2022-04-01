@@ -67,7 +67,7 @@
     "@types/listr": "0.14.2",
     "@types/read-pkg-up": "6.0.0",
     "@types/semver": "7.3.5",
-    "@types/tunnel": "0.0.1",
+    "@types/tunnel": "0.0.3",
     "@types/update-notifier": "5.0.0",
     "@types/url-parse": "^1.4.3"
   },
