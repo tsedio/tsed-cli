@@ -202,7 +202,7 @@ export class GenerateCmd implements CommandProvider {
       symbolPathBasename: normalizePath(this.classNamePipe.transform({name, type})),
       express: ctx.platform === "express",
       koa: ctx.platform === "koa",
-      platformSymbol: pascalCase(`Platform ${ctx.platform}`),
+      platformSymbol: ctx.platform && pascalCase(`Platform ${ctx.platform}`),
       indexControllerPath:
         this.projectPackageJson.preferences.convention === ProjectConvention.ANGULAR
           ? "./controllers/pages/index.controller"

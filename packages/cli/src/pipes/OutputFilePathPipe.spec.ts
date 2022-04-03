@@ -62,6 +62,32 @@ describe("OutputFilePathPipe", () => {
         )
       ).toEqual("controllers/rest/TestController");
     });
+    it("should return the output file (datasource)", () => {
+      const providers = new ProvidersInfoService();
+      providers.add({
+        name: "TypeORM Datasource",
+        value: "typeorm:datasource",
+        model: "{{symbolName}}.datasource"
+      });
+
+      const classPipe = new ClassNamePipe();
+      classPipe.providers = providers;
+
+      const pipe = new OutputFilePathPipe(classPipe);
+      pipe.providers = providers;
+      pipe.projectPackageJson = {
+        preferences: {}
+      } as any;
+
+      expect(
+        normalizePath(
+          pipe.transform({
+            type: "typeorm:datasource",
+            name: "MySQL"
+          })
+        )
+      ).toEqual("datasources/MySqlDatasource");
+    });
   });
   describe("Angular architecture", () => {
     it("should return the output file", () => {
@@ -123,6 +149,34 @@ describe("OutputFilePathPipe", () => {
           })
         )
       ).toEqual("rest/TestController");
+    });
+    it("should return the output file (datasource)", () => {
+      const providers = new ProvidersInfoService();
+      providers.add({
+        name: "TypeORM Datasource",
+        value: "typeorm:datasource",
+        model: "{{symbolName}}.datasource"
+      });
+
+      const classPipe = new ClassNamePipe();
+      classPipe.providers = providers;
+
+      const pipe = new OutputFilePathPipe(classPipe);
+      pipe.providers = providers;
+      pipe.projectPackageJson = {
+        preferences: {
+          architecture: ArchitectureConvention.FEATURE
+        }
+      } as any;
+
+      expect(
+        normalizePath(
+          pipe.transform({
+            type: "typeorm:datasource",
+            name: "MySQL"
+          })
+        )
+      ).toEqual("MySqlDatasource");
     });
   });
 });

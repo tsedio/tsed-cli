@@ -147,7 +147,7 @@ export class InitCmd implements CommandProvider {
       yarn: ctx.packageManager === PackageManager.YARN,
       express: ctx.platform === "express",
       koa: ctx.platform === "koa",
-      platformSymbol: pascalCase(`Platform ${ctx.platform}`)
+      platformSymbol: ctx.platform && pascalCase(`Platform ${ctx.platform}`)
     } as InitCmdContext;
   }
 

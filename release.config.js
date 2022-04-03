@@ -5,13 +5,18 @@ module.exports = {
     {name: "beta", prerelease: true, channel: "beta"},
     {name: "rc", prerelease: true, channel: "rc"}
   ],
-  verifyConditions: ["@semantic-release/github", "@semantic-release/npm", "@tsed/monorepo-utils/semantic-release"],
+  verifyConditions: [
+    "@semantic-release/github",
+    "@semantic-release/npm",
+    "@tsed/monorepo-utils/semantic-release",
+    "semantic-release-slack-bot"
+  ],
   analyzeCommits: ["@semantic-release/commit-analyzer"],
   verifyRelease: [],
   generateNotes: ["@semantic-release/release-notes-generator"],
   prepare: ["@semantic-release/npm", "@tsed/monorepo-utils/semantic-release"],
   publish: ["@tsed/monorepo-utils/semantic-release", "@semantic-release/github"],
-  success: ["@semantic-release/github", "@tsed/monorepo-utils/semantic-release"],
+  success: ["@semantic-release/github", "@tsed/monorepo-utils/semantic-release", "semantic-release-slack-bot"],
   fail: ["@semantic-release/github"],
   npmPublish: false
 };

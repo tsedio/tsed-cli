@@ -18,7 +18,7 @@ export class JestGenerateHook {
       {
         title: `Generate ${ctx.type} spec file to '${symbolPath}.spec.ts'`,
         enabled() {
-          return !(ctx.type === "server" || ctx.type.includes(":connection"));
+          return !(ctx.type === "server" || ctx.type.includes(":dataSource") || ctx.type.includes(":connection"));
         },
         task: () =>
           this.srcRenderService.render(

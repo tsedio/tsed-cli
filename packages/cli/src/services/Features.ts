@@ -78,6 +78,15 @@ export const FEATURES_TYPEORM_CONNECTION_TYPES = [
     }
   },
   {
+    name: "Better SQLite3",
+    value: {
+      type: "typeorm:better-sqlite3",
+      dependencies: {
+        "better-sqlite3": "latest"
+      }
+    }
+  },
+  {
     name: "Cordova",
     value: {
       type: "typeorm:cordova"

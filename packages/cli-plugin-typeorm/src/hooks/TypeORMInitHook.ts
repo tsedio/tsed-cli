@@ -1,7 +1,15 @@
 import {InitCmdContext} from "@tsed/cli";
-import {CliDockerComposeYaml, Inject, OnExec, ProjectPackageJson, RootRendererService, SrcRendererService} from "@tsed/cli-core";
+import {
+  CliDockerComposeYaml,
+  CliService,
+  Inject,
+  OnExec,
+  ProjectPackageJson,
+  RootRendererService,
+  SrcRendererService
+} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
-import {CliTypeORM} from "../services/CliTypeORM";
+import {pascalCase} from "change-case";
 
 function getDatabase(ctx: InitCmdContext) {
   return ctx.features.find(({type}) => type.includes("typeorm:"))?.type.split(":")[1] || "";
@@ -10,7 +18,7 @@ function getDatabase(ctx: InitCmdContext) {
 @Injectable()
 export class TypeORMInitHook {
   @Inject()
-  cliTypeORM: CliTypeORM;
+  protected cliService: CliService;
 
   @Inject()
   protected packageJson: ProjectPackageJson;
@@ -36,29 +44,16 @@ export class TypeORMInitHook {
       return [];
     }
 
-    return [
-      {
-        title: `Generate TypeORM connection file`,
-        task: async () =>
-          this.cliTypeORM.generateConnection("default", {
-            symbolPath: "DefaultConnection",
-            symbolName: "DefaultConnection"
-          })
-      },
-      {
-        title: "Generate TypeORM configuration",
-        task: async () => this.cliTypeORM.writeConfig("default", database)
-      },
-      {
-        title: "Generate docker-compose configuration",
-        task: async () => this.cliDockerComposeYaml.addDatabaseService(database, database)
-      }
-    ];
+    return this.cliService.getTasks("generate", {
+      ...ctx,
+      type: "typeorm:dataSource",
+      name: pascalCase(database)
+    });
   }
 
   addScripts() {
     this.packageJson.addScripts({
-      typeorm: "tsed typeorm"
+      typeorm: "typeorm-ts-node-commonjs"
     });
   }
 
