@@ -24,7 +24,7 @@ module.exports = {
       {
         notifyOnSuccess: true,
         onSuccessTemplate: {
-          text: "CLI $npm_package_version has been released at $repo_url!"
+          text: "CLI v$npm_package_version has been released at https://github.com/tsedio/tsed-cli/releases/tag/v$npm_package_version"
         }
       }
     ]
