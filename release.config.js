@@ -22,7 +22,10 @@ module.exports = {
     [
       "semantic-release-slack-bot",
       {
-        notifyOnSuccess: true
+        notifyOnSuccess: true,
+        onSuccessTemplate: {
+          text: "CLI $npm_package_version has been released at $repo_url!"
+        }
       }
     ]
   ],
