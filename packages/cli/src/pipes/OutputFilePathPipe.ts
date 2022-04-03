@@ -24,7 +24,7 @@ export class OutputFilePathPipe {
       return join(options.subDir || "", featureDir, this.classNamePipe.transform(options));
     }
 
-    const baseDir = options.baseDir || this.providers.get(options.type)?.baseDir || `${options.type}s`;
+    const baseDir = (options.baseDir || this.providers.get(options.type)?.baseDir || `${options.type}s`).split(":").at(-1);
 
     return join(baseDir, options.subDir || "", featureDir, this.classNamePipe.transform(options));
   }

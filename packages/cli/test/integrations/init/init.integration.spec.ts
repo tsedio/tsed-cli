@@ -3,7 +3,6 @@ import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
 import {dirname, join, resolve} from "path";
 import {InitCmd, ProjectConvention} from "../../../src";
-import {getPackageJson} from "@tsed/cli-core/src/utils/getPackageJson";
 
 const TEMPLATE_DIR = resolve(__dirname, "..", "..", "..", "templates");
 
@@ -34,7 +33,7 @@ describe("Init cmd", () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
 
-      jest.spyOn(projectPackageJson as any, 'getPackageJson').mockReturnValue({
+      jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
         dependencies: {},
         devDependencies: {},
         scripts: {}
@@ -126,7 +125,7 @@ describe("Init cmd", () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
 
-      jest.spyOn(projectPackageJson as any, 'getPackageJson').mockReturnValue({
+      jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
         dependencies: {},
         devDependencies: {},
         scripts: {}
@@ -225,7 +224,7 @@ describe("Init cmd", () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
 
-      jest.spyOn(projectPackageJson as any, 'getPackageJson').mockReturnValue({
+      jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
         dependencies: {},
         devDependencies: {},
         scripts: {}
@@ -318,7 +317,7 @@ describe("Init cmd", () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
 
-      jest.spyOn(projectPackageJson as any, 'getPackageJson').mockReturnValue({
+      jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
         dependencies: {},
         devDependencies: {},
         scripts: {}
@@ -393,7 +392,7 @@ describe("Init cmd", () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
 
-      jest.spyOn(projectPackageJson as any, 'getPackageJson').mockReturnValue({
+      jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
         dependencies: {},
         devDependencies: {},
         scripts: {}
@@ -489,7 +488,7 @@ describe("Init cmd", () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
       const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
 
-      jest.spyOn(projectPackageJson as any, 'getPackageJson').mockReturnValue({
+      jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
         dependencies: {},
         devDependencies: {},
         scripts: {}

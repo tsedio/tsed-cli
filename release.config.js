@@ -9,8 +9,8 @@ module.exports = {
   analyzeCommits: ["@semantic-release/commit-analyzer"],
   verifyRelease: [],
   generateNotes: ["@semantic-release/release-notes-generator"],
-  prepare: ["@semantic-release/npm", "@tsed/monorepo-utils/semantic-release"],
-  publish: ["@tsed/monorepo-utils/semantic-release", "@semantic-release/github"],
+  prepare: ["@semantic-release/npm", "@tsed/monorepo-utils/semantic-release", "semantic-release-slack-bot"],
+  publish: ["@tsed/monorepo-utils/semantic-release", "@semantic-release/github", "semantic-release-slack-bot"],
   success: ["@semantic-release/github", "@tsed/monorepo-utils/semantic-release"],
   fail: ["@semantic-release/github"],
   npmPublish: false
