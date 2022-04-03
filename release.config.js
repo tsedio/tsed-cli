@@ -16,7 +16,16 @@ module.exports = {
   generateNotes: ["@semantic-release/release-notes-generator"],
   prepare: ["@semantic-release/npm", "@tsed/monorepo-utils/semantic-release"],
   publish: ["@tsed/monorepo-utils/semantic-release", "@semantic-release/github"],
-  success: ["@semantic-release/github", "@tsed/monorepo-utils/semantic-release", "semantic-release-slack-bot"],
+  success: [
+    "@semantic-release/github",
+    "@tsed/monorepo-utils/semantic-release",
+    [
+      "semantic-release-slack-bot",
+      {
+        notifyOnSuccess: true
+      }
+    ]
+  ],
   fail: ["@semantic-release/github"],
   npmPublish: false
 };
