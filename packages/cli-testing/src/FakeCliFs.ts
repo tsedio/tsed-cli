@@ -9,6 +9,10 @@ export class FakeCliFs {
     return normalizePath(Array.from(FakeCliFs.entries.keys()).sort((a, b) => (a < b ? -1 : 1)));
   }
 
+  findUpFile() {
+    return null;
+  }
+
   exists(path: string): boolean {
     return FakeCliFs.entries.has(normalizePath(path));
   }

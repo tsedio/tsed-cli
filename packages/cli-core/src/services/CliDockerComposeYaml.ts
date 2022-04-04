@@ -1,6 +1,7 @@
 import {Inject, Injectable} from "@tsed/di";
 import {snakeCase} from "change-case";
 import {CliYaml} from "./CliYaml";
+import {setValue} from "@tsed/core";
 
 @Injectable()
 export class CliDockerComposeYaml {
@@ -17,12 +18,12 @@ export class CliDockerComposeYaml {
 
   async addDatabaseService(name: string, database: string) {
     const dockerCompose: any = await this.read();
-
     if (dockerCompose) {
+      let value: any;
       switch (database) {
         case "mysql":
         case "mariadb":
-          dockerCompose.services[snakeCase(name)] = {
+          value = {
             image: database === "mysql" ? "mysql:5.7.10" : "mariadb:10.1.16",
             ports: ["3306:3306"],
             environment: {
@@ -34,7 +35,7 @@ export class CliDockerComposeYaml {
           };
           break;
         case "postgres":
-          dockerCompose.services[snakeCase(name)] = {
+          value = {
             image: "postgres:9.6.1",
             ports: ["5432:5432"],
             environment: {
@@ -45,14 +46,14 @@ export class CliDockerComposeYaml {
           };
           break;
         case "cockroachdb":
-          dockerCompose.services[snakeCase(name)] = {
+          value = {
             image: "cockroachdb/cockroach:v2.1.4",
             command: "start --insecure",
             ports: ["26257:26257"]
           };
           break;
         case "mssql":
-          dockerCompose.services[snakeCase(name)] = {
+          value = {
             image: "mcr.microsoft.com/mssql/server:2017-latest",
             command: "start --insecure",
             ports: ["1433:1433"],
@@ -63,13 +64,14 @@ export class CliDockerComposeYaml {
           };
           break;
         case "mongodb":
-          dockerCompose.services[snakeCase(name)] = {
+          value = {
             image: "mongo:4.1",
             ports: ["27017:27017"]
           };
           break;
       }
 
+      setValue(dockerCompose, `services.${snakeCase(name)}`, value);
       await this.write(dockerCompose);
     }
   }

@@ -14,8 +14,7 @@ import cors from "@koa/cors";
 {{/if}}
 import "@tsed/ajv";{{#if swagger}}
 import "@tsed/swagger";{{/if}}{{#if mongoose}}
-import "@tsed/mongoose";{{/if}}{{#if typeorm}}
-import "@tsed/typeorm";{{/if}}{{#if oidc}}
+import "@tsed/mongoose";{{/if}}{{#if oidc}}
 import "@tsed/oidc-provider";{{/if}}
 import {config} from "./config";
 import * as rest from "./controllers/rest";{{#if swagger}}

@@ -2,8 +2,6 @@ import {readFileSync} from "fs";
 import {envs} from "./envs";
 import loggerConfig from "./logger";{{#if mongoose}}
 import mongooseConfig from "./mongoose";
-{{/if}}{{#if typeorm}}
-import typeormConfig from "./typeorm";
 {{/if}}{{#if oidc}}
 import oidcConfig from "./oidc";
 import {FileSyncAdapter} from "@tsed/adapters";
@@ -15,9 +13,6 @@ export const config: Partial<TsED.Configuration> = {
   version: pkg.version,
   envs,
   logger: loggerConfig,
-  {{#if typeorm}}
-  typeorm: typeormConfig,
-  {{/if}}
   {{#if mongoose}}
   mongoose: mongooseConfig,
   {{/if}}
