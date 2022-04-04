@@ -69,19 +69,23 @@ export class TypeORMGenerateHook {
 
   generateDataSourceTasks(ctx: TypeORMGenerateOptions) {
     const {typeormDataSource, symbolPath, name} = ctx;
-    const connection = FEATURES_TYPEORM_CONNECTION_TYPES.find((item) => item.value.type === typeormDataSource);
 
-    if (connection?.value?.dependencies) {
-      this.projectPackageJson.addDependencies(connection?.value.dependencies || {});
+    if (!typeormDataSource) {
+      return [];
     }
 
+    const databaseType = FEATURES_TYPEORM_CONNECTION_TYPES.find((item) => item.value.type === typeormDataSource);
     const database = typeormDataSource.split(":").at(-1)!;
+
+    if (databaseType?.value?.dependencies) {
+      this.projectPackageJson.addDependencies(databaseType?.value.dependencies || {});
+    }
 
     return [
       {
-        title: `Generate TypeORM connection file to '${symbolPath}.ts'`,
-        task: () => {
-          return this.srcRenderService.render(
+        title: `Generate TypeORM datasource file to '${symbolPath}.ts'`,
+        task: () =>
+          this.srcRenderService.render(
             "datasource.hbs",
             {
               name,
@@ -93,12 +97,11 @@ export class TypeORMGenerateHook {
               output: `${ctx.symbolPath}.ts`,
               rootDir: this.srcRenderService.rootDir
             }
-          );
-        }
+          )
       },
       {
         title: "Generate docker-compose configuration",
-        task: async () => this.cliDockerComposeYaml.addDatabaseService(name, database)
+        task: () => this.cliDockerComposeYaml.addDatabaseService(name, database)
       }
     ];
   }

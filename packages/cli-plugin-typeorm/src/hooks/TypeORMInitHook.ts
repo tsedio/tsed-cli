@@ -47,7 +47,8 @@ export class TypeORMInitHook {
     return this.cliService.getTasks("generate", {
       ...ctx,
       type: "typeorm:dataSource",
-      name: pascalCase(database)
+      name: pascalCase(database),
+      typeormDataSource: ctx.features.find(({type}) => type.startsWith("typeorm:"))?.type
     });
   }
 
