@@ -24,7 +24,7 @@ export class CliDockerComposeYaml {
         case "mysql":
         case "mariadb":
           value = {
-            image: database === "mysql" ? "mysql:5.7.10" : "mariadb:10.1.16",
+            image: database === "mysql" ? "mysql:8.0.28-oracle" : "mariadb:10.7.3",
             ports: ["3306:3306"],
             environment: {
               MYSQL_ROOT_PASSWORD: "admin",

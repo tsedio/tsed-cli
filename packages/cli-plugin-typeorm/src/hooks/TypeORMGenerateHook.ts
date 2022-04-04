@@ -2,6 +2,7 @@ import {FEATURES_TYPEORM_CONNECTION_TYPES, GenerateCmdContext, ProvidersInfoServ
 import {CliDockerComposeYaml, Inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {TEMPLATE_DIR} from "../utils/templateDir";
+import {constantCase} from "change-case";
 
 export interface TypeORMGenerateOptions extends GenerateCmdContext {
   typeormDataSource: string;
@@ -81,6 +82,8 @@ export class TypeORMGenerateHook {
       this.projectPackageJson.addDependencies(databaseType?.value.dependencies || {});
     }
 
+    const symbolName = ctx.symbolName.replace("Datasource", "DataSource");
+
     return [
       {
         title: `Generate TypeORM datasource file to '${symbolPath}.ts'`,
@@ -90,7 +93,8 @@ export class TypeORMGenerateHook {
             {
               name,
               database,
-              symbolName: ctx.symbolName.replace("Datasource", "DataSource")
+              symbolName,
+              tokenName: constantCase(symbolName)
             },
             {
               templateDir: TEMPLATE_DIR,

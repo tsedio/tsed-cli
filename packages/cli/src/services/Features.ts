@@ -37,7 +37,7 @@ export const FEATURES_TYPEORM_CONNECTION_TYPES = [
     value: {
       type: "typeorm:mysql",
       dependencies: {
-        mysql: "latest"
+        mysql2: "latest"
       }
     }
   },

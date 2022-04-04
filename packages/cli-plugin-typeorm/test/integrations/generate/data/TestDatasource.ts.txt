@@ -2,6 +2,7 @@ import {registerProvider} from "@tsed/di";
 import {DataSource} from "typeorm";
 import {Logger} from "@tsed/logger";
 
+export const TEST_DATA_SOURCE = Symbol.for(TestDataSource)
 export const TestDataSource = new DataSource({
   type: "mysql",
   host: "localhost",
@@ -12,7 +13,7 @@ export const TestDataSource = new DataSource({
 });
 
 registerProvider<DataSource>({
-  provide: TestDataSource,
+  provide: TEST_DATA_SOURCE,
   type: "typeorm:datasource",
   deps: [Logger],
   async useAsyncFactory(logger: Logger) {
