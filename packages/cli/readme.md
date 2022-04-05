@@ -17,6 +17,10 @@
 
 Please refer to the [documentation](https://cli.tsed.io/) for more details.
 
+## Requirement
+
+The CLI needs at least Node.js v12 and NPM v7/8.
+
 ## Installation
 
 ```bash
