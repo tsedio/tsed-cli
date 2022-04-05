@@ -35,7 +35,7 @@
     "create-frame": "1.0.0",
     "execa": "5.0.0",
     "figures": "3.2.0",
-    "fs-extra": "9.1.0",
+    "fs-extra": "10.0.1",
     "globby": "11.0.2",
     "handlebars": "4.7.7",
     "handlebars-utils": "1.0.6",
