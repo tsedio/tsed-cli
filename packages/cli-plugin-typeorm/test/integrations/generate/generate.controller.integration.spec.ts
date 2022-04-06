@@ -55,7 +55,7 @@ describe("Generate DataSource", () => {
 
     const datasource = FakeCliFs.entries.get("project-name/src/datasources/TestDatasource.ts");
 
-    expect(datasource).toEqual(readFile("data/TestDatasource.ts.txt", datasource!));
+    expect(datasource).toEqual(readFile("data/TestDatasource.ts.txt", datasource!, false));
 
     const dockerCompose = FakeCliFs.entries.get("project-name/docker-compose.yml");
     expect(dockerCompose).toEqual(readFile("data/docker-compose.yml.txt", dockerCompose!, false));

@@ -19,7 +19,7 @@ registerProvider<DataSource>({
   async useAsyncFactory(logger: Logger) {
     await TestDataSource.initialize();
 
-    logger.info('Connected with typeorm to database: Test');
+    logger.info("Connected with typeorm to database: Test");
 
     return TestDataSource;
   },
