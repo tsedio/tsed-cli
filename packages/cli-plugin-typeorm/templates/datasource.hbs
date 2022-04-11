@@ -2,9 +2,10 @@ import {registerProvider} from "@tsed/di";
 import {DataSource} from "typeorm";
 import {Logger} from "@tsed/logger";
 
-export const {{tokenName}} = Symbol.for({{symbolName}})
+export const {{tokenName}} = Symbol.for("{{symbolName}}");
 export const {{symbolName}} = new DataSource({
   type: "{{database}}",
+  entities: [],
 {{#switch database}}
   {{#case 'mysql'}}
   host: "localhost",
