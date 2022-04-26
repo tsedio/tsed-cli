@@ -20,7 +20,7 @@ export interface UpdateCmdContext extends CliDefaultOptions {
 }
 
 function cleanVersion(version = "") {
-  return version.replace(/[\^~]/, "");
+  return version.replace(/[\^~>=]/gi, "");
 }
 
 function isGreaterThan(a: any, b: string) {
