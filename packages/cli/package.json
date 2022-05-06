@@ -23,20 +23,6 @@
     "express",
     "decorators"
   ],
-  "dependencies": {
-    "@tsed/cli-core": "3.20.9",
-    "@tsed/core": ">=6.95.1",
-    "@tsed/di": ">=6.95.1",
-    "@tsed/logger": ">=6.0.0",
-    "@tsed/schema": ">=6.95.1",
-    "change-case": "4.1.2",
-    "normalize-path": "3.0.0",
-    "tslib": "2.3.1"
-  },
-  "devDependencies": {
-    "@tsed/cli-testing": "3.20.9",
-    "@types/change-case": "^2.3.1"
-  },
   "scripts": {
     "build": "tsc --build tsconfig.compile.json",
     "build:doc": "tsc --build tsconfig.doc.json",
@@ -58,5 +44,37 @@
   "engines": {
     "node": ">=8.9"
   },
-  "peerDependencies": {}
+  "dependencies": {
+    "change-case": "4.1.2",
+    "normalize-path": "3.0.0",
+    "tslib": "2.3.1"
+  },
+  "devDependencies": {
+    "@tsed/cli-testing": "3.20.9",
+    "@types/change-case": "^2.3.1"
+  },
+  "peerDependencies": {
+    "@tsed/cli-core": "3.20.8",
+    "@tsed/core": ">=6.114.6",
+    "@tsed/di": ">=6.114.6",
+    "@tsed/logger": ">=6.0.0",
+    "@tsed/schema": ">=6.114.6"
+  },
+  "peerDependenciesMeta": {
+    "@tsed/cli-core": {
+      "optional": false
+    },
+    "@tsed/core": {
+      "optional": false
+    },
+    "@tsed/di": {
+      "optional": false
+    },
+    "@tsed/logger": {
+      "optional": false
+    },
+    "@tsed/schema": {
+      "optional": false
+    }
+  }
 }
