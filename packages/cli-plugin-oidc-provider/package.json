@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-plugin-oidc-provider",
-  "version": "3.20.9",
+  "version": "3.20.10",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "description": "Ts.ED CLI plugin. Add OIDC Provider",
@@ -16,11 +16,11 @@
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/cli": "3.20.9",
-    "@tsed/cli-core": "3.20.9"
+    "@tsed/cli": "3.20.10",
+    "@tsed/cli-core": "3.20.10"
   },
   "peerDependencies": {
-    "@tsed/cli": "^3.20.9",
-    "@tsed/cli-core": "^3.20.9"
+    "@tsed/cli": "^3.20.10",
+    "@tsed/cli-core": "^3.20.10"
   }
 }

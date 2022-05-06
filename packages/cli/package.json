@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli",
-  "version": "3.20.9",
+  "version": "3.20.10",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "bin": {
@@ -50,11 +50,11 @@
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/cli-testing": "3.20.9",
+    "@tsed/cli-testing": "3.20.10",
     "@types/change-case": "^2.3.1"
   },
   "peerDependencies": {
-    "@tsed/cli-core": "3.20.8",
+    "@tsed/cli-core": "^3.20.10",
     "@tsed/core": ">=6.114.6",
     "@tsed/di": ">=6.114.6",
     "@tsed/logger": ">=6.0.0",
