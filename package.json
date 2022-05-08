@@ -54,7 +54,7 @@
     "consolidate": "0.16.0",
     "execa": "5.0.0",
     "figures": "3.2.0",
-    "fs-extra": "9.1.0",
+    "fs-extra": "10.1.0",
     "handlebars": "4.7.7",
     "handlebars-helpers": "0.10.0",
     "inquirer": "8.2.0",
