@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-plugin-passport",
-  "version": "3.20.11",
+  "version": "3.20.12",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "description": "Ts.ED CLI plugin. Add Passport.js support",
@@ -9,8 +9,8 @@
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/cli": "3.20.11",
-    "@tsed/cli-core": "3.20.11",
+    "@tsed/cli": "3.20.12",
+    "@tsed/cli-core": "3.20.12",
     "@types/change-case": "^2.3.1"
   },
   "scripts": {
