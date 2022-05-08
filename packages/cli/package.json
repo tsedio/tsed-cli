@@ -47,34 +47,16 @@
   "dependencies": {
     "change-case": "4.1.2",
     "normalize-path": "3.0.0",
-    "tslib": "2.3.1"
-  },
-  "devDependencies": {
-    "@tsed/cli-testing": "3.20.11",
-    "@types/change-case": "^2.3.1"
-  },
-  "peerDependencies": {
-    "@tsed/cli-core": "^3.20.11",
+    "tslib": "2.3.1",
+    "@tsed/cli-core": ">=3.20.11",
     "@tsed/core": ">=6.114.6",
     "@tsed/di": ">=6.114.6",
     "@tsed/logger": ">=6.0.0",
     "@tsed/schema": ">=6.114.6"
   },
-  "peerDependenciesMeta": {
-    "@tsed/cli-core": {
-      "optional": false
-    },
-    "@tsed/core": {
-      "optional": false
-    },
-    "@tsed/di": {
-      "optional": false
-    },
-    "@tsed/logger": {
-      "optional": false
-    },
-    "@tsed/schema": {
-      "optional": false
-    }
-  }
+  "devDependencies": {
+    "@tsed/cli-testing": "3.20.11",
+    "@types/change-case": "^2.3.1"
+  },
+  "peerDependencies": {}
 }

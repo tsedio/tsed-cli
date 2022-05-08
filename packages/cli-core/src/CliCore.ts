@@ -59,7 +59,7 @@ export class CliCore {
     const cli = injector.get<CliCore>(CliCore)!;
 
     try {
-      await cli.cliService.parseArgs(injector.settings.argv!);
+      await cli.cliService.parseArgs(injector.settings.get("argv")!);
     } catch (er) {
       throw new CliError({origin: er, cli});
     }
@@ -76,7 +76,7 @@ export class CliCore {
 
     await injector.emit("$afterInit");
 
-    injector.settings.loaded = true;
+    injector.settings.set("loaded", true);
   }
 
   static updateNotifier(pkg: any) {

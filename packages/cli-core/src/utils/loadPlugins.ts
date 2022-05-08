@@ -1,16 +1,14 @@
 import {GlobalProviders, InjectorService} from "@tsed/di";
-import {CliFs} from "../services/CliFs";
-import {ProjectPackageJson} from "../services/ProjectPackageJson";
 import {figures} from "listr2";
 import chalk from "chalk";
+import {CliFs} from "../services/CliFs";
+import {ProjectPackageJson} from "../services/ProjectPackageJson";
 
 const all = (promises: any[]) => Promise.all(promises);
 
 export async function loadPlugins(injector: InjectorService) {
-  const {
-    name,
-    project: {rootDir}
-  } = injector.settings;
+  const name = injector.settings.get("name");
+  const rootDir = injector.settings.get("project.rootDir");
 
   const projectPackageJson = injector.invoke<ProjectPackageJson>(ProjectPackageJson);
   const fs = injector.invoke<CliFs>(CliFs);
@@ -29,7 +27,7 @@ export async function loadPlugins(injector: InjectorService) {
               provider.imports.map(async (token) => {
                 injector.add(token, GlobalProviders.get(token)?.clone());
 
-                if (injector.settings.loaded) {
+                if (injector.settings.get("loaded")) {
                   await injector.invoke(token);
                 }
               })
@@ -38,7 +36,7 @@ export async function loadPlugins(injector: InjectorService) {
 
           injector.add(plugin, provider);
 
-          if (injector.settings.loaded) {
+          if (injector.settings.get("loaded")) {
             await injector.invoke(plugin);
           }
         }
