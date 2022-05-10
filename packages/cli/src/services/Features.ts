@@ -191,6 +191,9 @@ const featureChoices = (cliVersion: string) => [
     name: "TypeGraphQL",
     value: {
       type: "graphql",
+      dependencies: {
+        "@tsed/typegraphql": "{{tsedVersion}}"
+      },
       devDependencies: {
         "@tsed/cli-plugin-typegraphql": cliVersion
       }

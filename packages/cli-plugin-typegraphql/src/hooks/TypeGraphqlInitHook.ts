@@ -23,7 +23,7 @@ export class TypeGraphqlInitHook {
           this.rootRenderer.renderAll(
             [
               "/src/datasources/index.ts",
-              "/src/datasources/MyDataSource",
+              "/src/datasources/MyDataSource.ts",
               "/src/resolvers/recipes/Recipe.ts",
               "/src/resolvers/recipes/RecipeNotFoundError.ts",
               "/src/resolvers/recipes/RecipeResolver.ts",
