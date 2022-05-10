@@ -18,5 +18,8 @@ export class CliPluginOidcProviderModule {
       "@tsed/adapters": "latest",
       bcrypt: "latest"
     });
+    this.packageJson.addDevDependencies({
+      "@types/oidc-provider": "latest"
+    });
   }
 }

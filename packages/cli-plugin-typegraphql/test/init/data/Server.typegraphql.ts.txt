@@ -8,6 +8,9 @@ import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
 import cors from "cors";
 import "@tsed/ajv";
+import "@tsed/typegraphql";
+import "./datasources";
+import "./resolvers";
 import {config} from "./config";
 import * as rest from "./controllers/rest";
 

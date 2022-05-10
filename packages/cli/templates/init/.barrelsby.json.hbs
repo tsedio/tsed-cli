@@ -1,7 +1,9 @@
 {
   "directory": [
     "./src/controllers/rest"{{#or swagger oidc}},
-    "./src/controllers/pages"{{/or}}
+    "./src/controllers/pages"{{/or}}{{#if graphql}},
+    "./src/datasources",
+    "./src/resolvers"{{/if}}
   ],
   "exclude": [
     "__mock__",
