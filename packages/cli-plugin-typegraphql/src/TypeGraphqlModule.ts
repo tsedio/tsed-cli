@@ -12,7 +12,7 @@ export class TypeGraphqlModule {
   @OnAdd("@tsed/cli-plugin-typegraphql")
   install() {
     this.packageJson.addDependencies({
-      "@tsed/graphql": "{{tsedVersion}}",
+      "@tsed/typegraphql": "{{tsedVersion}}",
       "apollo-datasource": "^3.3.1",
       "apollo-datasource-rest": "^3.5.1",
       "apollo-server-core": "^3.6.2",
