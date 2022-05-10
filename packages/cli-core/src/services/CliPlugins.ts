@@ -48,7 +48,7 @@ export class CliPlugins {
     const tasks = plugins.map((plugin) => {
       return {
         title: `Run plugin '${chalk.cyan(plugin)}'`,
-        task: () => this.cliHooks.emit(CommandStoreKeys.ADD, plugin)
+        task: () => this.cliHooks.emit(CommandStoreKeys.ADD, plugin, ctx)
       };
     });
 
