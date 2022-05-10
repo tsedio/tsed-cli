@@ -44,7 +44,8 @@ import {InteractionsController} from "./controllers/oidc/InteractionsController"
     bodyParser.json(),
     bodyParser.urlencoded({
       extended: true
-    })  ],
+    })
+  ],
   views: {
     root: join(process.cwd(), "../views"),
     extensions: {

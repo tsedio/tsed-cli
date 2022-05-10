@@ -41,7 +41,8 @@ import * as pages from "./controllers/pages";
     bodyParser.json(),
     bodyParser.urlencoded({
       extended: true
-    })  ],
+    })
+  ],
   views: {
     root: join(process.cwd(), "../views"),
     extensions: {

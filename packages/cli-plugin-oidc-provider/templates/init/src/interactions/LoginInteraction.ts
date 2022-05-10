@@ -60,7 +60,7 @@ export class LoginInteraction {
 
     const client = await oidcCtx.findClient();
 
-    const account = await this.accounts.authenticate(payload.email, payload.password);
+    const account = await this.accounts.authenticate(payload.email);
 
     if (!account) {
       return {

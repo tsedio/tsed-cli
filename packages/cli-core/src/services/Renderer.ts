@@ -22,6 +22,9 @@ export interface RenderOptions {
 }
 
 export abstract class Renderer {
+  @Configuration()
+  protected configuration: Configuration;
+
   @Constant("templateDir")
   templateDir: string;
 
@@ -154,12 +157,6 @@ export abstract class Renderer {
 
 @Injectable()
 export class RootRendererService extends Renderer {
-  @Constant("templateDir")
-  templateDir: string;
-
-  @Configuration()
-  private configuration: Configuration;
-
   get rootDir() {
     return this.configuration.project?.rootDir as string;
   }
@@ -167,12 +164,6 @@ export class RootRendererService extends Renderer {
 
 @Injectable()
 export class SrcRendererService extends Renderer {
-  @Constant("templateDir")
-  templateDir: string;
-
-  @Configuration()
-  private configuration: Configuration;
-
   get rootDir() {
     return join(...([this.configuration.project?.rootDir, this.configuration.project?.srcDir].filter(Boolean) as string[]));
   }
@@ -180,12 +171,6 @@ export class SrcRendererService extends Renderer {
 
 @Injectable()
 export class ScriptsRendererService extends Renderer {
-  @Constant("templateDir")
-  templateDir: string;
-
-  @Configuration()
-  private configuration: Configuration;
-
   get rootDir() {
     return join(...([this.configuration.project?.rootDir, this.configuration.project?.scriptsDir].filter(Boolean) as string[]));
   }

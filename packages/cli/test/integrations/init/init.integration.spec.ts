@@ -111,7 +111,7 @@ describe("Init cmd", () => {
         "name": "project-data",
         "scripts": {
           "barrels": "barrelsby --config .barrelsby.json",
-          "build": "yarn run barrels && yarn run tsc --project tsconfig.compile.json",
+          "build": "yarn run barrels && tsc --project tsconfig.compile.json",
           "start": "yarn run barrels && tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
           "start:prod": "cross-env NODE_ENV=production node dist/index.js"
         },
@@ -210,7 +210,7 @@ describe("Init cmd", () => {
         "name": "project-data",
         "scripts": {
           "barrels": "barrelsby --config .barrelsby.json",
-          "build": "yarn run barrels && yarn run tsc --project tsconfig.compile.json",
+          "build": "yarn run barrels && tsc --project tsconfig.compile.json",
           "start": "yarn run barrels && tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
           "start:prod": "cross-env NODE_ENV=production node dist/index.js"
         },
@@ -303,7 +303,7 @@ describe("Init cmd", () => {
         "name": "project-data",
         "scripts": {
           "barrels": "barrelsby --config .barrelsby.json",
-          "build": "npm run barrels && npm run tsc --project tsconfig.compile.json",
+          "build": "npm run barrels && tsc --project tsconfig.compile.json",
           "start": "npm run barrels && tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
           "start:prod": "cross-env NODE_ENV=production node dist/index.js"
         },
@@ -471,7 +471,7 @@ describe("Init cmd", () => {
         "name": "project-data",
         "scripts": {
           "barrels": "barrelsby --config .barrelsby.json",
-          "build": "yarn run barrels && yarn run tsc --project tsconfig.compile.json",
+          "build": "yarn run barrels && tsc --project tsconfig.compile.json",
           "start": "yarn run barrels && tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
           "start:prod": "cross-env NODE_ENV=production node dist/index.js"
         },

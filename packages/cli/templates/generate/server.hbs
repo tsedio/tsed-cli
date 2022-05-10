@@ -15,7 +15,10 @@ import cors from "@koa/cors";
 import "@tsed/ajv";{{#if swagger}}
 import "@tsed/swagger";{{/if}}{{#if mongoose}}
 import "@tsed/mongoose";{{/if}}{{#if oidc}}
-import "@tsed/oidc-provider";{{/if}}
+import "@tsed/oidc-provider";{{/if}}{{#if graphql}}
+import "@tsed/typegraphql";
+import "./datasources";
+import "./resolvers";{{/if}}
 import {config} from "./config";
 import * as rest from "./controllers/rest";{{#if swagger}}
 import * as pages from "./controllers/pages";{{/if}}{{#if oidc}}
@@ -56,8 +59,7 @@ const methodOverride = require("koa-override");{{/if}}
     cors(),
     compress({}),
     methodOverride(),
-    bodyParser()
-    {{/if}}
+    bodyParser(){{/if}}
   ],
   views: {
     root: join(process.cwd(), "../views"),

@@ -19,10 +19,6 @@ export class OidcProviderInitHook {
 
   @OnExec("init")
   onExec(ctx: InitCmdContext) {
-    this.addScripts();
-    this.addDependencies(ctx);
-    this.addDevDependencies(ctx);
-
     return [
       {
         title: "Generate files",
@@ -54,15 +50,5 @@ export class OidcProviderInitHook {
           )
       }
     ];
-  }
-
-  addScripts() {}
-
-  addDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDependencies({}, ctx);
-  }
-
-  addDevDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDevDependencies({}, ctx);
   }
 }

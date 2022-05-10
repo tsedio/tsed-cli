@@ -27,6 +27,7 @@
   "ignorePatterns": [
     "**/lib/**/*.ts",
     "**/test/**/*.ts",
+    "**/templates/**/*.ts",
     "**/node_modules/**/*.ts"
   ]
 }

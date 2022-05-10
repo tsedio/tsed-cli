@@ -300,7 +300,7 @@ export class InitCmd implements CommandProvider {
     const runner = this.packageJson.getRunCmd();
 
     this.packageJson.addScripts({
-      build: `${runner} barrels && ${runner} tsc --project tsconfig.compile.json`,
+      build: `${runner} barrels && tsc --project tsconfig.compile.json`,
       barrels: "barrelsby --config .barrelsby.json",
       start: `${runner} barrels && tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts`,
       "start:prod": "cross-env NODE_ENV=production node dist/index.js"
@@ -308,14 +308,14 @@ export class InitCmd implements CommandProvider {
 
     if (ctx.babel) {
       this.packageJson.addScripts({
-        build: `${runner} tsc && babel src --out-dir dist --extensions ".ts,.tsx" --source-maps inline`,
+        build: `tsc && babel src --out-dir dist --extensions ".ts,.tsx" --source-maps inline`,
         start: "babel-watch --extensions .ts src/index.ts"
       });
     }
 
     if (ctx.webpack) {
       this.packageJson.addScripts({
-        bundle: `${runner} tsc && cross-env NODE_ENV=production webpack`,
+        bundle: `tsc && cross-env NODE_ENV=production webpack`,
         "start:bundle": "cross-env NODE_ENV=production node dist/app.bundle.js"
       });
     }
