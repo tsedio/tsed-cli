@@ -68,7 +68,7 @@ describe("Init TypeGraphQL project", () => {
       "project-name/src/controllers/rest",
       "project-name/src/controllers/rest/HelloWorldController.ts",
       "project-name/src/datasources",
-      "project-name/src/datasources/MyDataSource",
+      "project-name/src/datasources/MyDataSource.ts",
       "project-name/src/datasources/index.ts",
       "project-name/src/index.ts",
       "project-name/src/resolvers",
