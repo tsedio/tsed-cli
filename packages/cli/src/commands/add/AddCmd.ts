@@ -38,7 +38,7 @@ export class AddCmd implements CommandProvider {
   }
 
   async $exec(ctx: AddCmdOptions) {
-    this.packageJson.addDevDependency(ctx.name);
+    this.packageJson.addDevDependency(ctx.name, "latest");
 
     return [
       {
