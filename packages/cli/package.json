@@ -1,8 +1,35 @@
 {
   "name": "@tsed/cli",
   "version": "3.20.16",
-  "main": "./lib/index.js",
-  "typings": "./lib/index.d.ts",
+  "source": "./src/index.ts",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "typings": "./lib/types/index.d.ts",
+  "exports": {
+    "types": "./lib/types/index.d.ts",
+    "import": "./lib/esm/index.js",
+    "require": "./lib/cjs/index.js",
+    "default": "./lib/esm/index.js"
+  },
+  "scripts": {
+    "build": "yarn run build:esm && yarn run build:cjs",
+    "build:cjs": "tsc --build tsconfig.compile.json",
+    "build:esm": "tsc --build tsconfig.compile.esm.json",
+    "start:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts -h",
+    "start:help:g": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
+    "start:version": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts --version",
+    "start:init:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -h",
+    "start:init:run": "cross-env NODE_ENV=development cross-env CI=true ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default",
+    "start:init:run:name": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init awesome --verbose",
+    "start:add:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts add -r ./.tmp",
+    "start:generate": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -r ./.tmp/init/default",
+    "start:generate:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
+    "start:generate:model": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate model -r ./.tmp/init/awesome",
+    "start:g:model": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts g model -r ./.tmp/init/awesome",
+    "start:g:prisma": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts g service -r ./.tmp/init/awesome prisma",
+    "start:generate:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -r ./.tmp/init/awesome",
+    "start:typeorm:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts typeorm entity:create -r ./.tmp/init/awesome --name User"
+  },
   "bin": {
     "tsed": "lib/bin/tsed.js"
   },
@@ -23,26 +50,8 @@
     "express",
     "decorators"
   ],
-  "scripts": {
-    "build": "tsc --build tsconfig.compile.json",
-    "build:doc": "tsc --build tsconfig.doc.json",
-    "start:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts -h",
-    "start:help:g": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
-    "start:version": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts --version",
-    "start:init:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -h",
-    "start:init:run": "cross-env NODE_ENV=development cross-env CI=true ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default",
-    "start:init:run:name": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init awesome --verbose",
-    "start:add:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts add -r ./.tmp",
-    "start:generate": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -r ./.tmp/init/default",
-    "start:generate:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
-    "start:generate:model": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate model -r ./.tmp/init/awesome",
-    "start:g:model": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts g model -r ./.tmp/init/awesome",
-    "start:g:prisma": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts g service -r ./.tmp/init/awesome prisma",
-    "start:generate:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -r ./.tmp/init/awesome",
-    "start:typeorm:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts typeorm entity:create -r ./.tmp/init/awesome --name User"
-  },
   "engines": {
-    "node": ">=8.9"
+    "node": ">=14"
   },
   "dependencies": {
     "@tsed/cli-core": "3.20.16",
@@ -51,11 +60,11 @@
     "@tsed/logger": ">=6.0.0",
     "@tsed/schema": ">=6.114.6",
     "change-case": "4.1.2",
+    "read-pkg-up": "7.0.1",
     "normalize-path": "3.0.0",
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/cli-testing": "3.20.16",
     "@types/change-case": "^2.3.1"
   },
   "peerDependencies": {}

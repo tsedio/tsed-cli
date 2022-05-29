@@ -1,10 +1,7 @@
 import {GenerateCmd} from "@tsed/cli";
 import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {resolve} from "path";
-import "../../../src";
-
-const TEMPLATE_DIR = resolve(require.resolve("@tsed/cli"), "..", "..", "templates");
+import {TEMPLATE_DIR} from "../../../src";
 
 describe("Generate Schema", () => {
   beforeEach(() =>

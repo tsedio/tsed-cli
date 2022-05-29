@@ -2,6 +2,7 @@ import tunnel from "tunnel";
 import {Configuration, Inject, Injectable, Value} from "@tsed/di";
 import {CliExeca} from "./CliExeca";
 import {camelCase} from "change-case";
+import {URL} from "url";
 
 export interface CliProxySettings {
   url: string;

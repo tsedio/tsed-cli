@@ -1,5 +1,8 @@
 import {CliCore} from "@tsed/cli-core";
 import chalk from "chalk";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import alias from "module-alias";
 
 export class Cli extends CliCore {
   static checkPackage(pkg: any) {
@@ -38,7 +41,6 @@ export class Cli extends CliCore {
   }
 
   static createAliases() {
-    const alias = require("module-alias");
     alias.addAliases({
       "@tsed/core": require.resolve("@tsed/core"),
       "@tsed/di": require.resolve("@tsed/di"),

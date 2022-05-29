@@ -4,6 +4,7 @@ import {cleanObject} from "@tsed/core";
 import {stringify} from "querystring";
 import {CliProxyAgent} from "./CliProxyAgent";
 import {CliHttpLogClient} from "./CliHttpLogClient";
+import {URL} from "url";
 
 export interface CliHttpClientOptions extends AxiosRequestConfig, Record<string, unknown> {
   qs?: Record<string, unknown>;

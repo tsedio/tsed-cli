@@ -1,7 +1,10 @@
 import {getValue, isArray, isNumber, isObject, isString} from "@tsed/core";
-
-const createFrame = require("create-frame");
-const util = require("handlebars-utils");
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import createFrame from "create-frame";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import util from "handlebars-utils";
 
 export const helpers: any = {};
 

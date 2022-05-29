@@ -14,8 +14,11 @@ import {mapCommanderOptions} from "../utils/mapCommanderOptions";
 import {parseOption} from "../utils/parseOption";
 import {CliHooks} from "./CliHooks";
 import {ProjectPackageJson} from "./ProjectPackageJson";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
 
-Inquirer.registerPrompt("autocomplete", require("inquirer-autocomplete-prompt"));
+Inquirer.registerPrompt("autocomplete", inquirer_autocomplete_prompt);
 
 @Injectable()
 export class CliService {

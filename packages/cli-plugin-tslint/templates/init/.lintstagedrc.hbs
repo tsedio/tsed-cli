@@ -1,7 +1,0 @@
-{
-  "{{srcDir}}/**/*.ts": [
-     {{#if prettier}}"prettier --write",{{/if}}
-     "yarn test:lint:fix",
-     "git add"
-   ]
-}

@@ -1,12 +1,12 @@
-"use strict";
-
 import {getValue, isNumber, isObject} from "@tsed/core";
 import {helpers as array} from "./array";
-
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import util from "handlebars-utils";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import createFrame from "create-frame";
 const hasOwn = Object.hasOwnProperty;
-const util = require("handlebars-utils");
-const createFrame = require("create-frame");
-
 export const helpers: any = {};
 
 /**

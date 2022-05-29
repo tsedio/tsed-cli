@@ -1,5 +1,6 @@
 import {Configuration, Constant, Inject, Injectable} from "@tsed/di";
 import Consolidate from "consolidate";
+import normalizePath from "normalize-path";
 import {existsSync} from "fs-extra";
 import globby from "globby";
 import {dirname, join, relative} from "path";
@@ -9,8 +10,6 @@ import "../utils/hbs";
 import {isString} from "@tsed/core";
 import {insertImport} from "../utils/renderer/insertImport";
 import {insertAfter} from "../utils/renderer/insertAfter";
-
-const normalizePath = require("normalize-path");
 
 export interface RenderOptions {
   path: string;

@@ -19,25 +19,13 @@
     "resolveJsonModule": true,
     "newLine": "LF",
     "noEmit": true,
-    "lib": [
-      "es2019",
-      "dom",
-      "esnext.asynciterable"
-    ],
-    "typeRoots": [
-      "./node_modules/@types"
-    ]
+    "allowJs": true,
+    "skipLibCheck": true,
+    "lib": ["ES2019", "esnext.asynciterable"],
+    "typeRoots": ["./node_modules/@types"]
   },
   "linterOptions": {
-    "exclude": [
-      "docs",
-      "integration",
-      "examples/**"
-    ]
+    "exclude": ["docs", "integration", "examples/**"]
   },
-  "exclude": [
-    "docs",
-    "integration",
-    "examples/**"
-  ]
+  "exclude": ["docs", "integration", "examples/**"]
 }
