@@ -11,20 +11,19 @@ import cors from "cors";
 import bodyParser from "koa-bodyparser";
 import compress from "koa-compress";
 import cors from "@koa/cors";
+import methodOverride from "koa-override";
 {{/if}}
 import "@tsed/ajv";{{#if swagger}}
 import "@tsed/swagger";{{/if}}{{#if mongoose}}
 import "@tsed/mongoose";{{/if}}{{#if oidc}}
 import "@tsed/oidc-provider";{{/if}}{{#if graphql}}
 import "@tsed/typegraphql";
-import "./datasources";
-import "./resolvers";{{/if}}
-import {config} from "./config";
-import * as rest from "./controllers/rest";{{#if swagger}}
-import * as pages from "./controllers/pages";{{/if}}{{#if oidc}}
-import {InteractionsController} from "./controllers/oidc/InteractionsController";{{/if}}{{#if koa}}
-
-const methodOverride = require("koa-override");{{/if}}
+import "./datasources/index";
+import "./resolvers/index";{{/if}}
+import {config} from "./config/index";
+import * as rest from "./controllers/rest/index";{{#if swagger}}
+import * as pages from "./controllers/pages/index";{{/if}}{{#if oidc}}
+import {InteractionsController} from "./controllers/oidc/InteractionsController";{{/if}}
 
 @Configuration({
   ...config,

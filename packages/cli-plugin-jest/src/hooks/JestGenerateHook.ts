@@ -1,8 +1,8 @@
 import {GenerateCmdContext} from "@tsed/cli";
+import normalizePath from "normalize-path";
 import {Inject, Injectable, OnExec, SrcRendererService, Tasks} from "@tsed/cli-core";
-import {TEMPLATE_DIR} from "../utils/templateDir";
 
-const normalizePath = require("normalize-path");
+import {TEMPLATE_DIR} from "../utils/templateDir";
 
 @Injectable()
 export class JestGenerateHook {

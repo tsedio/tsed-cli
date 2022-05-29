@@ -4,9 +4,11 @@ import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
 import {dirname} from "path";
 import {InitCmd, TEMPLATE_DIR} from "@tsed/cli";
 import "../../../src";
+import filedirname from "filedirname";
+const [, dir] = filedirname();
 
 function readFile(file: string, content: string, rewrite = true) {
-  const path = `${__dirname}/${file}`
+  const path = `${dir}/${file}`
 
   ensureDirSync(dirname(path))
 

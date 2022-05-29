@@ -4,9 +4,12 @@ import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
 import {InitCmd, TEMPLATE_DIR} from "@tsed/cli";
 import {dirname} from "path";
 import "@tsed/cli-plugin-typegraphql";
+import filedirname from "filedirname";
+import readPkgUp from "read-pkg-up";
+const [, dir] = filedirname();
 
 function readFile(file: string, content: string, rewrite = false) {
-  const path = `${__dirname}/${file}`
+  const path = `${dir}/${file}`
 
   ensureDirSync(dirname(path))
 
@@ -84,8 +87,8 @@ describe("Init TypeGraphQL project", () => {
     const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
     expect(content).toContain("import \"@tsed/typegraphql\"");
-    expect(content).toContain("import \"./datasources\";");
-    expect(content).toContain("import \"./resolvers\";");
+    expect(content).toContain("import \"./datasources/index\";");
+    expect(content).toContain("import \"./resolvers/index\";");
     expect(content).toEqual(readFile("data/Server.typegraphql.ts.txt", content));
 
     const configContent = FakeCliFs.entries.get("project-name/src/config/index.ts")!;

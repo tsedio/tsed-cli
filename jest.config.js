@@ -1,8 +1,7 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
-module.exports = {
-  rootDir: __dirname,
+export default {
   // Automatically clear mock calls and instances between every test
   clearMocks: true,
 
@@ -19,6 +18,7 @@ module.exports = {
   // An array of regexp pattern strings used to skip coverage collection
   coveragePathIgnorePatterns: ["index.ts", "/node_modules/", "cli-testing/src"],
   moduleNameMapper: {
+    "^(\\.{1,2}/.*)\\.js$": "$1",
     "^@tsed/cli(.*)$": "<rootDir>/packages/cli$1/src"
   },
 
@@ -53,5 +53,13 @@ module.exports = {
 
   modulePathIgnorePatterns: ["<rootDir>/packages/*/lib", "<rootDir>/dist"],
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  setupFiles: []
+  setupFiles: [],
+
+  extensionsToTreatAsEsm: [".ts"],
+
+  globals: {
+    "ts-jest": {
+      useESM: true
+    }
+  }
 };
