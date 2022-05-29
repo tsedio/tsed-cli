@@ -1,4 +1,4 @@
-module.exports = { {{#if prettier}}
+{ {{#if prettier}}
   "**/*.{ts,js}": ["eslint --fix"],{{/if}}
   "**/*.{ts,js,json,md,yml,yaml}": ["prettier --write"]
-};
+}

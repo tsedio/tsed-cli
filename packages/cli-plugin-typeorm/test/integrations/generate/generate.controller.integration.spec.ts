@@ -4,9 +4,11 @@ import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {dirname} from "path";
 import "../../../src";
 import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
+import filedirname from "filedirname";
+const [, dir] = filedirname();
 
 function readFile(file: string, content: string, rewrite = true) {
-  const path = `${__dirname}/${file}`
+  const path = `${dir}/${file}`
 
   ensureDirSync(dirname(path))
 

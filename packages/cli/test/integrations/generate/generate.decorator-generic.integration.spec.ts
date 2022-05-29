@@ -1,14 +1,7 @@
 import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {readFileSync} from "fs";
-import {resolve} from "path";
-import {GenerateCmd} from "../../../src";
+import {GenerateCmd, TEMPLATE_DIR} from "../../../src";
 
-const TEMPLATE_DIR = resolve(__dirname, "..", "..", "..", "templates");
-
-function readFile(file: string) {
-  return readFileSync(`${__dirname}/${file}`, {encoding: "utf8"});
-}
 
 describe("Generate generic decorator", () => {
   beforeEach(() =>
@@ -42,7 +35,7 @@ describe("Generate generic decorator", () => {
 
     const result = FakeCliFs.entries.get("project-name/src/decorators/Test.ts");
 
-    expect(result).toContain('import {DecoratorTypes, UnsupportedDecoratorType, decoratorTypeOf} from "@tsed/core"');
+    expect(result).toContain("import {DecoratorTypes, UnsupportedDecoratorType, decoratorTypeOf} from \"@tsed/core\"");
     expect(result).toContain("export interface TestOptions {");
     expect(result).toContain("export function Test(options: TestOptions): any");
     expect(result).toContain("(...args: DecoratorParameters): any =>");

@@ -1,13 +1,14 @@
 import {CliService, PackageManager, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
-import {dirname, join, resolve} from "path";
-import {InitCmd, ProjectConvention} from "../../../src";
+import {dirname, join} from "path";
+import {InitCmd, ProjectConvention, TEMPLATE_DIR} from "../../../src";
+import filedirname from "filedirname";
 
-const TEMPLATE_DIR = resolve(__dirname, "..", "..", "..", "templates");
+const [, dir] = filedirname();
 
 function readFile(file: string, content: string, rewrite = true) {
-  const path = `${__dirname}/${file}`
+  const path = `${dir}/${file}`
 
   ensureDirSync(dirname(path))
 
@@ -183,7 +184,7 @@ describe("Init cmd", () => {
       expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
       expect(content).toContain("import \"@tsed/platform-express\"");
       expect(content).toContain("import \"@tsed/ajv\"");
-      expect(content).toContain("import * as pages from \"./controllers/pages\"");
+      expect(content).toContain("import * as pages from \"./controllers/pages/index\"");
       expect(content).toEqual(readFile("data/Server.express.swagger.ts.txt", content));
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -382,7 +383,7 @@ describe("Init cmd", () => {
       expect(content).toContain("import \"@tsed/platform-express\"");
       expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toEqual(readFile("data/Server.express.ts.txt", content));
-      expect(content).toContain("import * as pages from \"./controllers/pages\"");
+      expect(content).toContain("import * as pages from \"./controllers/pages/index\"");
       expect(content).toContain("export class Server {");
     });
   });
@@ -516,14 +517,13 @@ describe("Init cmd", () => {
           const content = FakeCliFs.entries.get(key)!
 
           if (content !== key) {
-            writeFileSync(join(__dirname, "data", key), content, {encoding: "utf-8"})
+            writeFileSync(join(dir, "data", key), content, {encoding: "utf-8"})
           } else {
-            ensureDirSync(join(__dirname, "data", key))
+            ensureDirSync(join(dir, "data", key))
           }
         })
       } catch (er) {
       }
-
 
       expect(FakeCliFs.getKeys()).toEqual([
         "./project-name",

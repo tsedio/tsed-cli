@@ -1,9 +1,9 @@
 import {readFileSync} from "fs";
-import {envs} from "./envs";
-import loggerConfig from "./logger";{{#if mongoose}}
-import mongooseConfig from "./mongoose";
+import {envs} from "./envs/index";
+import loggerConfig from "./logger/index";{{#if mongoose}}
+import mongooseConfig from "./mongoose/index";
 {{/if}}{{#if oidc}}
-import oidcConfig from "./oidc";
+import oidcConfig from "./oidc/index";
 import {FileSyncAdapter} from "@tsed/adapters";
 {{/if}}
 

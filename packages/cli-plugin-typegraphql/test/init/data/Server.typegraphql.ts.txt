@@ -9,10 +9,10 @@ import methodOverride from "method-override";
 import cors from "cors";
 import "@tsed/ajv";
 import "@tsed/typegraphql";
-import "./datasources";
-import "./resolvers";
-import {config} from "./config";
-import * as rest from "./controllers/rest";
+import "./datasources/index";
+import "./resolvers/index";
+import {config} from "./config/index";
+import * as rest from "./controllers/rest/index";
 
 @Configuration({
   ...config,

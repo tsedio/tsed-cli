@@ -8,8 +8,8 @@ import cookieParser from "cookie-parser";
 import methodOverride from "method-override";
 import cors from "cors";
 import "@tsed/ajv";
-import {config} from "./config";
-import * as rest from "./controllers/rest";
+import {config} from "./config/index";
+import * as rest from "./controllers/rest/index";
 
 @Configuration({
   ...config,

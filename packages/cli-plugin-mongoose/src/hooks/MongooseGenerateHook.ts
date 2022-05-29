@@ -1,11 +1,12 @@
 import {GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
 import {CliDockerComposeYaml, Inject, OnExec, ProjectPackageJson, SrcRendererService, Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import {plural} from "pluralize";
 import {camelCase, paramCase} from "change-case";
 import {CliMongoose} from "../services/CliMongoose";
 import {TEMPLATE_DIR} from "../utils/templateDir";
-
-const {plural} = require("pluralize");
 
 @Injectable()
 export class MongooseGenerateHook {
