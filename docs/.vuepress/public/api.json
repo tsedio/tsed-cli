@@ -1,5 +1,5 @@
 {
-  "version": "1.4.1",
+  "version": "3.21.0-rc.1",
   "scope": "@tsed",
   "symbolTypes": [
     {
@@ -66,12 +66,125 @@
     }
   ],
   "modules": {
-    "@tsed/cli-core": {
+    "@tsed/cli": {
       "symbols": [
         {
-          "path": "/api/cli-core/Cli",
+          "path": "/api/cli/types/Cli",
           "symbolName": "Cli",
-          "module": "@tsed/cli-core",
+          "module": "@tsed/cli",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/commands/_default",
+          "symbolName": "_default",
+          "module": "@tsed/cli",
+          "symbolType": "default",
+          "symbolLabel": "",
+          "symbolCode": "",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/constants/PKG",
+          "symbolName": "PKG",
+          "module": "@tsed/cli",
+          "symbolType": "const",
+          "symbolLabel": "Constant",
+          "symbolCode": "K",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/constants/MINIMAL_TSED_VERSION",
+          "symbolName": "MINIMAL_TSED_VERSION",
+          "module": "@tsed/cli",
+          "symbolType": "const",
+          "symbolLabel": "Constant",
+          "symbolCode": "K",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/constants/DEFAULT_TSED_TAGS",
+          "symbolName": "DEFAULT_TSED_TAGS",
+          "module": "@tsed/cli",
+          "symbolType": "const",
+          "symbolLabel": "Constant",
+          "symbolCode": "K",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/constants/IGNORE_VERSIONS",
+          "symbolName": "IGNORE_VERSIONS",
+          "module": "@tsed/cli",
+          "symbolType": "const",
+          "symbolLabel": "Constant",
+          "symbolCode": "K",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/constants/IGNORE_TAGS",
+          "symbolName": "IGNORE_TAGS",
+          "module": "@tsed/cli",
+          "symbolType": "const",
+          "symbolLabel": "Constant",
+          "symbolCode": "K",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/constants/TEMPLATE_DIR",
+          "symbolName": "TEMPLATE_DIR",
+          "module": "@tsed/cli",
+          "symbolType": "const",
+          "symbolLabel": "Constant",
+          "symbolCode": "K",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/interfaces/ArchitectureConvention",
+          "symbolName": "ArchitectureConvention",
+          "module": "@tsed/cli",
+          "symbolType": "enum",
+          "symbolLabel": "Enum",
+          "symbolCode": "E",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/interfaces/ProjectConvention",
+          "symbolName": "ProjectConvention",
+          "module": "@tsed/cli",
+          "symbolType": "enum",
+          "symbolLabel": "Enum",
+          "symbolCode": "E",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/pipes/ClassNamePipe",
+          "symbolName": "ClassNamePipe",
+          "module": "@tsed/cli",
           "symbolType": "class",
           "symbolLabel": "Class",
           "symbolCode": "C",
@@ -80,9 +193,31 @@
           ]
         },
         {
-          "path": "/api/cli-core/commands/IAddCmdOptions",
-          "symbolName": "IAddCmdOptions",
-          "module": "@tsed/cli-core",
+          "path": "/api/cli/types/pipes/OutputFilePathPipe",
+          "symbolName": "OutputFilePathPipe",
+          "module": "@tsed/cli",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/pipes/RoutePipe",
+          "symbolName": "RoutePipe",
+          "module": "@tsed/cli",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/services/FeatureValue",
+          "symbolName": "FeatureValue",
+          "module": "@tsed/cli",
           "symbolType": "interface",
           "symbolLabel": "Interface",
           "symbolCode": "I",
@@ -91,8 +226,246 @@
           ]
         },
         {
-          "path": "/api/cli-core/commands/AddCmd",
+          "path": "/api/cli/types/services/Feature",
+          "symbolName": "Feature",
+          "module": "@tsed/cli",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/services/Features",
+          "symbolName": "Features",
+          "module": "@tsed/cli",
+          "symbolType": "type",
+          "symbolLabel": "Type alias",
+          "symbolCode": "T",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/services/hasFeature",
+          "symbolName": "hasFeature",
+          "module": "@tsed/cli",
+          "symbolType": "service",
+          "symbolLabel": "Service",
+          "symbolCode": "S",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/services/hasValue",
+          "symbolName": "hasValue",
+          "module": "@tsed/cli",
+          "symbolType": "service",
+          "symbolLabel": "Service",
+          "symbolCode": "S",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/services/isPlatform",
+          "symbolName": "isPlatform",
+          "module": "@tsed/cli",
+          "symbolType": "service",
+          "symbolLabel": "Service",
+          "symbolCode": "S",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/services/FEATURES_TYPEORM_CONNECTION_TYPES",
+          "symbolName": "FEATURES_TYPEORM_CONNECTION_TYPES",
+          "module": "@tsed/cli",
+          "symbolType": "service",
+          "symbolLabel": "Service",
+          "symbolCode": "S",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/services/parseFeaturesFile",
+          "symbolName": "parseFeaturesFile",
+          "module": "@tsed/cli",
+          "symbolType": "service",
+          "symbolLabel": "Service",
+          "symbolCode": "S",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/services/getFeaturesChoicesValues",
+          "symbolName": "getFeaturesChoicesValues",
+          "module": "@tsed/cli",
+          "symbolType": "service",
+          "symbolLabel": "Service",
+          "symbolCode": "S",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/services/ProviderInfo",
+          "symbolName": "ProviderInfo",
+          "module": "@tsed/cli",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/services/ProvidersInfoService",
+          "symbolName": "ProvidersInfoService",
+          "module": "@tsed/cli",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/commands/add/AddCmdOptions",
+          "symbolName": "AddCmdOptions",
+          "module": "@tsed/cli",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/commands/add/AddCmd",
           "symbolName": "AddCmd",
+          "module": "@tsed/cli",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/commands/generate/GenerateCmdContext",
+          "symbolName": "GenerateCmdContext",
+          "module": "@tsed/cli",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/commands/generate/GenerateCmd",
+          "symbolName": "GenerateCmd",
+          "module": "@tsed/cli",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/commands/generate/PROVIDER_TYPES",
+          "symbolName": "PROVIDER_TYPES",
+          "module": "@tsed/cli",
+          "symbolType": "function",
+          "symbolLabel": "Function",
+          "symbolCode": "F",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/commands/init/InitCmdContext",
+          "symbolName": "InitCmdContext",
+          "module": "@tsed/cli",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/commands/init/InitCmd",
+          "symbolName": "InitCmd",
+          "module": "@tsed/cli",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/commands/run/RunCmdContext",
+          "symbolName": "RunCmdContext",
+          "module": "@tsed/cli",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/commands/run/RunCmd",
+          "symbolName": "RunCmd",
+          "module": "@tsed/cli",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/commands/update/UpdateCmdContext",
+          "symbolName": "UpdateCmdContext",
+          "module": "@tsed/cli",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli/types/commands/update/UpdateCmd",
+          "symbolName": "UpdateCmd",
+          "module": "@tsed/cli",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "stable"
+          ]
+        }
+      ],
+      "name": "@tsed/cli"
+    },
+    "@tsed/cli-core": {
+      "symbols": [
+        {
+          "path": "/api/cli-core/types/CliCore",
+          "symbolName": "CliCore",
           "module": "@tsed/cli-core",
           "symbolType": "class",
           "symbolLabel": "Class",
@@ -102,7 +475,7 @@
           ]
         },
         {
-          "path": "/api/cli-core/decorators/Command",
+          "path": "/api/cli-core/types/decorators/Command",
           "symbolName": "Command",
           "module": "@tsed/cli-core",
           "symbolType": "decorator",
@@ -113,7 +486,7 @@
           ]
         },
         {
-          "path": "/api/cli-core/decorators/On",
+          "path": "/api/cli-core/types/decorators/On",
           "symbolName": "On",
           "module": "@tsed/cli-core",
           "symbolType": "decorator",
@@ -125,8 +498,8 @@
           ]
         },
         {
-          "path": "/api/cli-core/decorators/OnPrompt",
-          "symbolName": "OnPrompt",
+          "path": "/api/cli-core/types/decorators/OnAdd",
+          "symbolName": "OnAdd",
           "module": "@tsed/cli-core",
           "symbolType": "decorator",
           "symbolLabel": "Decorator",
@@ -136,7 +509,7 @@
           ]
         },
         {
-          "path": "/api/cli-core/decorators/OnExec",
+          "path": "/api/cli-core/types/decorators/OnExec",
           "symbolName": "OnExec",
           "module": "@tsed/cli-core",
           "symbolType": "decorator",
@@ -147,7 +520,41 @@
           ]
         },
         {
-          "path": "/api/cli-core/domains/CommandStoreKeys",
+          "path": "/api/cli-core/types/decorators/OnPostInstall",
+          "symbolName": "OnPostInstall",
+          "module": "@tsed/cli-core",
+          "symbolType": "decorator",
+          "symbolLabel": "Decorator",
+          "symbolCode": "@",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/decorators/OnPrompt",
+          "symbolName": "OnPrompt",
+          "module": "@tsed/cli-core",
+          "symbolType": "decorator",
+          "symbolLabel": "Decorator",
+          "symbolCode": "@",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/domains/CliError",
+          "symbolName": "CliError",
+          "module": "@tsed/cli-core",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/domains/CommandStoreKeys",
           "symbolName": "CommandStoreKeys",
           "module": "@tsed/cli-core",
           "symbolType": "enum",
@@ -159,8 +566,8 @@
           ]
         },
         {
-          "path": "/api/cli-core/interfaces/ICliDefaultOptions",
-          "symbolName": "ICliDefaultOptions",
+          "path": "/api/cli-core/types/interfaces/CliDefaultOptions",
+          "symbolName": "CliDefaultOptions",
           "module": "@tsed/cli-core",
           "symbolType": "interface",
           "symbolLabel": "Interface",
@@ -170,7 +577,51 @@
           ]
         },
         {
-          "path": "/api/cli-core/interfaces/QuestionOptions",
+          "path": "/api/cli-core/types/interfaces/CommandMetadata",
+          "symbolName": "CommandMetadata",
+          "module": "@tsed/cli-core",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/interfaces/CommandArg",
+          "symbolName": "CommandArg",
+          "module": "@tsed/cli-core",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/interfaces/CommandOptions",
+          "symbolName": "CommandOptions",
+          "module": "@tsed/cli-core",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/interfaces/CommandParameters",
+          "symbolName": "CommandParameters",
+          "module": "@tsed/cli-core",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/interfaces/QuestionOptions",
           "symbolName": "QuestionOptions",
           "module": "@tsed/cli-core",
           "symbolType": "type",
@@ -182,8 +633,8 @@
           ]
         },
         {
-          "path": "/api/cli-core/interfaces/ICommand",
-          "symbolName": "ICommand",
+          "path": "/api/cli-core/types/interfaces/CommandProvider",
+          "symbolName": "CommandProvider",
           "module": "@tsed/cli-core",
           "symbolType": "interface",
           "symbolLabel": "Interface",
@@ -193,8 +644,8 @@
           ]
         },
         {
-          "path": "/api/cli-core/interfaces/ICommandMetadata",
-          "symbolName": "ICommandMetadata",
+          "path": "/api/cli-core/types/interfaces/PackageJson",
+          "symbolName": "PackageJson",
           "module": "@tsed/cli-core",
           "symbolType": "interface",
           "symbolLabel": "Interface",
@@ -204,8 +655,8 @@
           ]
         },
         {
-          "path": "/api/cli-core/interfaces/ICommandArg",
-          "symbolName": "ICommandArg",
+          "path": "/api/cli-core/types/interfaces/PackageInfo",
+          "symbolName": "PackageInfo",
           "module": "@tsed/cli-core",
           "symbolType": "interface",
           "symbolLabel": "Interface",
@@ -215,8 +666,19 @@
           ]
         },
         {
-          "path": "/api/cli-core/interfaces/ICommandOptions",
-          "symbolName": "ICommandOptions",
+          "path": "/api/cli-core/types/interfaces/PackageManager",
+          "symbolName": "PackageManager",
+          "module": "@tsed/cli-core",
+          "symbolType": "enum",
+          "symbolLabel": "Enum",
+          "symbolCode": "E",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/interfaces/ProjectPreferences",
+          "symbolName": "ProjectPreferences",
           "module": "@tsed/cli-core",
           "symbolType": "interface",
           "symbolLabel": "Interface",
@@ -226,8 +688,8 @@
           ]
         },
         {
-          "path": "/api/cli-core/interfaces/ICommandParameters",
-          "symbolName": "ICommandParameters",
+          "path": "/api/cli-core/types/interfaces/TaskOptions",
+          "symbolName": "TaskOptions",
           "module": "@tsed/cli-core",
           "symbolType": "interface",
           "symbolLabel": "Interface",
@@ -237,29 +699,19 @@
           ]
         },
         {
-          "path": "/api/cli-core/interfaces/IPackageJson",
-          "symbolName": "IPackageJson",
+          "path": "/api/cli-core/types/interfaces/Task",
+          "symbolName": "Task",
           "module": "@tsed/cli-core",
-          "symbolType": "interface",
-          "symbolLabel": "Interface",
-          "symbolCode": "I",
+          "symbolType": "type",
+          "symbolLabel": "Type alias",
+          "symbolCode": "T",
           "status": [
+            "private",
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/interfaces/IPackageInfo",
-          "symbolName": "IPackageInfo",
-          "module": "@tsed/cli-core",
-          "symbolType": "interface",
-          "symbolLabel": "Interface",
-          "symbolCode": "I",
-          "status": [
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-core/interfaces/Tasks",
+          "path": "/api/cli-core/types/interfaces/Tasks",
           "symbolName": "Tasks",
           "module": "@tsed/cli-core",
           "symbolType": "type",
@@ -271,7 +723,7 @@
           ]
         },
         {
-          "path": "/api/cli-core/registries/PROVIDER_TYPE_COMMAND",
+          "path": "/api/cli-core/types/registries/PROVIDER_TYPE_COMMAND",
           "symbolName": "PROVIDER_TYPE_COMMAND",
           "module": "@tsed/cli-core",
           "symbolType": "const",
@@ -283,7 +735,7 @@
           ]
         },
         {
-          "path": "/api/cli-core/registries/CommandRegistry",
+          "path": "/api/cli-core/types/registries/CommandRegistry",
           "symbolName": "CommandRegistry",
           "module": "@tsed/cli-core",
           "symbolType": "const",
@@ -296,101 +748,200 @@
           ]
         },
         {
-          "path": "/api/cli-core/registries/registerCommand",
+          "path": "/api/cli-core/types/registries/registerCommand",
           "symbolName": "registerCommand",
           "module": "@tsed/cli-core",
           "symbolType": "function",
           "symbolLabel": "Function",
           "symbolCode": "F",
           "status": [
-            "type",
             "private",
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/CliConfiguration",
+          "path": "/api/cli-core/types/services/CliConfiguration",
           "symbolName": "CliConfiguration",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
           "status": [
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/CliExeca",
+          "path": "/api/cli-core/types/services/CliDockerComposeYaml",
+          "symbolName": "CliDockerComposeYaml",
+          "module": "@tsed/cli-core",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/services/CliExeca",
           "symbolName": "CliExeca",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
           "status": [
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/CliHooks",
+          "path": "/api/cli-core/types/services/CliFs",
+          "symbolName": "CliFs",
+          "module": "@tsed/cli-core",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/services/CliHooks",
           "symbolName": "CliHooks",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
           "status": [
             "private",
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/ICliHttpClientOptions",
-          "symbolName": "ICliHttpClientOptions",
+          "path": "/api/cli-core/types/services/CliHttpClientOptions",
+          "symbolName": "CliHttpClientOptions",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
           "status": [
-            "private",
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/CliHttpClient",
+          "path": "/api/cli-core/types/services/CliHttpClient",
           "symbolName": "CliHttpClient",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
           "status": [
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/CliPackageJson",
+          "path": "/api/cli-core/types/services/BaseLogClientOptions",
+          "symbolName": "BaseLogClientOptions",
+          "module": "@tsed/cli-core",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/services/CliHttpLogClient",
+          "symbolName": "CliHttpLogClient",
+          "module": "@tsed/cli-core",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/services/CliPackageJson",
           "symbolName": "CliPackageJson",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "type",
+          "symbolLabel": "Type alias",
+          "symbolCode": "T",
           "status": [
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/CliPlugins",
+          "path": "/api/cli-core/types/services/CliPlugins",
           "symbolName": "CliPlugins",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
           "status": [
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/CliService",
+          "path": "/api/cli-core/types/services/CliProxySettings",
+          "symbolName": "CliProxySettings",
+          "module": "@tsed/cli-core",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/services/CliProxyAgent",
+          "symbolName": "CliProxyAgent",
+          "module": "@tsed/cli-core",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/services/CliRunScript",
+          "symbolName": "CliRunScript",
+          "module": "@tsed/cli-core",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/services/CliService",
           "symbolName": "CliService",
           "module": "@tsed/cli-core",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/services/CliYaml",
+          "symbolName": "CliYaml",
+          "module": "@tsed/cli-core",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/services/addSuffix",
+          "symbolName": "addSuffix",
+          "module": "@tsed/cli-core",
           "symbolType": "service",
           "symbolLabel": "Service",
           "symbolCode": "S",
@@ -399,99 +950,107 @@
           ]
         },
         {
-          "path": "/api/cli-core/services/NpmRegistryClient",
+          "path": "/api/cli-core/types/services/SCOPE_SEPARATOR",
+          "symbolName": "SCOPE_SEPARATOR",
+          "module": "@tsed/cli-core",
+          "symbolType": "const",
+          "symbolLabel": "Constant",
+          "symbolCode": "K",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/services/NpmRegistryClient",
           "symbolName": "NpmRegistryClient",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
           "status": [
-            "private",
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/IInstallOptions",
-          "symbolName": "IInstallOptions",
+          "path": "/api/cli-core/types/services/InstallOptions",
+          "symbolName": "InstallOptions",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
           "status": [
-            "private",
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/ProjectPackageJson",
+          "path": "/api/cli-core/types/services/ProjectPackageJson",
           "symbolName": "ProjectPackageJson",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
           "status": [
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/IRenderOptions",
-          "symbolName": "IRenderOptions",
+          "path": "/api/cli-core/types/services/RenderOptions",
+          "symbolName": "RenderOptions",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "interface",
+          "symbolLabel": "Interface",
+          "symbolCode": "I",
           "status": [
-            "private",
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/Renderer",
+          "path": "/api/cli-core/types/services/Renderer",
           "symbolName": "Renderer",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
           "status": [
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/RootRendererService",
+          "path": "/api/cli-core/types/services/RootRendererService",
           "symbolName": "RootRendererService",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
           "status": [
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/SrcRendererService",
+          "path": "/api/cli-core/types/services/SrcRendererService",
           "symbolName": "SrcRendererService",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
           "status": [
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/services/ScriptsRendererService",
+          "path": "/api/cli-core/types/services/ScriptsRendererService",
           "symbolName": "ScriptsRendererService",
           "module": "@tsed/cli-core",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
+          "symbolType": "class",
+          "symbolLabel": "Class",
+          "symbolCode": "C",
           "status": [
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/utils/createCommandSummary",
-          "symbolName": "createCommandSummary",
+          "path": "/api/cli-core/types/utils/getLogger",
+          "symbolName": "getLogger",
           "module": "@tsed/cli-core",
           "symbolType": "function",
           "symbolLabel": "Function",
@@ -501,7 +1060,7 @@
           ]
         },
         {
-          "path": "/api/cli-core/utils/createInjector",
+          "path": "/api/cli-core/types/utils/createInjector",
           "symbolName": "createInjector",
           "module": "@tsed/cli-core",
           "symbolType": "function",
@@ -512,7 +1071,29 @@
           ]
         },
         {
-          "path": "/api/cli-core/utils/createTasksRunner",
+          "path": "/api/cli-core/types/utils/createTasks",
+          "symbolName": "createTasks",
+          "module": "@tsed/cli-core",
+          "symbolType": "function",
+          "symbolLabel": "Function",
+          "symbolCode": "F",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/utils/createSubTasks",
+          "symbolName": "createSubTasks",
+          "module": "@tsed/cli-core",
+          "symbolType": "function",
+          "symbolLabel": "Function",
+          "symbolCode": "F",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/utils/createTasksRunner",
           "symbolName": "createTasksRunner",
           "module": "@tsed/cli-core",
           "symbolType": "function",
@@ -523,7 +1104,7 @@
           ]
         },
         {
-          "path": "/api/cli-core/utils/getCommandMetadata",
+          "path": "/api/cli-core/types/utils/getCommandMetadata",
           "symbolName": "getCommandMetadata",
           "module": "@tsed/cli-core",
           "symbolType": "function",
@@ -534,8 +1115,8 @@
           ]
         },
         {
-          "path": "/api/cli-core/utils/importModule",
-          "symbolName": "importModule",
+          "path": "/api/cli-core/types/utils/getPackageJson",
+          "symbolName": "getPackageJson",
           "module": "@tsed/cli-core",
           "symbolType": "function",
           "symbolLabel": "Function",
@@ -545,18 +1126,19 @@
           ]
         },
         {
-          "path": "/api/cli-core/utils/loadInjector",
-          "symbolName": "loadInjector",
+          "path": "/api/cli-core/types/utils/isValidVersion",
+          "symbolName": "isValidVersion",
           "module": "@tsed/cli-core",
           "symbolType": "function",
           "symbolLabel": "Function",
           "symbolCode": "F",
           "status": [
+            "private",
             "stable"
           ]
         },
         {
-          "path": "/api/cli-core/utils/loadPlugins",
+          "path": "/api/cli-core/types/utils/loadPlugins",
           "symbolName": "loadPlugins",
           "module": "@tsed/cli-core",
           "symbolType": "function",
@@ -567,8 +1149,8 @@
           ]
         },
         {
-          "path": "/api/cli-core/utils/mapArgsDescription",
-          "symbolName": "mapArgsDescription",
+          "path": "/api/cli-core/types/utils/logToCurl",
+          "symbolName": "logToCurl",
           "module": "@tsed/cli-core",
           "symbolType": "function",
           "symbolLabel": "Function",
@@ -578,7 +1160,7 @@
           ]
         },
         {
-          "path": "/api/cli-core/utils/mapCommanderArgs",
+          "path": "/api/cli-core/types/utils/mapCommanderArgs",
           "symbolName": "mapCommanderArgs",
           "module": "@tsed/cli-core",
           "symbolType": "function",
@@ -589,7 +1171,7 @@
           ]
         },
         {
-          "path": "/api/cli-core/utils/mapCommanderOptions",
+          "path": "/api/cli-core/types/utils/mapCommanderOptions",
           "symbolName": "mapCommanderOptions",
           "module": "@tsed/cli-core",
           "symbolType": "function",
@@ -600,7 +1182,18 @@
           ]
         },
         {
-          "path": "/api/cli-core/utils/parseOption",
+          "path": "/api/cli-core/types/utils/normalizePath",
+          "symbolName": "normalizePath",
+          "module": "@tsed/cli-core",
+          "symbolType": "function",
+          "symbolLabel": "Function",
+          "symbolCode": "F",
+          "status": [
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/utils/parseOption",
           "symbolName": "parseOption",
           "module": "@tsed/cli-core",
           "symbolType": "function",
@@ -609,445 +1202,93 @@
           "status": [
             "stable"
           ]
+        },
+        {
+          "path": "/api/cli-core/types/utils/hbs/helpers",
+          "symbolName": "helpers",
+          "module": "@tsed/cli-core",
+          "symbolType": "const",
+          "symbolLabel": "Constant",
+          "symbolCode": "K",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/utils/hbs/helpers",
+          "symbolName": "helpers",
+          "module": "@tsed/cli-core",
+          "symbolType": "const",
+          "symbolLabel": "Constant",
+          "symbolCode": "K",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/utils/hbs/helpers",
+          "symbolName": "helpers",
+          "module": "@tsed/cli-core",
+          "symbolType": "const",
+          "symbolLabel": "Constant",
+          "symbolCode": "K",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/utils/hbs/helpers",
+          "symbolName": "helpers",
+          "module": "@tsed/cli-core",
+          "symbolType": "const",
+          "symbolLabel": "Constant",
+          "symbolCode": "K",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/utils/hbs/helpers",
+          "symbolName": "helpers",
+          "module": "@tsed/cli-core",
+          "symbolType": "const",
+          "symbolLabel": "Constant",
+          "symbolCode": "K",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/utils/renderer/insertAfter",
+          "symbolName": "insertAfter",
+          "module": "@tsed/cli-core",
+          "symbolType": "function",
+          "symbolLabel": "Function",
+          "symbolCode": "F",
+          "status": [
+            "private",
+            "stable"
+          ]
+        },
+        {
+          "path": "/api/cli-core/types/utils/renderer/insertImport",
+          "symbolName": "insertImport",
+          "module": "@tsed/cli-core",
+          "symbolType": "function",
+          "symbolLabel": "Function",
+          "symbolCode": "F",
+          "status": [
+            "private",
+            "stable"
+          ]
         }
       ],
       "name": "@tsed/cli-core"
-    },
-    "@tsed/cli-plugin-jest": {
-      "symbols": [
-        {
-          "path": "/api/cli-plugin-jest/CliPluginJestModule",
-          "symbolName": "CliPluginJestModule",
-          "module": "@tsed/cli-plugin-jest",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-jest/CliPluginJestModule",
-          "symbolName": "CliPluginJestModule",
-          "module": "@tsed/cli-plugin-jest",
-          "symbolType": "default",
-          "symbolLabel": "",
-          "symbolCode": "",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-jest/hooks/JestGenerateHook",
-          "symbolName": "JestGenerateHook",
-          "module": "@tsed/cli-plugin-jest",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-jest/hooks/JestInitHook",
-          "symbolName": "JestInitHook",
-          "module": "@tsed/cli-plugin-jest",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-jest/utils/TEMPLATE_DIR",
-          "symbolName": "TEMPLATE_DIR",
-          "module": "@tsed/cli-plugin-jest",
-          "symbolType": "const",
-          "symbolLabel": "Constant",
-          "symbolCode": "K",
-          "status": [
-            "private",
-            "stable"
-          ]
-        }
-      ],
-      "name": "@tsed/cli-plugin-jest"
-    },
-    "@tsed/cli-plugin-mocha": {
-      "symbols": [
-        {
-          "path": "/api/cli-plugin-mocha/CliPluginMochaModule",
-          "symbolName": "CliPluginMochaModule",
-          "module": "@tsed/cli-plugin-mocha",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-mocha/CliPluginMochaModule",
-          "symbolName": "CliPluginMochaModule",
-          "module": "@tsed/cli-plugin-mocha",
-          "symbolType": "default",
-          "symbolLabel": "",
-          "symbolCode": "",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-mocha/utils/TEMPLATE_DIR",
-          "symbolName": "TEMPLATE_DIR",
-          "module": "@tsed/cli-plugin-mocha",
-          "symbolType": "const",
-          "symbolLabel": "Constant",
-          "symbolCode": "K",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-mocha/hooks/MochaGenerateHook",
-          "symbolName": "MochaGenerateHook",
-          "module": "@tsed/cli-plugin-mocha",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-mocha/hooks/MochaInitHook",
-          "symbolName": "MochaInitHook",
-          "module": "@tsed/cli-plugin-mocha",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "private",
-            "stable"
-          ]
-        }
-      ],
-      "name": "@tsed/cli-plugin-mocha"
-    },
-    "@tsed/cli-plugin-passport": {
-      "symbols": [
-        {
-          "path": "/api/cli-plugin-passport/CliPluginPassportModule",
-          "symbolName": "CliPluginPassportModule",
-          "module": "@tsed/cli-plugin-passport",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-passport/CliPluginPassportModule",
-          "symbolName": "CliPluginPassportModule",
-          "module": "@tsed/cli-plugin-passport",
-          "symbolType": "default",
-          "symbolLabel": "",
-          "symbolCode": "",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-passport/utils/TEMPLATE_DIR",
-          "symbolName": "TEMPLATE_DIR",
-          "module": "@tsed/cli-plugin-passport",
-          "symbolType": "const",
-          "symbolLabel": "Constant",
-          "symbolCode": "K",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-passport/hooks/IPassportGenerationOptions",
-          "symbolName": "IPassportGenerationOptions",
-          "module": "@tsed/cli-plugin-passport",
-          "symbolType": "interface",
-          "symbolLabel": "Interface",
-          "symbolCode": "I",
-          "status": [
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-passport/hooks/PassportGenerateHook",
-          "symbolName": "PassportGenerateHook",
-          "module": "@tsed/cli-plugin-passport",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-passport/services/PassportClient",
-          "symbolName": "PassportClient",
-          "module": "@tsed/cli-plugin-passport",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
-          "status": [
-            "stable"
-          ]
-        }
-      ],
-      "name": "@tsed/cli-plugin-passport"
-    },
-    "@tsed/cli-plugin-tslint": {
-      "symbols": [
-        {
-          "path": "/api/cli-plugin-tslint/CliPluginTslintModule",
-          "symbolName": "CliPluginTslintModule",
-          "module": "@tsed/cli-plugin-tslint",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-tslint/CliPluginTslintModule",
-          "symbolName": "CliPluginTslintModule",
-          "module": "@tsed/cli-plugin-tslint",
-          "symbolType": "default",
-          "symbolLabel": "",
-          "symbolCode": "",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-tslint/utils/TEMPLATE_DIR",
-          "symbolName": "TEMPLATE_DIR",
-          "module": "@tsed/cli-plugin-tslint",
-          "symbolType": "const",
-          "symbolLabel": "Constant",
-          "symbolCode": "K",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-plugin-tslint/hooks/TslintInitHook",
-          "symbolName": "TslintInitHook",
-          "module": "@tsed/cli-plugin-tslint",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "private",
-            "stable"
-          ]
-        }
-      ],
-      "name": "@tsed/cli-plugin-tslint"
-    },
-    "@tsed/cli-testing": {
-      "symbols": [
-        {
-          "path": "/api/cli-testing/IInvokeOptions",
-          "symbolName": "IInvokeOptions",
-          "module": "@tsed/cli-testing",
-          "symbolType": "interface",
-          "symbolLabel": "Interface",
-          "symbolCode": "I",
-          "status": [
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli-testing/CliTestContext",
-          "symbolName": "CliTestContext",
-          "module": "@tsed/cli-testing",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "stable"
-          ]
-        }
-      ],
-      "name": "@tsed/cli-testing"
-    },
-    "@tsed/cli": {
-      "symbols": [
-        {
-          "path": "/api/cli/commands/_default",
-          "symbolName": "_default",
-          "module": "@tsed/cli",
-          "symbolType": "default",
-          "symbolLabel": "",
-          "symbolCode": "",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli/pipes/ClassNamePipe",
-          "symbolName": "ClassNamePipe",
-          "module": "@tsed/cli",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli/pipes/OutputFilePathPipe",
-          "symbolName": "OutputFilePathPipe",
-          "module": "@tsed/cli",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli/pipes/RoutePipe",
-          "symbolName": "RoutePipe",
-          "module": "@tsed/cli",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli/services/FeatureValue",
-          "symbolName": "FeatureValue",
-          "module": "@tsed/cli",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli/services/Feature",
-          "symbolName": "Feature",
-          "module": "@tsed/cli",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli/services/Features",
-          "symbolName": "Features",
-          "module": "@tsed/cli",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
-          "status": [
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli/services/IProviderInfo",
-          "symbolName": "IProviderInfo",
-          "module": "@tsed/cli",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
-          "status": [
-            "private",
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli/services/ProvidersInfoService",
-          "symbolName": "ProvidersInfoService",
-          "module": "@tsed/cli",
-          "symbolType": "service",
-          "symbolLabel": "Service",
-          "symbolCode": "S",
-          "status": [
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli/commands/generate/IGenerateCmdContext",
-          "symbolName": "IGenerateCmdContext",
-          "module": "@tsed/cli",
-          "symbolType": "interface",
-          "symbolLabel": "Interface",
-          "symbolCode": "I",
-          "status": [
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli/commands/generate/GenerateCmd",
-          "symbolName": "GenerateCmd",
-          "module": "@tsed/cli",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli/commands/init/IInitCmdContext",
-          "symbolName": "IInitCmdContext",
-          "module": "@tsed/cli",
-          "symbolType": "interface",
-          "symbolLabel": "Interface",
-          "symbolCode": "I",
-          "status": [
-            "stable"
-          ]
-        },
-        {
-          "path": "/api/cli/commands/init/InitCmd",
-          "symbolName": "InitCmd",
-          "module": "@tsed/cli",
-          "symbolType": "class",
-          "symbolLabel": "Class",
-          "symbolCode": "C",
-          "status": [
-            "stable"
-          ]
-        }
-      ],
-      "name": "@tsed/cli"
     }
   }
 }
