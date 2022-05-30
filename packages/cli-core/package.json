@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-core",
-  "version": "3.21.0-rc.3",
+  "version": "3.21.0-rc.4",
   "description": "Build your CLI with TypeScript and Decorators",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
@@ -71,7 +71,6 @@
     "@types/globby": "9.1.0",
     "@types/inquirer": "8.2.0",
     "@types/js-yaml": "4.0.5",
-    "@types/normalize-path": "3.0.0",
     "@types/normalize-path": "^3.0.0",
     "@types/read-pkg-up": "6.0.0",
     "@types/semver": "7.3.9",
