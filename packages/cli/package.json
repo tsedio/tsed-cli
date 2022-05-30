@@ -31,11 +31,13 @@
     "start:typeorm:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts typeorm entity:create -r ./.tmp/init/awesome --name User"
   },
   "bin": {
-    "tsed": "lib/bin/tsed.js"
+    "tsed": "lib/cjs/bin/tsed.js"
   },
   "files": [
-    "lib/bin/tsed.js",
-    "lib/bin",
+    "lib/cjs/bin/tsed.js",
+    "lib/cjs/bin",
+    "lib/esm/bin/tsed.js",
+    "lib/esm/bin",
     "lib",
     "templates"
   ],
