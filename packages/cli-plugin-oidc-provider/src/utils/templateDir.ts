@@ -4,7 +4,7 @@ import filedirname from "filedirname";
 const [, dir] = filedirname();
 
 const {path} = readPkgUp.sync({
-  cwd: dir
+  cwd: join(dir, "..", "..")
 })!;
 
 export const TEMPLATE_DIR = join(dirname(path), "templates");

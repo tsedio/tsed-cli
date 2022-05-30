@@ -24,10 +24,8 @@ module.exports = {
     [
       "semantic-release-slack-bot",
       {
-        notifyOnSuccess: true,
-        onSuccessTemplate: {
-          text: "CLI v$npm_package_version has been released at https://github.com/tsedio/tsed-cli/releases/tag/v$npm_package_version"
-        }
+        markdownReleaseNotes: true,
+        notifyOnSuccess: true
       }
     ]
   ],

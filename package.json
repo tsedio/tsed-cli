@@ -44,9 +44,9 @@
   "homepage": "https://github.com/tsedio/tsed-cli",
   "dependencies": {
     "@samverschueren/stream-to-observable": "0.3.1",
-    "@tsed/core": ">=6.114.6",
-    "@tsed/di": ">=6.114.6",
-    "@tsed/components-scan": ">=6.114.6",
+    "@tsed/core": ">=6.114.14",
+    "@tsed/di": ">=6.114.14",
+    "@tsed/components-scan": ">=6.114.14",
     "@tsed/logger": ">=6.0.0",
     "any-observable": "0.5.1",
     "axios": "0.21.4",

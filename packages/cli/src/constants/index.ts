@@ -5,7 +5,7 @@ import filedirname from "filedirname";
 const [, dir] = filedirname();
 
 const {path, packageJson} = readPkgUp.sync({
-  cwd: dir
+  cwd: join(dir, "..", "..")
 })!;
 
 export const PKG = packageJson;
