@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli",
-  "version": "3.21.0-rc.1",
+  "version": "3.21.0-rc.2",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
@@ -56,7 +56,7 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@tsed/cli-core": "3.21.0-rc.1",
+    "@tsed/cli-core": "3.21.0-rc.2",
     "@tsed/core": ">=6.114.6",
     "@tsed/di": ">=6.114.6",
     "@tsed/logger": ">=6.0.0",
