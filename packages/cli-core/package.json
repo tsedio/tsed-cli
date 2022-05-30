@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-core",
-  "version": "3.20.16",
+  "version": "3.20.17",
   "description": "Build your CLI with TypeScript and Decorators",
   "source": "./src/index.ts",
   "main": "./lib/index.js",
@@ -58,7 +58,6 @@
   },
   "devDependencies": {
     "@types/axios": "0.14.0",
-    "@types/normalize-path": "3.0.0",
     "@types/commander": "2.12.2",
     "@types/consolidate": "0.14.1",
     "@types/figures": "3.0.1",
@@ -66,6 +65,7 @@
     "@types/globby": "9.1.0",
     "@types/inquirer": "8.2.0",
     "@types/js-yaml": "4.0.5",
+    "@types/normalize-path": "3.0.0",
     "@types/read-pkg-up": "6.0.0",
     "@types/semver": "7.3.9",
     "@types/tunnel": "0.0.3",
