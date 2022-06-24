@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-plugin-typegraphql",
-  "version": "3.21.0-rc.4",
+  "version": "3.21.0-rc.5",
   "description": "Ts.ED CLI plugin. Add TypeGraphql support.",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
@@ -25,11 +25,11 @@
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/cli": "3.21.0-rc.4",
-    "@tsed/cli-core": "3.21.0-rc.4"
+    "@tsed/cli": "3.21.0-rc.5",
+    "@tsed/cli-core": "3.21.0-rc.5"
   },
   "peerDependencies": {
-    "@tsed/cli": "^3.21.0-rc.4",
-    "@tsed/cli-core": "^3.21.0-rc.4"
+    "@tsed/cli": "^3.21.0-rc.5",
+    "@tsed/cli-core": "^3.21.0-rc.5"
   }
 }
