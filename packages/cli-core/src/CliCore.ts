@@ -11,8 +11,7 @@ import {ProjectPackageJson} from "./services/ProjectPackageJson";
 import {createInjector} from "./utils/createInjector";
 import {loadPlugins} from "./utils/loadPlugins";
 import {CliError} from "./domains/CliError";
-
-const semver = require("semver");
+import semver from "semver";
 
 function isHelpManual(argv: string[]) {
   return argv.includes("-h") || argv.includes("--help");

@@ -23,12 +23,13 @@ export class EslintInitHook {
           return this.rootRenderer.renderAll(
             [
               ".eslintrc.hbs",
+              ".eslintignore.hbs",
               ctx.lintstaged && ".husky/_/.gitignore.hbs",
               ctx.lintstaged && ".husky/_/husky.sh.hbs",
               ctx.lintstaged && ".husky/.gitignore.hbs",
               ctx.lintstaged && ".husky/post-commit.hbs",
               ctx.lintstaged && ".husky/pre-commit.hbs",
-              ctx.lintstaged && "lint-staged.config.js.hbs",
+              ctx.lintstaged && ".lintstagedrc.json.hbs",
               ctx.prettier && ".prettierignore.hbs",
               ctx.prettier && ".prettierrc.hbs"
             ],

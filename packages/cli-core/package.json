@@ -1,13 +1,21 @@
 {
   "name": "@tsed/cli-core",
-  "version": "3.20.17",
+  "version": "3.21.0-rc.5",
   "description": "Build your CLI with TypeScript and Decorators",
   "source": "./src/index.ts",
-  "main": "./lib/index.js",
-  "typings": "./lib/index.d.ts",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "typings": "./lib/types/index.d.ts",
   "exports": {
-    "require": "./lib/index.js",
-    "default": "./lib/index.modern.js"
+    "types": "./lib/types/index.d.ts",
+    "import": "./lib/esm/index.js",
+    "require": "./lib/cjs/index.js",
+    "default": "./lib/esm/index.js"
+  },
+  "scripts": {
+    "build": "yarn run build:esm && yarn run build:cjs",
+    "build:cjs": "tsc --build tsconfig.compile.json",
+    "build:esm": "tsc --build tsconfig.compile.esm.json"
   },
   "keywords": [
     "cli",
@@ -19,9 +27,6 @@
     "inquirer.js",
     "listr"
   ],
-  "scripts": {
-    "build": "microbundle --target node --no-compress --format modern,cjs --tsconfig ./tsconfig.compile.json"
-  },
   "dependencies": {
     "@npmcli/run-script": "3.0.1",
     "@samverschueren/stream-to-observable": "^0.3.1",
@@ -36,6 +41,7 @@
     "enquirer": "2.3.6",
     "execa": "5.1.1",
     "figures": "4.0.0",
+    "filedirname": "2.7.0",
     "fs-extra": "10.1.0",
     "globby": "11.1.0",
     "handlebars": "4.7.7",
@@ -65,7 +71,7 @@
     "@types/globby": "9.1.0",
     "@types/inquirer": "8.2.0",
     "@types/js-yaml": "4.0.5",
-    "@types/normalize-path": "3.0.0",
+    "@types/normalize-path": "^3.0.0",
     "@types/read-pkg-up": "6.0.0",
     "@types/semver": "7.3.9",
     "@types/tunnel": "0.0.3",

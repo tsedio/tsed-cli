@@ -1,31 +1,20 @@
 {
   "name": "@tsed/cli",
-  "version": "3.20.17",
-  "main": "./lib/index.js",
-  "typings": "./lib/index.d.ts",
-  "bin": {
-    "tsed": "lib/bin/tsed.js"
+  "version": "3.21.0-rc.5",
+  "source": "./src/index.ts",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "typings": "./lib/types/index.d.ts",
+  "exports": {
+    "types": "./lib/types/index.d.ts",
+    "import": "./lib/esm/index.js",
+    "require": "./lib/cjs/index.js",
+    "default": "./lib/esm/index.js"
   },
-  "files": [
-    "lib/bin/tsed.js",
-    "lib/bin",
-    "lib",
-    "templates"
-  ],
-  "description": "CLI to bootstrap your Ts.ED project",
-  "keywords": [
-    "Ts.ED",
-    "cli",
-    "typescript",
-    "framework",
-    "rest",
-    "api",
-    "express",
-    "decorators"
-  ],
   "scripts": {
-    "build": "tsc --build tsconfig.compile.json",
-    "build:doc": "tsc --build tsconfig.doc.json",
+    "build": "yarn run build:esm && yarn run build:cjs",
+    "build:cjs": "tsc --build tsconfig.compile.json",
+    "build:esm": "tsc --build tsconfig.compile.esm.json",
     "start:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts -h",
     "start:help:g": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
     "start:version": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts --version",
@@ -41,21 +30,44 @@
     "start:generate:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -r ./.tmp/init/awesome",
     "start:typeorm:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts typeorm entity:create -r ./.tmp/init/awesome --name User"
   },
+  "bin": {
+    "tsed": "lib/cjs/bin/tsed.js"
+  },
+  "files": [
+    "lib/cjs/bin/tsed.js",
+    "lib/cjs/bin",
+    "lib/esm/bin/tsed.js",
+    "lib/esm/bin",
+    "lib",
+    "templates"
+  ],
+  "description": "CLI to bootstrap your Ts.ED project",
+  "keywords": [
+    "Ts.ED",
+    "cli",
+    "typescript",
+    "framework",
+    "rest",
+    "api",
+    "express",
+    "decorators"
+  ],
   "engines": {
-    "node": ">=8.9"
+    "node": ">=14"
   },
   "dependencies": {
-    "@tsed/cli-core": "3.20.17",
-    "@tsed/core": ">=6.114.6",
-    "@tsed/di": ">=6.114.6",
-    "@tsed/logger": ">=6.1.0",
-    "@tsed/schema": ">=6.114.6",
+    "@tsed/cli-core": "3.21.0-rc.5",
+    "@tsed/core": ">=6.114.14",
+    "@tsed/di": ">=6.114.14",
+    "@tsed/logger": ">=6.0.0",
+    "@tsed/schema": ">=6.114.14",
     "change-case": "4.1.2",
+    "filedirname": "2.7.0",
     "normalize-path": "3.0.0",
+    "read-pkg-up": "7.0.1",
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/cli-testing": "3.20.17",
     "@types/change-case": "^2.3.1"
   },
   "peerDependencies": {}

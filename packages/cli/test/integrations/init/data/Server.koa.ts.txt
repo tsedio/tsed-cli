@@ -5,11 +5,10 @@ import "@tsed/platform-koa"; // /!\ keep this import
 import bodyParser from "koa-bodyparser";
 import compress from "koa-compress";
 import cors from "@koa/cors";
+import methodOverride from "koa-override";
 import "@tsed/ajv";
-import {config} from "./config";
-import * as rest from "./controllers/rest";
-
-const methodOverride = require("koa-override");
+import {config} from "./config/index";
+import * as rest from "./controllers/rest/index";
 
 @Configuration({
   ...config,

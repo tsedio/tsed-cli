@@ -1,5 +1,11 @@
+const generated = require("@tsed/markdown-it-symbols");
+const team = require('../../team.json')
+const api = require('./public/api.json')
+const {version} = require("../../package.json");
+
 const url = "https://cli.tsed.io";
 const title = 'Ts.ED CLI - CLI to bootstrap your Ts.ED project'
+
 module.exports = {
   title,
   description: 'A Node.js CLI to bootstrap and manage a Ts.ED project.',
@@ -34,8 +40,8 @@ module.exports = {
   themeConfig: {
     shortTitle: 'Ts.ED CLI',
     htmlTitle: '<span class=\'text-blue\'>Ts</span>.ED CLI',
-    version: require('../../package').version,
-    team: require('../../team.json'),
+    version,
+    team,
     licenseType: 'MIT',
     author: 'Lenzotti Romain',
     copyrightDates: {
@@ -53,7 +59,7 @@ module.exports = {
     docsDir: 'docs',
     sidebar: 'auto',
     docsBranch: 'master',
-    api: require('./public/api.json'),
+    api,
     smoothScroll: true,
     lastUpdated: 'Last updated',
     // algolia: {
@@ -242,7 +248,7 @@ module.exports = {
   markdown: {
     lineNumbers: true,
     extendMarkdown: md => {
-      md.use(require("@tsed/markdown-it-symbols"));
+      md.use(generated);
     }
   }
 };

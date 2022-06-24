@@ -7,8 +7,9 @@ import "any-observable/register/rxjs-all";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import streamToObservable from "@samverschueren/stream-to-observable";
-
-const split = require("split");
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import split from "split";
 
 @Injectable()
 export class CliExeca {

@@ -1,6 +1,6 @@
-"use strict";
-
-const util = require("handlebars-utils");
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import util from "handlebars-utils";
 import {helpers as object} from "./object";
 import {helpers as array} from "./array";
 

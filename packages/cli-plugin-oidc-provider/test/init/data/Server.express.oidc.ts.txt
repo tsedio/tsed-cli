@@ -9,8 +9,8 @@ import methodOverride from "method-override";
 import cors from "cors";
 import "@tsed/ajv";
 import "@tsed/oidc-provider";
-import {config} from "./config";
-import * as rest from "./controllers/rest";
+import {config} from "./config/index";
+import * as rest from "./controllers/rest/index";
 import {InteractionsController} from "./controllers/oidc/InteractionsController";
 
 @Configuration({

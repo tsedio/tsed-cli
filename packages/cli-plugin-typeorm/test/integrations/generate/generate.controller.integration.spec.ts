@@ -1,14 +1,14 @@
-import {GenerateCmd} from "@tsed/cli";
+import {GenerateCmd, TEMPLATE_DIR} from "@tsed/cli";
 import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {dirname, resolve} from "path";
+import {dirname} from "path";
 import "../../../src";
 import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
-
-const TEMPLATE_DIR = resolve(require.resolve("@tsed/cli"), "..", "..", "templates");
+import filedirname from "filedirname";
+const [, dir] = filedirname();
 
 function readFile(file: string, content: string, rewrite = true) {
-  const path = `${__dirname}/${file}`
+  const path = `${dir}/${file}`
 
   ensureDirSync(dirname(path))
 

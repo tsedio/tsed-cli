@@ -2,11 +2,11 @@
 import {Cli} from "../Cli";
 import commands from "../commands";
 import {ArchitectureConvention, ProjectConvention} from "../interfaces";
-import {TEMPLATE_DIR} from "../constants";
+import {PKG, TEMPLATE_DIR} from "../constants";
 
 Cli.bootstrap({
   name: "tsed",
-  pkg: require("../../package.json"),
+  pkg: PKG,
   templateDir: TEMPLATE_DIR,
   plugins: true,
   commands,

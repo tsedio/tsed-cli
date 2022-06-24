@@ -1,10 +1,7 @@
-import {GenerateCmd} from "@tsed/cli";
+import {GenerateCmd, TEMPLATE_DIR} from "@tsed/cli";
 import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {resolve} from "path";
 import "../../../src";
-
-const TEMPLATE_DIR = resolve(require.resolve("@tsed/cli"), "..", "..", "templates");
 
 describe("Generate Model", () => {
   beforeEach(() =>
@@ -36,9 +33,9 @@ describe("Generate Model", () => {
     expect(FakeCliFs.getKeys()).toEqual(["project-name/src/models", "project-name/src/models/ProductModel.ts"]);
 
     const result = FakeCliFs.entries.get("project-name/src/models/ProductModel.ts");
-    expect(result).toContain('import { Model, ObjectID } from "@tsed/mongoose";');
+    expect(result).toContain("import { Model, ObjectID } from \"@tsed/mongoose\";");
     expect(result).toContain("@Model");
-    expect(result).toContain('name: "products"');
+    expect(result).toContain("name: \"products\"");
     expect(result).toContain("export class ProductModel");
   });
 });

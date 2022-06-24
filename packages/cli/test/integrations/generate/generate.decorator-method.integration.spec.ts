@@ -1,9 +1,6 @@
 import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {resolve} from "path";
-import {GenerateCmd} from "../../../src";
-
-const TEMPLATE_DIR = resolve(__dirname, "..", "..", "..", "templates");
+import {GenerateCmd, TEMPLATE_DIR} from "../../../src";
 
 describe("Generate method decorator", () => {
   beforeEach(() =>

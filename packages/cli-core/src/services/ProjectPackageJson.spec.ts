@@ -1,6 +1,9 @@
 import {CliExeca, CliFs, createSubTasks, createTasksRunner, PackageManager, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {join, resolve} from "path";
+import filedirname from "filedirname";
+
+const [, dir] = filedirname();
 
 async function getProjectPackageJsonFixture() {
   const cliExeca = {
@@ -25,7 +28,7 @@ async function getProjectPackageJsonFixture() {
   return {projectPackageJson, cliExeca, cliFs};
 }
 
-const rootDir = resolve(join(__dirname, "__mock__"));
+const rootDir = resolve(join(dir, "__mock__"));
 
 function taskFixtureRunner(cb: any) {
   return createTasksRunner(

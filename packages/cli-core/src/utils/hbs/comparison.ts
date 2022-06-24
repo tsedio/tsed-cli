@@ -1,8 +1,8 @@
-"use strict";
-
 import {isNumber} from "@tsed/core";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import util from "handlebars-utils";
 
-const util = require("handlebars-utils");
 export const helpers: any = {};
 
 const contains = (val: any, obj: any, start?: number) => {

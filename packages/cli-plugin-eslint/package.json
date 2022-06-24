@@ -1,16 +1,25 @@
 {
   "name": "@tsed/cli-plugin-eslint",
-  "version": "3.20.17",
-  "main": "./lib/index.js",
-  "typings": "./lib/index.d.ts",
+  "version": "3.21.0-rc.5",
   "description": "Ts.ED CLI plugin. Add EsLint support",
-  "devDependencies": {
-    "@tsed/cli": "3.20.17",
-    "@tsed/cli-core": "3.20.17"
+  "source": "./src/index.ts",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "typings": "./lib/types/index.d.ts",
+  "exports": {
+    "types": "./lib/types/index.d.ts",
+    "import": "./lib/esm/index.js",
+    "require": "./lib/cjs/index.js",
+    "default": "./lib/esm/index.js"
   },
   "scripts": {
-    "build": "tsc --build tsconfig.compile.json",
-    "build:doc": "tsc --build tsconfig.doc.json"
+    "build": "yarn run build:esm && yarn run build:cjs",
+    "build:cjs": "tsc --build tsconfig.compile.json",
+    "build:esm": "tsc --build tsconfig.compile.esm.json"
+  },
+  "devDependencies": {
+    "@tsed/cli": "3.21.0-rc.5",
+    "@tsed/cli-core": "3.21.0-rc.5"
   },
   "dependencies": {
     "tslib": "2.3.1"
