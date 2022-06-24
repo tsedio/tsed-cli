@@ -45,9 +45,9 @@
   "homepage": "https://github.com/tsedio/tsed-cli",
   "dependencies": {
     "@samverschueren/stream-to-observable": "0.3.1",
+    "@tsed/components-scan": ">=6.114.14",
     "@tsed/core": ">=6.114.14",
     "@tsed/di": ">=6.114.14",
-    "@tsed/components-scan": ">=6.114.14",
     "@tsed/logger": ">=6.0.1",
     "any-observable": "0.5.1",
     "axios": "0.26.1",
@@ -96,6 +96,7 @@
     "is-ci": "3.0.1",
     "jest": "^28.1.0",
     "lint-staged": "^12.4.2",
+    "markdown-it": "8.4.2",
     "prettier": "2.2.1",
     "semantic-release": "19.0.3",
     "semantic-release-slack-bot": "3.5.3",
@@ -106,8 +107,8 @@
     "tsconfig-paths": "^4.0.0",
     "typescript": "^4.7.2",
     "vue-analytics": "5.22.1",
-    "vuepress": "1.9.7",
-    "vuepress-theme-tsed": "3.20.4"
+    "vuepress": "^1.9.7",
+    "vuepress-theme-tsed": "^3.20.4"
   },
   "directories": {
     "packages": "packages",
