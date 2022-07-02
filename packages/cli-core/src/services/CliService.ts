@@ -41,28 +41,6 @@ export class CliService {
 
   private commands = new Map();
 
-  $onInit() {
-    if (this.injector.logger.level !== "off") {
-      this.injector.logger.appenders
-        .set("stdout", {
-          type: "stdout",
-          layout: {
-            type: "pattern",
-            pattern: "[%d{hh:mm:ss}] %m"
-          },
-          levels: ["info", "debug"]
-        })
-        .set("stderr", {
-          type: "stderr",
-          layout: {
-            type: "pattern",
-            pattern: "[%d{hh:mm:ss}][%p] %m"
-          },
-          levels: ["trace", "fatal", "error", "warn"]
-        });
-    }
-  }
-
   /**
    * Parse process.argv and runLifecycle action
    * @param argv

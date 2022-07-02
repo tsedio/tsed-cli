@@ -29,7 +29,24 @@ export function createInjector(settings: Partial<DIConfigurationOptions> = {}) {
     injector.logger.stop();
   } else {
     /* istanbul ignore next */
-    injector.logger.level = injector.settings.logger?.level || "error";
+    injector.logger.level = injector.settings.logger?.level || "warn";
+    injector.logger.appenders
+      .set("stdout", {
+        type: "stdout",
+        layout: {
+          type: "pattern",
+          pattern: "[%d{hh:mm:ss}] %m"
+        },
+        levels: ["info", "debug"]
+      })
+      .set("stderr", {
+        type: "stderr",
+        layout: {
+          type: "pattern",
+          pattern: "[%d{hh:mm:ss}][%p] %m"
+        },
+        levels: ["trace", "fatal", "error", "warn"]
+      });
   }
 
   return injector;
