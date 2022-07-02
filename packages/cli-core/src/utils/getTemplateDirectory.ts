@@ -3,7 +3,7 @@ import {dirname, join} from "path";
 
 export function getTemplateDirectory(cwd: string) {
   const {path} = readPkgUp.sync({
-    cwd
+    cwd: join(cwd, "..", "..")
   })!;
 
   return join(dirname(path), "templates");
