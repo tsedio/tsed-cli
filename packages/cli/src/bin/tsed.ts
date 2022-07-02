@@ -18,5 +18,8 @@ Cli.bootstrap({
   },
   project: {
     reinstallAfterRun: true
+  },
+  logger: {
+    level: "info"
   }
 }).catch(console.error);
