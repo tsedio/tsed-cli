@@ -8,3 +8,5 @@ export * from "./parseOption";
 export * from "./createTasksRunner";
 export * from "./normalizePath";
 export * from "./getPackageJson";
+export * from "./getTemplateDirectory";
+export {default as filedirname} from "filedirname";
