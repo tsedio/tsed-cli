@@ -65,7 +65,7 @@ export class CliDockerComposeYaml {
           break;
         case "mongodb":
           value = {
-            image: "mongo:4.1",
+            image: "mongo:5.0.8",
             ports: ["27017:27017"]
           };
           break;
