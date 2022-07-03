@@ -5,7 +5,6 @@ import {InitCmd, TEMPLATE_DIR} from "@tsed/cli";
 import {dirname} from "path";
 import "@tsed/cli-plugin-typegraphql";
 import filedirname from "filedirname";
-import readPkgUp from "read-pkg-up";
 const [, dir] = filedirname();
 
 function readFile(file: string, content: string, rewrite = false) {
