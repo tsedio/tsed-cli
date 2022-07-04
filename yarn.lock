@@ -2754,7 +2754,7 @@
   dependencies:
     "@octokit/openapi-types" "^11.2.0"
 
-"@samverschueren/stream-to-observable@0.3.1", "@samverschueren/stream-to-observable@^0.3.0", "@samverschueren/stream-to-observable@^0.3.1":
+"@samverschueren/stream-to-observable@0.3.1", "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.1.tgz#a21117b19ee9be70c379ec1877537ef2e1c63301"
   integrity sha512-c/qwwcHyafOQuVQJj0IlBjf5yYgBI7YPJ77k4fOJYesb41jio65eaJODRUmfYKhTOFBrIZ66kgvGPlNbjuoRdQ==
@@ -3399,6 +3399,14 @@
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"
   integrity sha512-K5K+yml8LTo9bWJI/rECfIPrGgxdpeNbj+d53lwN4QjW1MCwlkhUms+gtdzigTeUyBr09+u8BwOIY3MXvHdcsA==
+
+"@types/split@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@types/split/-/split-1.0.1.tgz#61f84fb7140920477bdbaf12a7e8639dfde1c258"
+  integrity sha512-Bw2cMEAoTR+4ra3+ftkSD2DEidnTu8+TTj+cUFpZjQGYjoJnhiWk4oJzz1AK6Yqel5PseDnMH6rPhJqtFtXCoA==
+  dependencies:
+    "@types/node" "*"
+    "@types/through" "*"
 
 "@types/stack-utils@^2.0.0":
   version "2.0.1"

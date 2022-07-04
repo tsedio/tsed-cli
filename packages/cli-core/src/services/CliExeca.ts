@@ -1,15 +1,12 @@
 import {Injectable} from "@tsed/di";
-import type {SyncOptions, Options} from "execa";
+import type {Options, SyncOptions} from "execa";
 import execa from "execa";
-import {filter, merge} from "rxjs/operators";
+import {filter, mergeWith} from "rxjs/operators";
 import "any-observable/register/rxjs-all";
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import streamToObservable from "@samverschueren/stream-to-observable";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import split from "split";
+import {streamToObservable} from "../utils/streamToObservable";
 
 @Injectable()
 export class CliExeca {
@@ -26,7 +23,7 @@ export class CliExeca {
     const stdout = streamToObservable(cp.stdout!.pipe(split()), {await: cp});
     const stderr = streamToObservable(cp.stderr!.pipe(split()), {await: cp});
 
-    return stdout.pipe(merge(stderr)).pipe(filter(Boolean));
+    return stdout.pipe(mergeWith(stderr)).pipe(filter(Boolean));
   }
 
   runSync(cmd: string, args: string[], opts?: SyncOptions) {
