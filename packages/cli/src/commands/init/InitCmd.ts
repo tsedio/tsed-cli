@@ -269,14 +269,19 @@ export class InitCmd implements CommandProvider {
     ];
   }
 
-  async $postInstall() {
-    try {
-      await this.packageJson.runScript("barrels");
-    } catch (er) {
-      const runner = this.packageJson.getRunCmd();
-      console.warn(`Fail to run tasks: '${runner} barrels'. Please run '${runner} start'`);
-    }
-    return [];
+  async $onFinish() {
+    return new Promise((resolve) => {
+      this.packageJson.runScript("barrels").subscribe({
+        complete() {
+          resolve([]);
+        },
+        error: () => {
+          const runner = this.packageJson.getRunCmd();
+          console.warn(`Fail to run tasks: '${runner} barrels'. Please run '${runner} start'`);
+          resolve([]);
+        }
+      });
+    });
   }
 
   resolveRootDir(ctx: Partial<InitCmdContext>) {
