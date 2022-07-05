@@ -1,5 +1,5 @@
 {
-  "name": "@tsed/cli-plugin-client-generator",
+  "name": "@tsed/cli-generate-http-client",
   "version": "3.22.0",
   "description": "Ts.ED CLI plugin. Export a command that generate an HTTP Client (axios or fetch) from your Ts.ED controllers and OS3 spec.",
   "source": "./src/index.ts",
