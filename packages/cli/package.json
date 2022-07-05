@@ -61,6 +61,7 @@
     "@tsed/di": ">=6.114.14",
     "@tsed/logger": ">=6.0.0",
     "@tsed/schema": ">=6.114.14",
+    "@tsed/openspec": ">=6.114.14",
     "change-case": "4.1.2",
     "filedirname": "2.7.0",
     "normalize-path": "3.0.0",
