@@ -1,0 +1,42 @@
+{
+  "name": "@tsed/cli-plugin-client-generator",
+  "version": "3.21.4",
+  "description": "Ts.ED CLI plugin. Export a command that generate an HTTP Client (axios or fetch) from your Ts.ED controllers and OS3 spec.",
+  "source": "./src/index.ts",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "typings": "./lib/types/index.d.ts",
+  "exports": {
+    "types": "./lib/types/index.d.ts",
+    "import": "./lib/esm/index.js",
+    "require": "./lib/cjs/index.js",
+    "default": "./lib/esm/index.js"
+  },
+  "scripts": {
+    "build": "yarn run build:esm && yarn run build:cjs",
+    "build:cjs": "tsc --build tsconfig.compile.json",
+    "build:esm": "tsc --build tsconfig.compile.esm.json"
+  },
+  "dependencies": {
+    "change-case": "4.1.2",
+    "tslib": "2.3.1"
+  },
+  "devDependencies": {
+    "@tsed/cli": "3.21.4",
+    "@tsed/cli-core": "3.21.4",
+    "swagger-typescript-api": "^9.3.1"
+  },
+  "peerDependencies": {
+    "swagger-typescript-api": "^9.3.1",
+    "@tsed/swagger": ">=6.114.14",
+    "@tsed/common": ">=6.114.14"
+  },
+  "peerDependenciesMeta": {
+    "@tsed/swagger": {
+      "optional": false
+    },
+    "swagger-typescript-api": {
+      "optional": false
+    }
+  }
+}
