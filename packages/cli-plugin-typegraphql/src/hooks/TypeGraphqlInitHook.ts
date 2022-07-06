@@ -27,7 +27,8 @@ export class TypeGraphqlInitHook {
               "/src/resolvers/recipes/Recipe.ts",
               "/src/resolvers/recipes/RecipeNotFoundError.ts",
               "/src/resolvers/recipes/RecipeResolver.ts",
-              "/src/resolvers/index.ts"
+              "/src/resolvers/index.ts",
+              "/src/services/RecipeService.ts"
             ],
             ctx,
             {

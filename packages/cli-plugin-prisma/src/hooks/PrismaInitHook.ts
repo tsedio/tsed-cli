@@ -52,4 +52,17 @@ export class PrismaInitHook {
   addDevDependencies(ctx: InitCmdContext) {
     this.packageJson.addDevDependencies({}, ctx);
   }
+
+  $onFinish() {
+    return new Promise((resolve) => {
+      this.packageJson.runScript("prisma:generate").subscribe({
+        complete() {
+          resolve([]);
+        },
+        error: () => {
+          resolve([]);
+        }
+      });
+    });
+  }
 }

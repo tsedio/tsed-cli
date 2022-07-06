@@ -66,7 +66,11 @@
     "filedirname": "2.7.0",
     "normalize-path": "3.0.0",
     "read-pkg-up": "7.0.1",
-    "tslib": "2.3.1"
+    "tslib": "2.3.1",
+    "chalk": "4.1.2",
+    "module-alias": "^2.2.2",
+    "semver": "^7.3.5",
+    "globby": "11.1.0"
   },
   "devDependencies": {
     "@types/change-case": "^2.3.1"

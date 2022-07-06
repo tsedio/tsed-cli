@@ -46,11 +46,7 @@ describe("CliPrisma", () => {
 
       await service.patchPrismaSchema();
 
-      expect(cliFs.writeFile).toHaveBeenCalledWith(
-        expect.any(String),
-        schema + "\ngenerator tsed {\n" + '  provider = "tsed-prisma"\n' + "}\n",
-        {encoding: "utf8"}
-      );
+      expect(cliFs.writeFile.mock.calls[0][1]).toMatchSnapshot();
     });
     it("should not apply patch to the schema if it's already done", async () => {
       const {service, cliFs} = await createServiceFixture();
