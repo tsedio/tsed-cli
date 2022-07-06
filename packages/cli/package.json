@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli",
-  "version": "3.22.2",
+  "version": "3.22.3",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
@@ -56,21 +56,21 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@tsed/cli-core": "3.22.2",
+    "@tsed/cli-core": "3.22.3",
     "@tsed/core": ">=6.114.14",
     "@tsed/di": ">=6.114.14",
     "@tsed/logger": ">=6.0.0",
     "@tsed/openspec": ">=6.114.14",
     "@tsed/schema": ">=6.114.14",
+    "chalk": "4.1.2",
     "change-case": "4.1.2",
     "filedirname": "2.7.0",
+    "globby": "11.1.0",
+    "module-alias": "^2.2.2",
     "normalize-path": "3.0.0",
     "read-pkg-up": "7.0.1",
-    "tslib": "2.3.1",
-    "chalk": "4.1.2",
-    "module-alias": "^2.2.2",
     "semver": "^7.3.5",
-    "globby": "11.1.0"
+    "tslib": "2.3.1"
   },
   "devDependencies": {
     "@types/change-case": "^2.3.1"
