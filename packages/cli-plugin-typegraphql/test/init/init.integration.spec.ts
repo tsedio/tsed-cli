@@ -7,18 +7,6 @@ import "@tsed/cli-plugin-typegraphql";
 import filedirname from "filedirname";
 const [, dir] = filedirname();
 
-function readFile(file: string, content: string, rewrite = false) {
-  const path = `${dir}/${file}`
-
-  ensureDirSync(dirname(path))
-
-  if (!existsSync(path) || rewrite) {
-    writeFileSync(path, content, {encoding: "utf8"});
-  }
-
-  return readFileSync(path, {encoding: "utf8"});
-}
-
 describe("Init TypeGraphQL project", () => {
   beforeEach(() =>
     CliPlatformTest.bootstrap({
@@ -79,19 +67,19 @@ describe("Init TypeGraphQL project", () => {
       "project-name/src/resolvers/recipes/Recipe.ts",
       "project-name/src/resolvers/recipes/RecipeNotFoundError.ts",
       "project-name/src/resolvers/recipes/RecipeResolver.ts",
+      "project-name/src/services",
+      "project-name/src/services/RecipeService.ts",
       "project-name/tsconfig.compile.json",
       "project-name/tsconfig.json"
     ]);
 
     const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-
+    expect(content).toMatchSnapshot()
     expect(content).toContain("import \"@tsed/typegraphql\"");
     expect(content).toContain("import \"./datasources/index\";");
     expect(content).toContain("import \"./resolvers/index\";");
-    expect(content).toEqual(readFile("data/Server.typegraphql.ts.txt", content));
 
     const configContent = FakeCliFs.entries.get("project-name/src/config/index.ts")!;
-
-    expect(configContent).toEqual(readFile("data/config.typegraphql.ts.txt", configContent));
+    expect(configContent).toMatchSnapshot();
   });
 });

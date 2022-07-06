@@ -31,7 +31,7 @@
     "@npmcli/run-script": "3.0.1",
     "@tsed/logger": ">=6.1.1",
     "axios": "0.26.1",
-    "chalk": "4.1.0",
+    "chalk": "4.1.2",
     "change-case": "^4.1.2",
     "commander": "9.3.0",
     "consolidate": "0.16.0",

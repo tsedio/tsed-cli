@@ -31,6 +31,12 @@ export class CliPrisma {
 
       if (!content.includes("generator tsed")) {
         content += "\ngenerator tsed {\n" + '  provider = "tsed-prisma"\n' + "}\n";
+        content +=
+          "\nmodel User {\n" +
+          "  id    Int     @default(autoincrement()) @id\n" +
+          "  email String  @unique\n" +
+          "  name  String?\n" +
+          "}\n";
 
         return this.cliFs.writeFile(schemaPath, content, {encoding: "utf8"});
       }
