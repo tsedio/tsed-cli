@@ -10,6 +10,7 @@ import {CliExeca} from "./CliExeca";
 import {CliFs} from "./CliFs";
 import {isValidVersion} from "../utils/isValidVersion";
 import {getPackageJson} from "../utils/getPackageJson";
+import {Options} from "execa";
 
 export interface InstallOptions {
   packageManager?: PackageManager;
@@ -341,9 +342,10 @@ export class ProjectPackageJson {
     return this.fs.importModule(mod, this.dir);
   }
 
-  public runScript(npmTask: string, ignoreError = false) {
+  public runScript(npmTask: string, {ignoreError, ...opts}: {ignoreError?: boolean} & Options & Record<string, any> = {}) {
     const options = {
-      cwd: this.dir
+      cwd: this.dir,
+      ...opts
     };
     const errorPipe = () =>
       catchError((error: any) => {
