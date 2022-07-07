@@ -271,16 +271,16 @@ export class InitCmd implements CommandProvider {
 
   async $onFinish() {
     return new Promise((resolve) => {
-      this.packageJson.runScript("barrels").subscribe({
-        complete() {
-          resolve([]);
-        },
-        error: () => {
-          const runner = this.packageJson.getRunCmd();
-          console.warn(`Fail to run tasks: '${runner} barrels'. Please run '${runner} start'`);
-          resolve([]);
-        }
-      });
+      const next = () => resolve(undefined);
+      this.packageJson
+        .runScript("barrels", {
+          ignoreError: true
+        })
+        .subscribe({
+          next,
+          complete: next,
+          error: next
+        });
     });
   }
 
