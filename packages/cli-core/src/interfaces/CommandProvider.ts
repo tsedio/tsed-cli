@@ -40,4 +40,5 @@ export interface CommandProvider<Ctx = any> {
    * @param ctx
    */
   $postInstall?(ctx: Ctx): Tasks | Promise<Tasks> | any | Promise<any>;
+  $afterPostInstall?(ctx: Ctx): Tasks | Promise<Tasks> | any | Promise<any>;
 }
