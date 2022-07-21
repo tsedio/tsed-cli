@@ -163,7 +163,8 @@ export class CliService {
 
     return [
       ...(instance.$postInstall ? await instance.$postInstall(ctx) : []),
-      ...(await this.hooks.emit(CommandStoreKeys.POST_INSTALL_HOOKS, cmdName, ctx))
+      ...(await this.hooks.emit(CommandStoreKeys.POST_INSTALL_HOOKS, cmdName, ctx)),
+      ...(instance.$afterPostInstall ? await instance.$afterPostInstall(ctx) : [])
     ];
   }
 

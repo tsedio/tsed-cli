@@ -269,19 +269,17 @@ export class InitCmd implements CommandProvider {
     ];
   }
 
-  async $onFinish() {
-    return new Promise((resolve) => {
-      const next = () => resolve(undefined);
-      this.packageJson
-        .runScript("barrels", {
-          ignoreError: true
-        })
-        .subscribe({
-          next,
-          complete: next,
-          error: next
-        });
-    });
+  async $afterPostInstall() {
+    return [
+      {
+        title: "Generate barrels files",
+        task: () => {
+          return this.packageJson.runScript("barrels", {
+            ignoreError: true
+          });
+        }
+      }
+    ];
   }
 
   resolveRootDir(ctx: Partial<InitCmdContext>) {
