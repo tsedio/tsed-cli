@@ -45,15 +45,23 @@ Then create or edit the `src/bin/index.ts` in your project:
 ```typescript
 #!/usr/bin/env node
 import { CliCore } from "@tsed/cli-core";
-import {GenerateHttpClientCmd} from "@tsed/cli-generate-http-client";
-import { config } from "../config";
+import { GenerateHttpClientCmd } from "@tsed/cli-generate-http-client";
+import configuration from "../config";
+import { CronCmd } from "./commands/CronCmd";
+import "./db/connections";
 import { Server } from "../Server";
 
 CliCore.bootstrap({
-  ...config,
+  ...configuration,
   server: Server,
+  httpClient: {
+    hooks: {}, // see swagger-typescript-api hooks options
+    transformOperationId(operationId: string, routeNameInfo: any, raw: any) {
+      return raw.moduleName === "oidc" ? routeNameInfo.original.replace("oidc", "") : operationId;
+    }
+  },
   // add your custom commands here
-  commands: [GenerateHttpClientCmd]
+  commands: [GenerateHttpClientCmd, CronCmd]
 }).catch(console.error);
 ```
 

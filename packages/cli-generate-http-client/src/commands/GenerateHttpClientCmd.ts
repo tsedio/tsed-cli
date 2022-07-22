@@ -3,13 +3,19 @@ import {Constant, InjectorService} from "@tsed/di";
 import {importPackage, isString} from "@tsed/core";
 import {camelCase} from "change-case";
 import path, {join, resolve} from "path";
-import {generateApi} from "swagger-typescript-api";
+import {generateApi, Hooks, RawRouteInfo, RouteNameInfo} from "swagger-typescript-api";
 
-interface GenerateHttpClientCtx {
+export interface GenerateHttpClientCtx {
   output: string;
   type: "axios" | "fetch";
   name: string;
   suffix: string;
+}
+
+export interface GenerateHttpClientOpts {
+  hooks?: Partial<Hooks>;
+
+  transformOperationId?(operationId: string, routeNameInfo: RouteNameInfo, raw: RawRouteInfo): string;
 }
 
 @Command({
@@ -51,6 +57,9 @@ export class GenerateHttpClientCmd implements CommandProvider {
   @Constant("server")
   protected serverModule: Type<any>;
 
+  @Constant("httpClient", {hooks: {}})
+  protected options: Partial<GenerateHttpClientOpts>;
+
   $mapContext($ctx: GenerateHttpClientCtx) {
     return {...$ctx, output: resolve(join(process.cwd(), $ctx.output))};
   }
@@ -84,7 +93,9 @@ export class GenerateHttpClientCmd implements CommandProvider {
     const Platform = await this.loadPlatformModule();
     const {SwaggerService} = await importPackage("@tsed/swagger");
 
-    const platform: {injector: InjectorService} = await Platform.bootstrap(this.serverModule, {logger: {level: "off"}});
+    const platform: {injector: InjectorService; stop: () => Promise<any>} = await Platform.bootstrap(this.serverModule, {
+      logger: {level: "off"}
+    });
     const swaggerService = platform.injector.get<any>(SwaggerService)!;
     const confs = platform.injector.settings.get("swagger", []);
 
@@ -94,13 +105,17 @@ export class GenerateHttpClientCmd implements CommandProvider {
     const promises = confs.map(async (conf) => {
       const spec = await swaggerService.getOpenAPISpec(conf);
 
-      await this.generateFromSpec(spec, $ctx);
+      await this.generateFromSpec(spec, conf, $ctx);
     });
 
     await Promise.all(promises);
+
+    await platform.stop();
   }
 
-  private async generateFromSpec(spec: any, $ctx: GenerateHttpClientCtx) {
+  private async generateFromSpec(spec: any, conf: any, $ctx: GenerateHttpClientCtx) {
+    const operationIdMode = conf.operationId === "%c_%m" ? "underscore" : "default";
+
     const {files} = await generateApi({
       name: `${$ctx.name}.ts`,
       httpClientType: $ctx.type,
@@ -109,30 +124,10 @@ export class GenerateHttpClientCmd implements CommandProvider {
       typeSuffix: $ctx.suffix,
       unwrapResponseData: true,
       hooks: {
-        onCreateRouteName(routeNameInfo: any, raw: any) {
-          const [, operationId] = raw.operationId.split("_");
-
-          const name = raw.moduleName === "oidc" ? camelCase(routeNameInfo.original.replace("oidc", "")) : camelCase(operationId);
-
-          routeNameInfo.usage = name;
-          routeNameInfo.original = name;
-          raw.operationId = name;
-
-          return routeNameInfo;
-        },
-        onParseSchema(originalSchema: any, parsedSchema: any) {
-          const {content} = parsedSchema;
-
-          if (isString(content)) {
-            if (content.includes("null") && content.includes("any") && content.includes("Record")) {
-              parsedSchema.content = "any";
-            }
-
-            parsedSchema.content = parsedSchema.content.replace("object", "Record<string, any>");
-          }
-
-          return parsedSchema;
-        }
+        onCreateRouteName: (routeNameInfo: RouteNameInfo, rawRouteInfo: RawRouteInfo) =>
+          this.createRouteName(routeNameInfo, rawRouteInfo, operationIdMode),
+        onParseSchema: this.onParseSchema.bind(this),
+        ...this.options.hooks
       }
     } as any);
 
@@ -150,5 +145,39 @@ export class GenerateHttpClientCmd implements CommandProvider {
     });
 
     return Promise.all(promises);
+  }
+
+  private onParseSchema(originalSchema: any, parsedSchema: any) {
+    const {content} = parsedSchema;
+
+    if (isString(content)) {
+      if (content.includes("null") && content.includes("any") && content.includes("Record")) {
+        parsedSchema.content = "any";
+      }
+
+      parsedSchema.content = parsedSchema.content.replace("object", "Record<string, any>");
+    }
+
+    return parsedSchema;
+  }
+
+  private createRouteName(routeNameInfo: RouteNameInfo, raw: RawRouteInfo, mode: "default" | "underscore" = "default") {
+    let operationId = "";
+
+    if (mode === "underscore") {
+      operationId = raw.operationId.split("_")[1];
+    }
+
+    operationId = operationId || raw.operationId.replace(raw.moduleName, "");
+
+    const name = camelCase(
+      this.options.transformOperationId ? this.options.transformOperationId(operationId, routeNameInfo, raw) : operationId
+    );
+
+    routeNameInfo.usage = name;
+    routeNameInfo.original = name;
+    raw.operationId = name;
+
+    return routeNameInfo;
   }
 }
