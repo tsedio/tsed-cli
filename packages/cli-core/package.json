@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-core",
-  "version": "3.22.5",
+  "version": "3.23.0",
   "description": "Build your CLI with TypeScript and Decorators",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
