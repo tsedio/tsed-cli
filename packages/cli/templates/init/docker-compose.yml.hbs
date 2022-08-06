@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.5'
 services:
   server:
     build:
@@ -11,6 +11,4 @@ services:
     image: {{projectName}}/server:latest
     ports:
       - "8081:8081"
-    stdin_open: true  # -i
-    tty: true         # -t
 
