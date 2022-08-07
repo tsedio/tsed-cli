@@ -47,65 +47,17 @@ describe("Init OIDC Provider project", () => {
       projectName: "project-data",
       tsedVersion: "5.58.1",
       oidc: true,
+      jest: true,
       oidcBasePath: "/oidc"
     });
 
-    expect(FakeCliFs.getKeys()).toEqual([
-      "./project-name",
-      "project-name",
-      "project-name/.barrelsby.json",
-      "project-name/.dockerignore",
-      "project-name/.gitignore",
-      "project-name/Dockerfile",
-      "project-name/README.md",
-      "project-name/docker-compose.yml",
-      "project-name/package.json",
-      "project-name/processes.config.js",
-      "project-name/src",
-      "project-name/src/Server.ts",
-      "project-name/src/config",
-      "project-name/src/config/envs",
-      "project-name/src/config/envs/index.ts",
-      "project-name/src/config/index.ts",
-      "project-name/src/config/logger",
-      "project-name/src/config/logger/index.ts",
-      "project-name/src/config/oidc",
-      "project-name/src/config/oidc/index.ts",
-      "project-name/src/controllers/oidc",
-      "project-name/src/controllers/oidc/InteractionsController.ts",
-      "project-name/src/controllers/rest",
-      "project-name/src/controllers/rest/HelloWorldController.ts",
-      "project-name/src/index.ts",
-      "project-name/src/interactions",
-      "project-name/src/interactions/ConsentInteraction.ts",
-      "project-name/src/interactions/CustomInteraction.ts",
-      "project-name/src/interactions/LoginInteraction.ts",
-      "project-name/src/models",
-      "project-name/src/models/Account.ts",
-      "project-name/src/services",
-      "project-name/src/services/Accounts.ts",
-      "project-name/tsconfig.compile.json",
-      "project-name/tsconfig.json",
-      "project-name/views",
-      "project-name/views/forms",
-      "project-name/views/forms/interaction-form.ejs",
-      "project-name/views/forms/login-form.ejs",
-      "project-name/views/forms/select-account-form.ejs",
-      "project-name/views/interaction.ejs",
-      "project-name/views/login.ejs",
-      "project-name/views/partials",
-      "project-name/views/partials/footer.ejs",
-      "project-name/views/partials/header.ejs",
-      "project-name/views/partials/login-help.ejs",
-      "project-name/views/repost.ejs",
-      "project-name/views/select_account.ejs"
-    ]);
+    expect(FakeCliFs.getKeys()).toMatchSnapshot();
 
     const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
     expect(content).toContain("import \"@tsed/oidc-provider\"");
     expect(content).toContain("import {InteractionsController} from \"./controllers/oidc/InteractionsController\";");
-    expect(content).toEqual(readFile("data/Server.express.oidc.ts.txt", content));
+    expect(content).toMatchSnapshot();
 
     const configContent = FakeCliFs.entries.get("project-name/src/config/oidc/index.ts")!;
 
@@ -133,65 +85,13 @@ describe("Init OIDC Provider project", () => {
       oidcBasePath: "/oidc"
     });
 
-    expect(FakeCliFs.getKeys()).toEqual([
-      "./project-name",
-      "project-name",
-      "project-name/.barrelsby.json",
-      "project-name/.dockerignore",
-      "project-name/.gitignore",
-      "project-name/Dockerfile",
-      "project-name/README.md",
-      "project-name/docker-compose.yml",
-      "project-name/package.json",
-      "project-name/processes.config.js",
-      "project-name/src",
-      "project-name/src/Server.ts",
-      "project-name/src/config",
-      "project-name/src/config/envs",
-      "project-name/src/config/envs/index.ts",
-      "project-name/src/config/index.ts",
-      "project-name/src/config/logger",
-      "project-name/src/config/logger/index.ts",
-      "project-name/src/config/oidc",
-      "project-name/src/config/oidc/index.ts",
-      "project-name/src/controllers/oidc",
-      "project-name/src/controllers/oidc/InteractionsController.ts",
-      "project-name/src/controllers/pages",
-      "project-name/src/controllers/pages/IndexController.ts",
-      "project-name/src/controllers/rest",
-      "project-name/src/controllers/rest/HelloWorldController.ts",
-      "project-name/src/index.ts",
-      "project-name/src/interactions",
-      "project-name/src/interactions/ConsentInteraction.ts",
-      "project-name/src/interactions/CustomInteraction.ts",
-      "project-name/src/interactions/LoginInteraction.ts",
-      "project-name/src/models",
-      "project-name/src/models/Account.ts",
-      "project-name/src/services",
-      "project-name/src/services/Accounts.ts",
-      "project-name/tsconfig.compile.json",
-      "project-name/tsconfig.json",
-      "project-name/views",
-      "project-name/views/forms",
-      "project-name/views/forms/interaction-form.ejs",
-      "project-name/views/forms/login-form.ejs",
-      "project-name/views/forms/select-account-form.ejs",
-      "project-name/views/interaction.ejs",
-      "project-name/views/login.ejs",
-      "project-name/views/partials",
-      "project-name/views/partials/footer.ejs",
-      "project-name/views/partials/header.ejs",
-      "project-name/views/partials/login-help.ejs",
-      "project-name/views/repost.ejs",
-      "project-name/views/select_account.ejs",
-      "project-name/views/swagger.ejs"
-    ]);
+    expect(FakeCliFs.getKeys()).toMatchSnapshot();
 
     const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
     expect(content).toContain("import \"@tsed/oidc-provider\"");
     expect(content).toContain("import {InteractionsController} from \"./controllers/oidc/InteractionsController\";");
-    expect(content).toEqual(readFile("data/Server.express.oidc.swagger.ts.txt", content));
+    expect(content).toMatchSnapshot();
 
     const configContent = FakeCliFs.entries.get("project-name/src/config/oidc/index.ts")!;
 

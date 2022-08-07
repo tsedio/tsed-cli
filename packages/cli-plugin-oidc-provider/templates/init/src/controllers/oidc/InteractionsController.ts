@@ -1,14 +1,12 @@
 import {Get} from "@tsed/common";
 import {Interactions, OidcCtx} from "@tsed/oidc-provider";
 import {Name} from "@tsed/schema";
-import {ConsentInteraction} from "../../interactions/ConsentInteraction";
-import {CustomInteraction} from "../../interactions/CustomInteraction";
-import {LoginInteraction} from "../../interactions/LoginInteraction";
+import * as interactions from "../../interactions/index";
 
 @Name("Oidc")
 @Interactions({
   path: "/interaction/:uid",
-  children: [LoginInteraction, ConsentInteraction, CustomInteraction]
+  children: Object.values(interactions)
 })
 export class InteractionsController {
   @Get("/")

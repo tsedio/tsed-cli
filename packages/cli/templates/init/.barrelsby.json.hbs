@@ -1,7 +1,8 @@
 {
   "directory": [
     "./src/controllers/rest"{{#or swagger oidc}},
-    "./src/controllers/pages"{{/or}}{{#if graphql}},
+    "./src/controllers/pages"{{/or}}{{#if oidc}},
+    "./src/interactions"{{/if}}{{#if graphql}},
     "./src/datasources",
     "./src/resolvers"{{/if}}
   ],

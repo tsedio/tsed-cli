@@ -1,6 +1,5 @@
 import {Inject, Post, View} from "@tsed/common";
-import {BadRequest} from "@tsed/exceptions";
-import {Interaction, OidcCtx, OidcProvider, OidcSession, Params, Prompt, Uid} from "@tsed/oidc-provider";
+import {Interaction, OidcCtx, OidcProvider} from "@tsed/oidc-provider";
 import {Name} from "@tsed/schema";
 
 @Interaction({
@@ -11,47 +10,35 @@ export class ConsentInteraction {
   @Inject()
   oidc: OidcProvider;
 
-  @View("interaction")
-  async $prompt(
-    @OidcCtx() oidcCtx: OidcCtx,
-    @Prompt() prompt: Prompt,
-    @OidcSession() session: OidcSession,
-    @Params() params: Params,
-    @Uid() uid: Uid
-  ): Promise<any> {
-    const client = await oidcCtx.findClient();
-
-    return {
-      client,
-      uid,
-      details: prompt.details,
-      params,
+  @View("consent")
+  async $prompt(@OidcCtx() oidcCtx: OidcCtx): Promise<any> {
+    const account = await oidcCtx.findAccount();
+    return oidcCtx.interactionPrompt({
       title: "Authorize",
-      ...oidcCtx.debug()
-    };
+      account,
+      flash: false
+    });
   }
 
   @Post("/confirm")
-  async confirm(@OidcCtx() oidcCtx: OidcCtx, @Prompt() prompt: Prompt) {
-    if (prompt.name !== "consent") {
-      throw new BadRequest("Bad interaction name");
-    }
+  async confirm(@OidcCtx() oidcCtx: OidcCtx) {
+    oidcCtx.checkInteractionName("content");
 
     const grant = await oidcCtx.getGrant();
-    const details = prompt.details as {
+    const details = oidcCtx.prompt.details as {
       missingOIDCScope: string[];
       missingResourceScopes: Record<string, string[]>;
       missingOIDClaims: string[];
     };
 
-    const {missingOIDCScope, missingOIDClaims, missingResourceScopes} = details;
+    const { missingOIDCScope, missingOIDClaims, missingResourceScopes } = details;
 
     if (missingOIDCScope) {
       grant.addOIDCScope(missingOIDCScope.join(" "));
       // use grant.rejectOIDCScope to reject a subset or the whole thing
     }
     if (missingOIDClaims) {
-      grant.addOIDCClaims(missingOIDCScope);
+      grant.addOIDCClaims(missingOIDClaims);
       // use grant.rejectOIDCClaims to reject a subset or the whole thing
     }
 
@@ -64,7 +51,6 @@ export class ConsentInteraction {
     }
 
     const grantId = await grant.save();
-
     const consent: any = {};
 
     if (!oidcCtx.grantId) {
