@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-plugin-prisma",
-  "version": "3.23.0",
+  "version": "3.24.0",
   "description": "Ts.ED CLI plugin. Add Prisma project initialisation support.",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
@@ -22,8 +22,8 @@
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/cli": "3.23.0",
-    "@tsed/cli-core": "3.23.0"
+    "@tsed/cli": "3.24.0",
+    "@tsed/cli-core": "3.24.0"
   },
   "peerDependencies": {}
 }
