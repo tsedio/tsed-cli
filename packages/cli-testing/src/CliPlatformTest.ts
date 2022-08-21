@@ -14,7 +14,6 @@ import {Type} from "@tsed/core";
 import {FakeCliExeca} from "./FakeCliExeca";
 import {FakeCliFs} from "./FakeCliFs";
 import {FakeCliHttpClient} from "./FakeCliHttpClient";
-import {createContainer} from "@tsed/di";
 
 export interface InvokeOptions {
   token: TokenProvider;
@@ -57,8 +56,12 @@ export class CliPlatformTest extends DITest {
       name: "tsed",
       ...options
     });
-    const container = createContainer();
-    await DITest.injector.load(container, rootModule);
+
+    DITest.injector.addProvider(CliCore, {
+      useClass: rootModule
+    });
+
+    await DITest.injector.load();
   }
 
   /**

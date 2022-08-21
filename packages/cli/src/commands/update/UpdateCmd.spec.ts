@@ -3,20 +3,20 @@ import {CliPlatformTest} from "@tsed/cli-testing";
 import {UpdateCmd} from "./UpdateCmd";
 
 const versions = {
-  "6.0.0-alpha.4": {
+  "7.0.0-alpha.4": {
     version: "6.0.0-alpha.4",
     dependencies: {
       "@tsed/logger": "^5.5.0"
     },
     devDependencies: {}
   },
-  "6.0.0-alpha.3": {
+  "7.0.0-alpha.3": {
     version: "5.56.0"
   },
-  "6.0.0-alpha.2": {
+  "7.0.0-alpha.2": {
     version: "5.57.0"
   },
-  "6.0.0-alpha.1": {
+  "7.0.0-alpha.1": {
     version: "5.55.0"
   }
 };
@@ -57,7 +57,7 @@ describe("UpdateCmd", () => {
 
       expect(result).toEqual([
         {
-          choices: ["6.0.0-alpha.4", "6.0.0-alpha.3", "6.0.0-alpha.2", "6.0.0-alpha.1"],
+          choices: ["7.0.0-alpha.4", "7.0.0-alpha.3", "7.0.0-alpha.2", "7.0.0-alpha.1"],
           default: undefined,
           message: "Select a Ts.ED version",
           name: "version",
@@ -134,15 +134,15 @@ describe("UpdateCmd", () => {
       command.versions = versions;
 
       await command.$exec({
-        version: "6.0.0-alpha.4",
+        version: "7.0.0-alpha.4",
         verbose: false,
         rawArgs: []
       });
 
       expect(command.projectPackage.dependencies).toEqual({
-        "@tsed/common": "6.0.0-alpha.4",
-        "@tsed/core": "6.0.0-alpha.4",
-        "@tsed/di": "6.0.0-alpha.4",
+        "@tsed/common": "7.0.0-alpha.4",
+        "@tsed/core": "7.0.0-alpha.4",
+        "@tsed/di": "7.0.0-alpha.4",
         "@tsed/logger": "^5.5.0"
       });
       expect(command.projectPackage.devDependencies).toEqual({

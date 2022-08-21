@@ -1,4 +1,4 @@
-import {createContainer, Inject, InjectorService, Module} from "@tsed/di";
+import {Inject, InjectorService, Module} from "@tsed/di";
 import {Type} from "@tsed/core";
 import chalk from "chalk";
 import {Command} from "commander";
@@ -69,10 +69,12 @@ export class CliCore {
   static async loadInjector(injector: InjectorService, module: Type = CliCore) {
     await injector.emit("$beforeInit");
 
-    const container = createContainer();
+    injector.addProvider(CliCore, {
+      useClass: module
+    });
 
-    await injector.load(container, module);
-
+    await injector.load();
+    await injector.invoke(module);
     await injector.emit("$afterInit");
 
     injector.settings.set("loaded", true);
