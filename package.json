@@ -76,7 +76,7 @@
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",
     "@commitlint/config-conventional": "^17.0.3",
-    "@tsed/markdown-it-symbols": "3.19.5",
+    "@tsed/markdown-it-symbols": "3.20.4",
     "@tsed/monorepo-utils": "^1.21.0",
     "@tsed/ts-doc": "^4.1.0",
     "@types/jest": "27.4.1",
@@ -106,7 +106,8 @@
     "tsconfig-paths": "^4.0.0",
     "typescript": "^4.7.2",
     "vue-analytics": "5.22.1",
-    "vuepress": "1.9.5",
+    "vuepress": "1.9.7",
+    "entities": "1.1.2",
     "vuepress-theme-tsed": "3.19.5"
   },
   "directories": {
