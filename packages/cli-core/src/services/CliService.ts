@@ -64,6 +64,10 @@ export class CliService {
     data = await this.beforePrompt(cmdName, data);
     data = await this.prompt(cmdName, data);
 
+    await this.dispatch(cmdName, data);
+  }
+
+  public async dispatch(cmdName: string, data: any) {
     try {
       await this.exec(cmdName, data);
     } catch (er) {
