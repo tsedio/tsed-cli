@@ -22,10 +22,10 @@ function isHelpManual(argv: string[]) {
 })
 export class CliCore {
   @Inject()
-  injector: InjectorService;
+  readonly injector: InjectorService;
 
   @Inject()
-  cliService: CliService;
+  readonly cliService: CliService;
 
   static checkNodeVersion(wanted: string, id: string) {
     if (!semver.satisfies(process.version, wanted)) {
@@ -46,7 +46,7 @@ export class CliCore {
     return this;
   }
 
-  static async bootstrap(settings: Partial<TsED.Configuration>, module: Type = CliCore): Promise<CliCore> {
+  static async create<Cli extends CliCore = CliCore>(settings: Partial<TsED.Configuration>, module: Type = CliCore): Promise<Cli> {
     const injector = this.createInjector(settings);
 
     settings.plugins && (await loadPlugins(injector));
@@ -55,15 +55,13 @@ export class CliCore {
 
     await injector.emit("$onReady");
 
-    const cli = injector.get<CliCore>(CliCore)!;
+    return injector.get<Cli>(CliCore)!;
+  }
 
-    try {
-      await cli.cliService.parseArgs(injector.settings.get("argv")!);
-    } catch (er) {
-      throw new CliError({origin: er, cli});
-    }
+  static async bootstrap(settings: Partial<TsED.Configuration>, module: Type = CliCore) {
+    const cli = await this.create(settings, module);
 
-    return cli;
+    return cli.bootstrap();
   }
 
   static async loadInjector(injector: InjectorService, module: Type = CliCore) {
@@ -110,5 +108,15 @@ export class CliCore {
     }
 
     return process.cwd();
+  }
+
+  async bootstrap() {
+    try {
+      await this.cliService.parseArgs(this.injector.settings.get("argv")!);
+    } catch (er) {
+      throw new CliError({origin: er, cli: this});
+    }
+
+    return this;
   }
 }

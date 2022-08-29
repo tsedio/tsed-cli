@@ -11,3 +11,4 @@ export * from "./interfaces";
 export * from "./services/ProvidersInfoService";
 export * from "./pipes";
 export * from "./constants";
+export * from "./Cli";
