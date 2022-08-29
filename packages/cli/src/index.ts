@@ -7,3 +7,4 @@ export * from "./services/ProvidersInfoService";
 export * from "./services/Features";
 export * from "./pipes";
 export * from "./constants";
+export * from "./Cli";
