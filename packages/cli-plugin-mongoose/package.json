@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-plugin-mongoose",
-  "version": "3.24.1",
+  "version": "3.25.0",
   "description": "Ts.ED CLI plugin. Add Mongoose support",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
@@ -23,8 +23,8 @@
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/cli": "3.24.1",
-    "@tsed/cli-core": "3.24.1"
+    "@tsed/cli": "3.25.0",
+    "@tsed/cli-core": "3.25.0"
   },
   "peerDependencies": {}
 }
