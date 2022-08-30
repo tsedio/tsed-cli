@@ -64,7 +64,7 @@
     "@tsed/logger": ">=6.0.0",
     "@tsed/openspec": ">=6.114.14",
     "@tsed/schema": ">=6.114.14",
-    "chalk": "4.1.2",
+    "chalk": "5.0.1",
     "change-case": "4.1.2",
     "filedirname": "2.7.0",
     "globby": "11.1.0",
