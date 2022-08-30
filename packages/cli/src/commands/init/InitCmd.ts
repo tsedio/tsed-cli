@@ -53,6 +53,32 @@ export interface InitCmdContext extends CliDefaultOptions, InstallOptions {
     }
   },
   options: {
+    "-a, --arch <architecture>": {
+      type: String,
+      defaultValue: ArchitectureConvention.DEFAULT,
+      description: `Set the default architecture project (${ArchitectureConvention.DEFAULT} or ${ArchitectureConvention.FEATURE})`
+    },
+    "-c, --convention <convention>": {
+      type: String,
+      defaultValue: ProjectConvention.DEFAULT,
+      description: `Set the default architecture project (${ArchitectureConvention.DEFAULT} or ${ArchitectureConvention.FEATURE})`
+    },
+    "-p, --platform <platform>": {
+      type: String,
+      defaultValue: "express",
+      description: "Set the default platform for Ts.ED (express or koa)"
+    },
+    "-n, --project-name <projectName>": {
+      type: String,
+      defaultValue: "",
+      description: "Set the project name. By default, the project is the same as the name directory."
+    },
+    "--features <features...>": {
+      type: Array,
+      itemType: String,
+      defaultValue: [],
+      description: "List of the Ts.ED feature. The prompt will be skipped If this option is present"
+    },
     "-t, --tsed-version <version>": {
       type: String,
       defaultValue: DEFAULT_TSED_TAGS,
