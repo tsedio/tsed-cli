@@ -12,7 +12,7 @@ import {Injectable} from "@tsed/di";
 import {pascalCase} from "change-case";
 
 function getDatabase(ctx: InitCmdContext) {
-  return ctx.features.find(({type}) => type.includes("typeorm:"))?.type.split(":")[1] || "";
+  return ctx.features.find((type) => type.includes("typeorm:"))?.split(":")[1] || "";
 }
 
 @Injectable()
@@ -48,7 +48,7 @@ export class TypeORMInitHook {
       ...ctx,
       type: "typeorm:dataSource",
       name: pascalCase(database),
-      typeormDataSource: ctx.features.find(({type}) => type.startsWith("typeorm:"))?.type
+      typeormDataSource: ctx.features.find((value) => value.startsWith("typeorm:"))
     });
   }
 

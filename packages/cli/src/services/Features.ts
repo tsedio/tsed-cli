@@ -1,35 +1,5 @@
-import {CliPackageJson, Inject, registerProvider} from "@tsed/cli-core";
-import {getValue} from "@tsed/core";
-import {ProjectConvention, ArchitectureConvention} from "../interfaces";
-
-export interface FeatureValue {
-  type: string;
-  dependencies?: {[key: string]: string | undefined};
-  devDependencies?: {[key: string]: string | undefined};
-}
-
-export interface Feature {
-  name: string;
-  value: FeatureValue;
-}
-
-export type Features = Feature[];
-
-export function Features() {
-  return Inject(Features);
-}
-
-export function hasFeature(feature: string) {
-  return (ctx: any): boolean => !!ctx.features.find((item: any) => item.type === feature);
-}
-
-export function hasValue(expression: string, value: any) {
-  return (ctx: any) => getValue(expression, ctx) === value;
-}
-
-export function isPlatform(...types: string[]) {
-  return (ctx: any) => [types].includes(ctx.platform);
-}
+import {ProjectConvention} from "../interfaces";
+import {isPlatform} from "../commands/init/utils/isPlatform";
 
 export const FEATURES_TYPEORM_CONNECTION_TYPES = [
   {
@@ -433,118 +403,118 @@ export const getFeaturesChoicesValues = (cliVersion: string) => {
     packageManager: packageManagerChoices.map((v) => v.value)
   };
 };
-
-registerProvider({
-  provide: Features,
-  deps: [CliPackageJson],
-  useFactory(cliPackageJson: CliPackageJson) {
-    const cliVersion = cliPackageJson.version;
-
-    return [
-      {
-        message: "Choose the target platform:",
-        type: "list",
-        name: "platform",
-        choices: platformChoices
-      },
-      {
-        message: "Choose the architecture for your project:",
-        type: "list",
-        name: "architecture",
-        choices: [
-          {
-            name: "Ts.ED",
-            checked: true,
-            value: ArchitectureConvention.DEFAULT
-          },
-          {
-            name: "feature",
-            checked: false,
-            value: ArchitectureConvention.FEATURE
-          }
-        ]
-      },
-      {
-        message: "Choose the convention file styling:",
-        type: "list",
-        name: "convention",
-        choices: conventionChoices
-      },
-      {
-        type: "checkbox",
-        name: "features",
-        message: "Check the features needed for your project",
-        choices: featureChoices(cliVersion)
-      },
-      {
-        message: "Choose a ORM manager",
-        type: "list",
-        name: "featuresDB",
-        when: hasFeature("db"),
-        choices: featuresDbChoices(cliVersion)
-      },
-      {
-        type: "list",
-        name: "featuresTypeORM",
-        message: "Which TypeORM you want to install?",
-        choices: FEATURES_TYPEORM_CONNECTION_TYPES,
-        when: hasValue("featuresDB.type", "typeorm")
-      },
-      // {
-      //   type: "password",
-      //   name: "GH_TOKEN",
-      //   message:
-      //     "Enter GH_TOKEN to use the premium @tsedio/prisma package or leave blank (see https://tsed.io/tutorials/prisma-client.html)",
-      //   when: hasValue("featuresDB.type", "prisma")
-      // },
-      {
-        message: "Choose unit framework",
-        type: "list",
-        name: "featuresTesting",
-        when: hasFeature("testing"),
-        choices: featuresTestingChoices(cliVersion)
-      },
-      {
-        message: "Choose linter tools framework",
-        type: "list",
-        name: "featuresLinter",
-        when: hasFeature("linter"),
-        choices: featuresLinterChoices(cliVersion)
-      },
-      {
-        message: "Choose extra linter tools",
-        type: "checkbox",
-        name: "featuresExtraLinter",
-        when: hasFeature("linter"),
-        choices: featuresExtraLinterChoices
-      },
-      {
-        message: "Choose your bundler",
-        type: "list",
-        name: "featuresBundler",
-        when: hasFeature("bundler"),
-        choices: featuresBundlerChoices
-      },
-      {
-        message: "Choose the OIDC base path server",
-        name: "oidcBasePath",
-        default: "/oidc",
-        when: hasFeature("oidc"),
-        type: "input"
-      },
-      {
-        message: "Choose the OIDC base path server",
-        name: "oidcBasePath",
-        default: "/oidc",
-        when: hasFeature("oidc"),
-        type: "input"
-      },
-      {
-        message: "Choose the package manager:",
-        type: "list",
-        name: "packageManager",
-        choices: packageManagerChoices
-      }
-    ];
-  }
-});
+//
+// registerProvider({
+//   provide: Features,
+//   deps: [CliPackageJson],
+//   useFactory(cliPackageJson: CliPackageJson) {
+//     const cliVersion = cliPackageJson.version;
+//
+//     return [
+//       {
+//         message: "Choose the target platform:",
+//         type: "list",
+//         name: "platform",
+//         choices: platformChoices
+//       },
+//       {
+//         message: "Choose the architecture for your project:",
+//         type: "list",
+//         name: "architecture",
+//         choices: [
+//           {
+//             name: "Ts.ED",
+//             checked: true,
+//             value: ArchitectureConvention.DEFAULT
+//           },
+//           {
+//             name: "feature",
+//             checked: false,
+//             value: ArchitectureConvention.FEATURE
+//           }
+//         ]
+//       },
+//       {
+//         message: "Choose the convention file styling:",
+//         type: "list",
+//         name: "convention",
+//         choices: conventionChoices
+//       },
+//       {
+//         type: "checkbox",
+//         name: "features",
+//         message: "Check the features needed for your project",
+//         choices: featureChoices(cliVersion)
+//       },
+//       {
+//         message: "Choose a ORM manager",
+//         type: "list",
+//         name: "featuresDB",
+//         when: hasFeature("db"),
+//         choices: featuresDbChoices(cliVersion)
+//       },
+//       {
+//         type: "list",
+//         name: "featuresTypeORM",
+//         message: "Which TypeORM you want to install?",
+//         choices: FEATURES_TYPEORM_CONNECTION_TYPES,
+//         when: hasValue("featuresDB.type", "typeorm")
+//       },
+//       // {
+//       //   type: "password",
+//       //   name: "GH_TOKEN",
+//       //   message:
+//       //     "Enter GH_TOKEN to use the premium @tsedio/prisma package or leave blank (see https://tsed.io/tutorials/prisma-client.html)",
+//       //   when: hasValue("featuresDB.type", "prisma")
+//       // },
+//       {
+//         message: "Choose unit framework",
+//         type: "list",
+//         name: "featuresTesting",
+//         when: hasFeature("testing"),
+//         choices: featuresTestingChoices(cliVersion)
+//       },
+//       {
+//         message: "Choose linter tools framework",
+//         type: "list",
+//         name: "featuresLinter",
+//         when: hasFeature("linter"),
+//         choices: featuresLinterChoices(cliVersion)
+//       },
+//       {
+//         message: "Choose extra linter tools",
+//         type: "checkbox",
+//         name: "featuresExtraLinter",
+//         when: hasFeature("linter"),
+//         choices: featuresExtraLinterChoices
+//       },
+//       {
+//         message: "Choose your bundler",
+//         type: "list",
+//         name: "featuresBundler",
+//         when: hasFeature("bundler"),
+//         choices: featuresBundlerChoices
+//       },
+//       {
+//         message: "Choose the OIDC base path server",
+//         name: "oidcBasePath",
+//         default: "/oidc",
+//         when: hasFeature("oidc"),
+//         type: "input"
+//       },
+//       {
+//         message: "Choose the OIDC base path server",
+//         name: "oidcBasePath",
+//         default: "/oidc",
+//         when: hasFeature("oidc"),
+//         type: "input"
+//       },
+//       {
+//         message: "Choose the package manager:",
+//         type: "list",
+//         name: "packageManager",
+//         choices: packageManagerChoices
+//       }
+//     ];
+//   }
+// });

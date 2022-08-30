@@ -48,6 +48,12 @@ https_proxy=http://username:password@host:port
 > Note: The following environment variables can be also used to configure the proxy `HTTPS_PROXY`, `HTTP_PROXY`
 > and `NODE_TLS_REJECT_UNAUTHORIZED`.
 
+## Init project
+
+```typescript
+
+```
+
 ## Run Cli from code
 
 ```typescript

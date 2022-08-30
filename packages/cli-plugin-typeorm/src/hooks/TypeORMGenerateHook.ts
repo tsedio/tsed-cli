@@ -1,8 +1,8 @@
-import {FEATURES_TYPEORM_CONNECTION_TYPES, GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
+import {FeaturesMap, GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
 import {CliDockerComposeYaml, Inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
-import {TEMPLATE_DIR} from "../utils/templateDir";
 import {constantCase} from "change-case";
+import {TEMPLATE_DIR} from "../utils/templateDir";
 
 export interface TypeORMGenerateOptions extends GenerateCmdContext {
   typeormDataSource: string;
@@ -33,10 +33,10 @@ export class TypeORMGenerateHook {
 
   @OnPrompt("generate")
   async onGeneratePrompt() {
-    const list = FEATURES_TYPEORM_CONNECTION_TYPES.map((item) => {
+    const list = this.getTypeORMTypes().map(([value, {name}]) => {
       return {
-        name: item.name,
-        value: item.value.type
+        name: name,
+        value: value
       };
     });
 
@@ -68,6 +68,10 @@ export class TypeORMGenerateHook {
     return [];
   }
 
+  getTypeORMTypes() {
+    return Object.entries(FeaturesMap).filter(([value]) => value.startsWith("typeorm:"));
+  }
+
   generateDataSourceTasks(ctx: TypeORMGenerateOptions) {
     const {typeormDataSource, symbolPath, name} = ctx;
 
@@ -75,12 +79,18 @@ export class TypeORMGenerateHook {
       return [];
     }
 
-    const databaseType = FEATURES_TYPEORM_CONNECTION_TYPES.find((item) => item.value.type === typeormDataSource);
-    const database = typeormDataSource.split(":").at(-1)!;
+    this.getTypeORMTypes()
+      .filter(([value]) => value === typeormDataSource)
+      .forEach(([, feature]) => {
+        if (feature.dependencies) {
+          this.projectPackageJson.addDependencies(feature.dependencies);
+        }
+        if (feature.devDependencies) {
+          this.projectPackageJson.addDependencies(feature.devDependencies);
+        }
+      });
 
-    if (databaseType?.value?.dependencies) {
-      this.projectPackageJson.addDependencies(databaseType?.value.dependencies || {});
-    }
+    const database = typeormDataSource.split(":").at(-1)!;
 
     const symbolName = ctx.symbolName.replace("Datasource", "DataSource");
 
