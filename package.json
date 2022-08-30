@@ -123,8 +123,8 @@
     ]
   },
   "monorepo": {
-    "productionBranch": "master",
-    "developBranch": "master",
+    "productionBranch": "beta",
+    "developBranch": "beta",
     "npmAccess": "public",
     "ghpages": [
       {
