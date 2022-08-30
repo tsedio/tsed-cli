@@ -48,6 +48,103 @@ https_proxy=http://username:password@host:port
 > Note: The following environment variables can be also used to configure the proxy `HTTPS_PROXY`, `HTTP_PROXY`
 > and `NODE_TLS_REJECT_UNAUTHORIZED`.
 
+## Commands
+
+```shell
+Usage: tsed [options] [command]
+
+Options:
+  -V, --version                       output the version number
+  -h, --help                          display help for command
+
+Commands:  
+  add [options] [name]                Add cli plugin to the current project
+  generate|g [options] [type] [name]  Generate a new provider class
+  update [options]                    Update all Ts.ED packages used by your project
+  init [options] [root]               Init a new Ts.ED project
+  run [options] <command>             Run a project level command
+  help [command]                      display help for commands
+```
+
+## Init project
+
+```shell
+Usage: tsed init [options] [root]
+
+Init a new Ts.ED project
+
+Arguments:  
+  root                                    Root directory to initialize the Ts.ED project (default: ".")
+  
+Options:
+  -n, --project-name <projectName>        Set the project name. By default, the project is the same as the name directory. (default: "")
+  -a, --arch <architecture>               Set the default architecture convention (default or feature) (default: "default")
+  -c, --convention <convention>           Set the default project convention (default or feature) (default: "default")
+  -p, --platform <platform>               Set the default platform for Ts.ED (express or koa) (default: "express")
+  --features <features...>                List of the Ts.ED features. (default: [])
+  -m, --package-manager <packageManager>  The default package manager to install the project (default: "yarn")
+  -t, --tsed-version <version>            Use a specific version of Ts.ED (format: 5.x.x). (default: "latest")
+  -f, --file <path>                       Location of a file in which the features are defined.
+  -s, --skip-prompt                       Skip the prompt. (default: false)
+  -r, --root-dir <path>                   Project root directory
+  --verbose                               Verbose mode
+  -h, --help                              display help for command
+```
+
+Interactive prompt:
+
+```shell
+tsed init .
+```
+
+Skip prompt:
+
+```shell
+tsed init . --platform express --package-manager yarn --features swagger,jest,eslint,lintstaged,prettier --skip-prompt
+```
+
+## Use file to generate project
+
+A file can be defined to generate project. For example create a `tsed.template.yml` and add this code:
+
+```yaml
+projectName: project-example
+platform: express
+architecture: default
+convention: default
+skipPrompt: true
+packageManager: yarn
+features:
+ - graphql
+ - socketio
+ - swagger
+ - oidc
+ - passportjs
+ - commands
+ - db
+ - prisma
+ - mongoose
+ - typeorm
+ - typeorm:mysql
+ - testing
+ - jest
+ - mocha
+ - linter
+ - eslint
+ - lintstaged
+ - prettier
+ - bundler
+ - babel
+ - babel:webpack
+```
+> Note: The CLI support `yml` and `json` file!
+
+Then:
+
+```shell
+tsed init . --file ./tsed.template.yml
+```
+
 ## Run Cli from code
 
 ```typescript
