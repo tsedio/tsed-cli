@@ -1,0 +1,6 @@
+projectName: project-example
+platform: express
+architecture: default
+convention: default
+features:
+ - babel

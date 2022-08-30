@@ -1,7 +1,8 @@
 import {
-  CliDefaultOptions,
   CliExeca,
   CliFs,
+  CliLoadFile,
+  CliPackageJson,
   CliPlugins,
   CliService,
   Command,
@@ -10,37 +11,24 @@ import {
   createSubTasks,
   createTasksRunner,
   Inject,
-  InstallOptions,
   PackageManager,
   ProjectPackageJson,
   QuestionOptions,
   RootRendererService
 } from "@tsed/cli-core";
-import {camelCase, paramCase, pascalCase} from "change-case";
-import {basename, join, resolve} from "path";
+import {paramCase, pascalCase} from "change-case";
+import {basename, join} from "path";
 import {DEFAULT_TSED_TAGS} from "../../constants";
 import {ArchitectureConvention} from "../../interfaces/ArchitectureConvention";
 import {ProjectConvention} from "../../interfaces/ProjectConvention";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
-import {Features, FeatureValue, parseFeaturesFile} from "../../services/Features";
-
-export interface InitCmdContext extends CliDefaultOptions, InstallOptions {
-  platform: "express" | "koa";
-  root: string;
-  srcDir: string;
-  projectName: string;
-  tsedVersion: string;
-  features: FeatureValue[];
-  featuresTypeORM?: FeatureValue;
-  babel?: boolean;
-  webpack?: boolean;
-  architecture?: ArchitectureConvention;
-  convention?: ProjectConvention;
-  commands?: boolean;
-  GH_TOKEN?: string;
-
-  [key: string]: any;
-}
+import {InitCmdContext} from "./interfaces/InitCmdContext";
+import {InitFileSchema} from "./config/InitFileSchema";
+import {mapToContext} from "./mappers/mapToContext";
+import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt";
+import {InitOptions} from "./interfaces/InitOptions";
+import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt";
+import {PlatformType} from "../../interfaces";
 
 @Command({
   name: "init",
@@ -53,14 +41,51 @@ export interface InitCmdContext extends CliDefaultOptions, InstallOptions {
     }
   },
   options: {
+    "-n, --project-name <projectName>": {
+      type: String,
+      defaultValue: "",
+      description: "Set the project name. By default, the project is the same as the name directory."
+    },
+    "-a, --arch <architecture>": {
+      type: String,
+      defaultValue: ArchitectureConvention.DEFAULT,
+      description: `Set the default architecture convention (${ArchitectureConvention.DEFAULT} or ${ArchitectureConvention.FEATURE})`
+    },
+    "-c, --convention <convention>": {
+      type: String,
+      defaultValue: ProjectConvention.DEFAULT,
+      description: `Set the default project convention (${ArchitectureConvention.DEFAULT} or ${ArchitectureConvention.FEATURE})`
+    },
+    "-p, --platform <platform>": {
+      type: String,
+      defaultValue: PlatformType.EXPRESS,
+      description: "Set the default platform for Ts.ED (express or koa)"
+    },
+    "--features <features...>": {
+      type: Array,
+      itemType: String,
+      defaultValue: [],
+      description: "List of the Ts.ED features."
+    },
+    "-m, --package-manager <packageManager>": {
+      type: Array,
+      itemType: String,
+      defaultValue: PackageManager.YARN,
+      description: "The default package manager to install the project"
+    },
     "-t, --tsed-version <version>": {
       type: String,
       defaultValue: DEFAULT_TSED_TAGS,
-      description: "Use a specific version of Ts.ED (format: 5.x.x)"
+      description: "Use a specific version of Ts.ED (format: 5.x.x)."
     },
-    "-f, --features-file <path>": {
+    "-f, --file <path>": {
       type: String,
       description: "Location of a file in which the features are defined."
+    },
+    "-s, --skip-prompt": {
+      type: Boolean,
+      defaultValue: false,
+      description: "Skip the prompt."
     }
   }
 })
@@ -74,11 +99,14 @@ export class InitCmd implements CommandProvider {
   @Inject()
   protected packageJson: ProjectPackageJson;
 
-  @Features()
-  protected features: Features;
+  @CliPackageJson()
+  protected cliPackageJson: CliPackageJson;
 
   @Inject()
   protected cliService: CliService;
+
+  @Inject()
+  protected cliLoadFile: CliLoadFile;
 
   @Inject()
   protected rootRenderer: RootRendererService;
@@ -92,19 +120,24 @@ export class InitCmd implements CommandProvider {
   @Inject()
   protected fs: CliFs;
 
-  async $beforePrompt(initialOptions: Partial<InitCmdContext>) {
-    const callPath = process.cwd();
-    if (callPath && initialOptions.featuresFile) {
-      const featuresFilePath = resolve(callPath, initialOptions.featuresFile);
-      const featuresFromFile = await import(featuresFilePath);
-      const mappedFeatures = parseFeaturesFile(featuresFromFile, "3.8.0"); // Inject CLI version
-      initialOptions = {...initialOptions, ...mappedFeatures};
+  async $beforePrompt(initialOptions: Partial<InitOptions>) {
+    if (initialOptions.file) {
+      const file = join(this.packageJson.dir, initialOptions.file);
+
+      return {
+        ...initialOptions,
+        ...(await this.cliLoadFile.loadFile(file, InitFileSchema))
+      };
     }
+
     return initialOptions;
   }
 
-  $prompt(initialOptions: Partial<InitCmdContext>): QuestionOptions {
-    const featuresQuestions = initialOptions.features?.length ? [] : [...this.features];
+  $prompt(initialOptions: Partial<InitOptions>): QuestionOptions {
+    if (initialOptions.skipPrompt) {
+      return [];
+    }
+
     return [
       {
         type: "input",
@@ -116,37 +149,18 @@ export class InitCmd implements CommandProvider {
           return paramCase(input);
         }
       },
-      ...featuresQuestions
+      ...getFeaturesPrompt(initialOptions)
     ];
   }
 
-  $mapContext(ctx: Partial<InitCmdContext>): InitCmdContext {
+  $mapContext(ctx: any): InitCmdContext {
     this.resolveRootDir(ctx);
-
-    const features: FeatureValue[] = [];
-
-    Object.entries(ctx)
-      .filter(([key]) => key.startsWith("features") && key !== "featuresFile")
-      .forEach(([key, value]: any[]) => {
-        delete ctx[key];
-        features.push(...[].concat(value));
-      });
-
-    features.forEach((feature) => {
-      feature.type.split(":").forEach((type) => {
-        ctx[camelCase(type)] = true;
-      });
-    });
+    ctx = mapToContext(ctx);
 
     return {
       ...ctx,
-      features,
+      cliVersion: ctx.cliVersion || this.cliPackageJson.version,
       srcDir: this.configuration.project?.srcDir,
-      pnpm: ctx.packageManager === PackageManager.PNPM,
-      npm: ctx.packageManager === PackageManager.NPM,
-      yarn: ctx.packageManager === PackageManager.YARN,
-      express: ctx.platform === "express",
-      koa: ctx.platform === "koa",
       platformSymbol: ctx.platform && pascalCase(`Platform ${ctx.platform}`)
     } as InitCmdContext;
   }
@@ -376,7 +390,9 @@ export class InitCmd implements CommandProvider {
   }
 
   addFeatures(ctx: InitCmdContext) {
-    ctx.features.forEach((feature) => {
+    ctx.features.forEach((value) => {
+      const feature = FeaturesMap[value];
+
       if (feature.dependencies) {
         this.packageJson.addDependencies(feature.dependencies, ctx);
       }
@@ -395,7 +411,7 @@ export class InitCmd implements CommandProvider {
         break;
     }
 
-    if (ctx.features.find(({type}) => type === "graphql")) {
+    if (ctx.features.find((value) => value === FeatureType.GRAPHQL)) {
       this.packageJson.addDependencies(
         {
           ["apollo-server-" + ctx.platform]: "2.25.2"

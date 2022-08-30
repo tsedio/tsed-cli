@@ -1,10 +1,11 @@
-import {CliService, ProjectPackageJson} from "@tsed/cli-core";
+import {CliService, PackageManager, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
 import {dirname} from "path";
-import {InitCmd, TEMPLATE_DIR} from "@tsed/cli";
+import {ArchitectureConvention, FeatureType, InitCmd, PlatformType, ProjectConvention, TEMPLATE_DIR} from "@tsed/cli";
 import "../../../src";
 import filedirname from "filedirname";
+
 const [, dir] = filedirname();
 
 function readFile(file: string, content: string, rewrite = true) {
@@ -55,23 +56,18 @@ describe("TypeORM: Init cmd", () => {
         rootDir: "./.tmp/init/default",
         production: false,
         rawArgs: [],
-        platform: "express",
-        architecture: "default",
-        convention: "default",
-        packageManager: "yarn",
+        platform: PlatformType.EXPRESS,
+        architecture: ArchitectureConvention.DEFAULT,
+        convention: ProjectConvention.DEFAULT,
+        packageManager: PackageManager.YARN,
         projectName: "default",
         db: true,
         typeorm: true,
         mysql: true,
         features: [
-          {type: "db"},
-          {
-            type: "typeorm",
-            devDependencies: {
-              "@tsed/cli-plugin-typeorm": "5.58.1"
-            }
-          },
-          {type: "typeorm:mysql", dependencies: {mysql: "latest"}}
+          FeatureType.DB,
+          FeatureType.TYPEORM,
+          FeatureType.TYPEORM_MYSQL,
         ],
         srcDir: "src",
         pnpm: false,

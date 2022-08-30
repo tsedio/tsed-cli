@@ -8,6 +8,7 @@ export * from "./CliFs";
 export * from "./ProjectPackageJson";
 export * from "./Renderer";
 export * from "./CliExeca";
+export * from "./CliLoadFile";
 export * from "./CliYaml";
 export * from "./CliDockerComposeYaml";
 export * from "./NpmRegistryClient";

@@ -6,7 +6,7 @@ import alias from "module-alias";
 import {PKG, TEMPLATE_DIR} from "./constants";
 import commands from "./commands";
 import {ArchitectureConvention, ProjectConvention} from "./interfaces";
-import {InitCmdContext} from "./commands/init/InitCmd";
+import {InitCmdContext} from "./commands/init/interfaces/InitCmdContext";
 import {GenerateCmdContext} from "./commands/generate/GenerateCmd";
 
 export class Cli extends CliCore {
