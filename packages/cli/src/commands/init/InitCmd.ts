@@ -3,7 +3,6 @@ import {
   CliFs,
   CliLoadFile,
   CliPackageJson,
-  // CliPackageJson,
   CliPlugins,
   CliService,
   Command,
@@ -23,10 +22,11 @@ import {ArchitectureConvention} from "../../interfaces/ArchitectureConvention";
 import {ProjectConvention} from "../../interfaces/ProjectConvention";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
 import {InitCmdContext} from "./interfaces/InitCmdContext";
-import {getFeaturesPrompt, InitOptions} from "@tsed/cli";
 import {InitFileSchema} from "./config/InitFileSchema";
 import {mapToContext} from "./mappers/mapToContext";
 import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt";
+import {InitOptions} from "./interfaces/InitOptions";
+import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt";
 
 @Command({
   name: "init",
