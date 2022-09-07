@@ -1,10 +1,9 @@
 import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
 import {InitCmd, TEMPLATE_DIR} from "@tsed/cli";
-import {dirname} from "path";
 import "@tsed/cli-plugin-typegraphql";
 import filedirname from "filedirname";
+
 const [, dir] = filedirname();
 
 describe("Init TypeGraphQL project", () => {
@@ -30,6 +29,7 @@ describe("Init TypeGraphQL project", () => {
 
     await cliService.exec("init", {
       platform: "express",
+      convention: "default",
       rootDir: "./project-data",
       projectName: "project-data",
       tsedVersion: "5.58.1",

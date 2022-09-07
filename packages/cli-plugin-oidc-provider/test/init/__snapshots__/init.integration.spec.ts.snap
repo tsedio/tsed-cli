@@ -72,6 +72,7 @@ import \\"@tsed/ajv\\";
 import \\"@tsed/oidc-provider\\";
 import {config} from \\"./config/index\\";
 import * as rest from \\"./controllers/rest/index\\";
+import * as pages from \\"./controllers/pages/index\\";
 import {InteractionsController} from \\"./controllers/oidc/InteractionsController\\";
 
 @Configuration({
