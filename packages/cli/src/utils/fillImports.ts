@@ -14,7 +14,7 @@ export function fillImports(ctx: any) {
       (ctx.swagger || ctx.oidc) && (isFeature ? "./src/pages" : "./src/controllers/pages"),
       ctx.oidc && "./src/interactions",
       ctx.graphql && "./src/datasources",
-      "./src/resolvers"
+      ctx.graphql && "./src/resolvers"
     ].filter(Boolean)
   );
 
