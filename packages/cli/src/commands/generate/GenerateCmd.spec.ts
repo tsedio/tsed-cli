@@ -112,7 +112,12 @@ describe("GenerateCmd", () => {
           express: false,
           koa: false,
           platformSymbol: undefined,
-          indexControllerPath: "./controllers/pages/IndexController"
+          barrels: '["./src/controllers/rest","./src/resolvers"]',
+          imports: [
+            {from: "@tsed/ajv"},
+            {symbols: "{config}", from: "./config/index"},
+            {symbols: "* as rest", from: "./controllers/rest/index"}
+          ]
         },
         {
           output: "controllers/Test.ts"
@@ -161,7 +166,12 @@ describe("GenerateCmd", () => {
           express: false,
           koa: false,
           platformSymbol: undefined,
-          indexControllerPath: "./controllers/pages/IndexController"
+          barrels: '["./src/controllers/rest","./src/resolvers"]',
+          imports: [
+            {from: "@tsed/ajv"},
+            {symbols: "{config}", from: "./config/index"},
+            {symbols: "* as rest", from: "./controllers/rest/index"}
+          ]
         },
         {
           output: "controllers/Test.ts"

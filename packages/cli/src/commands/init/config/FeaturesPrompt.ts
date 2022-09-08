@@ -143,7 +143,7 @@ export const FeaturesMap: Record<string, Feature> = {
     checked: true
   },
   [ArchitectureConvention.FEATURE]: {
-    name: "feature",
+    name: "Feature",
     checked: false
   },
   [FeatureType.TYPEORM_MYSQL]: {

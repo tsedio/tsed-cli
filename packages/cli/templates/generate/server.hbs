@@ -1,29 +1,10 @@
 import {join} from "path";
 import {Configuration, Inject} from "@tsed/di";
 import {PlatformApplication} from "@tsed/common";
-{{#if express}}import "@tsed/platform-express"; // /!\ keep this import
-import bodyParser from "body-parser";
-import compress from "compression";
-import cookieParser from "cookie-parser";
-import methodOverride from "method-override";
-import cors from "cors";
-{{/if}}{{#if koa}}import "@tsed/platform-koa"; // /!\ keep this import
-import bodyParser from "koa-bodyparser";
-import compress from "koa-compress";
-import cors from "@koa/cors";
-import methodOverride from "koa-override";
-{{/if}}
-import "@tsed/ajv";{{#if swagger}}
-import "@tsed/swagger";{{/if}}{{#if mongoose}}
-import "@tsed/mongoose";{{/if}}{{#if oidc}}
-import "@tsed/oidc-provider";{{/if}}{{#if graphql}}
-import "@tsed/typegraphql";
-import "./datasources/index";
-import "./resolvers/index";{{/if}}
-import {config} from "./config/index";
-import * as rest from "./controllers/rest/index";{{#if swagger}}
-import * as pages from "./controllers/pages/index";{{/if}}{{#if oidc}}
-import {InteractionsController} from "./controllers/oidc/InteractionsController";{{/if}}
+{{#forEach imports}}{{#if tsIngore}}
+// @ts-ignore
+{{/if}}import {{symbols}}{{#if symbols}} from {{/if}}"{{from}}";{{comment}}
+{{/forEach}}
 
 @Configuration({
   ...config,
