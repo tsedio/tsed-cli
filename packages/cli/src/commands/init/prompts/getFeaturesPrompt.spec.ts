@@ -33,7 +33,7 @@ describe("getFeaturesPrompt", () => {
             },
             Object {
               "checked": false,
-              "name": "feature",
+              "name": "Feature",
               "value": "feature",
             },
           ],

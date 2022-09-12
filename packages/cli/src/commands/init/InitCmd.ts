@@ -29,6 +29,7 @@ import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt";
 import {InitOptions} from "./interfaces/InitOptions";
 import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt";
 import {PlatformType} from "../../interfaces";
+import {fillImports} from "../../utils/fillImports";
 
 @Command({
   name: "init",
@@ -157,12 +158,12 @@ export class InitCmd implements CommandProvider {
     this.resolveRootDir(ctx);
     ctx = mapToContext(ctx);
 
-    return {
+    return fillImports({
       ...ctx,
       cliVersion: ctx.cliVersion || this.cliPackageJson.version,
       srcDir: this.configuration.project?.srcDir,
       platformSymbol: ctx.platform && pascalCase(`Platform ${ctx.platform}`)
-    } as InitCmdContext;
+    }) as InitCmdContext;
   }
 
   async $beforeExec(ctx: InitCmdContext): Promise<any> {
@@ -207,6 +208,8 @@ export class InitCmd implements CommandProvider {
   }
 
   async $exec(ctx: InitCmdContext) {
+    InitCmd.checkPrecondition(ctx);
+
     const subTasks = [
       ...(await this.cliService.getTasks("generate", {
         ...ctx,
@@ -266,7 +269,8 @@ export class InitCmd implements CommandProvider {
                     ctx.swagger && "/init/views/swagger.ejs.hbs",
                     ctx.swagger && {
                       path: "/init/src/controllers/pages/IndexController.ts.hbs",
-                      basename: indexCtrlBaseName
+                      basename: indexCtrlBaseName,
+                      output: ctx.architecture === "default" ? "/controllers/pages/IndexController.ts" : "/pages/IndexController.ts"
                     }
                   ].filter(Boolean),
                   ctx,
@@ -391,7 +395,7 @@ export class InitCmd implements CommandProvider {
 
   addFeatures(ctx: InitCmdContext) {
     ctx.features.forEach((value) => {
-      const feature = FeaturesMap[value];
+      const feature = FeaturesMap[value.toLowerCase()];
 
       if (feature.dependencies) {
         this.packageJson.addDependencies(feature.dependencies, ctx);
@@ -475,5 +479,37 @@ export class InitCmd implements CommandProvider {
       },
       ctx
     );
+  }
+
+  static checkPrecondition(ctx: InitCmdContext) {
+    const isValid = (types: any, value: any) => (value ? Object.values(types).includes(value) : true);
+
+    if (!isValid(PlatformType, ctx.platform)) {
+      throw new Error(`Invalid selected platform: ${ctx.platform}. Possible values: ${Object.values(PlatformType).join(", ")}.`);
+    }
+
+    if (!isValid(ArchitectureConvention, ctx.architecture)) {
+      throw new Error(
+        `Invalid selected architecture: ${ctx.architecture}. Possible values: ${Object.values(ArchitectureConvention).join(", ")}.`
+      );
+    }
+
+    if (!isValid(ProjectConvention, ctx.convention)) {
+      throw new Error(`Invalid selected convention: ${ctx.convention}. Possible values: ${Object.values(ProjectConvention).join(", ")}.`);
+    }
+
+    if (!isValid(PackageManager, ctx.packageManager)) {
+      throw new Error(`Invalid selected convention: ${ctx.packageManager}. Possible values: ${Object.values(PackageManager).join(", ")}.`);
+    }
+
+    if (ctx.features) {
+      ctx.features.forEach((value) => {
+        const feature = FeaturesMap[value.toLowerCase()];
+
+        if (!feature) {
+          throw new Error(`Invalid selected feature: ${value}. Possible values: ${Object.values(FeatureType).join(", ")}.`);
+        }
+      });
+    }
   }
 }

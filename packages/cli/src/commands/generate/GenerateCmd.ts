@@ -9,6 +9,7 @@ import {RoutePipe} from "../../pipes/RoutePipe";
 import {ProvidersInfoService} from "../../services/ProvidersInfoService";
 import {PROVIDER_TYPES} from "./ProviderTypes";
 import {ProjectConvention} from "../../interfaces/ProjectConvention";
+import {fillImports} from "../../utils/fillImports";
 
 export interface GenerateCmdContext extends CliDefaultOptions {
   type: string;
@@ -185,7 +186,7 @@ export class GenerateCmd implements CommandProvider {
     const symbolName = this.classNamePipe.transform({name, type, format: ProjectConvention.DEFAULT});
     const symbolParamName = paramCase(symbolName);
 
-    return {
+    return fillImports({
       ...ctx,
       type,
       route: ctx.route ? this.routePipe.transform(ctx.route) : "",
@@ -199,14 +200,8 @@ export class GenerateCmd implements CommandProvider {
         })
       ),
       symbolPathBasename: normalizePath(this.classNamePipe.transform({name, type})),
-      express: ctx.platform === "express",
-      koa: ctx.platform === "koa",
-      platformSymbol: ctx.platform && pascalCase(`Platform ${ctx.platform}`),
-      indexControllerPath:
-        this.projectPackageJson.preferences.convention === ProjectConvention.ANGULAR
-          ? "./controllers/pages/index.controller"
-          : "./controllers/pages/IndexController"
-    } as GenerateCmdContext;
+      platformSymbol: ctx.platform && pascalCase(`Platform ${ctx.platform}`)
+    }) as GenerateCmdContext;
   }
 
   async $exec(ctx: GenerateCmdContext) {
