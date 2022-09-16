@@ -69,7 +69,6 @@ import {fillImports} from "../../utils/fillImports";
       description: "List of the Ts.ED features."
     },
     "-m, --package-manager <packageManager>": {
-      type: Array,
       itemType: String,
       defaultValue: PackageManager.YARN,
       description: "The default package manager to install the project"
@@ -499,7 +498,10 @@ export class InitCmd implements CommandProvider {
     }
 
     if (!isValid(PackageManager, ctx.packageManager)) {
-      throw new Error(`Invalid selected convention: ${ctx.packageManager}. Possible values: ${Object.values(PackageManager).join(", ")}.`);
+      console.log(PackageManager, ctx.packageManager);
+      throw new Error(
+        `Invalid selected package manager: ${ctx.packageManager}. Possible values: ${Object.values(PackageManager).join(", ")}.`
+      );
     }
 
     if (ctx.features) {
