@@ -23,6 +23,7 @@
     "start:init:run": "cross-env NODE_ENV=development cross-env CI=true ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default",
     "start:init:params": "cross-env NODE_ENV=development cross-env CI=true ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default --skip-prompt --features swagger,jest,lintstaged",
     "start:init:run:name": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init awesome --verbose",
+    "start:init:args": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/cmd --package-manager=npm --project-name=untitled3 --features=graphql,typeorm,passportjs,socketio,linter,eslint,prettier --arch=default --convention=default --platform=express --skip-prompt .",
     "start:add:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts add -r ./.tmp",
     "start:generate": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -r ./.tmp/init/default",
     "start:generate:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
