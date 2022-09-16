@@ -30,6 +30,24 @@ describe("InitCmd", () => {
       expect(result?.message).toEqual("Invalid selected convention: wrong. Possible values: default, angular.");
     });
 
+    it("should not throw error (package manager)", () => {
+      const result = catchError(() => {
+        InitCmd.checkPrecondition({
+          packageManager: "npm"
+        } as any);
+      });
+      expect(result?.message).toEqual(undefined);
+    });
+
+    it("should throw error (package manager)", () => {
+      const result = catchError(() => {
+        InitCmd.checkPrecondition({
+          packageManager: "unknown"
+        } as any);
+      });
+      expect(result?.message).toEqual("Invalid selected package manager: unknown. Possible values: yarn, npm, pnpm.");
+    });
+
     it("should throw error (features)", () => {
       const result = catchError(() => {
         InitCmd.checkPrecondition({
