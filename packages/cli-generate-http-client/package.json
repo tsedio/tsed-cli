@@ -27,8 +27,8 @@
     "swagger-typescript-api": "^9.3.1"
   },
   "peerDependencies": {
-    "@tsed/common": ">=7.0.0-rc.5",
-    "@tsed/swagger": ">=7.0.0-rc.5",
+    "@tsed/common": ">=7.0.0",
+    "@tsed/swagger": ">=7.0.0",
     "swagger-typescript-api": "^9.3.1"
   },
   "peerDependenciesMeta": {

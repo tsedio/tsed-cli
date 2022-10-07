@@ -45,9 +45,9 @@
   "homepage": "https://github.com/tsedio/tsed-cli",
   "dependencies": {
     "@samverschueren/stream-to-observable": "0.3.1",
-    "@tsed/components-scan": ">=7.0.0-rc.5",
-    "@tsed/core": ">=7.0.0-rc.5",
-    "@tsed/di": ">=7.0.0-rc.5",
+    "@tsed/components-scan": ">=7.0.0",
+    "@tsed/core": ">=7.0.0",
+    "@tsed/di": ">=7.0.0",
     "@tsed/logger": ">=6.2.1",
     "any-observable": "0.5.1",
     "axios": "0.26.1",
@@ -124,8 +124,8 @@
     ]
   },
   "monorepo": {
-    "productionBranch": "rc",
-    "developBranch": "rc",
+    "productionBranch": "master",
+    "developBranch": "master",
     "npmAccess": "public",
     "ghpages": [
       {

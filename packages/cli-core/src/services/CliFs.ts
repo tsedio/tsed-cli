@@ -3,7 +3,7 @@ import {PathLike, WriteFileOptions} from "fs";
 import Fs from "fs-extra";
 import {EnsureOptions} from "fs-extra";
 import {join} from "path";
-import {normalizePath} from "../utils/normalizePath";
+import {normalizePath} from "@tsed/core";
 
 @Injectable()
 export class CliFs {
