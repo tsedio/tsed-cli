@@ -498,7 +498,6 @@ export class InitCmd implements CommandProvider {
     }
 
     if (!isValid(PackageManager, ctx.packageManager)) {
-      console.log(PackageManager, ctx.packageManager);
       throw new Error(
         `Invalid selected package manager: ${ctx.packageManager}. Possible values: ${Object.values(PackageManager).join(", ")}.`
       );

@@ -78,7 +78,7 @@
     "@types/url-parse": "^1.4.3"
   },
   "peerDependencies": {
-    "@tsed/core": ">=7.0.0-rc.5",
-    "@tsed/di": ">=7.0.0-rc.5"
+    "@tsed/core": ">=7.0.0",
+    "@tsed/di": ">=7.0.0"
   }
 }
