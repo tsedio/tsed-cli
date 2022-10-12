@@ -18,6 +18,7 @@ export interface GenerateCmdContext extends CliDefaultOptions {
   directory: string;
   platform: string;
   templateType: string;
+  middlewarePosition: "before" | "after";
   symbolName: string;
   symbolPath: string;
   symbolPathBasename: string;
@@ -57,6 +58,24 @@ const searchFactory = (list: any) => {
     },
     name: {
       description: "Name of the class",
+      type: String
+    }
+  },
+  options: {
+    "-r, --route <route>": {
+      type: String,
+      description: "The route for the controller generated file"
+    },
+    "-d, --directory <directory>": {
+      description: "Directory where the file must be generated",
+      type: String
+    },
+    "-t, --template-type <templateType>": {
+      description: "Directory where the file must be generated",
+      type: String
+    },
+    "-m, --middleware-position <templateType>": {
+      description: "Middleware position (before, after)",
       type: String
     }
   }
@@ -135,7 +154,7 @@ export class GenerateCmd implements CommandProvider {
         name: "route",
         message: "Which route?",
         when(state: any) {
-          return ["controller", "server"].includes(state.type || initialOptions.type);
+          return !!(["controller", "server"].includes(state.type || initialOptions.type) || initialOptions.route);
         },
         default: (state: GenerateCmdContext) => {
           return state.type === "server" ? "/rest" : this.routePipe.transform(getName(state));
@@ -146,7 +165,7 @@ export class GenerateCmd implements CommandProvider {
         name: "directory",
         message: "Which directory?",
         when(state: any) {
-          return ["controller"].includes(state.type || initialOptions.type);
+          return ["controller"].includes(state.type || initialOptions.type) || initialOptions.directory;
         },
         choices: this.getDirectories("controllers")
       },
@@ -155,7 +174,7 @@ export class GenerateCmd implements CommandProvider {
         name: "templateType",
         message: (state: any) => `Which type of ${state.type || initialOptions.type}?`,
         when(state: any) {
-          return ["decorator"].includes(state.type || initialOptions.type);
+          return !!(["decorator"].includes(state.type || initialOptions.type) || initialOptions.templateType);
         },
         source: searchFactory(DECORATOR_TYPES)
       },
@@ -168,7 +187,10 @@ export class GenerateCmd implements CommandProvider {
           {name: "After the endpoint", value: "after"}
         ],
         when(state: any) {
-          return ["decorator"].includes(state.type || initialOptions.type) && ["middleware"].includes(state.templateType);
+          return !!(
+            (["decorator"].includes(state.type || initialOptions.type) && ["middleware"].includes(state.templateType)) ||
+            initialOptions.middlewarePosition
+          );
         }
       }
     ];
