@@ -322,7 +322,7 @@ export class InitCmd implements CommandProvider {
     this.packageJson.addScripts({
       build: `${runner} barrels && tsc --project tsconfig.compile.json`,
       barrels: "barrelsby --config .barrelsby.json",
-      start: `${runner} barrels && tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts`,
+      start: `${runner} barrels && tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts`,
       "start:prod": "cross-env NODE_ENV=production node dist/index.js"
     });
 
