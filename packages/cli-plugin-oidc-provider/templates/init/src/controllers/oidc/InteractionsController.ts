@@ -1,4 +1,4 @@
-import {Get} from "@tsed/common";
+import {Get, PathParams} from "@tsed/common";
 import {Interactions, OidcCtx} from "@tsed/oidc-provider";
 import {Name} from "@tsed/schema";
 import * as interactions from "../../interactions/index";
@@ -9,8 +9,8 @@ import * as interactions from "../../interactions/index";
   children: Object.values(interactions)
 })
 export class InteractionsController {
-  @Get("/")
-  async promptInteraction(@OidcCtx() oidcCtx: OidcCtx) {
+  @Get("/:name?")
+  async promptInteraction(@PathParams("name") name: string | undefined, @OidcCtx() oidcCtx: OidcCtx) {
     return oidcCtx.runInteraction();
   }
 }

@@ -6,7 +6,8 @@ import {Name} from "@tsed/schema";
 import {Accounts} from "../services/Accounts";
 
 @Interaction({
-  name: "login"
+  name: "login",
+  requestable: true
 })
 @Name("Oidc")
 export class LoginInteraction {

@@ -3,7 +3,8 @@ import {Interaction, OidcCtx, OidcProvider} from "@tsed/oidc-provider";
 import {Name} from "@tsed/schema";
 
 @Interaction({
-  name: "consent"
+  name: "consent",
+  requestable: true
 })
 @Name("Oidc")
 export class ConsentInteraction {
