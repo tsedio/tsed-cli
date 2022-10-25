@@ -126,7 +126,7 @@ describe("getFeaturesPrompt", () => {
                 "@tsed/cli-core": "{{cliVersion}}",
               },
               "devDependencies": Object {
-                "@types/inquirer": "latest",
+                "@types/inquirer": "^8.2.4",
               },
               "name": "Commands",
               "value": "commands",

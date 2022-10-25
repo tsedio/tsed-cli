@@ -1,7 +1,7 @@
-import Inquirer from "inquirer";
+import {Answers, QuestionCollection} from "inquirer";
 import {Tasks} from "./Tasks";
 
-export type QuestionOptions<T = any> = Inquirer.QuestionCollection<T>;
+export type QuestionOptions<T extends Answers = Answers> = QuestionCollection<T>;
 
 export interface CommandProvider<Ctx = any> {
   /**
@@ -15,7 +15,7 @@ export interface CommandProvider<Ctx = any> {
    * See https://github.com/enquirer/enquirer for more detail on question configuration.
    * @param initialOptions
    */
-  $prompt?<T = any>(initialOptions: Partial<Ctx>): QuestionOptions<T> | Promise<QuestionOptions<T>>;
+  $prompt?<T extends Answers = Answers>(initialOptions: Partial<Ctx>): QuestionOptions<T> | Promise<QuestionOptions<T>>;
 
   /**
    * Hook to map options
@@ -40,5 +40,6 @@ export interface CommandProvider<Ctx = any> {
    * @param ctx
    */
   $postInstall?(ctx: Ctx): Tasks | Promise<Tasks> | any | Promise<any>;
+
   $afterPostInstall?(ctx: Ctx): Tasks | Promise<Tasks> | any | Promise<any>;
 }
