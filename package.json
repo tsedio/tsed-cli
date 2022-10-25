@@ -65,7 +65,7 @@
     "lerna": "5.4.3",
     "listr2": "5.0.5",
     "module-alias": "2.2.2",
-    "read-pkg-up": "7.0.1",
+    "read-pkg-up": "9.1.0",
     "registry-url": "5.1.0",
     "rxjs": "^7.5.5",
     "semver": "7.3.5",
