@@ -12,9 +12,9 @@ describe("InteractionsController", () => {
       const oidcContext = getOidcContextFixture();
       const controller = await PlatformTest.invoke<InteractionsController>(InteractionsController);
 
-      await controller.promptInteraction(oidcContext);
+      await controller.promptInteraction("name", oidcContext);
 
-      expect(oidcContext.runInteraction).toHaveBeenCalledWith();
+      expect(oidcContext.runInteraction).toHaveBeenCalledWith("name");
     });
   });
 });
