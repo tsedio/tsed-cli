@@ -22,10 +22,17 @@ WORKDIR /opt
 COPY package.json yarn.lock tsconfig.json tsconfig.compile.json .barrelsby.json ./
 
 RUN yarn install --pure-lockfile
+{{#if yarn}}
+RUN yarn install --pure-lockfile{{/if}}{{#if npm}}
+RUN npm install{{/if}}{{#if pnpm}}
+RUN pnpm install{{/if}}
 
 COPY ./src ./src
 
-RUN yarn build
+{{#if yarn}}
+RUN yarn build{{/if}}{{#if npm}}
+RUN npm run build{{/if}}{{#if pnpm}}
+RUN pnpm run build{{/if}}
 
 FROM node:${NODE_VERSION}-alpine as runtime
 ENV WORKDIR /opt
