@@ -126,7 +126,7 @@ export const FeaturesMap: Record<string, Feature> = {
       "@tsed/cli-core": "{{cliVersion}}"
     },
     devDependencies: {
-      "@types/inquirer": "latest"
+      "@types/inquirer": "^8.2.4"
     }
   },
 
