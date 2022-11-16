@@ -50,7 +50,12 @@ export class PrismaInitHook {
   }
 
   addDevDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDevDependencies({}, ctx);
+    this.packageJson.addDevDependencies(
+      {
+        prisma: "latest"
+      },
+      ctx
+    );
   }
 
   $onFinish() {
