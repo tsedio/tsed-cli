@@ -20,16 +20,7 @@ export function fillImports(ctx: any) {
 
   ctx.imports = [
     ctx.express && {from: "@tsed/platform-express", comment: " // /!\\ keep this import"},
-    ctx.express && {symbols: "bodyParser", from: "body-parser"},
-    ctx.express && {symbols: "compress", from: "compression"},
-    ctx.express && {symbols: "cookieParser", from: "cookie-parser"},
-    ctx.express && {symbols: "methodOverride", from: "method-override"},
-    ctx.express && {symbols: "cors", from: "cors"},
     ctx.koa && {from: "@tsed/platform-koa", comment: " // /!\\ keep this import"},
-    ctx.koa && {symbols: "bodyParser", from: "koa-bodyparser"},
-    ctx.koa && {symbols: "compress", from: "koa-compress"},
-    ctx.koa && {symbols: "cors", from: "@koa/cors"},
-    ctx.koa && {symbols: "methodOverride", from: "koa-override", tsIgnore: true},
     {from: "@tsed/ajv"},
     ctx.swagger && {from: "@tsed/swagger"},
     ctx.mongoose && {from: "@tsed/mongoose"},

@@ -28,18 +28,16 @@ import {PlatformApplication} from "@tsed/common";
     }
   ],{{/if}}
   middlewares: [{{#if express}}
-    cors(),
-    cookieParser(),
-    compress({}),
-    methodOverride(),
-    bodyParser.json(),
-    bodyParser.urlencoded({
-      extended: true
-    }){{/if}}{{#if koa}}
-    cors(),
-    compress({}),
-    methodOverride(),
-    bodyParser(){{/if}}
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    { use: "urlencoded-parser", options: { extended: true }}{{/if}}{{#if koa}}
+    "@koa/cors",
+    "koa-compress",
+    "koa-override",
+    "koa-bodyparser"{{/if}}
   ],
   views: {
     root: join(process.cwd(), "../views"),

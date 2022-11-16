@@ -108,7 +108,7 @@ describe("TypeORM: Init cmd", () => {
     ]);
 
     const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-    expect(content).toEqual(readFile("data/Server.express.ts.txt", content, false));
+    expect(content).toMatchSnapshot();
 
     const datasource = FakeCliFs.entries.get("project-name/src/datasources/MysqlDatasource.ts")!;
     expect(datasource).toEqual(readFile("data/MysqlDatasource.ts.txt", datasource, false));
