@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-generate-http-client",
-  "version": "4.2.2",
+  "version": "4.2.3",
   "description": "Ts.ED CLI plugin. Export a command that generate an HTTP Client (axios or fetch) from your Ts.ED controllers and OS3 spec.",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
@@ -22,8 +22,8 @@
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/cli": "4.2.2",
-    "@tsed/cli-core": "4.2.2",
+    "@tsed/cli": "4.2.3",
+    "@tsed/cli-core": "4.2.3",
     "swagger-typescript-api": "^9.3.1"
   },
   "peerDependencies": {
