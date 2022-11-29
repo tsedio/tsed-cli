@@ -114,7 +114,7 @@ export class GenerateHttpClientCmd implements CommandProvider {
   }
 
   private async generateFromSpec(spec: any, conf: any, $ctx: GenerateHttpClientCtx) {
-    const operationIdMode = conf.operationId === "%c_%m" ? "underscore" : "default";
+    const operationIdMode = !conf.operationId || conf.operationId === "%c_%m" ? "underscore" : "default";
 
     const {files} = await generateApi({
       name: `${$ctx.name}.ts`,
