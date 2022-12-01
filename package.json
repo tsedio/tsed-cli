@@ -88,7 +88,7 @@
     "cross-env": "7.0.3",
     "eslint": "8.22.0",
     "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-jest": "26.8.5",
+    "eslint-plugin-jest": "27.1.6",
     "eslint-plugin-mocha": "10.1.0",
     "eslint-plugin-prettier": "4.2.1",
     "gflow": "^5.1.2",
