@@ -38,6 +38,7 @@ export class CliDockerComposeYaml {
           value = {
             image: "postgres:9.6.1",
             ports: ["5432:5432"],
+            volumes: ["./pgdata:/var/lib/postgresql/data"],
             environment: {
               POSTGRES_USER: "test",
               POSTGRES_PASSWORD: "test",
