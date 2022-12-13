@@ -350,6 +350,7 @@ export class InitCmd implements CommandProvider {
       "@tsed/exceptions": ctx.tsedVersion,
       "@tsed/schema": ctx.tsedVersion,
       "@tsed/json-mapper": ctx.tsedVersion,
+      "@tsed/openspec": ctx.tsedVersion,
       "@tsed/platform-cache": ctx.tsedVersion,
       "@tsed/platform-exceptions": ctx.tsedVersion,
       "@tsed/platform-log-middleware": ctx.tsedVersion,
