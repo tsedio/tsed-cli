@@ -3147,27 +3147,27 @@
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.2.tgz#423c77877d0569db20e1fc80885ac4118314010e"
   integrity sha512-eZxlbI8GZscaGS7kkc/trHTT5xgrjH3/1n2JDwusC9iahPKWMRvRjJSAN5mCXviuTGQ/lHnhvv8Q1YTpnfz9gA==
 
-"@tsed/components-scan@>=7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@tsed/components-scan/-/components-scan-7.0.0.tgz#d9dee155b3be2ef8e4c809da778b8c3e762a7115"
-  integrity sha512-/Vre/NCXePI+9c+9em7vGjjL5E4udYefU8A19FD6w4Fj4MCAvUzfua/v+s8NKoqOORJriLCfaG2mejfB5mrLNA==
+"@tsed/components-scan@>=7.10.0-rc.7":
+  version "7.10.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@tsed/components-scan/-/components-scan-7.10.0-rc.7.tgz#7e3b721ba05b1258fda295c3520b93027100ea11"
+  integrity sha512-tzEk3dvSZYgjia+hClpp0cGihrV9t3JfMhBunsYVZ8YI9pRpP3azgUTcaa1Leg8ODK2k3S15K2SWS7jk1VEtXg==
   dependencies:
+    "@tsed/normalize-path" "7.10.0-rc.7"
     globby "11.0.3"
     tslib "2.4.0"
 
-"@tsed/core@>=7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-7.0.0.tgz#678f76aa0ed39dee2ce1e859cb32bad5bad014cf"
-  integrity sha512-ANB+B5Qw9gtaeZd7H0qsEpeR2SNMIhDDmB769BtoAUMeM9/nFJCMOF8rj2lIGudxgFjh8FrUMv0jQR2ba4jUpQ==
+"@tsed/core@>=7.10.0-rc.7":
+  version "7.10.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@tsed/core/-/core-7.10.0-rc.7.tgz#e1bf8099e8a3b1b5026dd6dcbd30442ce89f4a86"
+  integrity sha512-WumC2YYY4jraP5wD9O6dpVdbFRfSSNPsJEwskCFPVeuIgcBX21zgjbiqtwNouPIUbcof1vG59eXqix5rnUtWyw==
   dependencies:
-    normalize-path "3.0.0"
     reflect-metadata "^0.1.13"
     tslib "2.4.0"
 
-"@tsed/di@>=7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@tsed/di/-/di-7.0.0.tgz#6db5fb40d3bef25d96d10f1bedc3ba2abc6ac5b4"
-  integrity sha512-LKAJwBMUJpBPoLJ8uYnsMBwEV8fq+wS1CVp4Jq48TPt1MiiBm0Iw6x4auelOJ1tJOQCU4/Qc4r9NoPO9XZZyVg==
+"@tsed/di@>=7.10.0-rc.7":
+  version "7.10.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@tsed/di/-/di-7.10.0-rc.7.tgz#6a5310e031220e1db137e4d6fd54d96b45d54333"
+  integrity sha512-CTyAX/cfgvZTH8858CXbuRx5+zsCjKjV4mRfB0QKHY1RtBGZZEDKN3/s5lYCDa8LIA+DpYFihxwkLEru4iYOdQ==
   dependencies:
     tslib "2.4.0"
 
@@ -3222,21 +3222,29 @@
     normalize-path "3.0.0"
     semver "7.3.7"
 
-"@tsed/openspec@7.0.0", "@tsed/openspec@>=7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@tsed/openspec/-/openspec-7.0.0.tgz#f7d748d28b5b07d44eb685af6e5202e6afd3ecee"
-  integrity sha512-6ZRkbMjykxu/44BvWldTzAZ6JeOBhWY0ZMY3hmTcICSpp8DLxDJg3HWk67TE8bnSv9zIz+qvtNkWRpm3XN0zRA==
-
-"@tsed/schema@>=7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@tsed/schema/-/schema-7.0.0.tgz#1596decaae7f8a82b2cd665677b6dfcc9c40d1ea"
-  integrity sha512-biPQgGDTOklhDlOkGLC3ACyN4tRLlwxlHMrX4j++79CvzLiWQkahhqHI1i/74XHmG6sq9WfQQYnq37ukgrTucA==
+"@tsed/normalize-path@7.10.0-rc.7", "@tsed/normalize-path@>=7.10.0-rc.7":
+  version "7.10.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@tsed/normalize-path/-/normalize-path-7.10.0-rc.7.tgz#708312d5cb4369d5f5b7bcc9651adf532406eebc"
+  integrity sha512-fNRycx0iXzjc4rshlEU54WmQpCVDG0VsnDiE9c39JRKGWcrcfod/1xWgHmu6Z1I2pbBaWHp6px8LYZy0xPEfSg==
   dependencies:
-    "@tsed/openspec" "7.0.0"
+    normalize-path "3.0.0"
+    tslib "2.4.0"
+
+"@tsed/openspec@7.10.0-rc.7", "@tsed/openspec@>=7.10.0-rc.7":
+  version "7.10.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@tsed/openspec/-/openspec-7.10.0-rc.7.tgz#bde9470d60e0ebc528deae48dd1f462ba5dea90a"
+  integrity sha512-cZzPqhOYleMg3vs0aWEHtwoIiHWgu+dtSA/hyLL37hiqh/WbdBhIp71Aq76uLPrR72/0NIRjRqQZxmAyuGQJWA==
+
+"@tsed/schema@>=7.10.0-rc.7":
+  version "7.10.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@tsed/schema/-/schema-7.10.0-rc.7.tgz#db5a18ce7d17bbb91c86fe6fab67c954a7dd3ffc"
+  integrity sha512-q33+GS/Zhh7myYI8XaI8EkKo0bK0Dm8bNPuJTrVvkYaJ+IVtsoYoBdfmzE2XMUzsajfLNDi0VOkMFv+KIL4gIw==
+  dependencies:
+    "@tsed/openspec" "7.10.0-rc.7"
     change-case "^4.1.2"
     fs-extra "^10.0.1"
     json-schema "0.4.0"
-    micromatch "4.0.5"
+    picomatch "2.3.1"
     statuses ">=2.0.1"
     tslib "2.4.0"
 
@@ -12354,14 +12362,6 @@ micromatch@4.0.2:
     braces "^3.0.1"
     picomatch "^2.0.5"
 
-micromatch@4.0.5, micromatch@^4.0.2, micromatch@^4.0.4, micromatch@^4.0.5:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.5.tgz#bc8999a7cbbf77cdc89f132f6e467051b49090c6"
-  integrity sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==
-  dependencies:
-    braces "^3.0.2"
-    picomatch "^2.3.1"
-
 micromatch@^3.1.10, micromatch@^3.1.4:
   version "3.1.10"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-3.1.10.tgz#70859bc95c9840952f359a068a3fc49f9ecfac23"
@@ -12380,6 +12380,14 @@ micromatch@^3.1.10, micromatch@^3.1.4:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
+
+micromatch@^4.0.2, micromatch@^4.0.4, micromatch@^4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.5.tgz#bc8999a7cbbf77cdc89f132f6e467051b49090c6"
+  integrity sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==
+  dependencies:
+    braces "^3.0.2"
+    picomatch "^2.3.1"
 
 miller-rabin@^4.0.0:
   version "4.0.1"
@@ -14030,7 +14038,7 @@ picocolors@^1.0.0:
   resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.0.tgz#cb5bdc74ff3f51892236eaf79d68bc44564ab81c"
   integrity sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==
 
-picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1, picomatch@^2.2.3, picomatch@^2.3.1:
+picomatch@2.3.1, picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1, picomatch@^2.2.3, picomatch@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.3.1.tgz#3ba3833733646d9d3e4995946c1365a67fb07a42"
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
