@@ -1,6 +1,7 @@
 import Inquirer from "inquirer";
 export * from "@tsed/core";
 export * from "@tsed/logger";
+export * from "@tsed/normalize-path";
 export {
   Inject,
   registerProvider,

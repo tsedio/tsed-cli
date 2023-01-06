@@ -1,6 +1,6 @@
 import {CliCore} from "./CliCore";
 import {CliService} from "./services";
-import {normalizePath} from "@tsed/core";
+import {normalizePath} from "@tsed/normalize-path";
 
 jest.mock("./utils/loadPlugins");
 
