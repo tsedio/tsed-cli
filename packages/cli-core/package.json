@@ -44,7 +44,7 @@
     "execa": "5.1.1",
     "figures": "4.0.1",
     "filedirname": "2.7.0",
-    "fs-extra": "10.1.0",
+    "fs-extra": "11.1.0",
     "globby": "11.1.0",
     "handlebars": "4.7.7",
     "handlebars-utils": "1.0.6",
