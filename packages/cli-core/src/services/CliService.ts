@@ -16,6 +16,7 @@ import {ProjectPackageJson} from "./ProjectPackageJson";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
+import {mapCommanderOptions} from "@tsed/cli-core";
 
 Inquirer.registerPrompt("autocomplete", inquirer_autocomplete_prompt);
 
@@ -183,11 +184,13 @@ export class CliService {
     const onAction = (...commanderArgs: any[]) => {
       const [, ...rawArgs] = cmd.args;
       const mappedArgs = mapCommanderArgs(args, commanderArgs);
+      const allOpts = mapCommanderOptions(this.program.commands);
 
       const data = {
+        ...allOpts,
         verbose: !!this.program.opts().verbose,
-        ...cmd.opts(),
         ...mappedArgs,
+        ...cmd.opts(),
         rawArgs
       };
 
@@ -262,7 +265,9 @@ export class CliService {
   private buildOption(subCommand: Command, options: {[key: string]: CommandOptions}, allowUnknownOptions: boolean) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
-      const fn = (v: any) => parseOption(v, options);
+      const fn = (v: any) => {
+        return parseOption(v, options);
+      };
 
       if (options.type === Boolean) {
         defaultValue = false;
