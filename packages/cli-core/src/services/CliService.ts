@@ -10,7 +10,6 @@ import {PROVIDER_TYPE_COMMAND} from "../registries/CommandRegistry";
 import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner";
 import {getCommandMetadata} from "../utils/getCommandMetadata";
 import {mapCommanderArgs} from "../utils/mapCommanderArgs";
-import {mapCommanderOptions} from "../utils/mapCommanderOptions";
 import {parseOption} from "../utils/parseOption";
 import {CliHooks} from "./CliHooks";
 import {ProjectPackageJson} from "./ProjectPackageJson";
@@ -183,10 +182,12 @@ export class CliService {
 
     const onAction = (...commanderArgs: any[]) => {
       const [, ...rawArgs] = cmd.args;
+      const mappedArgs = mapCommanderArgs(args, commanderArgs);
+
       const data = {
         verbose: !!this.program.opts().verbose,
-        ...mapCommanderArgs(args, commanderArgs),
-        ...mapCommanderOptions(this.program.commands),
+        ...cmd.opts(),
+        ...mappedArgs,
         rawArgs
       };
 
