@@ -14,7 +14,7 @@ import * as rest from \\"./controllers/rest/index\\";
   acceptMimes: [\\"application/json\\"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  componentsScan: false,
+  disableComponentsScan: true
   mount: {
     \\"/rest\\": [
       ...Object.values(rest)

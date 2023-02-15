@@ -11,7 +11,7 @@ import {PlatformApplication} from "@tsed/common";
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  componentsScan: false,
+  disableComponentsScan: true
   mount: {
     "{{route}}": [
       ...Object.values(rest)
