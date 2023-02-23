@@ -92,7 +92,6 @@ export class GenerateSwaggerCmd implements CommandProvider {
 
     this.fs.ensureDirSync(path.dirname(fileJson));
 
-    this.fs.writeFile(fileJson, JSON.stringify(spec, null, 2), {encoding: "utf8"});
-    await this.cliYaml.write(fileYaml, spec);
+    await Promise.all([this.fs.writeJson(fileJson, spec), this.cliYaml.write(fileYaml, spec)]);
   }
 }

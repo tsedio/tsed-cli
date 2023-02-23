@@ -21,6 +21,10 @@ export class CliFs {
     return this.raw.readFile(file, encoding) as any;
   }
 
+  async writeJson(file: string | Buffer | number, data: any, options?: WriteFileOptions | string): Promise<any> {
+    await this.raw.writeFile(file, JSON.stringify(data, null, 2), options || ({encoding: "utf8"} as any));
+  }
+
   writeFileSync(path: PathLike | number, data: any, options?: WriteFileOptions) {
     return this.raw.writeFileSync(path, data, options);
   }

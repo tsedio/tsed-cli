@@ -2,18 +2,37 @@ import {Inject, Injectable} from "@tsed/di";
 import {snakeCase} from "change-case";
 import {CliYaml} from "./CliYaml";
 import {setValue} from "@tsed/core";
+import {join} from "path";
+import {CliFs} from "./CliFs";
+import {ProjectPackageJson} from "./ProjectPackageJson";
 
 @Injectable()
 export class CliDockerComposeYaml {
   @Inject()
   protected cliYaml: CliYaml;
 
+  @Inject()
+  protected fs: CliFs;
+
+  @Inject()
+  protected projectPackageJson: ProjectPackageJson;
+
   async read() {
-    return this.cliYaml.read("docker-compose.yml");
+    const path = "docker-compose.yml";
+    const file = !this.fs.exists(path) ? this.fs.findUpFile(this.projectPackageJson.dir, path) : path;
+
+    if (file) {
+      return this.cliYaml.read("docker-compose.yml");
+    }
+
+    return {};
   }
 
   async write(obj: any) {
-    return this.cliYaml.write("docker-compose.yml", obj);
+    const path = "docker-compose.yml";
+    const file = this.fs.findUpFile(this.projectPackageJson.dir, path) || join(this.projectPackageJson.dir, path);
+
+    return this.cliYaml.write(file, obj);
   }
 
   async addDatabaseService(name: string, database: string) {
