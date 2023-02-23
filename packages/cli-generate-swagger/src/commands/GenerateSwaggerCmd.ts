@@ -1,4 +1,4 @@
-import {CliFs, Command, CommandProvider, Constant, Inject, InjectorService, Type} from "@tsed/cli-core";
+import {CliFs, CliYaml, Command, CommandProvider, Constant, Inject, InjectorService, Type} from "@tsed/cli-core";
 import {importPackage} from "@tsed/core";
 import path, {join, resolve} from "path";
 
@@ -23,6 +23,9 @@ export class GenerateSwaggerCmd implements CommandProvider {
 
   @Inject()
   protected fs: CliFs;
+
+  @Inject()
+  protected cliYaml: CliYaml;
 
   @Constant("server")
   protected serverModule: Type<any>;
@@ -84,10 +87,12 @@ export class GenerateSwaggerCmd implements CommandProvider {
   }
 
   private async generateFromSpec(spec: any, conf: any, $ctx: GenerateSwaggerCtx) {
-    const file = path.resolve(path.join($ctx.output, conf.path, "swagger.json"));
+    const fileJson = path.resolve(path.join($ctx.output, conf.path, "swagger.json"));
+    const fileYaml = path.resolve(path.join($ctx.output, conf.path, "swagger.yaml"));
 
-    this.fs.ensureDirSync(path.dirname(file));
+    this.fs.ensureDirSync(path.dirname(fileJson));
 
-    return this.fs.writeFile(file, JSON.stringify(spec, null, 2), {encoding: "utf8"});
+    this.fs.writeFile(fileJson, JSON.stringify(spec, null, 2), {encoding: "utf8"});
+    await this.cliYaml.write(fileYaml, spec);
   }
 }
