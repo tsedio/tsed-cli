@@ -23,13 +23,11 @@
   },
   "devDependencies": {
     "@tsed/cli": "4.3.0",
-    "@tsed/cli-core": "4.3.0",
-    "swagger-typescript-api": "^9.3.1"
+    "@tsed/cli-core": "4.3.0"
   },
   "peerDependencies": {
     "@tsed/common": ">=7.14.2",
-    "@tsed/swagger": ">=7.14.2",
-    "swagger-typescript-api": "^9.3.1"
+    "@tsed/swagger": ">=7.14.2"
   },
   "peerDependenciesMeta": {
     "@tsed/swagger": {
