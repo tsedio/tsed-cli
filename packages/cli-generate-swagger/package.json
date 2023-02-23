@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-generate-swagger",
-  "version": "4.2.9",
+  "version": "4.3.0",
   "description": "Ts.ED CLI plugin. Export a command that generate the swagger.json from your Ts.ED controllers and OS3 spec.",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
@@ -22,8 +22,8 @@
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/cli": "4.2.9",
-    "@tsed/cli-core": "4.2.9",
+    "@tsed/cli": "4.3.0",
+    "@tsed/cli-core": "4.3.0",
     "swagger-typescript-api": "^9.3.1"
   },
   "peerDependencies": {
