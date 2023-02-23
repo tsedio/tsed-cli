@@ -1,16 +1,9 @@
 import {CliFs, Command, CommandProvider, Constant, Inject, InjectorService, Type} from "@tsed/cli-core";
 import {importPackage} from "@tsed/core";
 import path, {join, resolve} from "path";
-import {Hooks, RawRouteInfo, RouteNameInfo} from "swagger-typescript-api";
 
 export interface GenerateSwaggerCtx {
   output: string;
-}
-
-export interface GenerateSwaggerOpts {
-  hooks?: Partial<Hooks>;
-
-  transformOperationId?(operationId: string, routeNameInfo: RouteNameInfo, raw: RawRouteInfo): string;
 }
 
 @Command({
@@ -33,9 +26,6 @@ export class GenerateSwaggerCmd implements CommandProvider {
 
   @Constant("server")
   protected serverModule: Type<any>;
-
-  @Constant("Swagger", {hooks: {}})
-  protected options: Partial<GenerateSwaggerOpts>;
 
   $mapContext($ctx: GenerateSwaggerCtx) {
     return {...$ctx, output: resolve(join(process.cwd(), $ctx.output))};
