@@ -3,7 +3,7 @@
 </p>
 
 <div align="center">
-  <h1>Ts.ED CLI - Generate Http Client</h1>
+  <h1>Ts.ED CLI - Generate Swagger</h1>
 
 [![Build & Release](https://github.com/tsedio/tsed-cli/workflows/Build%20&%20Release/badge.svg?branch=master)](https://github.com/tsedio/tsed-cli/actions?query=workflow%3A%22Build+%26+Release%22)
 [![PR Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/tsedio/tsed-cli/blob/master/CONTRIBUTING.md)
@@ -37,7 +37,7 @@ Any changes from your controllers and models are reflected in your client!
 Run:
 
 ```bash
-npm install @tsed/cli-generate-http-client @tsed/cli-core @tsed/cli @tsed/swagger swagger-typescript-api
+npm install @tsed/cli-generate-swagger @tsed/cli-core @tsed/cli @tsed/swagger swagger-typescript-api
 ```
 
 Then create or edit the `src/bin/index.ts` in your project:
@@ -45,7 +45,7 @@ Then create or edit the `src/bin/index.ts` in your project:
 ```typescript
 #!/usr/bin/env node
 import { CliCore } from "@tsed/cli-core";
-import { GenerateHttpClientCmd } from "@tsed/cli-generate-http-client";
+import { GenerateSwaggerCmd } from "@tsed/cli-generate-swagger";
 import configuration from "../config";
 import { CronCmd } from "./commands/CronCmd";
 import "./db/connections";
@@ -54,14 +54,8 @@ import { Server } from "../Server";
 CliCore.bootstrap({
   ...configuration,
   server: Server,
-  httpClient: {
-    hooks: {}, // see swagger-typescript-api hooks options
-    transformOperationId(operationId: string, routeNameInfo: any, raw: any) {
-      return raw.moduleName === "oidc" ? routeNameInfo.original.replace("oidc", "") : operationId;
-    }
-  },
   // add your custom commands here
-  commands: [GenerateHttpClientCmd, CronCmd]
+  commands: [GenerateSwaggerCmd, CronCmd]
 }).catch(console.error);
 ```
 
@@ -70,7 +64,7 @@ Add a new script your `package.json`:
 ```json
 {
   "scripts": {
-    "build:client": "yarn tsed run generate-http-client --output ../client/src/__generated__"
+    "build:specs": "yarn tsed run generate-swagger --output ../specs"
   }
 }
 ```
