@@ -25,19 +25,18 @@
 </div>
 
 
-> Ts.ED CLI plugin. Generate your HttpClient from OpenApiSpec!
+> Ts.ED CLI plugin. Generate all Swagger in `json` and `yaml` format from your Ts.ED Server.
 
 ## Features
 
-The plugin let you generate your HttpClient (axios or fetch) from the Ts.ED Controller and the OpenApiSpec.
-Any changes from your controllers and models are reflected in your client!
+The plugin let you generate all Swagger spec from the Ts.ED Server instance without running it.
 
 ## Installation
 
 Run:
 
 ```bash
-npm install @tsed/cli-generate-swagger @tsed/cli-core @tsed/cli @tsed/swagger swagger-typescript-api
+npm install @tsed/cli-generate-swagger @tsed/cli-core @tsed/cli @tsed/swagger
 ```
 
 Then create or edit the `src/bin/index.ts` in your project:
@@ -69,6 +68,8 @@ Add a new script your `package.json`:
 }
 ```
 
+This command generate all Swagger specification in `json` and `yaml` format.
+
 ## Contributors
 
 Please read [contributing guidelines here](https://tsed.io/CONTRIBUTING.html)
@@ -91,7 +92,7 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 The MIT License (MIT)
 
-Copyright (c) 2016 - 2018 Romain Lenzotti
+Copyright (c) 2016 - 2023 Romain Lenzotti
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
