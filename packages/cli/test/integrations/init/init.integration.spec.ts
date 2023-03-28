@@ -41,7 +41,8 @@ describe("Init cmd", () => {
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
-        tsedVersion: "5.58.1"
+        tsedVersion: "5.58.1",
+        packageManager: "yarn"
       });
 
       expect(FakeCliFs.getKeys()).toEqual([
@@ -110,6 +111,11 @@ describe("Init cmd", () => {
         },
         "version": "1.0.0"
       });
+
+      const dockerFile = FakeCliFs.entries.get("project-name/Dockerfile")!;
+
+      expect(dockerFile).toContain("RUN yarn build")
+      expect(dockerFile).toContain("RUN yarn install --pure-lockfile")
     });
     it("should generate a project with swagger", async () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
