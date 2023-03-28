@@ -21,7 +21,6 @@ WORKDIR /opt
 
 COPY package.json yarn.lock tsconfig.json tsconfig.compile.json .barrelsby.json ./
 
-RUN yarn install --pure-lockfile
 {{#if yarn}}
 RUN yarn install --pure-lockfile{{/if}}{{#if npm}}
 RUN npm install{{/if}}{{#if pnpm}}
