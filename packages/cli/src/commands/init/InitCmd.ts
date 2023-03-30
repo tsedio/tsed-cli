@@ -120,6 +120,40 @@ export class InitCmd implements CommandProvider {
   @Inject()
   protected fs: CliFs;
 
+  static checkPrecondition(ctx: InitCmdContext) {
+    const isValid = (types: any, value: any) => (value ? Object.values(types).includes(value) : true);
+
+    if (!isValid(PlatformType, ctx.platform)) {
+      throw new Error(`Invalid selected platform: ${ctx.platform}. Possible values: ${Object.values(PlatformType).join(", ")}.`);
+    }
+
+    if (!isValid(ArchitectureConvention, ctx.architecture)) {
+      throw new Error(
+        `Invalid selected architecture: ${ctx.architecture}. Possible values: ${Object.values(ArchitectureConvention).join(", ")}.`
+      );
+    }
+
+    if (!isValid(ProjectConvention, ctx.convention)) {
+      throw new Error(`Invalid selected convention: ${ctx.convention}. Possible values: ${Object.values(ProjectConvention).join(", ")}.`);
+    }
+
+    if (!isValid(PackageManager, ctx.packageManager)) {
+      throw new Error(
+        `Invalid selected package manager: ${ctx.packageManager}. Possible values: ${Object.values(PackageManager).join(", ")}.`
+      );
+    }
+
+    if (ctx.features) {
+      ctx.features.forEach((value) => {
+        const feature = FeaturesMap[value.toLowerCase()];
+
+        if (!feature) {
+          throw new Error(`Invalid selected feature: ${value}. Possible values: ${Object.values(FeatureType).join(", ")}.`);
+        }
+      });
+    }
+  }
+
   async $beforePrompt(initialOptions: Partial<InitOptions>) {
     if (initialOptions.file) {
       const file = join(this.packageJson.dir, initialOptions.file);
@@ -159,6 +193,9 @@ export class InitCmd implements CommandProvider {
 
     return fillImports({
       ...ctx,
+      yarn: ctx.packageManager == PackageManager.YARN || !ctx.packageManager,
+      npm: ctx.packageManager == PackageManager.NPM,
+      pnpm: ctx.packageManager == PackageManager.PNPM,
       cliVersion: ctx.cliVersion || this.cliPackageJson.version,
       srcDir: this.configuration.project?.srcDir,
       platformSymbol: ctx.platform && pascalCase(`Platform ${ctx.platform}`)
@@ -479,39 +516,5 @@ export class InitCmd implements CommandProvider {
       },
       ctx
     );
-  }
-
-  static checkPrecondition(ctx: InitCmdContext) {
-    const isValid = (types: any, value: any) => (value ? Object.values(types).includes(value) : true);
-
-    if (!isValid(PlatformType, ctx.platform)) {
-      throw new Error(`Invalid selected platform: ${ctx.platform}. Possible values: ${Object.values(PlatformType).join(", ")}.`);
-    }
-
-    if (!isValid(ArchitectureConvention, ctx.architecture)) {
-      throw new Error(
-        `Invalid selected architecture: ${ctx.architecture}. Possible values: ${Object.values(ArchitectureConvention).join(", ")}.`
-      );
-    }
-
-    if (!isValid(ProjectConvention, ctx.convention)) {
-      throw new Error(`Invalid selected convention: ${ctx.convention}. Possible values: ${Object.values(ProjectConvention).join(", ")}.`);
-    }
-
-    if (!isValid(PackageManager, ctx.packageManager)) {
-      throw new Error(
-        `Invalid selected package manager: ${ctx.packageManager}. Possible values: ${Object.values(PackageManager).join(", ")}.`
-      );
-    }
-
-    if (ctx.features) {
-      ctx.features.forEach((value) => {
-        const feature = FeaturesMap[value.toLowerCase()];
-
-        if (!feature) {
-          throw new Error(`Invalid selected feature: ${value}. Possible values: ${Object.values(FeatureType).join(", ")}.`);
-        }
-      });
-    }
   }
 }
