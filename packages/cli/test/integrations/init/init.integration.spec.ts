@@ -114,7 +114,7 @@ describe("Init cmd", () => {
 
       const dockerFile = FakeCliFs.entries.get("project-name/Dockerfile")!;
 
-      expect(dockerFile).toContain("yarn.lock");
+      expect(dockerFile).toContain("COPY package.json yarn.lock tsconfig.json tsconfig.compile.json .barrelsby.json ./");
     });
     it("should generate a project with swagger", async () => {
       const cliService = CliPlatformTest.get<CliService>(CliService);
