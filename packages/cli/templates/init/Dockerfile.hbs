@@ -19,7 +19,7 @@ ARG NODE_VERSION=16.13.1
 FROM node:${NODE_VERSION}-alpine as build
 WORKDIR /opt
 
-COPY package.json yarn.lock tsconfig.json tsconfig.compile.json .barrelsby.json ./
+COPY package.json {{#if yarn}}yarn.lock{{/if}}{{#if npm}}package-lock.json{{/if}}{{#if pnpm}}pnpm-lock.yaml{{/if}} tsconfig.json tsconfig.compile.json .barrelsby.json ./
 
 {{#if yarn}}
 RUN yarn install --pure-lockfile{{/if}}{{#if npm}}
