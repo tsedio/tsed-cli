@@ -68,17 +68,6 @@ export class Cli extends CliCore {
     return super.bootstrap(opts, Cli);
   }
 
-  //
-  // static async dispatch(cmd: "init", context: InitCmdContext): Promise<void>;
-  // static async dispatch(cmd: "generate", context: GenerateCmdContext): Promise<void>;
-  // static async dispatch(cmd: string, context: any) {
-  //   this.createAliases();
-  //
-  //   const cli = await this.create<Cli>({...Cli.defaults} as any, Cli);
-  //
-  //   await cli.cliService.dispatch(cmd, context);
-  // }
-
   static createAliases() {
     alias.addAliases({
       "@tsed/core": require.resolve("@tsed/core"),

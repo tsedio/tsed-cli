@@ -17,7 +17,7 @@ import {ProjectPackageJson} from "./ProjectPackageJson";
 // @ts-ignore
 import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
 import {mapCommanderOptions} from "../utils/mapCommanderOptions";
-import {CommandMetadata} from "@tsed/cli-core";
+import {CommandMetadata} from "../interfaces/CommandMetadata";
 
 Inquirer.registerPrompt("autocomplete", inquirer_autocomplete_prompt);
 

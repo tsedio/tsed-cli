@@ -1,6 +1,6 @@
 import {TokenProvider} from "@tsed/di";
-import {getCommandMetadata} from "@tsed/cli-core";
 import {getValue} from "@tsed/core";
+import {getCommandMetadata} from "./getCommandMetadata";
 
 export function resolveConfiguration(settings: any) {
   const argv = getValue(settings, "argv", process.argv);
