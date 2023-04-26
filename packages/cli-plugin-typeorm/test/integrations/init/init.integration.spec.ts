@@ -24,23 +24,15 @@ describe("TypeORM: Init cmd", () => {
   beforeEach(() => {
       return CliPlatformTest.bootstrap({
         templateDir: TEMPLATE_DIR,
-        commands: [InitCmd]
+        commands: [InitCmd],
+        argv: ["init"]
       });
     }
   );
   afterEach(() => CliPlatformTest.reset());
 
   it("should generate a project with the right options", async () => {
-    const cliService = CliPlatformTest.get<CliService>(CliService);
-    const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-
-    jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
-      dependencies: {},
-      devDependencies: {},
-      scripts: {}
-    });
-
-    projectPackageJson.setRaw({
+    CliPlatformTest.setPackageJson({
       name: "",
       version: "1.0.0",
       description: "",
@@ -49,7 +41,7 @@ describe("TypeORM: Init cmd", () => {
       devDependencies: {}
     });
 
-    await cliService.exec("init", {
+    await CliPlatformTest.exec("init", {
         verbose: false,
         root: ".",
         tsedVersion: "5.58.1",
@@ -67,7 +59,7 @@ describe("TypeORM: Init cmd", () => {
         features: [
           FeatureType.DB,
           FeatureType.TYPEORM,
-          FeatureType.TYPEORM_MYSQL,
+          FeatureType.TYPEORM_MYSQL
         ],
         srcDir: "src",
         pnpm: false,
@@ -114,16 +106,7 @@ describe("TypeORM: Init cmd", () => {
     expect(datasource).toEqual(readFile("data/MysqlDatasource.ts.txt", datasource, false));
   });
   it("should not generate database if any option is selected", async () => {
-    const cliService = CliPlatformTest.get<CliService>(CliService);
-    const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-
-    jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
-      dependencies: {},
-      devDependencies: {},
-      scripts: {}
-    });
-
-    projectPackageJson.setRaw({
+    CliPlatformTest.setPackageJson({
       name: "",
       version: "1.0.0",
       description: "",
@@ -132,7 +115,7 @@ describe("TypeORM: Init cmd", () => {
       devDependencies: {}
     });
 
-    await cliService.exec("init", {
+    await CliPlatformTest.exec("init", {
         verbose: false,
         root: ".",
         tsedVersion: "5.58.1",
@@ -147,8 +130,7 @@ describe("TypeORM: Init cmd", () => {
         db: true,
         typeorm: true,
         mysql: true,
-        features: [
-        ],
+        features: [],
         srcDir: "src",
         pnpm: false,
         npm: false,

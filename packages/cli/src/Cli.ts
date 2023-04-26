@@ -6,8 +6,6 @@ import alias from "module-alias";
 import {PKG, TEMPLATE_DIR} from "./constants";
 import commands from "./commands";
 import {ArchitectureConvention, ProjectConvention} from "./interfaces";
-import {InitCmdContext} from "./commands/init/interfaces/InitCmdContext";
-import {GenerateCmdContext} from "./commands/generate/GenerateCmd";
 
 export class Cli extends CliCore {
   static defaults = {
@@ -70,15 +68,16 @@ export class Cli extends CliCore {
     return super.bootstrap(opts, Cli);
   }
 
-  static async dispatch(cmd: "init", context: InitCmdContext): Promise<void>;
-  static async dispatch(cmd: "generate", context: GenerateCmdContext): Promise<void>;
-  static async dispatch(cmd: string, context: any) {
-    this.createAliases();
-
-    const cli = await this.create<Cli>({...Cli.defaults} as any, Cli);
-
-    await cli.cliService.dispatch(cmd, context);
-  }
+  //
+  // static async dispatch(cmd: "init", context: InitCmdContext): Promise<void>;
+  // static async dispatch(cmd: "generate", context: GenerateCmdContext): Promise<void>;
+  // static async dispatch(cmd: string, context: any) {
+  //   this.createAliases();
+  //
+  //   const cli = await this.create<Cli>({...Cli.defaults} as any, Cli);
+  //
+  //   await cli.cliService.dispatch(cmd, context);
+  // }
 
   static createAliases() {
     alias.addAliases({

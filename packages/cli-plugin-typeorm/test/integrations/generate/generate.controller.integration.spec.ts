@@ -29,9 +29,7 @@ describe("Generate DataSource", () => {
   afterEach(() => CliPlatformTest.reset());
 
   it("should generate the template with the right options (simple path)", async () => {
-    const cliService = CliPlatformTest.get<CliService>(CliService);
-    const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-    projectPackageJson.setRaw({
+    CliPlatformTest.setPackageJson({
       name: "",
       version: "1.0.0",
       description: "",
@@ -40,7 +38,7 @@ describe("Generate DataSource", () => {
       devDependencies: {}
     });
 
-    await cliService.exec("generate", {
+    await CliPlatformTest.exec("generate", {
       rootDir: "./project-data",
       type: "typeorm:datasource",
       name: "Test",

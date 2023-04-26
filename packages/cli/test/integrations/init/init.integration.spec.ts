@@ -1,7 +1,7 @@
-import {CliService, PackageManager, ProjectPackageJson} from "@tsed/cli-core";
+import {PackageManager} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
-import {dirname, join} from "path";
+import {ensureDirSync, writeFileSync} from "fs-extra";
+import {join} from "path";
 import {InitCmd, ProjectConvention, TEMPLATE_DIR} from "../../../src";
 import filedirname from "filedirname";
 
@@ -11,7 +11,8 @@ describe("Init cmd", () => {
   beforeEach(() => {
       return CliPlatformTest.bootstrap({
         templateDir: TEMPLATE_DIR,
-        commands: [InitCmd]
+        commands: [InitCmd],
+        argv: ["init"]
       });
     }
   );
@@ -19,29 +20,20 @@ describe("Init cmd", () => {
 
   describe("Express.js", () => {
     it("should generate a project with the right options", async () => {
-      const cliService = CliPlatformTest.get<CliService>(CliService);
-      const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-
-      jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
-        dependencies: {},
-        devDependencies: {},
-        scripts: {}
-      });
-
-      projectPackageJson.setRaw({
+      CliPlatformTest.setPackageJson({
         name: "",
         version: "1.0.0",
         description: "",
         scripts: {},
         dependencies: {},
         devDependencies: {}
-      });
+      })
 
-      await cliService.exec("init", {
+      await CliPlatformTest.exec("init", {
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
-        tsedVersion: "5.58.1", 
+        tsedVersion: "5.58.1",
         packageManager: "yarn"
       });
 
@@ -76,6 +68,7 @@ describe("Init cmd", () => {
       expect(content).toContain("import \"@tsed/platform-express\"");
       expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toMatchSnapshot();
+
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toEqual({
@@ -119,16 +112,7 @@ describe("Init cmd", () => {
       expect(dockerFile).toContain("RUN yarn install --pure-lockfile");
     });
     it("should generate a project with swagger", async () => {
-      const cliService = CliPlatformTest.get<CliService>(CliService);
-      const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-
-      jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
-        dependencies: {},
-        devDependencies: {},
-        scripts: {}
-      });
-
-      projectPackageJson.setRaw({
+      CliPlatformTest.setPackageJson({
         name: "",
         version: "1.0.0",
         description: "",
@@ -137,7 +121,7 @@ describe("Init cmd", () => {
         devDependencies: {}
       });
 
-      await cliService.exec("init", {
+      await CliPlatformTest.exec("init", {
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -219,16 +203,7 @@ describe("Init cmd", () => {
       });
     });
     it("should generate a project with NPM", async () => {
-      const cliService = CliPlatformTest.get<CliService>(CliService);
-      const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-
-      jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
-        dependencies: {},
-        devDependencies: {},
-        scripts: {}
-      });
-
-      projectPackageJson.setRaw({
+      CliPlatformTest.setPackageJson({
         name: "",
         version: "1.0.0",
         description: "",
@@ -237,7 +212,7 @@ describe("Init cmd", () => {
         devDependencies: {}
       });
 
-      await cliService.exec("init", {
+      await CliPlatformTest.exec("init", {
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -313,38 +288,41 @@ describe("Init cmd", () => {
       });
     });
     it("should generate a project with Convention ANGULAR", async () => {
-      const cliService = CliPlatformTest.get<CliService>(CliService);
-      const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-
-      jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
+      CliPlatformTest.setPackageJson({
+        name: "",
+        version: "1.0.0",
+        description: "",
+        scripts: {},
         dependencies: {},
         devDependencies: {},
-        scripts: {}
-      });
-
-      projectPackageJson.setRaw = (pkg) => {
-        // @ts-ignore
-        projectPackageJson.raw = {
-          name: "",
-          version: "1.0.0",
-          description: "",
-          scripts: {},
-          dependencies: {},
-          devDependencies: {},
-          tsed: {
-            convention: "angular"
-          }
+        tsed: {
+          convention: "angular"
         }
-      };
+      })
 
-      await cliService.exec("init", {
+      // projectPackageJson.setRaw = (pkg) => {
+      //   // @ts-ignore
+      //   projectPackageJson.raw = {
+      //     name: "",
+      //     version: "1.0.0",
+      //     description: "",
+      //     scripts: {},
+      //     dependencies: {},
+      //     devDependencies: {},
+      //     tsed: {
+      //       convention: "angular"
+      //     }
+      //   }
+      // };
+
+      await CliPlatformTest.exec("init", {
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
         tsedVersion: "5.58.1",
         convention: ProjectConvention.ANGULAR,
         swagger: true
-      });
+      })
 
       expect(FakeCliFs.getKeys()).toEqual([
         "./project-name",
@@ -388,16 +366,7 @@ describe("Init cmd", () => {
 
   describe("Koa.js", () => {
     it("should generate a project with the right options", async () => {
-      const cliService = CliPlatformTest.get<CliService>(CliService);
-      const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-
-      jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
-        dependencies: {},
-        devDependencies: {},
-        scripts: {}
-      });
-
-      projectPackageJson.setRaw({
+      CliPlatformTest.setPackageJson({
         name: "",
         version: "1.0.0",
         description: "",
@@ -406,7 +375,7 @@ describe("Init cmd", () => {
         devDependencies: {}
       });
 
-      await cliService.exec("init", {
+      await CliPlatformTest.exec("init", {
         platform: "koa",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -485,16 +454,8 @@ describe("Init cmd", () => {
 
   describe("shared configuration", () => {
     it("should configuration directory", async () => {
-      const cliService = CliPlatformTest.get<CliService>(CliService);
-      const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
 
-      jest.spyOn(projectPackageJson as any, "getPackageJson").mockReturnValue({
-        dependencies: {},
-        devDependencies: {},
-        scripts: {}
-      });
-
-      projectPackageJson.setRaw({
+      CliPlatformTest.setPackageJson({
         name: "",
         version: "1.0.0",
         description: "",
@@ -503,7 +464,7 @@ describe("Init cmd", () => {
         devDependencies: {}
       });
 
-      await cliService.exec("init", {
+      await CliPlatformTest.exec("init", {
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",

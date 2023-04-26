@@ -1,15 +1,19 @@
 import {Store, Type} from "@tsed/core";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
 import {CommandParameters} from "../interfaces/CommandParameters";
+import {CommandMetadata} from "../interfaces/CommandMetadata";
 
-export function getCommandMetadata(token: Type<any>) {
+export function getCommandMetadata(token: Type<any>): CommandMetadata {
   const {
     name,
     alias,
     args = {},
     allowUnknownOption,
     description,
-    options = {}
+    options = {},
+    enableFeatures,
+    disableReadUpPkg,
+    ...opts
   } = Store.from(token)?.get(CommandStoreKeys.COMMAND) as CommandParameters;
 
   return {
@@ -18,6 +22,9 @@ export function getCommandMetadata(token: Type<any>) {
     args,
     description,
     options,
-    allowUnknownOption: !!allowUnknownOption
+    allowUnknownOption: !!allowUnknownOption,
+    enableFeatures: enableFeatures || [],
+    disableReadUpPkg: !!disableReadUpPkg,
+    ...opts
   };
 }

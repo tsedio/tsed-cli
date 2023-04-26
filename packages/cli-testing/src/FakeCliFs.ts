@@ -9,6 +9,8 @@ export class FakeCliFs {
     return normalizePath(Array.from(FakeCliFs.entries.keys()).sort((a, b) => (a < b ? -1 : 1)));
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   findUpFile() {
     return null;
   }
@@ -20,6 +22,23 @@ export class FakeCliFs {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async readFile(file: string | Buffer | number, encoding?: any): Promise<string> {
     return FakeCliFs.entries.get(normalizePath(file))!;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  readFileSync(file: string | Buffer | number, encoding?: any): string {
+    return FakeCliFs.entries.get(normalizePath(file))!;
+  }
+
+  async readJson(file: string | Buffer | number, encoding?: any): Promise<string> {
+    const content = await this.readFile(file, encoding);
+
+    return JSON.parse(content);
+  }
+
+  readJsonSync(file: string | Buffer | number, encoding?: any): Promise<string> {
+    const content = this.readFileSync(file, encoding);
+
+    return JSON.parse(content);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

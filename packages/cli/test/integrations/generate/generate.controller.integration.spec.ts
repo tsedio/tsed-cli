@@ -12,9 +12,7 @@ describe("Generate Controller", () => {
   afterEach(() => CliPlatformTest.reset());
 
   it("should generate the template with the right options (simple path)", async () => {
-    const cliService = CliPlatformTest.get<CliService>(CliService);
-    const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-    projectPackageJson.setRaw({
+    CliPlatformTest.setPackageJson({
       name: "",
       version: "1.0.0",
       description: "",
@@ -23,7 +21,7 @@ describe("Generate Controller", () => {
       devDependencies: {}
     });
 
-    await cliService.exec("generate", {
+    await CliPlatformTest.exec("generate", {
       rootDir: "./project-data",
       type: "controller",
       name: "Test",
@@ -39,9 +37,7 @@ describe("Generate Controller", () => {
     expect(result).toContain("TestController");
   });
   it("should generate the template with the right options (complex path)", async () => {
-    const cliService = CliPlatformTest.get<CliService>(CliService);
-    const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-    projectPackageJson.setRaw({
+    CliPlatformTest.setPackageJson({
       name: "",
       version: "1.0.0",
       description: "",
@@ -50,7 +46,7 @@ describe("Generate Controller", () => {
       devDependencies: {}
     });
 
-    await cliService.exec("generate", {
+    await CliPlatformTest.exec("generate", {
       rootDir: "./project-data",
       type: "controller",
       name: "users/User",

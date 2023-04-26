@@ -2,7 +2,7 @@ import {getFeaturesPrompt} from "./getFeaturesPrompt";
 
 describe("getFeaturesPrompt", () => {
   it("should add a provider info", async () => {
-    const prompt = getFeaturesPrompt({});
+    const prompt = getFeaturesPrompt(["yarn", "npm", "pnpm"], {});
 
     expect(prompt).toBeInstanceOf(Array);
     expect(prompt).toMatchInlineSnapshot(`

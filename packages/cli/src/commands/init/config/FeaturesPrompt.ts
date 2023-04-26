@@ -1,4 +1,3 @@
-import {PackageManager} from "@tsed/cli-core";
 import {isPlatform} from "../utils/isPlatform";
 import {hasFeature, hasValue} from "../utils/hasFeature";
 import {InitOptions} from "../interfaces/InitOptions";
@@ -291,21 +290,25 @@ export const FeaturesMap: Record<string, Feature> = {
       "webpack-cli": "latest"
     }
   },
-  [PackageManager.YARN]: {
+  yarn: {
     name: "Yarn",
     checked: true
   },
-  [PackageManager.NPM]: {
+  yarn_berry: {
+    name: "Yarn Berry",
+    checked: false
+  },
+  npm: {
     name: "NPM",
     checked: false
   },
-  [PackageManager.PNPM]: {
+  pnpm: {
     name: "PNPM - experimental",
     checked: false
   }
 };
 
-export const FeaturesPrompt = () => [
+export const FeaturesPrompt = (availablePackageManagers: string[]) => [
   {
     message: "Choose the target platform:",
     type: "list",
@@ -416,6 +419,6 @@ export const FeaturesPrompt = () => [
     message: "Choose the package manager:",
     type: "list",
     name: "packageManager",
-    choices: [PackageManager.YARN, PackageManager.NPM, PackageManager.PNPM]
+    choices: availablePackageManagers
   }
 ];

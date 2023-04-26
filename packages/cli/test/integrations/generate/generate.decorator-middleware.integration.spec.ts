@@ -15,7 +15,7 @@ describe("Generate middleware decorator", () => {
     const cliService = CliPlatformTest.get<CliService>(CliService);
     const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
 
-    projectPackageJson.setRaw({
+    CliPlatformTest.setPackageJson({
       name: "",
       version: "1.0.0",
       description: "",
@@ -24,7 +24,7 @@ describe("Generate middleware decorator", () => {
       devDependencies: {}
     });
 
-    await cliService.exec("generate", {
+    await CliPlatformTest.exec("generate", {
       rootDir: "./project-data",
       type: "decorator",
       templateType: "middleware",
@@ -47,7 +47,7 @@ describe("Generate middleware decorator", () => {
   it("should generate a template with the right options (after)", async () => {
     const cliService = CliPlatformTest.get<CliService>(CliService);
     const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-    projectPackageJson.setRaw({
+    CliPlatformTest.setPackageJson({
       name: "",
       version: "1.0.0",
       description: "",
@@ -56,7 +56,7 @@ describe("Generate middleware decorator", () => {
       devDependencies: {}
     });
 
-    await cliService.exec("generate", {
+    await CliPlatformTest.exec("generate", {
       rootDir: "./project-data",
       type: "decorator",
       templateType: "middleware",

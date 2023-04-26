@@ -16,9 +16,7 @@ describe("Init TypeGraphQL project", () => {
   afterEach(() => CliPlatformTest.reset());
 
   it("should generate a project with typegraphql", async () => {
-    const cliService = CliPlatformTest.get<CliService>(CliService);
-    const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-    projectPackageJson.setRaw({
+    CliPlatformTest.setPackageJson({
       name: "",
       version: "1.0.0",
       description: "",
@@ -27,7 +25,7 @@ describe("Init TypeGraphQL project", () => {
       devDependencies: {}
     });
 
-    await cliService.exec("init", {
+    await CliPlatformTest.exec("init", {
       platform: "express",
       convention: "default",
       rootDir: "./project-data",

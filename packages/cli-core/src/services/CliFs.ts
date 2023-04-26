@@ -21,6 +21,22 @@ export class CliFs {
     return this.raw.readFile(file, encoding) as any;
   }
 
+  readFileSync(file: string | Buffer | number, encoding?: any) {
+    return this.raw.readFileSync(file, encoding) as any;
+  }
+
+  async readJson(file: string, encoding?: any) {
+    const content = await this.readFile(file, encoding);
+
+    return JSON.parse(content);
+  }
+
+  async readJsonSync(file: string, encoding?: any) {
+    const content = this.readFileSync(file, encoding) as any;
+
+    return JSON.parse(content);
+  }
+
   async writeJson(file: string | Buffer | number, data: any, options?: WriteFileOptions | string): Promise<any> {
     await this.raw.writeFile(file, JSON.stringify(data, null, 2), options || ({encoding: "utf8"} as any));
   }

@@ -87,7 +87,8 @@ import {fillImports} from "../../utils/fillImports";
       defaultValue: false,
       description: "Skip the prompt."
     }
-  }
+  },
+  disableReadUpPkg: true
 })
 export class InitCmd implements CommandProvider {
   @Configuration()
@@ -120,7 +121,7 @@ export class InitCmd implements CommandProvider {
   @Inject()
   protected fs: CliFs;
 
-  static checkPrecondition(ctx: InitCmdContext) {
+  static checkPrecondition(availablePackageManagers: string[], ctx: InitCmdContext) {
     const isValid = (types: any, value: any) => (value ? Object.values(types).includes(value) : true);
 
     if (!isValid(PlatformType, ctx.platform)) {
@@ -137,10 +138,8 @@ export class InitCmd implements CommandProvider {
       throw new Error(`Invalid selected convention: ${ctx.convention}. Possible values: ${Object.values(ProjectConvention).join(", ")}.`);
     }
 
-    if (!isValid(PackageManager, ctx.packageManager)) {
-      throw new Error(
-        `Invalid selected package manager: ${ctx.packageManager}. Possible values: ${Object.values(PackageManager).join(", ")}.`
-      );
+    if (!availablePackageManagers.includes(ctx.packageManager)) {
+      throw new Error(`Invalid selected package manager: ${ctx.packageManager}. Possible values: ${availablePackageManagers.join(", ")}.`);
     }
 
     if (ctx.features) {
@@ -172,6 +171,8 @@ export class InitCmd implements CommandProvider {
       return [];
     }
 
+    const packageManagers = this.packageJson.availablePackageManagers;
+
     return [
       {
         type: "input",
@@ -183,7 +184,7 @@ export class InitCmd implements CommandProvider {
           return paramCase(input);
         }
       },
-      ...getFeaturesPrompt(initialOptions)
+      ...getFeaturesPrompt(packageManagers, initialOptions)
     ];
   }
 
@@ -211,11 +212,6 @@ export class InitCmd implements CommandProvider {
     ctx.convention && this.packageJson.setPreference("convention", ctx.convention);
     ctx.GH_TOKEN && this.packageJson.setGhToken(ctx.GH_TOKEN);
 
-    this.addDependencies(ctx);
-    this.addDevDependencies(ctx);
-    this.addScripts(ctx);
-    this.addFeatures(ctx);
-
     await createTasksRunner(
       [
         {
@@ -225,6 +221,17 @@ export class InitCmd implements CommandProvider {
             this.rootRenderer.renderAll(["/init/.npmrc.hbs", "/init/.yarnrc.hbs"], ctx, {
               baseDir: "/init"
             })
+        },
+        {
+          title: "Initialize package.json",
+          task: async () => {
+            await this.packageJson.init(ctx);
+
+            this.addDependencies(ctx);
+            this.addDevDependencies(ctx);
+            this.addScripts(ctx);
+            this.addFeatures(ctx);
+          }
         },
         {
           title: "Install plugins",
@@ -244,7 +251,7 @@ export class InitCmd implements CommandProvider {
   }
 
   async $exec(ctx: InitCmdContext) {
-    InitCmd.checkPrecondition(ctx);
+    InitCmd.checkPrecondition(this.packageJson.availablePackageManagers, ctx);
 
     const subTasks = [
       ...(await this.cliService.getTasks("generate", {
