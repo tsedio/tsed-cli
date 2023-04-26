@@ -94,7 +94,10 @@ export class GenerateHttpClientCmd implements CommandProvider {
     const {SwaggerService} = await importPackage("@tsed/swagger");
 
     const platform: {injector: InjectorService; stop: () => Promise<any>} = await Platform.bootstrap(this.serverModule, {
-      logger: {level: "off"}
+      logger: {level: "off"},
+      mongoose: [],
+      redis: [],
+      ioredis: []
     });
     const swaggerService = platform.injector.get<any>(SwaggerService)!;
     const confs = platform.injector.settings.get("swagger", []);

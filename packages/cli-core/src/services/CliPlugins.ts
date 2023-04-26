@@ -56,7 +56,12 @@ export class CliPlugins {
       ...tasks,
       {
         title: "Install",
-        task: createSubTasks(() => this.packageJson.install(ctx), {...ctx, concurrent: false})
+        task: createSubTasks(
+          () => {
+            return this.packageJson.install(ctx);
+          },
+          {...ctx, concurrent: false}
+        )
       }
     ];
   }

@@ -13,9 +13,7 @@ describe("Generate Model", () => {
   afterEach(() => CliPlatformTest.reset());
 
   it("should generate the template", async () => {
-    const cliService = CliPlatformTest.get<CliService>(CliService);
-    const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-    projectPackageJson.setRaw({
+    CliPlatformTest.setPackageJson({
       name: "",
       version: "1.0.0",
       description: "",
@@ -24,7 +22,7 @@ describe("Generate Model", () => {
       devDependencies: {}
     });
 
-    await cliService.exec("generate", {
+    await CliPlatformTest.exec("generate", {
       rootDir: "./project-data",
       type: "mongoose:model",
       name: "Product"

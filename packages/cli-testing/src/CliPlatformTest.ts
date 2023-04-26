@@ -7,13 +7,18 @@ import {
   createInjector,
   DITest,
   Env,
+  getCommandMetadata,
   InjectorService,
+  ProjectPackageJson,
+  resolveConfiguration,
   TokenProvider
 } from "@tsed/cli-core";
 import {Type} from "@tsed/core";
 import {FakeCliExeca} from "./FakeCliExeca";
 import {FakeCliFs} from "./FakeCliFs";
 import {FakeCliHttpClient} from "./FakeCliHttpClient";
+import {DIContext, runInContext} from "@tsed/di";
+import {v4} from "uuid";
 
 export interface InvokeOptions {
   token: TokenProvider;
@@ -22,7 +27,7 @@ export interface InvokeOptions {
 
 export class CliPlatformTest extends DITest {
   static async bootstrap(options: Partial<TsED.Configuration> = {}) {
-    DITest.injector = CliPlatformTest.createInjector({
+    options = resolveConfiguration({
       name: "tsed",
       project: {
         rootDir: options.rootDir || "./project-name",
@@ -32,6 +37,8 @@ export class CliPlatformTest extends DITest {
       },
       ...options
     });
+
+    DITest.injector = CliPlatformTest.createInjector(options);
 
     DITest.injector
       .addProvider(CliHttpClient, {
@@ -52,10 +59,12 @@ export class CliPlatformTest extends DITest {
   }
 
   static async create(options: Partial<TsED.Configuration> = {}, rootModule: Type = CliCore) {
-    DITest.injector = CliPlatformTest.createInjector({
+    options = resolveConfiguration({
       name: "tsed",
       ...options
     });
+
+    DITest.injector = CliPlatformTest.createInjector(options);
 
     DITest.injector.addProvider(CliCore, {
       useClass: rootModule
@@ -78,7 +87,8 @@ export class CliPlatformTest extends DITest {
         rootDir: "./tmp",
         srcDir: "src",
         ...(options.project || {})
-      }
+      },
+      disableReadUpPkg: true
     });
 
     injector.settings.env = Env.TEST;
@@ -112,5 +122,34 @@ export class CliPlatformTest extends DITest {
 
       return await func(...deps);
     };
+  }
+
+  static setPackageJson(pkg: any) {
+    const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
+
+    (projectPackageJson as any).setRaw(pkg);
+  }
+
+  /**
+   * Invoke command with a new context without running prompts
+   * @param cmdName
+   * @param initialData
+   */
+  static async exec(cmdName: string, initialData: any) {
+    const $ctx = new DIContext({
+      id: v4(),
+      injector: this.injector,
+      logger: this.injector.logger
+    });
+
+    const metadata = this.injector.settings
+      .get("commands")
+      .map((token: TokenProvider) => getCommandMetadata(token))
+      .find((commandOpts: any) => cmdName === commandOpts.name);
+
+    $ctx.set("data", initialData);
+    $ctx.set("command", metadata);
+
+    return runInContext($ctx, () => this.injector.get<CliService>(CliService)!.exec(cmdName, initialData, $ctx));
   }
 }

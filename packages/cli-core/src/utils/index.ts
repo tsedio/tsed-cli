@@ -6,6 +6,6 @@ export * from "./mapCommanderArgs";
 export * from "./mapCommanderOptions";
 export * from "./parseOption";
 export * from "./createTasksRunner";
-export * from "./getPackageJson";
+export * from "./resolveConfiguration";
 export * from "./getTemplateDirectory";
 export {default as filedirname} from "filedirname";

@@ -33,6 +33,7 @@
     "@tsed/normalize-path": ">=7.14.2",
     "@types/fs-extra": "^9.0.13",
     "@types/inquirer": "^8.2.4",
+    "uuid": "^8.3.2",
     "ajv": "8.11.0",
     "axios": "0.26.1",
     "chalk": "4.1.2",
@@ -66,6 +67,7 @@
   },
   "devDependencies": {
     "@types/axios": "0.14.0",
+    "@types/uuid": "8.3.4",
     "@types/commander": "2.12.2",
     "@types/consolidate": "0.14.1",
     "@types/figures": "3.0.1",

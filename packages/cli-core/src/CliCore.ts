@@ -12,6 +12,7 @@ import {createInjector} from "./utils/createInjector";
 import {loadPlugins} from "./utils/loadPlugins";
 import {CliError} from "./domains/CliError";
 import semver from "semver";
+import {resolveConfiguration} from "./utils/resolveConfiguration";
 
 function isHelpManual(argv: string[]) {
   return argv.includes("-h") || argv.includes("--help");
@@ -47,6 +48,8 @@ export class CliCore {
   }
 
   static async create<Cli extends CliCore = CliCore>(settings: Partial<TsED.Configuration>, module: Type = CliCore): Promise<Cli> {
+    settings = resolveConfiguration(settings);
+
     const injector = this.createInjector(settings);
 
     settings.plugins && (await loadPlugins(injector));

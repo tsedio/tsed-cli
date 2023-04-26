@@ -1,16 +1,6 @@
-import {CommandArg, CommandOptions} from "./CommandParameters";
+import {CommandArg, CommandOptions, CommandParameters} from "./CommandParameters";
 
-export interface CommandMetadata {
-  /**
-   * name commands
-   */
-  name: string;
-
-  alias?: string;
-  /**
-   * CommandProvider description
-   */
-  description: string;
+export interface CommandMetadata extends CommandParameters {
   /**
    * CommandProvider arguments
    */
@@ -24,5 +14,9 @@ export interface CommandMetadata {
     [key: string]: CommandOptions;
   };
 
-  allowUnknownOption?: boolean;
+  allowUnknownOption: boolean;
+
+  enableFeatures: string[];
+
+  disableReadUpPkg: boolean;
 }

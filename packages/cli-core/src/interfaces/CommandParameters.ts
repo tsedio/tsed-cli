@@ -56,6 +56,8 @@ export interface CommandParameters {
    * name commands
    */
   name: string;
+
+  alias?: string;
   /**
    * CommandProvider description
    */
@@ -74,6 +76,10 @@ export interface CommandParameters {
   };
 
   allowUnknownOption?: boolean;
+
+  enableFeatures?: string[];
+
+  disableReadUpPkg?: boolean;
 
   [key: string]: any;
 }

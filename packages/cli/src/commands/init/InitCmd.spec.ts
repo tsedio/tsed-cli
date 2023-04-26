@@ -5,7 +5,7 @@ describe("InitCmd", () => {
   describe("checkPrecondition()", () => {
     it("should throw error (platform)", () => {
       const result = catchError(() => {
-        InitCmd.checkPrecondition({
+        InitCmd.checkPrecondition([], {
           platform: "wrong"
         } as any);
       });
@@ -14,7 +14,7 @@ describe("InitCmd", () => {
 
     it("should throw error (architecture)", () => {
       const result = catchError(() => {
-        InitCmd.checkPrecondition({
+        InitCmd.checkPrecondition([], {
           architecture: "wrong"
         } as any);
       });
@@ -23,7 +23,7 @@ describe("InitCmd", () => {
 
     it("should throw error (convention)", () => {
       const result = catchError(() => {
-        InitCmd.checkPrecondition({
+        InitCmd.checkPrecondition([], {
           convention: "wrong"
         } as any);
       });
@@ -32,7 +32,7 @@ describe("InitCmd", () => {
 
     it("should not throw error (package manager)", () => {
       const result = catchError(() => {
-        InitCmd.checkPrecondition({
+        InitCmd.checkPrecondition(["npm"], {
           packageManager: "npm"
         } as any);
       });
@@ -41,7 +41,7 @@ describe("InitCmd", () => {
 
     it("should throw error (package manager)", () => {
       const result = catchError(() => {
-        InitCmd.checkPrecondition({
+        InitCmd.checkPrecondition(["yarn", "npm", "pnpm"], {
           packageManager: "unknown"
         } as any);
       });
@@ -50,7 +50,8 @@ describe("InitCmd", () => {
 
     it("should throw error (features)", () => {
       const result = catchError(() => {
-        InitCmd.checkPrecondition({
+        InitCmd.checkPrecondition(["yarn", "npm", "pnpm"], {
+          packageManager: "yarn",
           features: ["wrong"]
         } as any);
       });

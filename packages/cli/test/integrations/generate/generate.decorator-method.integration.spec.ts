@@ -14,7 +14,7 @@ describe("Generate method decorator", () => {
   it("should generate a template with the right options", async () => {
     const cliService = CliPlatformTest.get<CliService>(CliService);
     const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-    projectPackageJson.setRaw({
+    CliPlatformTest.setPackageJson({
       name: "",
       version: "1.0.0",
       description: "",
@@ -23,7 +23,7 @@ describe("Generate method decorator", () => {
       devDependencies: {}
     });
 
-    await cliService.exec("generate", {
+    await CliPlatformTest.exec("generate", {
       rootDir: "./project-data",
       type: "decorator",
       templateType: "method",

@@ -76,7 +76,8 @@ describe("RunCmd", () => {
       };
       const cliFs = {
         exists: jest.fn().mockReturnValue(true),
-        readFile: jest.fn().mockResolvedValue(JSON.stringify({compilerOptions: {outDir: "./lib"}}))
+        readFile: jest.fn().mockResolvedValue(JSON.stringify({compilerOptions: {outDir: "./lib"}})),
+        readJsonSync: jest.fn().mockResolvedValue({})
       };
       const command = await CliPlatformTest.invoke<RunCmd>(RunCmd, [
         {

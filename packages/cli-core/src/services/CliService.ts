@@ -1,10 +1,10 @@
 import {classOf} from "@tsed/core";
-import {Constant, Inject, Injectable, InjectorService, Provider} from "@tsed/di";
+import {Constant, DIContext, getContext, Inject, Injectable, InjectorService, Provider, runInContext} from "@tsed/di";
 import {Argument, Command} from "commander";
 import Inquirer from "inquirer";
+import {v4} from "uuid";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
 import {CommandProvider} from "../interfaces/CommandProvider";
-import {CommandMetadata} from "../interfaces/CommandMetadata";
 import {CommandArg, CommandOptions} from "../interfaces/CommandParameters";
 import {PROVIDER_TYPE_COMMAND} from "../registries/CommandRegistry";
 import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner";
@@ -17,6 +17,7 @@ import {ProjectPackageJson} from "./ProjectPackageJson";
 // @ts-ignore
 import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
 import {mapCommanderOptions} from "../utils/mapCommanderOptions";
+import {CommandMetadata} from "../interfaces/CommandMetadata";
 
 Inquirer.registerPrompt("autocomplete", inquirer_autocomplete_prompt);
 
@@ -59,17 +60,25 @@ export class CliService {
    * Run lifecycle
    * @param cmdName
    * @param data
+   * @param $ctx
    */
-  public async runLifecycle(cmdName: string, data: any = {}) {
-    data = await this.beforePrompt(cmdName, data);
-    data = await this.prompt(cmdName, data);
+  public async runLifecycle(cmdName: string, data: any = {}, $ctx: DIContext) {
+    return runInContext($ctx, async () => {
+      data = await this.beforePrompt(cmdName, data);
 
-    await this.dispatch(cmdName, data);
+      $ctx.set("data", data);
+
+      data = await this.prompt(cmdName, data);
+      await this.dispatch(cmdName, data, $ctx);
+    });
   }
 
-  public async dispatch(cmdName: string, data: any) {
+  public async dispatch(cmdName: string, data: any, $ctx: DIContext) {
     try {
-      await this.exec(cmdName, data);
+      $ctx.set("dispatchCmd", cmdName);
+      $ctx.set("data", data);
+
+      await this.exec(cmdName, data, $ctx);
     } catch (er) {
       await this.injector.emit("$onFinish", er);
       await this.injector.destroy();
@@ -80,8 +89,8 @@ export class CliService {
     await this.injector.destroy();
   }
 
-  public async exec(cmdName: string, ctx: any) {
-    const initialTasks = await this.getTasks(cmdName, ctx);
+  public async exec(cmdName: string, data: any, $ctx: DIContext) {
+    const initialTasks = await this.getTasks(cmdName, data);
 
     if (initialTasks.length) {
       const tasks = [
@@ -89,12 +98,12 @@ export class CliService {
         {
           title: "Install dependencies",
           enabled: () => this.reinstallAfterRun && (this.projectPkg.rewrite || this.projectPkg.reinstall),
-          task: createSubTasks(() => this.projectPkg.install(ctx), {...ctx, concurrent: false})
+          task: createSubTasks(() => this.projectPkg.install(data), {...data, concurrent: false})
         },
-        ...(await this.getPostInstallTasks(cmdName, ctx))
+        ...(await this.getPostInstallTasks(cmdName, data))
       ];
 
-      return createTasksRunner(tasks, this.mapContext(cmdName, ctx));
+      return createTasksRunner(tasks, this.mapData(cmdName, data, $ctx));
     }
   }
 
@@ -144,31 +153,32 @@ export class CliService {
   /**
    * Run lifecycle
    * @param cmdName
-   * @param ctx
+   * @param data
    */
-  public async getTasks(cmdName: string, ctx: any) {
+  public async getTasks(cmdName: string, data: any) {
+    const $ctx = getContext()!;
     const provider = this.commands.get(cmdName);
     const instance = this.injector.get<CommandProvider>(provider.token)!;
 
-    ctx = this.mapContext(cmdName, ctx);
+    data = this.mapData(cmdName, data, $ctx);
 
     if (instance.$beforeExec) {
-      await instance.$beforeExec(ctx);
+      await instance.$beforeExec(data);
     }
 
-    return [...(await instance.$exec(ctx)), ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, ctx))];
+    return [...(await instance.$exec(data)), ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, data))];
   }
 
-  public async getPostInstallTasks(cmdName: string, ctx: any) {
+  public async getPostInstallTasks(cmdName: string, data: any) {
     const provider = this.commands.get(cmdName);
     const instance = this.injector.get<CommandProvider>(provider.useClass)!;
 
-    ctx = this.mapContext(cmdName, ctx);
+    data = this.mapData(cmdName, data, getContext()!);
 
     return [
-      ...(instance.$postInstall ? await instance.$postInstall(ctx) : []),
-      ...(await this.hooks.emit(CommandStoreKeys.POST_INSTALL_HOOKS, cmdName, ctx)),
-      ...(instance.$afterPostInstall ? await instance.$afterPostInstall(ctx) : [])
+      ...(instance.$postInstall ? await instance.$postInstall(data) : []),
+      ...(await this.hooks.emit(CommandStoreKeys.POST_INSTALL_HOOKS, cmdName, data)),
+      ...(instance.$afterPostInstall ? await instance.$afterPostInstall(data) : [])
     ];
   }
 
@@ -194,7 +204,16 @@ export class CliService {
         rawArgs
       };
 
-      return this.runLifecycle(name, data);
+      const $ctx = new DIContext({
+        id: v4(),
+        injector: this.injector,
+        logger: this.injector.logger
+      });
+
+      $ctx.set("data", data);
+      $ctx.set("command", metadata);
+
+      return this.runLifecycle(name, data, $ctx);
     };
 
     if (alias) {
@@ -217,23 +236,25 @@ export class CliService {
     this.injector.getProviders(PROVIDER_TYPE_COMMAND).forEach((provider) => this.build(provider));
   }
 
-  private mapContext(cmdName: string, ctx: any) {
+  private mapData(cmdName: string, data: any, $ctx: DIContext) {
     const provider = this.commands.get(cmdName);
     const instance = this.injector.get<CommandProvider>(provider.useClass)!;
-    const verbose = ctx.verbose;
+    const verbose = data.verbose;
 
     if (instance.$mapContext) {
-      ctx = instance.$mapContext(JSON.parse(JSON.stringify(ctx)));
-      ctx.verbose = verbose;
+      data = instance.$mapContext(JSON.parse(JSON.stringify(data)));
+      data.verbose = verbose;
     }
 
-    if (ctx.verbose) {
+    if (data.verbose) {
       this.injector.logger.level = "debug";
     } else {
       this.injector.logger.level = "info";
     }
 
-    return ctx;
+    $ctx.set("data", data);
+
+    return data;
   }
 
   /**

@@ -16,6 +16,8 @@ describe("getCommandMetadata", () => {
       description: "description",
       name: "name",
       alias: "g",
+      disableReadUpPkg: false,
+      enableFeatures: [],
       options: {}
     });
   });

@@ -1,5 +1,4 @@
 import {GenerateCmd} from "@tsed/cli";
-import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {TEMPLATE_DIR} from "../../../src";
 
@@ -13,10 +12,7 @@ describe("Generate Schema", () => {
   afterEach(() => CliPlatformTest.reset());
 
   it("should generate the template", async () => {
-    const cliService = CliPlatformTest.get<CliService>(CliService);
-    const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-
-    projectPackageJson.setRaw({
+    CliPlatformTest.setPackageJson({
       name: "",
       version: "1.0.0",
       description: "",
@@ -25,7 +21,7 @@ describe("Generate Schema", () => {
       devDependencies: {}
     });
 
-    await cliService.exec("generate", {
+    await CliPlatformTest.exec("generate", {
       rootDir: "./project-data",
       type: "mongoose:schema",
       name: "Product"
@@ -34,8 +30,8 @@ describe("Generate Schema", () => {
     expect(FakeCliFs.getKeys()).toEqual(["project-name/src/models", "project-name/src/models/ProductSchema.ts"]);
 
     const result = FakeCliFs.entries.get("project-name/src/models/ProductSchema.ts");
-    expect(result).toContain('import { Property } from "@tsed/schema";');
-    expect(result).toContain('import { Schema } from "@tsed/mongoose";');
+    expect(result).toContain("import { Property } from \"@tsed/schema\";");
+    expect(result).toContain("import { Schema } from \"@tsed/mongoose\";");
     expect(result).toContain("@Schema()");
     expect(result).toContain("export class ProductSchema {");
   });

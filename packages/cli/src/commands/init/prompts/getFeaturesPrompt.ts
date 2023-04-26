@@ -14,8 +14,8 @@ function mapChoices(item: any, options: Partial<InitOptions>) {
   });
 }
 
-export function getFeaturesPrompt(options: Partial<InitOptions>) {
-  return FeaturesPrompt().map((item: any) => {
+export function getFeaturesPrompt(availablePackageManagers: string[], options: Partial<InitOptions>) {
+  return FeaturesPrompt(availablePackageManagers).map((item: any) => {
     return cleanObject({
       ...item,
       choices: item.choices?.length ? mapChoices(item, options) : undefined
