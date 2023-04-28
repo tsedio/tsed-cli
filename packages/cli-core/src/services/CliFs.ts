@@ -31,7 +31,7 @@ export class CliFs {
     return JSON.parse(content);
   }
 
-  async readJsonSync(file: string, encoding?: any) {
+  readJsonSync(file: string, encoding?: any) {
     const content = this.readFileSync(file, encoding) as any;
 
     return JSON.parse(content);

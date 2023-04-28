@@ -59,7 +59,7 @@ export class EslintInitHook {
         skip: !ctx.lintstaged,
         task: async () => {
           this.packageJson
-            .read()
+            .refresh()
             .addScripts({
               prepare: "is-ci || husky install"
             })

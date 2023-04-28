@@ -3,7 +3,6 @@ import {Configuration, Inject, Injectable} from "@tsed/di";
 import {dirname, join} from "path";
 import {EMPTY, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
-import semver from "semver";
 import {PackageJson} from "../interfaces/PackageJson";
 import {ProjectPreferences} from "../interfaces/ProjectPreferences";
 import {CliFs} from "./CliFs";
@@ -28,7 +27,7 @@ function mapPackagesWithInvalidVersion(deps: any) {
   };
 
   return Object.entries(deps)
-    .filter(([, version]) => !semver.valid(version as string))
+    .filter(([, version]) => !isValidVersion(version as string))
     .map(toString);
 }
 
@@ -45,17 +44,19 @@ function sortKeys(obj: any) {
     }, {});
 }
 
-function mapPackagesWithValidVersion(deps: any) {
-  return Object.entries(deps).reduce((deps, [key, version]: [string, string]) => {
-    if (isValidVersion(version)) {
-      return {
-        ...deps,
-        [key]: version
-      };
-    }
+function mapPackages(deps: any) {
+  return Object.entries(deps).reduce(
+    (deps, [key, version]: [string, string]) => {
+      if (isValidVersion(version)) {
+        deps.valid[key] = version;
+      } else {
+        deps.invalid[key] = version;
+      }
 
-    return deps;
-  }, {});
+      return deps;
+    },
+    {valid: {}, invalid: {}} as {valid: Record<string, string>; invalid: Record<string, string>}
+  );
 }
 
 @Injectable({
@@ -268,8 +269,11 @@ export class ProjectPackageJson {
 
   write() {
     const originalPkg = this.getPackageJson();
+    const {valid: dependencies, invalid: pendingDependencies} = mapPackages(this.raw.dependencies);
+    const {valid: devDependencies, invalid: pendingDevDependencies} = mapPackages(this.raw.devDependencies);
 
     this.rewrite = false;
+
     this.raw = {
       ...originalPkg,
       ...this.raw,
@@ -279,17 +283,27 @@ export class ProjectPackageJson {
       },
       dependencies: sortKeys({
         ...originalPkg.dependencies,
-        ...mapPackagesWithValidVersion(this.raw.dependencies)
+        ...dependencies
       }),
       devDependencies: sortKeys({
         ...originalPkg.devDependencies,
-        ...mapPackagesWithValidVersion(this.raw.devDependencies)
+        ...devDependencies
       }),
       readme: undefined,
       _id: undefined
     };
 
     this.fs.writeFileSync(this.path, JSON.stringify(this.raw, null, 2), {encoding: "utf8"});
+
+    this.raw.dependencies = {
+      ...this.raw.dependencies,
+      ...pendingDependencies
+    };
+
+    this.raw.devDependencies = {
+      ...this.raw.devDependencies,
+      ...pendingDevDependencies
+    };
 
     return this;
   }
@@ -364,11 +378,9 @@ export class ProjectPackageJson {
         task: () => packageManager.addDev(devDeps, options as any).pipe(errorPipe())
       },
       {
-        title: "Clean",
+        title: "Refresh",
         task: () => {
-          this.reinstall = false;
-          this.rewrite = false;
-          this.read();
+          this.refresh();
         }
       }
     ];
@@ -402,6 +414,40 @@ export class ProjectPackageJson {
 
   setGhToken(GH_TOKEN: string) {
     this.GH_TOKEN = GH_TOKEN;
+  }
+
+  refresh() {
+    this.reinstall = false;
+    this.rewrite = false;
+
+    const cwd = this.configuration.get("project.rootDir");
+    const pkgPath = join(String(cwd), "package.json");
+
+    const pkg = this.fs.readJsonSync(pkgPath, {encoding: "utf8"});
+
+    pkg.scripts = {
+      ...this.raw.scripts,
+      ...pkg.scripts
+    };
+
+    pkg.depencencies = {
+      ...this.raw.dependencies,
+      ...pkg.dependencies
+    };
+
+    pkg.devDepencencies = {
+      ...this.raw.devDependencies,
+      ...pkg.devDependencies
+    };
+
+    pkg[this.configuration.name] = {
+      ...this.raw[this.configuration.name],
+      ...pkg[this.configuration.name]
+    };
+
+    this.raw = pkg;
+
+    return this;
   }
 
   protected getPackageJson() {

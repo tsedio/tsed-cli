@@ -36,7 +36,7 @@ describe("YarnBerryManager", () => {
 
       await manager.add(["deps"], {});
 
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "deps"], {});
+      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "--ignore-engines", "deps"], {});
     });
   });
   describe("addDev()", () => {
@@ -45,7 +45,7 @@ describe("YarnBerryManager", () => {
 
       await manager.addDev(["deps"], {});
 
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "-D", "deps"], {});
+      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "-D", "--ignore-engines", "deps"], {});
     });
   });
   describe("install()", () => {

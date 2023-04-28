@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Init cmd Express.js should generate a project with Convention ANGULAR 1`] = `
+exports[`Init cmd Express.js should generate a project with Convention ANGULAR 2`] = `
 "import {join} from \\"path\\";
 import {Configuration, Inject} from \\"@tsed/di\\";
 import {PlatformApplication} from \\"@tsed/common\\";
@@ -59,7 +59,7 @@ export class Server {
 "
 `;
 
-exports[`Init cmd Express.js should generate a project with NPM 1`] = `
+exports[`Init cmd Express.js should generate a project with NPM 2`] = `
 "import {join} from \\"path\\";
 import {Configuration, Inject} from \\"@tsed/di\\";
 import {PlatformApplication} from \\"@tsed/common\\";
@@ -107,7 +107,7 @@ export class Server {
 "
 `;
 
-exports[`Init cmd Express.js should generate a project with swagger 1`] = `
+exports[`Init cmd Express.js should generate a project with swagger 2`] = `
 "import {join} from \\"path\\";
 import {Configuration, Inject} from \\"@tsed/di\\";
 import {PlatformApplication} from \\"@tsed/common\\";
@@ -166,7 +166,7 @@ export class Server {
 "
 `;
 
-exports[`Init cmd Express.js should generate a project with the right options 1`] = `
+exports[`Init cmd Express.js should generate a project with the right options 2`] = `
 "import {join} from \\"path\\";
 import {Configuration, Inject} from \\"@tsed/di\\";
 import {PlatformApplication} from \\"@tsed/common\\";
@@ -214,7 +214,7 @@ export class Server {
 "
 `;
 
-exports[`Init cmd Koa.js should generate a project with the right options 1`] = `
+exports[`Init cmd Koa.js should generate a project with the right options 2`] = `
 "import {join} from \\"path\\";
 import {Configuration, Inject} from \\"@tsed/di\\";
 import {PlatformApplication} from \\"@tsed/common\\";
