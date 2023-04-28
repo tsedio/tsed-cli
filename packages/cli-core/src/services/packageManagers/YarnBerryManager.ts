@@ -29,11 +29,11 @@ export class YarnBerryManager extends BaseManager {
   }
 
   add(deps: string[], options: ManagerCmdOpts) {
-    return this.run("add", deps, options);
+    return this.run("add", ["--ignore-engines", ...deps], options);
   }
 
   addDev(deps: string[], options: ManagerCmdOpts) {
-    return this.run("add", ["-D", ...deps], options);
+    return this.run("add", ["-D", "--ignore-engines", ...deps], options);
   }
 
   install(options: {verbose?: boolean} & execa.Options): Observable<any> {

@@ -11,7 +11,8 @@ const [, dir] = filedirname();
 async function getProjectPackageJsonFixture({hasYarn = true, hasPnpm = true} = {}) {
   const cliFs = {
     writeFileSync: jest.fn(),
-    exists: jest.fn().mockReturnValue(false)
+    exists: jest.fn().mockReturnValue(false),
+    readJsonSync: jest.fn().mockReturnValue({scripts: {}, dependencies: {}, devDependencies: {}})
   };
 
   const npmManager = {

@@ -227,9 +227,9 @@ export class InitCmd implements CommandProvider {
           task: async () => {
             await this.packageJson.init(ctx);
 
+            this.addScripts(ctx);
             this.addDependencies(ctx);
             this.addDevDependencies(ctx);
-            this.addScripts(ctx);
             this.addFeatures(ctx);
           }
         },
