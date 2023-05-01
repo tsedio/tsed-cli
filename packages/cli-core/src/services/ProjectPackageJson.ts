@@ -430,12 +430,12 @@ export class ProjectPackageJson {
       ...pkg.scripts
     };
 
-    pkg.depencencies = {
+    pkg.dependencies = {
       ...this.raw.dependencies,
       ...pkg.dependencies
     };
 
-    pkg.devDepencencies = {
+    pkg.devDependencies = {
       ...this.raw.devDependencies,
       ...pkg.devDependencies
     };
