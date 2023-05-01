@@ -99,7 +99,7 @@
     "lint-staged": "13.0.3",
     "markdown-it": "13.0.1",
     "prettier": "2.7.1",
-    "semantic-release": "19.0.3",
+    "semantic-release": "19.0.5",
     "semantic-release-slack-bot": "3.5.3",
     "sinon": "14.0.0",
     "sinon-chai": "3.7.0",
