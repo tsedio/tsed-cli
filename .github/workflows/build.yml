@@ -52,8 +52,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: yarn install --frozen-lockfile --network-timeout 500000
+      - name: Run build
+        run: yarn tsc --build
       - name: Run test
-        run: yarn test:coverage
+        run: yarn test
 
   build:
     runs-on: ubuntu-latest

@@ -194,6 +194,7 @@ export class InitCmd implements CommandProvider {
 
     return fillImports({
       ...ctx,
+      entryServer: ctx.convention !== ProjectConvention.ANGULAR ? "Server" : "server",
       yarn: ctx.packageManager == PackageManager.YARN || !ctx.packageManager,
       npm: ctx.packageManager == PackageManager.NPM,
       pnpm: ctx.packageManager == PackageManager.PNPM,
