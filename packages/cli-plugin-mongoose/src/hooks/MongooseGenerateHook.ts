@@ -95,7 +95,7 @@ export class MongooseGenerateHook {
       },
       {
         title: "Generate docker-compose configuration",
-        task: async () => this.cliDockerComposeYaml.addDatabaseService(ctx.name, "mongodb")
+        task: () => this.cliDockerComposeYaml.addDatabaseService(ctx.name, "mongodb")
       }
     ];
   }

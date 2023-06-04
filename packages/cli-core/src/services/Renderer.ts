@@ -47,7 +47,7 @@ export abstract class Renderer {
     return this.write(content, {output, rootDir});
   }
 
-  async renderAll(paths: (string | RenderOptions)[], data: any, options: Partial<RenderOptions> = {}) {
+  renderAll(paths: (string | RenderOptions)[], data: any, options: Partial<RenderOptions> = {}) {
     let count = 0;
 
     const mapOptions = (opts: string | RenderOptions): Partial<RenderOptions> & {path: string} => {

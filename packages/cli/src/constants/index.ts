@@ -1,11 +1,8 @@
 import {dirname, join} from "path";
 import readPkgUp from "read-pkg-up";
-import filedirname from "filedirname";
-
-const [, dir] = filedirname();
 
 const {path, packageJson} = readPkgUp.sync({
-  cwd: join(dir, "..", "..")
+  cwd: join(__dirname, "..", "..")
 })!;
 
 export const PKG = packageJson;

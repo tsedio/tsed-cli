@@ -1,6 +1,6 @@
 import {ProvidersInfoService} from "../services/ProvidersInfoService";
 import {ClassNamePipe} from "./ClassNamePipe";
-import {ProjectConvention} from "@tsed/cli";
+import {ProjectConvention} from "../interfaces";
 
 describe("ClassNamePipe", () => {
   it("should return the className", () => {

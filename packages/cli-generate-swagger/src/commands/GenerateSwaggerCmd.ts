@@ -34,7 +34,7 @@ export class GenerateSwaggerCmd implements CommandProvider {
     return {...$ctx, output: resolve(join(process.cwd(), $ctx.output))};
   }
 
-  async $exec($ctx: GenerateSwaggerCtx) {
+  $exec($ctx: GenerateSwaggerCtx) {
     return [
       {
         title: "generate client",

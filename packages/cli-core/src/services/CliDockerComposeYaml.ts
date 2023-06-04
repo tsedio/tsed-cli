@@ -17,7 +17,7 @@ export class CliDockerComposeYaml {
   @Inject()
   protected projectPackageJson: ProjectPackageJson;
 
-  async read() {
+  read() {
     const path = "docker-compose.yml";
     const file = !this.fs.exists(path) ? this.fs.findUpFile(this.projectPackageJson.dir, path) : path;
 
@@ -25,10 +25,10 @@ export class CliDockerComposeYaml {
       return this.cliYaml.read("docker-compose.yml");
     }
 
-    return {};
+    return Promise.resolve({});
   }
 
-  async write(obj: any) {
+  write(obj: any) {
     const path = "docker-compose.yml";
     const file = this.fs.findUpFile(this.projectPackageJson.dir, path) || join(this.projectPackageJson.dir, path);
 

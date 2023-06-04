@@ -1,6 +1,6 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {NpmManager} from "./NpmManager";
-import {CliExeca} from "@tsed/cli-core";
+import {CliExeca} from "../CliExeca";
 
 async function getManagerFixture() {
   const cliExeca = {

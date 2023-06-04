@@ -1,7 +1,7 @@
 import {getFeaturesPrompt} from "./getFeaturesPrompt";
 
 describe("getFeaturesPrompt", () => {
-  it("should add a provider info", async () => {
+  it("should add a provider info", () => {
     const prompt = getFeaturesPrompt(["yarn", "npm", "pnpm"], {});
 
     expect(prompt).toBeInstanceOf(Array);
@@ -29,7 +29,7 @@ describe("getFeaturesPrompt", () => {
             Object {
               "checked": true,
               "name": "Ts.ED",
-              "value": "default",
+              "value": "arc_default",
             },
             Object {
               "checked": false,
@@ -46,7 +46,7 @@ describe("getFeaturesPrompt", () => {
             Object {
               "checked": true,
               "name": "Ts.ED",
-              "value": "default",
+              "value": "conv_default",
             },
             Object {
               "checked": false,

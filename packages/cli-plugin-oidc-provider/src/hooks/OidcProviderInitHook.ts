@@ -22,7 +22,7 @@ export class OidcProviderInitHook {
     return [
       {
         title: "Generate files",
-        task: async () =>
+        task: () =>
           this.rootRenderer.renderAll(
             [
               "/src/config/oidc/index.ts.hbs",

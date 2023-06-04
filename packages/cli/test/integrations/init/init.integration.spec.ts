@@ -310,21 +310,6 @@ describe("Init cmd", () => {
         }
       });
 
-      // projectPackageJson.setRaw = (pkg) => {
-      //   // @ts-ignore
-      //   projectPackageJson.raw = {
-      //     name: "",
-      //     version: "1.0.0",
-      //     description: "",
-      //     scripts: {},
-      //     dependencies: {},
-      //     devDependencies: {},
-      //     tsed: {
-      //       convention: "angular"
-      //     }
-      //   }
-      // };
-
       await CliPlatformTest.exec("init", {
         platform: "express",
         rootDir: "./project-data",

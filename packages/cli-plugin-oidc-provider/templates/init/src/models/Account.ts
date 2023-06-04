@@ -17,7 +17,7 @@ export class Account {
     return this._id;
   }
 
-  async claims() {
+  claims() {
     return {
       sub: this._id,
       email: this.email,

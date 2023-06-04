@@ -1,10 +1,13 @@
-import {CliFs, createSubTasks, createTasksRunner, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {join, resolve} from "path";
 import filedirname from "filedirname";
+import {ProjectPackageJson} from "./ProjectPackageJson";
+import {CliFs} from "./CliFs";
+import {CliExeca} from "./CliExeca";
 import {NpmManager} from "./packageManagers/NpmManager";
 import {YarnManager} from "./packageManagers/YarnManager";
 import {PNpmManager} from "./packageManagers/PNpmManager";
+import {createSubTasks, createTasksRunner} from "../utils";
 
 const [, dir] = filedirname();
 
@@ -14,6 +17,8 @@ async function getProjectPackageJsonFixture({hasYarn = true, hasPnpm = true} = {
     exists: jest.fn().mockReturnValue(false),
     readJsonSync: jest.fn().mockReturnValue({scripts: {}, dependencies: {}, devDependencies: {}})
   };
+
+  const cliExeca = {};
 
   const npmManager = {
     name: "npm",
@@ -49,6 +54,10 @@ async function getProjectPackageJsonFixture({hasYarn = true, hasPnpm = true} = {
     {
       token: CliFs,
       use: cliFs
+    },
+    {
+      token: CliExeca,
+      use: cliExeca
     },
     {
       token: NpmManager,

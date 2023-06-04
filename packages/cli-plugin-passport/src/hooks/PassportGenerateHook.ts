@@ -52,7 +52,7 @@ export class PassportGenerateHook {
         when(state: any) {
           return ["protocol"].includes(state.type);
         },
-        source: async (state: any, keyword: string) => {
+        source: (state: any, keyword: string) => {
           if (keyword) {
             return list.filter((item) => item.name.toLowerCase().includes(keyword.toLowerCase()));
           }

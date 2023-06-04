@@ -53,7 +53,7 @@ export class Cli extends CliCore {
     }
   }
 
-  static async bootstrap(settings: any = {}) {
+  static bootstrap(settings: any = {}) {
     const opts: any = {
       ...Cli.defaults,
       ...settings

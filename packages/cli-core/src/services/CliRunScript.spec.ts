@@ -1,8 +1,8 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {CliRunScript} from "./CliRunScript";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import runScript from "@npmcli/run-script";
+import {CliRunScript} from "./CliRunScript";
 
 jest.mock("@npmcli/run-script");
 

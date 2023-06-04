@@ -4,15 +4,15 @@ import {OnDestroy} from "@tsed/di";
 export class FakeCliHttpClient extends CliHttpClient implements OnDestroy {
   static entries = new Map<string, any>();
 
-  async get(endpoint: string, options: CliHttpClientOptions = {}): Promise<any> {
+  get(endpoint: string, options: CliHttpClientOptions = {}): Promise<any> {
     const key = endpoint + ":" + JSON.stringify(options);
 
     if (key.includes("https://registry.")) {
-      return {
+      return Promise.resolve({
         "dist-tags": {
           latest: "1.0.0"
         }
-      };
+      });
     }
 
     if (!FakeCliHttpClient.entries.has(key)) {

@@ -15,6 +15,7 @@ export class CliHttpLogClient {
   @Inject()
   protected logger: Logger;
 
+  // @ts-ignore
   constructor(@Opts options: Partial<BaseLogClientOptions> = {}) {
     this.callee = options.callee || "http";
   }

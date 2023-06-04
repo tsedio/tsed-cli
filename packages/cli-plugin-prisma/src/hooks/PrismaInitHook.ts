@@ -15,7 +15,7 @@ export class PrismaInitHook {
   protected packageJson: ProjectPackageJson;
 
   @OnExec("init")
-  async onExec(ctx: InitCmdContext) {
+  onExec(ctx: InitCmdContext) {
     this.addScripts();
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);

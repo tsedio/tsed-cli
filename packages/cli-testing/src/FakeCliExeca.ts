@@ -15,16 +15,18 @@ export class FakeCliExeca extends CliExeca {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async getAsync(cmd: string, args: string[], opts?: any): Promise<any> {
+  getAsync(cmd: string, args: string[], opts?: any): Promise<any> {
     if (["npm"].includes(cmd) && args.includes("view")) {
-      return JSON.stringify({
-        "dist-tags": {
-          latest: "1.0.0"
-        }
-      });
+      return Promise.resolve(
+        JSON.stringify({
+          "dist-tags": {
+            latest: "1.0.0"
+          }
+        })
+      );
     }
 
-    return FakeCliExeca.entries.get(cmd + " " + args.join(" "));
+    return Promise.resolve(FakeCliExeca.entries.get(cmd + " " + args.join(" ")));
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

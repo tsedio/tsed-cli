@@ -22,7 +22,7 @@ export class PrismaCmd implements CommandProvider {
   @Inject()
   cli: CliPrisma;
 
-  async $exec(ctx: PrismaContext) {
+  $exec(ctx: PrismaContext) {
     return [
       {
         title: `Run Prisma CLI ${ctx.command}`,

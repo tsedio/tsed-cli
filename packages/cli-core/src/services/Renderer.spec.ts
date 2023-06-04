@@ -1,4 +1,4 @@
-import {RootRendererService, SrcRendererService} from "@tsed/cli-core";
+import {RootRendererService, SrcRendererService} from "../..";
 import {FakeCliFs, normalizePath} from "@tsed/cli-testing";
 import Consolidate from "consolidate";
 import {TEMPLATE_DIR} from "../../../cli-plugin-jest/src/utils/templateDir";

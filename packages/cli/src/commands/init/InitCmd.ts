@@ -313,7 +313,10 @@ export class InitCmd implements CommandProvider {
                     ctx.swagger && {
                       path: "/init/src/controllers/pages/IndexController.ts.hbs",
                       basename: indexCtrlBaseName,
-                      output: ctx.architecture === "default" ? "/controllers/pages/IndexController.ts" : "/pages/IndexController.ts"
+                      output:
+                        ctx.architecture === ArchitectureConvention.DEFAULT
+                          ? "/controllers/pages/IndexController.ts"
+                          : "/pages/IndexController.ts"
                     }
                   ].filter(Boolean),
                   ctx,
@@ -330,7 +333,7 @@ export class InitCmd implements CommandProvider {
     ];
   }
 
-  async $afterPostInstall() {
+  $afterPostInstall() {
     return [
       {
         title: "Generate barrels files",

@@ -20,7 +20,7 @@ export class RecipeResolver {
   }
 
   @Query((returns) => [Recipe], {description: "Get all the recipes from around the world "})
-  async recipes(): Promise<Recipe[]> {
+  recipes(): Promise<Recipe[]> {
     return this.recipeService.findAll({});
   }
 }

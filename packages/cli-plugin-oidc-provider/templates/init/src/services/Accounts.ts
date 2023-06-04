@@ -25,11 +25,11 @@ export class Accounts implements OidcAccountsMethods {
     }
   }
 
-  async findAccount(id: string) {
+  findAccount(id: string) {
     return this.adapter.findById(id);
   }
 
-  async authenticate(email: string) {
+  authenticate(email: string) {
     return this.adapter.findOne({email});
   }
 }

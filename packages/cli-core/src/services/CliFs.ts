@@ -17,7 +17,7 @@ export class CliFs {
     return normalizePath(join(...args));
   }
 
-  async readFile(file: string | Buffer | number, encoding?: any): Promise<string> {
+  readFile(file: string | Buffer | number, encoding?: any): Promise<string> {
     return this.raw.readFile(file, encoding) as any;
   }
 

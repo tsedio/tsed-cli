@@ -20,8 +20,8 @@ export class FakeCliFs {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async readFile(file: string | Buffer | number, encoding?: any): Promise<string> {
-    return FakeCliFs.entries.get(normalizePath(file))!;
+  readFile(file: string | Buffer | number, encoding?: any): Promise<string> {
+    return Promise.resolve(FakeCliFs.entries.get(normalizePath(file))!);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -52,8 +52,9 @@ export class FakeCliFs {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async ensureDir(path: string, options?: EnsureOptions | number): Promise<void> {
+  ensureDir(path: string, options?: EnsureOptions | number): Promise<void> {
     FakeCliFs.entries.set(normalizePath(path), path);
+    return Promise.resolve();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

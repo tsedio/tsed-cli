@@ -1,4 +1,4 @@
-import {Command} from "@tsed/cli-core";
+import {Command} from "../..";
 import {getCommandMetadata} from "./getCommandMetadata";
 
 @Command({

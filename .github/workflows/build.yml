@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -33,7 +33,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node-version: [16.x]
+        node-version: [18.x]
         exclude:
           #          - os: macos-latest
           #            node-version: 12.x
@@ -42,7 +42,7 @@ jobs:
           #          - os: windows-latest
           #            node-version: 12.x
           - os: windows-latest
-            node-version: 16.x
+            node-version: 18.x
 
     steps:
       - uses: actions/checkout@v2
@@ -54,29 +54,13 @@ jobs:
         run: yarn install --frozen-lockfile --network-timeout 500000
       - name: Run test
         run: yarn test:coverage
-  #      - name: Coveralls
-  #        uses: coverallsapp/github-action@master
-  #        with:
-  #          github-token: ${{ secrets.GITHUB_TOKEN }}
-  #          flag-name: run-${{ matrix.test_number }}
-  #          parallel: true
-
-  #  coveralls:
-  #    needs: test
-  #    runs-on: ubuntu-latest
-  #    steps:
-  #      - name: Coveralls Finished
-  #        uses: coverallsapp/github-action@master
-  #        with:
-  #          github-token: ${{ secrets.GITHUB_TOKEN }}
-  #          parallel-finished: true
 
   build:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -96,7 +80,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v2

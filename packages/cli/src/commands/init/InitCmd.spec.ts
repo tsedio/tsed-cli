@@ -1,5 +1,5 @@
 import {catchError} from "@tsed/core";
-import {InitCmd} from "@tsed/cli";
+import {InitCmd} from "../../../src/commands/init/InitCmd";
 
 describe("InitCmd", () => {
   describe("checkPrecondition()", () => {
@@ -18,7 +18,7 @@ describe("InitCmd", () => {
           architecture: "wrong"
         } as any);
       });
-      expect(result?.message).toEqual("Invalid selected architecture: wrong. Possible values: default, feature.");
+      expect(result?.message).toEqual("Invalid selected architecture: wrong. Possible values: arc_default, feature.");
     });
 
     it("should throw error (convention)", () => {
@@ -27,7 +27,7 @@ describe("InitCmd", () => {
           convention: "wrong"
         } as any);
       });
-      expect(result?.message).toEqual("Invalid selected convention: wrong. Possible values: default, angular.");
+      expect(result?.message).toEqual("Invalid selected convention: wrong. Possible values: conv_default, angular.");
     });
 
     it("should not throw error (package manager)", () => {

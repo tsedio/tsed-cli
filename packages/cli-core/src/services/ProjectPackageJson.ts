@@ -2,18 +2,18 @@ import {getValue, setValue} from "@tsed/core";
 import {Configuration, Inject, Injectable} from "@tsed/di";
 import {dirname, join} from "path";
 import {EMPTY, throwError} from "rxjs";
+import {Options} from "execa";
 import {catchError} from "rxjs/operators";
+import readPkgUp from "read-pkg-up";
 import {PackageJson} from "../interfaces/PackageJson";
 import {ProjectPreferences} from "../interfaces/ProjectPreferences";
 import {CliFs} from "./CliFs";
 import {isValidVersion} from "../utils/isValidVersion";
-import {Options} from "execa";
 import {BaseManager} from "./packageManagers/BaseManager";
 import {YarnManager} from "./packageManagers/YarnManager";
 import {YarnBerryManager} from "./packageManagers/YarnBerryManager";
 import {NpmManager} from "./packageManagers/NpmManager";
 import {PNpmManager} from "./packageManagers/PNpmManager";
-import readPkgUp from "read-pkg-up";
 
 export interface InstallOptions {
   packageManager?: string;
@@ -390,7 +390,7 @@ export class ProjectPackageJson {
    * Import a module from the project workspace
    * @param mod
    */
-  async importModule(mod: string) {
+  importModule(mod: string) {
     return this.fs.importModule(mod, this.dir);
   }
 
