@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-plugin-prisma",
-  "version": "4.5.2",
+  "version": "4.5.3",
   "description": "Ts.ED CLI plugin. Add Prisma project initialisation support.",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
@@ -24,14 +24,14 @@
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/cli": "4.5.2",
-    "@tsed/cli-core": "4.5.2",
-    "@tsed/typescript": "4.5.2",
-    "@tsed/eslint": "4.5.2",
+    "@tsed/cli": "4.5.3",
+    "@tsed/cli-core": "4.5.3",
+    "@tsed/eslint": "4.5.3",
+    "@tsed/jest-config": "4.5.3",
+    "@tsed/typescript": "4.5.3",
+    "cross-env": "7.0.3",
     "eslint": "8.22.0",
-    "@tsed/jest-config": "4.5.2",
-    "jest": "29.5.0",
-    "cross-env": "7.0.3"
+    "jest": "29.5.0"
   },
   "peerDependencies": {}
 }

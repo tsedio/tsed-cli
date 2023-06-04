@@ -1,6 +1,6 @@
 {
   "name": "@tsed/jest-config",
-  "version": "4.5.2",
+  "version": "4.5.3",
   "private": true,
   "main": "jest.config.js",
   "exports": {
@@ -8,10 +8,10 @@
     "./install": "./install.js"
   },
   "scripts": {},
-  "dependencies": {},
   "devDependencies": {
-    "jest": "29.5.0",
-    "cross-env": "7.0.3"
+    "cross-env": "7.0.3",
+    "jest": "29.5.0"
   },
+  "dependencies": {},
   "peerDependencies": {}
 }
