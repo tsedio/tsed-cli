@@ -13,7 +13,7 @@ export class CliYaml {
     return JsYaml.load(content);
   }
 
-  async write(path: string, obj: any) {
+  write(path: string, obj: any) {
     const content = JsYaml.dump(obj);
 
     return this.fs.writeFile(path, content, {encoding: "utf8"});

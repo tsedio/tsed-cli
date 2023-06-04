@@ -1,4 +1,4 @@
-import {ArchitectureConvention, PlatformType, ProjectConvention} from "@tsed/cli";
+import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../../src/index";
 import {PackageManager} from "@tsed/cli-core";
 import {mapToContext} from "./mapToContext";
 import {FeatureType} from "../config/FeaturesPrompt";

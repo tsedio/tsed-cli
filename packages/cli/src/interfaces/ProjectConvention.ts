@@ -1,5 +1,5 @@
 export enum ProjectConvention {
-  DEFAULT = "default",
+  DEFAULT = "conv_default",
   ANGULAR = "angular"
 }
 

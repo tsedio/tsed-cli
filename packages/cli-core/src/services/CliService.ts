@@ -62,7 +62,7 @@ export class CliService {
    * @param data
    * @param $ctx
    */
-  public async runLifecycle(cmdName: string, data: any = {}, $ctx: DIContext) {
+  public runLifecycle(cmdName: string, data: any = {}, $ctx: DIContext) {
     return runInContext($ctx, async () => {
       data = await this.beforePrompt(cmdName, data);
 

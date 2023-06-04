@@ -19,7 +19,7 @@ export class TypeGraphqlInitHook {
     return [
       {
         title: "Generate files",
-        task: async () =>
+        task: () =>
           this.rootRenderer.renderAll(
             [
               "/src/datasources/index.ts",

@@ -1,17 +1,19 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {CliExeca} from "@tsed/cli-core";
 import {PNpmManager} from "./PNpmManager";
+import {CliExeca} from "../CliExeca";
 
 async function getManagerFixture() {
   const cliExeca = {
     runSync: jest.fn(),
     run: jest.fn()
   };
-  const manager = await CliPlatformTest.invoke<PNpmManager>(PNpmManager, [
-    {
-      token: CliExeca,
-      use: cliExeca
-    }
+  const [manager] = await Promise.all([
+    CliPlatformTest.invoke<PNpmManager>(PNpmManager, [
+      {
+        token: CliExeca,
+        use: cliExeca
+      }
+    ])
   ]);
   return {cliExeca, manager};
 }

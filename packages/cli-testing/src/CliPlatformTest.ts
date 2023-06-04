@@ -120,7 +120,7 @@ export class CliPlatformTest extends DITest {
         deps.push(injector.has(target) ? injector.get(target) : await injector.invoke(target));
       }
 
-      return await func(...deps);
+      return func(...deps);
     };
   }
 
@@ -135,7 +135,7 @@ export class CliPlatformTest extends DITest {
    * @param cmdName
    * @param initialData
    */
-  static async exec(cmdName: string, initialData: any) {
+  static exec(cmdName: string, initialData: any) {
     const $ctx = new DIContext({
       id: v4(),
       injector: this.injector,

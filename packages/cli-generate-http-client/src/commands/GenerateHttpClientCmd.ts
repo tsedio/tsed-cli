@@ -64,7 +64,7 @@ export class GenerateHttpClientCmd implements CommandProvider {
     return {...$ctx, output: resolve(join(process.cwd(), $ctx.output))};
   }
 
-  async $exec($ctx: GenerateHttpClientCtx) {
+  $exec($ctx: GenerateHttpClientCtx) {
     return [
       {
         title: "generate client",
@@ -93,7 +93,10 @@ export class GenerateHttpClientCmd implements CommandProvider {
     const Platform = await this.loadPlatformModule();
     const {SwaggerService} = await importPackage("@tsed/swagger");
 
-    const platform: {injector: InjectorService; stop: () => Promise<any>} = await Platform.bootstrap(this.serverModule, {
+    const platform: {
+      injector: InjectorService;
+      stop: () => Promise<any>;
+    } = await Platform.bootstrap(this.serverModule, {
       logger: {level: "off"},
       mongoose: [],
       redis: [],

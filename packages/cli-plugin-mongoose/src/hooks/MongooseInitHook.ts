@@ -29,14 +29,14 @@ export class MongooseInitHook {
     return [
       {
         title: "Generate Mongoose configuration",
-        task: async () =>
+        task: () =>
           this.cliMongoose.writeConfig("default", {
             symbolName: "MONGOOSE_DEFAULT"
           })
       },
       {
         title: "Generate docker-compose configuration",
-        task: async () => this.cliDockerComposeYaml.addDatabaseService("mongodb", "mongodb")
+        task: () => this.cliDockerComposeYaml.addDatabaseService("mongodb", "mongodb")
       }
     ];
   }

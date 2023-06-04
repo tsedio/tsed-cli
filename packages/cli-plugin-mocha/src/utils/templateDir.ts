@@ -1,5 +1,3 @@
-import {getTemplateDirectory, filedirname} from "@tsed/cli-core";
+import {getTemplateDirectory} from "@tsed/cli-core";
 
-const [, dir] = filedirname();
-
-export const TEMPLATE_DIR = getTemplateDirectory(dir);
+export const TEMPLATE_DIR = getTemplateDirectory(__dirname);

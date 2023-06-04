@@ -112,6 +112,9 @@ describe("Init cmd", () => {
       expect(dockerFile).toContain("COPY package.json yarn.lock tsconfig.json tsconfig.compile.json .barrelsby.json ./");
       expect(dockerFile).toContain("RUN yarn build");
       expect(dockerFile).toContain("RUN yarn install --pure-lockfile");
+
+      const indexContent = FakeCliFs.entries.get("project-name/src/index.ts")!;
+      expect(indexContent).toContain('import {Server} from "./Server"');
     });
     it("should generate a project with swagger", async () => {
       CliPlatformTest.setPackageJson({
@@ -310,21 +313,6 @@ describe("Init cmd", () => {
         }
       });
 
-      // projectPackageJson.setRaw = (pkg) => {
-      //   // @ts-ignore
-      //   projectPackageJson.raw = {
-      //     name: "",
-      //     version: "1.0.0",
-      //     description: "",
-      //     scripts: {},
-      //     dependencies: {},
-      //     devDependencies: {},
-      //     tsed: {
-      //       convention: "angular"
-      //     }
-      //   }
-      // };
-
       await CliPlatformTest.exec("init", {
         platform: "express",
         rootDir: "./project-data",
@@ -373,6 +361,9 @@ describe("Init cmd", () => {
       expect(content).toMatchSnapshot();
       expect(content).toContain('import * as pages from "./controllers/pages/index"');
       expect(content).toContain("export class Server {");
+
+      const indexContent = FakeCliFs.entries.get("project-name/src/index.ts")!;
+      expect(indexContent).toContain('import {Server} from "./server"');
     });
   });
 

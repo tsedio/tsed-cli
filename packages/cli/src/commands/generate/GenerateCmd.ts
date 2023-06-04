@@ -38,7 +38,7 @@ const DECORATOR_TYPES = [
 ];
 
 const searchFactory = (list: any) => {
-  return async (state: any, keyword: string) => {
+  return (state: any, keyword: string) => {
     if (keyword) {
       return list.filter((item: any) => item.name.toLowerCase().includes(keyword.toLowerCase()));
     }
@@ -226,7 +226,7 @@ export class GenerateCmd implements CommandProvider {
     }) as GenerateCmdContext;
   }
 
-  async $exec(ctx: GenerateCmdContext) {
+  $exec(ctx: GenerateCmdContext) {
     const {symbolPath} = ctx;
 
     if (this.providersList.isMyProvider(ctx.type, GenerateCmd)) {

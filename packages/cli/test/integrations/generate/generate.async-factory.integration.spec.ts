@@ -1,4 +1,3 @@
-import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {GenerateCmd, TEMPLATE_DIR} from "../../../src";
 

@@ -1,6 +1,6 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {CliExeca} from "@tsed/cli-core";
 import {YarnBerryManager} from "./YarnBerryManager";
+import {CliExeca} from "../CliExeca";
 
 async function getManagerFixture() {
   const cliExeca = {

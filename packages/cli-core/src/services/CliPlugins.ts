@@ -38,7 +38,7 @@ export class CliPlugins {
     return result.filter(({package: {name}}: any) => this.isPlugin(name)).map(mapPlugins);
   }
 
-  async loadPlugins() {
+  loadPlugins() {
     return loadPlugins(this.injector);
   }
 

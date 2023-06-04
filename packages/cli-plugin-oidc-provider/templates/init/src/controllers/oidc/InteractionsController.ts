@@ -10,7 +10,7 @@ import * as interactions from "../../interactions/index";
 })
 export class InteractionsController {
   @Get("/:name?")
-  async promptInteraction(@PathParams("name") name: string | undefined, @OidcCtx() oidcCtx: OidcCtx) {
+  promptInteraction(@PathParams("name") name: string | undefined, @OidcCtx() oidcCtx: OidcCtx) {
     return oidcCtx.runInteraction();
   }
 }

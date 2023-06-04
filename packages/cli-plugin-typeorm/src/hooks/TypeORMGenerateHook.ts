@@ -32,7 +32,7 @@ export class TypeORMGenerateHook {
   }
 
   @OnPrompt("generate")
-  async onGeneratePrompt() {
+  onGeneratePrompt() {
     const list = this.getTypeORMTypes().map(([value, {name}]) => {
       return {
         name: name,
@@ -48,7 +48,7 @@ export class TypeORMGenerateHook {
         when(state: any) {
           return state.type === "typeorm:datasource";
         },
-        source: async (state: any, keyword: string) => {
+        source: (state: any, keyword: string) => {
           if (keyword) {
             return list.filter((item) => item.name.toLowerCase().includes(keyword.toLowerCase()));
           }

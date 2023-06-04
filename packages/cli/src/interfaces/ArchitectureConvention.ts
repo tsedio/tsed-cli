@@ -1,5 +1,5 @@
 export enum ArchitectureConvention {
-  DEFAULT = "default",
+  DEFAULT = "arc_default",
   FEATURE = "feature"
 }
 

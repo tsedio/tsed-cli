@@ -1,5 +1,5 @@
 import {ArchitectureConvention} from "./../interfaces/ArchitectureConvention";
-import {ProvidersInfoService} from "@tsed/cli";
+import {ProvidersInfoService} from "../services/ProvidersInfoService";
 import {ClassNamePipe} from "./ClassNamePipe";
 import {OutputFilePathPipe} from "./OutputFilePathPipe";
 import {normalizePath} from "@tsed/cli-testing";
