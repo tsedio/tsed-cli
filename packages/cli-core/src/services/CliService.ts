@@ -207,7 +207,9 @@ export class CliService {
       const $ctx = new DIContext({
         id: v4(),
         injector: this.injector,
-        logger: this.injector.logger
+        logger: this.injector.logger,
+        level: this.injector.logger.level,
+        maxStackSize: 0
       });
 
       $ctx.set("data", data);
