@@ -1,0 +1,284 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fillImports() it should return barrels and imports files for (arc_default, oidc: false, graphql: false, swagger: true, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
+Object {
+  "architecture": "arc_default",
+  "barrels": "[\\"./src/controllers/rest\\",\\"./src/controllers/pages\\"]",
+  "express": false,
+  "graphql": false,
+  "imports": Array [
+    Object {
+      "from": "@tsed/ajv",
+    },
+    Object {
+      "from": "@tsed/swagger",
+    },
+    Object {
+      "from": "./config/index",
+      "symbols": "{config}",
+    },
+    Object {
+      "from": "./controllers/rest/index",
+      "symbols": "* as rest",
+    },
+    Object {
+      "from": "./controllers/pages/index",
+      "symbols": "* as pages",
+    },
+  ],
+  "koa": false,
+  "mongoose": false,
+  "oidc": false,
+  "passportjs": false,
+  "swagger": true,
+}
+`;
+
+exports[`fillImports() it should return barrels and imports files for (arc_default, oidc: true, graphql: false, swagger: false, passportjs: false, express: false, koa: true, mongoose: false) 1`] = `
+Object {
+  "architecture": "arc_default",
+  "barrels": "[\\"./src/controllers/rest\\",\\"./src/interactions\\"]",
+  "express": false,
+  "graphql": false,
+  "imports": Array [
+    Object {
+      "from": "@tsed/ajv",
+    },
+    Object {
+      "from": "@tsed/oidc-provider",
+    },
+    Object {
+      "from": "./config/index",
+      "symbols": "{config}",
+    },
+    Object {
+      "from": "./controllers/rest/index",
+      "symbols": "* as rest",
+    },
+    Object {
+      "from": "./controllers/pages/index",
+      "symbols": "* as pages",
+    },
+    Object {
+      "from": "./controllers/oidc/InteractionsController",
+      "symbols": "{InteractionsController}",
+    },
+  ],
+  "koa": false,
+  "mongoose": false,
+  "oidc": true,
+  "passportjs": false,
+  "swagger": false,
+}
+`;
+
+exports[`fillImports() it should return barrels and imports files for (arc_default, oidc: true, graphql: true, swagger: true, passportjs: true, express: false, koa: true, mongoose: true) 1`] = `
+Object {
+  "architecture": "arc_default",
+  "barrels": "[\\"./src/controllers/rest\\",\\"./src/controllers/pages\\",\\"./src/interactions\\",\\"./src/datasources\\",\\"./src/resolvers\\"]",
+  "express": false,
+  "graphql": true,
+  "imports": Array [
+    Object {
+      "from": "@tsed/ajv",
+    },
+    Object {
+      "from": "@tsed/swagger",
+    },
+    Object {
+      "from": "@tsed/mongoose",
+    },
+    Object {
+      "from": "@tsed/oidc-provider",
+    },
+    Object {
+      "from": "@tsed/passportjs",
+    },
+    Object {
+      "from": "@tsed/typegraphql",
+    },
+    Object {
+      "from": "./datasources/index",
+    },
+    Object {
+      "from": "./resolvers/index",
+    },
+    Object {
+      "from": "./config/index",
+      "symbols": "{config}",
+    },
+    Object {
+      "from": "./controllers/rest/index",
+      "symbols": "* as rest",
+    },
+    Object {
+      "from": "./controllers/pages/index",
+      "symbols": "* as pages",
+    },
+    Object {
+      "from": "./controllers/oidc/InteractionsController",
+      "symbols": "{InteractionsController}",
+    },
+  ],
+  "koa": false,
+  "mongoose": true,
+  "oidc": true,
+  "passportjs": true,
+  "swagger": true,
+}
+`;
+
+exports[`fillImports() it should return barrels and imports files for (feature, oidc: false, graphql: false, swagger: false, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
+Object {
+  "architecture": "feature",
+  "barrels": "[\\"./src/rest\\"]",
+  "express": false,
+  "graphql": false,
+  "imports": Array [
+    Object {
+      "from": "@tsed/ajv",
+    },
+    Object {
+      "from": "./config/index",
+      "symbols": "{config}",
+    },
+    Object {
+      "from": "./rest/index",
+      "symbols": "* as rest",
+    },
+  ],
+  "koa": false,
+  "mongoose": false,
+  "oidc": false,
+  "passportjs": false,
+  "swagger": false,
+}
+`;
+
+exports[`fillImports() it should return barrels and imports files for (feature, oidc: false, graphql: false, swagger: true, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
+Object {
+  "architecture": "feature",
+  "barrels": "[\\"./src/rest\\",\\"./src/pages\\"]",
+  "express": false,
+  "graphql": false,
+  "imports": Array [
+    Object {
+      "from": "@tsed/ajv",
+    },
+    Object {
+      "from": "@tsed/swagger",
+    },
+    Object {
+      "from": "./config/index",
+      "symbols": "{config}",
+    },
+    Object {
+      "from": "./rest/index",
+      "symbols": "* as rest",
+    },
+    Object {
+      "from": "./pages/index",
+      "symbols": "* as pages",
+    },
+  ],
+  "koa": false,
+  "mongoose": false,
+  "oidc": false,
+  "passportjs": false,
+  "swagger": true,
+}
+`;
+
+exports[`fillImports() it should return barrels and imports files for (feature, oidc: true, graphql: false, swagger: false, passportjs: false, express: true, koa: false, mongoose: false) 1`] = `
+Object {
+  "architecture": "feature",
+  "barrels": "[\\"./src/rest\\",\\"./src/interactions\\"]",
+  "express": false,
+  "graphql": false,
+  "imports": Array [
+    Object {
+      "from": "@tsed/ajv",
+    },
+    Object {
+      "from": "@tsed/oidc-provider",
+    },
+    Object {
+      "from": "./config/index",
+      "symbols": "{config}",
+    },
+    Object {
+      "from": "./rest/index",
+      "symbols": "* as rest",
+    },
+    Object {
+      "from": "./pages/index",
+      "symbols": "* as pages",
+    },
+    Object {
+      "from": "./controllers/oidc/InteractionsController",
+      "symbols": "{InteractionsController}",
+    },
+  ],
+  "koa": false,
+  "mongoose": false,
+  "oidc": true,
+  "passportjs": false,
+  "swagger": false,
+}
+`;
+
+exports[`fillImports() it should return barrels and imports files for (feature, oidc: true, graphql: true, swagger: true, passportjs: true, express: true, koa: false, mongoose: true) 1`] = `
+Object {
+  "architecture": "feature",
+  "barrels": "[\\"./src/rest\\",\\"./src/pages\\",\\"./src/interactions\\",\\"./src/datasources\\",\\"./src/resolvers\\"]",
+  "express": false,
+  "graphql": true,
+  "imports": Array [
+    Object {
+      "from": "@tsed/ajv",
+    },
+    Object {
+      "from": "@tsed/swagger",
+    },
+    Object {
+      "from": "@tsed/mongoose",
+    },
+    Object {
+      "from": "@tsed/oidc-provider",
+    },
+    Object {
+      "from": "@tsed/passportjs",
+    },
+    Object {
+      "from": "@tsed/typegraphql",
+    },
+    Object {
+      "from": "./datasources/index",
+    },
+    Object {
+      "from": "./resolvers/index",
+    },
+    Object {
+      "from": "./config/index",
+      "symbols": "{config}",
+    },
+    Object {
+      "from": "./rest/index",
+      "symbols": "* as rest",
+    },
+    Object {
+      "from": "./pages/index",
+      "symbols": "* as pages",
+    },
+    Object {
+      "from": "./controllers/oidc/InteractionsController",
+      "symbols": "{InteractionsController}",
+    },
+  ],
+  "koa": false,
+  "mongoose": true,
+  "oidc": true,
+  "passportjs": true,
+  "swagger": true,
+}
+`;

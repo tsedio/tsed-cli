@@ -54,6 +54,7 @@ export class CliPlatformTest extends DITest {
 
     await DITest.injector.load();
     await DITest.injector.emit("$onReady");
+    await DITest.injector.emit("$loadPackageJson");
 
     CliPlatformTest.get(CliService).load();
   }

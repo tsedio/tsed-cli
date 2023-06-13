@@ -64,6 +64,8 @@ export class CliService {
    */
   public runLifecycle(cmdName: string, data: any = {}, $ctx: DIContext) {
     return runInContext($ctx, async () => {
+      await this.injector.emit("$loadPackageJson");
+
       data = await this.beforePrompt(cmdName, data);
 
       $ctx.set("data", data);
@@ -214,6 +216,7 @@ export class CliService {
 
       $ctx.set("data", data);
       $ctx.set("command", metadata);
+      this.injector.settings.set("command.metadata", metadata);
 
       return this.runLifecycle(name, data, $ctx);
     };

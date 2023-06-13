@@ -32,13 +32,13 @@ export class FakeCliFs {
   async readJson(file: string | Buffer | number, encoding?: any): Promise<string> {
     const content = await this.readFile(file, encoding);
 
-    return JSON.parse(content);
+    return content ? JSON.parse(content) : {};
   }
 
   readJsonSync(file: string | Buffer | number, encoding?: any): Promise<string> {
     const content = this.readFileSync(file, encoding);
 
-    return JSON.parse(content);
+    return content ? JSON.parse(content) : {};
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

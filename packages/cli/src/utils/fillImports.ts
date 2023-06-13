@@ -11,7 +11,7 @@ export function fillImports(ctx: any) {
   ctx.barrels = JSON.stringify(
     [
       isFeature ? "./src/rest" : "./src/controllers/rest",
-      (ctx.swagger || ctx.oidc) && (isFeature ? "./src/pages" : "./src/controllers/pages"),
+      ctx.swagger && (isFeature ? "./src/pages" : "./src/controllers/pages"),
       ctx.oidc && "./src/interactions",
       ctx.graphql && "./src/datasources",
       ctx.graphql && "./src/resolvers"
@@ -25,6 +25,7 @@ export function fillImports(ctx: any) {
     ctx.swagger && {from: "@tsed/swagger"},
     ctx.mongoose && {from: "@tsed/mongoose"},
     ctx.oidc && {from: "@tsed/oidc-provider"},
+    ctx.passportjs && {from: "@tsed/passportjs"},
     ctx.graphql && {from: "@tsed/typegraphql"},
     ctx.graphql && {from: "./datasources/index"},
     ctx.graphql && {from: "./resolvers/index"},
