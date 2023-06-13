@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-plugin-eslint",
-  "version": "4.5.5",
+  "version": "4.5.6",
   "description": "Ts.ED CLI plugin. Add EsLint support",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
@@ -20,11 +20,11 @@
     "test": "cross-env NODE_ENV=test yarn jest --max-workers=2 --passWithNoTests && jest-coverage-thresholds-bumper"
   },
   "devDependencies": {
-    "@tsed/cli": "4.5.5",
-    "@tsed/cli-core": "4.5.5",
-    "@tsed/eslint": "4.5.5",
-    "@tsed/jest-config": "4.5.5",
-    "@tsed/typescript": "4.5.5",
+    "@tsed/cli": "4.5.6",
+    "@tsed/cli-core": "4.5.6",
+    "@tsed/eslint": "4.5.6",
+    "@tsed/jest-config": "4.5.6",
+    "@tsed/typescript": "4.5.6",
     "cross-env": "7.0.3",
     "eslint": "8.22.0",
     "jest": "29.5.0"
