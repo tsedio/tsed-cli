@@ -21,7 +21,7 @@ export class OidcProviderInitHook {
   onExec(ctx: InitCmdContext) {
     return [
       {
-        title: "Generate files",
+        title: "Generate OIDC files",
         task: () =>
           this.rootRenderer.renderAll(
             [

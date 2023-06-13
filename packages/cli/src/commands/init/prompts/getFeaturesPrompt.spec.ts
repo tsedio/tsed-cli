@@ -155,6 +155,7 @@ describe("getFeaturesPrompt", () => {
             Object {
               "devDependencies": Object {
                 "@tsed/cli-plugin-typeorm": "{{cliVersion}}",
+                "typeorm": "latest",
               },
               "name": "TypeORM",
               "value": "typeorm",

@@ -231,7 +231,8 @@ export const FeaturesMap: Record<string, Feature> = {
   [FeatureType.TYPEORM]: {
     name: "TypeORM",
     devDependencies: {
-      "@tsed/cli-plugin-typeorm": "{{cliVersion}}"
+      "@tsed/cli-plugin-typeorm": "{{cliVersion}}",
+      typeorm: "latest"
     }
   },
   [FeatureType.JEST]: {

@@ -82,7 +82,7 @@ export class ProjectPackageJson {
       dependencies: {},
       devDependencies: {}
     });
-    this.read();
+
     this.packageManagers = packageManagers.filter((manager) => manager.has());
   }
 
@@ -142,6 +142,10 @@ export class ProjectPackageJson {
 
   get availablePackageManagers() {
     return this.packageManagers.map((manager) => manager.name);
+  }
+
+  $loadPackageJson() {
+    return this.read();
   }
 
   toJSON() {
@@ -394,7 +398,16 @@ export class ProjectPackageJson {
     return this.fs.importModule(mod, this.dir);
   }
 
-  public runScript(scriptName: string, {ignoreError, ...opts}: {ignoreError?: boolean} & Options & Record<string, any> = {}) {
+  public runScript(
+    scriptName: string,
+    {
+      ignoreError,
+      ...opts
+    }: {
+      ignoreError?: boolean;
+    } & Options &
+      Record<string, any> = {}
+  ) {
     const options = {
       cwd: this.dir,
       ...opts
@@ -452,7 +465,7 @@ export class ProjectPackageJson {
 
   protected getPackageJson() {
     const cwd = this.configuration.get("project.rootDir");
-    const disableReadUpPkg = this.configuration.get("disableReadUpPkg");
+    const disableReadUpPkg = this.configuration.get("command.metadata.disableReadUpPkg");
     const name = this.configuration.get("name");
 
     const pkgPath = join(String(cwd), "package.json");

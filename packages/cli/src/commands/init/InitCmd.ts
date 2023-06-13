@@ -445,12 +445,14 @@ export class InitCmd implements CommandProvider {
     ctx.features.forEach((value) => {
       const feature = FeaturesMap[value.toLowerCase()];
 
-      if (feature.dependencies) {
-        this.packageJson.addDependencies(feature.dependencies, ctx);
-      }
+      if (feature) {
+        if (feature.dependencies) {
+          this.packageJson.addDependencies(feature.dependencies, ctx);
+        }
 
-      if (feature.devDependencies) {
-        this.packageJson.addDevDependencies(feature.devDependencies, ctx);
+        if (feature.devDependencies) {
+          this.packageJson.addDevDependencies(feature.devDependencies, ctx);
+        }
       }
     });
 
