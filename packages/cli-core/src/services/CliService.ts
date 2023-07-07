@@ -257,6 +257,8 @@ export class CliService {
       this.injector.logger.level = "info";
     }
 
+    data.bindLogger = $ctx.get("command").bindLogger;
+
     $ctx.set("data", data);
 
     return data;

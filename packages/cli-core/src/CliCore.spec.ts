@@ -1,10 +1,14 @@
 import {CliCore} from "./CliCore";
 import {CliService} from "./services";
 import {normalizePath} from "@tsed/normalize-path";
+import execa from "execa";
 
 jest.mock("./utils/loadPlugins");
-
+jest.mock("execa");
 describe("CliCore", () => {
+  beforeEach(() => {
+    (execa as any as jest.Mock).mockReturnValue({});
+  });
   describe("getProjectRoot()", () => {
     it("should return project root (-r)", () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

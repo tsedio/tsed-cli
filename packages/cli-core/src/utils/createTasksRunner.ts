@@ -37,13 +37,14 @@ class CustomLogger extends Logger {
   }
 }
 
-function getOptions(ctx: TaskOptions): any {
+function getOptions({bindLogger = true, ...ctx}: TaskOptions): any {
   const useRawRenderer = !(!ctx.verbose && !process.env.CI);
-  const rendererOptions = useRawRenderer
-    ? {
-        logger: CustomLogger
-      }
-    : {};
+  const rendererOptions =
+    useRawRenderer && bindLogger
+      ? {
+          logger: CustomLogger
+        }
+      : {};
   return {
     ...ctx,
     rendererSilent: process.env.NODE_ENV === "test",

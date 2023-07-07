@@ -1,12 +1,30 @@
 import axios from "axios";
 import {DITest} from "@tsed/di";
 import {CliHttpClient} from "./CliHttpClient";
+import {CliProxyAgent} from "./CliProxyAgent";
 
 jest.mock("axios");
 describe("CliHttpClient", () => {
   beforeEach(() => DITest.create());
   afterEach(() => DITest.reset());
 
+  describe("$afterInit()", () => {
+    it("should call $afterInit method", async () => {
+      const cliProxyAgent = {
+        resolveProxySettings: jest.fn()
+      };
+      const client = await DITest.invoke<CliHttpClient>(CliHttpClient, [
+        {
+          token: CliProxyAgent,
+          use: cliProxyAgent
+        }
+      ]);
+
+      await client.$afterInit();
+
+      expect(cliProxyAgent.resolveProxySettings).toHaveBeenCalled();
+    });
+  });
   describe("head()", () => {
     it("should call head method", async () => {
       // GIVEN

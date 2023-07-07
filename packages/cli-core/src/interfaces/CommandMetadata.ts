@@ -19,4 +19,6 @@ export interface CommandMetadata extends CommandParameters {
   enableFeatures: string[];
 
   disableReadUpPkg: boolean;
+
+  bindLogger: boolean;
 }

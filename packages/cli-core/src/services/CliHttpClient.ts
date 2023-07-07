@@ -22,7 +22,7 @@ export class CliHttpClient extends CliHttpLogClient {
     return stringify(cleanObject(params));
   }
 
-  async $onInit() {
+  async $afterInit() {
     await this.cliProxyAgent.resolveProxySettings();
   }
 
