@@ -110,7 +110,7 @@ describe("CliPlugins", () => {
 
         expect(cliProxyAgent.proxySettings).toEqual({
           url: "https://login:password@host:3000",
-          strictSsl: false
+          strictSsl: true
         });
       });
       it("should get proxy url from (https-proxy)", async () => {
@@ -143,7 +143,7 @@ describe("CliPlugins", () => {
 
         expect(cliProxyAgent.proxySettings).toEqual({
           url: "https://login:password@host:3000",
-          strictSsl: false
+          strictSsl: true
         });
       });
       it("should get proxy url from (https-proxy) without credentials", async () => {
@@ -176,7 +176,7 @@ describe("CliPlugins", () => {
 
         expect(cliProxyAgent.proxySettings).toEqual({
           url: "https://host:3000",
-          strictSsl: false
+          strictSsl: true
         });
       });
     });

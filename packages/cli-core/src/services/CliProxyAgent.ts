@@ -3,29 +3,11 @@ import {Configuration, Inject, Injectable, Value} from "@tsed/di";
 import {CliExeca} from "./CliExeca";
 import {camelCase} from "change-case";
 import {URL} from "url";
+import {coerce} from "../utils/coerce";
 
 export interface CliProxySettings {
   url: string;
   strictSsl: boolean;
-}
-
-function cast(value: any) {
-  if (["undefined"].includes(value)) {
-    return undefined;
-  }
-  if (["null"].includes(value)) {
-    return null;
-  }
-
-  if (["false"].includes(value)) {
-    return false;
-  }
-
-  if (["true"].includes(value)) {
-    return false;
-  }
-
-  return value;
 }
 
 @Injectable()
@@ -72,7 +54,9 @@ export class CliProxyAgent {
   }
 
   async resolveProxySettings(): Promise<void> {
-    if (this.hasProxy()) {
+    const hasProxy = this.hasProxy();
+
+    if (hasProxy) {
       return;
     }
 
@@ -83,13 +67,13 @@ export class CliProxyAgent {
       this.cliExeca.getAsync("npm", ["config", "get", "strict-ssl"])
     ]);
 
-    const [proxy, httpProxy, httpsProxy, strictSsl] = result.map(cast);
+    const [proxy, httpProxy, httpsProxy, strictSsl] = result.map(coerce);
     const url = httpsProxy || httpProxy || proxy;
 
     if (url) {
       this.proxySettings = {
         url,
-        strictSsl: cast(strictSsl) !== false
+        strictSsl: coerce(strictSsl) !== false
       };
     }
   }

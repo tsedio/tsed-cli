@@ -1,6 +1,12 @@
 import {CliCore, Command, CommandProvider, Tasks} from "../../src";
+import execa from "execa";
+
+jest.mock("execa")
 
 describe("Command", () => {
+  beforeEach(() => {
+    (execa as any as jest.Mock).mockReturnValue({})
+  })
   it("should exec a command with expected parsed argument", async () => {
     @Command({
       name: "test",
@@ -33,6 +39,7 @@ describe("Command", () => {
     })
 
     expect(TestCommand.prototype.$exec).toHaveBeenCalledWith({
+      "bindLogger": true,
       "command": "subcmd",
       "rawArgs": [],
       "rootDir": undefined,
