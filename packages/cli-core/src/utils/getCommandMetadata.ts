@@ -13,6 +13,7 @@ export function getCommandMetadata(token: Type<any>): CommandMetadata {
     options = {},
     enableFeatures,
     disableReadUpPkg,
+    bindLogger = true,
     ...opts
   } = Store.from(token)?.get(CommandStoreKeys.COMMAND) as CommandParameters;
 
@@ -25,6 +26,7 @@ export function getCommandMetadata(token: Type<any>): CommandMetadata {
     allowUnknownOption: !!allowUnknownOption,
     enableFeatures: enableFeatures || [],
     disableReadUpPkg: !!disableReadUpPkg,
+    bindLogger,
     ...opts
   };
 }
