@@ -20,6 +20,7 @@
     "start:version": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts --version",
     "start:init:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -h",
     "start:init:test": "cross-env NODE_ENV=development cross-env CI=true ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default --features=oidc --arch=default --convention=conv_default --platform=express --skip-prompt .",
+    "start:init:test:jest": "cross-env NODE_ENV=development cross-env CI=true ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default --features=jest --arch=default --convention=conv_default --platform=express --skip-prompt .",
     "start:init:run": "cross-env NODE_ENV=development cross-env CI=true ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default",
     "start:init:params": "cross-env NODE_ENV=development cross-env CI=true ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default --skip-prompt --features swagger,jest,lintstaged",
     "start:init:run:name": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init awesome --verbose",

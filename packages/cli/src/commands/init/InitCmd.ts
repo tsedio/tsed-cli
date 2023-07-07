@@ -244,7 +244,7 @@ export class InitCmd implements CommandProvider {
         },
         {
           title: "Install plugins dependencies",
-          task: createSubTasks(this.cliPlugins.addPluginsDependencies(ctx), {...ctx, concurrent: false})
+          task: createSubTasks(() => this.cliPlugins.addPluginsDependencies(ctx), {...ctx, concurrent: false})
         }
       ],
       ctx
