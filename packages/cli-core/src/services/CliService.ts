@@ -6,7 +6,6 @@ import {v4} from "uuid";
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
 import {CommandProvider} from "../interfaces/CommandProvider";
 import {CommandArg, CommandOptions} from "../interfaces/CommandParameters";
-import {PROVIDER_TYPE_COMMAND} from "../registries/CommandRegistry";
 import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner";
 import {getCommandMetadata} from "../utils/getCommandMetadata";
 import {mapCommanderArgs} from "../utils/mapCommanderArgs";
@@ -238,7 +237,7 @@ export class CliService {
   }
 
   private load() {
-    this.injector.getProviders(PROVIDER_TYPE_COMMAND).forEach((provider) => this.build(provider));
+    this.injector.getProviders("command").forEach((provider) => this.build(provider));
   }
 
   private mapData(cmdName: string, data: any, $ctx: DIContext) {
