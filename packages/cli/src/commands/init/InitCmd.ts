@@ -314,10 +314,7 @@ export class InitCmd implements CommandProvider {
                     ctx.swagger && {
                       path: "/init/src/controllers/pages/IndexController.ts.hbs",
                       basename: indexCtrlBaseName,
-                      output:
-                        ctx.architecture === ArchitectureConvention.DEFAULT
-                          ? "/controllers/pages/IndexController.ts"
-                          : "/pages/IndexController.ts"
+                      replaces: [ctx.architecture === ArchitectureConvention.FEATURE ? "controllers" : null]
                     }
                   ].filter(Boolean),
                   ctx,
