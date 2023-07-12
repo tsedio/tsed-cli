@@ -18,17 +18,16 @@ export interface RenderOptions {
   output: string;
   baseDir: string;
   basename: string;
+  replaces?: string[];
 }
 
 export abstract class Renderer {
-  @Configuration()
-  protected configuration: Configuration;
-
   @Constant("templateDir")
   templateDir: string;
-
   @Inject()
   fs: CliFs;
+  @Configuration()
+  protected configuration: Configuration;
 
   abstract get rootDir(): string;
 
@@ -152,6 +151,12 @@ export abstract class Renderer {
     }
 
     output = output.replace(/\.hbs$/, "");
+
+    if (options.replaces) {
+      options.replaces.filter(Boolean).forEach((replace) => {
+        output = output.replace(replace, "");
+      });
+    }
 
     return {output, templateDir, rootDir};
   }

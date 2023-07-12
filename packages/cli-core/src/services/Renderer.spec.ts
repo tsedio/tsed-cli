@@ -179,5 +179,44 @@ describe("Renderer", () => {
       expect(Consolidate.handlebars).toHaveBeenCalledWith("/tmpl/init/controllers/myfile.ts.hbs", {});
       expect(FakeCliFs.getKeys()).toEqual(["/home/controllers", "/home/controllers/myFile.controller.ts"]);
     });
+    it("should render a file from given option (with replaces)", async () => {
+      const service = new RootRendererService();
+
+      const props = {
+        path: "/init/src/controllers/pages/IndexController.ts.hbs",
+        basename: "index.controller.ts",
+        dir: "/pages",
+        replaces: ["controllers"]
+      };
+
+      const data = {};
+
+      const options = {
+        baseDir: "/init",
+        ...props
+      };
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      service.configuration = {
+        project: {
+          rootDir: "/home",
+          srcDir: "/src"
+        }
+      };
+
+      service.templateDir = "/tmpl";
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      Consolidate.handlebars.mockReturnValue("content");
+
+      service.fs = new FakeCliFs() as any;
+
+      await service.render(props.path, data, options);
+
+      expect(Consolidate.handlebars).toHaveBeenCalledWith("/tmpl/init/src/controllers/pages/IndexController.ts.hbs", {});
+      expect(FakeCliFs.getKeys()).toEqual(["/home/src/pages", "/home/src/pages/index.controller.ts"]);
+    });
   });
 });

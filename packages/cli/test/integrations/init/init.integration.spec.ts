@@ -2,7 +2,7 @@ import {PackageManager} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {ensureDirSync, writeFileSync} from "fs-extra";
 import {join} from "path";
-import {InitCmd, ProjectConvention, TEMPLATE_DIR} from "../../../src";
+import {ArchitectureConvention, InitCmd, ProjectConvention, TEMPLATE_DIR} from "../../../src";
 import filedirname from "filedirname";
 
 const [, dir] = filedirname();
@@ -360,6 +360,70 @@ describe("Init cmd", () => {
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
       expect(content).toContain('import * as pages from "./controllers/pages/index"');
+      expect(content).toContain("export class Server {");
+
+      const indexContent = FakeCliFs.entries.get("project-name/src/index.ts")!;
+      expect(indexContent).toContain('import {Server} from "./server"');
+    });
+    it("should generate a project with Arch FEATURE", async () => {
+      CliPlatformTest.setPackageJson({
+        name: "",
+        version: "1.0.0",
+        description: "",
+        scripts: {},
+        dependencies: {},
+        devDependencies: {},
+        tsed: {}
+      });
+
+      await CliPlatformTest.exec("init", {
+        platform: "express",
+        rootDir: "./project-data",
+        projectName: "project-data",
+        tsedVersion: "5.58.1",
+        convention: ProjectConvention.ANGULAR,
+        architecture: ArchitectureConvention.FEATURE,
+        swagger: true
+      });
+
+      expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
+        Array [
+          "./project-name",
+          "project-name",
+          "project-name/.barrelsby.json",
+          "project-name/.dockerignore",
+          "project-name/.gitignore",
+          "project-name/Dockerfile",
+          "project-name/README.md",
+          "project-name/docker-compose.yml",
+          "project-name/package.json",
+          "project-name/processes.config.js",
+          "project-name/src",
+          "project-name/src/config",
+          "project-name/src/config/envs",
+          "project-name/src/config/envs/index.ts",
+          "project-name/src/config/index.ts",
+          "project-name/src/config/logger",
+          "project-name/src/config/logger/index.ts",
+          "project-name/src/index.ts",
+          "project-name/src/pages",
+          "project-name/src/pages/index.controller.ts",
+          "project-name/src/rest",
+          "project-name/src/rest/hello-world.controller.ts",
+          "project-name/src/server.ts",
+          "project-name/tsconfig.compile.json",
+          "project-name/tsconfig.json",
+          "project-name/views",
+          "project-name/views/swagger.ejs",
+        ]
+      `);
+
+      const content = FakeCliFs.entries.get("project-name/src/server.ts")!;
+      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
+      expect(content).toContain('import "@tsed/platform-express"');
+      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toMatchSnapshot();
+      expect(content).toContain('import * as pages from "./pages/index"');
       expect(content).toContain("export class Server {");
 
       const indexContent = FakeCliFs.entries.get("project-name/src/index.ts")!;
