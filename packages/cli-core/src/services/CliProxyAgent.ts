@@ -4,6 +4,7 @@ import {CliExeca} from "./CliExeca";
 import {camelCase} from "change-case";
 import {URL} from "url";
 import {coerce} from "../utils/coerce";
+import {ProjectPackageJson} from "./ProjectPackageJson";
 
 export interface CliProxySettings {
   url: string;
@@ -20,6 +21,9 @@ export interface CliProxySettings {
 export class CliProxyAgent {
   @Value("proxy", {})
   proxySettings: CliProxySettings;
+
+  @Inject()
+  protected projectPackageJson: ProjectPackageJson;
 
   @Inject()
   protected cliExeca: CliExeca;
@@ -61,10 +65,26 @@ export class CliProxyAgent {
     }
 
     const result = await Promise.all([
-      this.cliExeca.getAsync("npm", ["config", "get", "proxy"]),
-      this.cliExeca.getAsync("npm", ["config", "get", "http-proxy"]),
-      this.cliExeca.getAsync("npm", ["config", "get", "https-proxy"]),
-      this.cliExeca.getAsync("npm", ["config", "get", "strict-ssl"])
+      this.cliExeca
+        .getAsync("npm", ["config", "get", "proxy"], {
+          cwd: this.projectPackageJson.dir
+        })
+        .catch(() => ""),
+      this.cliExeca
+        .getAsync("npm", ["config", "get", "http-proxy"], {
+          cwd: this.projectPackageJson.dir
+        })
+        .catch(() => ""),
+      this.cliExeca
+        .getAsync("npm", ["config", "get", "https-proxy"], {
+          cwd: this.projectPackageJson.dir
+        })
+        .catch(() => ""),
+      this.cliExeca
+        .getAsync("npm", ["config", "get", "strict-ssl"], {
+          cwd: this.projectPackageJson.dir
+        })
+        .catch(() => "")
     ]);
 
     const [proxy, httpProxy, httpsProxy, strictSsl] = result.map(coerce);
