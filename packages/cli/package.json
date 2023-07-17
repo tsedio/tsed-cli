@@ -63,7 +63,7 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@tsed/cli-core": "4.6.2",
+    "@tsed/cli-core": ">=4.6.2",
     "@tsed/core": ">=7.14.2",
     "@tsed/di": ">=7.14.2",
     "@tsed/logger": ">=6.2.1",
@@ -88,5 +88,12 @@
     "eslint": "8.22.0",
     "jest": "29.5.0"
   },
-  "peerDependencies": {}
+  "peerDependencies": {
+    "@tsed/core": ">=7.14.2",
+    "@tsed/cli-core": ">=4.6.2",
+    "@tsed/di": ">=7.14.2",
+    "@tsed/logger": ">=6.2.1",
+    "@tsed/openspec": ">=7.14.2",
+    "@tsed/schema": ">=7.14.2"
+  }
 }
