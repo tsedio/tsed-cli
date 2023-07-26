@@ -1,5 +1,6 @@
 export enum PackageManager {
   YARN = "yarn",
+  YARN_BERRY = "yarn_berry",
   NPM = "npm",
   PNPM = "pnpm"
 }

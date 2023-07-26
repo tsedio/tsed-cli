@@ -19,16 +19,19 @@ ARG NODE_VERSION=16.13.1
 FROM node:${NODE_VERSION}-alpine as build
 WORKDIR /opt
 
-COPY package.json {{#if yarn}}yarn.lock{{/if}}{{#if npm}}package-lock.json{{/if}}{{#if pnpm}}pnpm-lock.yaml{{/if}} tsconfig.json tsconfig.compile.json .barrelsby.json ./
+COPY package.json {{#if yarn}}yarn.lock{{/if}}{{#if yarn_berry}}yarn.lock{{/if}}{{#if npm}}package-lock.json{{/if}}{{#if pnpm}}pnpm-lock.yaml{{/if}} tsconfig.json tsconfig.compile.json .barrelsby.json ./
 
 {{#if yarn}}
-RUN yarn install --pure-lockfile{{/if}}{{#if npm}}
+RUN yarn install --pure-lockfile{{/if}}{{#if yarn}}
+RUN yarn install --immutable{{/if}}{{#if npm}}
 RUN npm install{{/if}}{{#if pnpm}}
 RUN pnpm install{{/if}}
 
 COPY ./src ./src
 
 {{#if yarn}}
+RUN yarn build{{/if}}
+{{#if yarn_berry}}
 RUN yarn build{{/if}}{{#if npm}}
 RUN npm run build{{/if}}{{#if pnpm}}
 RUN pnpm run build{{/if}}
@@ -42,7 +45,9 @@ RUN npm install -g pm2
 
 COPY --from=build /opt .
 
-RUN yarn install --pure-lockfile --production
+{{#if yarn}}
+RUN yarn install --pure-lockfile --production{{/if}}
+
 {{#if prisma}}
 COPY ./prisma ./prisma{{/if}}{{#or swagger oidc}}
 COPY ./views ./views{{/or}}
