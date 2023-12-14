@@ -1,23 +1,7 @@
 import {GenerateCmd, TEMPLATE_DIR} from "@tsed/cli";
-import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {dirname} from "path";
 import "../../../src";
-import {ensureDirSync, existsSync, readFileSync, writeFileSync} from "fs-extra";
-import filedirname from "filedirname";
-const [, dir] = filedirname();
 
-function readFile(file: string, content: string, rewrite = true) {
-  const path = `${dir}/${file}`
-
-  ensureDirSync(dirname(path))
-
-  if (!existsSync(path) || rewrite) {
-    writeFileSync(path, content, {encoding: "utf8"});
-  }
-
-  return readFileSync(path, {encoding: "utf8"});
-}
 
 describe("Generate DataSource", () => {
   beforeEach(() =>
@@ -53,9 +37,9 @@ describe("Generate DataSource", () => {
 
     const datasource = FakeCliFs.entries.get("project-name/src/datasources/TestDatasource.ts");
 
-    expect(datasource).toEqual(readFile("data/TestDatasource.ts.txt", datasource!, false));
+    expect(datasource).toMatchSnapshot();
 
     const dockerCompose = FakeCliFs.entries.get("project-name/docker-compose.yml");
-    expect(dockerCompose).toEqual(readFile("data/docker-compose.yml.txt", dockerCompose!, false));
+    expect(dockerCompose).toMatchSnapshot();
   });
 });

@@ -3,12 +3,13 @@
 
 module.exports = {
   ...require("@tsed/jest-config"),
+  roots: ["<rootDir>/src", "<rootDir>/test"],
   coverageThreshold: {
     global: {
-      statements: 0,
-      branches: 0,
-      functions: 0,
-      lines: 0
+      statements: 86.25,
+      branches: 61.11,
+      functions: 92.3,
+      lines: 86.25
     }
   }
 };

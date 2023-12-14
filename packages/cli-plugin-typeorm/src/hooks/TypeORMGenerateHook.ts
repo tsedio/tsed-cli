@@ -91,8 +91,7 @@ export class TypeORMGenerateHook {
       });
 
     const database = typeormDataSource.split(":").at(-1)!;
-
-    const symbolName = ctx.symbolName.replace("Datasource", "DataSource");
+    const symbolName = ctx.symbolName;
 
     return [
       {

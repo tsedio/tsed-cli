@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TypeORM: Init cmd should generate a project with the right options 1`] = `
+exports[`TypeORM: Init cmd should generate a project with the right options 2`] = `
 "import {join} from \\"path\\";
 import {Configuration, Inject} from \\"@tsed/di\\";
 import {PlatformApplication} from \\"@tsed/common\\";
@@ -15,6 +15,9 @@ import * as rest from \\"./controllers/rest/index\\";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
+  ajv: {
+    returnsCoercedValues: true
+  },
   mount: {
     \\"/rest\\": [
       ...Object.values(rest)
@@ -45,5 +48,59 @@ export class Server {
   @Configuration()
   protected settings: Configuration;
 }
+"
+`;
+
+exports[`TypeORM: Init cmd should generate a project with the right options 3`] = `
+"import {registerProvider} from \\"@tsed/di\\";
+import {DataSource} from \\"typeorm\\";
+import {Logger} from \\"@tsed/logger\\";
+
+export const MYSQL_DATASOURCE = Symbol.for(\\"MysqlDatasource\\");
+export const MysqlDatasource = new DataSource({
+  type: \\"mysql\\",
+  entities: [],
+  host: \\"localhost\\",
+  port: 3306,
+  username: \\"test\\",
+  password: \\"test\\",
+  database: \\"test\\"
+});
+
+registerProvider<DataSource>({
+  provide: MYSQL_DATASOURCE,
+  type: \\"typeorm:datasource\\",
+  deps: [Logger],
+  async useAsyncFactory(logger: Logger) {
+    await MysqlDatasource.initialize();
+
+    logger.info(\\"Connected with typeorm to database: Mysql\\");
+
+    return MysqlDatasource;
+  },
+  hooks: {
+    $onDestroy(dataSource) {
+      return dataSource.isInitialized && dataSource.close();
+    }
+  }
+});
+"
+`;
+
+exports[`TypeORM: Init cmd should generate a project with the right options 4`] = `
+"import { PlatformTest } from \\"@tsed/common\\";
+import { MysqlDatasource } from \\"./MysqlDatasource\\";
+
+describe(\\"MysqlDatasource\\", () => {
+  beforeEach(PlatformTest.create);
+  afterEach(PlatformTest.reset);
+
+  it(\\"should do something\\", () => {
+    const instance = PlatformTest.get<MysqlDatasource>(MysqlDatasource);
+    // const instance = PlatformTest.invoke<MysqlDatasource>(MysqlDatasource); // get fresh instance
+
+    expect(instance).toBeInstanceOf(MysqlDatasource);
+  });
+});
 "
 `;
