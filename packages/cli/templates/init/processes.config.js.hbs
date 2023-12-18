@@ -7,9 +7,9 @@ module.exports = {
   'apps': [
     {
       name: "api",
+      {{#if bun}}interpreter: "~/.bun/bin/bun",{{/if}}
       'script': `${process.env.WORKDIR}/dist/index.js`,
       'cwd': process.env.WORKDIR,
-      node_args: process.env.NODE_ARGS || "--max_old_space_size=1800",
       exec_mode: "cluster",
       instances: process.env.NODE_ENV === "test" ? 1 : process.env.NB_INSTANCES || 2,
       autorestart: true,

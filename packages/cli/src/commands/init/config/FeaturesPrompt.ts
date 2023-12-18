@@ -23,7 +23,6 @@ export enum FeatureType {
 
   // ORM
   PRISMA = "prisma",
-
   MONGOOSE = "mongoose",
 
   // TYPEORM
@@ -50,12 +49,12 @@ export enum FeatureType {
   LINTER = "linter",
   ESLINT = "eslint",
   LINT_STAGED = "lintstaged",
-  PRETTIER = "prettier",
+  PRETTIER = "prettier"
 
   // BUNDLER
-  BUNDLER = "bundler",
-  BABEL = "babel",
-  WEBPACK = "babel:webpack"
+  // BUNDLER = "bundler",
+  // BABEL = "babel",
+  // WEBPACK = "babel:webpack"
 }
 
 export const FeaturesMap: Record<string, Feature> = {
@@ -115,9 +114,6 @@ export const FeaturesMap: Record<string, Feature> = {
   },
   [FeatureType.LINTER]: {
     name: "Linter"
-  },
-  [FeatureType.BUNDLER]: {
-    name: "Bundler"
   },
   [FeatureType.COMMANDS]: {
     name: "Commands",
@@ -260,36 +256,56 @@ export const FeaturesMap: Record<string, Feature> = {
   [FeatureType.LINT_STAGED]: {
     name: "Lint on commit"
   },
-  [FeatureType.BABEL]: {
-    name: "Babel",
-    devDependencies: {
-      "@babel/cli": "latest",
-      "@babel/core": "latest",
-      "@babel/node": "latest",
-      "@babel/plugin-proposal-class-properties": "latest",
-      "@babel/plugin-proposal-decorators": "latest",
-      "@babel/preset-env": "latest",
-      "@babel/preset-typescript": "latest",
-      "babel-plugin-transform-typescript-metadata": "latest",
-      "babel-watch": "latest"
-    }
+  // [FeatureType.BABEL]: {
+  //   name: "Babel",
+  //   devDependencies: {
+  //     // "@babel/cli": "latest",
+  //     // "@babel/core": "latest",
+  //     // "@babel/node": "latest",
+  //     // "@babel/plugin-proposal-class-properties": "latest",
+  //     // "@babel/plugin-proposal-decorators": "latest",
+  //     // "@babel/preset-env": "latest",
+  //     // "@babel/preset-typescript": "latest",
+  //     // "babel-plugin-transform-typescript-metadata": "latest",
+  //     // "babel-watch": "latest"
+  //   }
+  // },
+  // [FeatureType.WEBPACK]: {
+  //   name: "Webpack",
+  //   devDependencies: {
+  //     // "@babel/cli": "latest",
+  //     // "@babel/core": "latest",
+  //     // "@babel/node": "latest",
+  //     // "@babel/plugin-proposal-class-properties": "latest",
+  //     // "@babel/plugin-proposal-decorators": "latest",
+  //     // "@babel/preset-env": "latest",
+  //     // "@babel/preset-typescript": "latest",
+  //     // "babel-plugin-transform-typescript-metadata": "latest",
+  //     // "babel-watch": "latest",
+  //     // "babel-loader": "latest",
+  //     // webpack: "latest",
+  //     // "webpack-cli": "latest"
+  //   }
+  // },
+  node: {
+    name: "Node.js",
+    checked: true
   },
-  [FeatureType.WEBPACK]: {
-    name: "Webpack",
-    devDependencies: {
-      "@babel/cli": "latest",
-      "@babel/core": "latest",
-      "@babel/node": "latest",
-      "@babel/plugin-proposal-class-properties": "latest",
-      "@babel/plugin-proposal-decorators": "latest",
-      "@babel/preset-env": "latest",
-      "@babel/preset-typescript": "latest",
-      "babel-plugin-transform-typescript-metadata": "latest",
-      "babel-watch": "latest",
-      "babel-loader": "latest",
-      webpack: "latest",
-      "webpack-cli": "latest"
-    }
+  babel: {
+    name: "Node.js + Babel",
+    checked: false
+  },
+  webpack: {
+    name: "Node.js + Webpack",
+    checked: false
+  },
+  swc: {
+    name: "Node.js + SWC",
+    checked: false
+  },
+  bun: {
+    name: "Bun.js (experimental)",
+    checked: false
   },
   yarn: {
     name: "Yarn",
@@ -304,12 +320,12 @@ export const FeaturesMap: Record<string, Feature> = {
     checked: false
   },
   pnpm: {
-    name: "PNPM - experimental",
+    name: "PNPM (experimental)",
     checked: false
   }
 };
 
-export const FeaturesPrompt = (availablePackageManagers: string[]) => [
+export const FeaturesPrompt = (availableRuntimes: string[], availablePackageManagers: string[]) => [
   {
     message: "Choose the target platform:",
     type: "list",
@@ -341,7 +357,7 @@ export const FeaturesPrompt = (availablePackageManagers: string[]) => [
       FeatureType.OIDC,
       FeatureType.TESTING,
       FeatureType.LINTER,
-      FeatureType.BUNDLER,
+      //  FeatureType.BUNDLER,
       FeatureType.COMMANDS
     ]
   },
@@ -403,13 +419,6 @@ export const FeaturesPrompt = (availablePackageManagers: string[]) => [
     choices: [FeatureType.PRETTIER, FeatureType.LINT_STAGED]
   },
   {
-    message: "Choose your bundler",
-    type: "list",
-    name: "featuresBundler",
-    when: hasFeature(FeatureType.BUNDLER),
-    choices: [FeatureType.BABEL, FeatureType.WEBPACK]
-  },
-  {
     message: "Choose the OIDC base path server",
     name: "oidcBasePath",
     default: "/oidc",
@@ -417,9 +426,16 @@ export const FeaturesPrompt = (availablePackageManagers: string[]) => [
     type: "input"
   },
   {
+    message: "Choose the runtime:",
+    type: "list",
+    name: "runtime",
+    choices: availableRuntimes
+  },
+  {
     message: "Choose the package manager:",
     type: "list",
     name: "packageManager",
+    when: hasValue("runtime", ["node", "babel", "swc", "webpack"]),
     choices: availablePackageManagers
   }
 ];

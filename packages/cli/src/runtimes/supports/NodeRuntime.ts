@@ -1,0 +1,29 @@
+import {BaseRuntime} from "./BaseRuntime";
+import {Injectable} from "@tsed/di";
+
+@Injectable({
+  type: "runtime"
+})
+export class NodeRuntime extends BaseRuntime {
+  readonly name: string = "node";
+  readonly cmd: string = "node";
+
+  devDependencies(): Record<string, any> {
+    return {
+      "ts-node": "latest",
+      "ts-node-dev": "latest"
+    };
+  }
+
+  compile(src: string, out: string) {
+    return `tsc --project tsconfig.compile.json`;
+  }
+
+  startDev(main: string) {
+    return `tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only ${main}`;
+  }
+
+  startProd(args: string) {
+    return `${this.cmd} ${args}`;
+  }
+}

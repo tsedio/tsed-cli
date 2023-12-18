@@ -15,6 +15,7 @@ export interface InitOptions {
   architecture: ArchitectureConvention;
   convention: ProjectConvention;
   packageManager: PackageManager;
+  runtime: "node" | "babel" | "swc" | "webpack" | "bun";
   oidcBasePath: string;
   file: string;
 }

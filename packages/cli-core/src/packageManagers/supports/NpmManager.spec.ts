@@ -1,6 +1,6 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {NpmManager} from "./NpmManager";
-import {CliExeca} from "../CliExeca";
+import {CliExeca} from "../../services";
 
 async function getManagerFixture() {
   const cliExeca = {
@@ -18,16 +18,6 @@ async function getManagerFixture() {
 describe("NpmManager", () => {
   beforeEach(() => CliPlatformTest.create());
   afterEach(() => CliPlatformTest.reset());
-
-  describe("runCmd()", () => {
-    it("should return the runCmd", async () => {
-      const {manager} = await getManagerFixture();
-
-      const result = manager.runCmd;
-
-      expect(result).toEqual("npm run");
-    });
-  });
 
   describe("add()", () => {
     it("should add dependencies", async () => {

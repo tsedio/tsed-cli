@@ -1,7 +1,7 @@
 import {Inject} from "@tsed/di";
 import {Observable} from "rxjs";
 import execa from "execa";
-import {CliExeca} from "../CliExeca";
+import {CliExeca} from "../../services/CliExeca";
 
 export type ManagerCmdOpts = {verbose?: boolean} & execa.Options;
 export type ManagerCmdSyncOpts = {verbose?: boolean} & execa.SyncOptions;
@@ -9,14 +9,11 @@ export type ManagerCmdSyncOpts = {verbose?: boolean} & execa.SyncOptions;
 export abstract class BaseManager {
   abstract readonly name: string;
   abstract readonly cmd: string;
+
   protected verboseOpt = "--verbose";
 
   @Inject(CliExeca)
   protected cliExeca: CliExeca;
-
-  get runCmd() {
-    return `${this.cmd} run`;
-  }
 
   has() {
     try {
@@ -41,7 +38,7 @@ export abstract class BaseManager {
     return this.run("run", [script], options);
   }
 
-  protected run(cmd: string, args: any[], options: {verbose?: boolean} & execa.Options<string>) {
+  run(cmd: string, args: any[], options: {verbose?: boolean} & execa.Options<string>) {
     return this.cliExeca.run(this.cmd, [cmd, options.verbose && this.verboseOpt, ...args].filter(Boolean) as string[], options);
   }
 }

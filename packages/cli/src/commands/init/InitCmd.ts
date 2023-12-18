@@ -12,6 +12,7 @@ import {
   createTasksRunner,
   Inject,
   PackageManager,
+  PackageManagersModule,
   ProjectPackageJson,
   QuestionOptions,
   RootRendererService
@@ -30,6 +31,10 @@ import {InitOptions} from "./interfaces/InitOptions";
 import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt";
 import {PlatformType} from "../../interfaces";
 import {fillImports} from "../../utils/fillImports";
+import {RuntimesModule} from "../../runtimes/RuntimesModule";
+import {NodeRuntime} from "../../runtimes/supports/NodeRuntime";
+import {BunRuntime} from "../../runtimes/supports/BunRuntime";
+import {InitPlatformsModule} from "../../platforms/InitPlatformsModule";
 
 @Command({
   name: "init",
@@ -68,6 +73,11 @@ import {fillImports} from "../../utils/fillImports";
       defaultValue: [],
       description: "List of the Ts.ED features."
     },
+    "--runtime <runtime>": {
+      itemType: String,
+      defaultValue: "node",
+      description: "The default runtime used to run the project"
+    },
     "-m, --package-manager <packageManager>": {
       itemType: String,
       defaultValue: PackageManager.YARN,
@@ -100,6 +110,15 @@ export class InitCmd implements CommandProvider {
   @Inject()
   protected packageJson: ProjectPackageJson;
 
+  @Inject()
+  protected packageManagers: PackageManagersModule;
+
+  @Inject()
+  protected runtimes: RuntimesModule;
+
+  @Inject()
+  protected platforms: InitPlatformsModule;
+
   @CliPackageJson()
   protected cliPackageJson: CliPackageJson;
 
@@ -121,7 +140,7 @@ export class InitCmd implements CommandProvider {
   @Inject()
   protected fs: CliFs;
 
-  static checkPrecondition(availablePackageManagers: string[], ctx: InitCmdContext) {
+  checkPrecondition(ctx: InitCmdContext) {
     const isValid = (types: any, value: any) => (value ? Object.values(types).includes(value) : true);
 
     if (!isValid(PlatformType, ctx.platform)) {
@@ -138,8 +157,14 @@ export class InitCmd implements CommandProvider {
       throw new Error(`Invalid selected convention: ${ctx.convention}. Possible values: ${Object.values(ProjectConvention).join(", ")}.`);
     }
 
-    if (!availablePackageManagers.includes(ctx.packageManager)) {
-      throw new Error(`Invalid selected package manager: ${ctx.packageManager}. Possible values: ${availablePackageManagers.join(", ")}.`);
+    const runtimes = this.runtimes.list();
+    if (!runtimes.includes(ctx.runtime)) {
+      throw new Error(`Invalid selected runtime: ${ctx.runtime}. Possible values: ${runtimes.join(", ")}.`);
+    }
+
+    const managers = this.packageManagers.list();
+    if (!managers.includes(ctx.packageManager)) {
+      throw new Error(`Invalid selected package manager: ${ctx.packageManager}. Possible values: ${managers.join(", ")}.`);
     }
 
     if (ctx.features) {
@@ -171,7 +196,8 @@ export class InitCmd implements CommandProvider {
       return [];
     }
 
-    const packageManagers = this.packageJson.availablePackageManagers;
+    const packageManagers = this.packageManagers.list();
+    const runtimes = this.runtimes.list();
 
     return [
       {
@@ -180,11 +206,11 @@ export class InitCmd implements CommandProvider {
         message: "What is your project name",
         default: paramCase(initialOptions.root!),
         when: initialOptions.root !== ".",
-        transformer(input) {
+        transformer(input: string) {
           return paramCase(input);
         }
       },
-      ...getFeaturesPrompt(packageManagers, initialOptions)
+      ...getFeaturesPrompt(runtimes, packageManagers, initialOptions)
     ];
   }
 
@@ -210,6 +236,7 @@ export class InitCmd implements CommandProvider {
     this.packageJson.name = ctx.projectName;
 
     ctx.packageManager && this.packageJson.setPreference("packageManager", ctx.packageManager);
+    ctx.runtime && this.packageJson.setPreference("runtime", ctx.runtime);
     ctx.architecture && this.packageJson.setPreference("architecture", ctx.architecture);
     ctx.convention && this.packageJson.setPreference("convention", ctx.convention);
     ctx.GH_TOKEN && this.packageJson.setGhToken(ctx.GH_TOKEN);
@@ -227,7 +254,8 @@ export class InitCmd implements CommandProvider {
         {
           title: "Initialize package.json",
           task: async () => {
-            await this.packageJson.init(ctx);
+            this.runtimes.init(ctx);
+            await this.packageManagers.init(ctx);
 
             this.addScripts(ctx);
             this.addDependencies(ctx);
@@ -237,7 +265,7 @@ export class InitCmd implements CommandProvider {
         },
         {
           title: "Install plugins",
-          task: createSubTasks(() => this.packageJson.install(ctx), {...ctx, concurrent: false})
+          task: createSubTasks(() => this.packageManagers.install(ctx), {...ctx, concurrent: false})
         },
         {
           title: "Load plugins",
@@ -253,7 +281,7 @@ export class InitCmd implements CommandProvider {
   }
 
   async $exec(ctx: InitCmdContext) {
-    InitCmd.checkPrecondition(this.packageJson.availablePackageManagers, ctx);
+    this.checkPrecondition(ctx);
 
     const subTasks = [
       ...(await this.cliService.getTasks("generate", {
@@ -277,14 +305,6 @@ export class InitCmd implements CommandProvider {
         : [])
     ];
 
-    const indexCtrlBaseName = basename(
-      `${this.outputFilePathPipe.transform({
-        name: "Index",
-        type: "controller",
-        format: ctx.convention
-      })}.ts`
-    );
-
     return [
       {
         title: "Generate project files",
@@ -292,37 +312,9 @@ export class InitCmd implements CommandProvider {
           [
             {
               title: "Root files",
-              task: () =>
-                this.rootRenderer.renderAll(
-                  [
-                    "/init/.dockerignore.hbs",
-                    "/init/.gitignore.hbs",
-                    "/init/.barrelsby.json.hbs",
-                    "/init/processes.config.js.hbs",
-                    ctx.babel && "/init/.babelrc.hbs",
-                    ctx.webpack && "/init/webpack.config.js.hbs",
-                    "/init/docker-compose.yml.hbs",
-                    "/init/Dockerfile.hbs",
-                    "/init/README.md.hbs",
-                    "/init/tsconfig.compile.json.hbs",
-                    "/init/tsconfig.json.hbs",
-                    "/init/src/index.ts.hbs",
-                    "/init/src/config/envs/index.ts.hbs",
-                    "/init/src/config/logger/index.ts.hbs",
-                    "/init/src/config/index.ts.hbs",
-                    ctx.commands && "/init/src/bin/index.ts.hbs",
-                    ctx.swagger && "/init/views/swagger.ejs.hbs",
-                    ctx.swagger && {
-                      path: "/init/src/controllers/pages/IndexController.ts.hbs",
-                      basename: indexCtrlBaseName,
-                      replaces: [ctx.architecture === ArchitectureConvention.FEATURE ? "controllers" : null]
-                    }
-                  ].filter(Boolean),
-                  ctx,
-                  {
-                    baseDir: "/init"
-                  }
-                )
+              task: () => {
+                return this.generateFiles(ctx);
+              }
             },
             ...subTasks
           ],
@@ -337,7 +329,7 @@ export class InitCmd implements CommandProvider {
       {
         title: "Generate barrels files",
         task: () => {
-          return this.packageJson.runScript("barrels", {
+          return this.packageManagers.runScript("barrels", {
             ignoreError: true
           });
         }
@@ -363,28 +355,7 @@ export class InitCmd implements CommandProvider {
   }
 
   addScripts(ctx: InitCmdContext): void {
-    const runner = this.packageJson.getRunCmd();
-
-    this.packageJson.addScripts({
-      build: `${runner} barrels && tsc --project tsconfig.compile.json`,
-      barrels: "barrelsby --config .barrelsby.json",
-      start: `${runner} barrels && tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts`,
-      "start:prod": "cross-env NODE_ENV=production node dist/index.js"
-    });
-
-    if (ctx.babel) {
-      this.packageJson.addScripts({
-        build: `tsc && babel src --out-dir dist --extensions ".ts,.tsx" --source-maps inline`,
-        start: "babel-watch --extensions .ts src/index.ts"
-      });
-    }
-
-    if (ctx.webpack) {
-      this.packageJson.addScripts({
-        bundle: `tsc && cross-env NODE_ENV=production webpack`,
-        "start:bundle": "cross-env NODE_ENV=production node dist/app.bundle.js"
-      });
-    }
+    this.packageJson.addScripts(this.runtimes.scripts(ctx));
   }
 
   addDependencies(ctx: InitCmdContext) {
@@ -412,7 +383,9 @@ export class InitCmd implements CommandProvider {
       "cross-env": "latest",
       dotenv: "latest",
       "dotenv-expand": "latest",
-      "dotenv-flow": "latest"
+      "dotenv-flow": "latest",
+      ...this.runtimes.get().dependencies(),
+      ...this.platforms.get(ctx.platform).dependencies(ctx)
     });
   }
 
@@ -422,21 +395,12 @@ export class InitCmd implements CommandProvider {
         "@types/node": "latest",
         "@types/multer": "latest",
         tslib: "latest",
-        "ts-node": "latest",
-        "tsconfig-paths": "latest",
-        typescript: "latest"
+        typescript: "latest",
+        ...this.runtimes.get().devDependencies(),
+        ...this.platforms.get(ctx.platform).devDependencies(ctx)
       },
       ctx
     );
-
-    if (!ctx.babel) {
-      this.packageJson.addDevDependencies(
-        {
-          "ts-node-dev": "latest"
-        },
-        ctx
-      );
-    }
   }
 
   addFeatures(ctx: InitCmdContext) {
@@ -454,78 +418,66 @@ export class InitCmd implements CommandProvider {
       }
     });
 
-    switch (ctx.platform) {
-      case "express":
-        this.addExpressDependencies(ctx);
-        break;
-      case "koa":
-        this.addKoaDependencies(ctx);
-        break;
-    }
-
     if (ctx.features.find((value) => value === FeatureType.GRAPHQL)) {
       this.packageJson.addDependencies(
         {
-          ["apollo-server-" + ctx.platform]: "2.25.2"
+          [`apollo-server-${ctx.platform}`]: "2.25.2"
         },
         ctx
       );
     }
   }
 
-  private addExpressDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDependencies(
-      {
-        "@tsed/platform-express": ctx.tsedVersion,
-        "body-parser": "latest",
-        cors: "latest",
-        compression: "latest",
-        "cookie-parser": "latest",
-        express: "latest",
-        "method-override": "latest"
-      },
-      ctx
+  private generateFiles(ctx: InitCmdContext) {
+    const indexCtrlBaseName = basename(
+      `${this.outputFilePathPipe.transform({
+        name: "Index",
+        type: "controller",
+        format: ctx.convention
+      })}.ts`
     );
 
-    this.packageJson.addDevDependencies(
-      {
-        "@types/cors": "latest",
-        "@types/express": "latest",
-        "@types/compression": "latest",
-        "@types/cookie-parser": "latest",
-        "@types/method-override": "latest"
-      },
-      ctx
-    );
-  }
+    const runtime = this.runtimes.get();
+    const packageManager = this.packageManagers.get();
 
-  private addKoaDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDependencies(
-      {
-        "@tsed/platform-koa": ctx.tsedVersion,
-        koa: "latest",
-        "@koa/cors": "latest",
-        "@koa/router": "latest",
-        "koa-qs": "latest",
-        "koa-bodyparser": "latest",
-        "koa-override": "latest",
-        "koa-compress": "latest"
-      },
-      ctx
-    );
+    ctx = {
+      ...ctx,
+      node: runtime instanceof NodeRuntime,
+      bun: runtime instanceof BunRuntime
+    };
 
-    this.packageJson.addDevDependencies(
+    return this.rootRenderer.renderAll(
+      [
+        ...runtime.files(),
+        "/init/.dockerignore.hbs",
+        "/init/.gitignore.hbs",
+        "/init/.barrelsby.json.hbs",
+        "/init/processes.config.js.hbs",
+        "/init/docker-compose.yml.hbs",
+        {
+          path: `/init/docker/${packageManager.name}/Dockerfile.hbs`,
+          output: `Dockerfile`,
+          replaces: [`docker/${packageManager.name}`]
+        },
+        "/init/README.md.hbs",
+        "/init/tsconfig.compile.json.hbs",
+        "/init/tsconfig.json.hbs",
+        "/init/src/index.ts.hbs",
+        "/init/src/config/envs/index.ts.hbs",
+        "/init/src/config/logger/index.ts.hbs",
+        "/init/src/config/index.ts.hbs",
+        ctx.commands && "/init/src/bin/index.ts.hbs",
+        ctx.swagger && "/init/views/swagger.ejs.hbs",
+        ctx.swagger && {
+          path: "/init/src/controllers/pages/IndexController.ts.hbs",
+          basename: indexCtrlBaseName,
+          replaces: [ctx.architecture === ArchitectureConvention.FEATURE ? "controllers" : null]
+        }
+      ].filter(Boolean),
+      ctx,
       {
-        "@types/koa": "latest",
-        "@types/koa-qs": "latest",
-        "@types/koa-json": "latest",
-        "@types/koa-bodyparser": "latest",
-        "@types/koa__router": "latest",
-        "@types/koa-compress": "latest",
-        "@types/koa-send": "latest",
-        "@types/koa__cors": "latest"
-      },
-      ctx
+        baseDir: "/init"
+      }
     );
   }
 }

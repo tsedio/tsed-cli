@@ -1,13 +1,13 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {YarnBerryManager} from "./YarnBerryManager";
-import {CliExeca} from "../CliExeca";
+import {YarnManager} from "./YarnManager";
+import {CliExeca} from "../../services";
 
 async function getManagerFixture() {
   const cliExeca = {
     runSync: jest.fn(),
     run: jest.fn()
   };
-  const manager = await CliPlatformTest.invoke<YarnBerryManager>(YarnBerryManager, [
+  const manager = await CliPlatformTest.invoke<YarnManager>(YarnManager, [
     {
       token: CliExeca,
       use: cliExeca
@@ -16,19 +16,9 @@ async function getManagerFixture() {
   return {cliExeca, manager};
 }
 
-describe("YarnBerryManager", () => {
+describe("YarnManager", () => {
   beforeEach(() => CliPlatformTest.create());
   afterEach(() => CliPlatformTest.reset());
-
-  describe("runCmd()", () => {
-    it("should return the runCmd", async () => {
-      const {manager} = await getManagerFixture();
-
-      const result = manager.runCmd;
-
-      expect(result).toEqual("yarn run");
-    });
-  });
 
   describe("add()", () => {
     it("should add dependencies", async () => {
@@ -36,7 +26,7 @@ describe("YarnBerryManager", () => {
 
       await manager.add(["deps"], {});
 
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "deps"], {});
+      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "--ignore-engines", "deps"], {});
     });
   });
   describe("addDev()", () => {
@@ -45,7 +35,7 @@ describe("YarnBerryManager", () => {
 
       await manager.addDev(["deps"], {});
 
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "-D", "deps"], {});
+      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "-D", "--ignore-engines", "deps"], {});
     });
   });
   describe("install()", () => {

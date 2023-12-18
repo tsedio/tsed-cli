@@ -6,6 +6,7 @@ import {
   createSubTasks,
   Inject,
   NpmRegistryClient,
+  PackageManagersModule,
   ProjectPackageJson,
   QuestionOptions
 } from "@tsed/cli-core";
@@ -40,11 +41,14 @@ function shouldUpdate(pkg: string) {
   options: {}
 })
 export class UpdateCmd implements CommandProvider {
-  @Inject()
+  @Inject(NpmRegistryClient)
   npmRegistryClient: NpmRegistryClient;
 
-  @Inject()
+  @Inject(ProjectPackageJson)
   projectPackage: ProjectPackageJson;
+
+  @Inject(PackageManagersModule)
+  packageManagers: PackageManagersModule;
 
   @CliPackageJson()
   cliPackage: CliPackageJson;
@@ -102,7 +106,7 @@ export class UpdateCmd implements CommandProvider {
     return [
       {
         title: "Update packages",
-        task: createSubTasks(() => this.projectPackage.install(), {...ctx, concurrent: false})
+        task: createSubTasks(() => this.packageManagers.install(), {...ctx, concurrent: false})
       }
     ];
   }

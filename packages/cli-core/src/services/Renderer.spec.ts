@@ -1,13 +1,18 @@
-import {RootRendererService, SrcRendererService} from "../..";
 import {FakeCliFs, normalizePath} from "@tsed/cli-testing";
 import Consolidate from "consolidate";
+import globby from "globby";
+import handlebars from "handlebars";
 import {TEMPLATE_DIR} from "../../../cli-plugin-jest/src/utils/templateDir";
+import {RootRendererService, SrcRendererService} from "./Renderer";
 
 jest.mock("consolidate");
+jest.mock("globby");
+jest.mock("handlebars");
 
 describe("Renderer", () => {
   afterEach(() => {
     FakeCliFs.entries.clear();
+    (globby as any as jest.SpyInstance).mockResolvedValue(["_partials/one.hbs", "_partials/two.hbs"]);
   });
 
   describe("relativeFrom()", () => {
@@ -28,6 +33,8 @@ describe("Renderer", () => {
   });
   describe("render()", () => {
     it("should render a file from given option (baseDir)", async () => {
+      (globby as any as jest.SpyInstance).mockResolvedValue(["_partials/one.hbs", "_partials/two.hbs"]);
+
       const service = new RootRendererService();
       const path = "/init/myfile.ts.hbs";
       const data = {};
@@ -217,6 +224,20 @@ describe("Renderer", () => {
 
       expect(Consolidate.handlebars).toHaveBeenCalledWith("/tmpl/init/src/controllers/pages/IndexController.ts.hbs", {});
       expect(FakeCliFs.getKeys()).toEqual(["/home/src/pages", "/home/src/pages/index.controller.ts"]);
+    });
+  });
+  describe("loadPartials()", () => {
+    it("should load partials", async () => {
+      const rootRendererService = new RootRendererService();
+      rootRendererService.fs = new FakeCliFs() as any;
+
+      rootRendererService.fs.writeFile("/templateDir/_partials/one.hbs", "content");
+      rootRendererService.fs.writeFile("/templateDir/_partials/two.hbs", "content");
+
+      await rootRendererService.loadPartials("/templateDir");
+
+      expect(handlebars.registerPartial).toHaveBeenCalledWith("one", "content");
+      expect(handlebars.registerPartial).toHaveBeenCalledWith("two", "content");
     });
   });
 });

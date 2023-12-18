@@ -1,36 +1,24 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {PNpmManager} from "./PNpmManager";
-import {CliExeca} from "../CliExeca";
+import {CliExeca} from "../../services";
+import {BunManager} from "./BunManager";
 
 async function getManagerFixture() {
   const cliExeca = {
     runSync: jest.fn(),
     run: jest.fn()
   };
-  const [manager] = await Promise.all([
-    CliPlatformTest.invoke<PNpmManager>(PNpmManager, [
-      {
-        token: CliExeca,
-        use: cliExeca
-      }
-    ])
+  const manager = await CliPlatformTest.invoke<BunManager>(BunManager, [
+    {
+      token: CliExeca,
+      use: cliExeca
+    }
   ]);
   return {cliExeca, manager};
 }
 
-describe("PNpmManager", () => {
+describe("BunManager", () => {
   beforeEach(() => CliPlatformTest.create());
   afterEach(() => CliPlatformTest.reset());
-
-  describe("runCmd()", () => {
-    it("should return the runCmd", async () => {
-      const {manager} = await getManagerFixture();
-
-      const result = manager.runCmd;
-
-      expect(result).toEqual("pnpm run");
-    });
-  });
 
   describe("add()", () => {
     it("should add dependencies", async () => {
@@ -38,7 +26,7 @@ describe("PNpmManager", () => {
 
       await manager.add(["deps"], {});
 
-      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["add", "--save-prod", "deps"], {});
+      expect(cliExeca.run).toHaveBeenCalledWith("bun", ["add", "deps"], {});
     });
   });
   describe("addDev()", () => {
@@ -47,7 +35,7 @@ describe("PNpmManager", () => {
 
       await manager.addDev(["deps"], {});
 
-      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["add", "--save-dev", "deps"], {});
+      expect(cliExeca.run).toHaveBeenCalledWith("bun", ["add", "-d", "deps"], {});
     });
   });
   describe("install()", () => {
@@ -56,7 +44,7 @@ describe("PNpmManager", () => {
 
       await manager.install({});
 
-      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["install", "--dev"], {});
+      expect(cliExeca.run).toHaveBeenCalledWith("bun", ["install"], {});
     });
   });
   describe("runScript()", () => {
@@ -65,7 +53,7 @@ describe("PNpmManager", () => {
 
       await manager.runScript("name", {});
 
-      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["run", "name"], {});
+      expect(cliExeca.run).toHaveBeenCalledWith("bun", ["run", "name"], {});
     });
   });
 });

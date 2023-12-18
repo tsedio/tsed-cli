@@ -1,0 +1,28 @@
+{{> docker-header }}
+
+ARG NODE_VERSION=20.10.0
+
+FROM node:${NODE_VERSION}-alpine as build
+WORKDIR /opt
+
+COPY package.json yarn.lock tsconfig.json tsconfig.compile.json .barrelsby.json ./
+
+RUN yarn install --pure-lockfile
+
+COPY ./src ./src
+
+RUN yarn build
+
+FROM node:${NODE_VERSION}-alpine as runtime
+ENV WORKDIR /opt
+WORKDIR $WORKDIR
+
+{{> docker-dev-tools }}
+
+COPY --from=build /opt .
+
+RUN yarn install --pure-lockfile --production
+
+{{> docker-body}}
+
+CMD ["pm2-runtime", "start", "processes.config.js", "--env", "production"]

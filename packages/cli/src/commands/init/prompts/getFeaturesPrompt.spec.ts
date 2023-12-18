@@ -2,7 +2,7 @@ import {getFeaturesPrompt} from "./getFeaturesPrompt";
 
 describe("getFeaturesPrompt", () => {
   it("should add a provider info", () => {
-    const prompt = getFeaturesPrompt(["yarn", "npm", "pnpm"], {});
+    const prompt = getFeaturesPrompt(["node", "bun"], ["yarn", "npm", "pnpm", "bun"], {});
 
     expect(prompt).toBeInstanceOf(Array);
     expect(prompt).toMatchInlineSnapshot(`
@@ -116,10 +116,6 @@ describe("getFeaturesPrompt", () => {
             Object {
               "name": "Linter",
               "value": "linter",
-            },
-            Object {
-              "name": "Bundler",
-              "value": "bundler",
             },
             Object {
               "dependencies": Object {
@@ -312,52 +308,28 @@ describe("getFeaturesPrompt", () => {
           "when": [Function],
         },
         Object {
-          "choices": Array [
-            Object {
-              "devDependencies": Object {
-                "@babel/cli": "latest",
-                "@babel/core": "latest",
-                "@babel/node": "latest",
-                "@babel/plugin-proposal-class-properties": "latest",
-                "@babel/plugin-proposal-decorators": "latest",
-                "@babel/preset-env": "latest",
-                "@babel/preset-typescript": "latest",
-                "babel-plugin-transform-typescript-metadata": "latest",
-                "babel-watch": "latest",
-              },
-              "name": "Babel",
-              "value": "babel",
-            },
-            Object {
-              "devDependencies": Object {
-                "@babel/cli": "latest",
-                "@babel/core": "latest",
-                "@babel/node": "latest",
-                "@babel/plugin-proposal-class-properties": "latest",
-                "@babel/plugin-proposal-decorators": "latest",
-                "@babel/preset-env": "latest",
-                "@babel/preset-typescript": "latest",
-                "babel-loader": "latest",
-                "babel-plugin-transform-typescript-metadata": "latest",
-                "babel-watch": "latest",
-                "webpack": "latest",
-                "webpack-cli": "latest",
-              },
-              "name": "Webpack",
-              "value": "babel:webpack",
-            },
-          ],
-          "message": "Choose your bundler",
-          "name": "featuresBundler",
-          "type": "list",
-          "when": [Function],
-        },
-        Object {
           "default": "/oidc",
           "message": "Choose the OIDC base path server",
           "name": "oidcBasePath",
           "type": "input",
           "when": [Function],
+        },
+        Object {
+          "choices": Array [
+            Object {
+              "checked": true,
+              "name": "Node.js",
+              "value": "node",
+            },
+            Object {
+              "checked": false,
+              "name": "Bun.js (experimental)",
+              "value": "bun",
+            },
+          ],
+          "message": "Choose the runtime:",
+          "name": "runtime",
+          "type": "list",
         },
         Object {
           "choices": Array [
@@ -373,13 +345,19 @@ describe("getFeaturesPrompt", () => {
             },
             Object {
               "checked": false,
-              "name": "PNPM - experimental",
+              "name": "PNPM (experimental)",
               "value": "pnpm",
+            },
+            Object {
+              "checked": false,
+              "name": "Bun.js (experimental)",
+              "value": "bun",
             },
           ],
           "message": "Choose the package manager:",
           "name": "packageManager",
           "type": "list",
+          "when": [Function],
         },
       ]
     `);

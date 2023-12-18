@@ -1,35 +1,11 @@
 import {getValue, setValue} from "@tsed/core";
-import {Configuration, Inject, Injectable} from "@tsed/di";
+import {Configuration, Injectable} from "@tsed/di";
 import {dirname, join} from "path";
-import {EMPTY, throwError} from "rxjs";
-import {Options} from "execa";
-import {catchError} from "rxjs/operators";
 import readPkgUp from "read-pkg-up";
 import {PackageJson} from "../interfaces/PackageJson";
 import {ProjectPreferences} from "../interfaces/ProjectPreferences";
 import {CliFs} from "./CliFs";
 import {isValidVersion} from "../utils/isValidVersion";
-import {BaseManager} from "./packageManagers/BaseManager";
-import {YarnManager} from "./packageManagers/YarnManager";
-import {YarnBerryManager} from "./packageManagers/YarnBerryManager";
-import {NpmManager} from "./packageManagers/NpmManager";
-import {PNpmManager} from "./packageManagers/PNpmManager";
-
-export interface InstallOptions {
-  packageManager?: string;
-
-  [key: string]: any;
-}
-
-function mapPackagesWithInvalidVersion(deps: any) {
-  const toString = (info: [string, string]) => {
-    return info[1] === "latest" ? info[0] : info.join("@");
-  };
-
-  return Object.entries(deps)
-    .filter(([, version]) => !isValidVersion(version as string))
-    .map(toString);
-}
 
 function sortKeys(obj: any) {
   return Object.entries(obj)
@@ -59,21 +35,15 @@ function mapPackages(deps: any) {
   );
 }
 
-@Injectable({
-  imports: [YarnManager, YarnBerryManager, NpmManager, PNpmManager]
-})
+@Injectable({})
 export class ProjectPackageJson {
   public rewrite = false;
   public reinstall = false;
 
-  private GH_TOKEN: string;
+  public GH_TOKEN: string;
   private raw: PackageJson;
 
-  constructor(
-    @Configuration() private configuration: Configuration,
-    protected fs: CliFs,
-    @Inject("package:manager") protected packageManagers: BaseManager[]
-  ) {
+  constructor(@Configuration() private configuration: Configuration, protected fs: CliFs) {
     this.setRaw({
       name: "",
       version: "1.0.0",
@@ -82,8 +52,6 @@ export class ProjectPackageJson {
       dependencies: {},
       devDependencies: {}
     });
-
-    this.packageManagers = packageManagers.filter((manager) => manager.has());
   }
 
   get path() {
@@ -140,10 +108,6 @@ export class ProjectPackageJson {
     return this.raw[this.configuration.name];
   }
 
-  get availablePackageManagers() {
-    return this.packageManagers.map((manager) => manager.name);
-  }
-
   $loadPackageJson() {
     return this.read();
   }
@@ -169,28 +133,6 @@ export class ProjectPackageJson {
         ...preferences
       }
     };
-  }
-
-  packageManager(name?: string): BaseManager {
-    if (this.preferences.packageManager) {
-      name = this.preferences.packageManager;
-    }
-
-    name = name || "yarn";
-
-    let selectedPackageManager = this.packageManagers.find((manager) => manager.name === name);
-
-    if (!selectedPackageManager) {
-      selectedPackageManager = this.packageManagers.find((manager) => manager.name === "npm")!;
-    }
-
-    this.setPreference("packageManager", selectedPackageManager.name);
-
-    return selectedPackageManager;
-  }
-
-  getRunCmd() {
-    return this.packageManager()!.runCmd;
   }
 
   addDevDependency(pkg: string, version?: string) {
@@ -312,117 +254,12 @@ export class ProjectPackageJson {
     return this;
   }
 
-  init(options: InstallOptions = {}) {
-    const packageManager = this.packageManager(options.packageManager);
-    options.packageManager = packageManager.name;
-
-    options = {
-      ...options,
-      cwd: this.dir,
-      env: {
-        ...process.env,
-        GH_TOKEN: this.GH_TOKEN
-      }
-    };
-
-    this.write();
-    this.rewrite = true;
-
-    return packageManager.init(options as any);
-  }
-
-  install(options: InstallOptions = {}) {
-    const packageManager = this.packageManager(options.packageManager);
-    options.packageManager = packageManager.name;
-
-    const devDeps = mapPackagesWithInvalidVersion(this.devDependencies);
-    const deps = mapPackagesWithInvalidVersion(this.dependencies);
-
-    options = {
-      ...options,
-      cwd: this.dir,
-      env: {
-        ...process.env,
-        GH_TOKEN: this.GH_TOKEN
-      }
-    };
-
-    const errorPipe = () =>
-      catchError((error: any) => {
-        if (error.stderr.startsWith("error Your lockfile needs to be updated")) {
-          return throwError(
-            new Error(`yarn.lock file is outdated. Run ${packageManager.name}, commit the updated lockfile and try again.`)
-          );
-        }
-
-        return throwError(error);
-      });
-
-    return [
-      {
-        title: "Write package.json",
-        enabled: () => this.rewrite,
-        task: () => {
-          this.write();
-        }
-      },
-      {
-        title: `Installing dependencies using ${packageManager.name}`,
-        skip: () => !this.reinstall,
-        task: () => packageManager.install(options as any).pipe(errorPipe())
-      },
-      {
-        title: `Add dependencies using ${packageManager.name}`,
-        skip: () => !deps.length,
-        task: () => packageManager.add(deps, options as any).pipe(errorPipe())
-      },
-      {
-        title: `Add devDependencies using ${packageManager.name}`,
-        skip: () => !devDeps.length,
-        task: () => packageManager.addDev(devDeps, options as any).pipe(errorPipe())
-      },
-      {
-        title: "Refresh",
-        task: () => {
-          this.refresh();
-        }
-      }
-    ];
-  }
-
   /**
    * Import a module from the project workspace
    * @param mod
    */
   importModule(mod: string) {
     return this.fs.importModule(mod, this.dir);
-  }
-
-  public runScript(
-    scriptName: string,
-    {
-      ignoreError,
-      ...opts
-    }: {
-      ignoreError?: boolean;
-    } & Options &
-      Record<string, any> = {}
-  ) {
-    const options = {
-      cwd: this.dir,
-      ...opts
-    };
-
-    const errorPipe = () =>
-      catchError((error: any) => {
-        if (ignoreError) {
-          return EMPTY;
-        }
-
-        return throwError(error);
-      });
-
-    return this.packageManager().runScript(scriptName, options).pipe(errorPipe());
   }
 
   setGhToken(GH_TOKEN: string) {

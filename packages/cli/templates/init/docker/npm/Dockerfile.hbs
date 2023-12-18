@@ -1,0 +1,28 @@
+{{> docker-header }}
+
+ARG NODE_VERSION=20.10.0
+
+FROM node:${NODE_VERSION}-alpine as build
+WORKDIR /opt
+
+COPY package.json package-lock.json tsconfig.json tsconfig.compile.json .barrelsby.json ./
+
+RUN npm ci
+
+COPY ./src ./src
+
+RUN npm run build
+
+FROM node:${NODE_VERSION}-alpine as runtime
+ENV WORKDIR /opt
+WORKDIR $WORKDIR
+
+{{> docker-dev-tools }}
+
+COPY --from=build /opt .
+
+RUN npm ci --omit=dev --ignore-scripts
+
+{{> docker-body}}
+
+CMD ["pm2-runtime", "start", "processes.config.js", "--env", "production"]

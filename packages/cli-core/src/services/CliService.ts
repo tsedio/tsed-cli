@@ -17,6 +17,7 @@ import {ProjectPackageJson} from "./ProjectPackageJson";
 import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
 import {mapCommanderOptions} from "../utils/mapCommanderOptions";
 import {CommandMetadata} from "../interfaces/CommandMetadata";
+import {PackageManagersModule} from "../packageManagers";
 
 Inquirer.registerPrompt("autocomplete", inquirer_autocomplete_prompt);
 
@@ -38,6 +39,9 @@ export class CliService {
 
   @Inject()
   protected projectPkg: ProjectPackageJson;
+
+  @Inject(PackageManagersModule)
+  protected packageManagers: PackageManagersModule;
 
   private commands = new Map();
 
@@ -99,7 +103,7 @@ export class CliService {
         {
           title: "Install dependencies",
           enabled: () => this.reinstallAfterRun && (this.projectPkg.rewrite || this.projectPkg.reinstall),
-          task: createSubTasks(() => this.projectPkg.install(data), {...data, concurrent: false})
+          task: createSubTasks(() => this.packageManagers.install(data), {...data, concurrent: false})
         },
         ...(await this.getPostInstallTasks(cmdName, data))
       ];
