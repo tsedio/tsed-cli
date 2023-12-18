@@ -1,5 +1,14 @@
 import {Inject} from "@tsed/di";
-import {CliDefaultOptions, CliPlugins, Command, CommandProvider, createSubTasks, ProjectPackageJson, QuestionOptions} from "@tsed/cli-core";
+import {
+  CliDefaultOptions,
+  CliPlugins,
+  Command,
+  CommandProvider,
+  createSubTasks,
+  PackageManagersModule,
+  ProjectPackageJson,
+  QuestionOptions
+} from "@tsed/cli-core";
 
 export interface AddCmdOptions extends CliDefaultOptions {
   name: string;
@@ -22,6 +31,9 @@ export class AddCmd implements CommandProvider {
   @Inject(ProjectPackageJson)
   packageJson: ProjectPackageJson;
 
+  @Inject(PackageManagersModule)
+  packageManagers: PackageManagersModule;
+
   $prompt(initialOptions: any): QuestionOptions {
     return [
       {
@@ -43,7 +55,7 @@ export class AddCmd implements CommandProvider {
     return [
       {
         title: "Install plugins",
-        task: createSubTasks(() => this.packageJson.install(ctx as any), {...ctx, concurrent: false})
+        task: createSubTasks(() => this.packageManagers.install(ctx as any), {...ctx, concurrent: false})
       },
       {
         title: "Load plugins",

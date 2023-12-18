@@ -1,34 +1,26 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {YarnManager} from "./YarnManager";
-import {CliExeca} from "../CliExeca";
+import {PNpmManager} from "./PNpmManager";
+import {CliExeca} from "../../services";
 
 async function getManagerFixture() {
   const cliExeca = {
     runSync: jest.fn(),
     run: jest.fn()
   };
-  const manager = await CliPlatformTest.invoke<YarnManager>(YarnManager, [
-    {
-      token: CliExeca,
-      use: cliExeca
-    }
+  const [manager] = await Promise.all([
+    CliPlatformTest.invoke<PNpmManager>(PNpmManager, [
+      {
+        token: CliExeca,
+        use: cliExeca
+      }
+    ])
   ]);
   return {cliExeca, manager};
 }
 
-describe("YarnManager", () => {
+describe("PNpmManager", () => {
   beforeEach(() => CliPlatformTest.create());
   afterEach(() => CliPlatformTest.reset());
-
-  describe("runCmd()", () => {
-    it("should return the runCmd", async () => {
-      const {manager} = await getManagerFixture();
-
-      const result = manager.runCmd;
-
-      expect(result).toEqual("yarn run");
-    });
-  });
 
   describe("add()", () => {
     it("should add dependencies", async () => {
@@ -36,7 +28,7 @@ describe("YarnManager", () => {
 
       await manager.add(["deps"], {});
 
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "--ignore-engines", "deps"], {});
+      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["add", "--save-prod", "deps"], {});
     });
   });
   describe("addDev()", () => {
@@ -45,7 +37,7 @@ describe("YarnManager", () => {
 
       await manager.addDev(["deps"], {});
 
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["add", "-D", "--ignore-engines", "deps"], {});
+      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["add", "--save-dev", "deps"], {});
     });
   });
   describe("install()", () => {
@@ -54,7 +46,7 @@ describe("YarnManager", () => {
 
       await manager.install({});
 
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["install"], {});
+      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["install", "--dev"], {});
     });
   });
   describe("runScript()", () => {
@@ -63,7 +55,7 @@ describe("YarnManager", () => {
 
       await manager.runScript("name", {});
 
-      expect(cliExeca.run).toHaveBeenCalledWith("yarn", ["run", "name"], {});
+      expect(cliExeca.run).toHaveBeenCalledWith("pnpm", ["run", "name"], {});
     });
   });
 });

@@ -1,6 +1,6 @@
 import {DITest} from "@tsed/di";
-import {CliLoadFile} from "../..";
 import {catchAsyncError} from "@tsed/core";
+import {CliLoadFile} from "./CliLoadFile";
 
 describe("CliLoadFile", () => {
   beforeEach(() => DITest.create());

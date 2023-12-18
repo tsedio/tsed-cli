@@ -1,0 +1,28 @@
+{{> docker-header }}
+
+ARG NODE_VERSION=20.10.0
+
+FROM node:${NODE_VERSION}-alpine as build
+WORKDIR /opt
+
+COPY package.json pnpm-lock.yaml tsconfig.json tsconfig.compile.json .barrelsby.json ./
+
+RUN pnpm install --frozen-lockfile
+
+COPY ./src ./src
+
+RUN pnpm run build
+
+FROM node:${NODE_VERSION}-alpine as runtime
+ENV WORKDIR /opt
+WORKDIR $WORKDIR
+
+{{> docker-dev-tools }}
+
+COPY --from=build /opt .
+
+RUN pnpm install --frozen-lockfile --prod
+
+{{> docker-body}}
+
+CMD ["pm2-runtime", "start", "processes.config.js", "--env", "production"]

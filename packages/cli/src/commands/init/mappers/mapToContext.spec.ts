@@ -20,16 +20,15 @@ describe("mapToContext", () => {
         FeatureType.OIDC,
         FeatureType.TESTING,
         FeatureType.LINTER,
-        FeatureType.BUNDLER,
         FeatureType.COMMANDS
       ],
       featuresDB: FeatureType.TYPEORM,
       featuresTypeORM: FeatureType.TYPEORM_MARIADB,
-      packageManager: PackageManager.PNPM
+      packageManager: PackageManager.PNPM,
+      runtime: "node"
     });
     expect(result).toEqual({
       architecture: "feature",
-      bundler: true,
       commands: true,
       convention: "angular",
       db: true,
@@ -42,7 +41,6 @@ describe("mapToContext", () => {
         "oidc",
         "testing",
         "linter",
-        "bundler",
         "commands",
         "typeorm",
         "typeorm:mariadb"
@@ -59,7 +57,8 @@ describe("mapToContext", () => {
       socketio: true,
       swagger: true,
       testing: true,
-      typeorm: true
+      typeorm: true,
+      runtime: "node"
     });
   });
 });

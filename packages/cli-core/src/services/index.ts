@@ -12,8 +12,4 @@ export * from "./CliLoadFile";
 export * from "./CliYaml";
 export * from "./CliDockerComposeYaml";
 export * from "./NpmRegistryClient";
-export * from "./packageManagers/BaseManager";
-export * from "./packageManagers/NpmManager";
-export * from "./packageManagers/YarnManager";
-export * from "./packageManagers/PNpmManager";
 export * from "./CliProxyAgent";

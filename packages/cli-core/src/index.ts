@@ -22,10 +22,11 @@ export {
   Container,
   DITest
 } from "@tsed/di";
-export * from "./interfaces";
-export * from "./decorators";
-export * from "./services";
-export * from "./utils";
+export * from "./interfaces/index";
+export * from "./decorators/index";
+export * from "./services/index";
+export * from "./packageManagers/index";
+export * from "./utils/index";
 export * from "./CliCore";
 export {Inquirer};
 

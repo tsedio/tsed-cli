@@ -7,6 +7,7 @@ export * from "./commands/init/config/FeaturesPrompt";
 export * from "./commands/generate/GenerateCmd";
 export * from "./commands/update/UpdateCmd";
 export * from "./commands/init/prompts/getFeaturesPrompt";
+export * from "./runtimes/index";
 export * from "./interfaces";
 export * from "./services/ProvidersInfoService";
 export * from "./pipes";

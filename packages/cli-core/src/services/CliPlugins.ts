@@ -6,6 +6,7 @@ import {loadPlugins} from "../utils/loadPlugins";
 import {CliHooks} from "./CliHooks";
 import {NpmRegistryClient} from "./NpmRegistryClient";
 import {ProjectPackageJson} from "./ProjectPackageJson";
+import {PackageManagersModule} from "../packageManagers/PackageManagersModule";
 
 function mapPlugins({package: {name, description = "", ...otherProps}}: any) {
   return {
@@ -20,17 +21,20 @@ export class CliPlugins {
   @Constant("name")
   name: string;
 
-  @Inject()
+  @Inject(NpmRegistryClient)
   private npmRegistryClient: NpmRegistryClient;
 
-  @Inject()
+  @Inject(InjectorService)
   private injector: InjectorService;
 
-  @Inject()
+  @Inject(CliHooks)
   private cliHooks: CliHooks;
 
-  @Inject()
+  @Inject(ProjectPackageJson)
   private packageJson: ProjectPackageJson;
+
+  @Inject(PackageManagersModule)
+  private packageManagers: PackageManagersModule;
 
   async searchPlugins(keyword = "", options: any = {}) {
     const result = await this.npmRegistryClient.search(this.getKeyword(keyword), options);
@@ -60,7 +64,7 @@ export class CliPlugins {
         title: "Install",
         task: createSubTasks(
           () => {
-            return this.packageJson.install(ctx);
+            return this.packageManagers.install(ctx);
           },
           {...ctx, concurrent: false}
         )

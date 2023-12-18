@@ -4,10 +4,11 @@ import Consolidate from "consolidate";
 import {existsSync} from "fs-extra";
 import normalizePath from "normalize-path";
 import globby from "globby";
-import {dirname, join, relative} from "path";
+import {basename, dirname, join, relative} from "path";
 import {Observable} from "rxjs";
 import {CliFs} from "./CliFs";
 import "../utils/hbs";
+import handlebars from "handlebars";
 import {insertImport} from "../utils/renderer/insertImport";
 import {insertAfter} from "../utils/renderer/insertAfter";
 
@@ -24,18 +25,42 @@ export interface RenderOptions {
 export abstract class Renderer {
   @Constant("templateDir")
   templateDir: string;
+
   @Inject()
   fs: CliFs;
+  cache = new Set<string>();
+
   @Configuration()
   protected configuration: Configuration;
 
   abstract get rootDir(): string;
+
+  async loadPartials(cwd: string) {
+    if (this.cache.has(cwd)) {
+      return;
+    }
+
+    const files = await globby("**/_partials/*.hbs", {
+      cwd
+    });
+
+    files.forEach((filename) => {
+      let template = this.fs.readFileSync(join(cwd, filename), "utf8");
+      const name = basename(filename).replace(".hbs", "");
+
+      handlebars.registerPartial(name, template);
+    });
+
+    this.cache.add(cwd);
+  }
 
   async render(path: string, data: any, options: Partial<RenderOptions> = {}) {
     const {output, templateDir, rootDir} = this.mapOptions(path, options);
     let content = "";
 
     const file = normalizePath(join(templateDir, path));
+
+    options.baseDir && (await this.loadPartials(join(templateDir, options.baseDir)));
 
     if (path.endsWith(".hbs")) {
       content = await Consolidate.handlebars(file, data);
