@@ -2,11 +2,15 @@ import {Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 import {MochaGenerateHook} from "./hooks/MochaGenerateHook";
 import {MochaInitHook} from "./hooks/MochaInitHook";
+import {RuntimesModule} from "@tsed/cli";
 
 @Module({
   imports: [MochaInitHook, MochaGenerateHook]
 })
 export class CliPluginMochaModule {
+  @Inject()
+  runtimes: RuntimesModule;
+
   @Inject()
   packageJson: ProjectPackageJson;
 
@@ -17,10 +21,10 @@ export class CliPluginMochaModule {
   }
 
   addScripts() {
-    const runner = this.packageJson.getRunCmd();
+    const runtime = this.runtimes.get();
 
     this.packageJson.addScripts({
-      test: `${runner} test:unit && ${runner} test:coverage`,
+      test: `${runtime.run("test:unit")}  && ${runtime.run("test:coverage")} `,
       "test:unit": "cross-env NODE_ENV=test mocha",
       "test:coverage": "cross-env NODE_ENV=test nyc mocha"
     });

@@ -1,4 +1,5 @@
 import {Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
+import {RuntimesModule} from "@tsed/cli";
 import {Inject} from "@tsed/di";
 import {JestGenerateHook} from "./hooks/JestGenerateHook";
 import {JestInitHook} from "./hooks/JestInitHook";
@@ -7,6 +8,9 @@ import {JestInitHook} from "./hooks/JestInitHook";
   imports: [JestInitHook, JestGenerateHook]
 })
 export class CliPluginJestModule {
+  @Inject()
+  runtimes: RuntimesModule;
+
   @Inject()
   packageJson: ProjectPackageJson;
 
@@ -17,12 +21,12 @@ export class CliPluginJestModule {
   }
 
   addScripts() {
-    const runner = this.packageJson.getRunCmd();
+    const runtime = this.runtimes.get();
 
     this.packageJson.addScripts({
-      test: `${runner} test:lint && ${runner} test:coverage`,
+      test: `${runtime.run("test:lint")} && ${runtime.run("test:coverage")} `,
       "test:unit": "cross-env NODE_ENV=test jest",
-      "test:coverage": `${runner} test:unit`
+      "test:coverage": `${runtime.run("test:unit")} `
     });
   }
 
