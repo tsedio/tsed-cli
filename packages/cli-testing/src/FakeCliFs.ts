@@ -1,6 +1,8 @@
+import * as fs from "fs";
 import {PathLike} from "fs";
 import {EnsureOptions, WriteFileOptions} from "fs-extra";
 import {normalizePath} from "./normalizePath";
+import {isString} from "@tsed/core";
 
 export class FakeCliFs {
   static entries = new Map<any, string>();
@@ -26,6 +28,12 @@ export class FakeCliFs {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   readFileSync(file: string | Buffer | number, encoding?: any): string {
+    try {
+      if (isString(file) && file.match(/_partials/)) {
+        return fs.readFileSync(file, encoding) as any as string;
+      }
+    } catch (er) {}
+
     return FakeCliFs.entries.get(normalizePath(file))!;
   }
 

@@ -1,5 +1,5 @@
 import {InitCmdContext} from "@tsed/cli";
-import {CliService, Inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
+import {CliService, Inject, OnExec, PackageManagersModule, ProjectPackageJson} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {CliPrisma} from "../services/CliPrisma";
 
@@ -13,6 +13,9 @@ export class PrismaInitHook {
 
   @Inject()
   protected packageJson: ProjectPackageJson;
+
+  @Inject()
+  protected packageManagers: PackageManagersModule;
 
   @OnExec("init")
   onExec(ctx: InitCmdContext) {
@@ -60,7 +63,7 @@ export class PrismaInitHook {
 
   $onFinish() {
     return new Promise((resolve) => {
-      this.packageJson.runScript("prisma:generate").subscribe({
+      this.packageManagers.runScript("prisma:generate").subscribe({
         complete() {
           resolve([]);
         },

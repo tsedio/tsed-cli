@@ -1,11 +1,14 @@
 import {InitCmdContext} from "@tsed/cli";
-import {Inject, Injectable, OnExec, OnPostInstall, ProjectPackageJson, RootRendererService} from "@tsed/cli-core";
+import {Inject, Injectable, OnExec, OnPostInstall, PackageManagersModule, ProjectPackageJson, RootRendererService} from "@tsed/cli-core";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
 @Injectable()
 export class EslintInitHook {
   @Inject()
   protected packageJson: ProjectPackageJson;
+
+  @Inject()
+  protected packageManagers: PackageManagersModule;
 
   @Inject()
   protected rootRenderer: RootRendererService;
@@ -65,7 +68,7 @@ export class EslintInitHook {
             })
             .write();
 
-          await this.packageJson.runScript("prepare");
+          await this.packageManagers.runScript("prepare");
         }
       }
     ];

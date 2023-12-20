@@ -7,7 +7,7 @@ import {BunRuntime} from "./supports/BunRuntime";
 import {SWCRuntime} from "./supports/SWCRuntime";
 import {BaseRuntime} from "./supports/BaseRuntime";
 
-export interface InitOptions extends Record<string, unknown> {
+export interface RuntimeInitOptions extends Record<string, unknown> {
   runtime?: string;
 }
 
@@ -25,7 +25,7 @@ export class RuntimesModule {
     this.runtimes = runtimes.filter((manager) => manager.has());
   }
 
-  init(ctx: InitOptions) {
+  init(ctx: RuntimeInitOptions) {
     ctx.runtime = ctx.runtime || this.get().name;
 
     if (ctx.runtime === "bun") {
@@ -55,7 +55,7 @@ export class RuntimesModule {
     return selected;
   }
 
-  scripts(ctx: InitOptions) {
+  scripts(ctx: RuntimeInitOptions) {
     const runtime = this.get(ctx.runtime);
 
     return {
