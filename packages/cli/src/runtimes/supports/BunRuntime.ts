@@ -7,6 +7,7 @@ import {Injectable} from "@tsed/di";
 export class BunRuntime extends BaseRuntime {
   readonly name = "bun";
   readonly cmd = "bun";
+  readonly order: number = 4;
 
   compile(src: string, out: string) {
     return `${this.cmd} build --target=bun ${src} --outfile=${out}`;

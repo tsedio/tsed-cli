@@ -210,7 +210,11 @@ export class InitCmd implements CommandProvider {
           return paramCase(input);
         }
       },
-      ...getFeaturesPrompt(runtimes, packageManagers, initialOptions)
+      ...getFeaturesPrompt(
+        runtimes,
+        packageManagers.filter((o) => o === "bun"),
+        initialOptions
+      )
     ];
   }
 
@@ -218,13 +222,19 @@ export class InitCmd implements CommandProvider {
     this.resolveRootDir(ctx);
     ctx = mapToContext(ctx);
 
+    this.runtimes.init(ctx);
+
+    this.runtimes.list().forEach((key) => {
+      ctx[key] = ctx.runtime === key;
+    });
+
+    this.packageManagers.list().forEach((key) => {
+      ctx[key] = ctx.packageManager === key;
+    });
+
     return fillImports({
       ...ctx,
       entryServer: ctx.convention !== ProjectConvention.ANGULAR ? "Server" : "server",
-      yarn: PackageManager.YARN === ctx.packageManager || !ctx.packageManager,
-      yarn_berry: ctx.packageManager === PackageManager.YARN_BERRY || !ctx.packageManager,
-      npm: ctx.packageManager == PackageManager.NPM,
-      pnpm: ctx.packageManager == PackageManager.PNPM,
       cliVersion: ctx.cliVersion || this.cliPackageJson.version,
       srcDir: this.configuration.project?.srcDir,
       platformSymbol: ctx.platform && pascalCase(`Platform ${ctx.platform}`)
@@ -254,7 +264,6 @@ export class InitCmd implements CommandProvider {
         {
           title: "Initialize package.json",
           task: async () => {
-            this.runtimes.init(ctx);
             await this.packageManagers.init(ctx);
 
             this.addScripts(ctx);

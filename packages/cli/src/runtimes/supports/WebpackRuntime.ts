@@ -7,6 +7,7 @@ import {BabelRuntime} from "./BabelRuntime";
 })
 export class WebpackRuntime extends BabelRuntime {
   readonly name = "webpack";
+  readonly order: number = 2;
 
   files() {
     return [...super.files(), "/init/webpack.config.js.hbs"];

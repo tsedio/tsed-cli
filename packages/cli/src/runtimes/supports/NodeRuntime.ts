@@ -7,6 +7,7 @@ import {Injectable} from "@tsed/di";
 export class NodeRuntime extends BaseRuntime {
   readonly name: string = "node";
   readonly cmd: string = "node";
+  readonly order: number = 0;
 
   devDependencies(): Record<string, any> {
     return {

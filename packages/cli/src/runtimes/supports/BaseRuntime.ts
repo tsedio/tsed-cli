@@ -4,6 +4,7 @@ import {CliExeca, PackageManagersModule} from "@tsed/cli-core";
 export abstract class BaseRuntime {
   abstract readonly name: string;
   abstract readonly cmd: string;
+  readonly order: number = 10;
 
   @Inject(PackageManagersModule)
   protected packageManagers: PackageManagersModule;

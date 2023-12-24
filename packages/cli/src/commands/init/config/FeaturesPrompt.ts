@@ -50,11 +50,6 @@ export enum FeatureType {
   ESLINT = "eslint",
   LINT_STAGED = "lintstaged",
   PRETTIER = "prettier"
-
-  // BUNDLER
-  // BUNDLER = "bundler",
-  // BABEL = "babel",
-  // WEBPACK = "babel:webpack"
 }
 
 export const FeaturesMap: Record<string, Feature> = {
