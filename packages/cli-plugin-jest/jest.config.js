@@ -6,10 +6,10 @@ module.exports = {
   roots: ["<rootDir>/src", "<rootDir>/test"],
   coverageThreshold: {
     global: {
-      statements: 79.45,
+      statements: 80,
       branches: 37.5,
       functions: 60,
-      lines: 79.45
+      lines: 80
     }
   }
 };

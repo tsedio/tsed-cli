@@ -512,6 +512,7 @@ describe("Init cmd", () => {
           "project-name/.barrelsby.json",
           "project-name/.dockerignore",
           "project-name/.gitignore",
+          "project-name/.node-dev.json",
           "project-name/.swcrc",
           "project-name/Dockerfile",
           "project-name/README.md",
@@ -567,7 +568,7 @@ describe("Init cmd", () => {
           "scripts": Object {
             "barrels": "barrelsby --config .barrelsby.json",
             "build": "yarn run barrels && swc src/index.ts -o dist/index.js -s",
-            "start": "yarn run barrels && swc src/index.ts -w -s ",
+            "start": "yarn run barrels && node-dev src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           },
           "tsed": Object {

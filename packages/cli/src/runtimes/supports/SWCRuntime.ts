@@ -6,13 +6,14 @@ import {NodeRuntime} from "./NodeRuntime";
 })
 export class SWCRuntime extends NodeRuntime {
   readonly name = "swc";
+  readonly order: number = 3;
 
   files() {
-    return [...super.files(), "/init/.swcrc.hbs"];
+    return [...super.files(), "/init/.swcrc.hbs", "/init/.node-dev.json.hbs"];
   }
 
   startDev(main: string) {
-    return `swc ${main} -w -s `;
+    return `node-dev ${main}`;
   }
 
   compile(src: string, out: string) {
@@ -23,7 +24,8 @@ export class SWCRuntime extends NodeRuntime {
     return {
       "@swc/core": "latest",
       "@swc/cli": "latest",
-      "@swc/helpers": "latest"
+      "@swc/helpers": "latest",
+      "node-dev": "latest"
     };
   }
 }

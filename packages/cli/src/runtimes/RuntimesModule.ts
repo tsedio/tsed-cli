@@ -34,7 +34,7 @@ export class RuntimesModule {
   }
 
   list(): string[] {
-    return this.runtimes.map((manager) => manager.name);
+    return this.runtimes.sort((a, b) => a.order - b.order).map((manager) => manager.name);
   }
 
   get(name?: string) {
