@@ -212,7 +212,7 @@ export class InitCmd implements CommandProvider {
       },
       ...getFeaturesPrompt(
         runtimes,
-        packageManagers.filter((o) => o === "bun"),
+        packageManagers.filter((o) => o !== "bun"),
         initialOptions
       )
     ];
