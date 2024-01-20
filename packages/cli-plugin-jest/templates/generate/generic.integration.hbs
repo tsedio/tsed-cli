@@ -4,7 +4,7 @@ import { {{symbolName}} } from "./{{symbolPathBasename}}";
 import { Server } from "{{relativeSrcPath}}/Server";
 
 describe("{{symbolName}}", () => {
-  let request: SuperTest.SuperTest<SuperTest.Test>;
+  let request: SuperTest.Agent;
 
   beforeEach(PlatformTest.bootstrap(Server, {
     mount: {
