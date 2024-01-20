@@ -567,7 +567,7 @@ describe("Init cmd", () => {
           "name": "project-data",
           "scripts": Object {
             "barrels": "barrelsby --config .barrelsby.json",
-            "build": "yarn run barrels && swc src/index.ts -o dist/index.js -s",
+            "build": "yarn run barrels && swc src --out-dir dist -s",
             "start": "yarn run barrels && node-dev src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           },

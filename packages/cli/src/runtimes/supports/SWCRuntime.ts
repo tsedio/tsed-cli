@@ -17,7 +17,7 @@ export class SWCRuntime extends NodeRuntime {
   }
 
   compile(src: string, out: string) {
-    return `swc ${src} -o ${out} -s`;
+    return `swc ${src.replace("/index.ts", "")} --out-dir ${out.replace("/index.js", "")} -s`;
   }
 
   devDependencies(): Record<string, any> {
