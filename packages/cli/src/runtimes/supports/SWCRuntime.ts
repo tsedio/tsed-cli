@@ -25,6 +25,7 @@ export class SWCRuntime extends NodeRuntime {
       "@swc/core": "latest",
       "@swc/cli": "latest",
       "@swc/helpers": "latest",
+      "@swc-node/register": "latest",
       "node-dev": "latest"
     };
   }
