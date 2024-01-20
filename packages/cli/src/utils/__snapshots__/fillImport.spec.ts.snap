@@ -92,7 +92,7 @@ Object {
       "from": "@tsed/oidc-provider",
     },
     Object {
-      "from": "@tsed/passportjs",
+      "from": "@tsed/passport",
     },
     Object {
       "from": "@tsed/typegraphql",
@@ -247,7 +247,7 @@ Object {
       "from": "@tsed/oidc-provider",
     },
     Object {
-      "from": "@tsed/passportjs",
+      "from": "@tsed/passport",
     },
     Object {
       "from": "@tsed/typegraphql",

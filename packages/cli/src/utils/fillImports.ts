@@ -25,7 +25,7 @@ export function fillImports(ctx: any) {
     ctx.swagger && {from: "@tsed/swagger"},
     ctx.mongoose && {from: "@tsed/mongoose"},
     ctx.oidc && {from: "@tsed/oidc-provider"},
-    ctx.passportjs && {from: "@tsed/passportjs"},
+    ctx.passportjs && {from: "@tsed/passport"},
     ctx.graphql && {from: "@tsed/typegraphql"},
     ctx.graphql && {from: "./datasources/index"},
     ctx.graphql && {from: "./resolvers/index"},
