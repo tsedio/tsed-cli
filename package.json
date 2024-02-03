@@ -52,7 +52,7 @@
     "@tsed/logger": ">=6.2.1",
     "@tsed/normalize-path": ">=7.14.2",
     "any-observable": "0.5.1",
-    "axios": "0.26.1",
+    "axios": "1.6.7",
     "chalk": "4.1.0",
     "commander": "9.3.0",
     "consolidate": "0.16.0",
@@ -82,7 +82,7 @@
     "@swc/helpers": "^0.5.1",
     "@swc/jest": "^0.2.26",
     "@tsed/markdown-it-symbols": "3.20.4",
-    "@tsed/monorepo-utils": "1.23.0",
+    "@tsed/monorepo-utils": "2.0.2",
     "@tsed/ts-doc": "^4.1.0",
     "@types/jest": "28.1.7",
     "@types/node": "18.7.8",
@@ -143,5 +143,6 @@
         "cname": "cli.tsed.io"
       }
     ]
-  }
+  },
+  "packageManager": "yarn@4.1.0"
 }
