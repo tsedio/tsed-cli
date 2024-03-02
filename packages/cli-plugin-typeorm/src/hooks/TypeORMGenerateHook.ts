@@ -1,7 +1,7 @@
 import {FeaturesMap, GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
 import {CliDockerComposeYaml, Inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
-import {constantCase} from "change-case";
+import {camelCase} from "change-case";
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
 export interface TypeORMGenerateOptions extends GenerateCmdContext {
@@ -103,7 +103,7 @@ export class TypeORMGenerateHook {
               name,
               database,
               symbolName,
-              tokenName: constantCase(symbolName)
+              instanceName: camelCase(symbolName)
             },
             {
               templateDir: TEMPLATE_DIR,

@@ -30,6 +30,7 @@ export class BabelRuntime extends NodeRuntime {
       "@babel/plugin-proposal-decorators": "latest",
       "@babel/preset-env": "latest",
       "@babel/preset-typescript": "latest",
+      "@babel/plugin-proposal-object-rest-spread": "latest",
       "babel-plugin-transform-typescript-metadata": "latest",
       "babel-watch": "latest"
     };

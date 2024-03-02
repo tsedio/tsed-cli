@@ -5,8 +5,9 @@ exports[`Generate DataSource should generate the template with the right options
 import {DataSource} from \\"typeorm\\";
 import {Logger} from \\"@tsed/logger\\";
 
-export const TEST_DATASOURCE = Symbol.for(\\"TestDatasource\\");
-export const TestDatasource = new DataSource({
+export const TestDatasource = Symbol.for(\\"TestDatasource\\");
+export type TestDatasource = DataSource;
+export const testDatasource = new DataSource({
   type: \\"mysql\\",
   entities: [],
   host: \\"localhost\\",
@@ -16,16 +17,17 @@ export const TestDatasource = new DataSource({
   database: \\"test\\"
 });
 
+
 registerProvider<DataSource>({
-  provide: TEST_DATASOURCE,
+  provide: TestDatasource,
   type: \\"typeorm:datasource\\",
   deps: [Logger],
   async useAsyncFactory(logger: Logger) {
-    await TestDatasource.initialize();
+    await testDatasource.initialize();
 
     logger.info(\\"Connected with typeorm to database: Test\\");
 
-    return TestDatasource;
+    return testDatasource;
   },
   hooks: {
     $onDestroy(dataSource) {

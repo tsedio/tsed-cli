@@ -2,8 +2,9 @@ import {registerProvider} from "@tsed/di";
 import {DataSource} from "typeorm";
 import {Logger} from "@tsed/logger";
 
-export const {{tokenName}} = Symbol.for("{{symbolName}}");
-export const {{symbolName}} = new DataSource({
+export const {{symbolName}} = Symbol.for("{{symbolName}}");
+export type {{symbolName}} = DataSource;
+export const {{instanceName}} = new DataSource({
   type: "{{database}}",
   entities: [],
 {{#switch database}}
@@ -60,16 +61,17 @@ export const {{symbolName}} = new DataSource({
 {{/switch}}
 });
 
+
 registerProvider<DataSource>({
-  provide: {{tokenName}},
+  provide: {{symbolName}},
   type: "typeorm:datasource",
   deps: [Logger],
   async useAsyncFactory(logger: Logger) {
-    await {{symbolName}}.initialize();
+    await {{instanceName}}.initialize();
 
     logger.info("Connected with typeorm to database: {{name}}");
 
-    return {{symbolName}};
+    return {{instanceName}};
   },
   hooks: {
     $onDestroy(dataSource) {
