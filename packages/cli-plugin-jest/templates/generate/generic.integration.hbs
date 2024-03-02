@@ -4,20 +4,15 @@ import { {{symbolName}} } from "./{{symbolPathBasename}}";
 import { Server } from "{{relativeSrcPath}}/Server";
 
 describe("{{symbolName}}", () => {
-  let request: SuperTest.Agent;
-
   beforeEach(PlatformTest.bootstrap(Server, {
     mount: {
       "/": [{{symbolName}}]
     }
   }));
-  beforeEach(() => {
-    request = SuperTest(PlatformTest.callback());
-  });
-
   afterEach(PlatformTest.reset);
 
   it("should call GET {{route}}", async () => {
+     const request = SuperTest(PlatformTest.callback());
      const response = await request.get("{{route}}").expect(200);
 
      expect(response.text).toEqual("hello");

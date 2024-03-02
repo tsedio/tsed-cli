@@ -3,16 +3,11 @@ import SuperTest from "supertest";
 import { {{symbolName}} } from "./{{symbolPathBasename}}";
 
 describe("{{symbolName}}", () => {
-  let request: SuperTest.SuperTest<SuperTest.Test>;
-
   beforeEach(PlatformTest.bootstrap({{symbolName}}));
-  beforeEach(() => {
-    request = SuperTest(PlatformTest.callback());
-  });
-
   afterEach(PlatformTest.reset);
 
   it("should call GET {{route}}", async () => {
+     const request = SuperTest(PlatformTest.callback());
      const response = await request.get("{{route}}").expect(404);
 
      expect(response.body).toEqual({

@@ -56,8 +56,9 @@ exports[`TypeORM: Init cmd should generate a project with the right options 3`] 
 import {DataSource} from \\"typeorm\\";
 import {Logger} from \\"@tsed/logger\\";
 
-export const MYSQL_DATASOURCE = Symbol.for(\\"MysqlDatasource\\");
-export const MysqlDatasource = new DataSource({
+export const MysqlDatasource = Symbol.for(\\"MysqlDatasource\\");
+export type MysqlDatasource = DataSource;
+export const mysqlDatasource = new DataSource({
   type: \\"mysql\\",
   entities: [],
   host: \\"localhost\\",
@@ -67,16 +68,17 @@ export const MysqlDatasource = new DataSource({
   database: \\"test\\"
 });
 
+
 registerProvider<DataSource>({
-  provide: MYSQL_DATASOURCE,
+  provide: MysqlDatasource,
   type: \\"typeorm:datasource\\",
   deps: [Logger],
   async useAsyncFactory(logger: Logger) {
-    await MysqlDatasource.initialize();
+    await mysqlDatasource.initialize();
 
     logger.info(\\"Connected with typeorm to database: Mysql\\");
 
-    return MysqlDatasource;
+    return mysqlDatasource;
   },
   hooks: {
     $onDestroy(dataSource) {
