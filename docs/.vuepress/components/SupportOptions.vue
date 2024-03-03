@@ -35,14 +35,17 @@
 
     <h4 class="text-center font-bold">Or</h4>
 
-    <div class="reset-list flex justify-center align-center p-3 mb-5">
-      <Button
-        data-mode="popup"
-        class="typeform-share"
-        href="https://form.typeform.com/to/uJLP7anG">
-        Reach me directly
-      </Button>
-    </div>
+    <ul class="reset-list flex justify-center align-center p-3 mb-5">
+      <li class="p-2">
+        <Button
+          class="typeform-share"
+          data-mode="popup"
+          href="https://tsed.io/contact.html">
+          <BxIcon name="bx-message-alt-dots" class="mr-1" />
+          Contact us directly
+        </Button>
+      </li>
+    </ul>
   </div>
 </template>
 <script>

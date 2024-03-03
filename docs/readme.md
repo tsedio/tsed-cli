@@ -5,10 +5,12 @@ meta:
  - name: keywords
    content: Ts.ED cli nodejs express typescript javascript es6 decorators
 gettingStartedText: Getting started
-gettingStartedUrl: /getting-started/
+gettingStartedUrl: /getting-started/index.html
 messengerText: Discussions
 messengerIcon: bxl-slack
 messengerUrl: https://api.tsed.io/rest/slack/tsedio/tsed
+sponsorText: Sponsor @romakita
+sponsorUrl: https://github.com/sponsors/Romakita
 features:
 - title: tsed init
   details: The Ts.ED CLI makes it easy to create an application that already works, right out of the box. It already follows our best practices!
@@ -25,40 +27,43 @@ contributors:
   badge:
     width: 45
     bgColor: white
+support:
+  url: https://tsed.io/contact.html
 backers:
- cta:
-   label: Become backer
-   url: https://opencollective.com/tsed#backers
+  cta:
+    label: Become backer
+    url: https://opencollective.com/tsed#backers
 sponsors:
- classes:
- title: Support us
- description: Ts.ED is under MIT-license and is an open-source project. Many thanks to our sponsors, partners and backers who contribute to promote and support our project!
- cta:
-   label: Become sponsor
-   url: /support.html 
- items:
-  - title: Sponsors
-    class: w-1/2 sm:w-1/6 px-5 py-3
-    style:
-      maxHeight: 150px
-    items:
-      - title: Medayo
-        href: https://www.medayo.com
-        src: https://avatars.githubusercontent.com/u/40989284?v=4
-      - title: Weseek
-        href: https://weseek.co.jp/
-        src: https://avatars.githubusercontent.com/u/6468105?v=4
-  - title: They use it
-    class: w-1/3 sm:w-1/6 px-5 py-3
-    style:
-      maxHeight: 80px
-    items:
-      - title: Artips
-        href: https://artips.fr
-        src: https://artips.fr/resources/img/artips/artips.png
-      - title: Yumi.us
-        src: https://yumi.us/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F6bc09fed-4612-4aa0-9192-225a0b3c7a30%2FYumi-logo-circle.png?table=block&id=1a875820-287a-4a97-aa40-ba3c8f3de9ae&width=250&userId=&cache=v2
-        href: https://yumi.us/
+  classes:
+  title: Support us
+  description: Ts.ED is under MIT-license and is an open-source project. Many thanks to our sponsors, partners and backers who contribute to promote and support our project!
+  cta:
+    label: Become sponsor
+    url: /support.html
+  items:
+    - title: Premium sponsors
+      class: w-1/2 sm:w-1/6 px-5 py-3
+      style:
+        maxHeight: 150px
+      items:
+        - title: Zenika
+          href: https://www.zenika.com
+          src: https://zenika-website.cdn.prismic.io/zenika-website/4e73b102-9045-4cff-b098-a0625f7d10f8_logo_light.svg
+        - title: Weseek
+          href: https://weseek.co.jp/
+          src: https://avatars.githubusercontent.com/u/6468105?v=4
+        - title: Underscore tech
+          href: https://pxr.homerun.co/
+          src: https://images.opencollective.com/pxr/fe09820/logo/256.png
+    - title: Partners
+      class: w-1/3 sm:w-1/6 px-5 py-3
+      style:
+        maxHeight: 90px
+      items:
+        - title: schnell.digital
+          href: https://schnell.digital/
+          src: https://tsed.io/partners/schnell.svg
+showContent: false
 frameworks:
 - title: TypeScript
   href: https://www.typescriptlang.org/
@@ -134,7 +139,7 @@ Why <span class="text-blue">Ts</span>.ED?
 :::
 
 ::: slot testimonial-content
-Ts.ED is a Node.js Framework on top of Express/Koa.js. Written in Typescript, it helps you build your server-side application easily and quickly. 
+Ts.ED is a Node.js Framework on top of Express/Koa.js. Written in Typescript, it helps you build your server-side application easily and quickly.
 If you want to start a complete out-of-the-box project or fully customize it yourself, Ts.ED will guide you there !
 
 <Button href="https://tsed.io" class="mt-8" rounded="medium">See more on Ts.ED</Button>

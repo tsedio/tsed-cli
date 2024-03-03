@@ -1,3 +1,4 @@
+import "./window-boot"
 import VueAnalytics from "vue-analytics";
 import VueTsED from "vuepress-theme-tsed/src/install";
 import SupportUsBlock from "./components/SupportUsBlock";
