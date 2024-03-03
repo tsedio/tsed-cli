@@ -4,6 +4,7 @@
   "description": "CLI to bootstrap your Ts.ED project",
   "private": true,
   "scripts": {
+    "postinstall": "cd docs && yarn install",
     "configure": "monorepo ci configure",
     "clean": "monorepo clean workspace",
     "test": "lerna run test --stream",
@@ -20,7 +21,7 @@
     "docs:build": "yarn api:build && yarn vuepress:build",
     "docs:publish": "yarn docs:build && monorepo publish ghpages",
     "api:build": "lerna run build && tsdoc",
-    "vuepress:build": "cross-env NODE_ENV=production vuepress build docs",
+    "vuepress:build": "rm -rf ./docs/api && cd ./docs && yarn vuepress:build",
     "vuepress:serve": "vuepress dev docs",
     "prettier": "prettier '**/*.{ts,js,json,md,yml,yaml}' --write",
     "release": "semantic-release",
@@ -112,10 +113,7 @@
     "ts-jest": "28.0.8",
     "ts-node": "10.9.1",
     "tsconfig-paths": "4.1.2",
-    "typescript": "4.9.5",
-    "vue-analytics": "5.22.1",
-    "vuepress": "1.9.7",
-    "vuepress-theme-tsed": "3.19.5"
+    "typescript": "4.9.5"
   },
   "directories": {
     "packages": "packages",
