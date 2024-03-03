@@ -45,6 +45,7 @@ export enum FeatureType {
   // TESTING
   TESTING = "testing",
   JEST = "jest",
+  VITEST = "vitest",
   MOCHA = "mocha",
   LINTER = "linter",
   ESLINT = "eslint",
@@ -226,6 +227,12 @@ export const FeaturesMap: Record<string, Feature> = {
       typeorm: "latest"
     }
   },
+  [FeatureType.VITEST]: {
+    name: "Vitest",
+    devDependencies: {
+      "@tsed/cli-plugin-vitest": "{{cliVersion}}"
+    }
+  },
   [FeatureType.JEST]: {
     name: "Jest",
     devDependencies: {
@@ -251,37 +258,6 @@ export const FeaturesMap: Record<string, Feature> = {
   [FeatureType.LINT_STAGED]: {
     name: "Lint on commit"
   },
-  // [FeatureType.BABEL]: {
-  //   name: "Babel",
-  //   devDependencies: {
-  //     // "@babel/cli": "latest",
-  //     // "@babel/core": "latest",
-  //     // "@babel/node": "latest",
-  //     // "@babel/plugin-proposal-class-properties": "latest",
-  //     // "@babel/plugin-proposal-decorators": "latest",
-  //     // "@babel/preset-env": "latest",
-  //     // "@babel/preset-typescript": "latest",
-  //     // "babel-plugin-transform-typescript-metadata": "latest",
-  //     // "babel-watch": "latest"
-  //   }
-  // },
-  // [FeatureType.WEBPACK]: {
-  //   name: "Webpack",
-  //   devDependencies: {
-  //     // "@babel/cli": "latest",
-  //     // "@babel/core": "latest",
-  //     // "@babel/node": "latest",
-  //     // "@babel/plugin-proposal-class-properties": "latest",
-  //     // "@babel/plugin-proposal-decorators": "latest",
-  //     // "@babel/preset-env": "latest",
-  //     // "@babel/preset-typescript": "latest",
-  //     // "babel-plugin-transform-typescript-metadata": "latest",
-  //     // "babel-watch": "latest",
-  //     // "babel-loader": "latest",
-  //     // webpack: "latest",
-  //     // "webpack-cli": "latest"
-  //   }
-  // },
   node: {
     name: "Node.js",
     checked: true
@@ -352,7 +328,6 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
       FeatureType.OIDC,
       FeatureType.TESTING,
       FeatureType.LINTER,
-      //  FeatureType.BUNDLER,
       FeatureType.COMMANDS
     ]
   },
@@ -397,7 +372,7 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
     type: "list",
     name: "featuresTesting",
     when: hasFeature(FeatureType.TESTING),
-    choices: [FeatureType.JEST, FeatureType.MOCHA]
+    choices: [FeatureType.VITEST, FeatureType.JEST, FeatureType.MOCHA]
   },
   {
     message: "Choose linter tools framework",

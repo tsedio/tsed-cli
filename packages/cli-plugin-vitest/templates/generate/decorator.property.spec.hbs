@@ -1,0 +1,14 @@
+import { expect, describe, it } from "vitest";
+import { {{symbolName}} } from "./{{symbolPathBasename}}";
+
+describe("{{symbolName}}", () => {
+  it("should do something", () => {
+    class Test {
+      @{{symbolName}}({})
+      property: string;
+    }
+
+    expect(typeof {{symbolName}}).toBe("function")
+    expect(typeof {{symbolName}}()).toBe("function")
+  });
+});

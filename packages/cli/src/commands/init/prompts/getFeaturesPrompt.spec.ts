@@ -257,6 +257,13 @@ describe("getFeaturesPrompt", () => {
           "choices": Array [
             Object {
               "devDependencies": Object {
+                "@tsed/cli-plugin-vitest": "{{cliVersion}}",
+              },
+              "name": "Vitest",
+              "value": "vitest",
+            },
+            Object {
+              "devDependencies": Object {
                 "@tsed/cli-plugin-jest": "{{cliVersion}}",
               },
               "name": "Jest",

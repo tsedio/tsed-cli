@@ -98,6 +98,10 @@ module.exports = {
                 link: 'https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-eslint'
               },
               {
+                text: 'Vitest',
+                link: 'https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-vitest'
+              },
+              {
                 text: 'Jest',
                 link: 'https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-jest'
               },

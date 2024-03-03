@@ -17,7 +17,7 @@ features:
 - title: tsed generate
   details: Generate provider, controllers, services and pipes with a simple command. The CLI will also create simple test shells for all of these.
 - title: tsed add
-  details: Install a CLI plugins to extend the CLI capabilities. Out-of-the-box support tslint, prettier, mocha, jest, passport, etc...
+  details: Install a CLI plugins to extend the CLI capabilities. Out-of-the-box support tslint, prettier, vitest, mocha, jest, passport, etc...
 contributors:
   classes: bg-gray-lighter mb-10
   title: Our awesome <b>contributors</b>
@@ -74,6 +74,9 @@ frameworks:
 - title: Koa.js
   href: https://koajs.com/
   src: /koa.svg
+- title: Vitest
+  href: https://vitest.dev/
+  src: /vitest.png
 - title: Jest
   href: https://jestjs.io/
   src: /jest.svg
