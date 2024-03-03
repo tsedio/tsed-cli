@@ -4436,7 +4436,7 @@ __metadata:
     "@types/url-parse": "npm:^1.4.3"
     "@types/uuid": "npm:8.3.4"
     ajv: "npm:8.11.0"
-    axios: "npm:0.26.1"
+    axios: "npm:1.6.7"
     chalk: "npm:4.1.2"
     change-case: "npm:^4.1.2"
     commander: "npm:9.3.0"
@@ -7516,7 +7516,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:*, axios@npm:0.26.1":
+"axios@npm:*":
   version: 0.26.1
   resolution: "axios@npm:0.26.1"
   dependencies:
