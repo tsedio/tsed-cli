@@ -1,15 +1,7 @@
 {
   "npmClient": "yarn",
-  "useWorkspaces": true,
   "packages": [
     "packages/*"
   ],
-  "version": "5.0.2",
-  "command": {
-    "bootstrap": {
-      "npmClientArgs": [
-        "--no-package-lock"
-      ]
-    }
-  }
+  "version": "5.0.2"
 }
