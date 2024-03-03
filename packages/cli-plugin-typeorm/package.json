@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-plugin-typeorm",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "Ts.ED CLI plugin. Add TypeORM support",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
@@ -24,13 +24,14 @@
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/cli": "5.0.2",
-    "@tsed/cli-core": "5.0.2",
-    "@tsed/eslint": "5.0.2",
-    "@tsed/jest-config": "5.0.2",
-    "@tsed/typescript": "5.0.2",
+    "@tsed/cli": "5.0.3",
+    "@tsed/cli-core": "5.0.3",
+    "@tsed/eslint": "5.0.3",
+    "@tsed/jest-config": "5.0.3",
+    "@tsed/typescript": "5.0.3",
     "cross-env": "7.0.3",
     "eslint": "8.22.0",
     "jest": "29.5.0"
-  }
+  },
+  "peerDependencies": {}
 }
