@@ -22,6 +22,9 @@
       "path": "./packages/cli-plugin-jest"
     },
     {
+      "path": "./packages/cli-plugin-vitest"
+    },
+    {
       "path": "./packages/cli-plugin-mocha"
     },
     {

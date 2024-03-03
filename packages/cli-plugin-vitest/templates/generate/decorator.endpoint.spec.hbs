@@ -1,0 +1,16 @@
+import { expect, describe, it } from "vitest";
+import { Store } from "@tsed/core";
+import { {{symbolName}} } from "./{{symbolPathBasename}}";
+
+describe("{{symbolName}}", () => {
+  it("should store options", () => {
+    class Test {
+      @{{symbolName}}({options: "options"})
+      method() param: string){}
+    }
+
+    const store = Store.fromMethod(Test, "method");
+
+    expect(store.get({{symbolName}})).toEqual({options: "options"});
+  });
+});
