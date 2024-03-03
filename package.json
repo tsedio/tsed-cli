@@ -19,7 +19,7 @@
     "sync:packages": "monorepo sync packages",
     "docs:serve": "yarn api:build && yarn vuepress:serve",
     "docs:build": "yarn api:build && yarn vuepress:build",
-    "docs:publish": "yarn docs:build && monorepo publish ghpages",
+    "docs:publish": "monorepo publish ghpages",
     "api:build": "lerna run build && tsdoc",
     "vuepress:build": "rm -rf ./docs/api && cd ./docs && yarn vuepress:build",
     "vuepress:serve": "vuepress dev docs",
