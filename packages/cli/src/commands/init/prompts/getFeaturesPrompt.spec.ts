@@ -20,7 +20,7 @@ describe("getFeaturesPrompt", () => {
               "value": "koa",
             },
           ],
-          "message": "Choose the target platform:",
+          "message": "Choose the target Framework:",
           "name": "platform",
           "type": "list",
         },
