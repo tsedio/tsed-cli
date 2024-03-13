@@ -4,17 +4,16 @@
     "prettier",{{/if}}
     "plugin:@typescript-eslint/recommended"
   ],
-  "plugins": ["@typescript-eslint"],
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module",
-    "project": "./tsconfig.json"
-  },
+  "plugins": [{{#if prettier}}
+    "prettier",{{/if}}
+    "@typescript-eslint"
+  ],
   "env": {
    "node": true,
    "es6": true
   },
-  "rules": {
+  "rules": { {{#if prettier}}
+    "prettier/prettier",{{/if}}
     "@typescript-eslint/no-inferrable-types": 0,
     "@typescript-eslint/no-unused-vars": 2,
     "@typescript-eslint/no-var-requires": 0
