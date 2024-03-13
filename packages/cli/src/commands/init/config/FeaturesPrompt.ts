@@ -298,7 +298,7 @@ export const FeaturesMap: Record<string, Feature> = {
 
 export const FeaturesPrompt = (availableRuntimes: string[], availablePackageManagers: string[]) => [
   {
-    message: "Choose the target platform:",
+    message: "Choose the target Framework:",
     type: "list",
     name: "platform",
     choices: [PlatformType.EXPRESS, PlatformType.KOA]

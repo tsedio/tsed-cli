@@ -29,7 +29,7 @@ export class VitestInitHook {
       {
         title: "Generate files for vitest",
         task: (ctx: any) => {
-          return this.rootRenderer.renderAll(["vitest.config.ts.hbs"], ctx, {
+          return this.rootRenderer.renderAll(["vitest.config.mts.hbs"], ctx, {
             templateDir: `${TEMPLATE_DIR}/init`
           });
         }
