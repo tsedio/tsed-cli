@@ -3276,7 +3276,7 @@ __metadata:
     enquirer: "npm:2.3.6"
     eslint: "npm:8.22.0"
     execa: "npm:5.1.1"
-    figures: "npm:4.0.1"
+    figures: "npm:6.1.0"
     filedirname: "npm:2.7.0"
     fs-extra: "npm:11.1.0"
     globby: "npm:11.1.0"
@@ -3566,7 +3566,7 @@ __metadata:
     eslint-plugin-prettier: "npm:4.2.1"
     eslint-plugin-workspaces: "npm:0.8.0"
     execa: "npm:5.1.1"
-    figures: "npm:4.0.1"
+    figures: "npm:6.1.0"
     fs-extra: "npm:11.1.0"
     gflow: "npm:^5.1.2"
     handlebars: "npm:4.7.7"
@@ -8326,7 +8326,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"figures@npm:*, figures@npm:4.0.1":
+"figures@npm:*":
   version: 4.0.1
   resolution: "figures@npm:4.0.1"
   dependencies:
@@ -8342,6 +8342,15 @@ __metadata:
   dependencies:
     escape-string-regexp: "npm:^1.0.5"
   checksum: 10/a3bf94e001be51d3770500789157f067218d4bc681a65e1f69d482de15120bcac822dceb1a7b3803f32e4e3a61a46df44f7f2c8ba95d6375e7491502e0dd3d97
+  languageName: node
+  linkType: hard
+
+"figures@npm:6.1.0":
+  version: 6.1.0
+  resolution: "figures@npm:6.1.0"
+  dependencies:
+    is-unicode-supported: "npm:^2.0.0"
+  checksum: 10/9822d13630bee8e6a9f2da866713adf13854b07e0bfde042defa8bba32d47a1c0b2afa627ce73837c674cf9a5e3edce7e879ea72cb9ea7960b2390432d8e1167
   languageName: node
   linkType: hard
 
