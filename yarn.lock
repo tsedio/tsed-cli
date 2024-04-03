@@ -3265,7 +3265,7 @@ __metadata:
     "@types/url-parse": "npm:^1.4.3"
     "@types/uuid": "npm:8.3.4"
     ajv: "npm:8.11.0"
-    axios: "npm:1.6.7"
+    axios: "npm:1.6.8"
     chalk: "npm:4.1.2"
     change-case: "npm:^4.1.2"
     commander: "npm:9.3.0"
@@ -3551,7 +3551,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^5.33.1"
     "@typescript-eslint/parser": "npm:^5.33.1"
     any-observable: "npm:0.5.1"
-    axios: "npm:1.6.7"
+    axios: "npm:1.6.8"
     chalk: "npm:4.1.0"
     commander: "npm:9.3.0"
     concurrently: "npm:7.6.0"
@@ -5274,7 +5274,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.6.7, axios@npm:>=1.6.7, axios@npm:^1.0.0":
+"axios@npm:1.6.8":
+  version: 1.6.8
+  resolution: "axios@npm:1.6.8"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10/3f9a79eaf1d159544fca9576261ff867cbbff64ed30017848e4210e49f3b01e97cf416390150e6fdf6633f336cd43dc1151f890bbd09c3c01ad60bb0891eee63
+  languageName: node
+  linkType: hard
+
+"axios@npm:>=1.6.7, axios@npm:^1.0.0":
   version: 1.6.7
   resolution: "axios@npm:1.6.7"
   dependencies:
@@ -8521,6 +8532,16 @@ __metadata:
     debug:
       optional: true
   checksum: 10/d467f13c1c6aa734599b8b369cd7a625b20081af358f6204ff515f6f4116eb440de9c4e0c49f10798eeb0df26c95dd05d5e0d9ddc5786ab1a8a8abefe92929b4
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:^1.15.6":
+  version: 1.15.6
+  resolution: "follow-redirects@npm:1.15.6"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 10/70c7612c4cab18e546e36b991bbf8009a1a41cf85354afe04b113d1117569abf760269409cb3eb842d9f7b03d62826687086b081c566ea7b1e6613cf29030bf7
   languageName: node
   linkType: hard
 
