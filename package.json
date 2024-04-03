@@ -82,7 +82,7 @@
     "@swc/helpers": "^0.5.1",
     "@swc/jest": "^0.2.26",
     "@tsed/markdown-it-symbols": "3.20.4",
-    "@tsed/monorepo-utils": "2.1.1",
+    "@tsed/monorepo-utils": "2.1.2",
     "@tsed/ts-doc": "^4.1.0",
     "@types/jest": "28.1.7",
     "@types/node": "18.7.8",
