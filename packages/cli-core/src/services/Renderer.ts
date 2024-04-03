@@ -1,13 +1,13 @@
 import {isString} from "@tsed/core";
 import {Configuration, Constant, Inject, Injectable} from "@tsed/di";
 import Consolidate from "consolidate";
-import {existsSync} from "fs-extra";
+import fs from "fs-extra";
 import normalizePath from "normalize-path";
 import globby from "globby";
 import {basename, dirname, join, relative} from "path";
 import {Observable} from "rxjs";
 import {CliFs} from "./CliFs";
-import "../utils/hbs";
+import "../utils/hbs/index";
 import handlebars from "handlebars";
 import {insertImport} from "../utils/renderer/insertImport";
 import {insertAfter} from "../utils/renderer/insertAfter";
@@ -121,7 +121,7 @@ export abstract class Renderer {
   templateExists(path: string, options: Partial<RenderOptions> = {}) {
     const {templateDir} = this.mapOptions(path, options);
 
-    return existsSync(join(templateDir, path));
+    return fs.existsSync(join(templateDir, path));
   }
 
   async scan(pattern: string[], options: any = {}): Promise<string[]> {

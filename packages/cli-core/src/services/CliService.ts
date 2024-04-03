@@ -17,7 +17,7 @@ import {ProjectPackageJson} from "./ProjectPackageJson";
 import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
 import {mapCommanderOptions} from "../utils/mapCommanderOptions";
 import {CommandMetadata} from "../interfaces/CommandMetadata";
-import {PackageManagersModule} from "../packageManagers";
+import {PackageManagersModule} from "../packageManagers/index";
 
 Inquirer.registerPrompt("autocomplete", inquirer_autocomplete_prompt);
 
