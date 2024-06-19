@@ -214,7 +214,8 @@ export class CliService {
         injector: this.injector,
         logger: this.injector.logger,
         level: this.injector.logger.level,
-        maxStackSize: 0
+        maxStackSize: 0,
+        platform: "CLI"
       });
 
       $ctx.set("data", data);
