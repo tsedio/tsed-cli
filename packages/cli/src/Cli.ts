@@ -53,7 +53,7 @@ export class Cli extends CliCore {
     }
   }
 
-  static bootstrap(settings: any = {}) {
+  static async bootstrap(settings: any = {}) {
     const opts: any = {
       ...Cli.defaults,
       ...settings
@@ -63,7 +63,8 @@ export class Cli extends CliCore {
 
     this.checkPrecondition(opts);
     this.createAliases();
-    this.updateNotifier(pkg);
+
+    await this.updateNotifier(pkg);
 
     return super.bootstrap(opts, Cli);
   }

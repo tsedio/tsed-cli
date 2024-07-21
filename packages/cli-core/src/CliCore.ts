@@ -3,7 +3,7 @@ import {Type} from "@tsed/core";
 import chalk from "chalk";
 import {Command} from "commander";
 import {join, resolve} from "path";
-import updateNotifier from "update-notifier";
+
 import {CliConfiguration} from "./services/CliConfiguration";
 import {CliPackageJson} from "./services/CliPackageJson";
 import {CliService} from "./services/CliService";
@@ -81,8 +81,11 @@ export class CliCore {
     injector.settings.set("loaded", true);
   }
 
-  static updateNotifier(pkg: any) {
+  static async updateNotifier(pkg: any) {
+    const {default: updateNotifier} = await import("update-notifier");
+
     updateNotifier({pkg, updateCheckInterval: 0}).notify();
+
     return this;
   }
 
