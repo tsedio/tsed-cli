@@ -7,7 +7,8 @@ import {
   createSubTasks,
   PackageManagersModule,
   ProjectPackageJson,
-  QuestionOptions
+  QuestionOptions,
+  Task
 } from "@tsed/cli-core";
 
 export interface AddCmdOptions extends CliDefaultOptions {
@@ -49,7 +50,7 @@ export class AddCmd implements CommandProvider {
     ];
   }
 
-  $exec(ctx: AddCmdOptions) {
+  $exec(ctx: AddCmdOptions): Task[] {
     this.packageJson.addDevDependency(ctx.name, "latest");
 
     return [
