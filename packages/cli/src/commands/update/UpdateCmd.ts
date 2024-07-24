@@ -8,7 +8,8 @@ import {
   NpmRegistryClient,
   PackageManagersModule,
   ProjectPackageJson,
-  QuestionOptions
+  QuestionOptions,
+  Task
 } from "@tsed/cli-core";
 import {getValue} from "@tsed/core";
 import semver from "semver";
@@ -70,7 +71,7 @@ export class UpdateCmd implements CommandProvider {
     ];
   }
 
-  async $exec(ctx: UpdateCmdContext) {
+  async $exec(ctx: UpdateCmdContext): Promise<Task[]> {
     Object.keys(this.projectPackage.dependencies).forEach((pkg: string) => {
       if (shouldUpdate(pkg)) {
         this.projectPackage.addDependency(pkg, ctx.version);

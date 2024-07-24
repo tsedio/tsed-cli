@@ -15,7 +15,8 @@ import {
   PackageManagersModule,
   ProjectPackageJson,
   QuestionOptions,
-  RootRendererService
+  RootRendererService,
+  Task
 } from "@tsed/cli-core";
 import {paramCase, pascalCase} from "change-case";
 import {basename, join} from "path";
@@ -289,7 +290,7 @@ export class InitCmd implements CommandProvider {
     );
   }
 
-  async $exec(ctx: InitCmdContext) {
+  async $exec(ctx: InitCmdContext): Promise<Task[]> {
     this.checkPrecondition(ctx);
 
     const subTasks = [
