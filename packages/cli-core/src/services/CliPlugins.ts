@@ -7,6 +7,7 @@ import {CliHooks} from "./CliHooks";
 import {NpmRegistryClient} from "./NpmRegistryClient";
 import {ProjectPackageJson} from "./ProjectPackageJson";
 import {PackageManagersModule} from "../packageManagers/PackageManagersModule";
+import {Task} from "../interfaces";
 
 function mapPlugins({package: {name, description = "", ...otherProps}}: any) {
   return {
@@ -46,7 +47,7 @@ export class CliPlugins {
     return loadPlugins(this.injector);
   }
 
-  addPluginsDependencies(ctx: any) {
+  addPluginsDependencies(ctx: any): Task[] {
     const plugins = Object.keys(this.packageJson.devDependencies).filter((name) => this.isPlugin(name));
 
     const tasks = plugins.map((plugin) => {

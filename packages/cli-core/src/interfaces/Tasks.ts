@@ -1,4 +1,5 @@
-import {ListrContext, ListrOptions, ListrTask} from "listr2";
+// @ts-ignore
+import type {ListrContext, ListrOptions, ListrTask} from "listr2";
 
 export interface TaskOptions<Ctx = ListrContext> extends ListrOptions<Ctx> {
   concurrent?: boolean | number;

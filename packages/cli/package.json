@@ -71,7 +71,6 @@
     "@tsed/schema": ">=7.14.2",
     "chalk": "4.1.2",
     "change-case": "4.1.2",
-    "filedirname": "2.7.0",
     "globby": "11.1.0",
     "module-alias": "^2.2.2",
     "normalize-path": "3.0.0",

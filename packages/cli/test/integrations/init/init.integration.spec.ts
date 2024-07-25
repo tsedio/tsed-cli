@@ -3,9 +3,8 @@ import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {ensureDirSync, writeFileSync} from "fs-extra";
 import {join} from "path";
 import {ArchitectureConvention, InitCmd, ProjectConvention, TEMPLATE_DIR} from "../../../src";
-import filedirname from "filedirname";
 
-const [, dir] = filedirname();
+const dir = __dirname
 
 describe("Init cmd", () => {
   beforeEach(() => {
@@ -66,9 +65,9 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
-      expect(content).toContain('import "@tsed/platform-express"');
-      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-express\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toMatchSnapshot();
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -116,7 +115,7 @@ describe("Init cmd", () => {
       expect(dockerFile).toContain("RUN yarn install --pure-lockfile");
 
       const indexContent = FakeCliFs.entries.get("project-name/src/index.ts")!;
-      expect(indexContent).toContain('import {Server} from "./Server"');
+      expect(indexContent).toContain("import {Server} from \"./Server\"");
     });
     it("should generate a project with swagger", async () => {
       CliPlatformTest.setPackageJson({
@@ -170,10 +169,10 @@ describe("Init cmd", () => {
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
-      expect(content).toContain('import "@tsed/platform-express"');
-      expect(content).toContain('import "@tsed/ajv"');
-      expect(content).toContain('import * as pages from "./controllers/pages/index"');
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-express\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
+      expect(content).toContain("import * as pages from \"./controllers/pages/index\"");
       expect(content).toMatchSnapshot();
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -261,9 +260,9 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
-      expect(content).toContain('import "@tsed/platform-express"');
-      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-express\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toMatchSnapshot();
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -352,9 +351,9 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
-      expect(content).toContain('import "@tsed/platform-express"');
-      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-express\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toMatchSnapshot();
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -444,9 +443,9 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
-      expect(content).toContain('import "@tsed/platform-express"');
-      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-express\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toMatchSnapshot();
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -536,9 +535,9 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
-      expect(content).toContain('import "@tsed/platform-express"');
-      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-express\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toMatchSnapshot();
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -626,9 +625,9 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
-      expect(content).toContain('import "@tsed/platform-express"');
-      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-express\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toMatchSnapshot();
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -724,15 +723,15 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
-      expect(content).toContain('import "@tsed/platform-express"');
-      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-express\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toMatchSnapshot();
-      expect(content).toContain('import * as pages from "./controllers/pages/index"');
+      expect(content).toContain("import * as pages from \"./controllers/pages/index\"");
       expect(content).toContain("export class Server {");
 
       const indexContent = FakeCliFs.entries.get("project-name/src/index.ts")!;
-      expect(indexContent).toContain('import {Server} from "./server"');
+      expect(indexContent).toContain("import {Server} from \"./server\"");
     });
     it("should generate a project with Arch FEATURE", async () => {
       CliPlatformTest.setPackageJson({
@@ -788,15 +787,15 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
-      expect(content).toContain('import "@tsed/platform-express"');
-      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-express\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toMatchSnapshot();
-      expect(content).toContain('import * as pages from "./pages/index"');
+      expect(content).toContain("import * as pages from \"./pages/index\"");
       expect(content).toContain("export class Server {");
 
       const indexContent = FakeCliFs.entries.get("project-name/src/index.ts")!;
-      expect(indexContent).toContain('import {Server} from "./server"');
+      expect(indexContent).toContain("import {Server} from \"./server\"");
     });
   });
 
@@ -848,9 +847,9 @@ describe("Init cmd", () => {
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
-      expect(content).toContain('import "@tsed/platform-koa"');
-      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toContain("import {Configuration, Inject} from \"@tsed/di\"");
+      expect(content).toContain("import \"@tsed/platform-koa\"");
+      expect(content).toContain("import \"@tsed/ajv\"");
       expect(content).toMatchSnapshot();
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -921,7 +920,8 @@ describe("Init cmd", () => {
             ensureDirSync(join(dir, "data", key));
           }
         });
-      } catch (er) {}
+      } catch (er) {
+      }
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
         Array [

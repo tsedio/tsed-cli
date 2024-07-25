@@ -8,4 +8,3 @@ export * from "./parseOption";
 export * from "./createTasksRunner";
 export * from "./resolveConfiguration";
 export * from "./getTemplateDirectory";
-export {default as filedirname} from "filedirname";
