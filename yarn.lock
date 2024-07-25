@@ -3277,7 +3277,6 @@ __metadata:
     eslint: "npm:8.22.0"
     execa: "npm:5.1.1"
     figures: "npm:4.0.1"
-    filedirname: "npm:2.7.0"
     fs-extra: "npm:11.1.0"
     globby: "npm:11.1.0"
     handlebars: "npm:4.7.7"
@@ -3543,7 +3542,7 @@ __metadata:
     "@tsed/di": "npm:>=7.14.2"
     "@tsed/logger": "npm:>=6.2.1"
     "@tsed/markdown-it-symbols": "npm:3.20.4"
-    "@tsed/monorepo-utils": "npm:2.1.2"
+    "@tsed/monorepo-utils": "npm:2.2.2"
     "@tsed/normalize-path": "npm:>=7.14.2"
     "@tsed/ts-doc": "npm:^4.1.0"
     "@types/jest": "npm:28.1.7"
@@ -3635,7 +3634,6 @@ __metadata:
     change-case: "npm:4.1.2"
     cross-env: "npm:7.0.3"
     eslint: "npm:8.22.0"
-    filedirname: "npm:2.7.0"
     globby: "npm:11.1.0"
     jest: "npm:29.5.0"
     module-alias: "npm:^2.2.2"
@@ -3723,9 +3721,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsed/monorepo-utils@npm:2.1.2":
-  version: 2.1.2
-  resolution: "@tsed/monorepo-utils@npm:2.1.2"
+"@tsed/monorepo-utils@npm:2.2.2":
+  version: 2.2.2
+  resolution: "@tsed/monorepo-utils@npm:2.2.2"
   dependencies:
     "@samverschueren/stream-to-observable": "npm:>=0.3.1"
     "@typescript-eslint/typescript-estree": "npm:>=6.20.0"
@@ -3752,7 +3750,7 @@ __metadata:
     semantic-release: ">=19"
   bin:
     monorepo: bin/monorepo.js
-  checksum: 10/839fdd5a50e893a61f2bfdabec82296504bd5b060fe6211ed6e591e473b9979b3a4c4b7eba427e836d54bee0788c89d56fe72e5088d70e5acaa22305958fb21f
+  checksum: 10/854af44cf89137c2586efb2f2c24b965f4da6e14fc0a45f0e46b42451642ee32712d10ccea17fb58e54bdc9a2731d547cd715ec464d94167eaa6c9c9c72669f3
   languageName: node
   linkType: hard
 
@@ -8432,15 +8430,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"filedirname@npm:2.7.0":
-  version: 2.7.0
-  resolution: "filedirname@npm:2.7.0"
-  dependencies:
-    get-current-line: "npm:^6.5.0"
-  checksum: 10/a32e2c1005ac8a3706cda47819ebff1100d5892e986e73c311da7ca80679143ada01d9536ef42c10af0ec076a616ae390b5f30c332f373fd4fb483731f41148e
-  languageName: node
-  linkType: hard
-
 "fill-range@npm:^4.0.0":
   version: 4.0.0
   resolution: "fill-range@npm:4.0.0"
@@ -8826,13 +8815,6 @@ __metadata:
   version: 2.0.5
   resolution: "get-caller-file@npm:2.0.5"
   checksum: 10/b9769a836d2a98c3ee734a88ba712e62703f1df31b94b784762c433c27a386dd6029ff55c2a920c392e33657d80191edbf18c61487e198844844516f843496b9
-  languageName: node
-  linkType: hard
-
-"get-current-line@npm:^6.5.0":
-  version: 6.6.0
-  resolution: "get-current-line@npm:6.6.0"
-  checksum: 10/bff44a3b3b5469dae1ab5b87adfe88d8149379b35069f6902eff3e779e1996e5464a106d2d542f1c89cd02e17fe513e4ca30e5910a59877d0588631da4ac1f48
   languageName: node
   linkType: hard
 

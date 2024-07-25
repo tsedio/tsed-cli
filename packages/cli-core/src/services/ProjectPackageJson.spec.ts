@@ -1,11 +1,10 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {join, resolve} from "path";
-import filedirname from "filedirname";
 import {ProjectPackageJson} from "./ProjectPackageJson";
 import {CliFs} from "./CliFs";
 import {CliExeca} from "./CliExeca";
 
-const [, dir] = filedirname();
+const dir = __dirname;
 
 async function getProjectPackageJsonFixture() {
   const cliFs = {
