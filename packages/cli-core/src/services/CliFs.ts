@@ -66,6 +66,10 @@ export class CliFs {
   async importModule(mod: string, root: string = process.cwd()) {
     try {
       if (process.env.NODE_ENV === "development") {
+        if (isCommonjs()) {
+          return require(mod);
+        }
+
         return await import(mod);
       }
     } catch (er) {}
@@ -78,4 +82,8 @@ export class CliFs {
 
     return import(mod);
   }
+}
+
+function isCommonjs() {
+  return typeof module !== "undefined" && typeof exports !== "undefined";
 }
