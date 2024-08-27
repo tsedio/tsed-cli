@@ -46,24 +46,31 @@ export class GenerateSwaggerCmd implements CommandProvider {
   private async loadPlatformModule(): Promise<{
     bootstrap(module: any, settings: any): Promise<{injector: InjectorService; stop(): Promise<void>}>;
   }> {
-    let platform = await importPackage("@tsed/platform-express", undefined, true);
+    try {
+      // @ts-ignore
+      let platform = await import("@tsed/platform-express");
 
-    if (platform) {
-      return platform.PlatformExpress;
-    }
+      if (platform) {
+        return platform.PlatformExpress;
+      }
+    } catch (er) {}
 
-    platform = await importPackage("@tsed/platform-koa", undefined, true);
+    try {
+      // @ts-ignore
+      const platform = await import("@tsed/platform-koa");
 
-    if (platform) {
-      return platform.PlatformKoa;
-    }
+      if (platform) {
+        return platform.PlatformKoa;
+      }
+    } catch (er) {}
 
     throw new Error("Unsupported platform. Please use Express.js or Koa.js platform.");
   }
 
   private async generate($ctx: GenerateSwaggerCtx) {
     const Platform = await this.loadPlatformModule();
-    const {SwaggerService} = await importPackage("@tsed/swagger");
+    // @ts-ignore
+    const {SwaggerService} = await import("@tsed/swagger");
 
     const platform = await Platform.bootstrap(this.serverModule, {
       logger: {level: "off"}
