@@ -1,6 +1,6 @@
 import {CliFs, Command, CommandProvider, Inject, Type} from "@tsed/cli-core";
 import {Constant, InjectorService} from "@tsed/di";
-import {importPackage, isString} from "@tsed/core";
+import {isString} from "@tsed/core";
 import {camelCase} from "change-case";
 import path, {join, resolve} from "path";
 import {generateApi, Hooks, RawRouteInfo, RouteNameInfo} from "swagger-typescript-api";
@@ -74,24 +74,30 @@ export class GenerateHttpClientCmd implements CommandProvider {
   }
 
   private async loadPlatformModule(): Promise<any> {
-    let platform = await importPackage("@tsed/platform-express", undefined, true);
+    try {
+      // @ts-ignore
+      let platform = await import("@tsed/platform-express");
 
-    if (platform) {
-      return platform.PlatformExpress;
-    }
+      if (platform) {
+        return platform.PlatformExpress;
+      }
+    } catch (er) {}
 
-    platform = await importPackage("@tsed/platform-koa", undefined, true);
+    try {
+      // @ts-ignore
+      const platform = await import("@tsed/platform-koa");
 
-    if (platform) {
-      return platform.PlatformKoa;
-    }
-
+      if (platform) {
+        return platform.PlatformKoa;
+      }
+    } catch (er) {}
     throw new Error("Unsupported platform. Please use Express.js or Koa.js platform.");
   }
 
   private async generate($ctx: GenerateHttpClientCtx) {
     const Platform = await this.loadPlatformModule();
-    const {SwaggerService} = await importPackage("@tsed/swagger");
+    // @ts-ignore
+    const {SwaggerService} = await import("@tsed/swagger");
 
     const platform: {
       injector: InjectorService;
