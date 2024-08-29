@@ -81,10 +81,11 @@ export class CliCore {
     injector.settings.set("loaded", true);
   }
 
+  // eslint-disable-next-line require-await
   static async updateNotifier(pkg: any) {
-    const {default: updateNotifier} = await import("update-notifier");
-
-    updateNotifier({pkg, updateCheckInterval: 0}).notify();
+    // const {default: updateNotifier} = await import("update-notifier");
+    //
+    // updateNotifier({pkg, updateCheckInterval: 0}).notify();
 
     return this;
   }
