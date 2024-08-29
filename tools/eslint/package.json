@@ -1,6 +1,6 @@
 {
   "name": "@tsed/eslint",
-  "version": "5.2.6",
+  "version": "5.2.7",
   "description": "Util to install eslint configuration on the workspace",
   "private": true,
   "main": "index.js",
@@ -9,7 +9,7 @@
     "./node.js": "./node.js"
   },
   "devDependencies": {
-    "@tsed/jest-config": "5.2.6",
+    "@tsed/jest-config": "5.2.7",
     "cross-env": "7.0.3",
     "jest": "29.5.0"
   }
