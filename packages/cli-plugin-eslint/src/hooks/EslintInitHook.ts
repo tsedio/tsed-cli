@@ -94,7 +94,7 @@ export class EslintInitHook {
   addDevDependencies(ctx: InitCmdContext) {
     this.packageJson.addDevDependencies(
       {
-        eslint: "latest",
+        eslint: "8",
         "eslint-config-prettier": "latest",
         "eslint-plugin-prettier": "latest",
         "@typescript-eslint/parser": "latest",
