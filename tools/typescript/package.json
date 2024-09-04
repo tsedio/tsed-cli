@@ -1,6 +1,6 @@
 {
   "name": "@tsed/typescript",
-  "version": "5.2.8",
+  "version": "5.2.9",
   "description": "Util to compile source",
   "private": true,
   "main": "index.js",
@@ -12,7 +12,7 @@
     "build:references": "node ./index.js"
   },
   "devDependencies": {
-    "@tsed/jest-config": "5.2.8",
+    "@tsed/jest-config": "5.2.9",
     "cross-env": "7.0.3",
     "jest": "29.5.0"
   }
