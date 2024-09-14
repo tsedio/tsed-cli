@@ -1,6 +1,7 @@
 // @ts-ignore
-import {CliPlatformTest} from "@tsed/cli-testing";
 import {SrcRendererService} from "@tsed/cli-core";
+import {CliPlatformTest} from "@tsed/cli-testing";
+
 import {GenerateCmd} from "./GenerateCmd";
 
 describe("GenerateCmd", () => {

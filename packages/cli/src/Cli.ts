@@ -1,10 +1,10 @@
 import {CliCore} from "@tsed/cli-core";
 import chalk from "chalk";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import alias from "module-alias";
-import {PKG, TEMPLATE_DIR} from "./constants";
+
 import commands from "./commands";
+import {PKG, TEMPLATE_DIR} from "./constants";
 import {ArchitectureConvention, ProjectConvention} from "./interfaces";
 
 export class Cli extends CliCore {

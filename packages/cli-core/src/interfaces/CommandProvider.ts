@@ -1,4 +1,5 @@
 import {Answers, QuestionCollection} from "inquirer";
+
 import {Tasks} from "./Tasks";
 
 export type QuestionOptions<T extends Answers = Answers> = QuestionCollection<T>;

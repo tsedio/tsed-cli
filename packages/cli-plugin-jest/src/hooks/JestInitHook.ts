@@ -7,6 +7,7 @@ import {
   ScriptsRendererService,
   SrcRendererService
 } from "@tsed/cli-core";
+
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
 @Injectable()

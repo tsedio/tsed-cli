@@ -1,12 +1,13 @@
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {PackageManagersModule} from "./PackageManagersModule";
-import {YarnManager} from "./supports/YarnManager";
-import {NpmManager} from "./supports/NpmManager";
+
 import {CliFs} from "../services";
+import {PackageManagersModule} from "./PackageManagersModule";
+import {BunManager} from "./supports/BunManager";
+import {NpmManager} from "./supports/NpmManager";
 import {PNpmManager} from "./supports/PNpmManager";
 import {YarnBerryManager} from "./supports/YarnBerryManager";
-import {BunManager} from "./supports/BunManager";
+import {YarnManager} from "./supports/YarnManager";
 
 async function getModuleFixture() {
   const yarnManager = {

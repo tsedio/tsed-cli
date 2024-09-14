@@ -1,9 +1,10 @@
 import {Inject, Injectable} from "@tsed/di";
 import execa from "execa";
-import {Observable} from "rxjs";
-import {BaseManager, ManagerCmdOpts, ManagerCmdSyncOpts} from "./BaseManager";
 import {join} from "path";
+import {Observable} from "rxjs";
+
 import {CliYaml} from "../../services/CliYaml";
+import {BaseManager, ManagerCmdOpts, ManagerCmdSyncOpts} from "./BaseManager";
 
 @Injectable({
   type: "package:manager"

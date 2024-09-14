@@ -1,11 +1,12 @@
 import {PackageManagersModule, ProjectPackageJson} from "@tsed/cli-core";
 import {Inject, Module} from "@tsed/di";
-import {NodeRuntime} from "./supports/NodeRuntime";
+
 import {BabelRuntime} from "./supports/BabelRuntime";
-import {WebpackRuntime} from "./supports/WebpackRuntime";
-import {BunRuntime} from "./supports/BunRuntime";
-import {SWCRuntime} from "./supports/SWCRuntime";
 import {BaseRuntime} from "./supports/BaseRuntime";
+import {BunRuntime} from "./supports/BunRuntime";
+import {NodeRuntime} from "./supports/NodeRuntime";
+import {SWCRuntime} from "./supports/SWCRuntime";
+import {WebpackRuntime} from "./supports/WebpackRuntime";
 
 export interface RuntimeInitOptions extends Record<string, unknown> {
   runtime?: string;

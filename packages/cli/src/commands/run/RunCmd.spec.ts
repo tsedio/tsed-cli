@@ -1,7 +1,8 @@
 // @ts-ignore
-import {CliPlatformTest} from "@tsed/cli-testing";
-import {RunCmd} from "./RunCmd";
 import {CliFs, CliRunScript} from "@tsed/cli-core";
+import {CliPlatformTest} from "@tsed/cli-testing";
+
+import {RunCmd} from "./RunCmd";
 
 describe("RunCmd", () => {
   beforeEach(() => CliPlatformTest.create());

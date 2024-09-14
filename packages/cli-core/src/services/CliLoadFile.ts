@@ -1,8 +1,9 @@
 import {Inject, Injectable} from "@tsed/di";
-import {extname} from "path";
 import Ajv, {Schema} from "ajv";
-import {CliYaml} from "./CliYaml";
+import {extname} from "path";
+
 import {CliFs} from "./CliFs";
+import {CliYaml} from "./CliYaml";
 
 @Injectable()
 export class CliLoadFile {

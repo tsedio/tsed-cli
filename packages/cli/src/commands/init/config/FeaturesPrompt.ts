@@ -1,7 +1,7 @@
-import {isPlatform} from "../utils/isPlatform";
-import {hasFeature, hasValue} from "../utils/hasFeature";
-import {InitOptions} from "../interfaces/InitOptions";
 import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../interfaces";
+import {InitOptions} from "../interfaces/InitOptions";
+import {hasFeature, hasValue} from "../utils/hasFeature";
+import {isPlatform} from "../utils/isPlatform";
 
 export interface Feature {
   name: string;

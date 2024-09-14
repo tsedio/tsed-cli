@@ -1,4 +1,5 @@
 import {Store} from "@tsed/core";
+
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
 import {OnPostInstall} from "./onPostInstall";
 

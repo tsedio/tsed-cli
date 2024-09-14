@@ -8,6 +8,7 @@ import {
   SrcRendererService
 } from "@tsed/cli-core";
 import {join} from "path";
+
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
 @Injectable()

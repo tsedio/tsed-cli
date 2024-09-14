@@ -1,4 +1,5 @@
-import {isClass, Type, isArray} from "@tsed/core";
+import {isArray, isClass, Type} from "@tsed/core";
+
 import {CommandArg} from "../interfaces/CommandParameters";
 
 function mapValue(value: any, {type, itemType}: {type?: Type<any>; itemType?: Type<any>}) {

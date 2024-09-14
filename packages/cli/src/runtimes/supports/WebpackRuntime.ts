@@ -1,5 +1,6 @@
-import {dirname} from "path";
 import {Injectable} from "@tsed/di";
+import {dirname} from "path";
+
 import {BabelRuntime} from "./BabelRuntime";
 
 @Injectable({

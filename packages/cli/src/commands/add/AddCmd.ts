@@ -1,4 +1,3 @@
-import {Inject} from "@tsed/di";
 import {
   CliDefaultOptions,
   CliPlugins,
@@ -10,6 +9,7 @@ import {
   QuestionOptions,
   Task
 } from "@tsed/cli-core";
+import {Inject} from "@tsed/di";
 
 export interface AddCmdOptions extends CliDefaultOptions {
   name: string;

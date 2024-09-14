@@ -1,7 +1,8 @@
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {PNpmManager} from "./PNpmManager";
+
 import {CliExeca} from "../../services";
+import {PNpmManager} from "./PNpmManager";
 
 async function getManagerFixture() {
   const cliExeca = {

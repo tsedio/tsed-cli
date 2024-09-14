@@ -1,7 +1,8 @@
+import "../../../src";
+
 import {GenerateCmd, TEMPLATE_DIR} from "@tsed/cli";
 import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import "../../../src";
 
 describe("Generate Controller", () => {
   beforeEach(() =>

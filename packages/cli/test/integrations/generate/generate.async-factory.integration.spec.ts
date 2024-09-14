@@ -1,4 +1,5 @@
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
+
 import {GenerateCmd, TEMPLATE_DIR} from "../../../src";
 
 describe("Generate AsyncFactory", () => {
@@ -30,7 +31,7 @@ describe("Generate AsyncFactory", () => {
 
     const result = FakeCliFs.entries.get("project-name/src/services/Test.ts");
 
-    expect(result).toContain("import {Configuration, Inject, registerProvider} from \"@tsed/di\";");
+    expect(result).toContain('import {Configuration, Inject, registerProvider} from "@tsed/di";');
     expect(result).toContain("export function Test()");
     expect(result).toContain("Inject(Test)");
     expect(result).toContain("registerProvider");

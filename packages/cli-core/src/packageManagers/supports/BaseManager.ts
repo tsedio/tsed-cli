@@ -1,6 +1,7 @@
 import {Inject} from "@tsed/di";
-import {Observable} from "rxjs";
 import execa from "execa";
+import {Observable} from "rxjs";
+
 import {CliExeca} from "../../services/CliExeca";
 
 export type ManagerCmdOpts = {verbose?: boolean} & execa.Options;
@@ -25,7 +26,6 @@ export abstract class BaseManager {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async init(opts: ManagerCmdSyncOpts): Promise<void> {}
 
   abstract install(options: ManagerCmdOpts): Observable<any>;

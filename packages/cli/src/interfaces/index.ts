@@ -1,3 +1,3 @@
-export * from "./ProjectConvention";
-export * from "./PlatformType";
 export * from "./ArchitectureConvention";
+export * from "./PlatformType";
+export * from "./ProjectConvention";

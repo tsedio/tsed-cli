@@ -13,6 +13,7 @@ import {
 } from "@tsed/cli-core";
 import {getValue} from "@tsed/core";
 import semver from "semver";
+
 import {IGNORE_TAGS, IGNORE_VERSIONS, MINIMAL_TSED_VERSION} from "../../constants";
 
 export interface UpdateCmdContext extends CliDefaultOptions {

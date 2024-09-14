@@ -1,9 +1,10 @@
+import {setValue} from "@tsed/core";
 import {Inject, Injectable} from "@tsed/di";
 import {snakeCase} from "change-case";
-import {CliYaml} from "./CliYaml";
-import {setValue} from "@tsed/core";
 import {join} from "path";
+
 import {CliFs} from "./CliFs";
+import {CliYaml} from "./CliYaml";
 import {ProjectPackageJson} from "./ProjectPackageJson";
 
 @Injectable()

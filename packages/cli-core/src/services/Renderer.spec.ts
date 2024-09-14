@@ -3,6 +3,7 @@ import {FakeCliFs, normalizePath} from "@tsed/cli-testing";
 import Consolidate from "consolidate";
 import globby from "globby";
 import handlebars from "handlebars";
+
 import {TEMPLATE_DIR} from "../../../cli-plugin-jest/src/utils/templateDir";
 import {RootRendererService, SrcRendererService} from "./Renderer";
 
@@ -19,7 +20,7 @@ describe("Renderer", () => {
   describe("relativeFrom()", () => {
     it("should return the valid path from", () => {
       const service = new SrcRendererService();
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
       // @ts-ignore
       service.configuration = {
         project: {
@@ -43,7 +44,6 @@ describe("Renderer", () => {
         baseDir: "/init"
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       service.configuration = {
         project: {
@@ -54,7 +54,6 @@ describe("Renderer", () => {
 
       service.templateDir = "/tmpl";
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
 
@@ -74,7 +73,6 @@ describe("Renderer", () => {
         templateDir: TEMPLATE_DIR
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       service.configuration = {
         project: {
@@ -85,7 +83,6 @@ describe("Renderer", () => {
 
       service.templateDir = "/tmpl";
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
 
@@ -104,7 +101,6 @@ describe("Renderer", () => {
         templateDir: `${TEMPLATE_DIR}/init`
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       service.configuration = {
         project: {
@@ -115,7 +111,6 @@ describe("Renderer", () => {
 
       service.templateDir = "/tmpl";
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
 
@@ -134,7 +129,6 @@ describe("Renderer", () => {
         baseDir: "/init"
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       service.configuration = {
         project: {
@@ -145,7 +139,6 @@ describe("Renderer", () => {
 
       service.templateDir = "/tmpl";
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
 
@@ -165,7 +158,6 @@ describe("Renderer", () => {
         basename: "myFile.controller.ts"
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       service.configuration = {
         project: {
@@ -176,7 +168,6 @@ describe("Renderer", () => {
 
       service.templateDir = "/tmpl";
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
 
@@ -204,7 +195,6 @@ describe("Renderer", () => {
         ...props
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       service.configuration = {
         project: {
@@ -215,7 +205,6 @@ describe("Renderer", () => {
 
       service.templateDir = "/tmpl";
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
 

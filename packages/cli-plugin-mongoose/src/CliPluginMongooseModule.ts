@@ -1,5 +1,6 @@
 import {Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
+
 import {MongooseGenerateHook} from "./hooks/MongooseGenerateHook";
 import {MongooseInitHook} from "./hooks/MongooseInitHook";
 import {CliMongoose} from "./services/CliMongoose";

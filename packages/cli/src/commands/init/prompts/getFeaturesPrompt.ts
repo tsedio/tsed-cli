@@ -1,4 +1,5 @@
 import {cleanObject, isFunction} from "@tsed/core";
+
 import {FeaturesMap, FeaturesPrompt} from "../config/FeaturesPrompt";
 import {InitOptions} from "../interfaces/InitOptions";
 

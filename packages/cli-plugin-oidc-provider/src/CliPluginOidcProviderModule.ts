@@ -1,5 +1,6 @@
 import {Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
+
 import {OidcProviderInitHook} from "./hooks/OidcProviderInitHook";
 
 @Module({

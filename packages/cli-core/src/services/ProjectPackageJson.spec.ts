@@ -1,9 +1,10 @@
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {join, resolve} from "path";
-import {ProjectPackageJson} from "./ProjectPackageJson";
-import {CliFs} from "./CliFs";
+
 import {CliExeca} from "./CliExeca";
+import {CliFs} from "./CliFs";
+import {ProjectPackageJson} from "./ProjectPackageJson";
 
 const dir = __dirname;
 

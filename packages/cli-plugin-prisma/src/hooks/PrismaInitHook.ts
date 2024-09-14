@@ -1,6 +1,7 @@
 import {InitCmdContext} from "@tsed/cli";
 import {CliService, Inject, OnExec, PackageManagersModule, ProjectPackageJson} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
+
 import {CliPrisma} from "../services/CliPrisma";
 
 @Injectable()

@@ -1,7 +1,8 @@
 import {InjectorService} from "@tsed/di";
 import {Logger} from "@tsed/logger";
-import {createInjector} from "./createInjector";
+
 import {CliConfiguration} from "../services";
+import {createInjector} from "./createInjector";
 
 describe("createInjector", () => {
   it("should create the injector", () => {

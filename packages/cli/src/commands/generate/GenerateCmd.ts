@@ -1,15 +1,16 @@
 import {CliDefaultOptions, Command, CommandProvider, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
 import {paramCase, pascalCase} from "change-case";
-import {basename, dirname, join} from "path";
 import globby from "globby";
 import normalizePath from "normalize-path";
+import {basename, dirname, join} from "path";
+
+import {ProjectConvention} from "../../interfaces/ProjectConvention";
 import {ClassNamePipe} from "../../pipes/ClassNamePipe";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
 import {RoutePipe} from "../../pipes/RoutePipe";
 import {ProvidersInfoService} from "../../services/ProvidersInfoService";
-import {PROVIDER_TYPES} from "./ProviderTypes";
-import {ProjectConvention} from "../../interfaces/ProjectConvention";
 import {fillImports} from "../../utils/fillImports";
+import {PROVIDER_TYPES} from "./ProviderTypes";
 
 export interface GenerateCmdContext extends CliDefaultOptions {
   type: string;

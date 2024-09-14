@@ -1,6 +1,7 @@
 import {PackageManager} from "@tsed/cli-core";
-import {PlatformType} from "../../../interfaces/PlatformType";
+
 import {ArchitectureConvention} from "../../../interfaces/ArchitectureConvention";
+import {PlatformType} from "../../../interfaces/PlatformType";
 import {ProjectConvention} from "../../../interfaces/ProjectConvention";
 import {FeatureType} from "../config/FeaturesPrompt";
 

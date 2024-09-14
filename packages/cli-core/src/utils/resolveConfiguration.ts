@@ -1,5 +1,6 @@
-import {TokenProvider} from "@tsed/di";
 import {getValue} from "@tsed/core";
+import {TokenProvider} from "@tsed/di";
+
 import {getCommandMetadata} from "./getCommandMetadata";
 
 export function resolveConfiguration(settings: any) {

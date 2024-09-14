@@ -14,11 +14,12 @@ import {
   TokenProvider
 } from "@tsed/cli-core";
 import {Type} from "@tsed/core";
+import {DIContext, runInContext} from "@tsed/di";
+import {v4} from "uuid";
+
 import {FakeCliExeca} from "./FakeCliExeca";
 import {FakeCliFs} from "./FakeCliFs";
 import {FakeCliHttpClient} from "./FakeCliHttpClient";
-import {DIContext, runInContext} from "@tsed/di";
-import {v4} from "uuid";
 
 export interface InvokeOptions {
   token: TokenProvider;

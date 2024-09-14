@@ -1,17 +1,17 @@
-import {Inject, InjectorService, Module} from "@tsed/di";
 import {Type} from "@tsed/core";
+import {Inject, InjectorService, Module} from "@tsed/di";
 import chalk from "chalk";
 import {Command} from "commander";
 import {join, resolve} from "path";
+import semver from "semver";
 
+import {CliError} from "./domains/CliError";
 import {CliConfiguration} from "./services/CliConfiguration";
 import {CliPackageJson} from "./services/CliPackageJson";
 import {CliService} from "./services/CliService";
 import {ProjectPackageJson} from "./services/ProjectPackageJson";
 import {createInjector} from "./utils/createInjector";
 import {loadPlugins} from "./utils/loadPlugins";
-import {CliError} from "./domains/CliError";
-import semver from "semver";
 import {resolveConfiguration} from "./utils/resolveConfiguration";
 
 function isHelpManual(argv: string[]) {
@@ -81,7 +81,6 @@ export class CliCore {
     injector.settings.set("loaded", true);
   }
 
-  // eslint-disable-next-line require-await
   static async updateNotifier(pkg: any) {
     // const {default: updateNotifier} = await import("update-notifier");
     //

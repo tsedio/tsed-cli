@@ -1,8 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import util from "handlebars-utils";
-import {helpers as object} from "./object";
+
 import {helpers as array} from "./array";
+import {helpers as object} from "./object";
 
 const forEach = array.forEach;
 const forOwn = object.forOwn;

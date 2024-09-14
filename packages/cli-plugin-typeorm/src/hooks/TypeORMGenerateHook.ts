@@ -2,6 +2,7 @@ import {FeaturesMap, GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
 import {CliDockerComposeYaml, Inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {camelCase} from "change-case";
+
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
 export interface TypeORMGenerateOptions extends GenerateCmdContext {

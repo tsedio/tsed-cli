@@ -1,6 +1,7 @@
 import {Inject, Injectable, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
 import {camelCase, constantCase, paramCase} from "change-case";
 import {basename, join} from "path";
+
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
 @Injectable()

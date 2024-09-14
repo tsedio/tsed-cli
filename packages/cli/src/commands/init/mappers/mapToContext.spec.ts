@@ -1,7 +1,8 @@
-import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../../src/index";
 import {PackageManager} from "@tsed/cli-core";
-import {mapToContext} from "./mapToContext";
+
+import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../../src/index";
 import {FeatureType} from "../config/FeaturesPrompt";
+import {mapToContext} from "./mapToContext";
 
 describe("mapToContext", () => {
   it("should map to final object", () => {

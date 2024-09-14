@@ -1,10 +1,12 @@
 // @ts-ignore
+import "../index";
+
 import {CliPlatformTest} from "@tsed/cli-testing";
 import tunnel from "tunnel";
-import {CliProxyAgent} from "./CliProxyAgent";
+
 import {CliConfiguration} from "./CliConfiguration";
 import {CliExeca} from "./CliExeca";
-import "../index";
+import {CliProxyAgent} from "./CliProxyAgent";
 
 vi.mock("tunnel");
 
@@ -32,7 +34,7 @@ describe("CliPlugins", () => {
         expect(cliProxyAgent.proxySettings).toEqual({url: "http://login:password@host:3000"});
       });
 
-      it("should get proxy url from env (HTTP_PROXY)", async () => {
+      it("should get proxy url from env (HTTP_PROXY -2)", async () => {
         const settings = CliPlatformTest.get(CliConfiguration);
 
         settings.set("proxy", {
@@ -70,7 +72,6 @@ describe("CliPlugins", () => {
           }
         ]);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         cliProxyAgent.proxySettings.url = undefined;
 
@@ -103,7 +104,6 @@ describe("CliPlugins", () => {
           }
         ]);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         cliProxyAgent.proxySettings.url = undefined;
 
@@ -136,7 +136,6 @@ describe("CliPlugins", () => {
           }
         ]);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         cliProxyAgent.proxySettings.url = undefined;
 
@@ -169,7 +168,6 @@ describe("CliPlugins", () => {
           }
         ]);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         cliProxyAgent.proxySettings.url = undefined;
 

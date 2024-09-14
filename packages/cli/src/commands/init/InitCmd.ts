@@ -20,22 +20,23 @@ import {
 } from "@tsed/cli-core";
 import {paramCase, pascalCase} from "change-case";
 import {basename, join} from "path";
+
 import {DEFAULT_TSED_TAGS} from "../../constants";
+import {PlatformType} from "../../interfaces";
 import {ArchitectureConvention} from "../../interfaces/ArchitectureConvention";
 import {ProjectConvention} from "../../interfaces/ProjectConvention";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
-import {InitCmdContext} from "./interfaces/InitCmdContext";
-import {InitFileSchema} from "./config/InitFileSchema";
-import {mapToContext} from "./mappers/mapToContext";
-import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt";
-import {InitOptions} from "./interfaces/InitOptions";
-import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt";
-import {PlatformType} from "../../interfaces";
-import {fillImports} from "../../utils/fillImports";
-import {RuntimesModule} from "../../runtimes/RuntimesModule";
-import {NodeRuntime} from "../../runtimes/supports/NodeRuntime";
-import {BunRuntime} from "../../runtimes/supports/BunRuntime";
 import {InitPlatformsModule} from "../../platforms/InitPlatformsModule";
+import {RuntimesModule} from "../../runtimes/RuntimesModule";
+import {BunRuntime} from "../../runtimes/supports/BunRuntime";
+import {NodeRuntime} from "../../runtimes/supports/NodeRuntime";
+import {fillImports} from "../../utils/fillImports";
+import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt";
+import {InitFileSchema} from "./config/InitFileSchema";
+import {InitCmdContext} from "./interfaces/InitCmdContext";
+import {InitOptions} from "./interfaces/InitOptions";
+import {mapToContext} from "./mappers/mapToContext";
+import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt";
 
 @Command({
   name: "init",

@@ -1,6 +1,6 @@
 import {GenerateCmdContext} from "@tsed/cli";
-import normalizePath from "normalize-path";
 import {Inject, Injectable, OnExec, SrcRendererService, Tasks} from "@tsed/cli-core";
+import normalizePath from "normalize-path";
 
 import {TEMPLATE_DIR} from "../utils/templateDir";
 

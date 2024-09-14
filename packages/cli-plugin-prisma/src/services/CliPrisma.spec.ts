@@ -1,8 +1,9 @@
 // @ts-ignore
-import {CliPlatformTest} from "@tsed/cli-testing";
-import {CliPrisma} from "./CliPrisma";
 import {CliFs, normalizePath} from "@tsed/cli-core";
+import {CliPlatformTest} from "@tsed/cli-testing";
 import {join} from "path";
+
+import {CliPrisma} from "./CliPrisma";
 
 async function createServiceFixture() {
   const cliFs = {
@@ -69,7 +70,7 @@ describe("CliPrisma", () => {
 
       await service.patchPrismaSchema();
 
-      expect(cliFs.writeFile).not.toBeCalled();
+      expect(cliFs.writeFile).not.toHaveBeenCalled();
     });
     it("should do nothing", async () => {
       const {service, cliFs} = await createServiceFixture();
@@ -88,7 +89,7 @@ describe("CliPrisma", () => {
 
       await service.patchPrismaSchema();
 
-      expect(cliFs.writeFile).not.toBeCalled();
+      expect(cliFs.writeFile).not.toHaveBeenCalled();
     });
   });
 });

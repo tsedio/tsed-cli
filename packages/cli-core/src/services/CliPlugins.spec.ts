@@ -1,5 +1,6 @@
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
+
 import {CliPlugins} from "./CliPlugins";
 import {NpmRegistryClient} from "./NpmRegistryClient";
 

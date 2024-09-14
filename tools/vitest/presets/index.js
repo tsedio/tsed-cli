@@ -1,5 +1,6 @@
 import swc from "unplugin-swc";
 import {defineConfig} from "vitest/config";
+
 import {resolveWorkspaceFiles} from "../plugins/resolveWorkspaceFiles.js";
 import {alias} from "./alias.js";
 
@@ -10,9 +11,7 @@ export const presets = defineConfig({
   test: {
     globals: true,
     environment: "node",
-    exclude:[
-      "**/templates/**"
-    ],
+    exclude: ["**/templates/**"],
     coverage: {
       enabled: true,
       provider: "v8",

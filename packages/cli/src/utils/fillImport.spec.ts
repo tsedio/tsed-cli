@@ -74,7 +74,7 @@ describe("fillImports()", () => {
       mongoose: true
     }
   ])(
-    "it should return barrels and imports files for ($architecture, oidc: $oidc, graphql: $graphql, swagger: $swagger, passportjs: $passportjs, express: $express, koa: $koa, mongoose: $mongoose)",
+    "should return barrels and imports files for ($architecture, oidc: $oidc, graphql: $graphql, swagger: $swagger, passportjs: $passportjs, express: $express, koa: $koa, mongoose: $mongoose)",
     (ctx) => {
       expect(fillImports(ctx)).toMatchSnapshot();
     }

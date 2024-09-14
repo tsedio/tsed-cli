@@ -1,6 +1,7 @@
 import {NpmRegistryClient, ProjectPackageJson} from "@tsed/cli-core";
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
+
 import {UpdateCmd} from "./UpdateCmd";
 
 const versions = {
@@ -27,7 +28,6 @@ describe("UpdateCmd", () => {
   describe("$prompt()", () => {
     it("should return prompts", async () => {
       const projectPkg = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       projectPkg.raw = {
         name: "project",
@@ -130,7 +130,6 @@ describe("UpdateCmd", () => {
         }
       ]);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       command.versions = versions;
 

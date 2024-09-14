@@ -1,9 +1,9 @@
 import {Injectable} from "@tsed/di";
+import {normalizePath} from "@tsed/normalize-path";
 import {PathLike, WriteFileOptions} from "fs";
 import Fs from "fs-extra";
 import {EnsureOptions} from "fs-extra";
 import {join} from "path";
-import {normalizePath} from "@tsed/normalize-path";
 
 @Injectable()
 export class CliFs {

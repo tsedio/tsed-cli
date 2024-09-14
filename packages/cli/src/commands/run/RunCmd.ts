@@ -1,4 +1,4 @@
-import {CliFs, CliRunScript, Command, CommandProvider, ProjectPackageJson, Tasks, normalizePath} from "@tsed/cli-core";
+import {CliFs, CliRunScript, Command, CommandProvider, normalizePath, ProjectPackageJson, Tasks} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 import {join} from "path";
 

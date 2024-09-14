@@ -1,13 +1,14 @@
 import {Type} from "@tsed/core";
+
 import {CommandProvider} from "./CommandProvider";
 import {PackageJson} from "./PackageJson";
 
-export * from "./CommandProvider";
-export * from "./CommandParameters";
-export * from "./CommandMetadata";
 export * from "./CliDefaultOptions";
-export * from "./ProjectPreferences";
+export * from "./CommandMetadata";
+export * from "./CommandParameters";
+export * from "./CommandProvider";
 export * from "./PackageJson";
+export * from "./ProjectPreferences";
 export * from "./Tasks";
 
 declare global {

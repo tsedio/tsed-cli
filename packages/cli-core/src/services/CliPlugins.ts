@@ -1,13 +1,14 @@
-import {createSubTasks} from "../utils/createTasksRunner";
-import chalk from "chalk";
 import {Constant, Inject, Injectable, InjectorService} from "@tsed/di";
+import chalk from "chalk";
+
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
+import {Task} from "../interfaces";
+import {PackageManagersModule} from "../packageManagers/PackageManagersModule";
+import {createSubTasks} from "../utils/createTasksRunner";
 import {loadPlugins} from "../utils/loadPlugins";
 import {CliHooks} from "./CliHooks";
 import {NpmRegistryClient} from "./NpmRegistryClient";
 import {ProjectPackageJson} from "./ProjectPackageJson";
-import {PackageManagersModule} from "../packageManagers/PackageManagersModule";
-import {Task} from "../interfaces";
 
 function mapPlugins({package: {name, description = "", ...otherProps}}: any) {
   return {

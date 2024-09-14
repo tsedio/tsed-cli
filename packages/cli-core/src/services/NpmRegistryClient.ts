@@ -1,6 +1,7 @@
 import {Inject, Injectable} from "@tsed/di";
-import url from "url";
 import registry_url from "registry-url";
+import url from "url";
+
 import {PackageInfo} from "../interfaces/PackageJson";
 import {CliHttpClient} from "./CliHttpClient";
 

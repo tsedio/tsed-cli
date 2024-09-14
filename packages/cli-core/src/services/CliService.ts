@@ -2,22 +2,22 @@ import {classOf} from "@tsed/core";
 import {Constant, DIContext, getContext, Inject, Injectable, InjectorService, Provider, runInContext} from "@tsed/di";
 import {Argument, Command} from "commander";
 import Inquirer from "inquirer";
+// @ts-ignore
+import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
 import {v4} from "uuid";
+
 import {CommandStoreKeys} from "../domains/CommandStoreKeys";
-import {CommandProvider} from "../interfaces/CommandProvider";
+import {CommandMetadata} from "../interfaces/CommandMetadata";
 import {CommandArg, CommandOptions} from "../interfaces/CommandParameters";
+import {CommandProvider} from "../interfaces/CommandProvider";
+import {PackageManagersModule} from "../packageManagers/index";
 import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner";
 import {getCommandMetadata} from "../utils/getCommandMetadata";
 import {mapCommanderArgs} from "../utils/mapCommanderArgs";
+import {mapCommanderOptions} from "../utils/mapCommanderOptions";
 import {parseOption} from "../utils/parseOption";
 import {CliHooks} from "./CliHooks";
 import {ProjectPackageJson} from "./ProjectPackageJson";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
-import {mapCommanderOptions} from "../utils/mapCommanderOptions";
-import {CommandMetadata} from "../interfaces/CommandMetadata";
-import {PackageManagersModule} from "../packageManagers/index";
 
 Inquirer.registerPrompt("autocomplete", inquirer_autocomplete_prompt);
 
@@ -295,7 +295,6 @@ export class CliService {
    * @param allowUnknownOptions
    */
   private buildOption(subCommand: Command, options: {[key: string]: CommandOptions}, allowUnknownOptions: boolean) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
       const fn = (v: any) => {
         return parseOption(v, options);

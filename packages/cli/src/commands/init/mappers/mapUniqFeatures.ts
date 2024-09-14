@@ -1,6 +1,6 @@
-import {InitPromptAnswers} from "../interfaces/InitPromptAnswers";
-import {InitOptions} from "../interfaces/InitOptions";
 import {FeatureType} from "../config/FeaturesPrompt";
+import {InitOptions} from "../interfaces/InitOptions";
+import {InitPromptAnswers} from "../interfaces/InitPromptAnswers";
 
 export function mapUniqFeatures(answers: InitPromptAnswers & any): InitOptions {
   const features: string[] = [];

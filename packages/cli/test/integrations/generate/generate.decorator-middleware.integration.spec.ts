@@ -1,5 +1,6 @@
 import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
+
 import {GenerateCmd, TEMPLATE_DIR} from "../../../src";
 
 describe("Generate middleware decorator", () => {
@@ -36,7 +37,7 @@ describe("Generate middleware decorator", () => {
 
     const result = FakeCliFs.entries.get("project-name/src/decorators/Test.ts");
 
-    expect(result).toContain("import {useDecorators, StoreSet} from \"@tsed/core\"");
+    expect(result).toContain('import {useDecorators, StoreSet} from "@tsed/core"');
     expect(result).toContain("export interface TestOptions {");
     expect(result).toContain("@Middleware()");
     expect(result).toContain("export function Test(options: TestOptions): MethodDecorator");
@@ -68,7 +69,7 @@ describe("Generate middleware decorator", () => {
 
     const result = FakeCliFs.entries.get("project-name/src/decorators/Test.ts");
 
-    expect(result).toContain("import {useDecorators, StoreSet} from \"@tsed/core\"");
+    expect(result).toContain('import {useDecorators, StoreSet} from "@tsed/core"');
     expect(result).toContain("export interface TestOptions {");
     expect(result).toContain("@Middleware()");
     expect(result).toContain("export function Test(options: TestOptions): MethodDecorator");

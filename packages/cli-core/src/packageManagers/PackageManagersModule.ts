@@ -1,15 +1,16 @@
 import {Inject, Injectable} from "@tsed/di";
-import {BaseManager} from "./supports/BaseManager";
-import {YarnManager} from "./supports/YarnManager";
-import {YarnBerryManager} from "./supports/YarnBerryManager";
-import {NpmManager} from "./supports/NpmManager";
-import {PNpmManager} from "./supports/PNpmManager";
-import {catchError} from "rxjs/operators";
+import {Options} from "execa";
 import {EMPTY, throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
+
 import {ProjectPackageJson} from "../services/ProjectPackageJson";
 import {isValidVersion} from "../utils/isValidVersion";
-import {Options} from "execa";
+import {BaseManager} from "./supports/BaseManager";
 import {BunManager} from "./supports/BunManager";
+import {NpmManager} from "./supports/NpmManager";
+import {PNpmManager} from "./supports/PNpmManager";
+import {YarnBerryManager} from "./supports/YarnBerryManager";
+import {YarnManager} from "./supports/YarnManager";
 
 function mapPackagesWithInvalidVersion(deps: any) {
   const toString = (info: [string, string]) => {

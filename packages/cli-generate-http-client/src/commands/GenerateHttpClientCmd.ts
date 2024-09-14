@@ -1,6 +1,6 @@
 import {CliFs, Command, CommandProvider, Inject, Type} from "@tsed/cli-core";
-import {Constant, InjectorService} from "@tsed/di";
 import {isString} from "@tsed/core";
+import {Constant, InjectorService} from "@tsed/di";
 import {camelCase} from "change-case";
 import path, {join, resolve} from "path";
 import {generateApi, Hooks, RawRouteInfo, RouteNameInfo} from "swagger-typescript-api";

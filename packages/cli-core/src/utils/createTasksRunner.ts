@@ -1,7 +1,8 @@
 // @ts-ignore
-import {Listr, ListrTaskWrapper, Logger} from "listr2";
-import type {TaskOptions, Tasks} from "../interfaces/Tasks";
 import {isFunction} from "@tsed/core";
+import {Listr, ListrTaskWrapper, Logger} from "listr2";
+
+import type {TaskOptions, Tasks} from "../interfaces/Tasks";
 import {getLogger} from "./createInjector";
 
 class CustomLogger extends Logger {

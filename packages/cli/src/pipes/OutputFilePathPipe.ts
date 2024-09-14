@@ -1,9 +1,10 @@
 import {Injectable, ProjectPackageJson} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 import {dirname, join} from "path";
+
+import {ArchitectureConvention, ProjectConvention} from "../interfaces";
 import {ProvidersInfoService} from "../services/ProvidersInfoService";
 import {ClassNamePipe} from "./ClassNamePipe";
-import {ProjectConvention, ArchitectureConvention} from "../interfaces";
 
 @Injectable()
 export class OutputFilePathPipe {

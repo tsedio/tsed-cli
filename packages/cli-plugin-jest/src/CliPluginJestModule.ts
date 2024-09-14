@@ -1,6 +1,7 @@
-import {Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 import {RuntimesModule} from "@tsed/cli";
+import {Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
+
 import {JestGenerateHook} from "./hooks/JestGenerateHook";
 import {JestInitHook} from "./hooks/JestInitHook";
 

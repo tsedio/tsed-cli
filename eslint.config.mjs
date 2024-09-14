@@ -8,7 +8,7 @@ import globals from "globals";
 
 export default [
   {
-    ignores: ["coverage", "dist", "processes.config.js"]
+    ignores: ["coverage", "dist", "processes.config.js", "**/templates"]
   },
   {
     files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"],
@@ -28,11 +28,6 @@ export default [
       "@typescript-eslint": typescriptEslint
     },
     rules: {
-      // "@typescript-eslint/lines-between-class-members": [
-      //   "error",
-      //   "always",
-      //   { exceptAfterOverload: true }
-      // ],
       "@typescript-eslint/ban-ts-comment": 0,
       "@typescript-eslint/camelcase": 0,
       "@typescript-eslint/no-inferrable-types": 0,
@@ -50,10 +45,7 @@ export default [
     },
     rules: {
       ...vitest.configs.recommended.rules, // you can also use vitest.configs.all.rules to enable all rules
-      "vitest/consistent-test-it": [
-        "error",
-        { fn: "it", withinDescribe: "it" }
-      ],
+      "vitest/consistent-test-it": ["error", {fn: "it", withinDescribe: "it"}],
       "vitest/no-alias-methods": "error"
     }
   },

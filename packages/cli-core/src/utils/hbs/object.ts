@@ -1,11 +1,10 @@
 import {getValue, isNumber, isObject} from "@tsed/core";
-import {helpers as array} from "./array";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import util from "handlebars-utils";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import createFrame from "create-frame";
+// @ts-ignore
+import util from "handlebars-utils";
+
+import {helpers as array} from "./array";
 const hasOwn = Object.hasOwnProperty;
 export const helpers: any = {};
 
@@ -18,7 +17,6 @@ export const helpers: any = {};
  * @api public
  */
 helpers.extend = function (/*objects*/) {
-  // eslint-disable-next-line prefer-rest-params
   const args = [].slice.call(arguments);
   let opts = {};
 
@@ -216,7 +214,6 @@ helpers.JSONstringify = function (obj: any, indent: string | number | undefined)
  * @api public
  */
 helpers.merge = function (...args1: any) {
-  // eslint-disable-next-line prefer-rest-params
   const args = [].slice.call(args1);
   let opts = {};
 

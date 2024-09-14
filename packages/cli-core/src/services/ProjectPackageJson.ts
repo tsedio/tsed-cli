@@ -2,10 +2,11 @@ import {getValue, setValue} from "@tsed/core";
 import {Configuration, Injectable} from "@tsed/di";
 import {dirname, join} from "path";
 import readPkgUp from "read-pkg-up";
+
 import {PackageJson} from "../interfaces/PackageJson";
 import {ProjectPreferences} from "../interfaces/ProjectPreferences";
-import {CliFs} from "./CliFs";
 import {isValidVersion} from "../utils/isValidVersion";
+import {CliFs} from "./CliFs";
 
 function sortKeys(obj: any) {
   return Object.entries(obj)
@@ -43,7 +44,10 @@ export class ProjectPackageJson {
   public GH_TOKEN: string;
   private raw: PackageJson;
 
-  constructor(@Configuration() private configuration: Configuration, protected fs: CliFs) {
+  constructor(
+    @Configuration() private configuration: Configuration,
+    protected fs: CliFs
+  ) {
     this.setRaw({
       name: "",
       version: "1.0.0",

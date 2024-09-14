@@ -1,7 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import runScript from "@npmcli/run-script";
 import {Inject, Injectable} from "@tsed/di";
+
 import {ProjectPackageJson} from "./ProjectPackageJson";
 
 @Injectable()

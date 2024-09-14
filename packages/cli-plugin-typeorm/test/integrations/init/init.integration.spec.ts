@@ -1,7 +1,8 @@
+import "../../../src";
+
+import {ArchitectureConvention, FeatureType, InitCmd, PlatformType, ProjectConvention, TEMPLATE_DIR} from "@tsed/cli";
 import {PackageManager} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {ArchitectureConvention, FeatureType, InitCmd, PlatformType, ProjectConvention, TEMPLATE_DIR} from "@tsed/cli";
-import "../../../src";
 
 describe("TypeORM: Init cmd", () => {
   beforeEach(() => {

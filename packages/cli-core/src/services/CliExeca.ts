@@ -2,9 +2,9 @@ import {Injectable} from "@tsed/di";
 import type {Options, SyncOptions} from "execa";
 import execa from "execa";
 import {filter, mergeWith} from "rxjs/operators";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import split from "split";
+
 import {streamToObservable} from "../utils/streamToObservable";
 
 @Injectable()

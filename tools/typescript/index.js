@@ -1,9 +1,10 @@
-import {findPackages, MonoRepo} from "@tsed/monorepo-utils";
 import {dirname, join, relative} from "node:path";
-import cloneDeep from "lodash/cloneDeep.js";
-import omit from "lodash/omit.js";
+
+import {findPackages, MonoRepo} from "@tsed/monorepo-utils";
 import fs from "fs-extra";
 import globby from "globby";
+import cloneDeep from "lodash/cloneDeep.js";
+import omit from "lodash/omit.js";
 
 const scriptDir = import.meta.dirname;
 

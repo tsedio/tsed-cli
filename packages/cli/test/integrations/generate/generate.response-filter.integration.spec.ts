@@ -1,5 +1,6 @@
 import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
+
 import {GenerateCmd, TEMPLATE_DIR} from "../../../src";
 
 describe("Generate Response Filter", () => {
@@ -31,9 +32,9 @@ describe("Generate Response Filter", () => {
 
     const result = FakeCliFs.entries.get("project-name/src/filters/JsonResponseFilter.ts");
 
-    expect(result).toContain("import {ResponseFilter, ResponseFilterMethods} from \"@tsed/platform-response-filter\";");
-    expect(result).toContain("import {BaseContext} from \"@tsed/di\";");
-    expect(result).toContain("@ResponseFilter(\"text/xml\")");
+    expect(result).toContain('import {ResponseFilter, ResponseFilterMethods} from "@tsed/platform-response-filter";');
+    expect(result).toContain('import {BaseContext} from "@tsed/di";');
+    expect(result).toContain('@ResponseFilter("text/xml")');
     expect(result).toContain("export class XmlResponseFilter implements ResponseFilterMethods");
     expect(result).toContain("transform(data: any, ctx: BaseContext)");
   });

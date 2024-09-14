@@ -1,7 +1,8 @@
 import {GlobalProviders, InjectorService} from "@tsed/di";
+import chalk from "chalk";
 // @ts-ignore
 import {figures} from "listr2";
-import chalk from "chalk";
+
 import {CliFs} from "../services/CliFs";
 import {ProjectPackageJson} from "../services/ProjectPackageJson";
 

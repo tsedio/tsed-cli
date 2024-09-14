@@ -1,5 +1,6 @@
 import {InitCmdContext} from "@tsed/cli";
 import {Inject, Injectable, OnExec, OnPostInstall, PackageManagersModule, ProjectPackageJson, RootRendererService} from "@tsed/cli-core";
+
 import {TEMPLATE_DIR} from "../utils/templateDir";
 
 @Injectable()

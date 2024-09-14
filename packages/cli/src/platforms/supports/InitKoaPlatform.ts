@@ -1,4 +1,5 @@
 import {Injectable} from "@tsed/cli-core";
+
 import {InitBasePlatform} from "./InitBasePlatform";
 
 @Injectable({

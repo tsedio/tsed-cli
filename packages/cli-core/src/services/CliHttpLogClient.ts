@@ -1,8 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import querystring from "querystring";
+import {getValue} from "@tsed/core";
 import {Inject, Opts} from "@tsed/di";
 import {Logger} from "@tsed/logger";
-import {getValue} from "@tsed/core";
+import querystring from "querystring";
+
 import {logToCurl} from "../utils/logToCurl";
 
 export interface BaseLogClientOptions {

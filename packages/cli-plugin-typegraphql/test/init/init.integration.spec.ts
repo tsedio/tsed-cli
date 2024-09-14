@@ -1,6 +1,7 @@
-import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
+import "../..";
+
 import {InitCmd, TEMPLATE_DIR} from "@tsed/cli";
-import "@tsed/cli-plugin-typegraphql";
+import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 
 describe("Init TypeGraphQL project", () => {
   beforeEach(() =>
@@ -71,9 +72,9 @@ describe("Init TypeGraphQL project", () => {
 
     const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
     expect(content).toMatchSnapshot();
-    expect(content).toContain("import \"@tsed/typegraphql\"");
-    expect(content).toContain("import \"./datasources/index\";");
-    expect(content).toContain("import \"./resolvers/index\";");
+    expect(content).toContain('import "@tsed/typegraphql"');
+    expect(content).toContain('import "./datasources/index";');
+    expect(content).toContain('import "./resolvers/index";');
 
     const configContent = FakeCliFs.entries.get("project-name/src/config/index.ts")!;
     expect(configContent).toMatchSnapshot();

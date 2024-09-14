@@ -1,10 +1,11 @@
+import {cleanObject} from "@tsed/core";
 import {Inject, Injectable} from "@tsed/di";
 import axios, {AxiosRequestConfig, Method} from "axios";
-import {cleanObject} from "@tsed/core";
 import {stringify} from "querystring";
-import {CliProxyAgent} from "./CliProxyAgent";
-import {CliHttpLogClient} from "./CliHttpLogClient";
 import {URL} from "url";
+
+import {CliHttpLogClient} from "./CliHttpLogClient";
+import {CliProxyAgent} from "./CliProxyAgent";
 
 export interface CliHttpClientOptions extends AxiosRequestConfig, Record<string, unknown> {
   qs?: Record<string, unknown>;
