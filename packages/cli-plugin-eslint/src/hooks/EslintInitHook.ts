@@ -26,8 +26,7 @@ export class EslintInitHook {
         task: (ctx: any) => {
           return this.rootRenderer.renderAll(
             [
-              ".eslintrc.hbs",
-              ".eslintignore.hbs",
+              "eslint.config.mjs",
               ctx.lintstaged && ".husky/_/.gitignore.hbs",
               ctx.lintstaged && ".husky/_/husky.sh.hbs",
               ctx.lintstaged && ".husky/.gitignore.hbs",
@@ -83,7 +82,7 @@ export class EslintInitHook {
 
     if (ctx.prettier) {
       this.packageJson.addScripts({
-        prettier: "prettier '**/*.{ts,js,json,md,yml,yaml}' --write"
+        prettier: "prettier '**/*.{json,md,yml,yaml}' --write"
       });
     }
   }
@@ -95,11 +94,12 @@ export class EslintInitHook {
   addDevDependencies(ctx: InitCmdContext) {
     this.packageJson.addDevDependencies(
       {
-        eslint: "8",
+        "@typescript-eslint/parser": "latest",
+        "@typescript-eslint/eslint-plugin": "latest",
+        eslint: "latest",
         "eslint-config-prettier": "latest",
         "eslint-plugin-prettier": "latest",
-        "@typescript-eslint/parser": "latest",
-        "@typescript-eslint/eslint-plugin": "latest"
+        "eslint-plugin-simple-import-sort": "latest"
       },
       ctx
     );

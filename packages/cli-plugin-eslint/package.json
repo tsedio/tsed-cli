@@ -17,9 +17,7 @@
   },
   "scripts": {
     "build": "yarn build:ts",
-    "build:ts": "tsc --build tsconfig.json",
-    "/test": "vitest run",
-    "/test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
+    "build:ts": "tsc --build tsconfig.json"
   },
   "devDependencies": {
     "@tsed/cli": "5.2.10",
