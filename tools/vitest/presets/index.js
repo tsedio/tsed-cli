@@ -10,6 +10,9 @@ export const presets = defineConfig({
   test: {
     globals: true,
     environment: "node",
+    exclude:[
+      "**/templates/**"
+    ],
     coverage: {
       enabled: true,
       provider: "v8",
@@ -17,6 +20,7 @@ export const presets = defineConfig({
       all: true,
       include: ["src/**/*.{tsx,ts}"],
       exclude: [
+        "**/templates/**",
         "**/*.spec.{ts,tsx}",
         "**/*.stories.{ts,tsx}",
         "**/*.d.ts",

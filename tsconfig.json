@@ -56,6 +56,9 @@
     },
     {
       "path": "./packages/cli-testing/tsconfig.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
     }
   ],
   "exclude": [

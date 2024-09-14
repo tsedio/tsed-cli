@@ -31,7 +31,7 @@ describe("Init TypeGraphQL project", () => {
     });
 
     expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-      Array [
+      [
         "./project-name",
         "project-name",
         "project-name/.barrelsby.json",

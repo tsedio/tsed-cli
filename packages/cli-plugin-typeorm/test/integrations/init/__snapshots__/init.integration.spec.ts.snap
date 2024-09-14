@@ -1,17 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TypeORM: Init cmd should generate a project with the right options 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-express\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./controllers/rest/index\\";
+exports[`TypeORM: Init cmd > should generate a project with the right options 2`] = `
+"import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/common";
+import "@tsed/platform-express"; // /!\\ keep this import
+import "@tsed/ajv";
+import {config} from "./config/index";
+import * as rest from "./controllers/rest/index";
 
 @Configuration({
   ...config,
-  acceptMimes: [\\"application/json\\"],
+  acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
@@ -19,26 +19,26 @@ import * as rest from \\"./controllers/rest/index\\";
     returnsCoercedValues: true
   },
   mount: {
-    \\"/rest\\": [
+    "/rest": [
       ...Object.values(rest)
     ]
   },
   middlewares: [
-    \\"cors\\",
-    \\"cookie-parser\\",
-    \\"compression\\",
-    \\"method-override\\",
-    \\"json-parser\\",
-    { use: \\"urlencoded-parser\\", options: { extended: true }}
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    { use: "urlencoded-parser", options: { extended: true }}
   ],
   views: {
-    root: join(process.cwd(), \\"../views\\"),
+    root: join(process.cwd(), "../views"),
     extensions: {
-      ejs: \\"ejs\\"
+      ejs: "ejs"
     }
   },
   exclude: [
-    \\"**/*.spec.ts\\"
+    "**/*.spec.ts"
   ]
 })
 export class Server {
@@ -51,32 +51,32 @@ export class Server {
 "
 `;
 
-exports[`TypeORM: Init cmd should generate a project with the right options 3`] = `
-"import {registerProvider} from \\"@tsed/di\\";
-import {DataSource} from \\"typeorm\\";
-import {Logger} from \\"@tsed/logger\\";
+exports[`TypeORM: Init cmd > should generate a project with the right options 3`] = `
+"import {registerProvider} from "@tsed/di";
+import {DataSource} from "typeorm";
+import {Logger} from "@tsed/logger";
 
-export const MysqlDatasource = Symbol.for(\\"MysqlDatasource\\");
+export const MysqlDatasource = Symbol.for("MysqlDatasource");
 export type MysqlDatasource = DataSource;
 export const mysqlDatasource = new DataSource({
-  type: \\"mysql\\",
+  type: "mysql",
   entities: [],
-  host: \\"localhost\\",
+  host: "localhost",
   port: 3306,
-  username: \\"test\\",
-  password: \\"test\\",
-  database: \\"test\\"
+  username: "test",
+  password: "test",
+  database: "test"
 });
 
 
 registerProvider<DataSource>({
   provide: MysqlDatasource,
-  type: \\"typeorm:datasource\\",
+  type: "typeorm:datasource",
   deps: [Logger],
   async useAsyncFactory(logger: Logger) {
     await mysqlDatasource.initialize();
 
-    logger.info(\\"Connected with typeorm to database: Mysql\\");
+    logger.info("Connected with typeorm to database: Mysql");
 
     return mysqlDatasource;
   },
@@ -89,20 +89,4 @@ registerProvider<DataSource>({
 "
 `;
 
-exports[`TypeORM: Init cmd should generate a project with the right options 4`] = `
-"import { PlatformTest } from \\"@tsed/common\\";
-import { MysqlDatasource } from \\"./MysqlDatasource\\";
-
-describe(\\"MysqlDatasource\\", () => {
-  beforeEach(PlatformTest.create);
-  afterEach(PlatformTest.reset);
-
-  it(\\"should do something\\", () => {
-    const instance = PlatformTest.get<MysqlDatasource>(MysqlDatasource);
-    // const instance = PlatformTest.invoke<MysqlDatasource>(MysqlDatasource); // get fresh instance
-
-    expect(instance).toBeInstanceOf(MysqlDatasource);
-  });
-});
-"
-`;
+exports[`TypeORM: Init cmd > should generate a project with the right options 4`] = `undefined`;

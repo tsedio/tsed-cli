@@ -8,7 +8,7 @@ import { LoginInteraction } from "./LoginInteraction";
 
 async function createInteractionFixture() {
   const accounts = {
-    authenticate: jest.fn()
+    authenticate: vi.fn()
   };
 
   const interaction = await PlatformTest.invoke<LoginInteraction>(LoginInteraction, [
@@ -23,7 +23,7 @@ async function createInteractionFixture() {
 
 describe("LoginInteraction", () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     return PlatformTest.create();
   });
   afterEach(() => PlatformTest.reset());
@@ -54,7 +54,7 @@ describe("LoginInteraction", () => {
       const { interaction } = await createInteractionFixture();
       const oidcContext = getOidcContextFixture();
 
-      (oidcContext.checkClientId as jest.Mock).mockRejectedValue(new Error("Unknown given client_id: client_id"));
+      (oidcContext.checkClientId as vi.Mock).mockRejectedValue(new Error("Unknown given client_id: client_id"));
 
       const result = await catchAsyncError(() => interaction.$prompt(oidcContext));
 

@@ -41,10 +41,10 @@ describe("ConsentInteraction", () => {
       oidcContext.prompt.name = "consent";
 
       const grant = {
-        save: jest.fn().mockResolvedValue("grantId"),
-        addOIDCScope: jest.fn(),
-        addOIDCClaims: jest.fn(),
-        addResourceScope: jest.fn()
+        save: vi.fn().mockResolvedValue("grantId"),
+        addOIDCScope: vi.fn(),
+        addOIDCClaims: vi.fn(),
+        addResourceScope: vi.fn()
       };
 
       oidcContext.getGrant.mockResolvedValue(grant);

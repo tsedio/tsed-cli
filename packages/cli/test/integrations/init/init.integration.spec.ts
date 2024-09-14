@@ -37,7 +37,7 @@ describe("Init cmd", () => {
       });
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-        Array [
+        [
           "./project-name",
           "project-name",
           "project-name/.barrelsby.json",
@@ -72,8 +72,8 @@ describe("Init cmd", () => {
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
-        Object {
-          "dependencies": Object {
+        {
+          "dependencies": {
             "@tsed/ajv": "5.58.1",
             "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
@@ -92,15 +92,15 @@ describe("Init cmd", () => {
             "@tsed/schema": "5.58.1",
           },
           "description": "",
-          "devDependencies": Object {},
+          "devDependencies": {},
           "name": "project-data",
-          "scripts": Object {
+          "scripts": {
             "barrels": "barrelsby --config .barrelsby.json",
             "build": "yarn run barrels && tsc --project tsconfig.compile.json",
             "start": "yarn run barrels && tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           },
-          "tsed": Object {
+          "tsed": {
             "packageManager": "yarn",
             "runtime": "node",
           },
@@ -136,7 +136,7 @@ describe("Init cmd", () => {
       });
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-        Array [
+        [
           "./project-name",
           "project-name",
           "project-name/.barrelsby.json",
@@ -177,8 +177,8 @@ describe("Init cmd", () => {
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
-        Object {
-          "dependencies": Object {
+        {
+          "dependencies": {
             "@tsed/ajv": "5.58.1",
             "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
@@ -197,15 +197,15 @@ describe("Init cmd", () => {
             "@tsed/schema": "5.58.1",
           },
           "description": "",
-          "devDependencies": Object {},
+          "devDependencies": {},
           "name": "project-data",
-          "scripts": Object {
+          "scripts": {
             "barrels": "barrelsby --config .barrelsby.json",
             "build": "yarn run barrels && tsc --project tsconfig.compile.json",
             "start": "yarn run barrels && tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           },
-          "tsed": Object {
+          "tsed": {
             "packageManager": "yarn",
             "runtime": "node",
           },
@@ -232,7 +232,7 @@ describe("Init cmd", () => {
       });
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-        Array [
+        [
           "./project-name",
           "project-name",
           "project-name/.barrelsby.json",
@@ -267,8 +267,8 @@ describe("Init cmd", () => {
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
-        Object {
-          "dependencies": Object {
+        {
+          "dependencies": {
             "@tsed/ajv": "5.58.1",
             "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
@@ -287,15 +287,15 @@ describe("Init cmd", () => {
             "@tsed/schema": "5.58.1",
           },
           "description": "",
-          "devDependencies": Object {},
+          "devDependencies": {},
           "name": "project-data",
-          "scripts": Object {
+          "scripts": {
             "barrels": "barrelsby --config .barrelsby.json",
             "build": "bun run barrels && bun build --target=bun src/index.ts --outfile=dist/index.js",
             "start": "bun run barrels && bun --watch src/index.ts",
             "start:prod": "cross-env NODE_ENV=production bun dist/index.js",
           },
-          "tsed": Object {
+          "tsed": {
             "packageManager": "bun",
             "runtime": "bun",
           },
@@ -322,7 +322,7 @@ describe("Init cmd", () => {
       });
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-        Array [
+        [
           "./project-name",
           "project-name",
           "project-name/.babelrc",
@@ -358,8 +358,8 @@ describe("Init cmd", () => {
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
-        Object {
-          "dependencies": Object {
+        {
+          "dependencies": {
             "@tsed/ajv": "5.58.1",
             "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
@@ -378,15 +378,15 @@ describe("Init cmd", () => {
             "@tsed/schema": "5.58.1",
           },
           "description": "",
-          "devDependencies": Object {},
+          "devDependencies": {},
           "name": "project-data",
-          "scripts": Object {
+          "scripts": {
             "barrels": "barrelsby --config .barrelsby.json",
-            "build": "yarn run barrels && tsc && babel src --out-dir dist --extensions \\".ts,.tsx\\" --source-maps inline",
+            "build": "yarn run barrels && tsc && babel src --out-dir dist --extensions ".ts,.tsx" --source-maps inline",
             "start": "yarn run barrels && babel-watch --extensions .ts src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           },
-          "tsed": Object {
+          "tsed": {
             "packageManager": "yarn",
             "runtime": "babel",
           },
@@ -413,7 +413,7 @@ describe("Init cmd", () => {
       });
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-        Array [
+        [
           "./project-name",
           "project-name",
           "project-name/.babelrc",
@@ -450,8 +450,8 @@ describe("Init cmd", () => {
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
-        Object {
-          "dependencies": Object {
+        {
+          "dependencies": {
             "@tsed/ajv": "5.58.1",
             "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
@@ -470,15 +470,15 @@ describe("Init cmd", () => {
             "@tsed/schema": "5.58.1",
           },
           "description": "",
-          "devDependencies": Object {},
+          "devDependencies": {},
           "name": "project-data",
-          "scripts": Object {
+          "scripts": {
             "barrels": "barrelsby --config .barrelsby.json",
             "build": "yarn run barrels && tsc && cross-env NODE_ENV=production webpack",
             "start": "yarn run barrels && babel-watch --extensions .ts src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/app.bundle.js",
           },
-          "tsed": Object {
+          "tsed": {
             "packageManager": "yarn",
             "runtime": "webpack",
           },
@@ -505,7 +505,7 @@ describe("Init cmd", () => {
       });
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-        Array [
+        [
           "./project-name",
           "project-name",
           "project-name/.barrelsby.json",
@@ -542,8 +542,8 @@ describe("Init cmd", () => {
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
-        Object {
-          "dependencies": Object {
+        {
+          "dependencies": {
             "@tsed/ajv": "5.58.1",
             "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
@@ -562,15 +562,15 @@ describe("Init cmd", () => {
             "@tsed/schema": "5.58.1",
           },
           "description": "",
-          "devDependencies": Object {},
+          "devDependencies": {},
           "name": "project-data",
-          "scripts": Object {
+          "scripts": {
             "barrels": "barrelsby --config .barrelsby.json",
             "build": "yarn run barrels && swc src --out-dir dist -s",
             "start": "yarn run barrels && node-dev src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           },
-          "tsed": Object {
+          "tsed": {
             "packageManager": "yarn",
             "runtime": "swc",
           },
@@ -597,7 +597,7 @@ describe("Init cmd", () => {
       });
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-        Array [
+        [
           "./project-name",
           "project-name",
           "project-name/.barrelsby.json",
@@ -632,8 +632,8 @@ describe("Init cmd", () => {
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
-        Object {
-          "dependencies": Object {
+        {
+          "dependencies": {
             "@tsed/ajv": "5.58.1",
             "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
@@ -652,15 +652,15 @@ describe("Init cmd", () => {
             "@tsed/schema": "5.58.1",
           },
           "description": "",
-          "devDependencies": Object {},
+          "devDependencies": {},
           "name": "project-data",
-          "scripts": Object {
+          "scripts": {
             "barrels": "barrelsby --config .barrelsby.json",
             "build": "npm run barrels && tsc --project tsconfig.compile.json",
             "start": "npm run barrels && tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           },
-          "tsed": Object {
+          "tsed": {
             "packageManager": "npm",
             "runtime": "node",
           },
@@ -691,7 +691,7 @@ describe("Init cmd", () => {
       });
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-        Array [
+        [
           "./project-name",
           "project-name",
           "project-name/.barrelsby.json",
@@ -755,7 +755,7 @@ describe("Init cmd", () => {
       });
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-        Array [
+        [
           "./project-name",
           "project-name",
           "project-name/.barrelsby.json",
@@ -818,7 +818,7 @@ describe("Init cmd", () => {
       });
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-        Array [
+        [
           "./project-name",
           "project-name",
           "project-name/.barrelsby.json",
@@ -854,8 +854,8 @@ describe("Init cmd", () => {
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
-        Object {
-          "dependencies": Object {
+        {
+          "dependencies": {
             "@tsed/ajv": "5.58.1",
             "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
@@ -874,15 +874,15 @@ describe("Init cmd", () => {
             "@tsed/schema": "5.58.1",
           },
           "description": "",
-          "devDependencies": Object {},
+          "devDependencies": {},
           "name": "project-data",
-          "scripts": Object {
+          "scripts": {
             "barrels": "barrelsby --config .barrelsby.json",
             "build": "yarn run barrels && tsc --project tsconfig.compile.json",
             "start": "yarn run barrels && tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
           },
-          "tsed": Object {
+          "tsed": {
             "packageManager": "yarn",
             "runtime": "node",
           },
@@ -924,7 +924,7 @@ describe("Init cmd", () => {
       }
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-        Array [
+        [
           "./project-name",
           "project-name",
           "project-name/.barrelsby.json",

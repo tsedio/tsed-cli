@@ -1,20 +1,20 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Init TypeGraphQL project should generate a project with typegraphql 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-express\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import \\"@tsed/typegraphql\\";
-import \\"./datasources/index\\";
-import \\"./resolvers/index\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./controllers/rest/index\\";
+exports[`Init TypeGraphQL project > should generate a project with typegraphql 2`] = `
+"import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/common";
+import "@tsed/platform-express"; // /!\\ keep this import
+import "@tsed/ajv";
+import "@tsed/typegraphql";
+import "./datasources/index";
+import "./resolvers/index";
+import {config} from "./config/index";
+import * as rest from "./controllers/rest/index";
 
 @Configuration({
   ...config,
-  acceptMimes: [\\"application/json\\"],
+  acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
@@ -22,26 +22,26 @@ import * as rest from \\"./controllers/rest/index\\";
     returnsCoercedValues: true
   },
   mount: {
-    \\"/rest\\": [
+    "/rest": [
       ...Object.values(rest)
     ]
   },
   middlewares: [
-    \\"cors\\",
-    \\"cookie-parser\\",
-    \\"compression\\",
-    \\"method-override\\",
-    \\"json-parser\\",
-    { use: \\"urlencoded-parser\\", options: { extended: true }}
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    { use: "urlencoded-parser", options: { extended: true }}
   ],
   views: {
-    root: join(process.cwd(), \\"../views\\"),
+    root: join(process.cwd(), "../views"),
     extensions: {
-      ejs: \\"ejs\\"
+      ejs: "ejs"
     }
   },
   exclude: [
-    \\"**/*.spec.ts\\"
+    "**/*.spec.ts"
   ]
 })
 export class Server {
@@ -54,11 +54,11 @@ export class Server {
 "
 `;
 
-exports[`Init TypeGraphQL project should generate a project with typegraphql 3`] = `
-"import {readFileSync} from \\"fs\\";
-import {envs} from \\"./envs/index\\";
-import loggerConfig from \\"./logger/index\\";
-const pkg = JSON.parse(readFileSync(\\"./package.json\\", {encoding: \\"utf8\\"}));
+exports[`Init TypeGraphQL project > should generate a project with typegraphql 3`] = `
+"import {readFileSync} from "fs";
+import {envs} from "./envs/index";
+import loggerConfig from "./logger/index";
+const pkg = JSON.parse(readFileSync("./package.json", {encoding: "utf8"}));
 
 export const config: Partial<TsED.Configuration> = {
   version: pkg.version,
@@ -66,7 +66,7 @@ export const config: Partial<TsED.Configuration> = {
   logger: loggerConfig,
   graphql: {
     default: {
-      path: \\"/graphql\\",
+      path: "/graphql",
       buildSchemaOptions: {
       }
     }

@@ -4,8 +4,8 @@ import {CliHttpClient} from "./CliHttpClient";
 import {NpmRegistryClient} from "./NpmRegistryClient";
 
 describe("NpmRegistryClient", () => {
-  beforeEach(CliPlatformTest.create);
-  afterEach(CliPlatformTest.reset);
+  beforeEach(() => CliPlatformTest.create());
+  afterEach(() => CliPlatformTest.reset());
 
   describe("search()", () => {
     it("should search packages", async () => {

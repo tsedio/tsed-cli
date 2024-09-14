@@ -1,4 +1,5 @@
 import {NpmRegistryClient, ProjectPackageJson} from "@tsed/cli-core";
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {UpdateCmd} from "./UpdateCmd";
 

@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Init OIDC Provider project should generate a project with oidc 1`] = `
-Array [
+exports[`Init OIDC Provider project > should generate a project with oidc 1`] = `
+[
   "./project-name",
   "project-name",
   "project-name/.barrelsby.json",
@@ -58,48 +58,51 @@ Array [
 ]
 `;
 
-exports[`Init OIDC Provider project should generate a project with oidc 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-express\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import \\"@tsed/oidc-provider\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./controllers/rest/index\\";
-import * as pages from \\"./controllers/pages/index\\";
-import {InteractionsController} from \\"./controllers/oidc/InteractionsController\\";
+exports[`Init OIDC Provider project > should generate a project with oidc 2`] = `
+"import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/common";
+import "@tsed/platform-express"; // /!\\ keep this import
+import "@tsed/ajv";
+import "@tsed/oidc-provider";
+import {config} from "./config/index";
+import * as rest from "./controllers/rest/index";
+import * as pages from "./controllers/pages/index";
+import {InteractionsController} from "./controllers/oidc/InteractionsController";
 
 @Configuration({
   ...config,
-  acceptMimes: [\\"application/json\\"],
+  acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
+  ajv: {
+    returnsCoercedValues: true
+  },
   mount: {
-    \\"/rest\\": [
+    "/rest": [
       ...Object.values(rest)
     ],
-    \\"/\\": [
+    "/": [
       InteractionsController
     ]
   },
   middlewares: [
-    \\"cors\\",
-    \\"cookie-parser\\",
-    \\"compression\\",
-    \\"method-override\\",
-    \\"json-parser\\",
-    { use: \\"urlencoded-parser\\", options: { extended: true }}
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    { use: "urlencoded-parser", options: { extended: true }}
   ],
   views: {
-    root: join(process.cwd(), \\"../views\\"),
+    root: join(process.cwd(), "../views"),
     extensions: {
-      ejs: \\"ejs\\"
+      ejs: "ejs"
     }
   },
   exclude: [
-    \\"**/*.spec.ts\\"
+    "**/*.spec.ts"
   ]
 })
 export class Server {
@@ -112,8 +115,8 @@ export class Server {
 "
 `;
 
-exports[`Init OIDC Provider project should generate a project with oidc and swagger 1`] = `
-Array [
+exports[`Init OIDC Provider project > should generate a project with oidc and swagger 1`] = `
+[
   "./project-name",
   "project-name",
   "project-name/.barrelsby.json",
@@ -168,56 +171,59 @@ Array [
 ]
 `;
 
-exports[`Init OIDC Provider project should generate a project with oidc and swagger 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-express\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import \\"@tsed/swagger\\";
-import \\"@tsed/oidc-provider\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./controllers/rest/index\\";
-import * as pages from \\"./controllers/pages/index\\";
-import {InteractionsController} from \\"./controllers/oidc/InteractionsController\\";
+exports[`Init OIDC Provider project > should generate a project with oidc and swagger 2`] = `
+"import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/common";
+import "@tsed/platform-express"; // /!\\ keep this import
+import "@tsed/ajv";
+import "@tsed/swagger";
+import "@tsed/oidc-provider";
+import {config} from "./config/index";
+import * as rest from "./controllers/rest/index";
+import * as pages from "./controllers/pages/index";
+import {InteractionsController} from "./controllers/oidc/InteractionsController";
 
 @Configuration({
   ...config,
-  acceptMimes: [\\"application/json\\"],
+  acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
+  ajv: {
+    returnsCoercedValues: true
+  },
   mount: {
-    \\"/rest\\": [
+    "/rest": [
       ...Object.values(rest)
     ],
-    \\"/\\": [
+    "/": [
       ...Object.values(pages),
       InteractionsController
     ]
   },
   swagger: [
     {
-      path: \\"/doc\\",
-      specVersion: \\"3.0.1\\"
+      path: "/doc",
+      specVersion: "3.0.1"
     }
   ],
   middlewares: [
-    \\"cors\\",
-    \\"cookie-parser\\",
-    \\"compression\\",
-    \\"method-override\\",
-    \\"json-parser\\",
-    { use: \\"urlencoded-parser\\", options: { extended: true }}
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    { use: "urlencoded-parser", options: { extended: true }}
   ],
   views: {
-    root: join(process.cwd(), \\"../views\\"),
+    root: join(process.cwd(), "../views"),
     extensions: {
-      ejs: \\"ejs\\"
+      ejs: "ejs"
     }
   },
   exclude: [
-    \\"**/*.spec.ts\\"
+    "**/*.spec.ts"
   ]
 })
 export class Server {

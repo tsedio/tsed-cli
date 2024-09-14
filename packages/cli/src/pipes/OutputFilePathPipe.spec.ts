@@ -2,6 +2,7 @@ import {ArchitectureConvention} from "./../interfaces/ArchitectureConvention";
 import {ProvidersInfoService} from "../services/ProvidersInfoService";
 import {ClassNamePipe} from "./ClassNamePipe";
 import {OutputFilePathPipe} from "./OutputFilePathPipe";
+// @ts-ignore
 import {normalizePath} from "@tsed/cli-testing";
 
 describe("OutputFilePathPipe", () => {

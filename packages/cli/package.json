@@ -1,19 +1,23 @@
 {
   "name": "@tsed/cli",
+  "description": "CLI to bootstrap your Ts.ED project",
+  "type": "commonjs",
   "version": "5.2.10",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {
-    "types": "./lib/types/index.d.ts",
-    "import": "./lib/esm/index.js",
-    "require": "./lib/cjs/index.js",
-    "default": "./lib/esm/index.js"
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "import": "./lib/esm/index.js",
+      "require": "./lib/cjs/index.js",
+      "default": "./lib/esm/index.js"
+    }
   },
   "scripts": {
     "build": "yarn build:ts",
-    "build:ts": "tsc --build tsconfig.json && tsc --build tsconfig.esm.json && cp scripts/index.esm.js lib/esm/constants/index.js",
+    "build:ts": "tsc --build tsconfig.json",
     "start:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts -h",
     "start:help:g": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
     "start:help:i": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -h",
@@ -33,9 +37,8 @@
     "start:g:prisma": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts g service -r ./.tmp/init/awesome prisma",
     "start:generate:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -r ./.tmp/init/awesome",
     "start:typeorm:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts typeorm entity:create -r ./.tmp/init/awesome --name User",
-    "lint": "eslint '**/*.{ts,js}'",
-    "lint:fix": "eslint '**/*.{ts,js}' --fix",
-    "test": "cross-env NODE_ENV=test yarn jest --max-workers=2 --passWithNoTests && jest-coverage-thresholds-bumper"
+    "test": "vitest run",
+    "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
   "bin": {
     "tsed": "lib/cjs/bin/tsed.js"
@@ -48,7 +51,6 @@
     "lib",
     "templates"
   ],
-  "description": "CLI to bootstrap your Ts.ED project",
   "keywords": [
     "Ts.ED",
     "cli",
@@ -79,13 +81,11 @@
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/eslint": "5.2.10",
-    "@tsed/jest-config": "5.2.10",
-    "@tsed/typescript": "5.2.10",
+    "@tsed/typescript": "workspace:*",
     "@types/change-case": "^2.3.1",
     "cross-env": "7.0.3",
-    "eslint": "8.22.0",
-    "jest": "29.5.0"
+    "typescript": "4.9.5",
+    "vitest": "2.1.1"
   },
   "peerDependencies": {
     "@tsed/cli-core": "5.2.10",

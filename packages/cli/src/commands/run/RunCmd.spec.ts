@@ -1,3 +1,4 @@
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {RunCmd} from "./RunCmd";
 import {CliFs, CliRunScript} from "@tsed/cli-core";
@@ -9,10 +10,10 @@ describe("RunCmd", () => {
   describe("$exec()", () => {
     it("should run sub project command (development)", async () => {
       const runScript = {
-        run: jest.fn()
+        run: vi.fn()
       };
       const cliFs = {
-        exists: jest.fn().mockReturnValue(false)
+        exists: vi.fn().mockReturnValue(false)
       };
       const command = await CliPlatformTest.invoke<RunCmd>(RunCmd, [
         {
@@ -40,10 +41,10 @@ describe("RunCmd", () => {
     });
     it("should run sub project command (production)", async () => {
       const runScript = {
-        run: jest.fn()
+        run: vi.fn()
       };
       const cliFs = {
-        exists: jest.fn().mockReturnValue(false)
+        exists: vi.fn().mockReturnValue(false)
       };
       const command = await CliPlatformTest.invoke<RunCmd>(RunCmd, [
         {
@@ -72,12 +73,12 @@ describe("RunCmd", () => {
     });
     it("should run sub project command (production + tsconfig)", async () => {
       const runScript = {
-        run: jest.fn()
+        run: vi.fn()
       };
       const cliFs = {
-        exists: jest.fn().mockReturnValue(true),
-        readFile: jest.fn().mockResolvedValue(JSON.stringify({compilerOptions: {outDir: "./lib"}})),
-        readJsonSync: jest.fn().mockResolvedValue({})
+        exists: vi.fn().mockReturnValue(true),
+        readFile: vi.fn().mockResolvedValue(JSON.stringify({compilerOptions: {outDir: "./lib"}})),
+        readJsonSync: vi.fn().mockResolvedValue({})
       };
       const command = await CliPlatformTest.invoke<RunCmd>(RunCmd, [
         {

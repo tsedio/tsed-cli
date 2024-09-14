@@ -1,10 +1,11 @@
-import {SrcRendererService} from "@tsed/cli-core";
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
+import {SrcRendererService} from "@tsed/cli-core";
 import {GenerateCmd} from "./GenerateCmd";
 
 describe("GenerateCmd", () => {
-  beforeEach(CliPlatformTest.create);
-  afterEach(CliPlatformTest.reset);
+  beforeEach(() => CliPlatformTest.create());
+  afterEach(() => CliPlatformTest.reset());
 
   describe("$prompt", () => {
     it(
@@ -73,7 +74,7 @@ describe("GenerateCmd", () => {
     it("should return tasks", async () => {
       // GIVEN
       const renderService = {
-        render: jest.fn()
+        render: vi.fn()
       };
 
       let options = {
@@ -127,7 +128,7 @@ describe("GenerateCmd", () => {
     it("should return empty tasks", async () => {
       // GIVEN
       const renderService = {
-        render: jest.fn()
+        render: vi.fn()
       };
 
       let options = {
