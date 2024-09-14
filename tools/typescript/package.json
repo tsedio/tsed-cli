@@ -10,10 +10,5 @@
   },
   "scripts": {
     "build:references": "node ./index.js"
-  },
-  "devDependencies": {
-    "@tsed/jest-config": "5.2.10",
-    "cross-env": "7.0.3",
-    "jest": "29.5.0"
   }
 }

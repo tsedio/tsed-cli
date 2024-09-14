@@ -1,5 +1,5 @@
-import {Command} from "../..";
 import {getCommandMetadata} from "./getCommandMetadata";
+import {Command} from "../decorators";
 
 @Command({
   name: "name",

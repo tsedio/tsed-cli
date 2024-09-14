@@ -3,11 +3,12 @@ import {CliService} from "./services";
 import {normalizePath} from "@tsed/normalize-path";
 import execa from "execa";
 
-jest.mock("./utils/loadPlugins");
-jest.mock("execa");
+vi.mock("./utils/loadPlugins");
+vi.mock("execa");
+
 describe("CliCore", () => {
   beforeEach(() => {
-    (execa as any as jest.Mock).mockReturnValue({});
+    vi.mocked(execa as any).mockReturnValue({});
   });
   describe("getProjectRoot()", () => {
     it("should return project root (-r)", () => {
@@ -42,9 +43,9 @@ describe("CliCore", () => {
 
   describe("bootstrap()", () => {
     beforeEach(() => {
-      jest.spyOn(CliService.prototype, "parseArgs").mockResolvedValue(undefined);
+      vi.spyOn(CliService.prototype, "parseArgs").mockResolvedValue(undefined);
     });
-    afterEach(() => jest.resetAllMocks());
+    afterEach(() => vi.resetAllMocks());
 
     it("should bootstrap CLI with process.argv", async () => {
       await CliCore.bootstrap({});

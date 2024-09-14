@@ -1,3 +1,4 @@
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {join, resolve} from "path";
 import {ProjectPackageJson} from "./ProjectPackageJson";
@@ -8,9 +9,9 @@ const dir = __dirname;
 
 async function getProjectPackageJsonFixture() {
   const cliFs = {
-    writeFileSync: jest.fn(),
-    exists: jest.fn().mockReturnValue(false),
-    readJsonSync: jest.fn().mockReturnValue({
+    writeFileSync: vi.fn(),
+    exists: vi.fn().mockReturnValue(false),
+    readJsonSync: vi.fn().mockReturnValue({
       scripts: {},
       dependencies: {},
       devDependencies: {}

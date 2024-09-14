@@ -1,15 +1,16 @@
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {YarnBerryManager} from "./YarnBerryManager";
 import {CliExeca, CliYaml} from "../../services";
 
 async function getManagerFixture() {
   const cliExeca = {
-    runSync: jest.fn(),
-    run: jest.fn()
+    runSync: vi.fn(),
+    run: vi.fn()
   };
   const cliYaml = {
-    read: jest.fn(),
-    write: jest.fn()
+    read: vi.fn(),
+    write: vi.fn()
   };
   const manager = await CliPlatformTest.invoke<YarnBerryManager>(YarnBerryManager, [
     {
@@ -53,7 +54,7 @@ describe("YarnBerryManager", () => {
     it("should init project", async () => {
       const {cliExeca, cliYaml, manager} = await getManagerFixture();
 
-      jest.spyOn(manager, "install").mockResolvedValue([] as never);
+      vi.spyOn(manager, "install").mockResolvedValue([] as never);
 
       await manager.init({
         cwd: "cwd"

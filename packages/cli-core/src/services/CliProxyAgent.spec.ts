@@ -1,3 +1,4 @@
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 import tunnel from "tunnel";
 import {CliProxyAgent} from "./CliProxyAgent";
@@ -5,7 +6,7 @@ import {CliConfiguration} from "./CliConfiguration";
 import {CliExeca} from "./CliExeca";
 import "../index";
 
-jest.mock("tunnel");
+vi.mock("tunnel");
 
 describe("CliPlugins", () => {
   beforeEach(() =>
@@ -49,7 +50,7 @@ describe("CliPlugins", () => {
     describe("from npm config", () => {
       it("should get proxy url from (proxy)", async () => {
         const cliExeca = {
-          getAsync: jest.fn().mockImplementation((p: string, args: string[]) => {
+          getAsync: vi.fn().mockImplementation((p: string, args: string[]) => {
             if (args.includes("proxy")) {
               return Promise.resolve("https://login:password@host:3000");
             }
@@ -82,7 +83,7 @@ describe("CliPlugins", () => {
       });
       it("should get proxy url from (http-proxy)", async () => {
         const cliExeca = {
-          getAsync: jest.fn().mockImplementation((p: string, args: string[]) => {
+          getAsync: vi.fn().mockImplementation((p: string, args: string[]) => {
             if (args.includes("http-proxy")) {
               return Promise.resolve("https://login:password@host:3000");
             }
@@ -115,7 +116,7 @@ describe("CliPlugins", () => {
       });
       it("should get proxy url from (https-proxy)", async () => {
         const cliExeca = {
-          getAsync: jest.fn().mockImplementation((p: string, args: string[]) => {
+          getAsync: vi.fn().mockImplementation((p: string, args: string[]) => {
             if (args.includes("https-proxy")) {
               return Promise.resolve("https://login:password@host:3000");
             }
@@ -148,7 +149,7 @@ describe("CliPlugins", () => {
       });
       it("should get proxy url from (https-proxy) without credentials", async () => {
         const cliExeca = {
-          getAsync: jest.fn().mockImplementation((p: string, args: string[]) => {
+          getAsync: vi.fn().mockImplementation((p: string, args: string[]) => {
             if (args.includes("https-proxy")) {
               return Promise.resolve("https://host:3000");
             }

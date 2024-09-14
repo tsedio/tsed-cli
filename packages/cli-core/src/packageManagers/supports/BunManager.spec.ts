@@ -1,11 +1,12 @@
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {CliExeca} from "../../services";
 import {BunManager} from "./BunManager";
 
 async function getManagerFixture() {
   const cliExeca = {
-    runSync: jest.fn(),
-    run: jest.fn()
+    runSync: vi.fn(),
+    run: vi.fn()
   };
   const manager = await CliPlatformTest.invoke<BunManager>(BunManager, [
     {

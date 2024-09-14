@@ -1,24 +1,34 @@
-const mono = require("@tsed/monorepo-utils");
-const {dirname, join, relative} = require("path");
-const cloneDeep = require("lodash/cloneDeep.js");
-const {readJson, writeJson, removeSync} = require("fs-extra");
+import {findPackages, MonoRepo} from "@tsed/monorepo-utils";
+import {dirname, join, relative} from "node:path";
+import cloneDeep from "lodash/cloneDeep.js";
+import omit from "lodash/omit.js";
+import fs from "fs-extra";
+import globby from "globby";
 
-const scriptDir = __dirname;
+const scriptDir = import.meta.dirname;
 
 async function main() {
-  const monoRepo = new mono.MonoRepo({
+  const monoRepo = new MonoRepo({
     rootDir: process.cwd(),
     verbose: false
   });
 
-  const tsConfigTemplate = await readJson(join(scriptDir, "./tsconfig.template.json"));
-  const tsConfigEsmTemplate = await readJson(join(scriptDir, "./tsconfig.template.esm.json"));
+  const pkgRoot = fs.readJsonSync(join(monoRepo.rootDir, "package.json"));
+  const packagesRootDir = join(monoRepo.rootDir, "packages");
 
   const tsConfigRootPath = join(monoRepo.rootDir, "tsconfig.json");
-  const tsConfigRoot = await readJson(tsConfigRootPath);
+  const tsConfigTemplate = await fs.readJson(join(scriptDir, "./tsconfig.template.json"));
+  const tsConfigTemplateCjsPath = join(scriptDir, "./tsconfig.template.cjs.json");
+  const tsConfigTemplateEsmPath = join(scriptDir, "./tsconfig.template.esm.json");
+  const tsConfigTemplateSpecPath = join(scriptDir, "./tsconfig.template.spec.json");
+  const tsConfigTemplateSpec = await fs.readJson(tsConfigTemplateSpecPath);
+  const npmIgnoreTemplatePath = join(scriptDir, "./.npmignore.template");
+  //const viteConfig = fs.readFileSync(join(scriptDir, "./vite.config.mts"), {encoding: "utf8"});
+
+  const tsConfigRoot = await fs.readJson(tsConfigRootPath);
   tsConfigRoot.references = [];
 
-  const packages = await mono.findPackages(monoRepo);
+  const packages = await findPackages(monoRepo);
 
   const packagesRefsMap = packages.reduce((map, pkg) => {
     if (pkg.pkg.source && pkg.pkg.source.endsWith(".ts")) {
@@ -27,14 +37,26 @@ async function main() {
     return map;
   }, new Map());
 
-  const promises = packages.map(async (pkg) => {
+  for (const pkg of packages) {
     const path = dirname(pkg.path);
 
     if (pkg.pkg.source && pkg.pkg.source.endsWith(".ts")) {
       const tsConfig = cloneDeep(tsConfigTemplate);
       const tsConfigPath = join(path, "tsconfig.json");
-      const tsConfigEsm = cloneDeep(tsConfigEsmTemplate);
-      const tsConfigEsmPath = join(path, "tsconfig.esm.json");
+      const tsConfigBuildEsmPath = join(path, "tsconfig.esm.json");
+      const tsConfigBuildCjsPath = join(path, "tsconfig.cjs.json");
+      const tsConfigBuildSpecPath = join(path, "tsconfig.spec.json");
+      const npmignore = join(path, ".npmignore");
+      const vitestPath = join(path, "vitest.config.mts");
+      const vitePath = join(path, "vite.config.mts");
+
+      const hasFiles = await globby(["{src,test}/**/*.spec.ts", "!node_modules"], {
+        cwd: path
+      });
+
+      // const viteConfigPath = join(path, "vite.config.ts");
+      tsConfig.references = [];
+      const deps = new Set();
 
       Object.keys({
         ...(pkg.pkg.peerDependencies || {}),
@@ -45,42 +67,134 @@ async function main() {
           return packagesRefsMap.has(peer);
         })
         .map((peer) => {
+          deps.add(peer);
           tsConfig.references.push({
-            path: relative(dirname(pkg.path), packagesRefsMap.get(peer))
-          });
-          tsConfigEsm.references.push({
-            path: relative(dirname(pkg.path), packagesRefsMap.get(peer))
+            path: join(relative(dirname(pkg.path), packagesRefsMap.get(peer)), "tsconfig.json")
           });
         });
 
-      await writeJson(tsConfigPath, tsConfig, {spaces: 2});
-      await writeJson(tsConfigEsmPath, tsConfigEsm, {spaces: 2});
+      tsConfig.references.push(
+        {
+          path: "./tsconfig.cjs.json"
+        },
+        {
+          path: "./tsconfig.esm.json"
+        }
+      );
 
-      tsConfigRoot.references.push({
-        path: `./${relative(process.cwd(), path)}`
-      });
+      if (hasFiles.length) {
+        tsConfig.references.push({
+          path: "./tsconfig.spec.json"
+        });
 
-      if (pkg.pkg.scripts["build:cjs"]) {
-        pkg.pkg.scripts["build"] = pkg.pkg.scripts["build"].replace("yarn run build:esm && yarn run build:cjs", "yarn build:ts");
-        delete pkg.pkg.scripts["build:cjs"];
-        delete pkg.pkg.scripts["build:esm"];
+        const paths = {};
+
+        packages
+          .filter((dep) => {
+            return (
+              ((dep.path.includes("/platform") && !dep.path.includes("serverless")) ||
+                dep.path.includes("/components-scan") ||
+                dep.path.includes("/spec") ||
+                dep.path.includes("/di")) &&
+              !deps.has(dep.name) &&
+              pkg.name !== dep.name
+            );
+          })
+          .forEach((dep) => {
+            paths["@tsed/" + dep.name] = [relative(dirname(pkg.path), dirname(dep.path)) + "/src"];
+          });
+        const tsCopy = cloneDeep(tsConfigTemplateSpec);
+        tsCopy.compilerOptions.paths = paths;
+        tsCopy.compilerOptions.rootDir = relative(dirname(tsConfigBuildSpecPath), packagesRootDir);
+
+        if (fs.existsSync(vitestPath)) {
+          tsCopy.include.push("vitest.config.mts");
+          tsCopy.compilerOptions.types = ["vite/client", "vitest/globals"];
+        }
+
+        if (fs.existsSync(vitePath)) {
+          tsCopy.include.push("vite.config.mts");
+        }
+
+        await fs.writeJSON(tsConfigBuildSpecPath, tsCopy, {spaces: 2});
       }
 
-      pkg.pkg.scripts["build:ts"] = "tsc --build tsconfig.json && tsc --build tsconfig.esm.json";
-      pkg.pkg.devDependencies["@tsed/typescript"] = pkg.pkg.version;
+      await fs.writeJson(tsConfigPath, tsConfig, {spaces: 2});
+      await fs.copy(tsConfigTemplateEsmPath, tsConfigBuildEsmPath);
+      await fs.copy(tsConfigTemplateCjsPath, tsConfigBuildCjsPath);
+      await fs.copy(npmIgnoreTemplatePath, npmignore);
 
-      await writeJson(pkg.path, pkg.pkg, {spaces: 2});
-      try {
-        removeSync(join(path, "tsconfig.compile.esm.json"));
-        removeSync(join(path, "tsconfig.compile.json"));
-        removeSync(join(path, "tsconfig.cjs.json"));
-      } catch {}
+      tsConfigRoot.references.push({
+        path: `./${relative(process.cwd(), path)}/tsconfig.json`
+      });
+
+      // if (hasFiles.length) {
+      //   tsConfigRoot.references.push(
+      //     {
+      //       path: `./${relative(process.cwd(), path)}/tsconfig.spec.json`
+      //     }
+      //   );
+      // }
+
+      pkg.pkg = {
+        name: pkg.pkg.name,
+        description: pkg.pkg.description,
+        type: "commonjs",
+        ...omit(pkg.pkg, ["name", "description"])
+      };
+      pkg.pkg.scripts = {
+        ...pkg.pkg.scripts,
+        "build:ts": "tsc --build tsconfig.json"
+      };
+
+      pkg.pkg.devDependencies["@tsed/typescript"] = "workspace:*";
+      pkg.pkg.devDependencies["typescript"] = pkgRoot.devDependencies["typescript"];
+
+      // migrate task
+      // if (pkg.pkg.scripts["build:browser"] === "webpack") {
+      //   delete pkg.pkg.devDependencies["webpack"];
+      //
+      //   pkg.pkg.scripts["build:browser"] = "vite build";
+      //
+      //   await fs.writeFile(
+      //     viteConfigPath,
+      //     viteConfig.replace("__PACKAGE__", pkg.pkg.name).replace("__NAME__", pkg.pkg.name.split("/")[1]),
+      //     {
+      //       encoding: "utf-8"
+      //     }
+      //   );
+      // }
+      //
+      // if (pkg.pkg.scripts["build:browser"]) {
+      //   pkg.pkg.devDependencies["vite"] = pkgRoot.devDependencies["vite"];
+      // }
+
+      // prepare exports
+
+      // pkg.pkg.main = pkg.pkg.main.replace("cjs/", "esm/");
+
+      if (pkg.pkg.exports && !pkg.pkg.exports["."]) {
+        pkg.pkg.exports = {
+          ".": {
+            ...pkg.pkg.exports
+          }
+        };
+      }
+
+      await fs.writeJson(pkg.path, pkg.pkg, {spaces: 2});
+      // try {
+      //   fs.removeSync(join(path, "tsconfig.compile.esm.json"));
+      //   fs.removeSync(join(path, "tsconfig.compile.json"));
+      //   fs.removeSync(join(path, "tsconfig.cjs.json"));
+      //   // fs.removeSync(join(path, "tsconfig.esm.json"));
+      // } catch {
+      // }
     }
-  });
+  }
 
-  await Promise.all(promises);
-
-  await writeJson(tsConfigRootPath, tsConfigRoot, {spaces: 2});
+  await fs.writeJson(tsConfigRootPath, tsConfigRoot, {spaces: 2});
 }
 
-main();
+main().catch((e) => {
+  console.error(e);
+});

@@ -1,3 +1,4 @@
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {PackageManagersModule} from "./PackageManagersModule";
 import {YarnManager} from "./supports/YarnManager";
@@ -13,18 +14,18 @@ async function getModuleFixture() {
     has() {
       return true;
     },
-    add: jest.fn().mockReturnValue({
-      pipe: jest.fn()
+    add: vi.fn().mockReturnValue({
+      pipe: vi.fn()
     }),
-    addDev: jest.fn().mockReturnValue({
-      pipe: jest.fn()
+    addDev: vi.fn().mockReturnValue({
+      pipe: vi.fn()
     }),
-    install: jest.fn().mockReturnValue({
-      pipe: jest.fn()
+    install: vi.fn().mockReturnValue({
+      pipe: vi.fn()
     }),
-    init: jest.fn(),
-    runScript: jest.fn().mockReturnValue({
-      pipe: jest.fn()
+    init: vi.fn(),
+    runScript: vi.fn().mockReturnValue({
+      pipe: vi.fn()
     })
   };
 
@@ -33,16 +34,16 @@ async function getModuleFixture() {
     has() {
       return true;
     },
-    add: jest.fn(),
-    addDev: jest.fn(),
-    install: jest.fn(),
-    runScript: jest.fn()
+    add: vi.fn(),
+    addDev: vi.fn(),
+    install: vi.fn(),
+    runScript: vi.fn()
   };
 
   const cliFs = {
-    exists: jest.fn().mockReturnValue(true),
-    writeFileSync: jest.fn(),
-    readJsonSync: jest.fn().mockReturnValue({
+    exists: vi.fn().mockReturnValue(true),
+    writeFileSync: vi.fn(),
+    readJsonSync: vi.fn().mockReturnValue({
       scripts: {},
       dependencies: {},
       devDependencies: {}

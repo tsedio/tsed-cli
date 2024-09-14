@@ -1,11 +1,11 @@
 import {CliCore, Command, CommandProvider, Tasks} from "../../src";
 import execa from "execa";
 
-jest.mock("execa")
+vi.mock("execa")
 
 describe("Command", () => {
   beforeEach(() => {
-    (execa as any as jest.Mock).mockReturnValue({})
+    (execa as any as vi.Mock).mockReturnValue({})
   })
   it("should exec a command with expected parsed argument", async () => {
     @Command({
@@ -30,7 +30,7 @@ describe("Command", () => {
       }
     }
 
-    jest.spyOn(TestCommand.prototype, "$exec").mockResolvedValue([])
+    vi.spyOn(TestCommand.prototype, "$exec").mockResolvedValue([])
 
     await CliCore.bootstrap({
       name: "tsed",
