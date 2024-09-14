@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`fillImports() > it should return barrels and imports files for ('arc_default', oidc: false, graphql: false, swagger: true, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
+exports[`fillImports() > should return barrels and imports files for ('arc_default', oidc: false, graphql: false, swagger: true, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
 {
   "architecture": "arc_default",
   "barrels": "["./src/controllers/rest","./src/controllers/pages"]",
@@ -34,7 +34,7 @@ exports[`fillImports() > it should return barrels and imports files for ('arc_de
 }
 `;
 
-exports[`fillImports() > it should return barrels and imports files for ('arc_default', oidc: true, graphql: false, swagger: false, passportjs: false, express: false, koa: true, mongoose: false) 1`] = `
+exports[`fillImports() > should return barrels and imports files for ('arc_default', oidc: true, graphql: false, swagger: false, passportjs: false, express: false, koa: true, mongoose: false) 1`] = `
 {
   "architecture": "arc_default",
   "barrels": "["./src/controllers/rest","./src/interactions"]",
@@ -72,7 +72,7 @@ exports[`fillImports() > it should return barrels and imports files for ('arc_de
 }
 `;
 
-exports[`fillImports() > it should return barrels and imports files for ('arc_default', oidc: true, graphql: true, swagger: true, passportjs: true, express: false, koa: true, mongoose: true) 1`] = `
+exports[`fillImports() > should return barrels and imports files for ('arc_default', oidc: true, graphql: true, swagger: true, passportjs: true, express: false, koa: true, mongoose: true) 1`] = `
 {
   "architecture": "arc_default",
   "barrels": "["./src/controllers/rest","./src/controllers/pages","./src/interactions","./src/datasources","./src/resolvers"]",
@@ -128,7 +128,7 @@ exports[`fillImports() > it should return barrels and imports files for ('arc_de
 }
 `;
 
-exports[`fillImports() > it should return barrels and imports files for ('feature', oidc: false, graphql: false, swagger: false, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
+exports[`fillImports() > should return barrels and imports files for ('feature', oidc: false, graphql: false, swagger: false, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
 {
   "architecture": "feature",
   "barrels": "["./src/rest"]",
@@ -155,7 +155,7 @@ exports[`fillImports() > it should return barrels and imports files for ('featur
 }
 `;
 
-exports[`fillImports() > it should return barrels and imports files for ('feature', oidc: false, graphql: false, swagger: true, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
+exports[`fillImports() > should return barrels and imports files for ('feature', oidc: false, graphql: false, swagger: true, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
 {
   "architecture": "feature",
   "barrels": "["./src/rest","./src/pages"]",
@@ -189,7 +189,7 @@ exports[`fillImports() > it should return barrels and imports files for ('featur
 }
 `;
 
-exports[`fillImports() > it should return barrels and imports files for ('feature', oidc: true, graphql: false, swagger: false, passportjs: false, express: true, koa: false, mongoose: false) 1`] = `
+exports[`fillImports() > should return barrels and imports files for ('feature', oidc: true, graphql: false, swagger: false, passportjs: false, express: true, koa: false, mongoose: false) 1`] = `
 {
   "architecture": "feature",
   "barrels": "["./src/rest","./src/interactions"]",
@@ -227,7 +227,7 @@ exports[`fillImports() > it should return barrels and imports files for ('featur
 }
 `;
 
-exports[`fillImports() > it should return barrels and imports files for ('feature', oidc: true, graphql: true, swagger: true, passportjs: true, express: true, koa: false, mongoose: true) 1`] = `
+exports[`fillImports() > should return barrels and imports files for ('feature', oidc: true, graphql: true, swagger: true, passportjs: true, express: true, koa: false, mongoose: true) 1`] = `
 {
   "architecture": "feature",
   "barrels": "["./src/rest","./src/pages","./src/interactions","./src/datasources","./src/resolvers"]",
