@@ -1,20 +1,8 @@
 {
   "name": "@tsed/barrels",
   "description": "A simple tool to generate barrels for your TypeScript project",
-  "version": "5.2.10",
+  "version": "5.3.1",
   "type": "module",
-  "main": "./lib/esm/index.js",
-  "source": "./src/index.ts",
-  "module": "./lib/esm/index.js",
-  "typings": "./lib/types/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./lib/types/index.d.ts",
-      "import": "./lib/esm/index.js",
-      "require": "./lib/cjs/index.js",
-      "default": "./lib/esm/index.js"
-    }
-  },
   "bin": "bin/barrels.js",
   "files": [],
   "keywords": [
