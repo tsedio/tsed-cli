@@ -4,6 +4,7 @@ import chalk from "chalk";
 import {Command} from "commander";
 import {join, resolve} from "path";
 import semver from "semver";
+import updateNotifier from "update-notifier";
 
 import {CliError} from "./domains/CliError.js";
 import {CliConfiguration} from "./services/CliConfiguration.js";
@@ -82,9 +83,7 @@ export class CliCore {
   }
 
   static async updateNotifier(pkg: any) {
-    // const {default: updateNotifier} = await import("update-notifier");
-    //
-    // updateNotifier({pkg, updateCheckInterval: 0}).notify();
+    updateNotifier({pkg, updateCheckInterval: 0}).notify();
 
     return this;
   }

@@ -31,9 +31,6 @@
       "path": "./packages/cli-plugin-jest/tsconfig.json"
     },
     {
-      "path": "./packages/cli-plugin-mocha/tsconfig.json"
-    },
-    {
       "path": "./packages/cli-plugin-mongoose/tsconfig.json"
     },
     {
