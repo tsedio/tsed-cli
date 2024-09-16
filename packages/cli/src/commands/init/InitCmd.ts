@@ -406,7 +406,6 @@ export class InitCmd implements CommandProvider {
         "@types/node": "latest",
         "@types/multer": "latest",
         tslib: "latest",
-        typescript: "latest",
         ...this.runtimes.get().devDependencies(),
         ...this.platforms.get(ctx.platform).devDependencies(ctx)
       },

@@ -25,6 +25,7 @@ export class WebpackRuntime extends BabelRuntime {
   devDependencies() {
     return {
       ...super.devDependencies(),
+      typescript: "latest",
       "babel-loader": "latest",
       webpack: "latest",
       "webpack-cli": "latest"

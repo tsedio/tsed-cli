@@ -1,6 +1,6 @@
-// @ts-ignore
 import {join} from "node:path";
 
+// @ts-ignore
 import {FakeCliFs, normalizePath} from "@tsed/cli-testing";
 import Consolidate from "consolidate";
 import globby from "globby";

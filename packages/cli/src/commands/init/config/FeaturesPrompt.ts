@@ -252,7 +252,7 @@ export const FeaturesMap: Record<string, Feature> = {
     name: "Lint on commit"
   },
   node: {
-    name: "Node.js",
+    name: "Node.js + SWC",
     checked: true
   },
   babel: {
@@ -263,12 +263,8 @@ export const FeaturesMap: Record<string, Feature> = {
     name: "Node.js + Webpack",
     checked: false
   },
-  swc: {
-    name: "Node.js + SWC",
-    checked: false
-  },
   bun: {
-    name: "Bun.js (experimental)",
+    name: "Bun.js",
     checked: false
   },
   yarn: {
@@ -284,7 +280,7 @@ export const FeaturesMap: Record<string, Feature> = {
     checked: false
   },
   pnpm: {
-    name: "PNPM (experimental)",
+    name: "PNPM",
     checked: false
   }
 };

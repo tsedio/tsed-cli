@@ -18,6 +18,10 @@ export class BabelRuntime extends NodeRuntime {
     return `babel-watch --extensions .ts ${main}`;
   }
 
+  startProd(args: string) {
+    return `${this.cmd} ${args}`;
+  }
+
   compile(src: string, out: string) {
     return `tsc && babel ${dirname(src)} --out-dir ${dirname(out)} --extensions ".ts,.tsx" --source-maps inline`;
   }
@@ -33,7 +37,8 @@ export class BabelRuntime extends NodeRuntime {
       "@babel/preset-typescript": "latest",
       "@babel/plugin-proposal-object-rest-spread": "latest",
       "babel-plugin-transform-typescript-metadata": "latest",
-      "babel-watch": "latest"
+      "babel-watch": "latest",
+      typescript: "latest"
     };
   }
 }

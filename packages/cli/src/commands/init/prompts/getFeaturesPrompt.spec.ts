@@ -318,12 +318,12 @@ describe("getFeaturesPrompt", () => {
           "choices": [
             {
               "checked": true,
-              "name": "Node.js",
+              "name": "Node.js + SWC",
               "value": "node",
             },
             {
               "checked": false,
-              "name": "Bun.js (experimental)",
+              "name": "Bun.js",
               "value": "bun",
             },
           ],
@@ -345,12 +345,12 @@ describe("getFeaturesPrompt", () => {
             },
             {
               "checked": false,
-              "name": "PNPM (experimental)",
+              "name": "PNPM",
               "value": "pnpm",
             },
             {
               "checked": false,
-              "name": "Bun.js (experimental)",
+              "name": "Bun.js",
               "value": "bun",
             },
           ],

@@ -10,22 +10,35 @@ export class NodeRuntime extends BaseRuntime {
   readonly cmd: string = "node";
   readonly order: number = 0;
 
-  devDependencies(): Record<string, any> {
-    return {
-      "ts-node": "latest",
-      "ts-node-dev": "latest"
-    };
-  }
-
-  compile(src: string, out: string) {
-    return `tsc --project tsconfig.compile.json`;
+  files() {
+    return ["/init/.swcrc.hbs", "/init/nodemon.json.hbs"];
   }
 
   startDev(main: string) {
-    return `tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only ${main}`;
+    return `nodemon --import @swc-node/register/register-esm ${main}`;
   }
 
-  startProd(args: string) {
-    return `${this.cmd} ${args}`;
+  startProd(main: string) {
+    return `${this.cmd} --import @swc-node/register/register-esm ${main.replace("dist", "src")}`;
+  }
+
+  compile(src: string, out: string) {
+    return `swc ${src.replace("/index.ts", "")} --out-dir ${out.replace("/index.js", "")} -s`;
+  }
+
+  dependencies(): Record<string, any> {
+    return {
+      "@swc/core": "latest",
+      "@swc/cli": "latest",
+      "@swc/helpers": "latest",
+      "@swc-node/register": "latest",
+      typescript: "latest"
+    };
+  }
+
+  devDependencies(): Record<string, any> {
+    return {
+      nodemon: "latest"
+    };
   }
 }

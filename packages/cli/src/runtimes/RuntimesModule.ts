@@ -5,7 +5,6 @@ import {BabelRuntime} from "./supports/BabelRuntime.js";
 import {BaseRuntime} from "./supports/BaseRuntime.js";
 import {BunRuntime} from "./supports/BunRuntime.js";
 import {NodeRuntime} from "./supports/NodeRuntime.js";
-import {SWCRuntime} from "./supports/SWCRuntime.js";
 import {WebpackRuntime} from "./supports/WebpackRuntime.js";
 
 export interface RuntimeInitOptions extends Record<string, unknown> {
@@ -13,7 +12,7 @@ export interface RuntimeInitOptions extends Record<string, unknown> {
 }
 
 @Module({
-  imports: [NodeRuntime, BabelRuntime, WebpackRuntime, SWCRuntime, BunRuntime]
+  imports: [NodeRuntime, BabelRuntime, WebpackRuntime, BunRuntime]
 })
 export class RuntimesModule {
   @Inject()
