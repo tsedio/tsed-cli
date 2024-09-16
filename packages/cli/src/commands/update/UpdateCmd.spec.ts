@@ -2,7 +2,7 @@ import {NpmRegistryClient, ProjectPackageJson} from "@tsed/cli-core";
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 
-import {UpdateCmd} from "./UpdateCmd";
+import {UpdateCmd} from "./UpdateCmd.js";
 
 const versions = {
   "7.0.0-alpha.4": {

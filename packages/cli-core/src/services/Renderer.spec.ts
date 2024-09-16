@@ -1,11 +1,15 @@
 // @ts-ignore
+import {join} from "node:path";
+
 import {FakeCliFs, normalizePath} from "@tsed/cli-testing";
 import Consolidate from "consolidate";
 import globby from "globby";
 import handlebars from "handlebars";
 
-import {TEMPLATE_DIR} from "../../../cli-plugin-jest/src/utils/templateDir";
-import {RootRendererService, SrcRendererService} from "./Renderer";
+import {getTemplateDirectory} from "../utils/index.js";
+import {RootRendererService, SrcRendererService} from "./Renderer.js";
+
+const TEMPLATE_DIR = getTemplateDirectory(join(import.meta.url, "../../../cli-plugin-jest/src/utils"));
 
 vi.mock("consolidate");
 vi.mock("globby");

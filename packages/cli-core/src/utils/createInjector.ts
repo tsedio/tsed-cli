@@ -1,8 +1,8 @@
 import {DIConfigurationOptions, InjectorService} from "@tsed/di";
 import {Logger} from "@tsed/logger";
 
-import {CliConfiguration} from "../services/CliConfiguration";
-import {ProjectPackageJson} from "../services/ProjectPackageJson";
+import {CliConfiguration} from "../services/CliConfiguration.js";
+import {ProjectPackageJson} from "../services/ProjectPackageJson.js";
 
 let logger: Logger;
 

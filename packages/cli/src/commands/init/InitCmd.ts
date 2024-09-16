@@ -21,22 +21,22 @@ import {
 import {paramCase, pascalCase} from "change-case";
 import {basename, join} from "path";
 
-import {DEFAULT_TSED_TAGS} from "../../constants";
-import {PlatformType} from "../../interfaces";
-import {ArchitectureConvention} from "../../interfaces/ArchitectureConvention";
-import {ProjectConvention} from "../../interfaces/ProjectConvention";
-import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
-import {InitPlatformsModule} from "../../platforms/InitPlatformsModule";
-import {RuntimesModule} from "../../runtimes/RuntimesModule";
-import {BunRuntime} from "../../runtimes/supports/BunRuntime";
-import {NodeRuntime} from "../../runtimes/supports/NodeRuntime";
-import {fillImports} from "../../utils/fillImports";
-import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt";
-import {InitFileSchema} from "./config/InitFileSchema";
-import {InitCmdContext} from "./interfaces/InitCmdContext";
-import {InitOptions} from "./interfaces/InitOptions";
-import {mapToContext} from "./mappers/mapToContext";
-import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt";
+import {DEFAULT_TSED_TAGS} from "../../constants/index.js";
+import {ArchitectureConvention} from "../../interfaces/ArchitectureConvention.js";
+import {PlatformType} from "../../interfaces/index.js";
+import {ProjectConvention} from "../../interfaces/ProjectConvention.js";
+import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe.js";
+import {InitPlatformsModule} from "../../platforms/InitPlatformsModule.js";
+import {RuntimesModule} from "../../runtimes/RuntimesModule.js";
+import {BunRuntime} from "../../runtimes/supports/BunRuntime.js";
+import {NodeRuntime} from "../../runtimes/supports/NodeRuntime.js";
+import {fillImports} from "../../utils/fillImports.js";
+import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt.js";
+import {InitFileSchema} from "./config/InitFileSchema.js";
+import {InitCmdContext} from "./interfaces/InitCmdContext.js";
+import {InitOptions} from "./interfaces/InitOptions.js";
+import {mapToContext} from "./mappers/mapToContext.js";
+import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt.js";
 
 @Command({
   name: "init",
@@ -463,7 +463,7 @@ export class InitCmd implements CommandProvider {
         "/init/.dockerignore.hbs",
         "/init/.gitignore.hbs",
         "/init/.barrelsby.json.hbs",
-        "/init/processes.config.js.hbs",
+        "/init/processes.config.cjs.hbs",
         "/init/docker-compose.yml.hbs",
         {
           path: `/init/docker/${packageManager.name}/Dockerfile.hbs`,
@@ -471,8 +471,9 @@ export class InitCmd implements CommandProvider {
           replaces: [`docker/${packageManager.name}`]
         },
         "/init/README.md.hbs",
-        "/init/tsconfig.compile.json.hbs",
-        "/init/tsconfig.json.hbs",
+        "/init/tsconfig.base.json.hbs",
+        "/init/tsconfig.node.json.hbs",
+        ctx.testing && "/init/tsconfig.spec.json.hbs",
         "/init/src/index.ts.hbs",
         "/init/src/config/envs/index.ts.hbs",
         "/init/src/config/logger/index.ts.hbs",

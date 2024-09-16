@@ -2,8 +2,8 @@
 import {isFunction} from "@tsed/core";
 import {Listr, ListrTaskWrapper, Logger} from "listr2";
 
-import type {TaskOptions, Tasks} from "../interfaces/Tasks";
-import {getLogger} from "./createInjector";
+import type {TaskOptions, Tasks} from "../interfaces/Tasks.js";
+import {getLogger} from "./createInjector.js";
 
 class CustomLogger extends Logger {
   fail(message: string) {

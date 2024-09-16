@@ -1,8 +1,8 @@
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 
-import {CliExeca} from "../../services";
-import {BunManager} from "./BunManager";
+import {CliExeca} from "../../services/index.js";
+import {BunManager} from "./BunManager.js";
 
 async function getManagerFixture() {
   const cliExeca = {

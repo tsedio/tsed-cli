@@ -2,7 +2,7 @@ import {Inject, Injectable, ProjectPackageJson, SrcRendererService} from "@tsed/
 import {camelCase, constantCase, paramCase} from "change-case";
 import {basename, join} from "path";
 
-import {TEMPLATE_DIR} from "../utils/templateDir";
+import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 @Injectable()
 export class CliMongoose {

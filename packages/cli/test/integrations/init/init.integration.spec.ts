@@ -3,9 +3,9 @@ import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {ensureDirSync, writeFileSync} from "fs-extra";
 import {join} from "path";
 
-import {ArchitectureConvention, InitCmd, ProjectConvention, TEMPLATE_DIR} from "../../../src";
+import {ArchitectureConvention, InitCmd, ProjectConvention, TEMPLATE_DIR} from "../../../src/index.js";
 
-const dir = __dirname;
+const dir = import.meta.dirname;
 
 describe("Init cmd", () => {
   beforeEach(() => {
@@ -48,7 +48,7 @@ describe("Init cmd", () => {
           "project-name/README.md",
           "project-name/docker-compose.yml",
           "project-name/package.json",
-          "project-name/processes.config.js",
+          "project-name/processes.config.cjs",
           "project-name/src",
           "project-name/src/Server.ts",
           "project-name/src/config",
@@ -60,8 +60,8 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
-          "project-name/tsconfig.compile.json",
-          "project-name/tsconfig.json",
+          "project-name/tsconfig.base.json",
+          "project-name/tsconfig.node.json",
         ]
       `);
 
@@ -116,7 +116,7 @@ describe("Init cmd", () => {
       expect(dockerFile).toContain("RUN yarn install --pure-lockfile");
 
       const indexContent = FakeCliFs.entries.get("project-name/src/index.ts")!;
-      expect(indexContent).toContain('import {Server} from "./Server"');
+      expect(indexContent).toContain('import {Server} from "./Server.js"');
     });
     it("should generate a project with swagger", async () => {
       CliPlatformTest.setPackageJson({
@@ -147,7 +147,7 @@ describe("Init cmd", () => {
           "project-name/README.md",
           "project-name/docker-compose.yml",
           "project-name/package.json",
-          "project-name/processes.config.js",
+          "project-name/processes.config.cjs",
           "project-name/src",
           "project-name/src/Server.ts",
           "project-name/src/config",
@@ -161,8 +161,8 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
-          "project-name/tsconfig.compile.json",
-          "project-name/tsconfig.json",
+          "project-name/tsconfig.base.json",
+          "project-name/tsconfig.node.json",
           "project-name/views",
           "project-name/views/swagger.ejs",
         ]
@@ -173,7 +173,7 @@ describe("Init cmd", () => {
       expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
-      expect(content).toContain('import * as pages from "./controllers/pages/index"');
+      expect(content).toContain('import * as pages from "./controllers/pages/index.js"');
       expect(content).toMatchSnapshot();
 
       const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
@@ -243,7 +243,7 @@ describe("Init cmd", () => {
           "project-name/README.md",
           "project-name/docker-compose.yml",
           "project-name/package.json",
-          "project-name/processes.config.js",
+          "project-name/processes.config.cjs",
           "project-name/src",
           "project-name/src/Server.ts",
           "project-name/src/config",
@@ -255,8 +255,8 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
-          "project-name/tsconfig.compile.json",
-          "project-name/tsconfig.json",
+          "project-name/tsconfig.base.json",
+          "project-name/tsconfig.node.json",
         ]
       `);
 
@@ -334,7 +334,7 @@ describe("Init cmd", () => {
           "project-name/README.md",
           "project-name/docker-compose.yml",
           "project-name/package.json",
-          "project-name/processes.config.js",
+          "project-name/processes.config.cjs",
           "project-name/src",
           "project-name/src/Server.ts",
           "project-name/src/config",
@@ -346,8 +346,8 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
-          "project-name/tsconfig.compile.json",
-          "project-name/tsconfig.json",
+          "project-name/tsconfig.base.json",
+          "project-name/tsconfig.node.json",
         ]
       `);
 
@@ -425,7 +425,7 @@ describe("Init cmd", () => {
           "project-name/README.md",
           "project-name/docker-compose.yml",
           "project-name/package.json",
-          "project-name/processes.config.js",
+          "project-name/processes.config.cjs",
           "project-name/src",
           "project-name/src/Server.ts",
           "project-name/src/config",
@@ -437,8 +437,8 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
-          "project-name/tsconfig.compile.json",
-          "project-name/tsconfig.json",
+          "project-name/tsconfig.base.json",
+          "project-name/tsconfig.node.json",
           "project-name/webpack.config.js",
         ]
       `);
@@ -518,7 +518,7 @@ describe("Init cmd", () => {
           "project-name/README.md",
           "project-name/docker-compose.yml",
           "project-name/package.json",
-          "project-name/processes.config.js",
+          "project-name/processes.config.cjs",
           "project-name/src",
           "project-name/src/Server.ts",
           "project-name/src/config",
@@ -530,8 +530,8 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
-          "project-name/tsconfig.compile.json",
-          "project-name/tsconfig.json",
+          "project-name/tsconfig.base.json",
+          "project-name/tsconfig.node.json",
         ]
       `);
 
@@ -608,7 +608,7 @@ describe("Init cmd", () => {
           "project-name/README.md",
           "project-name/docker-compose.yml",
           "project-name/package.json",
-          "project-name/processes.config.js",
+          "project-name/processes.config.cjs",
           "project-name/src",
           "project-name/src/Server.ts",
           "project-name/src/config",
@@ -620,8 +620,8 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
-          "project-name/tsconfig.compile.json",
-          "project-name/tsconfig.json",
+          "project-name/tsconfig.base.json",
+          "project-name/tsconfig.node.json",
         ]
       `);
 
@@ -702,7 +702,7 @@ describe("Init cmd", () => {
           "project-name/README.md",
           "project-name/docker-compose.yml",
           "project-name/package.json",
-          "project-name/processes.config.js",
+          "project-name/processes.config.cjs",
           "project-name/src",
           "project-name/src/config",
           "project-name/src/config/envs",
@@ -716,8 +716,8 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest/hello-world.controller.ts",
           "project-name/src/index.ts",
           "project-name/src/server.ts",
-          "project-name/tsconfig.compile.json",
-          "project-name/tsconfig.json",
+          "project-name/tsconfig.base.json",
+          "project-name/tsconfig.node.json",
           "project-name/views",
           "project-name/views/swagger.ejs",
         ]
@@ -728,11 +728,11 @@ describe("Init cmd", () => {
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
-      expect(content).toContain('import * as pages from "./controllers/pages/index"');
+      expect(content).toContain('import * as pages from "./controllers/pages/index.js"');
       expect(content).toContain("export class Server {");
 
       const indexContent = FakeCliFs.entries.get("project-name/src/index.ts")!;
-      expect(indexContent).toContain('import {Server} from "./server"');
+      expect(indexContent).toContain('import {Server} from "./server.js"');
     });
     it("should generate a project with Arch FEATURE", async () => {
       CliPlatformTest.setPackageJson({
@@ -766,7 +766,7 @@ describe("Init cmd", () => {
           "project-name/README.md",
           "project-name/docker-compose.yml",
           "project-name/package.json",
-          "project-name/processes.config.js",
+          "project-name/processes.config.cjs",
           "project-name/src",
           "project-name/src/config",
           "project-name/src/config/envs",
@@ -780,8 +780,8 @@ describe("Init cmd", () => {
           "project-name/src/rest",
           "project-name/src/rest/hello-world.controller.ts",
           "project-name/src/server.ts",
-          "project-name/tsconfig.compile.json",
-          "project-name/tsconfig.json",
+          "project-name/tsconfig.base.json",
+          "project-name/tsconfig.node.json",
           "project-name/views",
           "project-name/views/swagger.ejs",
         ]
@@ -792,11 +792,11 @@ describe("Init cmd", () => {
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
-      expect(content).toContain('import * as pages from "./pages/index"');
+      expect(content).toContain('import * as pages from "./pages/index.js"');
       expect(content).toContain("export class Server {");
 
       const indexContent = FakeCliFs.entries.get("project-name/src/index.ts")!;
-      expect(indexContent).toContain('import {Server} from "./server"');
+      expect(indexContent).toContain('import {Server} from "./server.js"');
     });
   });
 
@@ -829,7 +829,7 @@ describe("Init cmd", () => {
           "project-name/README.md",
           "project-name/docker-compose.yml",
           "project-name/package.json",
-          "project-name/processes.config.js",
+          "project-name/processes.config.cjs",
           "project-name/src",
           "project-name/src/Server.ts",
           "project-name/src/config",
@@ -841,8 +841,8 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
-          "project-name/tsconfig.compile.json",
-          "project-name/tsconfig.json",
+          "project-name/tsconfig.base.json",
+          "project-name/tsconfig.node.json",
         ]
       `);
 
@@ -934,7 +934,7 @@ describe("Init cmd", () => {
           "project-name/README.md",
           "project-name/docker-compose.yml",
           "project-name/package.json",
-          "project-name/processes.config.js",
+          "project-name/processes.config.cjs",
           "project-name/src",
           "project-name/src/Server.ts",
           "project-name/src/bin",
@@ -949,8 +949,8 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
-          "project-name/tsconfig.compile.json",
-          "project-name/tsconfig.json",
+          "project-name/tsconfig.base.json",
+          "project-name/tsconfig.node.json",
         ]
       `);
     });

@@ -1,7 +1,7 @@
 import {catchAsyncError} from "@tsed/core";
 import {DITest} from "@tsed/di";
 
-import {CliLoadFile} from "./CliLoadFile";
+import {CliLoadFile} from "./CliLoadFile.js";
 
 describe("CliLoadFile", () => {
   beforeEach(() => DITest.create());
@@ -10,7 +10,7 @@ describe("CliLoadFile", () => {
   it("should load yaml file", async () => {
     const service = DITest.get<CliLoadFile>(CliLoadFile);
 
-    const result = await service.loadFile(__dirname + "/__mock__/settings.yml");
+    const result = await service.loadFile(import.meta.dirname + "/__mock__/settings.yml");
 
     expect(result).toEqual({
       architecture: "default",
@@ -25,7 +25,7 @@ describe("CliLoadFile", () => {
     const service = DITest.get<CliLoadFile>(CliLoadFile);
 
     const error = await catchAsyncError(() =>
-      service.loadFile(__dirname + "/__mock__/settings.yml", {
+      service.loadFile(import.meta.dirname + "/__mock__/settings.yml", {
         type: "object",
         additionalProperties: true,
         properties: {
@@ -43,7 +43,7 @@ describe("CliLoadFile", () => {
   it("should load json file", async () => {
     const service = DITest.get<CliLoadFile>(CliLoadFile);
 
-    const result = await service.loadFile(__dirname + "/__mock__/settings.json");
+    const result = await service.loadFile(import.meta.dirname + "/__mock__/settings.json");
     expect(result).toEqual({
       architecture: "default",
       convention: "default",

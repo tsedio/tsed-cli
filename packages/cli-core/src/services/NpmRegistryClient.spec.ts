@@ -1,8 +1,8 @@
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 
-import {CliHttpClient} from "./CliHttpClient";
-import {NpmRegistryClient} from "./NpmRegistryClient";
+import {CliHttpClient} from "./CliHttpClient.js";
+import {NpmRegistryClient} from "./NpmRegistryClient.js";
 
 describe("NpmRegistryClient", () => {
   beforeEach(() => CliPlatformTest.create());

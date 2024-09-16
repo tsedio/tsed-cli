@@ -6,18 +6,18 @@ import Inquirer from "inquirer";
 import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
 import {v4} from "uuid";
 
-import {CommandStoreKeys} from "../domains/CommandStoreKeys";
-import {CommandMetadata} from "../interfaces/CommandMetadata";
-import {CommandArg, CommandOptions} from "../interfaces/CommandParameters";
-import {CommandProvider} from "../interfaces/CommandProvider";
-import {PackageManagersModule} from "../packageManagers/index";
-import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner";
-import {getCommandMetadata} from "../utils/getCommandMetadata";
-import {mapCommanderArgs} from "../utils/mapCommanderArgs";
-import {mapCommanderOptions} from "../utils/mapCommanderOptions";
-import {parseOption} from "../utils/parseOption";
-import {CliHooks} from "./CliHooks";
-import {ProjectPackageJson} from "./ProjectPackageJson";
+import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
+import {CommandMetadata} from "../interfaces/CommandMetadata.js";
+import {CommandArg, CommandOptions} from "../interfaces/CommandParameters.js";
+import {CommandProvider} from "../interfaces/CommandProvider.js";
+import {PackageManagersModule} from "../packageManagers/index.js";
+import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner.js";
+import {getCommandMetadata} from "../utils/getCommandMetadata.js";
+import {mapCommanderArgs} from "../utils/mapCommanderArgs.js";
+import {mapCommanderOptions} from "../utils/mapCommanderOptions.js";
+import {parseOption} from "../utils/parseOption.js";
+import {CliHooks} from "./CliHooks.js";
+import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
 Inquirer.registerPrompt("autocomplete", inquirer_autocomplete_prompt);
 

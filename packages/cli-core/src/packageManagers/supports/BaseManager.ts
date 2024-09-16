@@ -2,7 +2,7 @@ import {Inject} from "@tsed/di";
 import execa from "execa";
 import {Observable} from "rxjs";
 
-import {CliExeca} from "../../services/CliExeca";
+import {CliExeca} from "../../services/CliExeca.js";
 
 export type ManagerCmdOpts = {verbose?: boolean} & execa.Options;
 export type ManagerCmdSyncOpts = {verbose?: boolean} & execa.SyncOptions;

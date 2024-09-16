@@ -3,8 +3,8 @@ import {Inject} from "@tsed/di";
 import {paramCase, pascalCase} from "change-case";
 import {basename} from "path";
 
-import {ProjectConvention} from "../interfaces/ProjectConvention";
-import {ProvidersInfoService} from "../services/ProvidersInfoService";
+import {ProjectConvention} from "../interfaces/ProjectConvention.js";
+import {ProvidersInfoService} from "../services/ProvidersInfoService.js";
 
 @Injectable()
 export class ClassNamePipe {

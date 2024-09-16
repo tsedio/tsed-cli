@@ -1,10 +1,10 @@
 {
   "name": "@tsed/cli-testing",
   "description": "Utils to test you CLI based on Ts.ED CLI",
-  "type": "commonjs",
   "version": "5.2.10",
+  "type": "module",
+  "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
-  "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {
@@ -17,9 +17,7 @@
   },
   "scripts": {
     "build": "yarn build:ts",
-    "build:ts": "tsc --build tsconfig.json",
-    "test": "vitest run",
-    "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
+    "build:ts": "tsc --build tsconfig.json"
   },
   "keywords": [
     "Ts.ED",
@@ -32,7 +30,7 @@
     "decorators"
   ],
   "dependencies": {
-    "@tsed/cli-core": "5.2.10",
+    "@tsed/cli-core": "workspace:*",
     "tslib": "2.3.1"
   },
   "devDependencies": {

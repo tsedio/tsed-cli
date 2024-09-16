@@ -4,13 +4,13 @@ import globby from "globby";
 import normalizePath from "normalize-path";
 import {basename, dirname, join} from "path";
 
-import {ProjectConvention} from "../../interfaces/ProjectConvention";
-import {ClassNamePipe} from "../../pipes/ClassNamePipe";
-import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
-import {RoutePipe} from "../../pipes/RoutePipe";
-import {ProvidersInfoService} from "../../services/ProvidersInfoService";
-import {fillImports} from "../../utils/fillImports";
-import {PROVIDER_TYPES} from "./ProviderTypes";
+import {ProjectConvention} from "../../interfaces/ProjectConvention.js";
+import {ClassNamePipe} from "../../pipes/ClassNamePipe.js";
+import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe.js";
+import {RoutePipe} from "../../pipes/RoutePipe.js";
+import {ProvidersInfoService} from "../../services/ProvidersInfoService.js";
+import {fillImports} from "../../utils/fillImports.js";
+import {PROVIDER_TYPES} from "./ProviderTypes.js";
 
 export interface GenerateCmdContext extends CliDefaultOptions {
   type: string;
@@ -252,7 +252,7 @@ export class GenerateCmd implements CommandProvider {
             return this.srcRenderService.update("bin/index.ts", [
               {
                 type: "import",
-                content: `import {${ctx.symbolName}} from "./${basename(symbolPath)}";`
+                content: `import {${ctx.symbolName}} from "./${basename(symbolPath)}.js";`
               },
               {
                 type: "insert-after",

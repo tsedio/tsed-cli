@@ -60,7 +60,7 @@ describe("TypeORM: Init cmd", () => {
         "project-name/README.md",
         "project-name/docker-compose.yml",
         "project-name/package.json",
-        "project-name/processes.config.js",
+        "project-name/processes.config.cjs",
         "project-name/src",
         "project-name/src/Server.ts",
         "project-name/src/config",
@@ -74,8 +74,8 @@ describe("TypeORM: Init cmd", () => {
         "project-name/src/datasources",
         "project-name/src/datasources/MysqlDatasource.ts",
         "project-name/src/index.ts",
-        "project-name/tsconfig.compile.json",
-        "project-name/tsconfig.json",
+        "project-name/tsconfig.base.json",
+        "project-name/tsconfig.node.json",
       ]
     `);
 
@@ -134,7 +134,7 @@ describe("TypeORM: Init cmd", () => {
         "project-name/README.md",
         "project-name/docker-compose.yml",
         "project-name/package.json",
-        "project-name/processes.config.js",
+        "project-name/processes.config.cjs",
         "project-name/src",
         "project-name/src/Server.ts",
         "project-name/src/config",
@@ -146,8 +146,8 @@ describe("TypeORM: Init cmd", () => {
         "project-name/src/controllers/rest",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
-        "project-name/tsconfig.compile.json",
-        "project-name/tsconfig.json",
+        "project-name/tsconfig.base.json",
+        "project-name/tsconfig.node.json",
       ]
     `);
   });

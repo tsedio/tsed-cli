@@ -9,7 +9,7 @@ import {
 } from "@tsed/cli-core";
 import {join} from "path";
 
-import {TEMPLATE_DIR} from "../utils/templateDir";
+import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 @Injectable()
 export class MochaInitHook {

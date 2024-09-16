@@ -1,6 +1,6 @@
 import {CliDefaultOptions, Command, CommandProvider, Inject} from "@tsed/cli-core";
 
-import {CliPrisma} from "../services/CliPrisma";
+import {CliPrisma} from "../services/CliPrisma.js";
 
 export interface PrismaContext extends CliDefaultOptions {
   command: string;

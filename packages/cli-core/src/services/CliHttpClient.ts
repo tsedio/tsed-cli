@@ -4,8 +4,8 @@ import axios, {AxiosRequestConfig, Method} from "axios";
 import {stringify} from "querystring";
 import {URL} from "url";
 
-import {CliHttpLogClient} from "./CliHttpLogClient";
-import {CliProxyAgent} from "./CliProxyAgent";
+import {CliHttpLogClient} from "./CliHttpLogClient.js";
+import {CliProxyAgent} from "./CliProxyAgent.js";
 
 export interface CliHttpClientOptions extends AxiosRequestConfig, Record<string, unknown> {
   qs?: Record<string, unknown>;

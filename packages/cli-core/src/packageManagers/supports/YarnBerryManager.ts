@@ -3,8 +3,8 @@ import execa from "execa";
 import {join} from "path";
 import {Observable} from "rxjs";
 
-import {CliYaml} from "../../services/CliYaml";
-import {BaseManager, ManagerCmdOpts, ManagerCmdSyncOpts} from "./BaseManager";
+import {CliYaml} from "../../services/CliYaml.js";
+import {BaseManager, ManagerCmdOpts, ManagerCmdSyncOpts} from "./BaseManager.js";
 
 @Injectable({
   type: "package:manager"

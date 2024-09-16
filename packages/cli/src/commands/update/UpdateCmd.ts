@@ -14,7 +14,7 @@ import {
 import {getValue} from "@tsed/core";
 import semver from "semver";
 
-import {IGNORE_TAGS, IGNORE_VERSIONS, MINIMAL_TSED_VERSION} from "../../constants";
+import {IGNORE_TAGS, IGNORE_VERSIONS, MINIMAL_TSED_VERSION} from "../../constants/index.js";
 
 export interface UpdateCmdContext extends CliDefaultOptions {
   version: string;

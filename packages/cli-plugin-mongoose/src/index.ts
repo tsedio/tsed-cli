@@ -1,8 +1,8 @@
-import {CliPluginMongooseModule} from "./CliPluginMongooseModule";
+import {CliPluginMongooseModule} from "./CliPluginMongooseModule.js";
 
-export * from "./hooks/MongooseGenerateHook";
-export * from "./hooks/MongooseInitHook";
-export * from "./services/CliMongoose";
-export * from "./utils/templateDir";
+export * from "./hooks/MongooseGenerateHook.js";
+export * from "./hooks/MongooseInitHook.js";
+export * from "./services/CliMongoose.js";
+export * from "./utils/templateDir.js";
 
 export default CliPluginMongooseModule;

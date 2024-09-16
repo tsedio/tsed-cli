@@ -1,6 +1,6 @@
-import {ProjectConvention} from "../interfaces";
-import {ProvidersInfoService} from "../services/ProvidersInfoService";
-import {ClassNamePipe} from "./ClassNamePipe";
+import {ProjectConvention} from "../interfaces/index.js";
+import {ProvidersInfoService} from "../services/ProvidersInfoService.js";
+import {ClassNamePipe} from "./ClassNamePipe.js";
 
 describe("ClassNamePipe", () => {
   it("should return the className", () => {

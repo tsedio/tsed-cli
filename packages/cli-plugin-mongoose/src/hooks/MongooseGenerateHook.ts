@@ -5,8 +5,8 @@ import {camelCase, paramCase} from "change-case";
 // @ts-ignore
 import {plural} from "pluralize";
 
-import {CliMongoose} from "../services/CliMongoose";
-import {TEMPLATE_DIR} from "../utils/templateDir";
+import {CliMongoose} from "../services/CliMongoose.js";
+import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 @Injectable()
 export class MongooseGenerateHook {

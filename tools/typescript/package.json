@@ -2,6 +2,7 @@
   "name": "@tsed/typescript",
   "version": "5.2.10",
   "description": "Util to compile source",
+  "type": "module",
   "private": true,
   "main": "index.js",
   "exports": {

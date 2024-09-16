@@ -3,9 +3,9 @@ import {Inject, Injectable} from "@tsed/di";
 import {snakeCase} from "change-case";
 import {join} from "path";
 
-import {CliFs} from "./CliFs";
-import {CliYaml} from "./CliYaml";
-import {ProjectPackageJson} from "./ProjectPackageJson";
+import {CliFs} from "./CliFs.js";
+import {CliYaml} from "./CliYaml.js";
+import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
 @Injectable()
 export class CliDockerComposeYaml {

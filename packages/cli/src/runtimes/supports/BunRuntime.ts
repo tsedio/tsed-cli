@@ -1,6 +1,6 @@
 import {Injectable} from "@tsed/di";
 
-import {BaseRuntime} from "./BaseRuntime";
+import {BaseRuntime} from "./BaseRuntime.js";
 
 @Injectable({
   type: "runtime"

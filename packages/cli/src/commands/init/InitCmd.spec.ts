@@ -3,8 +3,8 @@ import {PackageManagersModule} from "@tsed/cli-core";
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {catchError} from "@tsed/core";
 
-import {InitCmd} from "../../../src/commands/init/InitCmd";
-import {RuntimesModule} from "../../runtimes/RuntimesModule";
+import {InitCmd} from "../../../src/commands/init/InitCmd.js";
+import {RuntimesModule} from "../../runtimes/RuntimesModule.js";
 
 async function getServiceFixture() {
   const packageManagers = {

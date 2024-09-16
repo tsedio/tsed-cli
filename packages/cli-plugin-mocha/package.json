@@ -1,10 +1,10 @@
 {
   "name": "@tsed/cli-plugin-mocha",
   "description": "Ts.ED CLI plugin. Add Mocha support",
-  "type": "commonjs",
   "version": "5.2.10",
+  "type": "module",
+  "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
-  "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {
@@ -22,8 +22,8 @@
     "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
   "devDependencies": {
-    "@tsed/cli": "5.2.10",
-    "@tsed/cli-core": "5.2.10",
+    "@tsed/cli": "workspace:*",
+    "@tsed/cli-core": "workspace:*",
     "@tsed/typescript": "workspace:*",
     "cross-env": "7.0.3",
     "typescript": "4.9.5",

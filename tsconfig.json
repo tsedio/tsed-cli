@@ -1,15 +1,15 @@
 {
   "files": [],
   "compilerOptions": {
-    "module": "ES2020",
-    "target": "ES2020",
+    "module": "NodeNext",
+    "target": "ESNext",
     "noEmit": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowJs": true,
-    "moduleResolution": "node"
+    "moduleResolution": "NodeNext"
   },
   "references": [
     {
@@ -40,13 +40,13 @@
       "path": "./packages/cli-plugin-oidc-provider/tsconfig.json"
     },
     {
-      "path": "./packages/cli-plugin-passport/tsconfig.json"
-    },
-    {
       "path": "./packages/cli-plugin-prisma/tsconfig.json"
     },
     {
       "path": "./packages/cli-plugin-typegraphql/tsconfig.json"
+    },
+    {
+      "path": "./packages/cli-plugin-passport/tsconfig.json"
     },
     {
       "path": "./packages/cli-plugin-typeorm/tsconfig.json"

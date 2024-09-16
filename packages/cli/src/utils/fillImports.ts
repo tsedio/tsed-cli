@@ -1,4 +1,4 @@
-import {ArchitectureConvention, PlatformType} from "../interfaces";
+import {ArchitectureConvention, PlatformType} from "../interfaces/index.js";
 
 export function fillImports(ctx: any) {
   ctx = {...ctx};
@@ -10,11 +10,11 @@ export function fillImports(ctx: any) {
 
   ctx.barrels = JSON.stringify(
     [
-      isFeature ? "./src/rest" : "./src/controllers/rest",
-      ctx.swagger && (isFeature ? "./src/pages" : "./src/controllers/pages"),
-      ctx.oidc && "./src/interactions",
-      ctx.graphql && "./src/datasources",
-      ctx.graphql && "./src/resolvers"
+      isFeature ? "./src/rest/index.js" : "./src/controllers/rest/index.js",
+      ctx.swagger && (isFeature ? "./src/pages/index.js" : "./src/controllers/pages/index.js"),
+      ctx.oidc && "./src/interactions/index.js",
+      ctx.graphql && "./src/datasources/index.js",
+      ctx.graphql && "./src/resolvers/index.js"
     ].filter(Boolean)
   );
 
@@ -27,15 +27,15 @@ export function fillImports(ctx: any) {
     ctx.oidc && {from: "@tsed/oidc-provider"},
     ctx.passportjs && {from: "@tsed/passport"},
     ctx.graphql && {from: "@tsed/typegraphql"},
-    ctx.graphql && {from: "./datasources/index"},
-    ctx.graphql && {from: "./resolvers/index"},
-    {symbols: "{config}", from: "./config/index"},
-    {symbols: "* as rest", from: isFeature ? "./rest/index" : "./controllers/rest/index"},
+    ctx.graphql && {from: "./datasources/index.js"},
+    ctx.graphql && {from: "./resolvers/index.js"},
+    {symbols: "{config}", from: "./config/index.js"},
+    {symbols: "* as rest", from: isFeature ? "./rest/index.js" : "./controllers/rest/index.js"},
     (ctx.swagger || ctx.oidc) && {
       symbols: "* as pages",
-      from: isFeature ? "./pages/index" : "./controllers/pages/index"
+      from: isFeature ? "./pages/index.js" : "./controllers/pages/index.js"
     },
-    ctx.oidc && {symbols: "{InteractionsController}", from: "./controllers/oidc/InteractionsController"}
+    ctx.oidc && {symbols: "{InteractionsController}", from: "./controllers/oidc/InteractionsController.js"}
   ].filter(Boolean);
 
   return ctx;

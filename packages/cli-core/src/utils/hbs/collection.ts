@@ -1,8 +1,8 @@
 // @ts-ignore
 import util from "handlebars-utils";
 
-import {helpers as array} from "./array";
-import {helpers as object} from "./object";
+import {helpers as array} from "./array.js";
+import {helpers as object} from "./object.js";
 
 const forEach = array.forEach;
 const forOwn = object.forOwn;

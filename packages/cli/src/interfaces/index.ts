@@ -1,3 +1,3 @@
-export * from "./ArchitectureConvention";
-export * from "./PlatformType";
-export * from "./ProjectConvention";
+export * from "./ArchitectureConvention.js";
+export * from "./PlatformType.js";
+export * from "./ProjectConvention.js";

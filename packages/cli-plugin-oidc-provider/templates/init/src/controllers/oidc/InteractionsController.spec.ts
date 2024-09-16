@@ -1,7 +1,7 @@
 import { PlatformTest } from "@tsed/common";
 
-import { getOidcContextFixture } from "../../interactions/__mock__/oidcContext.fixture";
-import { InteractionsController } from "./InteractionsController";
+import { getOidcContextFixture } from "../../interactions/__mock__/oidcContext.fixture.js";
+import { InteractionsController } from "./InteractionsController.js";
 
 describe("InteractionsController", () => {
   beforeEach(() => PlatformTest.create());

@@ -1,6 +1,6 @@
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 
-import {GenerateCmd, TEMPLATE_DIR} from "../../../src";
+import {GenerateCmd, TEMPLATE_DIR} from "../../../src/index.js";
 
 describe("Generate AsyncFactory", () => {
   beforeEach(() =>

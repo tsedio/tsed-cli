@@ -1,4 +1,4 @@
-import {CommandArg, CommandOptions, CommandParameters} from "./CommandParameters";
+import {CommandArg, CommandOptions, CommandParameters} from "./CommandParameters.js";
 
 export interface CommandMetadata extends CommandParameters {
   /**

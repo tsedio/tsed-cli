@@ -1,8 +1,8 @@
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 
-import {CliExeca, CliYaml} from "../../services";
-import {YarnBerryManager} from "./YarnBerryManager";
+import {CliExeca, CliYaml} from "../../services/index.js";
+import {YarnBerryManager} from "./YarnBerryManager.js";
 
 async function getManagerFixture() {
   const cliExeca = {

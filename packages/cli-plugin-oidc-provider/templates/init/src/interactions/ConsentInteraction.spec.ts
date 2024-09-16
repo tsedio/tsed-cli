@@ -1,7 +1,7 @@
 import { PlatformTest } from "@tsed/common";
 
-import { getOidcContextFixture } from "./__mock__/oidcContext.fixture";
-import { ConsentInteraction } from "./ConsentInteraction";
+import { getOidcContextFixture } from "./__mock__/oidcContext.fixture.js";
+import { ConsentInteraction } from "./ConsentInteraction.js";
 
 async function createInteractionFixture() {
   const interaction = await PlatformTest.invoke<ConsentInteraction>(ConsentInteraction, []);

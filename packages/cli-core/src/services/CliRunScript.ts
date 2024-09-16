@@ -2,7 +2,7 @@
 import runScript from "@npmcli/run-script";
 import {Inject, Injectable} from "@tsed/di";
 
-import {ProjectPackageJson} from "./ProjectPackageJson";
+import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
 @Injectable()
 export class CliRunScript {

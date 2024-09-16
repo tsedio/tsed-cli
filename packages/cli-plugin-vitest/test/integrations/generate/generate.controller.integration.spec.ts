@@ -1,7 +1,6 @@
-import "../../../src";
+import "../../../src/index.js";
 
 import {GenerateCmd, TEMPLATE_DIR} from "@tsed/cli";
-import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 
 describe("Generate Controller", () => {
@@ -40,8 +39,8 @@ describe("Generate Controller", () => {
     const result = FakeCliFs.entries.get("project-name/src/controllers/TestController.integration.spec.ts");
     expect(result).toContain('import { PlatformTest } from "@tsed/common";');
     expect(result).toContain('import SuperTest from "supertest";');
-    expect(result).toContain('import { Server } from "../Server";');
-    expect(result).toContain('import { TestController } from "./TestController";');
+    expect(result).toContain('import { Server } from "../Server.js";');
+    expect(result).toContain('import { TestController } from "./TestController.js";');
   });
   it("should generate the template with the right options (complex path)", async () => {
     CliPlatformTest.setPackageJson({
@@ -70,7 +69,7 @@ describe("Generate Controller", () => {
     const result = FakeCliFs.entries.get("project-name/src/controllers/users/UserController.integration.spec.ts");
     expect(result).toContain('import { PlatformTest } from "@tsed/common";');
     expect(result).toContain('import SuperTest from "supertest";');
-    expect(result).toContain('import { Server } from "../../Server";');
-    expect(result).toContain('import { UserController } from "./UserController";');
+    expect(result).toContain('import { Server } from "../../Server.js";');
+    expect(result).toContain('import { UserController } from "./UserController.js";');
   });
 });

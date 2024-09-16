@@ -3,7 +3,7 @@
 exports[`fillImports() > should return barrels and imports files for ('arc_default', oidc: false, graphql: false, swagger: true, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
 {
   "architecture": "arc_default",
-  "barrels": "["./src/controllers/rest","./src/controllers/pages"]",
+  "barrels": "["./src/controllers/rest/index.js","./src/controllers/pages/index.js"]",
   "express": false,
   "graphql": false,
   "imports": [
@@ -14,15 +14,15 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
       "from": "@tsed/swagger",
     },
     {
-      "from": "./config/index",
+      "from": "./config/index.js",
       "symbols": "{config}",
     },
     {
-      "from": "./controllers/rest/index",
+      "from": "./controllers/rest/index.js",
       "symbols": "* as rest",
     },
     {
-      "from": "./controllers/pages/index",
+      "from": "./controllers/pages/index.js",
       "symbols": "* as pages",
     },
   ],
@@ -37,7 +37,7 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
 exports[`fillImports() > should return barrels and imports files for ('arc_default', oidc: true, graphql: false, swagger: false, passportjs: false, express: false, koa: true, mongoose: false) 1`] = `
 {
   "architecture": "arc_default",
-  "barrels": "["./src/controllers/rest","./src/interactions"]",
+  "barrels": "["./src/controllers/rest/index.js","./src/interactions/index.js"]",
   "express": false,
   "graphql": false,
   "imports": [
@@ -48,19 +48,19 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
       "from": "@tsed/oidc-provider",
     },
     {
-      "from": "./config/index",
+      "from": "./config/index.js",
       "symbols": "{config}",
     },
     {
-      "from": "./controllers/rest/index",
+      "from": "./controllers/rest/index.js",
       "symbols": "* as rest",
     },
     {
-      "from": "./controllers/pages/index",
+      "from": "./controllers/pages/index.js",
       "symbols": "* as pages",
     },
     {
-      "from": "./controllers/oidc/InteractionsController",
+      "from": "./controllers/oidc/InteractionsController.js",
       "symbols": "{InteractionsController}",
     },
   ],
@@ -75,7 +75,7 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
 exports[`fillImports() > should return barrels and imports files for ('arc_default', oidc: true, graphql: true, swagger: true, passportjs: true, express: false, koa: true, mongoose: true) 1`] = `
 {
   "architecture": "arc_default",
-  "barrels": "["./src/controllers/rest","./src/controllers/pages","./src/interactions","./src/datasources","./src/resolvers"]",
+  "barrels": "["./src/controllers/rest/index.js","./src/controllers/pages/index.js","./src/interactions/index.js","./src/datasources/index.js","./src/resolvers/index.js"]",
   "express": false,
   "graphql": true,
   "imports": [
@@ -98,25 +98,25 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
       "from": "@tsed/typegraphql",
     },
     {
-      "from": "./datasources/index",
+      "from": "./datasources/index.js",
     },
     {
-      "from": "./resolvers/index",
+      "from": "./resolvers/index.js",
     },
     {
-      "from": "./config/index",
+      "from": "./config/index.js",
       "symbols": "{config}",
     },
     {
-      "from": "./controllers/rest/index",
+      "from": "./controllers/rest/index.js",
       "symbols": "* as rest",
     },
     {
-      "from": "./controllers/pages/index",
+      "from": "./controllers/pages/index.js",
       "symbols": "* as pages",
     },
     {
-      "from": "./controllers/oidc/InteractionsController",
+      "from": "./controllers/oidc/InteractionsController.js",
       "symbols": "{InteractionsController}",
     },
   ],
@@ -131,7 +131,7 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
 exports[`fillImports() > should return barrels and imports files for ('feature', oidc: false, graphql: false, swagger: false, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
 {
   "architecture": "feature",
-  "barrels": "["./src/rest"]",
+  "barrels": "["./src/rest/index.js"]",
   "express": false,
   "graphql": false,
   "imports": [
@@ -139,11 +139,11 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
       "from": "@tsed/ajv",
     },
     {
-      "from": "./config/index",
+      "from": "./config/index.js",
       "symbols": "{config}",
     },
     {
-      "from": "./rest/index",
+      "from": "./rest/index.js",
       "symbols": "* as rest",
     },
   ],
@@ -158,7 +158,7 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
 exports[`fillImports() > should return barrels and imports files for ('feature', oidc: false, graphql: false, swagger: true, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
 {
   "architecture": "feature",
-  "barrels": "["./src/rest","./src/pages"]",
+  "barrels": "["./src/rest/index.js","./src/pages/index.js"]",
   "express": false,
   "graphql": false,
   "imports": [
@@ -169,15 +169,15 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
       "from": "@tsed/swagger",
     },
     {
-      "from": "./config/index",
+      "from": "./config/index.js",
       "symbols": "{config}",
     },
     {
-      "from": "./rest/index",
+      "from": "./rest/index.js",
       "symbols": "* as rest",
     },
     {
-      "from": "./pages/index",
+      "from": "./pages/index.js",
       "symbols": "* as pages",
     },
   ],
@@ -192,7 +192,7 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
 exports[`fillImports() > should return barrels and imports files for ('feature', oidc: true, graphql: false, swagger: false, passportjs: false, express: true, koa: false, mongoose: false) 1`] = `
 {
   "architecture": "feature",
-  "barrels": "["./src/rest","./src/interactions"]",
+  "barrels": "["./src/rest/index.js","./src/interactions/index.js"]",
   "express": false,
   "graphql": false,
   "imports": [
@@ -203,19 +203,19 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
       "from": "@tsed/oidc-provider",
     },
     {
-      "from": "./config/index",
+      "from": "./config/index.js",
       "symbols": "{config}",
     },
     {
-      "from": "./rest/index",
+      "from": "./rest/index.js",
       "symbols": "* as rest",
     },
     {
-      "from": "./pages/index",
+      "from": "./pages/index.js",
       "symbols": "* as pages",
     },
     {
-      "from": "./controllers/oidc/InteractionsController",
+      "from": "./controllers/oidc/InteractionsController.js",
       "symbols": "{InteractionsController}",
     },
   ],
@@ -230,7 +230,7 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
 exports[`fillImports() > should return barrels and imports files for ('feature', oidc: true, graphql: true, swagger: true, passportjs: true, express: true, koa: false, mongoose: true) 1`] = `
 {
   "architecture": "feature",
-  "barrels": "["./src/rest","./src/pages","./src/interactions","./src/datasources","./src/resolvers"]",
+  "barrels": "["./src/rest/index.js","./src/pages/index.js","./src/interactions/index.js","./src/datasources/index.js","./src/resolvers/index.js"]",
   "express": false,
   "graphql": true,
   "imports": [
@@ -253,25 +253,25 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
       "from": "@tsed/typegraphql",
     },
     {
-      "from": "./datasources/index",
+      "from": "./datasources/index.js",
     },
     {
-      "from": "./resolvers/index",
+      "from": "./resolvers/index.js",
     },
     {
-      "from": "./config/index",
+      "from": "./config/index.js",
       "symbols": "{config}",
     },
     {
-      "from": "./rest/index",
+      "from": "./rest/index.js",
       "symbols": "* as rest",
     },
     {
-      "from": "./pages/index",
+      "from": "./pages/index.js",
       "symbols": "* as pages",
     },
     {
-      "from": "./controllers/oidc/InteractionsController",
+      "from": "./controllers/oidc/InteractionsController.js",
       "symbols": "{InteractionsController}",
     },
   ],

@@ -5,7 +5,7 @@ import {filter, mergeWith} from "rxjs/operators";
 // @ts-ignore
 import split from "split";
 
-import {streamToObservable} from "../utils/streamToObservable";
+import {streamToObservable} from "../utils/streamToObservable.js";
 
 @Injectable()
 export class CliExeca {

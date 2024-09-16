@@ -2,7 +2,7 @@ import {InitCmdContext} from "@tsed/cli";
 import {CliDockerComposeYaml, Inject, OnExec, ProjectPackageJson, RootRendererService, SrcRendererService} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 
-import {CliMongoose} from "../services/CliMongoose";
+import {CliMongoose} from "../services/CliMongoose.js";
 
 @Injectable()
 export class MongooseInitHook {

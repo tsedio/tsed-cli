@@ -3,8 +3,8 @@ import chalk from "chalk";
 // @ts-ignore
 import {figures} from "listr2";
 
-import {CliFs} from "../services/CliFs";
-import {ProjectPackageJson} from "../services/ProjectPackageJson";
+import {CliFs} from "../services/CliFs.js";
+import {ProjectPackageJson} from "../services/ProjectPackageJson.js";
 
 const all = (promises: any[]) => Promise.all(promises);
 

@@ -3,7 +3,7 @@ import {Inject, Opts} from "@tsed/di";
 import {Logger} from "@tsed/logger";
 import querystring from "querystring";
 
-import {logToCurl} from "../utils/logToCurl";
+import {logToCurl} from "../utils/logToCurl.js";
 
 export interface BaseLogClientOptions {
   callee: string;

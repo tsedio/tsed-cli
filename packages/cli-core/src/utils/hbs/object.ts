@@ -4,7 +4,7 @@ import createFrame from "create-frame";
 // @ts-ignore
 import util from "handlebars-utils";
 
-import {helpers as array} from "./array";
+import {helpers as array} from "./array.js";
 const hasOwn = Object.hasOwnProperty;
 export const helpers: any = {};
 

@@ -3,7 +3,7 @@ import {CliDockerComposeYaml, Inject, OnExec, OnPrompt, ProjectPackageJson, SrcR
 import {Injectable} from "@tsed/di";
 import {camelCase} from "change-case";
 
-import {TEMPLATE_DIR} from "../utils/templateDir";
+import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 export interface TypeORMGenerateOptions extends GenerateCmdContext {
   typeormDataSource: string;

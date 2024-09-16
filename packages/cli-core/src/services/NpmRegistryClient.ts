@@ -2,8 +2,8 @@ import {Inject, Injectable} from "@tsed/di";
 import registry_url from "registry-url";
 import url from "url";
 
-import {PackageInfo} from "../interfaces/PackageJson";
-import {CliHttpClient} from "./CliHttpClient";
+import {PackageInfo} from "../interfaces/PackageJson.js";
+import {CliHttpClient} from "./CliHttpClient.js";
 
 const HOST = registry_url();
 const REGEX_REGISTRY_ENFORCED_HTTPS = /^https?:\/\/([^\/]+\.)?(yarnpkg\.com|npmjs\.(org|com))(\/|$)/;

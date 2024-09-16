@@ -3,8 +3,8 @@ import {Inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, Tasks}
 import {Injectable} from "@tsed/di";
 import {paramCase} from "change-case";
 
-import {PassportClient} from "../services/PassportClient";
-import {TEMPLATE_DIR} from "../utils/templateDir";
+import {PassportClient} from "../services/PassportClient.js";
+import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 export interface PassportGenerateOptions extends GenerateCmdContext {
   passportPackage: string;

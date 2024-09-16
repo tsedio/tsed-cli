@@ -1,9 +1,9 @@
-// @ts-ignore
 import {CliFs, normalizePath} from "@tsed/cli-core";
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {join} from "path";
 
-import {CliPrisma} from "./CliPrisma";
+import {CliPrisma} from "./CliPrisma.js";
 
 async function createServiceFixture() {
   const cliFs = {

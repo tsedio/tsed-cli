@@ -1,7 +1,7 @@
 import {Store} from "@tsed/core";
 
-import {CommandStoreKeys} from "../domains/CommandStoreKeys";
-import {OnPrompt} from "./onPrompt";
+import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
+import {OnPrompt} from "./onPrompt.js";
 
 class Test {
   @OnPrompt("cmd")

@@ -1,7 +1,7 @@
 import {Store} from "@tsed/core";
 
-import {CommandStoreKeys} from "../domains/CommandStoreKeys";
-import {OnExec} from "./onExec";
+import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
+import {OnExec} from "./onExec.js";
 
 class Test {
   @OnExec("cmd")

@@ -1,4 +1,4 @@
-import {helpers} from "./switch";
+import {helpers} from "./switch.js";
 
 describe("switch", () => {
   it("should use switch statement", () => {

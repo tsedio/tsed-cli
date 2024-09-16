@@ -1,4 +1,4 @@
-import {getFeaturesPrompt} from "./getFeaturesPrompt";
+import {getFeaturesPrompt} from "./getFeaturesPrompt.js";
 
 describe("getFeaturesPrompt", () => {
   it("should add a provider info", () => {

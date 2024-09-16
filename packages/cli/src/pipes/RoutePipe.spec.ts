@@ -1,4 +1,4 @@
-import {RoutePipe} from "./RoutePipe";
+import {RoutePipe} from "./RoutePipe.js";
 
 describe("RoutePipe", () => {
   it("should return the output file", () => {

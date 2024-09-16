@@ -2,11 +2,11 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {join, resolve} from "path";
 
-import {CliExeca} from "./CliExeca";
-import {CliFs} from "./CliFs";
-import {ProjectPackageJson} from "./ProjectPackageJson";
+import {CliExeca} from "./CliExeca.js";
+import {CliFs} from "./CliFs.js";
+import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
-const dir = __dirname;
+const dir = import.meta.dirname;
 
 async function getProjectPackageJsonFixture() {
   const cliFs = {
@@ -91,6 +91,7 @@ describe("ProjectPackageJson", () => {
       devDependencies: {
         "dev-module3": "6.0.0"
       },
+      type: "module",
       tsed: {
         packageManager: "npm",
         runtime: "node"

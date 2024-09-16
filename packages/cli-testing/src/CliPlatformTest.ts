@@ -17,9 +17,9 @@ import {Type} from "@tsed/core";
 import {DIContext, runInContext} from "@tsed/di";
 import {v4} from "uuid";
 
-import {FakeCliExeca} from "./FakeCliExeca";
-import {FakeCliFs} from "./FakeCliFs";
-import {FakeCliHttpClient} from "./FakeCliHttpClient";
+import {FakeCliExeca} from "./FakeCliExeca.js";
+import {FakeCliFs} from "./FakeCliFs.js";
+import {FakeCliHttpClient} from "./FakeCliHttpClient.js";
 
 export interface InvokeOptions {
   token: TokenProvider;

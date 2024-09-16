@@ -1,7 +1,7 @@
-import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../interfaces";
-import {InitOptions} from "../interfaces/InitOptions";
-import {hasFeature, hasValue} from "../utils/hasFeature";
-import {isPlatform} from "../utils/isPlatform";
+import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../interfaces/index.js";
+import {InitOptions} from "../interfaces/InitOptions.js";
+import {hasFeature, hasValue} from "../utils/hasFeature.js";
+import {isPlatform} from "../utils/isPlatform.js";
 
 export interface Feature {
   name: string;

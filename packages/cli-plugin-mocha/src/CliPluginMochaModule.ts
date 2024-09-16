@@ -2,8 +2,8 @@ import {RuntimesModule} from "@tsed/cli";
 import {Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 
-import {MochaGenerateHook} from "./hooks/MochaGenerateHook";
-import {MochaInitHook} from "./hooks/MochaInitHook";
+import {MochaGenerateHook} from "./hooks/MochaGenerateHook.js";
+import {MochaInitHook} from "./hooks/MochaInitHook.js";
 
 @Module({
   imports: [MochaInitHook, MochaGenerateHook]

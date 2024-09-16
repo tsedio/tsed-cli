@@ -1,8 +1,8 @@
 import {normalizePath} from "@tsed/normalize-path";
 import execa from "execa";
 
-import {CliCore} from "./CliCore";
-import {CliService} from "./services";
+import {CliCore} from "./CliCore.js";
+import {CliService} from "./services/index.js";
 
 vi.mock("./utils/loadPlugins");
 vi.mock("execa");

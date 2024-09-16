@@ -1,9 +1,9 @@
 import {Inject} from "@tsed/cli-core";
 import {Module} from "@tsed/di";
 
-import {InitBasePlatform} from "./supports/InitBasePlatform";
-import {InitExpressPlatform} from "./supports/InitExpressPlatform";
-import {InitKoaPlatform} from "./supports/InitKoaPlatform";
+import {InitBasePlatform} from "./supports/InitBasePlatform.js";
+import {InitExpressPlatform} from "./supports/InitExpressPlatform.js";
+import {InitKoaPlatform} from "./supports/InitKoaPlatform.js";
 
 @Module({
   imports: [InitExpressPlatform, InitKoaPlatform]

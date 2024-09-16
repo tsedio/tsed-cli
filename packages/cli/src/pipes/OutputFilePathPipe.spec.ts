@@ -1,10 +1,10 @@
 // @ts-ignore
 import {normalizePath} from "@tsed/cli-testing";
 
-import {ProvidersInfoService} from "../services/ProvidersInfoService";
-import {ArchitectureConvention} from "./../interfaces/ArchitectureConvention";
-import {ClassNamePipe} from "./ClassNamePipe";
-import {OutputFilePathPipe} from "./OutputFilePathPipe";
+import {ProvidersInfoService} from "../services/ProvidersInfoService.js";
+import {ArchitectureConvention} from "./../interfaces/ArchitectureConvention.js";
+import {ClassNamePipe} from "./ClassNamePipe.js";
+import {OutputFilePathPipe} from "./OutputFilePathPipe.js";
 
 describe("OutputFilePathPipe", () => {
   describe("Ts.ED architecture", () => {

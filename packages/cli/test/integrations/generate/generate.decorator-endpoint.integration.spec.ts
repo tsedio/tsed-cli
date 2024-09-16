@@ -2,7 +2,7 @@ import {CliService, ProjectPackageJson} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {resolve} from "path";
 
-import {GenerateCmd, TEMPLATE_DIR} from "../../../src";
+import {GenerateCmd, TEMPLATE_DIR} from "../../../src/index.js";
 
 describe("Generate endpoint decorator", () => {
   beforeEach(() =>

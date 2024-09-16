@@ -1,5 +1,5 @@
-import {ArchitectureConvention} from "../interfaces";
-import {fillImports} from "./fillImports";
+import {ArchitectureConvention} from "../interfaces/index.js";
+import {fillImports} from "./fillImports.js";
 
 describe("fillImports()", () => {
   it.each([

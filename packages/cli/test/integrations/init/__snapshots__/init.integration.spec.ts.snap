@@ -7,9 +7,9 @@ import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
 import "@tsed/swagger";
-import {config} from "./config/index";
-import * as rest from "./rest/index";
-import * as pages from "./pages/index";
+import {config} from "./config/index.js";
+import * as rest from "./rest/index.js";
+import * as pages from "./pages/index.js";
 
 @Configuration({
   ...config,
@@ -68,8 +68,8 @@ import {Configuration, Inject} from "@tsed/di";
 import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
-import {config} from "./config/index";
-import * as rest from "./controllers/rest/index";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
@@ -119,8 +119,8 @@ import {Configuration, Inject} from "@tsed/di";
 import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
-import {config} from "./config/index";
-import * as rest from "./controllers/rest/index";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
@@ -171,9 +171,9 @@ import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
 import "@tsed/swagger";
-import {config} from "./config/index";
-import * as rest from "./controllers/rest/index";
-import * as pages from "./controllers/pages/index";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
+import * as pages from "./controllers/pages/index.js";
 
 @Configuration({
   ...config,
@@ -232,8 +232,8 @@ import {Configuration, Inject} from "@tsed/di";
 import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
-import {config} from "./config/index";
-import * as rest from "./controllers/rest/index";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
@@ -283,8 +283,8 @@ import {Configuration, Inject} from "@tsed/di";
 import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
-import {config} from "./config/index";
-import * as rest from "./controllers/rest/index";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
@@ -334,8 +334,8 @@ import {Configuration, Inject} from "@tsed/di";
 import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
-import {config} from "./config/index";
-import * as rest from "./controllers/rest/index";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
@@ -386,9 +386,9 @@ import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
 import "@tsed/swagger";
-import {config} from "./config/index";
-import * as rest from "./controllers/rest/index";
-import * as pages from "./controllers/pages/index";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
+import * as pages from "./controllers/pages/index.js";
 
 @Configuration({
   ...config,
@@ -447,8 +447,8 @@ import {Configuration, Inject} from "@tsed/di";
 import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
-import {config} from "./config/index";
-import * as rest from "./controllers/rest/index";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
@@ -498,8 +498,8 @@ import {Configuration, Inject} from "@tsed/di";
 import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-koa"; // /!\\ keep this import
 import "@tsed/ajv";
-import {config} from "./config/index";
-import * as rest from "./controllers/rest/index";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,

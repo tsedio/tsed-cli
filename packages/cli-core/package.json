@@ -1,17 +1,16 @@
 {
   "name": "@tsed/cli-core",
   "description": "Build your CLI with TypeScript and Decorators",
-  "type": "commonjs",
   "version": "5.2.10",
+  "type": "module",
+  "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
-  "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {
     ".": {
       "types": "./lib/types/index.d.ts",
       "import": "./lib/esm/index.js",
-      "require": "./lib/cjs/index.js",
       "default": "./lib/esm/index.js"
     }
   },
@@ -37,7 +36,7 @@
     "@tsed/normalize-path": ">=7.14.2",
     "@types/fs-extra": "^9.0.13",
     "@types/inquirer": "^8.2.4",
-    "ajv": "8.11.0",
+    "ajv": "8.17.1",
     "axios": "1.6.7",
     "chalk": "4.1.2",
     "change-case": "^4.1.2",

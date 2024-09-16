@@ -3,7 +3,7 @@ import * as fs from "fs";
 import {PathLike} from "fs";
 import {EnsureOptions, WriteFileOptions} from "fs-extra";
 
-import {normalizePath} from "./normalizePath";
+import {normalizePath} from "./normalizePath.js";
 
 export class FakeCliFs {
   static entries = new Map<any, string>();

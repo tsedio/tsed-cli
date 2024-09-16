@@ -2,9 +2,9 @@ import { PlatformTest } from "@tsed/common";
 import { catchAsyncError } from "@tsed/core";
 import { BadRequest } from "@tsed/exceptions";
 
-import { Accounts } from "../services/Accounts";
-import { getOidcContextFixture } from "./__mock__/oidcContext.fixture";
-import { LoginInteraction } from "./LoginInteraction";
+import { Accounts } from "../services/Accounts.js";
+import { getOidcContextFixture } from "./__mock__/oidcContext.fixture.js";
+import { LoginInteraction } from "./LoginInteraction.js";
 
 async function createInteractionFixture() {
   const accounts = {

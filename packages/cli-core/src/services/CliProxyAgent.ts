@@ -3,9 +3,9 @@ import {camelCase} from "change-case";
 import tunnel from "tunnel";
 import {URL} from "url";
 
-import {coerce} from "../utils/coerce";
-import {CliExeca} from "./CliExeca";
-import {ProjectPackageJson} from "./ProjectPackageJson";
+import {coerce} from "../utils/coerce.js";
+import {CliExeca} from "./CliExeca.js";
+import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
 export interface CliProxySettings {
   url: string;

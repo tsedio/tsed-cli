@@ -1,12 +1,12 @@
-// @ts-ignore
-import "../index";
+import "../index.js";
 
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 import tunnel from "tunnel";
 
-import {CliConfiguration} from "./CliConfiguration";
-import {CliExeca} from "./CliExeca";
-import {CliProxyAgent} from "./CliProxyAgent";
+import {CliConfiguration} from "./CliConfiguration.js";
+import {CliExeca} from "./CliExeca.js";
+import {CliProxyAgent} from "./CliProxyAgent.js";
 
 vi.mock("tunnel");
 

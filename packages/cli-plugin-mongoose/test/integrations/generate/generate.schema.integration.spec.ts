@@ -1,7 +1,7 @@
 import {GenerateCmd} from "@tsed/cli";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 
-import {TEMPLATE_DIR} from "../../../src";
+import {TEMPLATE_DIR} from "../../../src/index.js";
 
 describe("Generate Schema", () => {
   beforeEach(() =>

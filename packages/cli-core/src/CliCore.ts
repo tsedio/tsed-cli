@@ -5,14 +5,14 @@ import {Command} from "commander";
 import {join, resolve} from "path";
 import semver from "semver";
 
-import {CliError} from "./domains/CliError";
-import {CliConfiguration} from "./services/CliConfiguration";
-import {CliPackageJson} from "./services/CliPackageJson";
-import {CliService} from "./services/CliService";
-import {ProjectPackageJson} from "./services/ProjectPackageJson";
-import {createInjector} from "./utils/createInjector";
-import {loadPlugins} from "./utils/loadPlugins";
-import {resolveConfiguration} from "./utils/resolveConfiguration";
+import {CliError} from "./domains/CliError.js";
+import {CliConfiguration} from "./services/CliConfiguration.js";
+import {CliPackageJson} from "./services/CliPackageJson.js";
+import {CliService} from "./services/CliService.js";
+import {ProjectPackageJson} from "./services/ProjectPackageJson.js";
+import {createInjector} from "./utils/createInjector.js";
+import {loadPlugins} from "./utils/loadPlugins.js";
+import {resolveConfiguration} from "./utils/resolveConfiguration.js";
 
 function isHelpManual(argv: string[]) {
   return argv.includes("-h") || argv.includes("--help");

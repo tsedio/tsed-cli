@@ -1,15 +1,15 @@
 import {Type} from "@tsed/core";
 
-import {CommandProvider} from "./CommandProvider";
-import {PackageJson} from "./PackageJson";
+import {CommandProvider} from "./CommandProvider.js";
+import {PackageJson} from "./PackageJson.js";
 
-export * from "./CliDefaultOptions";
-export * from "./CommandMetadata";
-export * from "./CommandParameters";
-export * from "./CommandProvider";
-export * from "./PackageJson";
-export * from "./ProjectPreferences";
-export * from "./Tasks";
+export * from "./CliDefaultOptions.js";
+export * from "./CommandMetadata.js";
+export * from "./CommandParameters.js";
+export * from "./CommandProvider.js";
+export * from "./PackageJson.js";
+export * from "./ProjectPreferences.js";
+export * from "./Tasks.js";
 
 declare global {
   namespace TsED {

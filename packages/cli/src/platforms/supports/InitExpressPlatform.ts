@@ -1,6 +1,6 @@
 import {Injectable} from "@tsed/cli-core";
 
-import {InitBasePlatform} from "./InitBasePlatform";
+import {InitBasePlatform} from "./InitBasePlatform.js";
 
 @Injectable({
   type: "platform:init"

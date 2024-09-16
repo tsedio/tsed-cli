@@ -1,12 +1,12 @@
 import execa from "execa";
 
-import {CliCore, Command, CommandProvider, Tasks} from "../../src";
+import {CliCore, Command, CommandProvider, Tasks} from "../../src/index.js";
 
 vi.mock("execa");
 
 describe("Command", () => {
   beforeEach(() => {
-    (execa as any as vi.Mock).mockReturnValue({});
+    vi.mocked(execa).mockReturnValue({} as never);
   });
   it("should exec a command with expected parsed argument", async () => {
     @Command({

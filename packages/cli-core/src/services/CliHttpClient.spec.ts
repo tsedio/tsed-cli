@@ -1,8 +1,8 @@
 import {DITest} from "@tsed/di";
 import axios from "axios";
 
-import {CliHttpClient} from "./CliHttpClient";
-import {CliProxyAgent} from "./CliProxyAgent";
+import {CliHttpClient} from "./CliHttpClient.js";
+import {CliProxyAgent} from "./CliProxyAgent.js";
 
 vi.mock("axios");
 describe("CliHttpClient", () => {

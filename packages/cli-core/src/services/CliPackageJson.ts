@@ -1,6 +1,6 @@
 import {Configuration, Inject, registerProvider} from "@tsed/di";
 
-import {PackageJson} from "../interfaces/PackageJson";
+import {PackageJson} from "../interfaces/PackageJson.js";
 
 export type CliPackageJson = PackageJson;
 

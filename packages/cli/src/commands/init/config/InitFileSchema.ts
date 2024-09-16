@@ -1,7 +1,7 @@
 import {PackageManager} from "@tsed/cli-core";
 
-import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../interfaces";
-import {FeatureType} from "./FeaturesPrompt";
+import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../interfaces/index.js";
+import {FeatureType} from "./FeaturesPrompt.js";
 
 export const InitFileSchema = {
   type: "object",

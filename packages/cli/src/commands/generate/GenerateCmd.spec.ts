@@ -1,8 +1,9 @@
 // @ts-ignore
 import {SrcRendererService} from "@tsed/cli-core";
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 
-import {GenerateCmd} from "./GenerateCmd";
+import {GenerateCmd} from "./GenerateCmd.js";
 
 describe("GenerateCmd", () => {
   beforeEach(() => CliPlatformTest.create());
@@ -114,11 +115,11 @@ describe("GenerateCmd", () => {
           express: false,
           koa: false,
           platformSymbol: undefined,
-          barrels: '["./src/controllers/rest"]',
+          barrels: '["./src/controllers/rest/index.js"]',
           imports: [
             {from: "@tsed/ajv"},
-            {symbols: "{config}", from: "./config/index"},
-            {symbols: "* as rest", from: "./controllers/rest/index"}
+            {symbols: "{config}", from: "./config/index.js"},
+            {symbols: "* as rest", from: "./controllers/rest/index.js"}
           ]
         },
         {
@@ -168,11 +169,11 @@ describe("GenerateCmd", () => {
           express: false,
           koa: false,
           platformSymbol: undefined,
-          barrels: '["./src/controllers/rest"]',
+          barrels: '["./src/controllers/rest/index.js"]',
           imports: [
             {from: "@tsed/ajv"},
-            {symbols: "{config}", from: "./config/index"},
-            {symbols: "* as rest", from: "./controllers/rest/index"}
+            {symbols: "{config}", from: "./config/index.js"},
+            {symbols: "* as rest", from: "./controllers/rest/index.js"}
           ]
         },
         {

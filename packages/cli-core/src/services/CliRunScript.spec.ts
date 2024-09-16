@@ -1,10 +1,9 @@
 // @ts-ignore
-
-// @ts-ignore
 import runScript from "@npmcli/run-script";
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 
-import {CliRunScript} from "./CliRunScript";
+import {CliRunScript} from "./CliRunScript.js";
 
 vi.mock("@npmcli/run-script");
 

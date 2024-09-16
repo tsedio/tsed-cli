@@ -1,7 +1,7 @@
 import {Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 
-import {TypeGraphqlInitHook} from "./hooks/TypeGraphqlInitHook";
+import {TypeGraphqlInitHook} from "./hooks/TypeGraphqlInitHook.js";
 
 @Module({
   imports: [TypeGraphqlInitHook]

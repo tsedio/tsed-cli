@@ -3,10 +3,10 @@ import {Configuration, Injectable} from "@tsed/di";
 import {dirname, join} from "path";
 import readPkgUp from "read-pkg-up";
 
-import {PackageJson} from "../interfaces/PackageJson";
-import {ProjectPreferences} from "../interfaces/ProjectPreferences";
-import {isValidVersion} from "../utils/isValidVersion";
-import {CliFs} from "./CliFs";
+import {PackageJson} from "../interfaces/PackageJson.js";
+import {ProjectPreferences} from "../interfaces/ProjectPreferences.js";
+import {isValidVersion} from "../utils/isValidVersion.js";
+import {CliFs} from "./CliFs.js";
 
 function sortKeys(obj: any) {
   return Object.entries(obj)
@@ -52,6 +52,7 @@ export class ProjectPackageJson {
       name: "",
       version: "1.0.0",
       description: "",
+      type: "module",
       scripts: {},
       dependencies: {},
       devDependencies: {}

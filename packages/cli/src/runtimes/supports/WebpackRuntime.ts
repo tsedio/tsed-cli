@@ -1,7 +1,7 @@
 import {Injectable} from "@tsed/di";
 import {dirname} from "path";
 
-import {BabelRuntime} from "./BabelRuntime";
+import {BabelRuntime} from "./BabelRuntime.js";
 
 @Injectable({
   type: "runtime"

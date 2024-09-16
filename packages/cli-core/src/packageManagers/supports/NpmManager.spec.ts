@@ -1,8 +1,8 @@
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 
-import {CliExeca} from "../../services";
-import {NpmManager} from "./NpmManager";
+import {CliExeca} from "../../services/index.js";
+import {NpmManager} from "./NpmManager.js";
 
 async function getManagerFixture() {
   const cliExeca = {

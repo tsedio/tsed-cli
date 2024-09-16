@@ -2,7 +2,7 @@ import {Injectable} from "@tsed/di";
 import execa from "execa";
 import {Observable} from "rxjs";
 
-import {BaseManager, ManagerCmdOpts} from "./BaseManager";
+import {BaseManager, ManagerCmdOpts} from "./BaseManager.js";
 
 @Injectable({
   type: "package:manager"

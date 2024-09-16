@@ -3,14 +3,14 @@ import {Options} from "execa";
 import {EMPTY, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 
-import {ProjectPackageJson} from "../services/ProjectPackageJson";
-import {isValidVersion} from "../utils/isValidVersion";
-import {BaseManager} from "./supports/BaseManager";
-import {BunManager} from "./supports/BunManager";
-import {NpmManager} from "./supports/NpmManager";
-import {PNpmManager} from "./supports/PNpmManager";
-import {YarnBerryManager} from "./supports/YarnBerryManager";
-import {YarnManager} from "./supports/YarnManager";
+import {ProjectPackageJson} from "../services/ProjectPackageJson.js";
+import {isValidVersion} from "../utils/isValidVersion.js";
+import {BaseManager} from "./supports/BaseManager.js";
+import {BunManager} from "./supports/BunManager.js";
+import {NpmManager} from "./supports/NpmManager.js";
+import {PNpmManager} from "./supports/PNpmManager.js";
+import {YarnBerryManager} from "./supports/YarnBerryManager.js";
+import {YarnManager} from "./supports/YarnManager.js";
 
 function mapPackagesWithInvalidVersion(deps: any) {
   const toString = (info: [string, string]) => {

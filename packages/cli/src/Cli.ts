@@ -3,9 +3,9 @@ import chalk from "chalk";
 // @ts-ignore
 import alias from "module-alias";
 
-import commands from "./commands";
-import {PKG, TEMPLATE_DIR} from "./constants";
-import {ArchitectureConvention, ProjectConvention} from "./interfaces";
+import commands from "./commands/index.js";
+import {PKG, TEMPLATE_DIR} from "./constants/index.js";
+import {ArchitectureConvention, ProjectConvention} from "./interfaces/index.js";
 
 export class Cli extends CliCore {
   static defaults = {
