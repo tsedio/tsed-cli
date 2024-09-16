@@ -1,0 +1,18 @@
+{
+  "name": "@tsed/barrels",
+  "description": "A simple tool to generate barrels for your TypeScript project",
+  "version": "5.2.10",
+  "type": "module",
+  "bin": "bin/barrels.js",
+  "files": [],
+  "keywords": [
+    "Ts.ED",
+    "barrels"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "globby": "14.0.2"
+  }
+}
