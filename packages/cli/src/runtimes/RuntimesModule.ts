@@ -61,7 +61,7 @@ export class RuntimesModule {
 
     return {
       build: `${runtime.run("barrels")} && ${runtime.compile("src/index.ts", "dist/index.js")}`,
-      barrels: "barrelsby --config .barrelsby.json",
+      barrels: "barrels",
       start: `${runtime.run("barrels")} && ${runtime.startDev("src/index.ts")}`,
       "start:prod": `cross-env NODE_ENV=production ${runtime.startProd("dist/index.js")}`
     };

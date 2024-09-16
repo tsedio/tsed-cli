@@ -41,7 +41,7 @@ describe("Init cmd", () => {
         [
           "./project-name",
           "project-name",
-          "project-name/.barrelsby.json",
+          "project-name/.barrels.json",
           "project-name/.dockerignore",
           "project-name/.gitignore",
           "project-name/Dockerfile",
@@ -96,7 +96,7 @@ describe("Init cmd", () => {
           "devDependencies": {},
           "name": "project-data",
           "scripts": {
-            "barrels": "barrelsby --config .barrelsby.json",
+            "barrels": "barrels",
             "build": "yarn run barrels && tsc --project tsconfig.compile.json",
             "start": "yarn run barrels && tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
@@ -111,7 +111,7 @@ describe("Init cmd", () => {
 
       const dockerFile = FakeCliFs.entries.get("project-name/Dockerfile")!;
 
-      expect(dockerFile).toContain("COPY package.json yarn.lock tsconfig.json tsconfig.compile.json .barrelsby.json ./");
+      expect(dockerFile).toContain("COPY package.json yarn.lock tsconfig.json tsconfig.compile.json .barrels.json ./");
       expect(dockerFile).toContain("RUN yarn build");
       expect(dockerFile).toContain("RUN yarn install --pure-lockfile");
 
@@ -140,7 +140,7 @@ describe("Init cmd", () => {
         [
           "./project-name",
           "project-name",
-          "project-name/.barrelsby.json",
+          "project-name/.barrels.json",
           "project-name/.dockerignore",
           "project-name/.gitignore",
           "project-name/Dockerfile",
@@ -201,7 +201,7 @@ describe("Init cmd", () => {
           "devDependencies": {},
           "name": "project-data",
           "scripts": {
-            "barrels": "barrelsby --config .barrelsby.json",
+            "barrels": "barrels",
             "build": "yarn run barrels && tsc --project tsconfig.compile.json",
             "start": "yarn run barrels && tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
@@ -236,7 +236,7 @@ describe("Init cmd", () => {
         [
           "./project-name",
           "project-name",
-          "project-name/.barrelsby.json",
+          "project-name/.barrels.json",
           "project-name/.dockerignore",
           "project-name/.gitignore",
           "project-name/Dockerfile",
@@ -291,7 +291,7 @@ describe("Init cmd", () => {
           "devDependencies": {},
           "name": "project-data",
           "scripts": {
-            "barrels": "barrelsby --config .barrelsby.json",
+            "barrels": "barrels",
             "build": "bun run barrels && bun build --target=bun src/index.ts --outfile=dist/index.js",
             "start": "bun run barrels && bun --watch src/index.ts",
             "start:prod": "cross-env NODE_ENV=production bun dist/index.js",
@@ -327,7 +327,7 @@ describe("Init cmd", () => {
           "./project-name",
           "project-name",
           "project-name/.babelrc",
-          "project-name/.barrelsby.json",
+          "project-name/.barrels.json",
           "project-name/.dockerignore",
           "project-name/.gitignore",
           "project-name/Dockerfile",
@@ -382,7 +382,7 @@ describe("Init cmd", () => {
           "devDependencies": {},
           "name": "project-data",
           "scripts": {
-            "barrels": "barrelsby --config .barrelsby.json",
+            "barrels": "barrels",
             "build": "yarn run barrels && tsc && babel src --out-dir dist --extensions ".ts,.tsx" --source-maps inline",
             "start": "yarn run barrels && babel-watch --extensions .ts src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
@@ -418,7 +418,7 @@ describe("Init cmd", () => {
           "./project-name",
           "project-name",
           "project-name/.babelrc",
-          "project-name/.barrelsby.json",
+          "project-name/.barrels.json",
           "project-name/.dockerignore",
           "project-name/.gitignore",
           "project-name/Dockerfile",
@@ -474,7 +474,7 @@ describe("Init cmd", () => {
           "devDependencies": {},
           "name": "project-data",
           "scripts": {
-            "barrels": "barrelsby --config .barrelsby.json",
+            "barrels": "barrels",
             "build": "yarn run barrels && tsc && cross-env NODE_ENV=production webpack",
             "start": "yarn run barrels && babel-watch --extensions .ts src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/app.bundle.js",
@@ -509,7 +509,7 @@ describe("Init cmd", () => {
         [
           "./project-name",
           "project-name",
-          "project-name/.barrelsby.json",
+          "project-name/.barrels.json",
           "project-name/.dockerignore",
           "project-name/.gitignore",
           "project-name/.node-dev.json",
@@ -566,7 +566,7 @@ describe("Init cmd", () => {
           "devDependencies": {},
           "name": "project-data",
           "scripts": {
-            "barrels": "barrelsby --config .barrelsby.json",
+            "barrels": "barrels",
             "build": "yarn run barrels && swc src --out-dir dist -s",
             "start": "yarn run barrels && node-dev src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
@@ -601,7 +601,7 @@ describe("Init cmd", () => {
         [
           "./project-name",
           "project-name",
-          "project-name/.barrelsby.json",
+          "project-name/.barrels.json",
           "project-name/.dockerignore",
           "project-name/.gitignore",
           "project-name/Dockerfile",
@@ -656,7 +656,7 @@ describe("Init cmd", () => {
           "devDependencies": {},
           "name": "project-data",
           "scripts": {
-            "barrels": "barrelsby --config .barrelsby.json",
+            "barrels": "barrels",
             "build": "npm run barrels && tsc --project tsconfig.compile.json",
             "start": "npm run barrels && tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
@@ -695,7 +695,7 @@ describe("Init cmd", () => {
         [
           "./project-name",
           "project-name",
-          "project-name/.barrelsby.json",
+          "project-name/.barrels.json",
           "project-name/.dockerignore",
           "project-name/.gitignore",
           "project-name/Dockerfile",
@@ -759,7 +759,7 @@ describe("Init cmd", () => {
         [
           "./project-name",
           "project-name",
-          "project-name/.barrelsby.json",
+          "project-name/.barrels.json",
           "project-name/.dockerignore",
           "project-name/.gitignore",
           "project-name/Dockerfile",
@@ -822,7 +822,7 @@ describe("Init cmd", () => {
         [
           "./project-name",
           "project-name",
-          "project-name/.barrelsby.json",
+          "project-name/.barrels.json",
           "project-name/.dockerignore",
           "project-name/.gitignore",
           "project-name/Dockerfile",
@@ -878,7 +878,7 @@ describe("Init cmd", () => {
           "devDependencies": {},
           "name": "project-data",
           "scripts": {
-            "barrels": "barrelsby --config .barrelsby.json",
+            "barrels": "barrels",
             "build": "yarn run barrels && tsc --project tsconfig.compile.json",
             "start": "yarn run barrels && tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node dist/index.js",
@@ -927,7 +927,7 @@ describe("Init cmd", () => {
         [
           "./project-name",
           "project-name",
-          "project-name/.barrelsby.json",
+          "project-name/.barrels.json",
           "project-name/.dockerignore",
           "project-name/.gitignore",
           "project-name/Dockerfile",

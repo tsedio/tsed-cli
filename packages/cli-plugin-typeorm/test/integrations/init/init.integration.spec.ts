@@ -53,7 +53,7 @@ describe("TypeORM: Init cmd", () => {
       [
         "./project-name",
         "project-name",
-        "project-name/.barrelsby.json",
+        "project-name/.barrels.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
         "project-name/Dockerfile",
@@ -127,7 +127,7 @@ describe("TypeORM: Init cmd", () => {
       [
         "./project-name",
         "project-name",
-        "project-name/.barrelsby.json",
+        "project-name/.barrels.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
         "project-name/Dockerfile",

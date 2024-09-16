@@ -35,7 +35,7 @@ describe("Init TypeGraphQL project", () => {
       [
         "./project-name",
         "project-name",
-        "project-name/.barrelsby.json",
+        "project-name/.barrels.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
         "project-name/Dockerfile",

@@ -4,7 +4,7 @@ exports[`Init OIDC Provider project > should generate a project with oidc 1`] = 
 [
   "./project-name",
   "project-name",
-  "project-name/.barrelsby.json",
+  "project-name/.barrels.json",
   "project-name/.dockerignore",
   "project-name/.gitignore",
   "project-name/Dockerfile",
@@ -119,7 +119,7 @@ exports[`Init OIDC Provider project > should generate a project with oidc and sw
 [
   "./project-name",
   "project-name",
-  "project-name/.barrelsby.json",
+  "project-name/.barrels.json",
   "project-name/.dockerignore",
   "project-name/.gitignore",
   "project-name/Dockerfile",

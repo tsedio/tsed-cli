@@ -38,33 +38,14 @@ export class RunCmd implements CommandProvider {
   runScript: CliRunScript;
 
   async $exec(ctx: RunCmdContext): Promise<Tasks> {
-    const cmd = ctx.production ? "node" : "ts-node";
-    const args = ctx.production ? [] : ["-r", "tsconfig-paths/register"];
-    const path = normalizePath(ctx.production ? join(await this.getCompilePath(), "bin/index.js") : "src/bin/index.ts");
-    const env: any = {
-      ...process.env
-    };
-
-    if (ctx.production) {
-      env.NODE_ENV = "production";
-    }
+    const cmd = "node";
+    const args = ["--import", "@swc-node/register/register-esm"];
+    const path = normalizePath("src/bin/index.ts");
 
     await this.runScript.run(cmd, [...args, path, ctx.command, ...ctx.rawArgs], {
-      env
+      env: process.env
     });
 
     return [];
-  }
-
-  protected async getCompilePath() {
-    const {dir} = this.projectPackageJson;
-    const tsConfigPath = join(dir, "tsconfig.compile.json");
-
-    if (this.fs.exists(tsConfigPath)) {
-      const content = JSON.parse(await this.fs.readFile(tsConfigPath, "utf8"));
-      return content.compilerOptions.outDir;
-    }
-
-    return "./dist";
   }
 }

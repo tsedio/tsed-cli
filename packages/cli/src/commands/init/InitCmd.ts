@@ -389,8 +389,8 @@ export class InitCmd implements CommandProvider {
       "@tsed/logger": "latest",
       "@tsed/logger-file": "latest",
       "@tsed/engines": "latest",
+      "@tsed/barrels": "latest",
       ajv: "latest",
-      barrelsby: "latest",
       "cross-env": "latest",
       dotenv: "latest",
       "dotenv-expand": "latest",
@@ -462,7 +462,7 @@ export class InitCmd implements CommandProvider {
         ...runtime.files(),
         "/init/.dockerignore.hbs",
         "/init/.gitignore.hbs",
-        "/init/.barrelsby.json.hbs",
+        "/init/.barrels.json.hbs",
         "/init/processes.config.cjs.hbs",
         "/init/docker-compose.yml.hbs",
         {
