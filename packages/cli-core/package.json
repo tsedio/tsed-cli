@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-core",
-  "version": "5.3.0",
+  "version": "5.3.1",
   "description": "Build your CLI with TypeScript and Decorators",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
@@ -67,9 +67,9 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@tsed/eslint": "5.3.0",
-    "@tsed/jest-config": "5.3.0",
-    "@tsed/typescript": "5.3.0",
+    "@tsed/eslint": "5.3.1",
+    "@tsed/jest-config": "5.3.1",
+    "@tsed/typescript": "5.3.1",
     "@types/axios": "0.14.0",
     "@types/commander": "2.12.2",
     "@types/consolidate": "0.14.1",
