@@ -46,7 +46,6 @@ export enum FeatureType {
   TESTING = "testing",
   JEST = "jest",
   VITEST = "vitest",
-  MOCHA = "mocha",
   LINTER = "linter",
   ESLINT = "eslint",
   LINT_STAGED = "lintstaged",
@@ -239,12 +238,6 @@ export const FeaturesMap: Record<string, Feature> = {
       "@tsed/cli-plugin-jest": "{{cliVersion}}"
     }
   },
-  [FeatureType.MOCHA]: {
-    name: "Mocha + Chai + Sinon",
-    devDependencies: {
-      "@tsed/cli-plugin-mocha": "{{cliVersion}}"
-    }
-  },
   [FeatureType.ESLINT]: {
     name: "EsLint",
     checked: true,
@@ -372,7 +365,7 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
     type: "list",
     name: "featuresTesting",
     when: hasFeature(FeatureType.TESTING),
-    choices: [FeatureType.VITEST, FeatureType.JEST, FeatureType.MOCHA]
+    choices: [FeatureType.VITEST, FeatureType.JEST]
   },
   {
     message: "Choose linter tools framework",

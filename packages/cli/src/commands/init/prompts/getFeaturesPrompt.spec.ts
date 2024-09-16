@@ -269,13 +269,6 @@ describe("getFeaturesPrompt", () => {
               "name": "Jest",
               "value": "jest",
             },
-            {
-              "devDependencies": {
-                "@tsed/cli-plugin-mocha": "{{cliVersion}}",
-              },
-              "name": "Mocha + Chai + Sinon",
-              "value": "mocha",
-            },
           ],
           "message": "Choose unit framework",
           "name": "featuresTesting",
