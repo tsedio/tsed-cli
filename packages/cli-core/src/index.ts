@@ -30,4 +30,4 @@ export * from "@tsed/logger";
 export * from "@tsed/normalize-path";
 export {Inquirer};
 
-import "./utils/patchCommander";
+import "./utils/patchCommander.js";
