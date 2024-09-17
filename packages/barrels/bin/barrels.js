@@ -53,9 +53,14 @@ async function build() {
     .map((path) => `!${path}`)
     .concat(directory.map((path) => `!${path}/index.ts`));
 
-  const promises = directory
+  const directories = await globby(directory, {
+    cwd: process.cwd(),
+    onlyDirectories: true
+  })
+
+  const promises = directories
     .map(async (directory) => {
-      const baseIndex = join(process.cwd(), directory);
+      const baseIndex = join(process.cwd(), directory?.path ?? directory);
 
       const files = await globby([
         "**/*.ts",
