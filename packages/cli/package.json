@@ -11,7 +11,6 @@
     ".": {
       "types": "./lib/types/index.d.ts",
       "import": "./lib/esm/index.js",
-      "require": "./lib/cjs/index.js",
       "default": "./lib/esm/index.js"
     }
   },
@@ -41,11 +40,9 @@
     "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
   "bin": {
-    "tsed": "lib/cjs/bin/tsed.js"
+    "tsed": "lib/esm/bin/tsed.js"
   },
   "files": [
-    "lib/cjs/bin/tsed.js",
-    "lib/cjs/bin",
     "lib/esm/bin/tsed.js",
     "lib/esm/bin",
     "lib",
