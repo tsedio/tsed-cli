@@ -1,4 +1,4 @@
-import "../../../src";
+import "../../../src/index.js";
 
 import {ArchitectureConvention, FeatureType, InitCmd, PlatformType, ProjectConvention, TEMPLATE_DIR} from "@tsed/cli";
 import {PackageManager} from "@tsed/cli-core";

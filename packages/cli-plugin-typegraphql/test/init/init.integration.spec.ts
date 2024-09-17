@@ -1,4 +1,4 @@
-import "../..";
+import "../../src/index.js";
 
 import {InitCmd, TEMPLATE_DIR} from "@tsed/cli";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";

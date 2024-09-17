@@ -1,4 +1,4 @@
-import "../utils/hbs/index";
+import "../utils/hbs/index.js";
 
 import {isString} from "@tsed/core";
 import {Configuration, Constant, Inject, Injectable} from "@tsed/di";
