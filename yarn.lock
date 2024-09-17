@@ -2430,7 +2430,6 @@ __metadata:
     inquirer-autocomplete-prompt: "npm:2.0.0"
     js-yaml: "npm:4.1.0"
     listr2: "npm:5.0.5"
-    module-alias: "npm:2.2.2"
     normalize-path: "npm:3.0.0"
     read-pkg-up: "npm:7.0.1"
     registry-url: "npm:5.1.0"
@@ -2685,7 +2684,6 @@ __metadata:
     lint-staged: "npm:13.0.3"
     listr2: "npm:5.0.5"
     markdown-it: "npm:13.0.1"
-    module-alias: "npm:2.2.2"
     prettier: "npm:3.3.3"
     read-pkg-up: "npm:7.0.1"
     registry-url: "npm:5.1.0"
@@ -2739,7 +2737,6 @@ __metadata:
     change-case: "npm:4.1.2"
     cross-env: "npm:7.0.3"
     globby: "npm:11.1.0"
-    module-alias: "npm:^2.2.2"
     normalize-path: "npm:3.0.0"
     read-pkg-up: "npm:7.0.1"
     semver: "npm:^7.3.5"
@@ -11830,13 +11827,6 @@ __metadata:
   version: 1.0.1
   resolution: "modify-values@npm:1.0.1"
   checksum: 10/16fa93f7ddb2540a8e82c99738ae4ed0e8e8cae57c96e13a0db9d68dfad074fd2eec542929b62ebbb18b357bbb3e4680b92d3a4099baa7aeb32360cb1c8f0247
-  languageName: node
-  linkType: hard
-
-"module-alias@npm:2.2.2, module-alias@npm:^2.2.2":
-  version: 2.2.2
-  resolution: "module-alias@npm:2.2.2"
-  checksum: 10/997aab639bff9b911fa856e445e5a6481b0ad84e5411b3b36a776624106e112984ff287b8be52ba53dd4088e09c2d7bd7afd951a540e4e87860017ec03e68d4e
   languageName: node
   linkType: hard
 
