@@ -228,6 +228,7 @@ export class ProjectPackageJson {
     this.raw = {
       ...originalPkg,
       ...this.raw,
+      type: "module",
       scripts: {
         ...(originalPkg.scripts || {}),
         ...(this.raw.scripts || {})
