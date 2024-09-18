@@ -77,6 +77,7 @@ describe("TypeORM: Init cmd", () => {
         "project-name/src/datasources/MysqlDatasource.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.base.json",
+        "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
       ]
     `);
@@ -151,6 +152,7 @@ describe("TypeORM: Init cmd", () => {
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.base.json",
+        "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
       ]
     `);

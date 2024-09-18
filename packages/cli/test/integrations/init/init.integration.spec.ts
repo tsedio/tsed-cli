@@ -63,6 +63,7 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
+          "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
         ]
       `);
@@ -100,7 +101,7 @@ describe("Init cmd", () => {
           "scripts": {
             "barrels": "barrels",
             "build": "yarn run barrels && swc src --out-dir dist -s",
-            "start": "yarn run barrels && nodemon --import @swc-node/register/register-esm src/index.ts",
+            "start": "yarn run barrels && nodemon src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/register-esm src/index.js",
           },
           "tsed": {
@@ -113,7 +114,9 @@ describe("Init cmd", () => {
 
       const dockerFile = FakeCliFs.entries.get("project-name/Dockerfile")!;
 
-      expect(dockerFile).toContain("COPY package.json yarn.lock tsconfig.json tsconfig.compile.json .barrels.json ./");
+      expect(dockerFile).toContain(
+        "COPY package.json yarn.lock tsconfig.json tsconfig.base.json tsconfig.node.json tsconfig.spec.json .barrels.json .swcrc ./"
+      );
       expect(dockerFile).toContain("RUN yarn build");
       expect(dockerFile).toContain("RUN yarn install --pure-lockfile");
 
@@ -166,6 +169,7 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
+          "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
           "project-name/views",
           "project-name/views/swagger.ejs",
@@ -207,7 +211,7 @@ describe("Init cmd", () => {
           "scripts": {
             "barrels": "barrels",
             "build": "yarn run barrels && swc src --out-dir dist -s",
-            "start": "yarn run barrels && nodemon --import @swc-node/register/register-esm src/index.ts",
+            "start": "yarn run barrels && nodemon src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/register-esm src/index.js",
           },
           "tsed": {
@@ -260,6 +264,7 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
+          "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
         ]
       `);
@@ -351,6 +356,7 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
+          "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
         ]
       `);
@@ -442,6 +448,7 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
+          "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
           "project-name/webpack.config.js",
         ]
@@ -535,6 +542,7 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
+          "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
         ]
       `);
@@ -572,7 +580,7 @@ describe("Init cmd", () => {
           "scripts": {
             "barrels": "barrels",
             "build": "npm run barrels && swc src --out-dir dist -s",
-            "start": "npm run barrels && nodemon --import @swc-node/register/register-esm src/index.ts",
+            "start": "npm run barrels && nodemon src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/register-esm src/index.js",
           },
           "tsed": {
@@ -633,6 +641,7 @@ describe("Init cmd", () => {
           "project-name/src/index.ts",
           "project-name/src/server.ts",
           "project-name/tsconfig.base.json",
+          "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
           "project-name/views",
           "project-name/views/swagger.ejs",
@@ -699,6 +708,7 @@ describe("Init cmd", () => {
           "project-name/src/rest/hello-world.controller.ts",
           "project-name/src/server.ts",
           "project-name/tsconfig.base.json",
+          "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
           "project-name/views",
           "project-name/views/swagger.ejs",
@@ -762,6 +772,7 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
+          "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
         ]
       `);
@@ -800,7 +811,7 @@ describe("Init cmd", () => {
           "scripts": {
             "barrels": "barrels",
             "build": "yarn run barrels && swc src --out-dir dist -s",
-            "start": "yarn run barrels && nodemon --import @swc-node/register/register-esm src/index.ts",
+            "start": "yarn run barrels && nodemon src/index.ts",
             "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/register-esm src/index.js",
           },
           "tsed": {
@@ -872,6 +883,7 @@ describe("Init cmd", () => {
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
+          "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
         ]
       `);

@@ -15,7 +15,7 @@ export class NodeRuntime extends BaseRuntime {
   }
 
   startDev(main: string) {
-    return `nodemon --import @swc-node/register/register-esm ${main}`;
+    return `nodemon ${main}`;
   }
 
   startProd(main: string) {

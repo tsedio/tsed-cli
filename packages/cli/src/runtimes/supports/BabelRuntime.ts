@@ -10,6 +10,10 @@ export class BabelRuntime extends NodeRuntime {
   readonly name: string = "babel";
   readonly order: number = 1;
 
+  isCompiled() {
+    return false;
+  }
+
   files() {
     return ["/init/.babelrc.hbs"];
   }

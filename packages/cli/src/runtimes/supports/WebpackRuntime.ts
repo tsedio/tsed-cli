@@ -10,6 +10,10 @@ export class WebpackRuntime extends BabelRuntime {
   readonly name = "webpack";
   readonly order: number = 2;
 
+  isCompiled() {
+    return true;
+  }
+
   files() {
     return [...super.files(), "/init/webpack.config.js.hbs"];
   }

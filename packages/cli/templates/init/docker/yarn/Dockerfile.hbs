@@ -1,11 +1,11 @@
 {{> docker-header }}
 
-ARG NODE_VERSION=20.10.0
+ARG NODE_VERSION=20.11.0
 
-FROM node:${NODE_VERSION}-alpine as build
+FROM node:${NODE_VERSION}-alpine AS build
 WORKDIR /opt
 
-COPY package.json yarn.lock tsconfig.json tsconfig.compile.json .barrels.json ./
+COPY package.json yarn.lock tsconfig.json tsconfig.base.json tsconfig.node.json tsconfig.spec.json .barrels.json .swcrc ./
 
 RUN yarn install --pure-lockfile
 
@@ -13,7 +13,7 @@ COPY ./src ./src
 
 RUN yarn build
 
-FROM node:${NODE_VERSION}-alpine as runtime
+FROM node:${NODE_VERSION}-alpine AS runtime
 ENV WORKDIR /opt
 WORKDIR $WORKDIR
 
@@ -25,4 +25,4 @@ RUN yarn install --pure-lockfile --production
 
 {{> docker-body}}
 
-CMD ["pm2-runtime", "start", "processes.config.js", "--env", "production"]
+CMD ["pm2-runtime", "start", "processes.config.cjs", "--env", "production"]

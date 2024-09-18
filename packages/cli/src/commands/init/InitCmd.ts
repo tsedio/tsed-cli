@@ -214,7 +214,7 @@ export class InitCmd implements CommandProvider {
       },
       ...getFeaturesPrompt(
         runtimes,
-        packageManagers.filter((o) => o !== "bun"),
+        packageManagers.filter((o: string) => o !== "bun"),
         initialOptions
       )
     ];
@@ -226,11 +226,11 @@ export class InitCmd implements CommandProvider {
 
     this.runtimes.init(ctx);
 
-    this.runtimes.list().forEach((key) => {
+    this.runtimes.list().forEach((key: string) => {
       ctx[key] = ctx.runtime === key;
     });
 
-    this.packageManagers.list().forEach((key) => {
+    this.packageManagers.list().forEach((key: string) => {
       ctx[key] = ctx.packageManager === key;
     });
 
@@ -453,8 +453,11 @@ export class InitCmd implements CommandProvider {
     ctx = {
       ...ctx,
       node: runtime instanceof NodeRuntime,
-      bun: runtime instanceof BunRuntime
+      bun: runtime instanceof BunRuntime,
+      compiled: runtime instanceof NodeRuntime && runtime.isCompiled()
     };
+
+    const pm2 = ctx.bun ? "bun" : ctx.compiled ? "node-compiled" : "node-loader";
 
     return this.rootRenderer.renderAll(
       [
@@ -462,7 +465,11 @@ export class InitCmd implements CommandProvider {
         "/init/.dockerignore.hbs",
         "/init/.gitignore.hbs",
         "/init/.barrels.json.hbs",
-        "/init/processes.config.cjs.hbs",
+        {
+          path: `/init/pm2/${pm2}/processes.config.cjs.hbs`,
+          output: `processes.config.cjs`,
+          replaces: [`pm2/${pm2}`]
+        },
         "/init/docker-compose.yml.hbs",
         {
           path: `/init/docker/${packageManager.name}/Dockerfile.hbs`,
@@ -470,6 +477,7 @@ export class InitCmd implements CommandProvider {
           replaces: [`docker/${packageManager.name}`]
         },
         "/init/README.md.hbs",
+        "/init/tsconfig.json.hbs",
         "/init/tsconfig.base.json.hbs",
         "/init/tsconfig.node.json.hbs",
         ctx.testing && "/init/tsconfig.spec.json.hbs",

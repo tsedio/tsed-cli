@@ -16,6 +16,10 @@ export abstract class BaseRuntime {
     return this.packageManagers.get();
   }
 
+  isCompiled() {
+    return true;
+  }
+
   files(): string[] {
     return [];
   }

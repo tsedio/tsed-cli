@@ -68,6 +68,7 @@ describe("Init TypeGraphQL project", () => {
         "project-name/src/services",
         "project-name/src/services/RecipeService.ts",
         "project-name/tsconfig.base.json",
+        "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
       ]
     `);
