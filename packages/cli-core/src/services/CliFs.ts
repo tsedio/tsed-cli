@@ -1,8 +1,9 @@
+import {fileURLToPath} from "node:url";
+
 import {Injectable} from "@tsed/di";
 import {normalizePath} from "@tsed/normalize-path";
 import {PathLike, WriteFileOptions} from "fs";
-import Fs from "fs-extra";
-import {EnsureOptions} from "fs-extra";
+import Fs, {EnsureOptions} from "fs-extra";
 import {join} from "path";
 
 @Injectable()
@@ -66,10 +67,6 @@ export class CliFs {
   async importModule(mod: string, root: string = process.cwd()) {
     try {
       if (process.env.NODE_ENV === "development") {
-        if (isCommonjs()) {
-          return require(mod);
-        }
-
         return await import(mod);
       }
     } catch (er) {}
@@ -77,13 +74,12 @@ export class CliFs {
     const path = this.findUpFile(root, join("node_modules", mod));
 
     if (path) {
-      return import(path);
+      const pkg = await this.readJson(join(path, "package.json"));
+      const file = pkg.exports?.["."]?.import || pkg.exports?.["."]?.default || pkg.exports?.["."] || pkg.module || pkg.main;
+
+      return import(join(path, file));
     }
 
     return import(mod);
   }
-}
-
-function isCommonjs() {
-  return typeof module !== "undefined" && typeof exports !== "undefined";
 }

@@ -1,3 +1,5 @@
+import {fileURLToPath} from "node:url";
+
 import {GlobalProviders, InjectorService} from "@tsed/di";
 import chalk from "chalk";
 // @ts-ignore
@@ -19,7 +21,7 @@ export async function loadPlugins(injector: InjectorService) {
     .filter((mod) => mod.startsWith(`@${name}/cli-plugin`) || mod.includes(`${name}-cli-plugin`))
     .map(async (mod) => {
       try {
-        const {default: plugin} = await fs.importModule(mod, rootDir);
+        const {default: plugin} = await fs.importModule(mod, fileURLToPath(rootDir));
 
         if (!injector.has(plugin)) {
           const provider = GlobalProviders.get(plugin)?.clone();

@@ -1,11 +1,12 @@
 import generateAliasesResolver from "esm-module-alias";
 
-const aliases = {
-  "@tsed/core": import.meta.resolve("@tsed/core"),
-  "@tsed/di": import.meta.resolve("@tsed/di"),
-  "@tsed/schema": import.meta.resolve("@tsed/schema"),
-  "@tsed/cli-core": import.meta.resolve("@tsed/cli-core"),
-  "@tsed/cli": import.meta.resolve("@tsed/cli")
-};
+let resolver: any = null;
 
-export const resolve = generateAliasesResolver(aliases);
+export async function initialize(aliases: Record<string, string>) {
+  // Receives data from `register`.
+  resolver = generateAliasesResolver(aliases);
+}
+
+export function resolve(specifier: any, context: any, nextResolve: any) {
+  return resolver(specifier, context, nextResolve);
+}
