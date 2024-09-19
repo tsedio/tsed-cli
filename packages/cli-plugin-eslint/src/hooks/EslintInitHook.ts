@@ -26,7 +26,7 @@ export class EslintInitHook {
         task: (ctx: any) => {
           return this.rootRenderer.renderAll(
             [
-              "eslint.config.mjs",
+              "eslint.config.mjs.hbs",
               ctx.lintstaged && ".husky/_/.gitignore.hbs",
               ctx.lintstaged && ".husky/_/husky.sh.hbs",
               ctx.lintstaged && ".husky/.gitignore.hbs",
