@@ -36,7 +36,7 @@
     "start:g:prisma": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts g service -r ./.tmp/init/awesome prisma",
     "start:generate:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -r ./.tmp/init/awesome",
     "start:typeorm:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts typeorm entity:create -r ./.tmp/init/awesome --name User",
-    "test": "vitest run -u",
+    "test": "vitest run",
     "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
   "bin": {
@@ -73,6 +73,7 @@
     "@tsed/schema": ">=7.14.2",
     "chalk": "4.1.2",
     "change-case": "4.1.2",
+    "esm-module-alias": "^2.2.1",
     "globby": "11.1.0",
     "normalize-path": "3.0.0",
     "read-pkg-up": "7.0.1",

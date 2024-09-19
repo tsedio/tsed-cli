@@ -108,6 +108,7 @@ describe("Init cmd", () => {
             "packageManager": "yarn",
             "runtime": "node",
           },
+          "type": "module",
           "version": "1.0.0",
         }
       `);
@@ -218,6 +219,7 @@ describe("Init cmd", () => {
             "packageManager": "yarn",
             "runtime": "node",
           },
+          "type": "module",
           "version": "1.0.0",
         }
       `);
@@ -309,6 +311,7 @@ describe("Init cmd", () => {
             "packageManager": "bun",
             "runtime": "bun",
           },
+          "type": "module",
           "version": "1.0.0",
         }
       `);
@@ -401,6 +404,7 @@ describe("Init cmd", () => {
             "packageManager": "yarn",
             "runtime": "babel",
           },
+          "type": "module",
           "version": "1.0.0",
         }
       `);
@@ -494,6 +498,7 @@ describe("Init cmd", () => {
             "packageManager": "yarn",
             "runtime": "webpack",
           },
+          "type": "module",
           "version": "1.0.0",
         }
       `);
@@ -587,6 +592,7 @@ describe("Init cmd", () => {
             "packageManager": "npm",
             "runtime": "node",
           },
+          "type": "module",
           "version": "1.0.0",
         }
       `);
@@ -818,6 +824,7 @@ describe("Init cmd", () => {
             "packageManager": "yarn",
             "runtime": "node",
           },
+          "type": "module",
           "version": "1.0.0",
         }
       `);
