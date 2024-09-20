@@ -3,8 +3,8 @@ import {Configuration, Injectable} from "@tsed/di";
 import {dirname, join} from "path";
 import readPkgUp from "read-pkg-up";
 
-import {PackageJson} from "../interfaces/PackageJson.js";
-import {ProjectPreferences} from "../interfaces/ProjectPreferences.js";
+import type {PackageJson} from "../interfaces/PackageJson.js";
+import type {ProjectPreferences} from "../interfaces/ProjectPreferences.js";
 import {isValidVersion} from "../utils/isValidVersion.js";
 import {CliFs} from "./CliFs.js";
 

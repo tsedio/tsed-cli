@@ -1,7 +1,7 @@
 import {Inject} from "@tsed/cli-core";
 import {Module} from "@tsed/di";
 
-import {InitBasePlatform} from "./supports/InitBasePlatform.js";
+import type {InitBasePlatform} from "./supports/InitBasePlatform.js";
 import {InitExpressPlatform} from "./supports/InitExpressPlatform.js";
 import {InitKoaPlatform} from "./supports/InitKoaPlatform.js";
 

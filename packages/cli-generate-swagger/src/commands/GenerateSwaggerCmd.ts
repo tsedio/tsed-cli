@@ -1,5 +1,4 @@
-import {CliFs, CliYaml, Command, CommandProvider, Constant, Inject, InjectorService, Type} from "@tsed/cli-core";
-import {importPackage} from "@tsed/core";
+import {CliFs, CliYaml, Command, type CommandProvider, Constant, Inject, InjectorService, Type} from "@tsed/cli-core";
 import path, {join, resolve} from "path";
 
 export interface GenerateSwaggerCtx {

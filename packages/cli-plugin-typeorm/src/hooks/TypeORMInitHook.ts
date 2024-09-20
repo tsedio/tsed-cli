@@ -1,4 +1,4 @@
-import {InitCmdContext} from "@tsed/cli";
+import type {InitCmdContext} from "@tsed/cli";
 import {
   CliDockerComposeYaml,
   CliService,

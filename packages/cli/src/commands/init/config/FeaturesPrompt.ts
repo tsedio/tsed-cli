@@ -1,5 +1,5 @@
 import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../interfaces/index.js";
-import {InitOptions} from "../interfaces/InitOptions.js";
+import type {InitOptions} from "../interfaces/InitOptions.js";
 import {hasFeature, hasValue} from "../utils/hasFeature.js";
 import {isPlatform} from "../utils/isPlatform.js";
 

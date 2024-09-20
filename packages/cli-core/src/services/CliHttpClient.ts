@@ -1,6 +1,6 @@
 import {cleanObject} from "@tsed/core";
 import {Inject, Injectable} from "@tsed/di";
-import axios, {AxiosRequestConfig, Method} from "axios";
+import axios, {type AxiosRequestConfig, type Method} from "axios";
 import {stringify} from "querystring";
 import {URL} from "url";
 

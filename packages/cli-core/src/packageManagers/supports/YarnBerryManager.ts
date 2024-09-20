@@ -4,7 +4,7 @@ import {join} from "path";
 import {Observable} from "rxjs";
 
 import {CliYaml} from "../../services/CliYaml.js";
-import {BaseManager, ManagerCmdOpts, ManagerCmdSyncOpts} from "./BaseManager.js";
+import {BaseManager, type ManagerCmdOpts, type ManagerCmdSyncOpts} from "./BaseManager.js";
 
 @Injectable({
   type: "package:manager"

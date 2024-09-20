@@ -2,7 +2,7 @@ import {Constant, Inject, Injectable, InjectorService} from "@tsed/di";
 import chalk from "chalk";
 
 import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
-import {Task} from "../interfaces/index.js";
+import type {Task} from "../interfaces/index.js";
 import {PackageManagersModule} from "../packageManagers/PackageManagersModule.js";
 import {createSubTasks} from "../utils/createTasksRunner.js";
 import {loadPlugins} from "../utils/loadPlugins.js";

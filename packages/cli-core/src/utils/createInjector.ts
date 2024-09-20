@@ -1,4 +1,4 @@
-import {DIConfigurationOptions, InjectorService} from "@tsed/di";
+import {type DIConfigurationOptions, InjectorService} from "@tsed/di";
 import {Logger} from "@tsed/logger";
 
 import {CliConfiguration} from "../services/CliConfiguration.js";
