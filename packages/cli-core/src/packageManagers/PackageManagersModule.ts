@@ -1,5 +1,5 @@
 import {Inject, Injectable} from "@tsed/di";
-import {Options} from "execa";
+import type {Options} from "execa";
 import {EMPTY, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 

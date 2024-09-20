@@ -1,7 +1,7 @@
 import {Type} from "@tsed/core";
 
-import {CommandProvider} from "./CommandProvider.js";
-import {PackageJson} from "./PackageJson.js";
+import type {CommandProvider} from "./CommandProvider.js";
+import type {PackageJson} from "./PackageJson.js";
 
 export * from "./CliDefaultOptions.js";
 export * from "./CommandMetadata.js";

@@ -1,6 +1,6 @@
-import {Answers, QuestionCollection} from "inquirer";
+import type {Answers, QuestionCollection} from "inquirer";
 
-import {Tasks} from "./Tasks.js";
+import type {Tasks} from "./Tasks.js";
 
 export type QuestionOptions<T extends Answers = Answers> = QuestionCollection<T>;
 

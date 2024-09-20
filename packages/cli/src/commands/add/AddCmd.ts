@@ -1,13 +1,13 @@
 import {
-  CliDefaultOptions,
+  type CliDefaultOptions,
   CliPlugins,
   Command,
-  CommandProvider,
+  type CommandProvider,
   createSubTasks,
   PackageManagersModule,
   ProjectPackageJson,
-  QuestionOptions,
-  Task
+  type QuestionOptions,
+  type Task
 } from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 

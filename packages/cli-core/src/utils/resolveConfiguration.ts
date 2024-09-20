@@ -1,5 +1,5 @@
 import {getValue} from "@tsed/core";
-import {TokenProvider} from "@tsed/di";
+import type {TokenProvider} from "@tsed/di";
 
 import {getCommandMetadata} from "./getCommandMetadata.js";
 

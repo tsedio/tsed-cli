@@ -1,5 +1,5 @@
 import {Inject, Injectable} from "@tsed/di";
-import {default as Ajv, Schema} from "ajv";
+import {default as Ajv, type Schema} from "ajv";
 import {extname} from "path";
 
 import {CliFs} from "./CliFs.js";

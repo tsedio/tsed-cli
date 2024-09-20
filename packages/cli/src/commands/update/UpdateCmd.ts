@@ -1,15 +1,15 @@
 import {
-  CliDefaultOptions,
+  type CliDefaultOptions,
   CliPackageJson,
   Command,
-  CommandProvider,
+  type CommandProvider,
   createSubTasks,
   Inject,
   NpmRegistryClient,
   PackageManagersModule,
   ProjectPackageJson,
-  QuestionOptions,
-  Task
+  type QuestionOptions,
+  type Task
 } from "@tsed/cli-core";
 import {getValue} from "@tsed/core";
 import semver from "semver";

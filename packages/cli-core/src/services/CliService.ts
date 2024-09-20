@@ -7,9 +7,9 @@ import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
 import {v4} from "uuid";
 
 import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
-import {CommandMetadata} from "../interfaces/CommandMetadata.js";
-import {CommandArg, CommandOptions} from "../interfaces/CommandParameters.js";
-import {CommandProvider} from "../interfaces/CommandProvider.js";
+import type {CommandMetadata} from "../interfaces/CommandMetadata.js";
+import type {CommandArg, CommandOptions} from "../interfaces/CommandParameters.js";
+import type {CommandProvider} from "../interfaces/CommandProvider.js";
 import {PackageManagersModule} from "../packageManagers/index.js";
 import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner.js";
 import {getCommandMetadata} from "../utils/getCommandMetadata.js";

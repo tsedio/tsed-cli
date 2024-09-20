@@ -1,9 +1,7 @@
-import {fileURLToPath} from "node:url";
-
 import {Injectable} from "@tsed/di";
 import {normalizePath} from "@tsed/normalize-path";
-import {PathLike, WriteFileOptions} from "fs";
-import Fs, {EnsureOptions} from "fs-extra";
+import type {PathLike, WriteFileOptions} from "fs";
+import Fs, {type EnsureOptions} from "fs-extra";
 import {join} from "path";
 
 @Injectable()

@@ -1,4 +1,4 @@
-import {InitCmdContext} from "@tsed/cli";
+import type {InitCmdContext} from "@tsed/cli";
 import {Inject, OnExec, ProjectPackageJson, RootRendererService, SrcRendererService} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 

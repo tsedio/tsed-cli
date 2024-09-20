@@ -11,7 +11,7 @@ import {
   InjectorService,
   ProjectPackageJson,
   resolveConfiguration,
-  TokenProvider
+  type TokenProvider
 } from "@tsed/cli-core";
 import {Type} from "@tsed/core";
 import {DIContext, runInContext} from "@tsed/di";

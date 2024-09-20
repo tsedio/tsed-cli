@@ -2,7 +2,7 @@ import {Inject, Injectable} from "@tsed/di";
 import registry_url from "registry-url";
 import url from "url";
 
-import {PackageInfo} from "../interfaces/PackageJson.js";
+import type {PackageInfo} from "../interfaces/PackageJson.js";
 import {CliHttpClient} from "./CliHttpClient.js";
 
 const HOST = registry_url();

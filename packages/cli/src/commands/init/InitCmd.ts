@@ -6,7 +6,7 @@ import {
   CliPlugins,
   CliService,
   Command,
-  CommandProvider,
+  type CommandProvider,
   Configuration,
   createSubTasks,
   createTasksRunner,
@@ -14,9 +14,9 @@ import {
   PackageManager,
   PackageManagersModule,
   ProjectPackageJson,
-  QuestionOptions,
+  type QuestionOptions,
   RootRendererService,
-  Task
+  type Task
 } from "@tsed/cli-core";
 import {paramCase, pascalCase} from "change-case";
 import {basename, join} from "path";
@@ -33,8 +33,8 @@ import {NodeRuntime} from "../../runtimes/supports/NodeRuntime.js";
 import {fillImports} from "../../utils/fillImports.js";
 import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt.js";
 import {InitFileSchema} from "./config/InitFileSchema.js";
-import {InitCmdContext} from "./interfaces/InitCmdContext.js";
-import {InitOptions} from "./interfaces/InitOptions.js";
+import type {InitCmdContext} from "./interfaces/InitCmdContext.js";
+import type {InitOptions} from "./interfaces/InitOptions.js";
 import {mapToContext} from "./mappers/mapToContext.js";
 import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt.js";
 

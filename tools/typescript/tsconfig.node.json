@@ -23,6 +23,7 @@
     "declaration": false,
     "noResolve": false,
     "preserveConstEnums": true,
+    "verbatimModuleSyntax": true,
     "sourceMap": true,
     "noEmit": true
   }
