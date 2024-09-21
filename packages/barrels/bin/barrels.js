@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import {existsSync} from "node:fs";
 import {readFile, writeFile} from "node:fs/promises";
-import {join} from "node:path";
+import {dirname, join} from "node:path";
 
 import {globby} from "globby";
 
@@ -46,8 +46,16 @@ async function build() {
 
   const excluded = exclude.map((path) => `!${path}`).concat(directory.map((path) => `!${path}/index.ts`));
 
-  const promises = directory.map(async (directory) => {
-    const baseIndex = join(process.cwd(), directory);
+  const directories = (
+    await globby(directory, {
+      cwd: process.cwd()
+    })
+  ).reduce((set, file) => {
+    return set.add(dirname(file));
+  }, new Set());
+
+  const promises = [...directories.keys()].map(async (directory) => {
+    const baseIndex = join(process.cwd(), directory?.path ?? directory);
 
     const files = await globby(["**/*.ts", "!index.ts", ...excluded], {
       cwd: directory
