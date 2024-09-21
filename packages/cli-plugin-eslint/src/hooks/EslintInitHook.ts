@@ -70,6 +70,14 @@ export class EslintInitHook {
 
           await this.packageManagers.runScript("prepare");
         }
+      },
+      {
+        title: "Run linter",
+        task: () => {
+          return this.packageManagers.runScript("test:lint:fix", {
+            ignoreError: true
+          });
+        }
       }
     ];
   }
@@ -110,6 +118,15 @@ export class EslintInitHook {
           "is-ci": "latest",
           husky: "latest",
           "lint-staged": "latest"
+        },
+        ctx
+      );
+    }
+
+    if (ctx.vitest) {
+      this.packageJson.addDevDependencies(
+        {
+          "eslint-plugin-vitest": "latest"
         },
         ctx
       );
