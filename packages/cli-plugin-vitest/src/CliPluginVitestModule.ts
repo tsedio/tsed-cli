@@ -25,7 +25,7 @@ export class CliPluginVitestModule {
     const runtime = this.runtimes.get();
 
     this.packageJson.addScripts({
-      test: `${runtime.run("test:lint")} && ${runtime.run("test:coverage")} `,
+      test: `${runtime.run("test:lint")} && ${runtime.run("test:coverage")}`,
       "test:unit": "cross-env NODE_ENV=test vitest run",
       "test:watch": "cross-env NODE_ENV=test vitest",
       "test:coverage": `cross-env NODE_ENV=test vitest run --coverage`
