@@ -1,6 +1,6 @@
-import commander from "commander";
+import type {Command} from "commander";
 
-export function mapCommanderOptions(commands: commander.Command[]) {
+export function mapCommanderOptions(commands: Command[]) {
   const options: any = {};
   commands.forEach((command) => {
     Object.entries(command.opts())
