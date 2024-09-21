@@ -3,7 +3,7 @@ import typescriptParser from "@typescript-eslint/parser";
 {{#if prettier}}import pluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 {{/if}}import pluginSimpleImportSort from "eslint-plugin-simple-import-sort";
 {{#if vitest}}import vitest from "eslint-plugin-vitest";
-i{{/if}}import globals from "globals";
+{{/if}}import globals from "globals";
 
 export default [
   {
@@ -58,8 +58,7 @@ export default [
     },
     rules: {
       "simple-import-sort/imports": "error",
-      "simple-import-sort/exports": "error",
-      "workspaces/no-absolute-imports": "error"
+      "simple-import-sort/exports": "error"
     }
   }{{#if prettier}},
   pluginPrettierRecommended{{/if}}
