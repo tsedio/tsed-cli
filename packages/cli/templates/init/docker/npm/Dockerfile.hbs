@@ -13,7 +13,7 @@ COPY ./src ./src
 
 RUN npm run build
 
-FROM node:${NODE_VERSION}-alpine as runtime
+FROM node:${NODE_VERSION}-alpine AS runtime
 ENV WORKDIR /opt
 WORKDIR $WORKDIR
 
