@@ -1,7 +1,7 @@
 {
   "name": "@tsed/cli-core",
   "description": "Build your CLI with TypeScript and Decorators",
-  "version": "6.0.0-alpha.7",
+  "version": "6.0.0-alpha.8",
   "type": "module",
   "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
