@@ -10,11 +10,11 @@ export function fillImports(ctx: any) {
 
   ctx.barrels = JSON.stringify(
     [
-      isFeature ? "./src/rest/index.js" : "./src/controllers/rest/index.js",
-      ctx.swagger && (isFeature ? "./src/pages/index.js" : "./src/controllers/pages/index.js"),
-      ctx.oidc && "./src/interactions/index.js",
-      ctx.graphql && "./src/datasources/index.js",
-      ctx.graphql && "./src/resolvers/index.js"
+      isFeature ? "./src/rest" : "./src/controllers/rest",
+      ctx.swagger && (isFeature ? "./src/pages" : "./src/controllers/pages"),
+      ctx.oidc && "./src/interactions",
+      ctx.graphql && "./src/datasources",
+      ctx.graphql && "./src/resolvers"
     ].filter(Boolean)
   );
 

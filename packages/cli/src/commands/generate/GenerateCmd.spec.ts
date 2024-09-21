@@ -115,7 +115,7 @@ describe("GenerateCmd", () => {
           express: false,
           koa: false,
           platformSymbol: undefined,
-          barrels: '["./src/controllers/rest/index.js"]',
+          barrels: '["./src/controllers/rest"]',
           imports: [
             {from: "@tsed/ajv"},
             {symbols: "{config}", from: "./config/index.js"},
@@ -169,7 +169,7 @@ describe("GenerateCmd", () => {
           express: false,
           koa: false,
           platformSymbol: undefined,
-          barrels: '["./src/controllers/rest/index.js"]',
+          barrels: '["./src/controllers/rest"]',
           imports: [
             {from: "@tsed/ajv"},
             {symbols: "{config}", from: "./config/index.js"},

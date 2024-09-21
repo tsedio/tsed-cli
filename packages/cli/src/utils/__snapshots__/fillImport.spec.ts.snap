@@ -3,7 +3,7 @@
 exports[`fillImports() > should return barrels and imports files for ('arc_default', oidc: false, graphql: false, swagger: true, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
 {
   "architecture": "arc_default",
-  "barrels": "["./src/controllers/rest/index.js","./src/controllers/pages/index.js"]",
+  "barrels": "["./src/controllers/rest","./src/controllers/pages"]",
   "express": false,
   "graphql": false,
   "imports": [
@@ -37,7 +37,7 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
 exports[`fillImports() > should return barrels and imports files for ('arc_default', oidc: true, graphql: false, swagger: false, passportjs: false, express: false, koa: true, mongoose: false) 1`] = `
 {
   "architecture": "arc_default",
-  "barrels": "["./src/controllers/rest/index.js","./src/interactions/index.js"]",
+  "barrels": "["./src/controllers/rest","./src/interactions"]",
   "express": false,
   "graphql": false,
   "imports": [
@@ -75,7 +75,7 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
 exports[`fillImports() > should return barrels and imports files for ('arc_default', oidc: true, graphql: true, swagger: true, passportjs: true, express: false, koa: true, mongoose: true) 1`] = `
 {
   "architecture": "arc_default",
-  "barrels": "["./src/controllers/rest/index.js","./src/controllers/pages/index.js","./src/interactions/index.js","./src/datasources/index.js","./src/resolvers/index.js"]",
+  "barrels": "["./src/controllers/rest","./src/controllers/pages","./src/interactions","./src/datasources","./src/resolvers"]",
   "express": false,
   "graphql": true,
   "imports": [
@@ -131,7 +131,7 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
 exports[`fillImports() > should return barrels and imports files for ('feature', oidc: false, graphql: false, swagger: false, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
 {
   "architecture": "feature",
-  "barrels": "["./src/rest/index.js"]",
+  "barrels": "["./src/rest"]",
   "express": false,
   "graphql": false,
   "imports": [
@@ -158,7 +158,7 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
 exports[`fillImports() > should return barrels and imports files for ('feature', oidc: false, graphql: false, swagger: true, passportjs: false, express: false, koa: false, mongoose: false) 1`] = `
 {
   "architecture": "feature",
-  "barrels": "["./src/rest/index.js","./src/pages/index.js"]",
+  "barrels": "["./src/rest","./src/pages"]",
   "express": false,
   "graphql": false,
   "imports": [
@@ -192,7 +192,7 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
 exports[`fillImports() > should return barrels and imports files for ('feature', oidc: true, graphql: false, swagger: false, passportjs: false, express: true, koa: false, mongoose: false) 1`] = `
 {
   "architecture": "feature",
-  "barrels": "["./src/rest/index.js","./src/interactions/index.js"]",
+  "barrels": "["./src/rest","./src/interactions"]",
   "express": false,
   "graphql": false,
   "imports": [
@@ -230,7 +230,7 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
 exports[`fillImports() > should return barrels and imports files for ('feature', oidc: true, graphql: true, swagger: true, passportjs: true, express: true, koa: false, mongoose: true) 1`] = `
 {
   "architecture": "feature",
-  "barrels": "["./src/rest/index.js","./src/pages/index.js","./src/interactions/index.js","./src/datasources/index.js","./src/resolvers/index.js"]",
+  "barrels": "["./src/rest","./src/pages","./src/interactions","./src/datasources","./src/resolvers"]",
   "express": false,
   "graphql": true,
   "imports": [
