@@ -14,5 +14,8 @@
   },
   "dependencies": {
     "globby": "14.0.2"
+  },
+  "scripts": {
+    "test": "node --test test/barrels.integration.spec.js"
   }
 }
