@@ -1,6 +1,6 @@
 {
   "name": "@tsed/cli-testing",
-  "version": "5.4.1",
+  "version": "5.4.2",
   "description": "Utils to test you CLI based on Ts.ED CLI",
   "source": "./src/index.ts",
   "main": "./lib/cjs/index.js",
@@ -30,13 +30,13 @@
     "decorators"
   ],
   "dependencies": {
-    "@tsed/cli-core": "5.4.1",
+    "@tsed/cli-core": "5.4.2",
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@tsed/eslint": "5.4.1",
-    "@tsed/jest-config": "5.4.1",
-    "@tsed/typescript": "5.4.1",
+    "@tsed/eslint": "5.4.2",
+    "@tsed/jest-config": "5.4.2",
+    "@tsed/typescript": "5.4.2",
     "cross-env": "7.0.3",
     "eslint": "8.22.0",
     "jest": "29.5.0"
