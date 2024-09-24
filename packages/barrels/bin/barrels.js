@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import {generateBarrels} from "../src/generate-barrel.js";
-import {getConfig} from "../src/get-config.js";
+import {generateBarrels} from "./generate-barrel.js";
+import {getConfig} from "./get-config.js";
 
 async function build() {
   const {

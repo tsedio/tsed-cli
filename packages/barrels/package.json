@@ -4,7 +4,6 @@
   "version": "5.4.2",
   "type": "module",
   "bin": "bin/barrels.js",
-  "files": [],
   "keywords": [
     "Ts.ED",
     "barrels"

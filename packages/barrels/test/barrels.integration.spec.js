@@ -1,4 +1,4 @@
-import {generateBarrels} from "../src/generate-barrel.js";
+import {generateBarrels} from "../bin/generate-barrel.js";
 import {describe, it} from "node:test";
 import assert from "node:assert";
 import {join} from "node:path";
