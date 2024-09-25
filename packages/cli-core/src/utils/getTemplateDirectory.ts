@@ -1,8 +1,8 @@
 import {dirname, join} from "path";
-import readPkgUp from "read-pkg-up";
+import {readPackageUpSync} from "read-pkg-up";
 
 export function getTemplateDirectory(cwd: string) {
-  const {path} = readPkgUp.sync({
+  const {path} = readPackageUpSync({
     cwd: join(cwd, "..", "..")
   })!;
 

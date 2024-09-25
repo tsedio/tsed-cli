@@ -1,7 +1,7 @@
 import {getValue, setValue} from "@tsed/core";
 import {Configuration, Injectable} from "@tsed/di";
 import {dirname, join} from "path";
-import readPkgUp from "read-pkg-up";
+import {readPackageUpSync} from "read-pkg-up";
 
 import type {PackageJson} from "../interfaces/PackageJson.js";
 import type {ProjectPreferences} from "../interfaces/ProjectPreferences.js";
@@ -315,7 +315,7 @@ export class ProjectPackageJson {
     const fileExists = this.fs.exists(pkgPath);
 
     if (!disableReadUpPkg && !fileExists) {
-      const result = readPkgUp.sync({
+      const result = readPackageUpSync({
         cwd
       });
 

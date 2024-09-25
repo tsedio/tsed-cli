@@ -75,7 +75,7 @@
     "change-case": "^5.4.4",
     "esm-module-alias": "^2.2.1",
     "globby": "^14.0.2",
-    "read-pkg-up": "^7.0.1",
+    "read-pkg-up": "^11.0.0",
     "semver": "^7.6.3",
     "tslib": "^2.3.1"
   },

@@ -2274,7 +2274,6 @@ __metadata:
     "@types/globby": "npm:9.1.0"
     "@types/inquirer": "npm:9.0.7"
     "@types/js-yaml": "npm:4.0.9"
-    "@types/read-pkg-up": "npm:6.0.0"
     "@types/semver": "npm:7.5.8"
     "@types/tunnel": "npm:0.0.7"
     "@types/update-notifier": "npm:6.0.8"
@@ -2300,7 +2299,7 @@ __metadata:
     inquirer-autocomplete-prompt: "npm:^2.0.1"
     js-yaml: "npm:^4.1.0"
     listr2: "npm:^5.0.8"
-    read-pkg-up: "npm:^7.0.1"
+    read-pkg-up: "npm:^11.0.0"
     registry-url: "npm:^5.1.0"
     rxjs: "npm:^7.8.1"
     semver: "npm:^7.6.3"
@@ -2553,7 +2552,7 @@ __metadata:
     listr2: "npm:5.0.8"
     markdown-it: "npm:13.0.2"
     prettier: "npm:3.3.3"
-    read-pkg-up: "npm:7.0.1"
+    read-pkg-up: "npm:^11.0.0"
     registry-url: "npm:5.1.0"
     rxjs: "npm:^7.8.1"
     semantic-release: "npm:24.1.1"
@@ -2602,7 +2601,7 @@ __metadata:
     cross-env: "npm:7.0.3"
     esm-module-alias: "npm:^2.2.1"
     globby: "npm:^14.0.2"
-    read-pkg-up: "npm:^7.0.1"
+    read-pkg-up: "npm:^11.0.0"
     semver: "npm:^7.6.3"
     tslib: "npm:^2.3.1"
     typescript: "npm:5.6.2"
@@ -2984,7 +2983,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/normalize-package-data@npm:^2.4.0, @types/normalize-package-data@npm:^2.4.1":
+"@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
   checksum: 10/e87bccbf11f95035c89a132b52b79ce69a1e3652fe55962363063c9c0dae0fe2477ebc585e03a9652adc6f381d24ba5589cc5e51849df4ced3d3e004a7d40ed5
@@ -3002,15 +3001,6 @@ __metadata:
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
   checksum: 10/4df9de98150d2978afc2161482a3a8e6617883effba3223324f079de97ba7eabd7d84b90ced11c3f82b0c08d4a8383f678c9f73e9c41258f769b3fa234a2bb4f
-  languageName: node
-  linkType: hard
-
-"@types/read-pkg-up@npm:6.0.0":
-  version: 6.0.0
-  resolution: "@types/read-pkg-up@npm:6.0.0"
-  dependencies:
-    read-pkg-up: "npm:*"
-  checksum: 10/d3dd17b2ab8841ff7071591dc5203fe080a610abfb8ecebef3f3e998aaa9e8c537a032fa657da0f4724c72929df9a1ea5b9f7cb4648badffe49def9badeff81a
   languageName: node
   linkType: hard
 
@@ -7209,16 +7199,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"find-up@npm:^6.3.0":
-  version: 6.3.0
-  resolution: "find-up@npm:6.3.0"
-  dependencies:
-    locate-path: "npm:^7.1.0"
-    path-exists: "npm:^5.0.0"
-  checksum: 10/4f3bdc30d41778c647e53f4923e72de5e5fb055157031f34501c5b36c2eb59f77b997edf9cb00165c6060cda7eaa2e3da82cb6be2e61d68ad3e07c4bc4cce67e
-  languageName: node
-  linkType: hard
-
 "find-up@npm:^7.0.0":
   version: 7.0.0
   resolution: "find-up@npm:7.0.0"
@@ -10320,7 +10300,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"locate-path@npm:^7.1.0, locate-path@npm:^7.2.0":
+"locate-path@npm:^7.2.0":
   version: 7.2.0
   resolution: "locate-path@npm:7.2.0"
   dependencies:
@@ -11631,7 +11611,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"normalize-package-data@npm:^3.0.0, normalize-package-data@npm:^3.0.2, normalize-package-data@npm:^3.0.3":
+"normalize-package-data@npm:^3.0.0, normalize-package-data@npm:^3.0.3":
   version: 3.0.3
   resolution: "normalize-package-data@npm:3.0.3"
   dependencies:
@@ -13316,17 +13296,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"read-pkg-up@npm:*":
-  version: 9.1.0
-  resolution: "read-pkg-up@npm:9.1.0"
-  dependencies:
-    find-up: "npm:^6.3.0"
-    read-pkg: "npm:^7.1.0"
-    type-fest: "npm:^2.5.0"
-  checksum: 10/41b8ba4bdb7c1e914aa6ce2d36a7c1651e9086938977fa12f058f6fca51ee15315634af648ca4ef70dd074e575e854616b39032ad0b376e9e97d61a9d0867afe
-  languageName: node
-  linkType: hard
-
 "read-pkg-up@npm:7.0.0":
   version: 7.0.0
   resolution: "read-pkg-up@npm:7.0.0"
@@ -13338,14 +13307,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"read-pkg-up@npm:7.0.1, read-pkg-up@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "read-pkg-up@npm:7.0.1"
+"read-pkg-up@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "read-pkg-up@npm:11.0.0"
   dependencies:
-    find-up: "npm:^4.1.0"
-    read-pkg: "npm:^5.2.0"
-    type-fest: "npm:^0.8.1"
-  checksum: 10/e4e93ce70e5905b490ca8f883eb9e48b5d3cebc6cd4527c25a0d8f3ae2903bd4121c5ab9c5a3e217ada0141098eeb661313c86fa008524b089b8ed0b7f165e44
+    find-up-simple: "npm:^1.0.0"
+    read-pkg: "npm:^9.0.0"
+    type-fest: "npm:^4.6.0"
+  checksum: 10/c08fe324a6d8cb3f1f4533074db8a4ef222c85af74bc30e7a98117c578e5d6b2dd8868fded660386167c95ffaf5d566f95743a621581df332573bc989c19cf45
   languageName: node
   linkType: hard
 
@@ -13370,6 +13339,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"read-pkg-up@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "read-pkg-up@npm:7.0.1"
+  dependencies:
+    find-up: "npm:^4.1.0"
+    read-pkg: "npm:^5.2.0"
+    type-fest: "npm:^0.8.1"
+  checksum: 10/e4e93ce70e5905b490ca8f883eb9e48b5d3cebc6cd4527c25a0d8f3ae2903bd4121c5ab9c5a3e217ada0141098eeb661313c86fa008524b089b8ed0b7f165e44
+  languageName: node
+  linkType: hard
+
 "read-pkg@npm:^3.0.0":
   version: 3.0.0
   resolution: "read-pkg@npm:3.0.0"
@@ -13390,18 +13370,6 @@ __metadata:
     parse-json: "npm:^5.0.0"
     type-fest: "npm:^0.6.0"
   checksum: 10/eb696e60528b29aebe10e499ba93f44991908c57d70f2d26f369e46b8b9afc208ef11b4ba64f67630f31df8b6872129e0a8933c8c53b7b4daf0eace536901222
-  languageName: node
-  linkType: hard
-
-"read-pkg@npm:^7.1.0":
-  version: 7.1.0
-  resolution: "read-pkg@npm:7.1.0"
-  dependencies:
-    "@types/normalize-package-data": "npm:^2.4.1"
-    normalize-package-data: "npm:^3.0.2"
-    parse-json: "npm:^5.2.0"
-    type-fest: "npm:^2.0.0"
-  checksum: 10/20d11c59be3ae1fc79d4b9c8594dabeaec58105f9dfd710570ef9690ec2ac929247006e79ca114257683228663199735d60f149948dbc5f34fcd2d28883ab5f7
   languageName: node
   linkType: hard
 
@@ -15595,13 +15563,6 @@ __metadata:
   version: 1.4.0
   resolution: "type-fest@npm:1.4.0"
   checksum: 10/89875c247564601c2650bacad5ff80b859007fbdb6c9e43713ae3ffa3f584552eea60f33711dd762e16496a1ab4debd409822627be14097d9a17e39c49db591a
-  languageName: node
-  linkType: hard
-
-"type-fest@npm:^2.0.0, type-fest@npm:^2.5.0":
-  version: 2.12.1
-  resolution: "type-fest@npm:2.12.1"
-  checksum: 10/88be3a1ae7c5f8b8b7a8b0488704a78a83bc11f55529f972ef2ae4533694ae8a80a828610d23c23d92cb5b4c85adc21fa25ac6e43b1cf86817b088df5bbe5230
   languageName: node
   linkType: hard
 

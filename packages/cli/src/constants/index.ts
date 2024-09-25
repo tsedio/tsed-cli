@@ -1,7 +1,7 @@
 import {dirname, join} from "path";
-import readPkgUp from "read-pkg-up";
+import {readPackageUpSync} from "read-pkg-up";
 
-const {path, packageJson} = readPkgUp.sync({
+const {path, packageJson} = readPackageUpSync({
   cwd: join(import.meta.dirname, "..", "..")
 })!;
 
