@@ -2531,7 +2531,6 @@ __metadata:
     concurrently: "npm:9.0.1"
     consolidate: "npm:1.0.4"
     cross-env: "npm:7.0.3"
-    entities: "npm:1.1.2"
     eslint: "npm:9.11.1"
     eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-prettier: "npm:5.2.1"
@@ -6340,13 +6339,6 @@ __metadata:
   version: 2.2.0
   resolution: "ent@npm:2.2.0"
   checksum: 10/818a2b5f5039ea02c9e232ba4c7496ced8512341b2524ae7c6c808d2e2b357d8087e715e0e3950cec9895c20c9b3443e0b56a2e26879984d97bb511c5fbb5299
-  languageName: node
-  linkType: hard
-
-"entities@npm:1.1.2":
-  version: 1.1.2
-  resolution: "entities@npm:1.1.2"
-  checksum: 10/4a707022f4e932060f03df2526be55d085a2576fe534421e5b22bc62abb0d1f04241c171f9981e3d7baa4f4160606cad72a2f7eb01b6a25e279e3f31a2be4bf2
   languageName: node
   linkType: hard
 
