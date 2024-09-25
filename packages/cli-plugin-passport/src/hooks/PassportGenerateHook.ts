@@ -1,7 +1,7 @@
 import {type GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
 import {Inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, type Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
-import {paramCase} from "change-case";
+import {kebabCase} from "change-case";
 
 import {PassportClient} from "../services/PassportClient.js";
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
@@ -90,7 +90,7 @@ export class PassportGenerateHook {
   private mapOptions(options: PassportGenerateOptions) {
     return {
       ...options,
-      protocolName: paramCase(options.name),
+      protocolName: kebabCase(options.name),
       passportPackage: options.passportPackage
     };
   }
