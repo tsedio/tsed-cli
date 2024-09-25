@@ -1,7 +1,7 @@
 import {type CliDefaultOptions, Command, type CommandProvider, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
+import {normalizePath} from "@tsed/normalize-path";
 import {paramCase, pascalCase} from "change-case";
 import globby from "globby";
-import normalizePath from "normalize-path";
 import {basename, dirname, join} from "path";
 
 import {ProjectConvention} from "../../interfaces/ProjectConvention.js";

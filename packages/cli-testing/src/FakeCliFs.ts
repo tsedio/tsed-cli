@@ -1,7 +1,7 @@
 import {isString} from "@tsed/core";
 import type {PathLike} from "fs";
 import * as fs from "fs";
-import type {EnsureOptions, WriteFileOptions} from "fs-extra";
+import type {EnsureDirOptions, WriteFileOptions} from "fs-extra";
 
 import {normalizePath} from "./normalizePath.js";
 
@@ -55,12 +55,12 @@ export class FakeCliFs {
     FakeCliFs.entries.set(normalizePath(file), data);
   }
 
-  ensureDir(path: string, options?: EnsureOptions | number): Promise<void> {
+  ensureDir(path: string, options?: EnsureDirOptions | number): Promise<void> {
     FakeCliFs.entries.set(normalizePath(path), path);
     return Promise.resolve();
   }
 
-  ensureDirSync(path: string, options?: EnsureOptions | number) {
+  ensureDirSync(path: string, options?: EnsureDirOptions | number) {
     FakeCliFs.entries.set(normalizePath(path), path);
   }
 

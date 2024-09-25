@@ -51,7 +51,6 @@ describe("TypeORM: Init cmd", () => {
 
     expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
       [
-        "./project-name",
         "project-name",
         "project-name/.barrels.json",
         "project-name/.dockerignore",
@@ -128,7 +127,6 @@ describe("TypeORM: Init cmd", () => {
 
     expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
       [
-        "./project-name",
         "project-name",
         "project-name/.barrels.json",
         "project-name/.dockerignore",

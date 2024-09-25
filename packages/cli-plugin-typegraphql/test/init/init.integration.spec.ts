@@ -33,7 +33,6 @@ describe("Init TypeGraphQL project", () => {
 
     expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
       [
-        "./project-name",
         "project-name",
         "project-name/.barrels.json",
         "project-name/.dockerignore",

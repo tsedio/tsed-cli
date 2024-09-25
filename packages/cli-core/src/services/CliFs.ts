@@ -1,7 +1,7 @@
 import {Injectable} from "@tsed/di";
 import {normalizePath} from "@tsed/normalize-path";
 import type {PathLike, WriteFileOptions} from "fs";
-import Fs, {type EnsureOptions} from "fs-extra";
+import Fs, {type EnsureDirOptions} from "fs-extra";
 import {join} from "path";
 
 @Injectable()
@@ -48,11 +48,11 @@ export class CliFs {
     return this.raw.writeFile(file, data, options as any);
   }
 
-  ensureDir(path: string, options?: EnsureOptions | number) {
+  ensureDir(path: string, options?: EnsureDirOptions | number) {
     return this.raw.ensureDir(path, options);
   }
 
-  ensureDirSync(path: string, options?: EnsureOptions | number): void {
+  ensureDirSync(path: string, options?: EnsureDirOptions | number): void {
     return this.raw.ensureDirSync(path, options);
   }
 

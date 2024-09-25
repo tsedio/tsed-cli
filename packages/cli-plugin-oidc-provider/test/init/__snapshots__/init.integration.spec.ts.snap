@@ -2,7 +2,6 @@
 
 exports[`Init OIDC Provider project > should generate a project with oidc 1`] = `
 [
-  "./project-name",
   "project-name",
   "project-name/.barrels.json",
   "project-name/.dockerignore",
@@ -120,7 +119,6 @@ export class Server {
 
 exports[`Init OIDC Provider project > should generate a project with oidc and swagger 1`] = `
 [
-  "./project-name",
   "project-name",
   "project-name/.barrels.json",
   "project-name/.dockerignore",

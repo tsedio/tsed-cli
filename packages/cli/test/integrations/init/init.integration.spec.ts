@@ -39,7 +39,6 @@ describe("Init cmd", () => {
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
         [
-          "./project-name",
           "project-name",
           "project-name/.barrels.json",
           "project-name/.dockerignore",
@@ -144,7 +143,6 @@ describe("Init cmd", () => {
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
         [
-          "./project-name",
           "project-name",
           "project-name/.barrels.json",
           "project-name/.dockerignore",
@@ -244,7 +242,6 @@ describe("Init cmd", () => {
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
         [
-          "./project-name",
           "project-name",
           "project-name/.barrels.json",
           "project-name/.dockerignore",
@@ -336,7 +333,6 @@ describe("Init cmd", () => {
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
         [
-          "./project-name",
           "project-name",
           "project-name/.babelrc",
           "project-name/.barrels.json",
@@ -429,7 +425,6 @@ describe("Init cmd", () => {
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
         [
-          "./project-name",
           "project-name",
           "project-name/.babelrc",
           "project-name/.barrels.json",
@@ -523,7 +518,6 @@ describe("Init cmd", () => {
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
         [
-          "./project-name",
           "project-name",
           "project-name/.barrels.json",
           "project-name/.dockerignore",
@@ -621,7 +615,6 @@ describe("Init cmd", () => {
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
         [
-          "./project-name",
           "project-name",
           "project-name/.barrels.json",
           "project-name/.dockerignore",
@@ -688,7 +681,6 @@ describe("Init cmd", () => {
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
         [
-          "./project-name",
           "project-name",
           "project-name/.barrels.json",
           "project-name/.dockerignore",
@@ -754,7 +746,6 @@ describe("Init cmd", () => {
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
         [
-          "./project-name",
           "project-name",
           "project-name/.barrels.json",
           "project-name/.dockerignore",
@@ -863,7 +854,6 @@ describe("Init cmd", () => {
 
       expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
         [
-          "./project-name",
           "project-name",
           "project-name/.barrels.json",
           "project-name/.dockerignore",
