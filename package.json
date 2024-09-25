@@ -80,7 +80,7 @@
     "@tsed/markdown-it-symbols": "3.20.4",
     "@tsed/monorepo-utils": "2.3.5",
     "@tsed/ts-doc": "^4.1.0",
-    "@types/node": "20.14.8",
+    "@types/node": "22.7.0",
     "@typescript-eslint/eslint-plugin": "8.5.0",
     "@typescript-eslint/parser": "8.5.0",
     "@vitest/coverage-v8": "^2.1.1",
