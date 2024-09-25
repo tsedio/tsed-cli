@@ -71,7 +71,7 @@
     "@tsed/logger": ">=6.2.1",
     "@tsed/openspec": ">=7.14.2",
     "@tsed/schema": ">=7.14.2",
-    "chalk": "4.1.2",
+    "chalk": "5.3.0",
     "change-case": "4.1.2",
     "esm-module-alias": "^2.2.1",
     "globby": "11.1.0",
