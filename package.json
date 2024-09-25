@@ -55,7 +55,7 @@
     "commander": "9.3.0",
     "consolidate": "1.0.4",
     "execa": "5.1.1",
-    "figures": "4.0.1",
+    "figures": "6.1.0",
     "fs-extra": "11.1.0",
     "handlebars": "4.7.8",
     "handlebars-helpers": "0.10.0",

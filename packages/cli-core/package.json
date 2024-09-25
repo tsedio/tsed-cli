@@ -45,7 +45,7 @@
     "create-frame": "1.0.0",
     "enquirer": "2.4.1",
     "execa": "5.1.1",
-    "figures": "4.0.1",
+    "figures": "6.1.0",
     "fs-extra": "11.1.0",
     "globby": "11.1.0",
     "handlebars": "4.7.8",

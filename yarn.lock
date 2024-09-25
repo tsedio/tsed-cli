@@ -2291,7 +2291,7 @@ __metadata:
     deps: "npm:^1.0.0"
     enquirer: "npm:2.4.1"
     execa: "npm:5.1.1"
-    figures: "npm:4.0.1"
+    figures: "npm:6.1.0"
     fs-extra: "npm:11.1.0"
     globby: "npm:11.1.0"
     handlebars: "npm:4.7.8"
@@ -2539,7 +2539,7 @@ __metadata:
     eslint-plugin-vitest: "npm:^0.5.4"
     eslint-plugin-workspaces: "npm:0.10.1"
     execa: "npm:5.1.1"
-    figures: "npm:4.0.1"
+    figures: "npm:6.1.0"
     fs-extra: "npm:11.1.0"
     gflow: "npm:^5.1.4"
     handlebars: "npm:4.7.8"
@@ -7111,7 +7111,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"figures@npm:*, figures@npm:4.0.1":
+"figures@npm:*":
   version: 4.0.1
   resolution: "figures@npm:4.0.1"
   dependencies:
@@ -7127,6 +7127,15 @@ __metadata:
   dependencies:
     escape-string-regexp: "npm:^1.0.5"
   checksum: 10/a3bf94e001be51d3770500789157f067218d4bc681a65e1f69d482de15120bcac822dceb1a7b3803f32e4e3a61a46df44f7f2c8ba95d6375e7491502e0dd3d97
+  languageName: node
+  linkType: hard
+
+"figures@npm:6.1.0, figures@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "figures@npm:6.1.0"
+  dependencies:
+    is-unicode-supported: "npm:^2.0.0"
+  checksum: 10/9822d13630bee8e6a9f2da866713adf13854b07e0bfde042defa8bba32d47a1c0b2afa627ce73837c674cf9a5e3edce7e879ea72cb9ea7960b2390432d8e1167
   languageName: node
   linkType: hard
 
@@ -7155,15 +7164,6 @@ __metadata:
   dependencies:
     escape-string-regexp: "npm:^1.0.5"
   checksum: 10/0e5bba8d2b8847c6844a476113d8d283af8757143d7760cc1a5422cceec5e8dd68c15ba50e0847597bc2c4e3865711657aeef394478c6ddce8aed7e0cd18beca
-  languageName: node
-  linkType: hard
-
-"figures@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "figures@npm:6.1.0"
-  dependencies:
-    is-unicode-supported: "npm:^2.0.0"
-  checksum: 10/9822d13630bee8e6a9f2da866713adf13854b07e0bfde042defa8bba32d47a1c0b2afa627ce73837c674cf9a5e3edce7e879ea72cb9ea7960b2390432d8e1167
   languageName: node
   linkType: hard
 
