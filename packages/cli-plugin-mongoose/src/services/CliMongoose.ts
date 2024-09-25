@@ -1,5 +1,5 @@
 import {Inject, Injectable, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
-import {camelCase, constantCase, paramCase} from "change-case";
+import {camelCase, constantCase, kebabCase} from "change-case";
 import {basename, join} from "path";
 
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
@@ -18,10 +18,10 @@ export class CliMongoose {
       {
         ...options,
         symbolName: constantCase(name),
-        name: paramCase(name)
+        name: kebabCase(name)
       },
       {
-        output: `${paramCase(name)}.config.ts`,
+        output: `${kebabCase(name)}.config.ts`,
         rootDir: join(this.srcRenderer.rootDir, "config", "mongoose"),
         templateDir: TEMPLATE_DIR
       }

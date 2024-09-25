@@ -1,75 +1,46 @@
 // @ts-ignore
 import {isFunction} from "@tsed/core";
-import {Listr, type ListrTaskWrapper, Logger} from "listr2";
+import {DefaultRenderer, Listr, ListrLogger, type ListrTaskWrapper, type LoggerFieldOptions, VerboseRenderer} from "listr2";
 
 import type {TaskOptions, Tasks} from "../interfaces/Tasks.js";
 import {getLogger} from "./createInjector.js";
 
-class CustomLogger extends Logger {
-  fail(message: string) {
-    getLogger()?.error("[FAIL]", message);
-  }
-
-  skip(message: string) {
-    getLogger()?.info("[SKIP]", message);
-  }
-
-  success(message: string) {
-    getLogger()?.info("[SUCCESS]", message);
-  }
-
-  data(message: string) {
-    getLogger()?.info("[DATA]", message);
-  }
-
-  start(message: string) {
-    getLogger()?.info("[START]", message);
-  }
-
-  title(message: string) {
-    getLogger()?.info("[TITLE]", message);
-  }
-
-  retry(message: string) {
-    getLogger()?.info("[RETRY]", message);
-  }
-
-  rollback(message: string) {
-    getLogger()?.info("[ROLLBACK]", message);
+class CustomLogger extends ListrLogger {
+  log(level: string, message: string | any[], options?: LoggerFieldOptions) {
+    if (["FAILED"].includes(level)) {
+      getLogger()?.error(`[${level}]`, message);
+    } else {
+      getLogger()?.info(`[${level}]`, message);
+    }
   }
 }
 
-function getOptions({bindLogger = true, ...ctx}: TaskOptions): any {
+function getOptions({bindLogger = true, ...ctx}: TaskOptions) {
   const useRawRenderer = !(!ctx.verbose && !process.env.CI);
-  const rendererOptions =
-    useRawRenderer && bindLogger
-      ? {
-          logger: CustomLogger
-        }
-      : {};
+
   return {
-    ...ctx,
-    rendererSilent: process.env.NODE_ENV === "test",
-    rendererFallback: useRawRenderer,
-    renderer: useRawRenderer ? "verbose" : "default",
-    nonTTYRendererOptions: rendererOptions,
-    rendererOptions
+    silentRendererCondition: process.env.NODE_ENV === "test",
+    renderer: useRawRenderer ? VerboseRenderer : DefaultRenderer,
+    rendererOptions:
+      useRawRenderer && bindLogger
+        ? {
+            logger: CustomLogger as never
+          }
+        : undefined
   };
 }
 
 export function createTasks(tasks: Tasks, ctx: TaskOptions) {
-  return new Listr(tasks as any, getOptions(ctx));
+  return new Listr(tasks, getOptions(ctx));
 }
 
 export function createSubTasks(tasks: Tasks | ((ctx: any, task: any) => Tasks | Promise<Tasks>), opts: TaskOptions) {
-  opts = getOptions(opts);
-
-  return async (ctx: any, task: ListrTaskWrapper<any, any>) => {
+  return async (ctx: any, task: ListrTaskWrapper<any, any, any>) => {
     if (isFunction(tasks)) {
       tasks = await tasks(ctx, task);
     }
 
-    return task.newListr(tasks, opts);
+    return task.newListr(tasks, getOptions(opts));
   };
 }
 

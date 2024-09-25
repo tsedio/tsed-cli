@@ -1,7 +1,7 @@
 import {type GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
 import {CliDockerComposeYaml, Inject, OnExec, ProjectPackageJson, SrcRendererService, type Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
-import {camelCase, paramCase} from "change-case";
+import {camelCase, kebabCase} from "change-case";
 // @ts-ignore
 import {plural} from "pluralize";
 
@@ -90,7 +90,7 @@ export class MongooseGenerateHook {
   private generateConnection(ctx: GenerateCmdContext) {
     return [
       {
-        title: `Generate Mongoose configuration file to '${paramCase(ctx.name)}.config.ts'`,
+        title: `Generate Mongoose configuration file to '${kebabCase(ctx.name)}.config.ts'`,
         task: () => this.cliMongoose.writeConfig(ctx.name, ctx)
       },
       {
