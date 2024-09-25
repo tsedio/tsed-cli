@@ -1,11 +1,11 @@
 import {Inject} from "@tsed/di";
-import execa from "execa";
+import type {Options, SyncOptions} from "execa";
 import {Observable} from "rxjs";
 
 import {CliExeca} from "../../services/CliExeca.js";
 
-export type ManagerCmdOpts = {verbose?: boolean} & execa.Options;
-export type ManagerCmdSyncOpts = {verbose?: boolean} & execa.SyncOptions;
+export type ManagerCmdOpts = {verbose?: boolean} & Omit<Options, "verbose">;
+export type ManagerCmdSyncOpts = {verbose?: boolean} & Omit<SyncOptions, "verbose">;
 
 export abstract class BaseManager {
   abstract readonly name: string;
@@ -26,7 +26,7 @@ export abstract class BaseManager {
     }
   }
 
-  async init(opts: ManagerCmdSyncOpts): Promise<void> {}
+  async init(opts: ManagerCmdOpts): Promise<void> {}
 
   abstract install(options: ManagerCmdOpts): Observable<any>;
 
@@ -38,7 +38,10 @@ export abstract class BaseManager {
     return this.run("run", [script], options);
   }
 
-  run(cmd: string, args: any[], options: {verbose?: boolean} & execa.Options<string>) {
-    return this.cliExeca.run(this.cmd, [cmd, options.verbose && this.verboseOpt, ...args].filter(Boolean) as string[], options);
+  run(cmd: string, args: any[], options: ManagerCmdOpts) {
+    return this.cliExeca.run(this.cmd, [cmd, options.verbose && this.verboseOpt, ...args].filter(Boolean) as string[], {
+      ...options,
+      verbose: options.verbose ? "full" : undefined
+    });
   }
 }

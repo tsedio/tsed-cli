@@ -71,13 +71,13 @@
     "@tsed/logger": ">=6.2.1",
     "@tsed/openspec": ">=7.14.2",
     "@tsed/schema": ">=7.14.2",
-    "chalk": "5.3.0",
-    "change-case": "5.4.4",
+    "chalk": "^5.3.0",
+    "change-case": "^5.4.4",
     "esm-module-alias": "^2.2.1",
-    "globby": "11.1.0",
-    "read-pkg-up": "7.0.1",
+    "globby": "^11.1.0",
+    "read-pkg-up": "^7.0.1",
     "semver": "^7.6.3",
-    "tslib": "2.3.1"
+    "tslib": "^2.3.1"
   },
   "devDependencies": {
     "@tsed/typescript": "workspace:*",

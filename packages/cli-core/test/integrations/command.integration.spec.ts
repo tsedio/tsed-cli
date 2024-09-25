@@ -1,6 +1,6 @@
-import execa from "execa";
+import {execa} from "execa";
 
-import {CliCore, Command, CommandProvider, Tasks} from "../../src/index.js";
+import {CliCore, Command, type CommandProvider, type Tasks} from "../../src/index.js";
 
 vi.mock("execa");
 

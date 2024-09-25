@@ -1,11 +1,10 @@
 import {Inject, Injectable} from "@tsed/di";
-import type {Options} from "execa";
 import {EMPTY, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 
 import {ProjectPackageJson} from "../services/ProjectPackageJson.js";
 import {isValidVersion} from "../utils/isValidVersion.js";
-import {BaseManager} from "./supports/BaseManager.js";
+import {BaseManager, type ManagerCmdOpts} from "./supports/BaseManager.js";
 import {BunManager} from "./supports/BunManager.js";
 import {NpmManager} from "./supports/NpmManager.js";
 import {PNpmManager} from "./supports/PNpmManager.js";
@@ -146,7 +145,7 @@ export class PackageManagersModule {
       ...opts
     }: {
       ignoreError?: boolean;
-    } & Options &
+    } & ManagerCmdOpts &
       Record<string, any> = {}
   ) {
     const options = {

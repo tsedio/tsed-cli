@@ -1,5 +1,5 @@
 import {normalizePath} from "@tsed/normalize-path";
-import execa from "execa";
+import {execa} from "execa";
 
 import {CliCore} from "./CliCore.js";
 import {CliService} from "./services/index.js";

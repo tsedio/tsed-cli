@@ -1,6 +1,6 @@
 import {Injectable} from "@tsed/di";
 import type {Options, SyncOptions} from "execa";
-import execa from "execa";
+import {execa, execaSync} from "execa";
 import {filter, mergeWith} from "rxjs/operators";
 // @ts-ignore
 import split from "split";
@@ -10,6 +10,7 @@ import {streamToObservable} from "../utils/streamToObservable.js";
 @Injectable()
 export class CliExeca {
   readonly raw = execa;
+  readonly rawSync = execaSync;
 
   /**
    *
@@ -26,14 +27,14 @@ export class CliExeca {
   }
 
   runSync(cmd: string, args: string[], opts?: SyncOptions) {
-    return this.raw.sync(cmd, args, opts);
+    return this.rawSync(cmd, args, opts);
   }
 
-  async getAsync(cmd: string, args: string[], opts?: SyncOptions) {
+  async getAsync(cmd: string | URL, args: readonly string[], opts?: Options) {
     return (await this.raw(cmd, args, opts)).stdout;
   }
 
   get(cmd: string, args: string[], opts?: SyncOptions) {
-    return this.raw.sync(cmd, args, opts).stdout;
+    return this.rawSync(cmd, args, opts).stdout;
   }
 }
