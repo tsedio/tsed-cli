@@ -1,6 +1,6 @@
 import {type CliDefaultOptions, Command, type CommandProvider, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
 import {normalizePath} from "@tsed/normalize-path";
-import {paramCase, pascalCase} from "change-case";
+import {kebabCase, pascalCase} from "change-case";
 import globby from "globby";
 import {basename, dirname, join} from "path";
 
@@ -207,7 +207,7 @@ export class GenerateCmd implements CommandProvider {
     }
 
     const symbolName = this.classNamePipe.transform({name, type, format: ProjectConvention.DEFAULT});
-    const symbolParamName = paramCase(symbolName);
+    const symbolParamName = kebabCase(symbolName);
 
     return fillImports({
       ...ctx,

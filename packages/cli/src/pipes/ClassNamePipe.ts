@@ -1,6 +1,6 @@
 import {Injectable, ProjectPackageJson} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
-import {paramCase, pascalCase} from "change-case";
+import {kebabCase, pascalCase} from "change-case";
 import {basename} from "path";
 
 import {ProjectConvention} from "../interfaces/ProjectConvention.js";
@@ -19,7 +19,7 @@ export class ClassNamePipe {
 
     const meta = this.providers.get(options.type)?.model || "{{symbolName}}.{{symbolType}}?";
     const type = options.type.split(":").at(-1)!;
-    const symbolName = paramCase(basename(options.name)).replace(`-${type}`, "");
+    const symbolName = kebabCase(basename(options.name)).replace(`-${type}`, "");
 
     const names = meta.split(".").reduce((acc: Set<string>, key: string) => {
       return key

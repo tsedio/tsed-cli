@@ -2325,7 +2325,7 @@ __metadata:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
     "@tsed/typescript": "workspace:*"
-    change-case: "npm:4.1.2"
+    change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
     swagger-typescript-api: "npm:^9.3.1"
     tslib: "npm:2.3.1"
@@ -2350,7 +2350,7 @@ __metadata:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
     "@tsed/typescript": "workspace:*"
-    change-case: "npm:4.1.2"
+    change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.3.1"
     typescript: "npm:5.6.2"
@@ -2401,7 +2401,7 @@ __metadata:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
     "@tsed/typescript": "workspace:*"
-    change-case: "npm:4.1.2"
+    change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
     pluralize: "npm:8.0.0"
     tslib: "npm:2.3.1"
@@ -2450,7 +2450,7 @@ __metadata:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
     "@tsed/typescript": "workspace:*"
-    change-case: "npm:4.1.2"
+    change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.3.1"
     typescript: "npm:5.6.2"
@@ -2482,7 +2482,7 @@ __metadata:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
     "@tsed/typescript": "workspace:*"
-    change-case: "npm:4.1.2"
+    change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.3.1"
     typescript: "npm:5.6.2"
@@ -2599,7 +2599,7 @@ __metadata:
     "@tsed/typescript": "workspace:*"
     "@types/change-case": "npm:^2.3.1"
     chalk: "npm:5.3.0"
-    change-case: "npm:4.1.2"
+    change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
     esm-module-alias: "npm:^2.2.1"
     globby: "npm:11.1.0"
@@ -4712,7 +4712,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"change-case@npm:*, change-case@npm:4.1.2, change-case@npm:^4.1.2":
+"change-case@npm:*, change-case@npm:^4.1.2":
   version: 4.1.2
   resolution: "change-case@npm:4.1.2"
   dependencies:
@@ -4732,7 +4732,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"change-case@npm:^5.4.4":
+"change-case@npm:5.4.4, change-case@npm:^5.4.4":
   version: 5.4.4
   resolution: "change-case@npm:5.4.4"
   checksum: 10/446e5573f3c854290a91292afef92b957d2e43a928260c91989b482aa860caaa29711b6725fc40c200af68061cbab357b033446d16a17bc5c553636994074e92

@@ -18,7 +18,7 @@ import {
   RootRendererService,
   type Task
 } from "@tsed/cli-core";
-import {paramCase, pascalCase} from "change-case";
+import {kebabCase, pascalCase} from "change-case";
 import {basename, join} from "path";
 
 import {DEFAULT_TSED_TAGS} from "../../constants/index.js";
@@ -206,10 +206,10 @@ export class InitCmd implements CommandProvider {
         type: "input",
         name: "projectName",
         message: "What is your project name",
-        default: paramCase(initialOptions.root!),
+        default: kebabCase(initialOptions.root!),
         when: initialOptions.root !== ".",
         transformer(input: string) {
-          return paramCase(input);
+          return kebabCase(input);
         }
       },
       ...getFeaturesPrompt(
@@ -349,7 +349,7 @@ export class InitCmd implements CommandProvider {
   }
 
   resolveRootDir(ctx: Partial<InitCmdContext>) {
-    const rootDirName = paramCase(ctx.projectName || basename(this.packageJson.dir));
+    const rootDirName = kebabCase(ctx.projectName || basename(this.packageJson.dir));
 
     if (this.packageJson.dir.endsWith(rootDirName)) {
       ctx.projectName = ctx.projectName || rootDirName;
