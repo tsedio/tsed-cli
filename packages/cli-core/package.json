@@ -31,7 +31,7 @@
     "listr"
   ],
   "dependencies": {
-    "@npmcli/run-script": "3.0.1",
+    "@npmcli/run-script": "8.1.0",
     "@tsed/logger": ">=6.1.1",
     "@tsed/normalize-path": ">=7.14.2",
     "@types/fs-extra": "^9.0.13",
