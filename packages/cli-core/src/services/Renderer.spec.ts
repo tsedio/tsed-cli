@@ -3,7 +3,7 @@ import {join} from "node:path";
 // @ts-ignore
 import {FakeCliFs, normalizePath} from "@tsed/cli-testing";
 import Consolidate from "consolidate";
-import globby from "globby";
+import {globby} from "globby";
 import handlebars from "handlebars";
 
 import {getTemplateDirectory} from "../utils/index.js";

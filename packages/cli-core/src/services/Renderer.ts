@@ -5,7 +5,7 @@ import {Configuration, Constant, Inject, Injectable} from "@tsed/di";
 import {normalizePath} from "@tsed/normalize-path";
 import Consolidate from "consolidate";
 import fs from "fs-extra";
-import globby from "globby";
+import {globby} from "globby";
 import handlebars from "handlebars";
 import {basename, dirname, join, relative} from "path";
 import {Observable} from "rxjs";

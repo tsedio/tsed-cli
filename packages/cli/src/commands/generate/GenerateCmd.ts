@@ -1,7 +1,7 @@
 import {type CliDefaultOptions, Command, type CommandProvider, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
 import {normalizePath} from "@tsed/normalize-path";
 import {kebabCase, pascalCase} from "change-case";
-import globby from "globby";
+import {globbySync} from "globby";
 import {basename, dirname, join} from "path";
 
 import {ProjectConvention} from "../../interfaces/ProjectConvention.js";
@@ -269,7 +269,7 @@ export class GenerateCmd implements CommandProvider {
   }
 
   getDirectories(dir: string) {
-    const directories = globby.sync("**/*", {
+    const directories = globbySync("**/*", {
       cwd: join(this.srcRenderService.rootDir, dir),
       ignore: ["__*"]
     });

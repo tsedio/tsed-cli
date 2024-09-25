@@ -2293,7 +2293,7 @@ __metadata:
     execa: "npm:^9.4.0"
     figures: "npm:^6.1.0"
     fs-extra: "npm:^11.2.0"
-    globby: "npm:^11.1.0"
+    globby: "npm:^14.0.2"
     handlebars: "npm:^4.7.8"
     handlebars-utils: "npm:^1.0.6"
     inquirer: "npm:^8.2.6"
@@ -2601,7 +2601,7 @@ __metadata:
     change-case: "npm:^5.4.4"
     cross-env: "npm:7.0.3"
     esm-module-alias: "npm:^2.2.1"
-    globby: "npm:^11.1.0"
+    globby: "npm:^14.0.2"
     read-pkg-up: "npm:^7.0.1"
     semver: "npm:^7.6.3"
     tslib: "npm:^2.3.1"
@@ -7921,7 +7921,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globby@npm:14.0.2":
+"globby@npm:14.0.2, globby@npm:^14.0.2":
   version: 14.0.2
   resolution: "globby@npm:14.0.2"
   dependencies:
