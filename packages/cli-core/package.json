@@ -44,7 +44,7 @@
     "consolidate": "^1.0.4",
     "create-frame": "^1.0.0",
     "enquirer": "^2.4.1",
-    "execa": "^9.4.0",
+    "execa": "^8.0.1",
     "figures": "^6.1.0",
     "fs-extra": "^11.2.0",
     "globby": "^14.0.2",

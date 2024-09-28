@@ -30,7 +30,7 @@ export class CliExeca {
     return this.rawSync(cmd, args, opts);
   }
 
-  async getAsync(cmd: string | URL, args: readonly string[], opts?: Options) {
+  async getAsync(cmd: string, args: readonly string[], opts?: Options) {
     return (await this.raw(cmd, args, opts)).stdout;
   }
 

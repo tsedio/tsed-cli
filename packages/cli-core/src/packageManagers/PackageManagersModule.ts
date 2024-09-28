@@ -95,17 +95,17 @@ export class PackageManagersModule {
       {
         title: `Installing dependencies using ${packageManager.name}`,
         skip: () => !this.projectPackageJson.reinstall,
-        task: () => packageManager.install(options as any).pipe(errorPipe())
+        task: () => packageManager.install(options as any) // .pipe(errorPipe())
       },
       {
         title: `Add dependencies using ${packageManager.name}`,
         skip: () => !deps.length,
-        task: () => packageManager.add(deps, options as any).pipe(errorPipe())
+        task: () => packageManager.add(deps, options as any) //.pipe(errorPipe())
       },
       {
         title: `Add devDependencies using ${packageManager.name}`,
         skip: () => !devDeps.length,
-        task: () => packageManager.addDev(devDeps, options as any).pipe(errorPipe())
+        task: () => packageManager.addDev(devDeps, options as any) //.pipe(errorPipe())
       },
       {
         title: "Refresh",

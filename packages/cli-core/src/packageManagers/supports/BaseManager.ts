@@ -39,9 +39,6 @@ export abstract class BaseManager {
   }
 
   run(cmd: string, args: any[], options: ManagerCmdOpts) {
-    return this.cliExeca.run(this.cmd, [cmd, options.verbose && this.verboseOpt, ...args].filter(Boolean) as string[], {
-      ...options,
-      verbose: options.verbose ? "full" : undefined
-    });
+    return this.cliExeca.run(this.cmd, [cmd, options.verbose && this.verboseOpt, ...args].filter(Boolean) as string[], options);
   }
 }

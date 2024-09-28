@@ -24,7 +24,7 @@ function getOptions({bindLogger = true, ...ctx}: TaskOptions) {
     rendererOptions:
       useRawRenderer && bindLogger
         ? {
-            logger: CustomLogger as never
+            logger: new CustomLogger() as never
           }
         : undefined
   };
@@ -40,7 +40,7 @@ export function createSubTasks(tasks: Tasks | ((ctx: any, task: any) => Tasks | 
       tasks = await tasks(ctx, task);
     }
 
-    return task.newListr(tasks, getOptions(opts));
+    return task.newListr(tasks, getOptions(opts) as never);
   };
 }
 
