@@ -29,7 +29,7 @@
     "@tsed/cli-core": "workspace:*",
     "@tsed/typescript": "workspace:*",
     "cross-env": "7.0.3",
-    "swagger-typescript-api": "^9.3.1",
+    "swagger-typescript-api": "^13.0.22",
     "typescript": "5.6.2",
     "vitest": "2.1.1"
   },

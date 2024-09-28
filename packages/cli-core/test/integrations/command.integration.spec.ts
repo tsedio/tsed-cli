@@ -13,7 +13,7 @@ describe("Command", () => {
       name: "test",
       description: "Command description",
       args: {
-        command: {
+        argument: {
           type: String,
           description: "Arg description"
         }
@@ -41,7 +41,7 @@ describe("Command", () => {
 
     expect(TestCommand.prototype.$exec).toHaveBeenCalledWith({
       bindLogger: true,
-      command: "subcmd",
+      argument: "subcmd",
       rawArgs: [],
       rootDir: undefined,
       verbose: false

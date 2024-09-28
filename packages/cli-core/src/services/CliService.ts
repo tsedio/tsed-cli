@@ -13,8 +13,8 @@ import type {CommandProvider} from "../interfaces/CommandProvider.js";
 import {PackageManagersModule} from "../packageManagers/index.js";
 import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner.js";
 import {getCommandMetadata} from "../utils/getCommandMetadata.js";
+import {mapCommanderOptions} from "../utils/index.js";
 import {mapCommanderArgs} from "../utils/mapCommanderArgs.js";
-import {mapCommanderOptions} from "../utils/mapCommanderOptions.js";
 import {parseOption} from "../utils/parseOption.js";
 import {CliHooks} from "./CliHooks.js";
 import {ProjectPackageJson} from "./ProjectPackageJson.js";
@@ -196,10 +196,13 @@ export class CliService {
 
     let cmd = this.program.command(name);
 
-    const onAction = (...commanderArgs: any[]) => {
+    const onAction = (commandName: string) => {
       const [, ...rawArgs] = cmd.args;
-      const mappedArgs = mapCommanderArgs(args, commanderArgs);
-      const allOpts = mapCommanderOptions(this.program.commands);
+      const mappedArgs = mapCommanderArgs(
+        args,
+        this.program.args.filter((arg) => commandName === arg)
+      );
+      const allOpts = mapCommanderOptions(commandName, this.program.commands);
 
       const data = {
         ...allOpts,
