@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "@swc-node/register": "^1.10.9",
-    "@swc/core": "^1.7.28",
+    "@swc/core": "1.7.26",
     "@swc/helpers": "^0.5.13",
     "@tsed/cli-core": "workspace:*",
     "@tsed/core": ">=7.14.2",
