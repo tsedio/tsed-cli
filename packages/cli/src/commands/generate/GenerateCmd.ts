@@ -63,7 +63,7 @@ const searchFactory = (list: any) => {
     }
   },
   options: {
-    "-r, --route <route>": {
+    "--route <route>": {
       type: String,
       description: "The route for the controller generated file"
     },

@@ -143,8 +143,9 @@ export class GenerateHttpClientCmd implements CommandProvider {
       }
     } as any);
 
-    const promises = files.map(({content, name}) => {
-      content = content
+    const promises = files.map((file) => {
+      const name = file.fileName;
+      file.fileContent = file.fileContent
         .replace("class Api", `class ${$ctx.name}`)
         .replace(".then((response) => response.data)", ".then((response) => response.data as T)")
         .replace('requestParams.headers.common = { Accept: "*/*" };', "")
@@ -153,7 +154,7 @@ export class GenerateHttpClientCmd implements CommandProvider {
         .replace("(this.instance.defaults.headers || {})", "((this.instance.defaults.headers || {}) as any)");
 
       console.log(`${$ctx.output}/${name}`, path.resolve(`${$ctx.output}/${name}`));
-      return this.fs.writeFile(`${$ctx.output}/${name}`, content, {encoding: "utf8"});
+      return this.fs.writeFile(`${$ctx.output}/${name}`, file.fileContent, {encoding: "utf8"});
     });
 
     return Promise.all(promises);
