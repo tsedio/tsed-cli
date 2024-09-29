@@ -19,7 +19,7 @@
 npm install -g @tsed/barrels
 ```
 
-Then create a `barrels.json` configuration:
+Then create a `.barrels.json` configuration:
 
 ```
 {

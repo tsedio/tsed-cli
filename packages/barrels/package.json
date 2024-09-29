@@ -4,7 +4,6 @@
   "version": "6.0.0-alpha.10",
   "type": "module",
   "bin": "bin/barrels.js",
-  "files": [],
   "keywords": [
     "Ts.ED",
     "barrels"
@@ -14,5 +13,8 @@
   },
   "dependencies": {
     "globby": "14.0.2"
+  },
+  "scripts": {
+    "test": "node --test test/barrels.integration.spec.js"
   }
 }
