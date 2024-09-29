@@ -613,6 +613,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@inquirer/figures@npm:^1.0.3":
+  version: 1.0.6
+  resolution: "@inquirer/figures@npm:1.0.6"
+  checksum: 10/1b9023d331c41f09d0848b8920885d535cdaf52edd782009e003b2f3b2df6a6a6a26fb8ecd05eb3c3df3df9d080e042ca525438a1513cdcc4410f3eefce3e4e0
+  languageName: node
+  linkType: hard
+
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -2302,7 +2309,7 @@ __metadata:
     "@types/figures": "npm:3.0.1"
     "@types/fs-extra": "npm:^11.0.4"
     "@types/globby": "npm:9.1.0"
-    "@types/inquirer": "npm:9.0.7"
+    "@types/inquirer": "npm:^9.0.7"
     "@types/js-yaml": "npm:4.0.9"
     "@types/semver": "npm:7.5.8"
     "@types/tunnel": "npm:0.0.7"
@@ -2325,8 +2332,8 @@ __metadata:
     globby: "npm:^14.0.2"
     handlebars: "npm:^4.7.8"
     handlebars-utils: "npm:^1.0.6"
-    inquirer: "npm:^8.2.6"
-    inquirer-autocomplete-prompt: "npm:^2.0.1"
+    inquirer: "npm:^9.3.7"
+    inquirer-autocomplete-prompt: "npm:^3.0.1"
     js-yaml: "npm:^4.1.0"
     listr2: "npm:^8.2.4"
     read-pkg-up: "npm:^11.0.0"
@@ -2541,12 +2548,14 @@ __metadata:
     "@commitlint/config-conventional": "npm:19.5.0"
     "@swc/core": "npm:1.7.26"
     "@swc/helpers": "npm:0.5.13"
-    "@tsed/core": "npm:>=7.14.2"
-    "@tsed/di": "npm:>=7.14.2"
+    "@tsed/core": "npm:>=7.83.3"
+    "@tsed/di": "npm:>=7.83.3"
     "@tsed/logger": "npm:>=6.2.1"
     "@tsed/markdown-it-symbols": "npm:3.20.8"
     "@tsed/monorepo-utils": "npm:2.3.5"
-    "@tsed/normalize-path": "npm:>=7.14.2"
+    "@tsed/normalize-path": "npm:>=7.83.3"
+    "@tsed/openspec": "npm:>=7.83.3"
+    "@tsed/schema": "npm:>=7.83.3"
     "@tsed/ts-doc": "npm:^4.1.0"
     "@types/node": "npm:22.7.4"
     "@typescript-eslint/eslint-plugin": "npm:8.7.0"
@@ -2571,8 +2580,8 @@ __metadata:
     handlebars: "npm:^4.7.8"
     handlebars-helpers: "npm:^0.10.0"
     husky: "npm:9.1.6"
-    inquirer: "npm:^8.2.6"
-    inquirer-autocomplete-prompt: "npm:^2.0.1"
+    inquirer: "npm:^9.3.7"
+    inquirer-autocomplete-prompt: "npm:^3.0.1"
     is-ci: "npm:3.0.1"
     js-yaml: "npm:^4.1.0"
     lerna: "npm:^8.1.8"
@@ -2646,16 +2655,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@tsed/core@npm:>=7.14.2":
-  version: 7.31.0
-  resolution: "@tsed/core@npm:7.31.0"
-  dependencies:
-    reflect-metadata: "npm:^0.1.13"
-    tslib: "npm:2.5.0"
-  checksum: 10/8a25fd598a17d4cbf4757016440e0671765b1e11bf6002c98db12e35d2bb76845a94fa31b520a3ea2c37088372997b5a02be4364d162dc15729d9d374e93e90e
-  languageName: node
-  linkType: hard
-
 "@tsed/core@npm:>=7.83.3":
   version: 7.83.3
   resolution: "@tsed/core@npm:7.83.3"
@@ -2663,26 +2662,6 @@ __metadata:
     reflect-metadata: "npm:^0.2.1"
     tslib: "npm:2.6.1"
   checksum: 10/523764b7139ca3c5ace071a818e54e0d61bb8639169b50fdf1ce63d5327d172ce9291342c9d8717d356cbbdce87b0aeefa78b7cd222cc7e0828146875cade148
-  languageName: node
-  linkType: hard
-
-"@tsed/di@npm:>=7.14.2":
-  version: 7.31.0
-  resolution: "@tsed/di@npm:7.31.0"
-  dependencies:
-    tslib: "npm:2.5.0"
-  peerDependencies:
-    "@tsed/core": ^7.31.0
-    "@tsed/logger": ">=6.2.2"
-    "@tsed/schema": ^7.31.0
-  peerDependenciesMeta:
-    "@tsed/core":
-      optional: false
-    "@tsed/logger":
-      optional: false
-    "@tsed/schema":
-      optional: false
-  checksum: 10/72f53a0a8ed41198a11e339ce0e3821a1672d93e636873bc64b4b0a5737522ee5c686c776290e1e29706973633f80d6e2c5afb01ca97dfcfe3b786a25efcb144
   languageName: node
   linkType: hard
 
@@ -2765,6 +2744,16 @@ __metadata:
     normalize-path: "npm:3.0.0"
     tslib: "npm:2.5.0"
   checksum: 10/5b1a69938818a409c29bf8350b24b6d6f58f39545abc391c88b63924575a9c54aafd7a71802be14987763ff295cf96d76c503443636f322e38b42081c784014a
+  languageName: node
+  linkType: hard
+
+"@tsed/normalize-path@npm:>=7.83.3":
+  version: 7.83.3
+  resolution: "@tsed/normalize-path@npm:7.83.3"
+  dependencies:
+    normalize-path: "npm:3.0.0"
+    tslib: "npm:2.6.1"
+  checksum: 10/887db10f0444b98b6d0e8227353c388643ddb3c614a23e8bc8ac825f6bf0288aa3bd343b86930f08f84bcb6740b22b141390aef27d324dd98fc37c63b63164d0
   languageName: node
   linkType: hard
 
@@ -2960,7 +2949,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/inquirer@npm:9.0.7":
+"@types/inquirer@npm:^9.0.7":
   version: 9.0.7
   resolution: "@types/inquirer@npm:9.0.7"
   dependencies:
@@ -3079,11 +3068,11 @@ __metadata:
   linkType: hard
 
 "@types/through@npm:*":
-  version: 0.0.30
-  resolution: "@types/through@npm:0.0.30"
+  version: 0.0.33
+  resolution: "@types/through@npm:0.0.33"
   dependencies:
     "@types/node": "npm:*"
-  checksum: 10/9578470db0b527c26e246a1220ae9bffc6bf47f20f89c54aac467c083ab1f7e16c00d9a7b4bb6cb4e2dfae465027270827e5908a6236063f6214625e50585d78
+  checksum: 10/fd0b73f873a64ed5366d1d757c42e5dbbb2201002667c8958eda7ca02fff09d73de91360572db465ee00240c32d50c6039ea736d8eca374300f9664f93e8da39
   languageName: node
   linkType: hard
 
@@ -3762,6 +3751,13 @@ __metadata:
   dependencies:
     type-fest: "npm:^0.21.3"
   checksum: 10/8661034456193ffeda0c15c8c564a9636b0c04094b7f78bd01517929c17c504090a60f7a75f949f5af91289c264d3e1001d91492c1bd58efc8e100500ce04de2
+  languageName: node
+  linkType: hard
+
+"ansi-escapes@npm:^6.0.0":
+  version: 6.2.1
+  resolution: "ansi-escapes@npm:6.2.1"
+  checksum: 10/3b064937dc8a0645ed8094bc8b09483ee718f3aa3139746280e6c2ea80e28c0a3ce66973d0f33e88e60021abbf67e5f877deabfc810e75edf8a19dfa128850be
   languageName: node
   linkType: hard
 
@@ -7101,6 +7097,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"figures@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "figures@npm:5.0.0"
+  dependencies:
+    escape-string-regexp: "npm:^5.0.0"
+    is-unicode-supported: "npm:^1.2.0"
+  checksum: 10/951d18be2f450c90462c484eff9bda705293319bc2f17b250194a0cf1a291600db4cb283a6ce199d49380c95b08d85d822ce4b18d2f9242663fd5895476d667c
+  languageName: node
+  linkType: hard
+
 "figures@npm:^6.1.0":
   version: 6.1.0
   resolution: "figures@npm:6.1.0"
@@ -8664,18 +8670,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inquirer-autocomplete-prompt@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "inquirer-autocomplete-prompt@npm:2.0.1"
+"inquirer-autocomplete-prompt@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "inquirer-autocomplete-prompt@npm:3.0.1"
   dependencies:
-    ansi-escapes: "npm:^4.3.2"
-    figures: "npm:^3.2.0"
+    ansi-escapes: "npm:^6.0.0"
+    figures: "npm:^5.0.0"
     picocolors: "npm:^1.0.0"
     run-async: "npm:^2.4.1"
-    rxjs: "npm:^7.5.4"
+    rxjs: "npm:^7.5.6"
   peerDependencies:
-    inquirer: ^8.0.0
-  checksum: 10/1c17ca6181f700edc465d6b4e34e0cfaa9b6b99d8f704750e372cb57ea3d5346adee71f96f204c8bf9db87735d9b7750eb7ce6794e26a485c8a87623233dbf8d
+    inquirer: ^9.1.0
+  checksum: 10/758eb9a4487ffcd02fb6ea95a2751fa7aeac0d6a45f06ada07b2733406a693eb1f545f5d14dd2d688ddb84492ac5bb3a6cc70024cfbd8081e6660351c5a8c78e
   languageName: node
   linkType: hard
 
@@ -8746,26 +8752,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inquirer@npm:^8.2.6":
-  version: 8.2.6
-  resolution: "inquirer@npm:8.2.6"
+"inquirer@npm:^9.3.7":
+  version: 9.3.7
+  resolution: "inquirer@npm:9.3.7"
   dependencies:
-    ansi-escapes: "npm:^4.2.1"
-    chalk: "npm:^4.1.1"
-    cli-cursor: "npm:^3.1.0"
-    cli-width: "npm:^3.0.0"
-    external-editor: "npm:^3.0.3"
-    figures: "npm:^3.0.0"
-    lodash: "npm:^4.17.21"
-    mute-stream: "npm:0.0.8"
+    "@inquirer/figures": "npm:^1.0.3"
+    ansi-escapes: "npm:^4.3.2"
+    cli-width: "npm:^4.1.0"
+    external-editor: "npm:^3.1.0"
+    mute-stream: "npm:1.0.0"
     ora: "npm:^5.4.1"
-    run-async: "npm:^2.4.0"
-    rxjs: "npm:^7.5.5"
-    string-width: "npm:^4.1.0"
-    strip-ansi: "npm:^6.0.0"
-    through: "npm:^2.3.6"
-    wrap-ansi: "npm:^6.0.1"
-  checksum: 10/f642b9e5a94faaba54f277bdda2af0e0a6b592bd7f88c60e1614b5795b19336c7025e0c2923915d5f494f600a02fe8517413779a794415bb79a9563b061d68ab
+    run-async: "npm:^3.0.0"
+    rxjs: "npm:^7.8.1"
+    string-width: "npm:^4.2.3"
+    strip-ansi: "npm:^6.0.1"
+    wrap-ansi: "npm:^6.2.0"
+    yoctocolors-cjs: "npm:^2.1.2"
+  checksum: 10/92d0a0f55701e05a8dd3624eab0c03c6e96de18285cefdbef4edc5c1a77c8283361700e088db275ec5d5b36c45ff9428127125d78428e07ea4c5574f55b17176
   languageName: node
   linkType: hard
 
@@ -13359,13 +13362,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reflect-metadata@npm:^0.1.13":
-  version: 0.1.13
-  resolution: "reflect-metadata@npm:0.1.13"
-  checksum: 10/732570da35d2d96f8fdd5aac60fb263aa92f6512eaded5962b052bd9e90f22a9dec5aaf0d7ff4bfe97646c9530e8444e8435c2d80b24d0bdf938b5d47f6f5b83
-  languageName: node
-  linkType: hard
-
 "reflect-metadata@npm:^0.2.1":
   version: 0.2.2
   resolution: "reflect-metadata@npm:0.2.2"
@@ -13758,7 +13754,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:>=7.8.1, rxjs@npm:^7.2.0, rxjs@npm:^7.5.4, rxjs@npm:^7.8.1":
+"rxjs@npm:>=7.8.1, rxjs@npm:^7.2.0, rxjs@npm:^7.5.6, rxjs@npm:^7.8.1":
   version: 7.8.1
   resolution: "rxjs@npm:7.8.1"
   dependencies:
@@ -16276,7 +16272,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrap-ansi@npm:^6.0.1, wrap-ansi@npm:^6.2.0":
+"wrap-ansi@npm:^6.2.0":
   version: 6.2.0
   resolution: "wrap-ansi@npm:6.2.0"
   dependencies:
@@ -16511,6 +16507,13 @@ __metadata:
   version: 1.0.0
   resolution: "yocto-queue@npm:1.0.0"
   checksum: 10/2cac84540f65c64ccc1683c267edce396b26b1e931aa429660aefac8fbe0188167b7aee815a3c22fa59a28a58d898d1a2b1825048f834d8d629f4c2a5d443801
+  languageName: node
+  linkType: hard
+
+"yoctocolors-cjs@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "yoctocolors-cjs@npm:2.1.2"
+  checksum: 10/d731e3ba776a0ee19021d909787942933a6c2eafb2bbe85541f0c59aa5c7d475ce86fcb860d5803105e32244c3dd5ba875b87c4c6bf2d6f297da416aa54e556f
   languageName: node
   linkType: hard
 
