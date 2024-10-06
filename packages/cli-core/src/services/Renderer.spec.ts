@@ -2,11 +2,13 @@ import {join} from "node:path";
 
 // @ts-ignore
 import {FakeCliFs, normalizePath} from "@tsed/cli-testing";
+import {DITest} from "@tsed/di";
 import Consolidate from "consolidate";
 import {globby} from "globby";
 import handlebars from "handlebars";
 
 import {getTemplateDirectory} from "../utils/index.js";
+import {CliFs} from "./CliFs.js";
 import {RootRendererService, SrcRendererService} from "./Renderer.js";
 
 const TEMPLATE_DIR = getTemplateDirectory(join(import.meta.url, "../../../cli-plugin-jest/src/utils"));
@@ -16,9 +18,21 @@ vi.mock("globby");
 vi.mock("handlebars");
 
 describe("Renderer", () => {
+  beforeEach(() => {
+    vi.mocked(globby as any).mockResolvedValue(["_partials/one.hbs", "_partials/two.hbs"]);
+
+    return DITest.create({
+      imports: [
+        {
+          token: CliFs,
+          useClass: FakeCliFs
+        }
+      ]
+    });
+  });
   afterEach(() => {
     FakeCliFs.entries.clear();
-    vi.mocked(globby as any).mockResolvedValue(["_partials/one.hbs", "_partials/two.hbs"]);
+    return DITest.reset();
   });
 
   describe("relativeFrom()", () => {
@@ -26,12 +40,10 @@ describe("Renderer", () => {
       const service = new SrcRendererService();
 
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       expect(service.relativeFrom("/controller/users.spec.ts")).toEqual("..");
       expect(normalizePath(service.relativeFrom("/controller/users/users.spec.ts"))).toEqual("../..");
@@ -49,19 +61,15 @@ describe("Renderer", () => {
       };
 
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       service.templateDir = "/tmpl";
 
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
-
-      service.fs = new FakeCliFs() as any;
 
       await service.render(path, data, options);
 
@@ -78,19 +86,15 @@ describe("Renderer", () => {
       };
 
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       service.templateDir = "/tmpl";
 
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
-
-      service.fs = new FakeCliFs() as any;
 
       await service.render(path, data, options);
 
@@ -106,19 +110,15 @@ describe("Renderer", () => {
       };
 
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       service.templateDir = "/tmpl";
 
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
-
-      service.fs = new FakeCliFs() as any;
 
       await service.render(path, data, options);
 
@@ -134,19 +134,15 @@ describe("Renderer", () => {
       };
 
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       service.templateDir = "/tmpl";
 
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
-
-      service.fs = new FakeCliFs() as any;
 
       await service.render(path, data, options);
 
@@ -163,19 +159,15 @@ describe("Renderer", () => {
       };
 
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       service.templateDir = "/tmpl";
 
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
-
-      service.fs = new FakeCliFs() as any;
 
       await service.render(path, data, options);
 
@@ -200,19 +192,15 @@ describe("Renderer", () => {
       };
 
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       service.templateDir = "/tmpl";
 
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
-
-      service.fs = new FakeCliFs() as any;
 
       await service.render(props.path, data, options);
 
@@ -223,7 +211,6 @@ describe("Renderer", () => {
   describe("loadPartials()", () => {
     it("should load partials", async () => {
       const rootRendererService = new RootRendererService();
-      rootRendererService.fs = new FakeCliFs() as any;
 
       rootRendererService.fs.writeFile("/templateDir/_partials/one.hbs", "content");
       rootRendererService.fs.writeFile("/templateDir/_partials/two.hbs", "content");

@@ -9,12 +9,13 @@ import {ClassNamePipe} from "./ClassNamePipe.js";
 @Injectable()
 export class OutputFilePathPipe {
   @Inject()
-  providers: ProvidersInfoService;
+  protected providers: ProvidersInfoService;
 
   @Inject()
-  projectPackageJson: ProjectPackageJson;
+  protected projectPackageJson: ProjectPackageJson;
 
-  constructor(private classNamePipe: ClassNamePipe) {}
+  @Inject()
+  protected classNamePipe: ClassNamePipe;
 
   transform(options: {name: string; type: string; subDir?: string; baseDir?: string; format?: ProjectConvention}) {
     options.format = options.format || this.projectPackageJson.preferences.convention || ProjectConvention.DEFAULT;

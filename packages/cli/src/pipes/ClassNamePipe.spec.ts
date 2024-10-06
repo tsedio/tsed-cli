@@ -1,14 +1,21 @@
+import {ProjectPackageJson} from "@tsed/cli-core";
+import {DITest} from "@tsed/di";
+
 import {ProjectConvention} from "../interfaces/index.js";
-import {ProvidersInfoService} from "../services/ProvidersInfoService.js";
 import {ClassNamePipe} from "./ClassNamePipe.js";
 
 describe("ClassNamePipe", () => {
-  it("should return the className", () => {
-    const pipe = new ClassNamePipe();
-    pipe.providers = new ProvidersInfoService();
-    pipe.projectPackageJson = {
-      preferences: {}
-    } as any;
+  beforeEach(() => DITest.create());
+  afterEach(() => DITest.reset());
+  it("should return the className", async () => {
+    const pipe = await DITest.invoke(ClassNamePipe, [
+      {
+        token: ProjectPackageJson,
+        use: {
+          preferences: {}
+        }
+      }
+    ]);
 
     pipe.providers.add({
       name: "Controller",
@@ -34,15 +41,37 @@ describe("ClassNamePipe", () => {
     });
 
     expect(pipe.transform({type: "controller", name: "test"})).toEqual("TestController");
-    expect(pipe.transform({type: "controller", name: "test", format: ProjectConvention.ANGULAR})).toEqual("test.controller");
-    expect(pipe.transform({type: "controller", name: "HelloWorld", format: ProjectConvention.ANGULAR})).toEqual("hello-world.controller");
+    expect(
+      pipe.transform({
+        type: "controller",
+        name: "test",
+        format: ProjectConvention.ANGULAR
+      })
+    ).toEqual("test.controller");
+    expect(
+      pipe.transform({
+        type: "controller",
+        name: "HelloWorld",
+        format: ProjectConvention.ANGULAR
+      })
+    ).toEqual("hello-world.controller");
     expect(pipe.transform({type: "server", name: "Server"})).toEqual("Server");
     expect(pipe.transform({type: "server", name: "Server", format: ProjectConvention.ANGULAR})).toEqual("server");
     expect(pipe.transform({type: "factory", name: "Connection"})).toEqual("Connection");
-    expect(pipe.transform({type: "factory", name: "Connection", format: ProjectConvention.ANGULAR})).toEqual("connection.factory");
+    expect(
+      pipe.transform({
+        type: "factory",
+        name: "Connection",
+        format: ProjectConvention.ANGULAR
+      })
+    ).toEqual("connection.factory");
     expect(pipe.transform({type: "typeorm:datasource", name: "MySQLDatasource"})).toEqual("MySqlDatasource");
-    expect(pipe.transform({type: "typeorm:datasource", name: "MySQLDatasource", format: ProjectConvention.ANGULAR})).toEqual(
-      "my-sql.datasource"
-    );
+    expect(
+      pipe.transform({
+        type: "typeorm:datasource",
+        name: "MySQLDatasource",
+        format: ProjectConvention.ANGULAR
+      })
+    ).toEqual("my-sql.datasource");
   });
 });
