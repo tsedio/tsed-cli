@@ -117,6 +117,10 @@ describe("GenerateCmd", () => {
           platformSymbol: undefined,
           barrels: '["./src/controllers/rest"]',
           imports: [
+            {
+              from: "@tsed/platform-log-request",
+              comment: " // remove this import if you don't want log request"
+            },
             {from: "@tsed/ajv"},
             {symbols: "{config}", from: "./config/index.js"},
             {symbols: "* as rest", from: "./controllers/rest/index.js"}
@@ -171,6 +175,10 @@ describe("GenerateCmd", () => {
           platformSymbol: undefined,
           barrels: '["./src/controllers/rest"]',
           imports: [
+            {
+              from: "@tsed/platform-log-request",
+              comment: " // remove this import if you don't want log request"
+            },
             {from: "@tsed/ajv"},
             {symbols: "{config}", from: "./config/index.js"},
             {symbols: "* as rest", from: "./controllers/rest/index.js"}

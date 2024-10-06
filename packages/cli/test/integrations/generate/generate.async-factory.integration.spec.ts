@@ -1,3 +1,4 @@
+// @ts-ignore
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 
 import {GenerateCmd, TEMPLATE_DIR} from "../../../src/index.js";

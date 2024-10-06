@@ -25,7 +25,7 @@ export async function loadPlugins(injector: InjectorService) {
 
           if (provider?.imports.length) {
             await all(
-              provider.imports.map(async (token) => {
+              provider.imports.map(async (token: any) => {
                 injector.add(token, GlobalProviders.get(token)?.clone());
 
                 if (injector.settings.get("loaded")) {
