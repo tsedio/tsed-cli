@@ -235,7 +235,7 @@ export class CliService {
     cmd = cmd.description(description);
     cmd = this.buildArguments(cmd, args);
 
-    cmd = cmd.action(onAction);
+    cmd = cmd.action(onAction as never);
 
     if (options) {
       cmd = this.buildOption(cmd, options, !!allowUnknownOption);

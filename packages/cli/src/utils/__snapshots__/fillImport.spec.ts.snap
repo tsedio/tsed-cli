@@ -8,6 +8,10 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
   "graphql": false,
   "imports": [
     {
+      "comment": " // remove this import if you don't want log request",
+      "from": "@tsed/platform-log-request",
+    },
+    {
       "from": "@tsed/ajv",
     },
     {
@@ -41,6 +45,10 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
   "express": false,
   "graphql": false,
   "imports": [
+    {
+      "comment": " // remove this import if you don't want log request",
+      "from": "@tsed/platform-log-request",
+    },
     {
       "from": "@tsed/ajv",
     },
@@ -79,6 +87,10 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
   "express": false,
   "graphql": true,
   "imports": [
+    {
+      "comment": " // remove this import if you don't want log request",
+      "from": "@tsed/platform-log-request",
+    },
     {
       "from": "@tsed/ajv",
     },
@@ -136,6 +148,10 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
   "graphql": false,
   "imports": [
     {
+      "comment": " // remove this import if you don't want log request",
+      "from": "@tsed/platform-log-request",
+    },
+    {
       "from": "@tsed/ajv",
     },
     {
@@ -162,6 +178,10 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
   "express": false,
   "graphql": false,
   "imports": [
+    {
+      "comment": " // remove this import if you don't want log request",
+      "from": "@tsed/platform-log-request",
+    },
     {
       "from": "@tsed/ajv",
     },
@@ -196,6 +216,10 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
   "express": false,
   "graphql": false,
   "imports": [
+    {
+      "comment": " // remove this import if you don't want log request",
+      "from": "@tsed/platform-log-request",
+    },
     {
       "from": "@tsed/ajv",
     },
@@ -234,6 +258,10 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
   "express": false,
   "graphql": true,
   "imports": [
+    {
+      "comment": " // remove this import if you don't want log request",
+      "from": "@tsed/platform-log-request",
+    },
     {
       "from": "@tsed/ajv",
     },

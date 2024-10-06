@@ -381,7 +381,7 @@ export class InitCmd implements CommandProvider {
       "@tsed/openspec": ctx.tsedVersion,
       "@tsed/platform-cache": ctx.tsedVersion,
       "@tsed/platform-exceptions": ctx.tsedVersion,
-      "@tsed/platform-log-middleware": ctx.tsedVersion,
+      "@tsed/platform-log-request": ctx.tsedVersion,
       "@tsed/platform-middlewares": ctx.tsedVersion,
       "@tsed/platform-params": ctx.tsedVersion,
       "@tsed/platform-response-filter": ctx.tsedVersion,

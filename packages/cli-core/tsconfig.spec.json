@@ -6,22 +6,11 @@
     "declaration": false,
     "composite": false,
     "noEmit": true,
-    "paths": {},
-    "types": [
-      "vite/client",
-      "vitest/globals"
-    ]
+    "paths": {
+      "@tsed/cli-testing": ["../packages/cli-testing/src/index.ts"]
+    },
+    "types": ["vite/client", "vitest/globals"]
   },
-  "include": [
-    "src/**/*.spec.ts",
-    "test/**/*.spec.ts",
-    "vitest.config.mts"
-  ],
-  "exclude": [
-    "node_modules",
-    "test",
-    "lib",
-    "benchmark",
-    "coverage"
-  ]
+  "include": ["src/**/*.spec.ts", "test/**/*.spec.ts", "vitest.config.mts"],
+  "exclude": ["node_modules", "lib", "benchmark", "coverage"]
 }

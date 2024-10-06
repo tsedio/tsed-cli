@@ -4,7 +4,7 @@ import {type PackageJson} from "../interfaces/PackageJson.js";
 
 export type CliPackageJson = PackageJson;
 
-export function CliPackageJson() {
+export function CliPackageJson(): any {
   return Inject(CliPackageJson);
 }
 

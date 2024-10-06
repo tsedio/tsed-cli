@@ -1,4 +1,5 @@
 import {PackageManager} from "@tsed/cli-core";
+// @ts-ignore
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {ensureDirSync, writeFileSync} from "fs-extra";
 import {join} from "path";
@@ -87,7 +88,7 @@ describe("Init cmd", () => {
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
             "@tsed/platform-express": "5.58.1",
-            "@tsed/platform-log-middleware": "5.58.1",
+            "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",
             "@tsed/platform-params": "5.58.1",
             "@tsed/platform-response-filter": "5.58.1",
@@ -197,7 +198,7 @@ describe("Init cmd", () => {
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
             "@tsed/platform-express": "5.58.1",
-            "@tsed/platform-log-middleware": "5.58.1",
+            "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",
             "@tsed/platform-params": "5.58.1",
             "@tsed/platform-response-filter": "5.58.1",
@@ -288,7 +289,7 @@ describe("Init cmd", () => {
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
             "@tsed/platform-express": "5.58.1",
-            "@tsed/platform-log-middleware": "5.58.1",
+            "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",
             "@tsed/platform-params": "5.58.1",
             "@tsed/platform-response-filter": "5.58.1",
@@ -380,7 +381,7 @@ describe("Init cmd", () => {
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
             "@tsed/platform-express": "5.58.1",
-            "@tsed/platform-log-middleware": "5.58.1",
+            "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",
             "@tsed/platform-params": "5.58.1",
             "@tsed/platform-response-filter": "5.58.1",
@@ -473,7 +474,7 @@ describe("Init cmd", () => {
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
             "@tsed/platform-express": "5.58.1",
-            "@tsed/platform-log-middleware": "5.58.1",
+            "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",
             "@tsed/platform-params": "5.58.1",
             "@tsed/platform-response-filter": "5.58.1",
@@ -566,7 +567,7 @@ describe("Init cmd", () => {
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
             "@tsed/platform-express": "5.58.1",
-            "@tsed/platform-log-middleware": "5.58.1",
+            "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",
             "@tsed/platform-params": "5.58.1",
             "@tsed/platform-response-filter": "5.58.1",
@@ -795,7 +796,7 @@ describe("Init cmd", () => {
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
             "@tsed/platform-koa": "5.58.1",
-            "@tsed/platform-log-middleware": "5.58.1",
+            "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",
             "@tsed/platform-params": "5.58.1",
             "@tsed/platform-response-filter": "5.58.1",
