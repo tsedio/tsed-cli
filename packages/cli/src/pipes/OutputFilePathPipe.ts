@@ -1,4 +1,4 @@
-import {Injectable, ProjectPackageJson} from "@tsed/cli-core";
+import {inject, Injectable, ProjectPackageJson} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 import {dirname, join} from "path";
 
@@ -8,14 +8,9 @@ import {ClassNamePipe} from "./ClassNamePipe.js";
 
 @Injectable()
 export class OutputFilePathPipe {
-  @Inject()
-  protected providers: ProvidersInfoService;
-
-  @Inject()
-  protected projectPackageJson: ProjectPackageJson;
-
-  @Inject()
-  protected classNamePipe: ClassNamePipe;
+  protected providers = inject(ProvidersInfoService);
+  protected projectPackageJson = inject(ProjectPackageJson);
+  protected classNamePipe = inject(ClassNamePipe);
 
   transform(options: {name: string; type: string; subDir?: string; baseDir?: string; format?: ProjectConvention}) {
     options.format = options.format || this.projectPackageJson.preferences.convention || ProjectConvention.DEFAULT;

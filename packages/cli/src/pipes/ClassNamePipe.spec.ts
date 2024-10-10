@@ -2,6 +2,7 @@ import {ProjectPackageJson} from "@tsed/cli-core";
 import {DITest} from "@tsed/di";
 
 import {ProjectConvention} from "../interfaces/index.js";
+import {ProvidersInfoService} from "../services/ProvidersInfoService.js";
 import {ClassNamePipe} from "./ClassNamePipe.js";
 
 describe("ClassNamePipe", () => {
@@ -17,23 +18,28 @@ describe("ClassNamePipe", () => {
       }
     ]);
 
+    // @ts-ignore
     pipe.providers.add({
       name: "Controller",
       value: "controller",
       model: "{{symbolName}}.controller"
     });
 
+    // @ts-ignore
     pipe.providers.add({
       name: "Factory",
       value: "factory",
       model: "{{symbolName}}.factory?"
     });
 
+    // @ts-ignore
     pipe.providers.add({
       name: "Factory",
       value: "factory",
       model: "{{symbolName}}.factory?"
     });
+
+    // @ts-ignore
     pipe.providers.add({
       name: "TypeORM Datasource",
       value: "typeorm:datasource",

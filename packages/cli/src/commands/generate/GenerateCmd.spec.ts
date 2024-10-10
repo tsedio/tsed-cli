@@ -1,5 +1,5 @@
 // @ts-ignore
-import {SrcRendererService} from "@tsed/cli-core";
+import {InjectorService, SrcRendererService} from "@tsed/cli-core";
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 

@@ -139,12 +139,14 @@ describe("UpdateCmd", () => {
         rawArgs: []
       });
 
+      // @ts-ignore
       expect(command.projectPackage.dependencies).toEqual({
         "@tsed/common": "8.0.0-alpha.4",
         "@tsed/core": "8.0.0-alpha.4",
         "@tsed/di": "8.0.0-alpha.4",
         "@tsed/logger": "^5.5.0"
       });
+      // @ts-ignore
       expect(command.projectPackage.devDependencies).toEqual({
         "@tsed/cli-plugin-eslint": "1.5.0",
         "@tsed/cli-plugin-typeorm": "1.5.0"

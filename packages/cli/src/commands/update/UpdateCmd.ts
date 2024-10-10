@@ -5,6 +5,7 @@ import {
   type CommandProvider,
   createSubTasks,
   Inject,
+  inject,
   NpmRegistryClient,
   PackageManagersModule,
   ProjectPackageJson,
@@ -43,17 +44,10 @@ function shouldUpdate(pkg: string) {
   options: {}
 })
 export class UpdateCmd implements CommandProvider {
-  @Inject(NpmRegistryClient)
-  npmRegistryClient: NpmRegistryClient;
-
-  @Inject(ProjectPackageJson)
-  projectPackage: ProjectPackageJson;
-
-  @Inject(PackageManagersModule)
-  packageManagers: PackageManagersModule;
-
-  @CliPackageJson()
-  cliPackage: CliPackageJson;
+  protected npmRegistryClient = inject(NpmRegistryClient);
+  protected projectPackage = inject(ProjectPackageJson);
+  protected packageManagers = inject(PackageManagersModule);
+  protected cliPackage = inject(CliPackageJson);
 
   private versions: any;
 

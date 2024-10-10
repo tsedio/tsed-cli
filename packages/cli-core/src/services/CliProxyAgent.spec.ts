@@ -31,7 +31,7 @@ describe("CliPlugins", () => {
 
         await cliProxyAgent.resolveProxySettings();
 
-        expect(cliProxyAgent.proxySettings).toEqual({url: "http://login:password@host:3000"});
+        expect(cliProxyAgent.proxySettings.value).toEqual({url: "http://login:password@host:3000"});
       });
 
       it("should get proxy url from env (HTTP_PROXY -2)", async () => {
@@ -46,7 +46,7 @@ describe("CliPlugins", () => {
 
         await cliProxyAgent.resolveProxySettings();
 
-        expect(cliProxyAgent.proxySettings).toEqual({strictSsl: false, url: "https://login:password@host:3000"});
+        expect(cliProxyAgent.proxySettings.value).toEqual({strictSsl: false, url: "https://login:password@host:3000"});
       });
     });
     describe("from npm config", () => {
@@ -73,11 +73,11 @@ describe("CliPlugins", () => {
         ]);
 
         // @ts-ignore
-        cliProxyAgent.proxySettings.url = undefined;
+        cliProxyAgent.proxySettings.value.url = undefined;
 
         await cliProxyAgent.resolveProxySettings();
 
-        expect(cliProxyAgent.proxySettings).toEqual({
+        expect(cliProxyAgent.proxySettings.value).toEqual({
           url: "https://login:password@host:3000",
           strictSsl: false
         });
@@ -105,11 +105,11 @@ describe("CliPlugins", () => {
         ]);
 
         // @ts-ignore
-        cliProxyAgent.proxySettings.url = undefined;
+        cliProxyAgent.proxySettings.value.url = undefined;
 
         await cliProxyAgent.resolveProxySettings();
 
-        expect(cliProxyAgent.proxySettings).toEqual({
+        expect(cliProxyAgent.proxySettings.value).toEqual({
           url: "https://login:password@host:3000",
           strictSsl: true
         });
@@ -137,11 +137,11 @@ describe("CliPlugins", () => {
         ]);
 
         // @ts-ignore
-        cliProxyAgent.proxySettings.url = undefined;
+        cliProxyAgent.proxySettings.value.url = undefined;
 
         await cliProxyAgent.resolveProxySettings();
 
-        expect(cliProxyAgent.proxySettings).toEqual({
+        expect(cliProxyAgent.proxySettings.value).toEqual({
           url: "https://login:password@host:3000",
           strictSsl: true
         });
@@ -169,11 +169,11 @@ describe("CliPlugins", () => {
         ]);
 
         // @ts-ignore
-        cliProxyAgent.proxySettings.url = undefined;
+        cliProxyAgent.proxySettings.value.url = undefined;
 
         await cliProxyAgent.resolveProxySettings();
 
-        expect(cliProxyAgent.proxySettings).toEqual({
+        expect(cliProxyAgent.proxySettings.value).toEqual({
           url: "https://host:3000",
           strictSsl: true
         });

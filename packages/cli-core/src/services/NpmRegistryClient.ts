@@ -1,4 +1,4 @@
-import {Inject, Injectable} from "@tsed/di";
+import {inject, Injectable} from "@tsed/di";
 import registry_url from "registry-url";
 import url from "url";
 
@@ -21,8 +21,7 @@ export const SCOPE_SEPARATOR = "%2f";
 
 @Injectable()
 export class NpmRegistryClient {
-  @Inject(CliHttpClient)
-  private httpClient: CliHttpClient;
+  private httpClient = inject(CliHttpClient);
 
   static escapeName(name: string): string {
     // scoped packages contain slashes and the npm registry expects them to be escaped

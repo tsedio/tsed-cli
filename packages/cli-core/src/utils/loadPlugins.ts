@@ -1,4 +1,4 @@
-import {GlobalProviders, InjectorService} from "@tsed/di";
+import {GlobalProviders, injector, logger} from "@tsed/di";
 import chalk from "chalk";
 import figures from "figures";
 
@@ -7,12 +7,13 @@ import {ProjectPackageJson} from "../services/ProjectPackageJson.js";
 
 const all = (promises: any[]) => Promise.all(promises);
 
-export async function loadPlugins(injector: InjectorService) {
-  const name = injector.settings.get("name");
-  const rootDir = injector.settings.get("project.rootDir");
+export async function loadPlugins() {
+  const $inj = injector();
+  const name = $inj.settings.get("name");
+  const rootDir = $inj.settings.get("project.rootDir");
 
-  const projectPackageJson = injector.invoke<ProjectPackageJson>(ProjectPackageJson);
-  const fs = injector.invoke<CliFs>(CliFs);
+  const projectPackageJson = $inj.invoke<ProjectPackageJson>(ProjectPackageJson);
+  const fs = $inj.invoke<CliFs>(CliFs);
 
   const promises = Object.keys(projectPackageJson.allDependencies)
     .filter((mod) => mod.startsWith(`@${name}/cli-plugin`) || mod.includes(`${name}-cli-plugin`))
@@ -20,30 +21,30 @@ export async function loadPlugins(injector: InjectorService) {
       try {
         const {default: plugin} = await fs.importModule(mod, rootDir);
 
-        if (!injector.has(plugin)) {
+        if (!$inj.has(plugin)) {
           const provider = GlobalProviders.get(plugin)?.clone();
 
           if (provider?.imports.length) {
             await all(
               provider.imports.map(async (token: any) => {
-                injector.add(token, GlobalProviders.get(token)?.clone());
+                $inj.add(token, GlobalProviders.get(token)?.clone());
 
-                if (injector.settings.get("loaded")) {
-                  await injector.invoke(token);
+                if ($inj.settings.get("loaded")) {
+                  await $inj.invoke(token);
                 }
               })
             );
           }
 
-          injector.add(plugin, provider);
+          $inj.add(plugin, provider);
 
-          if (injector.settings.get("loaded")) {
-            await injector.invoke(plugin);
+          if ($inj.settings.get("loaded")) {
+            await $inj.invoke(plugin);
           }
         }
-        injector.logger.info(chalk.green(figures.tick), mod, "module loaded");
+        logger().info(chalk.green(figures.tick), mod, "module loaded");
       } catch (er) {
-        injector.logger.warn(chalk.red(figures.cross), "Fail to load plugin", mod);
+        logger().warn(chalk.red(figures.cross), "Fail to load plugin", mod);
       }
     });
 

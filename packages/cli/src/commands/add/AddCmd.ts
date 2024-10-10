@@ -4,12 +4,12 @@ import {
   Command,
   type CommandProvider,
   createSubTasks,
+  inject,
   PackageManagersModule,
   ProjectPackageJson,
   type QuestionOptions,
   type Task
 } from "@tsed/cli-core";
-import {Inject} from "@tsed/di";
 
 export interface AddCmdOptions extends CliDefaultOptions {
   name: string;
@@ -26,14 +26,9 @@ export interface AddCmdOptions extends CliDefaultOptions {
   }
 })
 export class AddCmd implements CommandProvider {
-  @Inject(CliPlugins)
-  cliPlugins: CliPlugins;
-
-  @Inject(ProjectPackageJson)
-  packageJson: ProjectPackageJson;
-
-  @Inject(PackageManagersModule)
-  packageManagers: PackageManagersModule;
+  protected cliPlugins = inject(CliPlugins);
+  protected packageJson = inject(ProjectPackageJson);
+  protected packageManagers = inject(PackageManagersModule);
 
   $prompt(initialOptions: any): QuestionOptions {
     return [

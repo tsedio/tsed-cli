@@ -1,7 +1,7 @@
 import "../utils/hbs/index.js";
 
 import {isString} from "@tsed/core";
-import {Configuration, Constant, Inject, Injectable} from "@tsed/di";
+import {Configuration, constant, inject, Injectable} from "@tsed/di";
 import {normalizePath} from "@tsed/normalize-path";
 import Consolidate from "consolidate";
 import fs from "fs-extra";
@@ -25,15 +25,10 @@ export interface RenderOptions {
 }
 
 export abstract class Renderer {
-  @Constant("templateDir")
-  templateDir: string;
-
-  @Inject()
-  fs: CliFs;
-  cache = new Set<string>();
-
-  @Configuration()
-  protected configuration: Configuration;
+  public templateDir = constant<string>("templateDir", "");
+  readonly fs = inject(CliFs);
+  readonly cache = new Set<string>();
+  protected configuration = inject(Configuration);
 
   abstract get rootDir(): string;
 

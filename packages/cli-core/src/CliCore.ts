@@ -1,5 +1,5 @@
 import {Type} from "@tsed/core";
-import {Inject, InjectorService, Module} from "@tsed/di";
+import {inject, InjectorService, Module} from "@tsed/di";
 import chalk from "chalk";
 import {Command} from "commander";
 import {join, resolve} from "path";
@@ -23,11 +23,8 @@ function isHelpManual(argv: string[]) {
   imports: [CliPackageJson, ProjectPackageJson, CliService, CliConfiguration]
 })
 export class CliCore {
-  @Inject()
-  readonly injector: InjectorService;
-
-  @Inject()
-  readonly cliService: CliService;
+  readonly injector = inject(InjectorService);
+  readonly cliService = inject(CliService);
 
   static checkNodeVersion(wanted: string, id: string) {
     if (!semver.satisfies(process.version, wanted)) {
@@ -53,7 +50,7 @@ export class CliCore {
 
     const injector = this.createInjector(settings);
 
-    settings.plugins && (await loadPlugins(injector));
+    settings.plugins && (await loadPlugins());
 
     await this.loadInjector(injector, module);
 

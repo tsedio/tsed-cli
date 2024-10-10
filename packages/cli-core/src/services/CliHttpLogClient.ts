@@ -1,5 +1,5 @@
 import {getValue} from "@tsed/core";
-import {Inject, Opts} from "@tsed/di";
+import {inject, Opts} from "@tsed/di";
 import {Logger} from "@tsed/logger";
 import querystring from "querystring";
 
@@ -11,9 +11,7 @@ export interface BaseLogClientOptions {
 
 export class CliHttpLogClient {
   callee: string;
-
-  @Inject()
-  protected logger: Logger;
+  protected logger = inject(Logger);
 
   // @ts-ignore
   constructor(@Opts options: Partial<BaseLogClientOptions> = {}) {

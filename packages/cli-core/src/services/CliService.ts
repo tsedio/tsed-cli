@@ -1,5 +1,18 @@
 import {classOf} from "@tsed/core";
-import {Constant, DIContext, getContext, Inject, Injectable, InjectorService, Provider, runInContext} from "@tsed/di";
+import {
+  $emit,
+  configuration,
+  constant,
+  destroyInjector,
+  DIContext,
+  getContext,
+  inject,
+  Injectable,
+  injector,
+  logger,
+  Provider,
+  runInContext
+} from "@tsed/di";
 import {Argument, Command} from "commander";
 import Inquirer from "inquirer";
 // @ts-ignore
@@ -23,26 +36,12 @@ Inquirer.registerPrompt("autocomplete", inquirer_autocomplete_prompt);
 
 @Injectable()
 export class CliService {
+  readonly reinstallAfterRun = constant<boolean>("project.reinstallAfterRun", false);
   readonly program = new Command();
-
-  @Constant("project.reinstallAfterRun", false)
-  reinstallAfterRun = false;
-
-  @Constant("pkg", {version: "1.0.0"})
-  protected pkg: any;
-
-  @Inject()
-  protected injector: InjectorService;
-
-  @Inject()
-  protected hooks: CliHooks;
-
-  @Inject()
-  protected projectPkg: ProjectPackageJson;
-
-  @Inject(PackageManagersModule)
-  protected packageManagers: PackageManagersModule;
-
+  protected pkg: Record<string, any> = constant("pkg", {version: "1.0.0"});
+  protected hooks = inject(CliHooks);
+  protected projectPkg = inject(ProjectPackageJson);
+  protected packageManagers = inject(PackageManagersModule);
   private commands = new Map();
 
   /**
@@ -67,7 +66,7 @@ export class CliService {
    */
   public runLifecycle(cmdName: string, data: any = {}, $ctx: DIContext) {
     return runInContext($ctx, async () => {
-      await this.injector.emit("$loadPackageJson");
+      await $emit("$loadPackageJson");
 
       data = await this.beforePrompt(cmdName, data);
 
@@ -85,13 +84,13 @@ export class CliService {
 
       await this.exec(cmdName, data, $ctx);
     } catch (er) {
-      await this.injector.emit("$onFinish", er);
-      await this.injector.destroy();
+      await $emit("$onFinish", er);
+      await destroyInjector();
       throw er;
     }
 
-    await this.injector.emit("$onFinish");
-    await this.injector.destroy();
+    await $emit("$onFinish");
+    await destroyInjector();
   }
 
   public async exec(cmdName: string, data: any, $ctx: DIContext) {
@@ -119,13 +118,14 @@ export class CliService {
    */
   public async beforePrompt(cmdName: string, ctx: any = {}) {
     const provider = this.commands.get(cmdName);
-    const instance = this.injector.get<CommandProvider>(provider.useClass)!;
+    const instance = inject<CommandProvider>(provider.useClass)!;
     const verbose = ctx.verbose;
 
     if (instance.$beforePrompt) {
       ctx = await instance.$beforePrompt(JSON.parse(JSON.stringify(ctx)));
       ctx.verbose = verbose;
     }
+
     return ctx;
   }
 
@@ -136,7 +136,7 @@ export class CliService {
    */
   public async prompt(cmdName: string, ctx: any = {}) {
     const provider = this.commands.get(cmdName);
-    const instance = this.injector.get<CommandProvider>(provider.useClass)!;
+    const instance = inject<CommandProvider>(provider.useClass)!;
 
     if (instance.$prompt) {
       const questions = [
@@ -163,7 +163,7 @@ export class CliService {
   public async getTasks(cmdName: string, data: any) {
     const $ctx = getContext()!;
     const provider = this.commands.get(cmdName);
-    const instance = this.injector.get<CommandProvider>(provider.token)!;
+    const instance = inject<CommandProvider>(provider.token)!;
 
     data = this.mapData(cmdName, data, $ctx);
 
@@ -176,7 +176,7 @@ export class CliService {
 
   public async getPostInstallTasks(cmdName: string, data: any) {
     const provider = this.commands.get(cmdName);
-    const instance = this.injector.get<CommandProvider>(provider.useClass)!;
+    const instance = inject<CommandProvider>(provider.useClass)!;
 
     data = this.mapData(cmdName, data, getContext()!);
 
@@ -214,16 +214,17 @@ export class CliService {
 
       const $ctx = new DIContext({
         id: v4(),
-        injector: this.injector,
-        logger: this.injector.logger,
-        level: this.injector.logger.level,
+        injector: injector(),
+        logger: logger(),
+        level: logger().level,
         maxStackSize: 0,
         platform: "CLI"
       });
 
       $ctx.set("data", data);
       $ctx.set("command", metadata);
-      this.injector.settings.set("command.metadata", metadata);
+
+      configuration().set("command.metadata", metadata);
 
       return this.runLifecycle(name, data, $ctx);
     };
@@ -245,12 +246,14 @@ export class CliService {
   }
 
   private load() {
-    this.injector.getProviders("command").forEach((provider) => this.build(provider));
+    injector()
+      .getProviders("command")
+      .forEach((provider) => this.build(provider));
   }
 
   private mapData(cmdName: string, data: any, $ctx: DIContext) {
     const provider = this.commands.get(cmdName);
-    const instance = this.injector.get<CommandProvider>(provider.useClass)!;
+    const instance = inject<CommandProvider>(provider.useClass)!;
     const verbose = data.verbose;
 
     if (instance.$mapContext) {
@@ -259,9 +262,9 @@ export class CliService {
     }
 
     if (data.verbose) {
-      this.injector.logger.level = "debug";
+      logger().level = "debug";
     } else {
-      this.injector.logger.level = "info";
+      logger().level = "info";
     }
 
     data.bindLogger = $ctx.get("command").bindLogger;
