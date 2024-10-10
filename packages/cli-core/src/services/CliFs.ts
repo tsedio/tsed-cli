@@ -1,9 +1,8 @@
 import {Injectable} from "@tsed/di";
-import {PathLike, WriteFileOptions} from "fs";
-import Fs from "fs-extra";
-import {EnsureOptions} from "fs-extra";
-import {join} from "path";
 import {normalizePath} from "@tsed/normalize-path";
+import type {PathLike, WriteFileOptions} from "fs";
+import Fs, {type EnsureDirOptions} from "fs-extra";
+import {join} from "path";
 
 @Injectable()
 export class CliFs {
@@ -49,11 +48,11 @@ export class CliFs {
     return this.raw.writeFile(file, data, options as any);
   }
 
-  ensureDir(path: string, options?: EnsureOptions | number) {
+  ensureDir(path: string, options?: EnsureDirOptions | number) {
     return this.raw.ensureDir(path, options);
   }
 
-  ensureDirSync(path: string, options?: EnsureOptions | number): void {
+  ensureDirSync(path: string, options?: EnsureDirOptions | number): void {
     return this.raw.ensureDirSync(path, options);
   }
 
@@ -66,10 +65,6 @@ export class CliFs {
   async importModule(mod: string, root: string = process.cwd()) {
     try {
       if (process.env.NODE_ENV === "development") {
-        if (isCommonjs()) {
-          return require(mod);
-        }
-
         return await import(mod);
       }
     } catch (er) {}
@@ -77,13 +72,12 @@ export class CliFs {
     const path = this.findUpFile(root, join("node_modules", mod));
 
     if (path) {
-      return import(path);
+      const pkg = await this.readJson(join(path, "package.json"));
+      const file = pkg.exports?.["."]?.import || pkg.exports?.["."]?.default || pkg.exports?.["."] || pkg.module || pkg.main;
+
+      return import(join(path, file));
     }
 
     return import(mod);
   }
-}
-
-function isCommonjs() {
-  return typeof module !== "undefined" && typeof exports !== "undefined";
 }

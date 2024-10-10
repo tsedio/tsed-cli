@@ -1,7 +1,7 @@
-import {CliPluginTypeORMModule} from "./CliPluginTypeORMModule";
+import {CliPluginTypeORMModule} from "./CliPluginTypeORMModule.js";
 
-export * from "./hooks/TypeORMInitHook";
-export * from "./hooks/TypeORMGenerateHook";
-export * from "./utils/templateDir";
+export * from "./hooks/TypeORMGenerateHook.js";
+export * from "./hooks/TypeORMInitHook.js";
+export * from "./utils/templateDir.js";
 
 export default CliPluginTypeORMModule;

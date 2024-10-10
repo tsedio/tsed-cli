@@ -1,5 +1,5 @@
-import {CliHttpClient, CliHttpClientOptions} from "@tsed/cli-core";
-import {OnDestroy} from "@tsed/di";
+import {CliHttpClient, type CliHttpClientOptions} from "@tsed/cli-core";
+import type {OnDestroy} from "@tsed/di";
 
 export class FakeCliHttpClient extends CliHttpClient implements OnDestroy {
   static entries = new Map<string, any>();

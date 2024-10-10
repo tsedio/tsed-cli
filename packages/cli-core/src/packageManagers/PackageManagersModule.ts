@@ -1,15 +1,15 @@
 import {Inject, Injectable} from "@tsed/di";
-import {BaseManager} from "./supports/BaseManager";
-import {YarnManager} from "./supports/YarnManager";
-import {YarnBerryManager} from "./supports/YarnBerryManager";
-import {NpmManager} from "./supports/NpmManager";
-import {PNpmManager} from "./supports/PNpmManager";
-import {catchError} from "rxjs/operators";
 import {EMPTY, throwError} from "rxjs";
-import {ProjectPackageJson} from "../services/ProjectPackageJson";
-import {isValidVersion} from "../utils/isValidVersion";
-import {Options} from "execa";
-import {BunManager} from "./supports/BunManager";
+import {catchError} from "rxjs/operators";
+
+import {ProjectPackageJson} from "../services/ProjectPackageJson.js";
+import {isValidVersion} from "../utils/isValidVersion.js";
+import {BaseManager, type ManagerCmdOpts} from "./supports/BaseManager.js";
+import {BunManager} from "./supports/BunManager.js";
+import {NpmManager} from "./supports/NpmManager.js";
+import {PNpmManager} from "./supports/PNpmManager.js";
+import {YarnBerryManager} from "./supports/YarnBerryManager.js";
+import {YarnManager} from "./supports/YarnManager.js";
 
 function mapPackagesWithInvalidVersion(deps: any) {
   const toString = (info: [string, string]) => {
@@ -95,17 +95,17 @@ export class PackageManagersModule {
       {
         title: `Installing dependencies using ${packageManager.name}`,
         skip: () => !this.projectPackageJson.reinstall,
-        task: () => packageManager.install(options as any).pipe(errorPipe())
+        task: () => packageManager.install(options as any) // .pipe(errorPipe())
       },
       {
         title: `Add dependencies using ${packageManager.name}`,
         skip: () => !deps.length,
-        task: () => packageManager.add(deps, options as any).pipe(errorPipe())
+        task: () => packageManager.add(deps, options as any) //.pipe(errorPipe())
       },
       {
         title: `Add devDependencies using ${packageManager.name}`,
         skip: () => !devDeps.length,
-        task: () => packageManager.addDev(devDeps, options as any).pipe(errorPipe())
+        task: () => packageManager.addDev(devDeps, options as any) //.pipe(errorPipe())
       },
       {
         title: "Refresh",
@@ -145,7 +145,7 @@ export class PackageManagersModule {
       ...opts
     }: {
       ignoreError?: boolean;
-    } & Options &
+    } & ManagerCmdOpts &
       Record<string, any> = {}
   ) {
     const options = {

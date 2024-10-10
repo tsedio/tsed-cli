@@ -2,11 +2,10 @@
   "extends": "@tsed/typescript/tsconfig.node.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "ES2020",
     "rootDir": "src",
     "outDir": "./lib/esm",
-    "declaration": true,
     "declarationDir": "./lib/types",
+    "declaration": true,
     "composite": true,
     "noEmit": false
   },
@@ -21,9 +20,7 @@
     "**/*.benchmark.ts",
     "**/*.spec.ts",
     "keys",
-    "jest.config.js",
     "**/__mock__/**",
     "webpack.config.js"
-  ],
-  "references": []
+  ]
 }

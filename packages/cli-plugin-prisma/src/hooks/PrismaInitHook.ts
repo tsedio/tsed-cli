@@ -1,21 +1,14 @@
-import {InitCmdContext} from "@tsed/cli";
-import {CliService, Inject, OnExec, PackageManagersModule, ProjectPackageJson} from "@tsed/cli-core";
+import type {InitCmdContext} from "@tsed/cli";
+import {inject, OnExec, PackageManagersModule, ProjectPackageJson} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
-import {CliPrisma} from "../services/CliPrisma";
+
+import {CliPrisma} from "../services/CliPrisma.js";
 
 @Injectable()
 export class PrismaInitHook {
-  @Inject()
-  protected cliPrisma: CliPrisma;
-
-  @Inject()
-  protected cliService: CliService;
-
-  @Inject()
-  protected packageJson: ProjectPackageJson;
-
-  @Inject()
-  protected packageManagers: PackageManagersModule;
+  protected cliPrisma = inject(CliPrisma);
+  protected packageJson = inject(ProjectPackageJson);
+  protected packageManagers = inject(PackageManagersModule);
 
   @OnExec("init")
   onExec(ctx: InitCmdContext) {

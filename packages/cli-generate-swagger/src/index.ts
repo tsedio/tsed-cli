@@ -1,3 +1,3 @@
-export * from "./commands/GenerateSwaggerCmd";
+export * from "./commands/GenerateSwaggerCmd.js";
 
 export default {};

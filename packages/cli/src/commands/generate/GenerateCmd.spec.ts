@@ -1,79 +1,78 @@
-import {SrcRendererService} from "@tsed/cli-core";
+// @ts-ignore
+import {InjectorService, SrcRendererService} from "@tsed/cli-core";
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {GenerateCmd} from "./GenerateCmd";
+
+import {GenerateCmd} from "./GenerateCmd.js";
 
 describe("GenerateCmd", () => {
-  beforeEach(CliPlatformTest.create);
-  afterEach(CliPlatformTest.reset);
+  beforeEach(() => CliPlatformTest.create());
+  afterEach(() => CliPlatformTest.reset());
 
   describe("$prompt", () => {
-    it(
-      "should return prompts dialog",
-      CliPlatformTest.inject([GenerateCmd], async (command: GenerateCmd) => {
-        // GIVEN
-        const options = {};
+    it("should return prompts dialog", async () => {
+      const command = await CliPlatformTest.invoke(GenerateCmd);
+      // GIVEN
+      const options = {};
 
-        // WHEN
-        const result: any[] = (await command.$prompt(options)) as any[];
+      // WHEN
+      const result: any[] = (await command.$prompt(options)) as any[];
 
-        // THEN
-        expect(result[0]).toEqual({
-          default: undefined,
-          message: "Which type of provider?",
-          name: "type",
-          source: expect.any(Function),
-          type: "autocomplete",
-          when: expect.any(Function)
-        });
-        expect(result[1].message).toEqual("Which name?");
-        expect(result[1].default({type: "name"})).toEqual("Name");
-        expect(result[1].when).toEqual(true);
-        expect(result[3].message).toEqual("Which route?");
-        expect(result[3].when({type: "controller"})).toEqual(true);
-        expect(result[3].when({type: "server"})).toEqual(true);
-        expect(result[3].when({type: "pipe"})).toEqual(false);
-        expect(result[3].default({type: "server"})).toEqual("/rest");
-        expect(result[3].default({type: "other", name: "test"})).toEqual("/test");
-      })
-    );
-    it(
-      "should return prompts dialog (with initial options)",
-      CliPlatformTest.inject([GenerateCmd], async (command: GenerateCmd) => {
-        // GIVEN
-        const options = {
-          type: "controller",
-          name: "Name"
-        };
+      // THEN
+      expect(result[0]).toEqual({
+        default: undefined,
+        message: "Which type of provider?",
+        name: "type",
+        source: expect.any(Function),
+        type: "autocomplete",
+        when: expect.any(Function)
+      });
+      expect(result[1].message).toEqual("Which name?");
+      expect(result[1].default({type: "name"})).toEqual("Name");
+      expect(result[1].when).toEqual(true);
+      expect(result[3].message).toEqual("Which route?");
+      expect(result[3].when({type: "controller"})).toEqual(true);
+      expect(result[3].when({type: "server"})).toEqual(true);
+      expect(result[3].when({type: "pipe"})).toEqual(false);
+      expect(result[3].default({type: "server"})).toEqual("/rest");
+      expect(result[3].default({type: "other", name: "test"})).toEqual("/test");
+    });
+    it("should return prompts dialog (with initial options)", async () => {
+      const command = await CliPlatformTest.invoke(GenerateCmd);
+      // GIVEN
+      const options = {
+        type: "controller",
+        name: "Name"
+      };
 
-        // WHEN
-        const result: any[] = (await command.$prompt(options)) as any[];
+      // WHEN
+      const result: any[] = (await command.$prompt(options)) as any[];
 
-        // THEN
-        expect(result[0]).toEqual({
-          default: "controller",
-          message: "Which type of provider?",
-          source: expect.any(Function),
-          name: "type",
-          type: "autocomplete",
-          when: expect.any(Function)
-        });
-        expect(result[1].message).toEqual("Which name?");
-        expect(result[1].default({type: "name"})).toEqual("Name");
-        expect(result[1].when).toEqual(false);
-        expect(result[3].message).toEqual("Which route?");
-        expect(result[3].when({type: "controller"})).toEqual(true);
-        expect(result[3].when({type: "server"})).toEqual(true);
-        expect(result[3].when({type: "pipe"})).toEqual(false);
-        expect(result[3].default({type: "server"})).toEqual("/rest");
-        expect(result[3].default({type: "other", name: "test"})).toEqual("/name");
-      })
-    );
+      // THEN
+      expect(result[0]).toEqual({
+        default: "controller",
+        message: "Which type of provider?",
+        source: expect.any(Function),
+        name: "type",
+        type: "autocomplete",
+        when: expect.any(Function)
+      });
+      expect(result[1].message).toEqual("Which name?");
+      expect(result[1].default({type: "name"})).toEqual("Name");
+      expect(result[1].when).toEqual(false);
+      expect(result[3].message).toEqual("Which route?");
+      expect(result[3].when({type: "controller"})).toEqual(true);
+      expect(result[3].when({type: "server"})).toEqual(true);
+      expect(result[3].when({type: "pipe"})).toEqual(false);
+      expect(result[3].default({type: "server"})).toEqual("/rest");
+      expect(result[3].default({type: "other", name: "test"})).toEqual("/name");
+    });
   });
   describe("$exec", () => {
     it("should return tasks", async () => {
       // GIVEN
       const renderService = {
-        render: jest.fn()
+        render: vi.fn()
       };
 
       let options = {
@@ -114,9 +113,13 @@ describe("GenerateCmd", () => {
           platformSymbol: undefined,
           barrels: '["./src/controllers/rest"]',
           imports: [
+            {
+              from: "@tsed/platform-log-request",
+              comment: " // remove this import if you don't want log request"
+            },
             {from: "@tsed/ajv"},
-            {symbols: "{config}", from: "./config/index"},
-            {symbols: "* as rest", from: "./controllers/rest/index"}
+            {symbols: "{config}", from: "./config/index.js"},
+            {symbols: "* as rest", from: "./controllers/rest/index.js"}
           ]
         },
         {
@@ -127,7 +130,7 @@ describe("GenerateCmd", () => {
     it("should return empty tasks", async () => {
       // GIVEN
       const renderService = {
-        render: jest.fn()
+        render: vi.fn()
       };
 
       let options = {
@@ -168,9 +171,13 @@ describe("GenerateCmd", () => {
           platformSymbol: undefined,
           barrels: '["./src/controllers/rest"]',
           imports: [
+            {
+              from: "@tsed/platform-log-request",
+              comment: " // remove this import if you don't want log request"
+            },
             {from: "@tsed/ajv"},
-            {symbols: "{config}", from: "./config/index"},
-            {symbols: "* as rest", from: "./controllers/rest/index"}
+            {symbols: "{config}", from: "./config/index.js"},
+            {symbols: "* as rest", from: "./controllers/rest/index.js"}
           ]
         },
         {

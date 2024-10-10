@@ -1,5 +1,5 @@
-import {Inject} from "@tsed/di";
 import {CliExeca, PackageManagersModule} from "@tsed/cli-core";
+import {Inject} from "@tsed/di";
 
 export abstract class BaseRuntime {
   abstract readonly name: string;
@@ -14,6 +14,10 @@ export abstract class BaseRuntime {
 
   get packageManager() {
     return this.packageManagers.get();
+  }
+
+  isCompiled() {
+    return true;
   }
 
   files(): string[] {

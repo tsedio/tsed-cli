@@ -1,6 +1,6 @@
-import {TypeGraphqlModule} from "./TypeGraphqlModule";
+import {TypeGraphqlModule} from "./TypeGraphqlModule.js";
 
-export * from "./hooks/TypeGraphqlInitHook";
-export * from "./utils/templateDir";
+export * from "./hooks/TypeGraphqlInitHook.js";
+export * from "./utils/templateDir.js";
 
 export default TypeGraphqlModule;

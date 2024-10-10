@@ -1,6 +1,7 @@
 import {camelCase} from "change-case";
-import {InitCmdContext} from "../interfaces/InitCmdContext";
-import {mapUniqFeatures} from "./mapUniqFeatures";
+
+import type {InitCmdContext} from "../interfaces/InitCmdContext.js";
+import {mapUniqFeatures} from "./mapUniqFeatures.js";
 
 export function mapToContext(options: any): InitCmdContext {
   options = mapUniqFeatures(options);

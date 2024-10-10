@@ -1,7 +1,6 @@
-// @ts-ignore
-import type {ListrContext, ListrOptions, ListrTask} from "listr2";
+import {type ListrBaseClassOptions, type ListrContext, type ListrTask} from "listr2";
 
-export interface TaskOptions<Ctx = ListrContext> extends ListrOptions<Ctx> {
+export interface TaskOptions<Ctx = ListrContext> extends ListrBaseClassOptions<Ctx> {
   concurrent?: boolean | number;
   verbose?: boolean;
   bindLogger?: boolean;

@@ -1,6 +1,6 @@
 process.env.SEMANTIC_RELEASE_PACKAGE = "Ts.ED CLI";
 
-module.exports = {
+export default {
   branches: [
     "master",
     {name: "alpha", prerelease: true, channel: "alpha"},

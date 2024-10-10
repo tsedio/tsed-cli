@@ -1,40 +1,16 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "sourceRoot": "src",
-    "module": "commonjs",
-    "target": "esnext",
-    "sourceMap": true,
-    "declaration": false,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "moduleResolution": "node",
-    "isolatedModules": false,
-    "suppressImplicitAnyIndexErrors": false,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "allowSyntheticDefaultImports": true,
-    "importHelpers": true,
-    "newLine": "LF",
-    "noEmit": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "useDefineForClassFields": false,
-    "lib": [
-      "es7",
-      "dom",
-      "ESNext.AsyncIterable"
-    ],
-    "typeRoots": [
-      "./node_modules/@types"
-    ]
+    "noEmit": true
   },
-  "include": [
-    "src"
-  ],
-  "linterOptions": {
-    "exclude": []
-  }
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }{{#if testing}},
+    {
+      "path": "./tsconfig.spec.json"
+    }{{/if}}
+  ]
 }

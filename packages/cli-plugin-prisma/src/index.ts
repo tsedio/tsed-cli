@@ -1,7 +1,7 @@
-import {CliPluginPrismaModule} from "./CliPluginPrismaModule";
+import {CliPluginPrismaModule} from "./CliPluginPrismaModule.js";
 
-export * from "./hooks/PrismaInitHook";
-export * from "./services/CliPrisma";
-export * from "./utils/templateDir";
+export * from "./hooks/PrismaInitHook.js";
+export * from "./services/CliPrisma.js";
+export * from "./utils/templateDir.js";
 
 export default CliPluginPrismaModule;

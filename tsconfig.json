@@ -1,61 +1,61 @@
 {
   "files": [],
   "compilerOptions": {
-    "module": "ES2020",
-    "target": "ES2020",
+    "module": "NodeNext",
+    "target": "ESNext",
     "noEmit": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowJs": true,
-    "moduleResolution": "node"
+    "moduleResolution": "NodeNext"
   },
   "references": [
     {
-      "path": "./packages/cli-core"
+      "path": "./packages/cli-core/tsconfig.json"
     },
     {
-      "path": "./packages/cli-plugin-eslint"
+      "path": "./packages/cli/tsconfig.json"
     },
     {
-      "path": "./packages/cli-plugin-jest"
+      "path": "./packages/cli-generate-http-client/tsconfig.json"
     },
     {
-      "path": "./packages/cli-plugin-vitest"
+      "path": "./packages/cli-generate-swagger/tsconfig.json"
     },
     {
-      "path": "./packages/cli-plugin-mocha"
+      "path": "./packages/cli-plugin-eslint/tsconfig.json"
     },
     {
-      "path": "./packages/cli-plugin-mongoose"
+      "path": "./packages/cli-plugin-jest/tsconfig.json"
     },
     {
-      "path": "./packages/cli-plugin-oidc-provider"
+      "path": "./packages/cli-plugin-mongoose/tsconfig.json"
     },
     {
-      "path": "./packages/cli-plugin-passport"
+      "path": "./packages/cli-plugin-oidc-provider/tsconfig.json"
     },
     {
-      "path": "./packages/cli-plugin-prisma"
+      "path": "./packages/cli-plugin-prisma/tsconfig.json"
     },
     {
-      "path": "./packages/cli-testing"
+      "path": "./packages/cli-plugin-typegraphql/tsconfig.json"
     },
     {
-      "path": "./packages/cli-generate-swagger"
+      "path": "./packages/cli-plugin-passport/tsconfig.json"
     },
     {
-      "path": "./packages/cli-plugin-typegraphql"
+      "path": "./packages/cli-plugin-typeorm/tsconfig.json"
     },
     {
-      "path": "./packages/cli-generate-http-client"
+      "path": "./packages/cli-plugin-vitest/tsconfig.json"
     },
     {
-      "path": "./packages/cli-plugin-typeorm"
+      "path": "./packages/cli-testing/tsconfig.json"
     },
     {
-      "path": "./packages/cli"
+      "path": "./tsconfig.spec.json"
     }
   ],
   "exclude": [

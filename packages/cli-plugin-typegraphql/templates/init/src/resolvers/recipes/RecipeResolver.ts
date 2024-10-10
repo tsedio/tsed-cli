@@ -1,8 +1,8 @@
 import {ResolverService} from "@tsed/typegraphql";
 import {Arg, Query} from "type-graphql";
-import {RecipeService} from "../../services/RecipeService";
-import {Recipe} from "./Recipe";
-import {RecipeNotFoundError} from "./RecipeNotFoundError";
+import {RecipeService} from "../../services/RecipeService.js";
+import {Recipe} from "./Recipe.js";
+import {RecipeNotFoundError} from "./RecipeNotFoundError.js";
 
 @ResolverService(Recipe)
 export class RecipeResolver {

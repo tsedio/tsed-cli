@@ -3,7 +3,7 @@ import {Env} from "@tsed/core";
 import {Constant} from "@tsed/di";
 import {Interaction, OidcCtx} from "@tsed/oidc-provider";
 import {Name} from "@tsed/schema";
-import {Accounts} from "../services/Accounts";
+import {Accounts} from "../services/Accounts.js";
 
 @Interaction({
   name: "login",

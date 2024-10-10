@@ -7,7 +7,8 @@ import {
   ScriptsRendererService,
   SrcRendererService
 } from "@tsed/cli-core";
-import {TEMPLATE_DIR} from "../utils/templateDir";
+
+import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 @Injectable()
 export class VitestInitHook {

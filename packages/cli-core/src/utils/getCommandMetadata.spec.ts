@@ -1,5 +1,5 @@
-import {Command} from "../..";
-import {getCommandMetadata} from "./getCommandMetadata";
+import {Command} from "../decorators/index.js";
+import {getCommandMetadata} from "./getCommandMetadata.js";
 
 @Command({
   name: "name",

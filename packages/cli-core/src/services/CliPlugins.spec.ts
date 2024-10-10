@@ -1,6 +1,8 @@
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {CliPlugins} from "./CliPlugins";
-import {NpmRegistryClient} from "./NpmRegistryClient";
+
+import {CliPlugins} from "./CliPlugins.js";
+import {NpmRegistryClient} from "./NpmRegistryClient.js";
 
 describe("CliPlugins", () => {
   beforeEach(() =>
@@ -32,7 +34,7 @@ describe("CliPlugins", () => {
         }
       ];
       const npmClient = {
-        search: jest.fn().mockReturnValue(Promise.resolve(response))
+        search: vi.fn().mockReturnValue(Promise.resolve(response))
       };
 
       const cliPlugins = await CliPlatformTest.invoke<CliPlugins>(CliPlugins, [

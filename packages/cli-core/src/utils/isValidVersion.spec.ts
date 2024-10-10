@@ -1,4 +1,4 @@
-import {isValidVersion} from "./isValidVersion";
+import {isValidVersion} from "./isValidVersion.js";
 
 describe("isValidVersion", () => {
   it("should validate version", () => {

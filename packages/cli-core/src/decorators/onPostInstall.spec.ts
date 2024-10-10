@@ -1,6 +1,7 @@
 import {Store} from "@tsed/core";
-import {CommandStoreKeys} from "../domains/CommandStoreKeys";
-import {OnPostInstall} from "./onPostInstall";
+
+import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
+import {OnPostInstall} from "./onPostInstall.js";
 
 class Test {
   @OnPostInstall("cmd")

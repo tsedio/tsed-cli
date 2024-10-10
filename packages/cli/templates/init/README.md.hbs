@@ -45,11 +45,11 @@ docker compose build
 docker compose up
 ```
 
-## Barrelsby
+## Barrels
 
-This project uses [barrelsby](https://www.npmjs.com/package/barrelsby) to generate index files to import the controllers.
+This project uses [barrels](https://www.npmjs.com/package/@tsed/barrels) to generate index files to import the controllers.
 
-Edit `.barreslby.json` to customize it:
+Edit `.barrels.json` to customize it:
 
 ```json
 {
@@ -58,9 +58,9 @@ Edit `.barreslby.json` to customize it:
     "./src/controllers/pages"
   ],
   "exclude": [
-    "__mock__",
-    "__mocks__",
-    ".spec.ts"
+    "**/__mock__",
+    "**/__mocks__",
+    "**/*.spec.ts"
   ],
   "delete": true
 }

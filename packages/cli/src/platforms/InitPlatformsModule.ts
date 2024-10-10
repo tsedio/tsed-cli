@@ -1,14 +1,16 @@
+import {Inject, injectMany} from "@tsed/cli-core";
 import {Module} from "@tsed/di";
-import {InitExpressPlatform} from "./supports/InitExpressPlatform";
-import {InitKoaPlatform} from "./supports/InitKoaPlatform";
-import {InitBasePlatform} from "./supports/InitBasePlatform";
-import {Inject} from "@tsed/cli-core";
+
+import type {InitBasePlatform} from "./supports/InitBasePlatform.js";
+import {InitExpressPlatform} from "./supports/InitExpressPlatform.js";
+import {InitKoaPlatform} from "./supports/InitKoaPlatform.js";
 
 @Module({
   imports: [InitExpressPlatform, InitKoaPlatform]
 })
 export class InitPlatformsModule {
-  constructor(@Inject("platform:init") private platforms: InitBasePlatform[]) {}
+  private platforms = injectMany<InitBasePlatform>("platform:init");
+
   get(name: string) {
     return this.platforms.find((platform) => platform.name === name)!;
   }

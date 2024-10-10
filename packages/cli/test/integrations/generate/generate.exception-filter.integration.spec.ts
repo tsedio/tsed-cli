@@ -1,6 +1,8 @@
 import {CliService, ProjectPackageJson} from "@tsed/cli-core";
+// @ts-ignore
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {GenerateCmd, TEMPLATE_DIR} from "../../../src";
+
+import {GenerateCmd, TEMPLATE_DIR} from "../../../src/index.js";
 
 describe("Generate Exception Filter", () => {
   beforeEach(() =>
@@ -33,8 +35,8 @@ describe("Generate Exception Filter", () => {
 
     const result = FakeCliFs.entries.get("project-name/src/filters/HttpExceptionFilter.ts");
 
-    expect(result).toContain("import {BaseContext} from \"@tsed/di\";");
-    expect(result).toContain("import {Catch, ExceptionFilterMethods} from \"@tsed/platform-exceptions\";");
+    expect(result).toContain('import {BaseContext} from "@tsed/di";');
+    expect(result).toContain('import {Catch, ExceptionFilterMethods} from "@tsed/platform-exceptions";');
     expect(result).toContain("@Catch(Error)");
     expect(result).toContain("export class HttpExceptionFilter implements ExceptionFilterMethods");
     expect(result).toContain("catch(exception: Exception, ctx: BaseContext) {");

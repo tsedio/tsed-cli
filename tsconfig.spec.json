@@ -1,0 +1,18 @@
+{
+  "extends": "@tsed/typescript/tsconfig.node.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noEmit": true,
+    "composite": false,
+    "declarationMap": false,
+    "types": [
+      "vitest/globals",
+      "vitest/importMeta",
+      "vite/client",
+      "node",
+      "vitest"
+    ]
+  },
+  "include": ["vitest.*.mts"],
+  "exclude": ["dist"]
+}

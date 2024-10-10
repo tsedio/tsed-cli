@@ -1,7 +1,7 @@
 import { PlatformTest } from "@tsed/common";
 
-import { getOidcContextFixture } from "./__mock__/oidcContext.fixture";
-import { ConsentInteraction } from "./ConsentInteraction";
+import { getOidcContextFixture } from "./__mock__/oidcContext.fixture.js";
+import { ConsentInteraction } from "./ConsentInteraction.js";
 
 async function createInteractionFixture() {
   const interaction = await PlatformTest.invoke<ConsentInteraction>(ConsentInteraction, []);
@@ -41,10 +41,10 @@ describe("ConsentInteraction", () => {
       oidcContext.prompt.name = "consent";
 
       const grant = {
-        save: jest.fn().mockResolvedValue("grantId"),
-        addOIDCScope: jest.fn(),
-        addOIDCClaims: jest.fn(),
-        addResourceScope: jest.fn()
+        save: vi.fn().mockResolvedValue("grantId"),
+        addOIDCScope: vi.fn(),
+        addOIDCClaims: vi.fn(),
+        addResourceScope: vi.fn()
       };
 
       oidcContext.getGrant.mockResolvedValue(grant);

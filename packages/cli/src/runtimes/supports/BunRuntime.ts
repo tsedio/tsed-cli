@@ -1,5 +1,6 @@
-import {BaseRuntime} from "./BaseRuntime";
 import {Injectable} from "@tsed/di";
+
+import {BaseRuntime} from "./BaseRuntime.js";
 
 @Injectable({
   type: "runtime"
@@ -19,5 +20,11 @@ export class BunRuntime extends BaseRuntime {
 
   startProd(args: string) {
     return `${this.cmd} ${args}`;
+  }
+
+  dependencies(): Record<string, any> {
+    return {
+      typescript: "latest"
+    };
   }
 }

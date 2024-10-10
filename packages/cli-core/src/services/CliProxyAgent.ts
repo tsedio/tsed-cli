@@ -1,10 +1,11 @@
-import tunnel from "tunnel";
-import {Configuration, Inject, Injectable, Value} from "@tsed/di";
-import {CliExeca} from "./CliExeca";
+import {Configuration, Inject, inject, Injectable, refValue} from "@tsed/di";
 import {camelCase} from "change-case";
+import tunnel from "tunnel";
 import {URL} from "url";
-import {coerce} from "../utils/coerce";
-import {ProjectPackageJson} from "./ProjectPackageJson";
+
+import {coerce} from "../utils/coerce.js";
+import {CliExeca} from "./CliExeca.js";
+import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
 export interface CliProxySettings {
   url: string;
@@ -19,23 +20,18 @@ export interface CliProxySettings {
   }
 })
 export class CliProxyAgent {
-  @Value("proxy", {})
-  proxySettings: CliProxySettings;
-
-  @Inject()
-  protected projectPackageJson: ProjectPackageJson;
-
-  @Inject()
-  protected cliExeca: CliExeca;
+  readonly proxySettings = refValue<CliProxySettings>("proxy", {} as never);
+  protected projectPackageJson = Inject(ProjectPackageJson);
+  protected cliExeca = inject(CliExeca);
 
   hasProxy() {
-    return !!this.proxySettings.url;
+    return !!this.proxySettings.value.url;
   }
 
   get(type: "http" | "https") {
     if (this.hasProxy()) {
-      const {strictSsl = true} = this.proxySettings;
-      const url = new URL(this.proxySettings.url);
+      const {strictSsl = true} = this.proxySettings.value;
+      const url = new URL(this.proxySettings.value.url);
       const protocol = url.protocol.replace(":", "");
 
       const options = {
@@ -91,7 +87,7 @@ export class CliProxyAgent {
     const url = httpsProxy || httpProxy || proxy;
 
     if (url) {
-      this.proxySettings = {
+      this.proxySettings.value = {
         url,
         strictSsl: coerce(strictSsl) !== false
       };

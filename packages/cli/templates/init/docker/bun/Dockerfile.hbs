@@ -2,7 +2,7 @@
 
 ARG BUN_VERSION=1
 
-FROM oven/bun:${BUN_VERSION} as base
+FROM oven/bun:${BUN_VERSION} AS base
 WORKDIR /opt
 
 FROM base AS install
@@ -33,4 +33,4 @@ USER bun
 
 {{> docker-body}}
 
-CMD ["pm2-runtime", "start", "processes.config.js", "--env", "production", "--interpreter", "~/.bun/bin/bun"]
+CMD ["pm2-runtime", "start", "processes.config.cjs", "--env", "production", "--interpreter", "~/.bun/bin/bun"]

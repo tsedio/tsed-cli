@@ -1,8 +1,8 @@
+import "../../../src/index.js";
+
+import {ArchitectureConvention, FeatureType, InitCmd, PlatformType, ProjectConvention, TEMPLATE_DIR} from "@tsed/cli";
 import {PackageManager} from "@tsed/cli-core";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {ArchitectureConvention, FeatureType, InitCmd, PlatformType, ProjectConvention, TEMPLATE_DIR} from "@tsed/cli";
-import "../../../src";
-import "@tsed/cli-plugin-jest";
 
 describe("TypeORM: Init cmd", () => {
   beforeEach(() => {
@@ -50,20 +50,19 @@ describe("TypeORM: Init cmd", () => {
     });
 
     expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-      Array [
-        "./project-name",
+      [
         "project-name",
-        "project-name/.barrelsby.json",
+        "project-name/.barrels.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
+        "project-name/.swcrc",
         "project-name/Dockerfile",
         "project-name/README.md",
         "project-name/docker-compose.yml",
-        "project-name/jest.config.js",
+        "project-name/nodemon.json",
         "project-name/package.json",
-        "project-name/processes.config.js",
+        "project-name/processes.config.cjs",
         "project-name/src",
-        "project-name/src/Server.integration.spec.ts",
         "project-name/src/Server.ts",
         "project-name/src/config",
         "project-name/src/config/envs",
@@ -72,15 +71,13 @@ describe("TypeORM: Init cmd", () => {
         "project-name/src/config/logger",
         "project-name/src/config/logger/index.ts",
         "project-name/src/controllers/rest",
-        "project-name/src/controllers/rest/HelloWorldController.integration.spec.ts",
-        "project-name/src/controllers/rest/HelloWorldController.spec.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/datasources",
-        "project-name/src/datasources/MysqlDatasource.spec.ts",
         "project-name/src/datasources/MysqlDatasource.ts",
         "project-name/src/index.ts",
-        "project-name/tsconfig.compile.json",
+        "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
+        "project-name/tsconfig.node.json",
       ]
     `);
 
@@ -129,20 +126,19 @@ describe("TypeORM: Init cmd", () => {
     });
 
     expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-      Array [
-        "./project-name",
+      [
         "project-name",
-        "project-name/.barrelsby.json",
+        "project-name/.barrels.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
+        "project-name/.swcrc",
         "project-name/Dockerfile",
         "project-name/README.md",
         "project-name/docker-compose.yml",
-        "project-name/jest.config.js",
+        "project-name/nodemon.json",
         "project-name/package.json",
-        "project-name/processes.config.js",
+        "project-name/processes.config.cjs",
         "project-name/src",
-        "project-name/src/Server.integration.spec.ts",
         "project-name/src/Server.ts",
         "project-name/src/config",
         "project-name/src/config/envs",
@@ -151,12 +147,11 @@ describe("TypeORM: Init cmd", () => {
         "project-name/src/config/logger",
         "project-name/src/config/logger/index.ts",
         "project-name/src/controllers/rest",
-        "project-name/src/controllers/rest/HelloWorldController.integration.spec.ts",
-        "project-name/src/controllers/rest/HelloWorldController.spec.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
-        "project-name/tsconfig.compile.json",
+        "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
+        "project-name/tsconfig.node.json",
       ]
     `);
   });

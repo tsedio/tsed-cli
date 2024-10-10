@@ -1,8 +1,9 @@
 import {PackageManager} from "@tsed/cli-core";
-import {PlatformType} from "../../../interfaces/PlatformType";
-import {ArchitectureConvention} from "../../../interfaces/ArchitectureConvention";
-import {ProjectConvention} from "../../../interfaces/ProjectConvention";
-import {FeatureType} from "../config/FeaturesPrompt";
+
+import {ArchitectureConvention} from "../../../interfaces/ArchitectureConvention.js";
+import {PlatformType} from "../../../interfaces/PlatformType.js";
+import {ProjectConvention} from "../../../interfaces/ProjectConvention.js";
+import {FeatureType} from "../config/FeaturesPrompt.js";
 
 export interface InitOptions {
   root: string;

@@ -1,5 +1,5 @@
-import {CliPluginJestModule} from "./CliPluginJestModule";
+import {CliPluginJestModule} from "./CliPluginJestModule.js";
 
-export * from "./utils/templateDir";
+export * from "./utils/templateDir.js";
 
 export default CliPluginJestModule;
