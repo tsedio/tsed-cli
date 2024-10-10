@@ -1,4 +1,4 @@
-import {Inject, Injectable} from "@tsed/di";
+import {inject, Injectable} from "@tsed/di";
 import {default as Ajv, type Schema} from "ajv";
 import {extname} from "path";
 
@@ -7,11 +7,8 @@ import {CliYaml} from "./CliYaml.js";
 
 @Injectable()
 export class CliLoadFile {
-  @Inject()
-  protected cliYaml: CliYaml;
-
-  @Inject()
-  protected cliFs: CliFs;
+  protected cliYaml: CliYaml = inject(CliYaml);
+  protected cliFs = inject(CliFs);
 
   // @ts-ignore
   #ajv: Ajv;

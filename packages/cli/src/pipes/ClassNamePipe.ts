@@ -1,5 +1,5 @@
-import {Injectable, ProjectPackageJson} from "@tsed/cli-core";
-import {Inject} from "@tsed/di";
+import {ProjectPackageJson} from "@tsed/cli-core";
+import {inject, Injectable} from "@tsed/di";
 import {kebabCase, pascalCase} from "change-case";
 import {basename} from "path";
 
@@ -8,11 +8,8 @@ import {ProvidersInfoService} from "../services/ProvidersInfoService.js";
 
 @Injectable()
 export class ClassNamePipe {
-  @Inject()
-  providers: ProvidersInfoService;
-
-  @Inject()
-  projectPackageJson: ProjectPackageJson;
+  protected providers: ProvidersInfoService = inject(ProvidersInfoService);
+  protected projectPackageJson = inject(ProjectPackageJson);
 
   transform(options: {name: string; type: string; format?: ProjectConvention}) {
     const format = options.format || this.projectPackageJson.preferences.convention || ProjectConvention.DEFAULT;

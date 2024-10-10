@@ -2,7 +2,7 @@ import {
   CliExeca,
   CliFs,
   CliLoadFile,
-  CliPackageJson,
+  cliPackageJson,
   CliPlugins,
   CliService,
   Command,
@@ -11,6 +11,7 @@ import {
   createSubTasks,
   createTasksRunner,
   Inject,
+  inject,
   PackageManager,
   PackageManagersModule,
   ProjectPackageJson,
@@ -103,44 +104,19 @@ import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt.js";
   disableReadUpPkg: true
 })
 export class InitCmd implements CommandProvider {
-  @Configuration()
-  protected configuration: Configuration;
-
-  @Inject()
-  protected cliPlugins: CliPlugins;
-
-  @Inject()
-  protected packageJson: ProjectPackageJson;
-
-  @Inject()
-  protected packageManagers: PackageManagersModule;
-
-  @Inject()
-  protected runtimes: RuntimesModule;
-
-  @Inject()
-  protected platforms: InitPlatformsModule;
-
-  @CliPackageJson()
-  protected cliPackageJson: CliPackageJson;
-
-  @Inject()
-  protected cliService: CliService;
-
-  @Inject()
-  protected cliLoadFile: CliLoadFile;
-
-  @Inject()
-  protected rootRenderer: RootRendererService;
-
-  @Inject()
-  protected outputFilePathPipe: OutputFilePathPipe;
-
-  @Inject()
-  protected execa: CliExeca;
-
-  @Inject()
-  protected fs: CliFs;
+  protected configuration = inject(Configuration);
+  protected cliPlugins = inject(CliPlugins);
+  protected packageJson = inject(ProjectPackageJson);
+  protected packageManagers = inject(PackageManagersModule);
+  protected runtimes = inject(RuntimesModule);
+  protected platforms = inject(InitPlatformsModule);
+  protected cliPackageJson = cliPackageJson();
+  protected cliService = inject(CliService);
+  protected cliLoadFile = inject(CliLoadFile);
+  protected rootRenderer = inject(RootRendererService);
+  protected outputFilePathPipe = inject(OutputFilePathPipe);
+  protected execa = inject(CliExeca);
+  protected fs = inject(CliFs);
 
   checkPrecondition(ctx: InitCmdContext) {
     const isValid = (types: any, value: any) => (value ? Object.values(types).includes(value) : true);

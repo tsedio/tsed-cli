@@ -1,4 +1,4 @@
-import {Constant, Inject, Injectable, InjectorService} from "@tsed/di";
+import {constant, inject, Injectable} from "@tsed/di";
 import chalk from "chalk";
 
 import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
@@ -20,32 +20,17 @@ function mapPlugins({package: {name, description = "", ...otherProps}}: any) {
 
 @Injectable()
 export class CliPlugins {
-  @Constant("name")
-  name: string;
-
-  @Inject(NpmRegistryClient)
-  private npmRegistryClient: NpmRegistryClient;
-
-  @Inject(InjectorService)
-  private injector: InjectorService;
-
-  @Inject(CliHooks)
-  private cliHooks: CliHooks;
-
-  @Inject(ProjectPackageJson)
-  private packageJson: ProjectPackageJson;
-
-  @Inject(PackageManagersModule)
-  private packageManagers: PackageManagersModule;
+  name = constant<string>("name", "");
+  readonly loadPlugins = loadPlugins;
+  private npmRegistryClient = inject(NpmRegistryClient);
+  private cliHooks = inject(CliHooks);
+  private packageJson = inject(ProjectPackageJson);
+  private packageManagers = inject(PackageManagersModule);
 
   async searchPlugins(keyword = "", options: any = {}) {
     const result = await this.npmRegistryClient.search(this.getKeyword(keyword), options);
 
     return result.filter(({package: {name}}: any) => this.isPlugin(name)).map(mapPlugins);
-  }
-
-  loadPlugins() {
-    return loadPlugins(this.injector);
   }
 
   addPluginsDependencies(ctx: any): Task[] {

@@ -1,4 +1,4 @@
-import {CliFs, CliRunScript, Command, type CommandProvider, normalizePath, ProjectPackageJson, type Tasks} from "@tsed/cli-core";
+import {CliFs, CliRunScript, Command, type CommandProvider, inject, normalizePath, ProjectPackageJson, type Tasks} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
 
 export interface RunCmdContext {
@@ -27,14 +27,9 @@ export interface RunCmdContext {
   allowUnknownOption: true
 })
 export class RunCmd implements CommandProvider {
-  @Inject()
-  fs: CliFs;
-
-  @Inject()
-  projectPackageJson: ProjectPackageJson;
-
-  @Inject()
-  runScript: CliRunScript;
+  protected fs = inject(CliFs);
+  protected projectPackageJson = inject(ProjectPackageJson);
+  protected runScript = inject(CliRunScript);
 
   async $exec(ctx: RunCmdContext): Promise<Tasks> {
     const cmd = "node";

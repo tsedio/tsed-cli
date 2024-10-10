@@ -1,5 +1,5 @@
 import {getValue, setValue} from "@tsed/core";
-import {Configuration, Injectable} from "@tsed/di";
+import {configuration, constant, inject, Injectable} from "@tsed/di";
 import {dirname, join} from "path";
 import {readPackageUpSync} from "read-pkg-up";
 
@@ -40,14 +40,11 @@ function mapPackages(deps: any) {
 export class ProjectPackageJson {
   public rewrite = false;
   public reinstall = false;
-
   public GH_TOKEN: string;
+  protected fs = inject(CliFs);
   private raw: PackageJson;
 
-  constructor(
-    @Configuration() private configuration: Configuration,
-    protected fs: CliFs
-  ) {
+  constructor() {
     this.setRaw({
       name: "",
       version: "1.0.0",
@@ -64,11 +61,11 @@ export class ProjectPackageJson {
   }
 
   get dir() {
-    return String(this.configuration.project?.rootDir);
+    return String(constant("project.rootDir"));
   }
 
   set dir(dir: string) {
-    this.configuration.project.rootDir = dir;
+    configuration().project.rootDir = dir;
 
     this.read();
   }
@@ -110,7 +107,7 @@ export class ProjectPackageJson {
   }
 
   get preferences(): ProjectPreferences {
-    return this.raw[this.configuration.name];
+    return this.raw[constant<string>("name")!];
   }
 
   $loadPackageJson() {
@@ -128,12 +125,13 @@ export class ProjectPackageJson {
   }
 
   setRaw(pkg: any) {
-    const projectPreferences = this.configuration.defaultProjectPreferences;
-    const preferences = getValue(pkg, this.configuration.name);
+    const config = configuration();
+    const projectPreferences = config.defaultProjectPreferences;
+    const preferences = getValue(pkg, config.name);
 
     this.raw = {
       ...pkg,
-      [this.configuration.name]: {
+      [config.name]: {
         ...(projectPreferences && projectPreferences(pkg)),
         ...preferences
       }
@@ -198,7 +196,7 @@ export class ProjectPackageJson {
   }
 
   setPreference(key: keyof ProjectPreferences, value: any) {
-    setValue(this.raw, `${this.configuration.name}.${key}`, value);
+    setValue(this.raw, `${constant<string>("name")}.${key}`, value);
     this.rewrite = true;
 
     return;
@@ -276,7 +274,7 @@ export class ProjectPackageJson {
     this.reinstall = false;
     this.rewrite = false;
 
-    const cwd = this.configuration.get("project.rootDir");
+    const cwd = constant<string>("project.rootDir");
     const pkgPath = join(String(cwd), "package.json");
 
     const pkg = this.fs.readJsonSync(pkgPath, {encoding: "utf8"});
@@ -296,9 +294,11 @@ export class ProjectPackageJson {
       ...pkg.devDependencies
     };
 
-    pkg[this.configuration.name] = {
-      ...this.raw[this.configuration.name],
-      ...pkg[this.configuration.name]
+    const name = constant<string>("name")!;
+
+    pkg[name] = {
+      ...this.raw[name],
+      ...pkg[name]
     };
 
     this.raw = pkg;
@@ -307,9 +307,9 @@ export class ProjectPackageJson {
   }
 
   protected getPackageJson() {
-    const cwd = this.configuration.get("project.rootDir");
-    const disableReadUpPkg = this.configuration.get("command.metadata.disableReadUpPkg");
-    const name = this.configuration.get("name");
+    const cwd = constant<string>("project.rootDir");
+    const disableReadUpPkg = constant<string>("command.metadata.disableReadUpPkg");
+    const name = constant<string>("name")!;
 
     const pkgPath = join(String(cwd), "package.json");
     const fileExists = this.fs.exists(pkgPath);
@@ -321,7 +321,7 @@ export class ProjectPackageJson {
 
       if (result && result.path) {
         const pkgPath = dirname(result.path);
-        this.configuration.set("project.root", pkgPath);
+        configuration().set("project.root", pkgPath);
 
         const pkg = this.fs.readJsonSync(result.path, {encoding: "utf8"});
 
@@ -331,7 +331,7 @@ export class ProjectPackageJson {
 
     if (disableReadUpPkg && fileExists) {
       const pkg = this.fs.readJsonSync(pkgPath, {encoding: "utf8"});
-      this.configuration.set("project.root", pkgPath);
+      configuration().set("project.root", pkgPath);
 
       return {...this.getEmptyPackageJson(name), ...pkg} as any;
     }

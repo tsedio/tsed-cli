@@ -2349,8 +2349,8 @@ __metadata:
     uuid: "npm:^10.0.0"
     vitest: "npm:2.1.1"
   peerDependencies:
-    "@tsed/core": ">=8.0.0-beta.1"
-    "@tsed/di": ">=8.0.0-beta.1"
+    "@tsed/core": ">=8.0.0-beta.2"
+    "@tsed/di": ">=8.0.0-beta.2"
   languageName: unknown
   linkType: soft
 

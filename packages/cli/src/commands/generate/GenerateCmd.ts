@@ -1,4 +1,12 @@
-import {type CliDefaultOptions, Command, type CommandProvider, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
+import {
+  type CliDefaultOptions,
+  Command,
+  type CommandProvider,
+  Inject,
+  inject,
+  ProjectPackageJson,
+  SrcRendererService
+} from "@tsed/cli-core";
 import {normalizePath} from "@tsed/normalize-path";
 import {kebabCase, pascalCase} from "change-case";
 import {globbySync} from "globby";

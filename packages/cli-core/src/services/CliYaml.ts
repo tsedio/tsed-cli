@@ -1,12 +1,11 @@
-import {Inject, Injectable} from "@tsed/di";
+import {inject, Injectable} from "@tsed/di";
 import JsYaml from "js-yaml";
 
 import {CliFs} from "./CliFs.js";
 
 @Injectable()
 export class CliYaml {
-  @Inject()
-  protected fs: CliFs;
+  protected fs = inject(CliFs);
 
   async read(path: string) {
     const content = await this.fs.readFile(path, {encoding: "utf8"});
