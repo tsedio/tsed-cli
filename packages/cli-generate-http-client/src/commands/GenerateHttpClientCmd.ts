@@ -1,6 +1,6 @@
-import {CliFs, Command, type CommandProvider, Inject, Type} from "@tsed/cli-core";
+import {CliFs, Command, type CommandProvider, constant, inject, Type} from "@tsed/cli-core";
 import {isString} from "@tsed/core";
-import {Constant, InjectorService} from "@tsed/di";
+import {InjectorService} from "@tsed/di";
 import {camelCase} from "change-case";
 import path, {join, resolve} from "path";
 import {generateApi, type Hooks, type RawRouteInfo, type RouteNameInfo} from "swagger-typescript-api";
@@ -48,17 +48,9 @@ export interface GenerateHttpClientOpts {
   }
 })
 export class GenerateHttpClientCmd implements CommandProvider {
-  @Inject()
-  injector: InjectorService;
-
-  @Inject()
-  protected fs: CliFs;
-
-  @Constant("server")
-  protected serverModule: Type<any>;
-
-  @Constant("httpClient", {hooks: {}})
-  protected options: Partial<GenerateHttpClientOpts>;
+  protected fs = inject(CliFs);
+  protected serverModule = constant<Type<any>>("server");
+  protected options = constant<Partial<GenerateHttpClientOpts>>("httpClient", {hooks: {}});
 
   $mapContext($ctx: GenerateHttpClientCtx) {
     return {...$ctx, output: resolve(join(process.cwd(), $ctx.output))};

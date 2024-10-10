@@ -1,4 +1,4 @@
-import {type CliDefaultOptions, Command, type CommandProvider, Inject} from "@tsed/cli-core";
+import {type CliDefaultOptions, Command, type CommandProvider, inject} from "@tsed/cli-core";
 
 import {CliPrisma} from "../services/CliPrisma.js";
 
@@ -20,8 +20,7 @@ export interface PrismaContext extends CliDefaultOptions {
   allowUnknownOption: true
 })
 export class PrismaCmd implements CommandProvider {
-  @Inject()
-  cli: CliPrisma;
+  protected cli = inject(CliPrisma);
 
   $exec(ctx: PrismaContext) {
     return [

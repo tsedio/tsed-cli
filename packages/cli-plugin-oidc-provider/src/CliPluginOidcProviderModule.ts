@@ -1,5 +1,4 @@
-import {Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
-import {Inject} from "@tsed/di";
+import {inject, Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 
 import {OidcProviderInitHook} from "./hooks/OidcProviderInitHook.js";
 
@@ -7,8 +6,7 @@ import {OidcProviderInitHook} from "./hooks/OidcProviderInitHook.js";
   imports: [OidcProviderInitHook]
 })
 export class CliPluginOidcProviderModule {
-  @Inject()
-  packageJson: ProjectPackageJson;
+  protected packageJson = inject(ProjectPackageJson);
 
   @OnAdd("@tsed/cli-plugin-oidc-provider")
   install() {

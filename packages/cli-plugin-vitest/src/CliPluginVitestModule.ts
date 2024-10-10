@@ -1,6 +1,5 @@
 import {RuntimesModule} from "@tsed/cli";
-import {Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
-import {Inject} from "@tsed/di";
+import {inject, Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 
 import {VitestGenerateHook} from "./hooks/VitestGenerateHook.js";
 import {VitestInitHook} from "./hooks/VitestInitHook.js";
@@ -9,11 +8,8 @@ import {VitestInitHook} from "./hooks/VitestInitHook.js";
   imports: [VitestInitHook, VitestGenerateHook]
 })
 export class CliPluginVitestModule {
-  @Inject()
-  runtimes: RuntimesModule;
-
-  @Inject()
-  packageJson: ProjectPackageJson;
+  protected runtimes = inject(RuntimesModule);
+  protected packageJson = inject(ProjectPackageJson);
 
   @OnAdd("@tsed/cli-plugin-vitest")
   install() {

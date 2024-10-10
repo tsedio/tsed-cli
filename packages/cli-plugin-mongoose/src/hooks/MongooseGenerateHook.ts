@@ -1,5 +1,5 @@
 import {type GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
-import {CliDockerComposeYaml, Inject, OnExec, ProjectPackageJson, SrcRendererService, type Tasks} from "@tsed/cli-core";
+import {CliDockerComposeYaml, inject, OnExec, ProjectPackageJson, SrcRendererService, type Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {camelCase, kebabCase} from "change-case";
 // @ts-ignore
@@ -10,18 +10,11 @@ import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 @Injectable()
 export class MongooseGenerateHook {
-  @Inject()
-  projectPackageJson: ProjectPackageJson;
-
-  @Inject()
-  srcRenderService: SrcRendererService;
-
-  @Inject()
-  cliMongoose: CliMongoose;
-
-  packages: any[];
-  @Inject()
-  protected cliDockerComposeYaml: CliDockerComposeYaml;
+  protected projectPackageJson = inject(ProjectPackageJson);
+  protected srcRenderService = inject(SrcRendererService);
+  protected cliMongoose = inject(CliMongoose);
+  protected packages: any[];
+  protected cliDockerComposeYaml = inject(CliDockerComposeYaml);
 
   constructor(private providersInfoService: ProvidersInfoService) {
     providersInfoService

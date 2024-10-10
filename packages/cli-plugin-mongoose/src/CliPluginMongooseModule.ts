@@ -1,5 +1,4 @@
-import {Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
-import {Inject} from "@tsed/di";
+import {inject, Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 
 import {MongooseGenerateHook} from "./hooks/MongooseGenerateHook.js";
 import {MongooseInitHook} from "./hooks/MongooseInitHook.js";
@@ -9,8 +8,7 @@ import {CliMongoose} from "./services/CliMongoose.js";
   imports: [MongooseInitHook, MongooseGenerateHook, CliMongoose]
 })
 export class CliPluginMongooseModule {
-  @Inject()
-  packageJson: ProjectPackageJson;
+  protected packageJson = inject(ProjectPackageJson);
 
   @OnAdd("@tsed/cli-plugin-mongoose")
   install() {
