@@ -1,4 +1,4 @@
-import {Inject, Injectable, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
+import {inject, Injectable, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
 import {camelCase, constantCase, kebabCase} from "change-case";
 import {basename, join} from "path";
 
@@ -6,11 +6,8 @@ import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 @Injectable()
 export class CliMongoose {
-  @Inject()
-  projectPackageJson: ProjectPackageJson;
-
-  @Inject()
-  protected srcRenderer: SrcRendererService;
+  protected projectPackageJson = inject(ProjectPackageJson);
+  protected srcRenderer = inject(SrcRendererService);
 
   async writeConfig(name: string, options: any = {}) {
     await this.srcRenderer.render(

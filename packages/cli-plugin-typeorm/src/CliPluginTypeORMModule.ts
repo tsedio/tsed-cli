@@ -1,5 +1,4 @@
-import {Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
-import {Inject} from "@tsed/di";
+import {inject, Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 
 import {TypeORMGenerateHook} from "./hooks/TypeORMGenerateHook.js";
 import {TypeORMInitHook} from "./hooks/TypeORMInitHook.js";
@@ -8,8 +7,7 @@ import {TypeORMInitHook} from "./hooks/TypeORMInitHook.js";
   imports: [TypeORMInitHook, TypeORMGenerateHook]
 })
 export class CliPluginTypeORMModule {
-  @Inject()
-  packageJson: ProjectPackageJson;
+  protected packageJson = inject(ProjectPackageJson);
 
   @OnAdd("@tsed/cli-plugin-typeorm")
   install() {

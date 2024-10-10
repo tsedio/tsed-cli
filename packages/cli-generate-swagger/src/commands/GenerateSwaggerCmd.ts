@@ -1,4 +1,4 @@
-import {CliFs, CliYaml, Command, type CommandProvider, Constant, Inject, InjectorService, Type} from "@tsed/cli-core";
+import {CliFs, CliYaml, Command, type CommandProvider, Constant, constant, Inject, inject, InjectorService, Type} from "@tsed/cli-core";
 import path, {join, resolve} from "path";
 
 export interface GenerateSwaggerCtx {
@@ -17,17 +17,9 @@ export interface GenerateSwaggerCtx {
   }
 })
 export class GenerateSwaggerCmd implements CommandProvider {
-  @Inject()
-  injector: InjectorService;
-
-  @Inject()
-  protected fs: CliFs;
-
-  @Inject()
-  protected cliYaml: CliYaml;
-
-  @Constant("server")
-  protected serverModule: Type<any>;
+  protected fs = inject(CliFs);
+  protected cliYaml = inject(CliYaml);
+  protected serverModule = constant<Type<any>>("server");
 
   $mapContext($ctx: GenerateSwaggerCtx) {
     return {...$ctx, output: resolve(join(process.cwd(), $ctx.output))};

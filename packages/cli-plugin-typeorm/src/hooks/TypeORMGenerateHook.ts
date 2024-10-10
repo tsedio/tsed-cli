@@ -1,5 +1,5 @@
 import {FeaturesMap, type GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
-import {CliDockerComposeYaml, Inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, type Tasks} from "@tsed/cli-core";
+import {CliDockerComposeYaml, inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, type Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {camelCase} from "change-case";
 
@@ -12,14 +12,9 @@ export interface TypeORMGenerateOptions extends GenerateCmdContext {
 
 @Injectable()
 export class TypeORMGenerateHook {
-  @Inject()
-  protected projectPackageJson: ProjectPackageJson;
-
-  @Inject()
-  protected srcRenderService: SrcRendererService;
-
-  @Inject()
-  protected cliDockerComposeYaml: CliDockerComposeYaml;
+  protected projectPackageJson = inject(ProjectPackageJson);
+  protected srcRenderService = inject(SrcRendererService);
+  protected cliDockerComposeYaml = inject(CliDockerComposeYaml);
 
   constructor(private providersInfoService: ProvidersInfoService) {
     providersInfoService.add(

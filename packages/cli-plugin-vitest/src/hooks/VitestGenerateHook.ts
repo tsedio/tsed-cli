@@ -1,13 +1,12 @@
 import type {GenerateCmdContext} from "@tsed/cli";
-import {Inject, Injectable, OnExec, SrcRendererService, type Tasks} from "@tsed/cli-core";
+import {inject, Injectable, OnExec, SrcRendererService, type Tasks} from "@tsed/cli-core";
 import {normalizePath} from "@tsed/normalize-path";
 
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 @Injectable()
 export class VitestGenerateHook {
-  @Inject()
-  srcRenderService: SrcRendererService;
+  protected srcRenderService = inject(SrcRendererService);
 
   @OnExec("generate")
   onGenerateExec(ctx: GenerateCmdContext): Tasks {

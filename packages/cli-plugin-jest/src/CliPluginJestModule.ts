@@ -1,6 +1,5 @@
 import {RuntimesModule} from "@tsed/cli";
-import {Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
-import {Inject} from "@tsed/di";
+import {inject, Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 
 import {JestGenerateHook} from "./hooks/JestGenerateHook.js";
 import {JestInitHook} from "./hooks/JestInitHook.js";
@@ -9,11 +8,8 @@ import {JestInitHook} from "./hooks/JestInitHook.js";
   imports: [JestInitHook, JestGenerateHook]
 })
 export class CliPluginJestModule {
-  @Inject()
-  runtimes: RuntimesModule;
-
-  @Inject()
-  packageJson: ProjectPackageJson;
+  protected runtimes = inject(RuntimesModule);
+  protected packageJson = inject(ProjectPackageJson);
 
   @OnAdd("@tsed/cli-plugin-jest")
   install() {

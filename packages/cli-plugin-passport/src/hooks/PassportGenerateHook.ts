@@ -1,5 +1,5 @@
 import {type GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
-import {Inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, type Tasks} from "@tsed/cli-core";
+import {inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, type Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {kebabCase} from "change-case";
 
@@ -12,16 +12,10 @@ export interface PassportGenerateOptions extends GenerateCmdContext {
 
 @Injectable()
 export class PassportGenerateHook {
-  @Inject()
-  projectPackageJson: ProjectPackageJson;
-
-  @Inject()
-  srcRenderService: SrcRendererService;
-
-  @Inject()
-  passportClient: PassportClient;
-
-  packages: any[];
+  protected projectPackageJson = inject(ProjectPackageJson);
+  protected srcRenderService = inject(SrcRendererService);
+  protected passportClient = inject(PassportClient);
+  protected packages: any[];
 
   constructor(private providersInfoService: ProvidersInfoService) {
     providersInfoService.add(

@@ -1,25 +1,14 @@
 import type {InitCmdContext} from "@tsed/cli";
-import {CliDockerComposeYaml, Inject, OnExec, ProjectPackageJson, RootRendererService, SrcRendererService} from "@tsed/cli-core";
+import {CliDockerComposeYaml, inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 
 import {CliMongoose} from "../services/CliMongoose.js";
 
 @Injectable()
 export class MongooseInitHook {
-  @Inject()
-  cliMongoose: CliMongoose;
-
-  @Inject()
-  protected packageJson: ProjectPackageJson;
-
-  @Inject()
-  protected rootRenderer: RootRendererService;
-
-  @Inject()
-  protected srcRenderer: SrcRendererService;
-
-  @Inject()
-  protected cliDockerComposeYaml: CliDockerComposeYaml;
+  protected cliMongoose = inject(CliMongoose);
+  protected packageJson = inject(ProjectPackageJson);
+  protected cliDockerComposeYaml = inject(CliDockerComposeYaml);
 
   @OnExec("init")
   onExec(ctx: InitCmdContext) {

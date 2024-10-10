@@ -1,11 +1,10 @@
-import {CliHttpClient, Inject, Injectable} from "@tsed/cli-core";
+import {CliHttpClient, inject, Injectable} from "@tsed/cli-core";
 
 const HOST = "http://www.passportjs.org/packages";
 
 @Injectable()
 export class PassportClient {
-  @Inject(CliHttpClient)
-  httpClient: CliHttpClient;
+  protected httpClient = inject(CliHttpClient);
 
   async getPackages(): Promise<any[]> {
     const result = await this.httpClient.get<any>(`${HOST}/-/all.json`, {});
