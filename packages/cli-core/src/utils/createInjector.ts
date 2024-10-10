@@ -1,4 +1,4 @@
-import {type DIConfigurationOptions, InjectorService} from "@tsed/di";
+import {type DIConfigurationOptions, injector, InjectorService} from "@tsed/di";
 import {Logger} from "@tsed/logger";
 
 import {CliConfiguration} from "../services/CliConfiguration.js";
@@ -17,21 +17,21 @@ function createConfiguration(injector: InjectorService): CliConfiguration & TsED
 }
 
 export function createInjector(settings: Partial<DIConfigurationOptions> = {}) {
-  const injector = new InjectorService();
-  injector.settings = createConfiguration(injector);
-  logger = injector.logger = new Logger(settings.name || "CLI");
+  const inj = injector();
+  inj.settings = createConfiguration(inj);
+  logger = inj.logger = new Logger(settings.name || "CLI");
 
-  injector.addProvider(ProjectPackageJson);
+  inj.addProvider(ProjectPackageJson);
 
-  injector.settings.set(settings);
+  inj.settings.set(settings);
 
   /* istanbul ignore next */
-  if (injector.settings.env === "test") {
-    injector.logger.stop();
+  if (inj.settings.env === "test") {
+    inj.logger.stop();
   } else {
     /* istanbul ignore next */
-    injector.logger.level = injector.settings.logger?.level || "warn";
-    injector.logger.appenders
+    inj.logger.level = inj.settings.logger?.level || "warn";
+    inj.logger.appenders
       .set("stdout", {
         type: "stdout",
         layout: {
@@ -50,5 +50,5 @@ export function createInjector(settings: Partial<DIConfigurationOptions> = {}) {
       });
   }
 
-  return injector;
+  return inj;
 }
