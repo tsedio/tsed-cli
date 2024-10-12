@@ -1,8 +1,8 @@
-import {BodyParams, Inject, Post, View} from "@tsed/common";
+import {BodyParams} from "@tsed/platform-params";
 import {Env} from "@tsed/core";
-import {Constant} from "@tsed/di";
+import {Constant, Inject} from "@tsed/di";
 import {Interaction, OidcCtx} from "@tsed/oidc-provider";
-import {Name} from "@tsed/schema";
+import {Name, Post, View} from "@tsed/schema";
 import {Accounts} from "../services/Accounts.js";
 
 @Interaction({
@@ -20,9 +20,7 @@ export class LoginInteraction {
   $onCreate() {}
 
   @View("login")
-  async $prompt(
-    @OidcCtx() oidcCtx: OidcCtx
-  ): Promise<any> {
+  async $prompt(@OidcCtx() oidcCtx: OidcCtx): Promise<any> {
     await oidcCtx.checkClientId();
 
     return oidcCtx.interactionPrompt({
@@ -33,10 +31,7 @@ export class LoginInteraction {
 
   @Post("/login")
   @View("login")
-  async submit(
-    @BodyParams() payload: any,
-    @OidcCtx() oidcCtx: OidcCtx
-  ) {
+  async submit(@BodyParams() payload: any, @OidcCtx() oidcCtx: OidcCtx) {
     oidcCtx.checkInteractionName("login");
 
     const account = await this.accounts.authenticate(payload.email, payload.password);

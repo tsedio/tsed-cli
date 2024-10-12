@@ -34,7 +34,7 @@
     "vitest": "2.1.1"
   },
   "peerDependencies": {
-    "@tsed/common": ">=7.14.2",
+    "@tsed/platform-http": ">=7.14.2",
     "@tsed/swagger": ">=7.14.2",
     "swagger-typescript-api": "^9.3.1"
   },

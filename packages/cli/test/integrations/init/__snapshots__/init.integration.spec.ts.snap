@@ -3,7 +3,7 @@
 exports[`Init cmd > Express.js > should generate a project with Arch FEATURE 2`] = `
 "import {join} from "path";
 import {Configuration, Inject} from "@tsed/di";
-import {PlatformApplication} from "@tsed/common";
+import {PlatformApplication} from "@tsed/platform-http";
 import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
@@ -66,7 +66,7 @@ export class Server {
 exports[`Init cmd > Express.js > should generate a project with Babel 2`] = `
 "import {join} from "path";
 import {Configuration, Inject} from "@tsed/di";
-import {PlatformApplication} from "@tsed/common";
+import {PlatformApplication} from "@tsed/platform-http";
 import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
@@ -118,7 +118,7 @@ export class Server {
 exports[`Init cmd > Express.js > should generate a project with Bun 2`] = `
 "import {join} from "path";
 import {Configuration, Inject} from "@tsed/di";
-import {PlatformApplication} from "@tsed/common";
+import {PlatformApplication} from "@tsed/platform-http";
 import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
@@ -170,7 +170,7 @@ export class Server {
 exports[`Init cmd > Express.js > should generate a project with Convention ANGULAR 2`] = `
 "import {join} from "path";
 import {Configuration, Inject} from "@tsed/di";
-import {PlatformApplication} from "@tsed/common";
+import {PlatformApplication} from "@tsed/platform-http";
 import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
@@ -233,7 +233,7 @@ export class Server {
 exports[`Init cmd > Express.js > should generate a project with NPM 2`] = `
 "import {join} from "path";
 import {Configuration, Inject} from "@tsed/di";
-import {PlatformApplication} from "@tsed/common";
+import {PlatformApplication} from "@tsed/platform-http";
 import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
@@ -285,7 +285,7 @@ export class Server {
 exports[`Init cmd > Express.js > should generate a project with Webpack 2`] = `
 "import {join} from "path";
 import {Configuration, Inject} from "@tsed/di";
-import {PlatformApplication} from "@tsed/common";
+import {PlatformApplication} from "@tsed/platform-http";
 import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
@@ -337,7 +337,7 @@ export class Server {
 exports[`Init cmd > Express.js > should generate a project with swagger 2`] = `
 "import {join} from "path";
 import {Configuration, Inject} from "@tsed/di";
-import {PlatformApplication} from "@tsed/common";
+import {PlatformApplication} from "@tsed/platform-http";
 import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
@@ -400,7 +400,7 @@ export class Server {
 exports[`Init cmd > Express.js > should generate a project with the right options 2`] = `
 "import {join} from "path";
 import {Configuration, Inject} from "@tsed/di";
-import {PlatformApplication} from "@tsed/common";
+import {PlatformApplication} from "@tsed/platform-http";
 import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
 import "@tsed/platform-express"; // /!\\ keep this import
 import "@tsed/ajv";
@@ -452,7 +452,7 @@ export class Server {
 exports[`Init cmd > Koa.js > should generate a project with the right options 2`] = `
 "import {join} from "path";
 import {Configuration, Inject} from "@tsed/di";
-import {PlatformApplication} from "@tsed/common";
+import {PlatformApplication} from "@tsed/platform-http";
 import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
 import "@tsed/platform-koa"; // /!\\ keep this import
 import "@tsed/ajv";

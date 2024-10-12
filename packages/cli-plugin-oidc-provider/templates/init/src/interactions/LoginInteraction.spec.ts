@@ -1,10 +1,10 @@
-import { PlatformTest } from "@tsed/common";
-import { catchAsyncError } from "@tsed/core";
-import { BadRequest } from "@tsed/exceptions";
+import {PlatformTest} from "@tsed/platform-http";
+import {catchAsyncError} from "@tsed/core";
+import {BadRequest} from "@tsed/exceptions";
 
-import { Accounts } from "../services/Accounts.js";
-import { getOidcContextFixture } from "./__mock__/oidcContext.fixture.js";
-import { LoginInteraction } from "./LoginInteraction.js";
+import {Accounts} from "../services/Accounts.js";
+import {getOidcContextFixture} from "./__mock__/oidcContext.fixture.js";
+import {LoginInteraction} from "./LoginInteraction.js";
 
 async function createInteractionFixture() {
   const accounts = {
@@ -18,7 +18,7 @@ async function createInteractionFixture() {
     }
   ]);
 
-  return { interaction, accounts };
+  return {interaction, accounts};
 }
 
 describe("LoginInteraction", () => {
@@ -30,7 +30,7 @@ describe("LoginInteraction", () => {
 
   describe("$prompt()", () => {
     it("should return the prompt login context", async () => {
-      const { interaction } = await createInteractionFixture();
+      const {interaction} = await createInteractionFixture();
       const oidcContext = getOidcContextFixture();
 
       const result = await interaction.$prompt(oidcContext);
@@ -51,7 +51,7 @@ describe("LoginInteraction", () => {
       });
     });
     it("should throw error when the Client is unauthorized", async () => {
-      const { interaction } = await createInteractionFixture();
+      const {interaction} = await createInteractionFixture();
       const oidcContext = getOidcContextFixture();
 
       (oidcContext.checkClientId as vi.Mock).mockRejectedValue(new Error("Unknown given client_id: client_id"));
@@ -64,10 +64,10 @@ describe("LoginInteraction", () => {
   });
   describe("submit()", () => {
     it("should find account", async () => {
-      const { interaction, accounts } = await createInteractionFixture();
+      const {interaction, accounts} = await createInteractionFixture();
       const oidcContext = getOidcContextFixture();
 
-      const payload = { email: "email@email.com", password: "pwd" };
+      const payload = {email: "email@email.com", password: "pwd"};
 
       accounts.authenticate.mockResolvedValue({
         accountId: "id"
@@ -77,13 +77,13 @@ describe("LoginInteraction", () => {
 
       expect(result).toEqual(undefined);
       expect(oidcContext.checkInteractionName).toHaveBeenCalledWith("login");
-      expect(oidcContext.interactionFinished).toHaveBeenCalledWith({ login: { accountId: "id" } });
+      expect(oidcContext.interactionFinished).toHaveBeenCalledWith({login: {accountId: "id"}});
     });
     it("should return to the login page and return the right context page", async () => {
-      const { interaction, accounts } = await createInteractionFixture();
+      const {interaction, accounts} = await createInteractionFixture();
       const oidcContext = getOidcContextFixture();
 
-      const payload = { email: "email@email.com", password: "pwd" };
+      const payload = {email: "email@email.com", password: "pwd"};
 
       accounts.authenticate.mockResolvedValue(null);
 
@@ -106,7 +106,7 @@ describe("LoginInteraction", () => {
       expect(oidcContext.interactionFinished).not.toHaveBeenCalled();
     });
     it("should fail if the prompt name is incorrect", async () => {
-      const { interaction } = await createInteractionFixture();
+      const {interaction} = await createInteractionFixture();
       const oidcContext = getOidcContextFixture();
       oidcContext.prompt.name = "unknown";
 
@@ -114,7 +114,7 @@ describe("LoginInteraction", () => {
         throw new BadRequest("Bad interaction name");
       });
 
-      const payload = { email: "email@email.com", password: "pwd" };
+      const payload = {email: "email@email.com", password: "pwd"};
 
       const error = await catchAsyncError<any>(() => interaction.submit(payload, oidcContext));
 

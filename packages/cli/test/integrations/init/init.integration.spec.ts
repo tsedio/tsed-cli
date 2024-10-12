@@ -79,7 +79,6 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
-            "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -88,6 +87,7 @@ describe("Init cmd", () => {
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
             "@tsed/platform-express": "5.58.1",
+            "@tsed/platform-http": "5.58.1",
             "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",
             "@tsed/platform-params": "5.58.1",
@@ -189,7 +189,6 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
-            "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -198,6 +197,7 @@ describe("Init cmd", () => {
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
             "@tsed/platform-express": "5.58.1",
+            "@tsed/platform-http": "5.58.1",
             "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",
             "@tsed/platform-params": "5.58.1",
@@ -280,7 +280,6 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
-            "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -289,6 +288,7 @@ describe("Init cmd", () => {
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
             "@tsed/platform-express": "5.58.1",
+            "@tsed/platform-http": "5.58.1",
             "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",
             "@tsed/platform-params": "5.58.1",
@@ -372,7 +372,6 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
-            "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -381,6 +380,7 @@ describe("Init cmd", () => {
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
             "@tsed/platform-express": "5.58.1",
+            "@tsed/platform-http": "5.58.1",
             "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",
             "@tsed/platform-params": "5.58.1",
@@ -465,7 +465,6 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
-            "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -474,6 +473,7 @@ describe("Init cmd", () => {
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
             "@tsed/platform-express": "5.58.1",
+            "@tsed/platform-http": "5.58.1",
             "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",
             "@tsed/platform-params": "5.58.1",
@@ -558,7 +558,6 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
-            "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -567,6 +566,7 @@ describe("Init cmd", () => {
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
             "@tsed/platform-express": "5.58.1",
+            "@tsed/platform-http": "5.58.1",
             "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",
             "@tsed/platform-params": "5.58.1",
@@ -787,7 +787,6 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
-            "@tsed/common": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -795,6 +794,7 @@ describe("Init cmd", () => {
             "@tsed/openspec": "5.58.1",
             "@tsed/platform-cache": "5.58.1",
             "@tsed/platform-exceptions": "5.58.1",
+            "@tsed/platform-http": "5.58.1",
             "@tsed/platform-koa": "5.58.1",
             "@tsed/platform-log-request": "5.58.1",
             "@tsed/platform-middlewares": "5.58.1",

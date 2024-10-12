@@ -13,12 +13,12 @@ export class CliPluginMongooseModule {
   @OnAdd("@tsed/cli-plugin-mongoose")
   install() {
     this.packageJson.addDependencies({
-      "@tsed/mongoose": this.packageJson.dependencies["@tsed/common"],
+      "@tsed/mongoose": this.packageJson.dependencies["@tsed/platform-http"],
       mongoose: "latest"
     });
 
     this.packageJson.addDevDependencies({
-      "@tsed/testing-mongoose": this.packageJson.dependencies["@tsed/common"]
+      "@tsed/testing-mongoose": this.packageJson.dependencies["@tsed/platform-http"]
     });
   }
 }

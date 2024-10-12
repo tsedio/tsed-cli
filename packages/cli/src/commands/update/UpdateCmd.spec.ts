@@ -40,7 +40,7 @@ describe("UpdateCmd", () => {
 
       const npmClientRegistry = {
         info(pkg: string) {
-          if (pkg === "@tsed/common") {
+          if (pkg === "@tsed/platform-http") {
             return {versions};
           }
         }
@@ -103,7 +103,7 @@ describe("UpdateCmd", () => {
         dependencies: {
           "@tsed/core": "5.50.1",
           "@tsed/di": "5.50.1",
-          "@tsed/common": "5.50.1",
+          "@tsed/platform-http": "5.50.1",
           "@tsed/logger": "5.4.0"
         },
         devDependencies: {
@@ -141,7 +141,7 @@ describe("UpdateCmd", () => {
 
       // @ts-ignore
       expect(command.projectPackage.dependencies).toEqual({
-        "@tsed/common": "8.0.0-alpha.4",
+        "@tsed/platform-http": "8.0.0-alpha.4",
         "@tsed/core": "8.0.0-alpha.4",
         "@tsed/di": "8.0.0-alpha.4",
         "@tsed/logger": "^5.5.0"

@@ -347,7 +347,6 @@ export class InitCmd implements CommandProvider {
 
   addDependencies(ctx: InitCmdContext) {
     this.packageJson.addDependencies({
-      "@tsed/common": ctx.tsedVersion,
       "@tsed/core": ctx.tsedVersion,
       "@tsed/di": ctx.tsedVersion,
       "@tsed/ajv": ctx.tsedVersion,
@@ -355,6 +354,7 @@ export class InitCmd implements CommandProvider {
       "@tsed/schema": ctx.tsedVersion,
       "@tsed/json-mapper": ctx.tsedVersion,
       "@tsed/openspec": ctx.tsedVersion,
+      "@tsed/platform-http": ctx.tsedVersion,
       "@tsed/platform-cache": ctx.tsedVersion,
       "@tsed/platform-exceptions": ctx.tsedVersion,
       "@tsed/platform-log-request": ctx.tsedVersion,
@@ -363,7 +363,6 @@ export class InitCmd implements CommandProvider {
       "@tsed/platform-response-filter": ctx.tsedVersion,
       "@tsed/platform-views": ctx.tsedVersion,
       "@tsed/logger": "latest",
-      "@tsed/logger-file": "latest",
       "@tsed/engines": "latest",
       "@tsed/barrels": "latest",
       ajv: "latest",

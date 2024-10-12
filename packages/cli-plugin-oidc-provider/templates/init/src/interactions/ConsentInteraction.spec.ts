@@ -1,12 +1,12 @@
-import { PlatformTest } from "@tsed/common";
+import {PlatformTest} from "@tsed/platform-http";
 
-import { getOidcContextFixture } from "./__mock__/oidcContext.fixture.js";
-import { ConsentInteraction } from "./ConsentInteraction.js";
+import {getOidcContextFixture} from "./__mock__/oidcContext.fixture.js";
+import {ConsentInteraction} from "./ConsentInteraction.js";
 
 async function createInteractionFixture() {
   const interaction = await PlatformTest.invoke<ConsentInteraction>(ConsentInteraction, []);
 
-  return { interaction };
+  return {interaction};
 }
 
 describe("ConsentInteraction", () => {
@@ -15,7 +15,7 @@ describe("ConsentInteraction", () => {
 
   describe("$prompt()", () => {
     it("should return consent context", async () => {
-      const { interaction } = await createInteractionFixture();
+      const {interaction} = await createInteractionFixture();
       const oidcContext = getOidcContextFixture();
 
       const result = await interaction.$prompt(oidcContext);
@@ -36,7 +36,7 @@ describe("ConsentInteraction", () => {
   });
   describe("confirm()", () => {
     it("should control all consentement", async () => {
-      const { interaction } = await createInteractionFixture();
+      const {interaction} = await createInteractionFixture();
       const oidcContext = getOidcContextFixture();
       oidcContext.prompt.name = "consent";
 
@@ -65,7 +65,7 @@ describe("ConsentInteraction", () => {
       expect(grant.addOIDCClaims).toHaveBeenCalledWith(["claims"]);
       expect(grant.addResourceScope).toHaveBeenCalledWith("indicator", "scopes");
       expect(grant.save).toHaveBeenCalledWith();
-      expect(oidcContext.interactionFinished).toHaveBeenCalledWith({ consent: { grantId: "grantId" } }, { mergeWithLastSubmission: true });
+      expect(oidcContext.interactionFinished).toHaveBeenCalledWith({consent: {grantId: "grantId"}}, {mergeWithLastSubmission: true});
     });
   });
 });
