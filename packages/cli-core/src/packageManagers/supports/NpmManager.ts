@@ -1,6 +1,7 @@
-import {BaseManager, ManagerCmdOpts} from "./BaseManager";
 import {Injectable} from "@tsed/di";
 import {Observable} from "rxjs";
+
+import {BaseManager, type ManagerCmdOpts} from "./BaseManager.js";
 
 @Injectable({
   type: "package:manager"

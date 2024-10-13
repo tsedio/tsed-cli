@@ -1,8 +1,8 @@
 import { expect, describe, it, afterAll, beforeAll } from "vitest";
-import { PlatformTest } from "@tsed/common";
+import { PlatformTest } from "@tsed/platform-http/testing";
 import SuperTest from "supertest";
-import { {{symbolName}} } from "./{{symbolPathBasename}}";
-import { Server } from "{{relativeSrcPath}}/Server";
+import { {{symbolName}} } from "./{{symbolPathBasename}}.js";
+import { Server } from "{{relativeSrcPath}}/Server.js";
 
 describe("{{symbolName}}", () => {
   beforeAll(PlatformTest.bootstrap(Server, {

@@ -1,6 +1,7 @@
 import {Store} from "@tsed/core";
-import {CommandStoreKeys} from "../domains/CommandStoreKeys";
-import {OnAdd} from "./onAdd";
+
+import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
+import {OnAdd} from "./onAdd.js";
 
 class Test {
   @OnAdd("@tsed/cli-plugin")

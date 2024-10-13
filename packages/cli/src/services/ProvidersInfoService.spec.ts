@@ -1,4 +1,4 @@
-import {ProvidersInfoService} from "./ProvidersInfoService";
+import {ProvidersInfoService} from "./ProvidersInfoService.js";
 
 describe("ProvidersInfoService", () => {
   describe("add()", () => {

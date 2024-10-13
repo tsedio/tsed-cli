@@ -1,16 +1,18 @@
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {join, resolve} from "path";
-import {ProjectPackageJson} from "./ProjectPackageJson";
-import {CliFs} from "./CliFs";
-import {CliExeca} from "./CliExeca";
 
-const dir = __dirname;
+import {CliExeca} from "./CliExeca.js";
+import {CliFs} from "./CliFs.js";
+import {ProjectPackageJson} from "./ProjectPackageJson.js";
+
+const dir = import.meta.dirname;
 
 async function getProjectPackageJsonFixture() {
   const cliFs = {
-    writeFileSync: jest.fn(),
-    exists: jest.fn().mockReturnValue(false),
-    readJsonSync: jest.fn().mockReturnValue({
+    writeFileSync: vi.fn(),
+    exists: vi.fn().mockReturnValue(false),
+    readJsonSync: vi.fn().mockReturnValue({
       scripts: {},
       dependencies: {},
       devDependencies: {}
@@ -89,6 +91,7 @@ describe("ProjectPackageJson", () => {
       devDependencies: {
         "dev-module3": "6.0.0"
       },
+      type: "module",
       tsed: {
         packageManager: "npm",
         runtime: "node"

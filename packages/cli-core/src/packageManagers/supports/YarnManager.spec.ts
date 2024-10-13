@@ -1,11 +1,13 @@
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {YarnManager} from "./YarnManager";
-import {CliExeca} from "../../services";
+
+import {CliExeca} from "../../services/index.js";
+import {YarnManager} from "./YarnManager.js";
 
 async function getManagerFixture() {
   const cliExeca = {
-    runSync: jest.fn(),
-    run: jest.fn()
+    runSync: vi.fn(),
+    run: vi.fn()
   };
   const manager = await CliPlatformTest.invoke<YarnManager>(YarnManager, [
     {

@@ -1,54 +1,54 @@
 {
   "name": "@tsed/cli",
-  "version": "5.4.3",
+  "description": "CLI to bootstrap your Ts.ED project",
+  "version": "6.0.0-beta.3",
+  "type": "module",
+  "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
-  "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {
-    "types": "./lib/types/index.d.ts",
-    "import": "./lib/esm/index.js",
-    "require": "./lib/cjs/index.js",
-    "default": "./lib/esm/index.js"
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "import": "./lib/esm/index.js",
+      "default": "./lib/esm/index.js"
+    }
   },
   "scripts": {
     "build": "yarn build:ts",
-    "build:ts": "tsc --build tsconfig.json && tsc --build tsconfig.esm.json && cp scripts/index.esm.js lib/esm/constants/index.js",
-    "start:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts -h",
-    "start:help:g": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
-    "start:help:i": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -h",
-    "start:version": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts --version",
-    "start:init:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -h",
-    "start:init:test": "cross-env NODE_ENV=development cross-env CI=true ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default --features=oidc --arch=default --convention=conv_default --platform=express --skip-prompt .",
-    "start:init:test:jest": "cross-env NODE_ENV=development cross-env CI=true ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default --features=jest --arch=default --convention=conv_default --platform=express --skip-prompt .",
-    "start:init:run": "cross-env NODE_ENV=development cross-env CI=true ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default",
-    "start:init:params": "cross-env NODE_ENV=development cross-env CI=true ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init/default --skip-prompt --features swagger,jest,lintstaged",
-    "start:init:run:name": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/init awesome --verbose",
-    "start:init:args": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts init -r ./.tmp/cmd --package-manager=npm --project-name=untitled3 --features=graphql,typeorm,passportjs,socketio,linter,eslint,prettier --arch=default --convention=default --platform=express --skip-prompt .",
-    "start:add:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts add -r ./.tmp",
-    "start:generate": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -r ./.tmp/init/default",
-    "start:generate:help": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -h",
-    "start:generate:model": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate model -r ./.tmp/init/awesome",
-    "start:g:model": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts g model -r ./.tmp/init/awesome",
-    "start:g:prisma": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts g service -r ./.tmp/init/awesome prisma",
-    "start:generate:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts generate -r ./.tmp/init/awesome",
-    "start:typeorm:run": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/bin/tsed.ts typeorm entity:create -r ./.tmp/init/awesome --name User",
-    "lint": "eslint '**/*.{ts,js}'",
-    "lint:fix": "eslint '**/*.{ts,js}' --fix",
-    "test": "cross-env NODE_ENV=test yarn jest --max-workers=2 --passWithNoTests && jest-coverage-thresholds-bumper"
+    "build:ts": "tsc --build tsconfig.json",
+    "run-cmd": "cross-env NODE_ENV=development CLI_MODE=ts CI=true node --import @swc-node/register/esm-register src/bin/tsed.ts",
+    "start:help": "yarn run-cmd -h",
+    "start:help:g": "yarn run-cmd generate -h",
+    "start:help:i": "yarn run-cmd init -h",
+    "start:version": "yarn run-cmd --version",
+    "start:init:help": "yarn run-cmd init -h",
+    "start:init:test": "yarn run-cmd init init -r ./.tmp/init/default --features=oidc --arch=default --convention=conv_default --platform=express --package-manager=npm --skip-prompt .",
+    "start:init:test:jest": "yarn run-cmd init -r ./.tmp/init/default --features=jest --arch=default --convention=conv_default --platform=express --package-manager=npm --skip-prompt .",
+    "start:init:run": "yarn run-cmd init -r ./.tmp/init/default",
+    "start:init:params": "yarn run-cmd init -r ./.tmp/init/default --skip-prompt --features swagger,jest,lintstaged",
+    "start:init:run:name": "yarn run-cmd init -r ./.tmp/init awesome --verbose",
+    "start:init:args": "yarn run-cmd init -r ./.tmp/cmd --package-manager=npm --project-name=untitled3 --features=graphql,typeorm,passportjs,socketio,linter,eslint,prettier --arch=default --convention=default --platform=express --skip-prompt .",
+    "start:add:run": "yarn run-cmd add -r ./.tmp",
+    "start:generate": "yarn run-cmd generate -r ./.tmp/init/default",
+    "start:generate:help": "yarn run-cmd generate -h",
+    "start:generate:model": "yarn run-cmd generate model -r ./.tmp/init/awesome",
+    "start:g:model": "yarn run-cmd g model -r ./.tmp/init/awesome",
+    "start:g:prisma": "yarn run-cmd g service -r ./.tmp/init/awesome prisma",
+    "start:generate:run": "yarn run-cmd generate -r ./.tmp/init/awesome",
+    "start:typeorm:run": "yarn run-cmd typeorm entity:create -r ./.tmp/init/awesome --name User",
+    "test": "vitest run",
+    "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
   "bin": {
-    "tsed": "lib/cjs/bin/tsed.js"
+    "tsed": "lib/esm/bin/tsed.js"
   },
   "files": [
-    "lib/cjs/bin/tsed.js",
-    "lib/cjs/bin",
     "lib/esm/bin/tsed.js",
     "lib/esm/bin",
     "lib",
     "templates"
   ],
-  "description": "CLI to bootstrap your Ts.ED project",
   "keywords": [
     "Ts.ED",
     "cli",
@@ -63,36 +63,36 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@tsed/cli-core": "5.4.3",
-    "@tsed/core": ">=7.14.2",
-    "@tsed/di": ">=7.14.2",
+    "@swc-node/register": "^1.10.9",
+    "@swc/core": "1.7.26",
+    "@swc/helpers": "^0.5.13",
+    "@tsed/cli-core": "workspace:*",
+    "@tsed/core": ">=8.0.0-beta.5",
+    "@tsed/di": ">=8.0.0-beta.5",
     "@tsed/logger": ">=6.2.1",
-    "@tsed/openspec": ">=7.14.2",
-    "@tsed/schema": ">=7.14.2",
-    "chalk": "4.1.2",
-    "change-case": "4.1.2",
-    "globby": "11.1.0",
-    "module-alias": "^2.2.2",
-    "normalize-path": "3.0.0",
-    "read-pkg-up": "7.0.1",
-    "semver": "^7.3.5",
-    "tslib": "2.3.1"
+    "@tsed/openspec": ">=8.0.0-beta.5",
+    "@tsed/schema": ">=8.0.0-beta.5",
+    "chalk": "^5.3.0",
+    "change-case": "^5.4.4",
+    "esm-module-alias": "^2.2.1",
+    "globby": "^14.0.2",
+    "read-pkg-up": "^11.0.0",
+    "semver": "^7.6.3",
+    "tslib": "^2.7.0"
   },
   "devDependencies": {
-    "@tsed/eslint": "5.4.3",
-    "@tsed/jest-config": "5.4.3",
-    "@tsed/typescript": "5.4.3",
+    "@tsed/typescript": "workspace:*",
     "@types/change-case": "^2.3.1",
     "cross-env": "7.0.3",
-    "eslint": "8.22.0",
-    "jest": "29.5.0"
+    "typescript": "5.6.2",
+    "vitest": "2.1.1"
   },
   "peerDependencies": {
-    "@tsed/cli-core": "5.4.3",
-    "@tsed/core": ">=7.14.2",
-    "@tsed/di": ">=7.14.2",
+    "@tsed/cli-core": "workspace:*",
+    "@tsed/core": ">=8.0.0-beta.5",
+    "@tsed/di": ">=8.0.0-beta.5",
     "@tsed/logger": ">=6.2.1",
-    "@tsed/openspec": ">=7.14.2",
-    "@tsed/schema": ">=7.14.2"
+    "@tsed/openspec": ">=8.0.0-beta.5",
+    "@tsed/schema": ">=8.0.0-beta.5"
   }
 }

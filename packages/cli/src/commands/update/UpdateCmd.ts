@@ -1,19 +1,21 @@
 import {
-  CliDefaultOptions,
+  type CliDefaultOptions,
   CliPackageJson,
   Command,
-  CommandProvider,
+  type CommandProvider,
   createSubTasks,
   Inject,
+  inject,
   NpmRegistryClient,
   PackageManagersModule,
   ProjectPackageJson,
-  QuestionOptions,
-  Task
+  type QuestionOptions,
+  type Task
 } from "@tsed/cli-core";
 import {getValue} from "@tsed/core";
 import semver from "semver";
-import {IGNORE_TAGS, IGNORE_VERSIONS, MINIMAL_TSED_VERSION} from "../../constants";
+
+import {IGNORE_TAGS, IGNORE_VERSIONS, MINIMAL_TSED_VERSION} from "../../constants/index.js";
 
 export interface UpdateCmdContext extends CliDefaultOptions {
   version: string;
@@ -42,17 +44,10 @@ function shouldUpdate(pkg: string) {
   options: {}
 })
 export class UpdateCmd implements CommandProvider {
-  @Inject(NpmRegistryClient)
-  npmRegistryClient: NpmRegistryClient;
-
-  @Inject(ProjectPackageJson)
-  projectPackage: ProjectPackageJson;
-
-  @Inject(PackageManagersModule)
-  packageManagers: PackageManagersModule;
-
-  @CliPackageJson()
-  cliPackage: CliPackageJson;
+  protected npmRegistryClient = inject(NpmRegistryClient);
+  protected projectPackage = inject(ProjectPackageJson);
+  protected packageManagers = inject(PackageManagersModule);
+  protected cliPackage = inject(CliPackageJson);
 
   private versions: any;
 
@@ -113,7 +108,7 @@ export class UpdateCmd implements CommandProvider {
   }
 
   private async getAvailableVersions() {
-    const {versions} = await this.npmRegistryClient.info("@tsed/common", 10);
+    const {versions} = await this.npmRegistryClient.info("@tsed/platform-http", 10);
     this.versions = versions;
 
     return Object.keys(versions)

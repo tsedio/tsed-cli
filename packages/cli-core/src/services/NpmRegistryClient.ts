@@ -1,8 +1,9 @@
-import {Inject, Injectable} from "@tsed/di";
-import url from "url";
+import {inject, Injectable} from "@tsed/di";
 import registry_url from "registry-url";
-import {PackageInfo} from "../interfaces/PackageJson";
-import {CliHttpClient} from "./CliHttpClient";
+import url from "url";
+
+import type {PackageInfo} from "../interfaces/PackageJson.js";
+import {CliHttpClient} from "./CliHttpClient.js";
 
 const HOST = registry_url();
 const REGEX_REGISTRY_ENFORCED_HTTPS = /^https?:\/\/([^\/]+\.)?(yarnpkg\.com|npmjs\.(org|com))(\/|$)/;
@@ -20,8 +21,7 @@ export const SCOPE_SEPARATOR = "%2f";
 
 @Injectable()
 export class NpmRegistryClient {
-  @Inject(CliHttpClient)
-  private httpClient: CliHttpClient;
+  private httpClient = inject(CliHttpClient);
 
   static escapeName(name: string): string {
     // scoped packages contain slashes and the npm registry expects them to be escaped

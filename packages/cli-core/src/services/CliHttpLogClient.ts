@@ -1,9 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import querystring from "querystring";
-import {Inject, Opts} from "@tsed/di";
-import {Logger} from "@tsed/logger";
 import {getValue} from "@tsed/core";
-import {logToCurl} from "../utils/logToCurl";
+import {inject, Opts} from "@tsed/di";
+import {Logger} from "@tsed/logger";
+import querystring from "querystring";
+
+import {logToCurl} from "../utils/logToCurl.js";
 
 export interface BaseLogClientOptions {
   callee: string;
@@ -11,9 +11,7 @@ export interface BaseLogClientOptions {
 
 export class CliHttpLogClient {
   callee: string;
-
-  @Inject()
-  protected logger: Logger;
+  protected logger = inject(Logger);
 
   // @ts-ignore
   constructor(@Opts options: Partial<BaseLogClientOptions> = {}) {

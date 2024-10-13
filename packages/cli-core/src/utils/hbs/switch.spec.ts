@@ -1,9 +1,9 @@
-import {helpers} from "./switch";
+import {helpers} from "./switch.js";
 
 describe("switch", () => {
   it("should use switch statement", () => {
     const options = {
-      fn: jest.fn()
+      fn: vi.fn()
     };
     const ctx = {};
 
@@ -15,7 +15,7 @@ describe("switch", () => {
 
   it("should use case statement", () => {
     const options = {
-      fn: jest.fn()
+      fn: vi.fn()
     };
     const ctx = {switch_value: 1};
 
@@ -26,7 +26,7 @@ describe("switch", () => {
 
   it("should use case statement (false)", () => {
     const options = {
-      fn: jest.fn()
+      fn: vi.fn()
     };
     const ctx = {switch_value: 0};
 

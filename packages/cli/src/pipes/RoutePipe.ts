@@ -1,5 +1,5 @@
 import {Injectable} from "@tsed/cli-core";
-import {paramCase} from "change-case";
+import {kebabCase} from "change-case";
 
 @Injectable()
 export class RoutePipe {
@@ -7,13 +7,13 @@ export class RoutePipe {
     const r = route
       .split("/")
       .reduce((paths: string[], path) => {
-        const word = paramCase(path);
+        const word = kebabCase(path);
 
         if (paths.includes(`${word}s`) || paths.includes(word)) {
           return paths;
         }
 
-        return [...paths, paramCase(path)];
+        return [...paths, kebabCase(path)];
       }, [])
       .join("/");
 

@@ -1,5 +1,5 @@
-import {CliPluginEslintModule} from "./CliPluginEslintModule";
+import {CliPluginEslintModule} from "./CliPluginEslintModule.js";
 
-export * from "./utils/templateDir";
+export * from "./utils/templateDir.js";
 
 export default CliPluginEslintModule;

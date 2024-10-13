@@ -1,19 +1,20 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Init cmd Express.js should generate a project with Arch FEATURE 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-express\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import \\"@tsed/swagger\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./rest/index\\";
-import * as pages from \\"./pages/index\\";
+exports[`Init cmd > Express.js > should generate a project with Arch FEATURE 2`] = `
+"import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/platform-http";
+import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
+import "@tsed/platform-express"; // /!\\ keep this import
+import "@tsed/ajv";
+import "@tsed/swagger";
+import {config} from "./config/index.js";
+import * as rest from "./rest/index.js";
+import * as pages from "./pages/index.js";
 
 @Configuration({
   ...config,
-  acceptMimes: [\\"application/json\\"],
+  acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
@@ -21,35 +22,35 @@ import * as pages from \\"./pages/index\\";
     returnsCoercedValues: true
   },
   mount: {
-    \\"/rest\\": [
+    "/rest": [
       ...Object.values(rest)
     ],
-    \\"/\\": [
+    "/": [
       ...Object.values(pages)
     ]
   },
   swagger: [
     {
-      path: \\"/doc\\",
-      specVersion: \\"3.0.1\\"
+      path: "/doc",
+      specVersion: "3.0.1"
     }
   ],
   middlewares: [
-    \\"cors\\",
-    \\"cookie-parser\\",
-    \\"compression\\",
-    \\"method-override\\",
-    \\"json-parser\\",
-    { use: \\"urlencoded-parser\\", options: { extended: true }}
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    { use: "urlencoded-parser", options: { extended: true }}
   ],
   views: {
-    root: join(process.cwd(), \\"../views\\"),
+    root: join(process.cwd(), "../views"),
     extensions: {
-      ejs: \\"ejs\\"
+      ejs: "ejs"
     }
   },
   exclude: [
-    \\"**/*.spec.ts\\"
+    "**/*.spec.ts"
   ]
 })
 export class Server {
@@ -62,18 +63,19 @@ export class Server {
 "
 `;
 
-exports[`Init cmd Express.js should generate a project with Babel 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-express\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./controllers/rest/index\\";
+exports[`Init cmd > Express.js > should generate a project with Babel 2`] = `
+"import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/platform-http";
+import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
+import "@tsed/platform-express"; // /!\\ keep this import
+import "@tsed/ajv";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
-  acceptMimes: [\\"application/json\\"],
+  acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
@@ -81,26 +83,26 @@ import * as rest from \\"./controllers/rest/index\\";
     returnsCoercedValues: true
   },
   mount: {
-    \\"/rest\\": [
+    "/rest": [
       ...Object.values(rest)
     ]
   },
   middlewares: [
-    \\"cors\\",
-    \\"cookie-parser\\",
-    \\"compression\\",
-    \\"method-override\\",
-    \\"json-parser\\",
-    { use: \\"urlencoded-parser\\", options: { extended: true }}
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    { use: "urlencoded-parser", options: { extended: true }}
   ],
   views: {
-    root: join(process.cwd(), \\"../views\\"),
+    root: join(process.cwd(), "../views"),
     extensions: {
-      ejs: \\"ejs\\"
+      ejs: "ejs"
     }
   },
   exclude: [
-    \\"**/*.spec.ts\\"
+    "**/*.spec.ts"
   ]
 })
 export class Server {
@@ -113,18 +115,19 @@ export class Server {
 "
 `;
 
-exports[`Init cmd Express.js should generate a project with Bun 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-express\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./controllers/rest/index\\";
+exports[`Init cmd > Express.js > should generate a project with Bun 2`] = `
+"import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/platform-http";
+import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
+import "@tsed/platform-express"; // /!\\ keep this import
+import "@tsed/ajv";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
-  acceptMimes: [\\"application/json\\"],
+  acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
@@ -132,26 +135,26 @@ import * as rest from \\"./controllers/rest/index\\";
     returnsCoercedValues: true
   },
   mount: {
-    \\"/rest\\": [
+    "/rest": [
       ...Object.values(rest)
     ]
   },
   middlewares: [
-    \\"cors\\",
-    \\"cookie-parser\\",
-    \\"compression\\",
-    \\"method-override\\",
-    \\"json-parser\\",
-    { use: \\"urlencoded-parser\\", options: { extended: true }}
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    { use: "urlencoded-parser", options: { extended: true }}
   ],
   views: {
-    root: join(process.cwd(), \\"../views\\"),
+    root: join(process.cwd(), "../views"),
     extensions: {
-      ejs: \\"ejs\\"
+      ejs: "ejs"
     }
   },
   exclude: [
-    \\"**/*.spec.ts\\"
+    "**/*.spec.ts"
   ]
 })
 export class Server {
@@ -164,20 +167,21 @@ export class Server {
 "
 `;
 
-exports[`Init cmd Express.js should generate a project with Convention ANGULAR 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-express\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import \\"@tsed/swagger\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./controllers/rest/index\\";
-import * as pages from \\"./controllers/pages/index\\";
+exports[`Init cmd > Express.js > should generate a project with Convention ANGULAR 2`] = `
+"import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/platform-http";
+import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
+import "@tsed/platform-express"; // /!\\ keep this import
+import "@tsed/ajv";
+import "@tsed/swagger";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
+import * as pages from "./controllers/pages/index.js";
 
 @Configuration({
   ...config,
-  acceptMimes: [\\"application/json\\"],
+  acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
@@ -185,35 +189,35 @@ import * as pages from \\"./controllers/pages/index\\";
     returnsCoercedValues: true
   },
   mount: {
-    \\"/rest\\": [
+    "/rest": [
       ...Object.values(rest)
     ],
-    \\"/\\": [
+    "/": [
       ...Object.values(pages)
     ]
   },
   swagger: [
     {
-      path: \\"/doc\\",
-      specVersion: \\"3.0.1\\"
+      path: "/doc",
+      specVersion: "3.0.1"
     }
   ],
   middlewares: [
-    \\"cors\\",
-    \\"cookie-parser\\",
-    \\"compression\\",
-    \\"method-override\\",
-    \\"json-parser\\",
-    { use: \\"urlencoded-parser\\", options: { extended: true }}
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    { use: "urlencoded-parser", options: { extended: true }}
   ],
   views: {
-    root: join(process.cwd(), \\"../views\\"),
+    root: join(process.cwd(), "../views"),
     extensions: {
-      ejs: \\"ejs\\"
+      ejs: "ejs"
     }
   },
   exclude: [
-    \\"**/*.spec.ts\\"
+    "**/*.spec.ts"
   ]
 })
 export class Server {
@@ -226,18 +230,19 @@ export class Server {
 "
 `;
 
-exports[`Init cmd Express.js should generate a project with NPM 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-express\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./controllers/rest/index\\";
+exports[`Init cmd > Express.js > should generate a project with NPM 2`] = `
+"import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/platform-http";
+import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
+import "@tsed/platform-express"; // /!\\ keep this import
+import "@tsed/ajv";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
-  acceptMimes: [\\"application/json\\"],
+  acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
@@ -245,26 +250,26 @@ import * as rest from \\"./controllers/rest/index\\";
     returnsCoercedValues: true
   },
   mount: {
-    \\"/rest\\": [
+    "/rest": [
       ...Object.values(rest)
     ]
   },
   middlewares: [
-    \\"cors\\",
-    \\"cookie-parser\\",
-    \\"compression\\",
-    \\"method-override\\",
-    \\"json-parser\\",
-    { use: \\"urlencoded-parser\\", options: { extended: true }}
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    { use: "urlencoded-parser", options: { extended: true }}
   ],
   views: {
-    root: join(process.cwd(), \\"../views\\"),
+    root: join(process.cwd(), "../views"),
     extensions: {
-      ejs: \\"ejs\\"
+      ejs: "ejs"
     }
   },
   exclude: [
-    \\"**/*.spec.ts\\"
+    "**/*.spec.ts"
   ]
 })
 export class Server {
@@ -277,18 +282,19 @@ export class Server {
 "
 `;
 
-exports[`Init cmd Express.js should generate a project with SWC 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-express\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./controllers/rest/index\\";
+exports[`Init cmd > Express.js > should generate a project with Webpack 2`] = `
+"import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/platform-http";
+import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
+import "@tsed/platform-express"; // /!\\ keep this import
+import "@tsed/ajv";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
-  acceptMimes: [\\"application/json\\"],
+  acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
@@ -296,26 +302,26 @@ import * as rest from \\"./controllers/rest/index\\";
     returnsCoercedValues: true
   },
   mount: {
-    \\"/rest\\": [
+    "/rest": [
       ...Object.values(rest)
     ]
   },
   middlewares: [
-    \\"cors\\",
-    \\"cookie-parser\\",
-    \\"compression\\",
-    \\"method-override\\",
-    \\"json-parser\\",
-    { use: \\"urlencoded-parser\\", options: { extended: true }}
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    { use: "urlencoded-parser", options: { extended: true }}
   ],
   views: {
-    root: join(process.cwd(), \\"../views\\"),
+    root: join(process.cwd(), "../views"),
     extensions: {
-      ejs: \\"ejs\\"
+      ejs: "ejs"
     }
   },
   exclude: [
-    \\"**/*.spec.ts\\"
+    "**/*.spec.ts"
   ]
 })
 export class Server {
@@ -328,18 +334,21 @@ export class Server {
 "
 `;
 
-exports[`Init cmd Express.js should generate a project with Webpack 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-express\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./controllers/rest/index\\";
+exports[`Init cmd > Express.js > should generate a project with swagger 2`] = `
+"import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/platform-http";
+import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
+import "@tsed/platform-express"; // /!\\ keep this import
+import "@tsed/ajv";
+import "@tsed/swagger";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
+import * as pages from "./controllers/pages/index.js";
 
 @Configuration({
   ...config,
-  acceptMimes: [\\"application/json\\"],
+  acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
@@ -347,88 +356,35 @@ import * as rest from \\"./controllers/rest/index\\";
     returnsCoercedValues: true
   },
   mount: {
-    \\"/rest\\": [
-      ...Object.values(rest)
-    ]
-  },
-  middlewares: [
-    \\"cors\\",
-    \\"cookie-parser\\",
-    \\"compression\\",
-    \\"method-override\\",
-    \\"json-parser\\",
-    { use: \\"urlencoded-parser\\", options: { extended: true }}
-  ],
-  views: {
-    root: join(process.cwd(), \\"../views\\"),
-    extensions: {
-      ejs: \\"ejs\\"
-    }
-  },
-  exclude: [
-    \\"**/*.spec.ts\\"
-  ]
-})
-export class Server {
-  @Inject()
-  protected app: PlatformApplication;
-
-  @Configuration()
-  protected settings: Configuration;
-}
-"
-`;
-
-exports[`Init cmd Express.js should generate a project with swagger 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-express\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import \\"@tsed/swagger\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./controllers/rest/index\\";
-import * as pages from \\"./controllers/pages/index\\";
-
-@Configuration({
-  ...config,
-  acceptMimes: [\\"application/json\\"],
-  httpPort: process.env.PORT || 8083,
-  httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
-  mount: {
-    \\"/rest\\": [
+    "/rest": [
       ...Object.values(rest)
     ],
-    \\"/\\": [
+    "/": [
       ...Object.values(pages)
     ]
   },
   swagger: [
     {
-      path: \\"/doc\\",
-      specVersion: \\"3.0.1\\"
+      path: "/doc",
+      specVersion: "3.0.1"
     }
   ],
   middlewares: [
-    \\"cors\\",
-    \\"cookie-parser\\",
-    \\"compression\\",
-    \\"method-override\\",
-    \\"json-parser\\",
-    { use: \\"urlencoded-parser\\", options: { extended: true }}
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    { use: "urlencoded-parser", options: { extended: true }}
   ],
   views: {
-    root: join(process.cwd(), \\"../views\\"),
+    root: join(process.cwd(), "../views"),
     extensions: {
-      ejs: \\"ejs\\"
+      ejs: "ejs"
     }
   },
   exclude: [
-    \\"**/*.spec.ts\\"
+    "**/*.spec.ts"
   ]
 })
 export class Server {
@@ -441,18 +397,19 @@ export class Server {
 "
 `;
 
-exports[`Init cmd Express.js should generate a project with the right options 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-express\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./controllers/rest/index\\";
+exports[`Init cmd > Express.js > should generate a project with the right options 2`] = `
+"import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/platform-http";
+import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
+import "@tsed/platform-express"; // /!\\ keep this import
+import "@tsed/ajv";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
-  acceptMimes: [\\"application/json\\"],
+  acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
@@ -460,26 +417,26 @@ import * as rest from \\"./controllers/rest/index\\";
     returnsCoercedValues: true
   },
   mount: {
-    \\"/rest\\": [
+    "/rest": [
       ...Object.values(rest)
     ]
   },
   middlewares: [
-    \\"cors\\",
-    \\"cookie-parser\\",
-    \\"compression\\",
-    \\"method-override\\",
-    \\"json-parser\\",
-    { use: \\"urlencoded-parser\\", options: { extended: true }}
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    { use: "urlencoded-parser", options: { extended: true }}
   ],
   views: {
-    root: join(process.cwd(), \\"../views\\"),
+    root: join(process.cwd(), "../views"),
     extensions: {
-      ejs: \\"ejs\\"
+      ejs: "ejs"
     }
   },
   exclude: [
-    \\"**/*.spec.ts\\"
+    "**/*.spec.ts"
   ]
 })
 export class Server {
@@ -492,18 +449,19 @@ export class Server {
 "
 `;
 
-exports[`Init cmd Koa.js should generate a project with the right options 2`] = `
-"import {join} from \\"path\\";
-import {Configuration, Inject} from \\"@tsed/di\\";
-import {PlatformApplication} from \\"@tsed/common\\";
-import \\"@tsed/platform-koa\\"; // /!\\\\ keep this import
-import \\"@tsed/ajv\\";
-import {config} from \\"./config/index\\";
-import * as rest from \\"./controllers/rest/index\\";
+exports[`Init cmd > Koa.js > should generate a project with the right options 2`] = `
+"import {join} from "path";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/platform-http";
+import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
+import "@tsed/platform-koa"; // /!\\ keep this import
+import "@tsed/ajv";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
-  acceptMimes: [\\"application/json\\"],
+  acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
@@ -511,24 +469,24 @@ import * as rest from \\"./controllers/rest/index\\";
     returnsCoercedValues: true
   },
   mount: {
-    \\"/rest\\": [
+    "/rest": [
       ...Object.values(rest)
     ]
   },
   middlewares: [
-    \\"@koa/cors\\",
-    \\"koa-compress\\",
-    \\"koa-override\\",
-    \\"koa-bodyparser\\"
+    "@koa/cors",
+    "koa-compress",
+    "koa-override",
+    "koa-bodyparser"
   ],
   views: {
-    root: join(process.cwd(), \\"../views\\"),
+    root: join(process.cwd(), "../views"),
     extensions: {
-      ejs: \\"ejs\\"
+      ejs: "ejs"
     }
   },
   exclude: [
-    \\"**/*.spec.ts\\"
+    "**/*.spec.ts"
   ]
 })
 export class Server {

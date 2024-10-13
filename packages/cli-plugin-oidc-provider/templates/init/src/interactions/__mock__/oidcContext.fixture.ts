@@ -17,17 +17,17 @@ export function getOidcContextFixture(opts: Partial<OidcInteractionContext> = {}
     oidcInteractions: undefined,
     oidcProvider: undefined,
     raw: undefined,
-    debug: jest.fn(),
-    findAccount: jest.fn(),
-    findClient: jest.fn(),
-    getGrant: jest.fn(),
+    debug: vi.fn(),
+    findAccount: vi.fn(),
+    findClient: vi.fn(),
+    getGrant: vi.fn(),
     grantId: undefined,
-    checkInteractionName: jest.fn(),
-    checkClientId: jest.fn(),
-    interactionDetails: jest.fn().mockResolvedValue({}),
-    interactionFinished: jest.fn().mockResolvedValue(undefined),
-    interactionResult: jest.fn().mockResolvedValue(""),
-    interactionPrompt: jest.fn().mockImplementation((obj) => {
+    checkInteractionName: vi.fn(),
+    checkClientId: vi.fn(),
+    interactionDetails: vi.fn().mockResolvedValue({}),
+    interactionFinished: vi.fn().mockResolvedValue(undefined),
+    interactionResult: vi.fn().mockResolvedValue(""),
+    interactionPrompt: vi.fn().mockImplementation((obj) => {
       return {
         client: {
           client_id: "client_id"
@@ -41,9 +41,9 @@ export function getOidcContextFixture(opts: Partial<OidcInteractionContext> = {}
         }
       };
     }),
-    render: jest.fn(),
-    runInteraction: jest.fn(),
-    save: jest.fn(),
+    render: vi.fn(),
+    runInteraction: vi.fn(),
+    save: vi.fn(),
     session: {},
     params: {
       client_id: "client_id"

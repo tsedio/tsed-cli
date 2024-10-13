@@ -2,6 +2,7 @@ export interface PackageJson {
   name: string;
   version: string;
   description: string;
+  type: "module";
   scripts: {[key: string]: string};
   dependencies: {[key: string]: string};
   devDependencies: {[key: string]: string};
@@ -13,6 +14,7 @@ export interface PackageInfo {
   _id: string;
   _rev: string;
   name: string;
+  type: "module";
   "dist-tags": {
     [key: string]: string;
   };

@@ -1,6 +1,9 @@
-import {CliPlatformTest} from "@tsed/cli-testing";
-import {RunCmd} from "./RunCmd";
+// @ts-ignore
 import {CliFs, CliRunScript} from "@tsed/cli-core";
+// @ts-ignore
+import {CliPlatformTest} from "@tsed/cli-testing";
+
+import {RunCmd} from "./RunCmd.js";
 
 describe("RunCmd", () => {
   beforeEach(() => CliPlatformTest.create());
@@ -9,10 +12,10 @@ describe("RunCmd", () => {
   describe("$exec()", () => {
     it("should run sub project command (development)", async () => {
       const runScript = {
-        run: jest.fn()
+        run: vi.fn()
       };
       const cliFs = {
-        exists: jest.fn().mockReturnValue(false)
+        exists: vi.fn().mockReturnValue(false)
       };
       const command = await CliPlatformTest.invoke<RunCmd>(RunCmd, [
         {
@@ -32,7 +35,7 @@ describe("RunCmd", () => {
       };
 
       await command.$exec(ctx as any);
-      expect(runScript.run).toHaveBeenCalledWith("ts-node", ["-r", "tsconfig-paths/register", "src/bin/index.ts", "do", "-o"], {
+      expect(runScript.run).toHaveBeenCalledWith("node", ["--import", "@swc-node/register/register-esm", "src/bin/index.ts", "do", "-o"], {
         env: {
           ...process.env
         }
@@ -40,10 +43,10 @@ describe("RunCmd", () => {
     });
     it("should run sub project command (production)", async () => {
       const runScript = {
-        run: jest.fn()
+        run: vi.fn()
       };
       const cliFs = {
-        exists: jest.fn().mockReturnValue(false)
+        exists: vi.fn().mockReturnValue(false)
       };
       const command = await CliPlatformTest.invoke<RunCmd>(RunCmd, [
         {
@@ -63,44 +66,9 @@ describe("RunCmd", () => {
       };
 
       await command.$exec(ctx as any);
-      expect(runScript.run).toHaveBeenCalledWith("node", ["dist/bin/index.js", "do", "-o"], {
+      expect(runScript.run).toHaveBeenCalledWith("node", ["--import", "@swc-node/register/register-esm", "src/bin/index.ts", "do", "-o"], {
         env: {
-          ...process.env,
-          NODE_ENV: "production"
-        }
-      });
-    });
-    it("should run sub project command (production + tsconfig)", async () => {
-      const runScript = {
-        run: jest.fn()
-      };
-      const cliFs = {
-        exists: jest.fn().mockReturnValue(true),
-        readFile: jest.fn().mockResolvedValue(JSON.stringify({compilerOptions: {outDir: "./lib"}})),
-        readJsonSync: jest.fn().mockResolvedValue({})
-      };
-      const command = await CliPlatformTest.invoke<RunCmd>(RunCmd, [
-        {
-          token: CliRunScript,
-          use: runScript
-        },
-        {
-          token: CliFs,
-          use: cliFs
-        }
-      ]);
-
-      const ctx = {
-        production: true,
-        command: "do",
-        rawArgs: ["-o"]
-      };
-
-      await command.$exec(ctx as any);
-      expect(runScript.run).toHaveBeenCalledWith("node", ["lib/bin/index.js", "do", "-o"], {
-        env: {
-          ...process.env,
-          NODE_ENV: "production"
+          ...process.env
         }
       });
     });

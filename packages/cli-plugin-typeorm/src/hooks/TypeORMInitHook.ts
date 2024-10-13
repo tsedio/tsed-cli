@@ -1,13 +1,5 @@
-import {InitCmdContext} from "@tsed/cli";
-import {
-  CliDockerComposeYaml,
-  CliService,
-  Inject,
-  OnExec,
-  ProjectPackageJson,
-  RootRendererService,
-  SrcRendererService
-} from "@tsed/cli-core";
+import type {InitCmdContext} from "@tsed/cli";
+import {CliService, inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {pascalCase} from "change-case";
 
@@ -17,20 +9,8 @@ function getDatabase(ctx: InitCmdContext) {
 
 @Injectable()
 export class TypeORMInitHook {
-  @Inject()
-  protected cliService: CliService;
-
-  @Inject()
-  protected packageJson: ProjectPackageJson;
-
-  @Inject()
-  protected rootRenderer: RootRendererService;
-
-  @Inject()
-  protected srcRenderer: SrcRendererService;
-
-  @Inject()
-  protected cliDockerComposeYaml: CliDockerComposeYaml;
+  protected cliService = inject(CliService);
+  protected packageJson = inject(ProjectPackageJson);
 
   @OnExec("init")
   onExec(ctx: InitCmdContext) {

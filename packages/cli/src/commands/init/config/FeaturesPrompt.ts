@@ -1,7 +1,7 @@
-import {isPlatform} from "../utils/isPlatform";
-import {hasFeature, hasValue} from "../utils/hasFeature";
-import {InitOptions} from "../interfaces/InitOptions";
-import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../interfaces";
+import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../interfaces/index.js";
+import type {InitOptions} from "../interfaces/InitOptions.js";
+import {hasFeature, hasValue} from "../utils/hasFeature.js";
+import {isPlatform} from "../utils/isPlatform.js";
 
 export interface Feature {
   name: string;
@@ -46,7 +46,6 @@ export enum FeatureType {
   TESTING = "testing",
   JEST = "jest",
   VITEST = "vitest",
-  MOCHA = "mocha",
   LINTER = "linter",
   ESLINT = "eslint",
   LINT_STAGED = "lintstaged",
@@ -239,12 +238,6 @@ export const FeaturesMap: Record<string, Feature> = {
       "@tsed/cli-plugin-jest": "{{cliVersion}}"
     }
   },
-  [FeatureType.MOCHA]: {
-    name: "Mocha + Chai + Sinon",
-    devDependencies: {
-      "@tsed/cli-plugin-mocha": "{{cliVersion}}"
-    }
-  },
   [FeatureType.ESLINT]: {
     name: "EsLint",
     checked: true,
@@ -259,7 +252,7 @@ export const FeaturesMap: Record<string, Feature> = {
     name: "Lint on commit"
   },
   node: {
-    name: "Node.js",
+    name: "Node.js + SWC",
     checked: true
   },
   babel: {
@@ -270,12 +263,8 @@ export const FeaturesMap: Record<string, Feature> = {
     name: "Node.js + Webpack",
     checked: false
   },
-  swc: {
-    name: "Node.js + SWC",
-    checked: false
-  },
   bun: {
-    name: "Bun.js (experimental)",
+    name: "Bun.js",
     checked: false
   },
   yarn: {
@@ -291,7 +280,7 @@ export const FeaturesMap: Record<string, Feature> = {
     checked: false
   },
   pnpm: {
-    name: "PNPM (experimental)",
+    name: "PNPM",
     checked: false
   }
 };
@@ -372,7 +361,7 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
     type: "list",
     name: "featuresTesting",
     when: hasFeature(FeatureType.TESTING),
-    choices: [FeatureType.VITEST, FeatureType.JEST, FeatureType.MOCHA]
+    choices: [FeatureType.VITEST, FeatureType.JEST]
   },
   {
     message: "Choose linter tools framework",

@@ -1,6 +1,7 @@
-import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
+import "../../src/index.js";
+
 import {InitCmd, TEMPLATE_DIR} from "@tsed/cli";
-import "@tsed/cli-plugin-typegraphql";
+import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 
 describe("Init TypeGraphQL project", () => {
   beforeEach(() =>
@@ -31,17 +32,18 @@ describe("Init TypeGraphQL project", () => {
     });
 
     expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
-      Array [
-        "./project-name",
+      [
         "project-name",
-        "project-name/.barrelsby.json",
+        "project-name/.barrels.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
+        "project-name/.swcrc",
         "project-name/Dockerfile",
         "project-name/README.md",
         "project-name/docker-compose.yml",
+        "project-name/nodemon.json",
         "project-name/package.json",
-        "project-name/processes.config.js",
+        "project-name/processes.config.cjs",
         "project-name/src",
         "project-name/src/Server.ts",
         "project-name/src/config",
@@ -64,16 +66,17 @@ describe("Init TypeGraphQL project", () => {
         "project-name/src/resolvers/recipes/RecipeResolver.ts",
         "project-name/src/services",
         "project-name/src/services/RecipeService.ts",
-        "project-name/tsconfig.compile.json",
+        "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
+        "project-name/tsconfig.node.json",
       ]
     `);
 
     const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
     expect(content).toMatchSnapshot();
-    expect(content).toContain("import \"@tsed/typegraphql\"");
-    expect(content).toContain("import \"./datasources/index\";");
-    expect(content).toContain("import \"./resolvers/index\";");
+    expect(content).toContain('import "@tsed/typegraphql"');
+    expect(content).toContain('import "./datasources/index.js";');
+    expect(content).toContain('import "./resolvers/index.js";');
 
     const configContent = FakeCliFs.entries.get("project-name/src/config/index.ts")!;
     expect(configContent).toMatchSnapshot();

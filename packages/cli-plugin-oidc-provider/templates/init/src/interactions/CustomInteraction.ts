@@ -1,8 +1,7 @@
-import {View} from "@tsed/common";
 import {Env} from "@tsed/core";
 import {Constant} from "@tsed/di";
 import {Interaction, InteractionMethods, OidcCtx, OidcSession, Params, Prompt, Uid} from "@tsed/oidc-provider";
-import {Name} from "@tsed/schema";
+import {Name, View} from "@tsed/schema";
 import {interactionPolicy, KoaContextWithOIDC} from "oidc-provider";
 import Check = interactionPolicy.Check;
 
@@ -15,8 +14,7 @@ export class CustomInteraction implements InteractionMethods {
   @Constant("env")
   env: Env;
 
-  $onCreate() {
-  }
+  $onCreate() {}
 
   /**
    * return checks conditions. See: https://github.com/panva/node-oidc-provider/blob/main/docs/README.md#interactionspolicy
@@ -24,7 +22,7 @@ export class CustomInteraction implements InteractionMethods {
   checks() {
     return [
       new Check("no_session", "End-User authentication is required", (ctx) => {
-        const { oidc } = ctx;
+        const {oidc} = ctx;
 
         if (oidc.session?.accountId) {
           // @ts-ignore
@@ -41,12 +39,12 @@ export class CustomInteraction implements InteractionMethods {
    * return checks conditions. See: https://github.com/panva/node-oidc-provider/blob/main/docs/README.md#interactionspolicy
    */
   details(ctx: KoaContextWithOIDC) {
-    const { oidc } = ctx;
+    const {oidc} = ctx;
 
     return {
-      ...(oidc.params?.max_age === undefined ? undefined : { max_age: oidc.params.max_age }),
-      ...(oidc.params?.login_hint === undefined ? undefined : { login_hint: oidc.params.login_hint }),
-      ...(oidc.params?.id_token_hint === undefined ? undefined : { id_token_hint: oidc.params.id_token_hint })
+      ...(oidc.params?.max_age === undefined ? undefined : {max_age: oidc.params.max_age}),
+      ...(oidc.params?.login_hint === undefined ? undefined : {login_hint: oidc.params.login_hint}),
+      ...(oidc.params?.id_token_hint === undefined ? undefined : {id_token_hint: oidc.params.id_token_hint})
     };
   }
 

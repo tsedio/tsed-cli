@@ -1,16 +1,18 @@
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {CliHttpClient} from "./CliHttpClient";
-import {NpmRegistryClient} from "./NpmRegistryClient";
+
+import {CliHttpClient} from "./CliHttpClient.js";
+import {NpmRegistryClient} from "./NpmRegistryClient.js";
 
 describe("NpmRegistryClient", () => {
-  beforeEach(CliPlatformTest.create);
-  afterEach(CliPlatformTest.reset);
+  beforeEach(() => CliPlatformTest.create());
+  afterEach(() => CliPlatformTest.reset());
 
   describe("search()", () => {
     it("should search packages", async () => {
       // GIVEN
       const httpClient = {
-        get: jest.fn().mockReturnValue(Promise.resolve({objects: "response"}))
+        get: vi.fn().mockReturnValue(Promise.resolve({objects: "response"}))
       };
 
       const npmRegistryClient = await CliPlatformTest.invoke<NpmRegistryClient>(NpmRegistryClient, [
@@ -43,7 +45,7 @@ describe("NpmRegistryClient", () => {
     it("should search packages with some options", async () => {
       // GIVEN
       const httpClient = {
-        get: jest.fn().mockReturnValue(Promise.resolve({objects: "response"}))
+        get: vi.fn().mockReturnValue(Promise.resolve({objects: "response"}))
       };
 
       const npmRegistryClient = await CliPlatformTest.invoke<NpmRegistryClient>(NpmRegistryClient, [
@@ -84,7 +86,7 @@ describe("NpmRegistryClient", () => {
     it("should get package info", async () => {
       // GIVEN
       const httpClient = {
-        get: jest.fn().mockRejectedValueOnce(new Error("Not found")).mockResolvedValueOnce("response")
+        get: vi.fn().mockRejectedValueOnce(new Error("Not found")).mockResolvedValueOnce("response")
       };
 
       const npmRegistryClient: NpmRegistryClient = await CliPlatformTest.invoke<NpmRegistryClient>(NpmRegistryClient, [

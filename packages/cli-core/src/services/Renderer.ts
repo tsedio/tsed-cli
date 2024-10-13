@@ -1,16 +1,18 @@
+import "../utils/hbs/index.js";
+
 import {isString} from "@tsed/core";
-import {Configuration, Constant, Inject, Injectable} from "@tsed/di";
+import {Configuration, constant, inject, Injectable} from "@tsed/di";
+import {normalizePath} from "@tsed/normalize-path";
 import Consolidate from "consolidate";
 import fs from "fs-extra";
-import normalizePath from "normalize-path";
-import globby from "globby";
+import {globby} from "globby";
+import handlebars from "handlebars";
 import {basename, dirname, join, relative} from "path";
 import {Observable} from "rxjs";
-import {CliFs} from "./CliFs";
-import "../utils/hbs/index";
-import handlebars from "handlebars";
-import {insertImport} from "../utils/renderer/insertImport";
-import {insertAfter} from "../utils/renderer/insertAfter";
+
+import {insertAfter} from "../utils/renderer/insertAfter.js";
+import {insertImport} from "../utils/renderer/insertImport.js";
+import {CliFs} from "./CliFs.js";
 
 export interface RenderOptions {
   path: string;
@@ -23,15 +25,10 @@ export interface RenderOptions {
 }
 
 export abstract class Renderer {
-  @Constant("templateDir")
-  templateDir: string;
-
-  @Inject()
-  fs: CliFs;
-  cache = new Set<string>();
-
-  @Configuration()
-  protected configuration: Configuration;
+  public templateDir = constant<string>("templateDir", "");
+  readonly fs = inject(CliFs);
+  readonly cache = new Set<string>();
+  protected configuration = inject(Configuration);
 
   abstract get rootDir(): string;
 
@@ -147,18 +144,21 @@ export abstract class Renderer {
       return;
     }
 
-    const content: string = actions.reduce((fileContent, action) => {
-      switch (action.type) {
-        case "import":
-          return insertImport(fileContent, action.content);
-        case "insert-after":
-          return insertAfter(fileContent, action.content, action.pattern!);
-        default:
-          break;
-      }
+    const content: string = actions.reduce(
+      (fileContent, action) => {
+        switch (action.type) {
+          case "import":
+            return insertImport(fileContent, action.content);
+          case "insert-after":
+            return insertAfter(fileContent, action.content, action.pattern!);
+          default:
+            break;
+        }
 
-      return fileContent;
-    }, await this.fs.readFile(path, {encoding: "utf8"}));
+        return fileContent;
+      },
+      await this.fs.readFile(path, {encoding: "utf8"})
+    );
 
     return this.fs.writeFile(path, content, {encoding: "utf8"});
   }

@@ -1,6 +1,6 @@
-import {Inject, Post, View} from "@tsed/common";
+import {Post, View, Name} from "@tsed/schema";
+import {Inject} from "@tsed/di";
 import {Interaction, OidcCtx, OidcProvider} from "@tsed/oidc-provider";
-import {Name} from "@tsed/schema";
 
 @Interaction({
   name: "consent",
@@ -32,7 +32,7 @@ export class ConsentInteraction {
       missingOIDClaims: string[];
     };
 
-    const { missingOIDCScope, missingOIDClaims, missingResourceScopes } = details;
+    const {missingOIDCScope, missingOIDClaims, missingResourceScopes} = details;
 
     if (missingOIDCScope) {
       grant.addOIDCScope(missingOIDCScope.join(" "));

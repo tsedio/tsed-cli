@@ -1,5 +1,5 @@
 import {Injectable} from "@tsed/di";
-import {Recipe} from "../resolvers";
+import {Recipe} from "../resolvers.js";
 
 @Injectable()
 export class RecipeService {

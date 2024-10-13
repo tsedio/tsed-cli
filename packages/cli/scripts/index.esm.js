@@ -1,9 +1,10 @@
-import { dirname, join } from "path";
-import readPkgUp from "read-pkg-up";
-import { fileURLToPath } from "node:url";
+import {fileURLToPath} from "node:url";
 
-const { path, packageJson } = readPkgUp.sync({
-    cwd: join(fileURLToPath(import.meta.url), "..", "..")
+import {dirname, join} from "path";
+import readPkgUp from "read-pkg-up";
+
+const {path, packageJson} = readPkgUp.sync({
+  cwd: join(fileURLToPath(import.meta.url), "..", "..")
 });
 export const PKG = packageJson;
 export const MINIMAL_TSED_VERSION = "7";

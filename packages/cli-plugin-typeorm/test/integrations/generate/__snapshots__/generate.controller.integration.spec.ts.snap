@@ -1,31 +1,31 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Generate DataSource should generate the template with the right options (simple path) 1`] = `
-"import {registerProvider} from \\"@tsed/di\\";
-import {DataSource} from \\"typeorm\\";
-import {Logger} from \\"@tsed/logger\\";
+exports[`Generate DataSource > should generate the template with the right options (simple path) 1`] = `
+"import {registerProvider} from "@tsed/di";
+import {DataSource} from "typeorm";
+import {Logger} from "@tsed/logger";
 
-export const TestDatasource = Symbol.for(\\"TestDatasource\\");
+export const TestDatasource = Symbol.for("TestDatasource");
 export type TestDatasource = DataSource;
 export const testDatasource = new DataSource({
-  type: \\"mysql\\",
+  type: "mysql",
   entities: [],
-  host: \\"localhost\\",
+  host: "localhost",
   port: 3306,
-  username: \\"test\\",
-  password: \\"test\\",
-  database: \\"test\\"
+  username: "test",
+  password: "test",
+  database: "test"
 });
 
 
 registerProvider<DataSource>({
   provide: TestDatasource,
-  type: \\"typeorm:datasource\\",
+  type: "typeorm:datasource",
   deps: [Logger],
   async useAsyncFactory(logger: Logger) {
     await testDatasource.initialize();
 
-    logger.info(\\"Connected with typeorm to database: Test\\");
+    logger.info("Connected with typeorm to database: Test");
 
     return testDatasource;
   },
@@ -38,7 +38,7 @@ registerProvider<DataSource>({
 "
 `;
 
-exports[`Generate DataSource should generate the template with the right options (simple path) 2`] = `
+exports[`Generate DataSource > should generate the template with the right options (simple path) 2`] = `
 "services:
   test:
     image: mysql:8.0.28-oracle
