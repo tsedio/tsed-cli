@@ -65,7 +65,7 @@ export class ProjectPackageJson {
   }
 
   set dir(dir: string) {
-    configuration().project.rootDir = dir;
+    configuration().set("project.rootDir", dir);
 
     this.read();
   }
@@ -126,12 +126,12 @@ export class ProjectPackageJson {
 
   setRaw(pkg: any) {
     const config = configuration();
-    const projectPreferences = config.defaultProjectPreferences;
-    const preferences = getValue(pkg, config.name);
+    const projectPreferences = config.get("defaultProjectPreferences");
+    const preferences = getValue(pkg, config.get("name"));
 
     this.raw = {
       ...pkg,
-      [config.name]: {
+      [config.get("name")]: {
         ...(projectPreferences && projectPreferences(pkg)),
         ...preferences
       }

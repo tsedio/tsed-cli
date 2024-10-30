@@ -2,7 +2,7 @@ import {join} from "node:path";
 
 // @ts-ignore
 import {FakeCliFs, normalizePath} from "@tsed/cli-testing";
-import {DITest} from "@tsed/di";
+import {configuration, DITest} from "@tsed/di";
 import Consolidate from "consolidate";
 import {globby} from "globby";
 import handlebars from "handlebars";
@@ -39,8 +39,7 @@ describe("Renderer", () => {
     it("should return the valid path from", () => {
       const service = new SrcRendererService();
 
-      // @ts-ignore
-      service.configuration.set("project", {
+      configuration().set("project", {
         rootDir: "/home",
         srcDir: "/src"
       });
@@ -60,8 +59,7 @@ describe("Renderer", () => {
         baseDir: "/init"
       };
 
-      // @ts-ignore
-      service.configuration.set("project", {
+      configuration().set("project", {
         rootDir: "/home",
         srcDir: "/src"
       });
@@ -85,8 +83,7 @@ describe("Renderer", () => {
         templateDir: TEMPLATE_DIR
       };
 
-      // @ts-ignore
-      service.configuration.set("project", {
+      configuration().set("project", {
         rootDir: "/home",
         srcDir: "/src"
       });
@@ -109,8 +106,7 @@ describe("Renderer", () => {
         templateDir: `${TEMPLATE_DIR}/init`
       };
 
-      // @ts-ignore
-      service.configuration.set("project", {
+      configuration().set("project", {
         rootDir: "/home",
         srcDir: "/src"
       });
@@ -133,8 +129,7 @@ describe("Renderer", () => {
         baseDir: "/init"
       };
 
-      // @ts-ignore
-      service.configuration.set("project", {
+      configuration().set("project", {
         rootDir: "/home",
         srcDir: "/src"
       });
@@ -158,8 +153,7 @@ describe("Renderer", () => {
         basename: "myFile.controller.ts"
       };
 
-      // @ts-ignore
-      service.configuration.set("project", {
+      configuration().set("project", {
         rootDir: "/home",
         srcDir: "/src"
       });
@@ -191,8 +185,7 @@ describe("Renderer", () => {
         ...props
       };
 
-      // @ts-ignore
-      service.configuration.set("project", {
+      configuration().set("project", {
         rootDir: "/home",
         srcDir: "/src"
       });

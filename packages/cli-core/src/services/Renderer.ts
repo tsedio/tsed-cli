@@ -1,7 +1,7 @@
 import "../utils/hbs/index.js";
 
 import {isString} from "@tsed/core";
-import {Configuration, constant, inject, Injectable} from "@tsed/di";
+import {constant, inject, Injectable} from "@tsed/di";
 import {normalizePath} from "@tsed/normalize-path";
 import Consolidate from "consolidate";
 import fs from "fs-extra";
@@ -28,7 +28,6 @@ export abstract class Renderer {
   public templateDir = constant<string>("templateDir", "");
   readonly fs = inject(CliFs);
   readonly cache = new Set<string>();
-  protected configuration = inject(Configuration);
 
   abstract get rootDir(): string;
 
@@ -190,20 +189,20 @@ export abstract class Renderer {
 @Injectable()
 export class RootRendererService extends Renderer {
   get rootDir() {
-    return this.configuration.project?.rootDir as string;
+    return constant<string>("project.rootDir", "");
   }
 }
 
 @Injectable()
 export class SrcRendererService extends Renderer {
   get rootDir() {
-    return join(...([this.configuration.project?.rootDir, this.configuration.project?.srcDir].filter(Boolean) as string[]));
+    return join(...([constant("project.rootDir"), constant("project.srcDir")].filter(Boolean) as string[]));
   }
 }
 
 @Injectable()
 export class ScriptsRendererService extends Renderer {
   get rootDir() {
-    return join(...([this.configuration.project?.rootDir, this.configuration.project?.scriptsDir].filter(Boolean) as string[]));
+    return join(...([constant("project.rootDir"), constant("project.scriptsDir")].filter(Boolean) as string[]));
   }
 }

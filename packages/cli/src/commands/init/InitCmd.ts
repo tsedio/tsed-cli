@@ -10,7 +10,6 @@ import {
   Configuration,
   createSubTasks,
   createTasksRunner,
-  Inject,
   inject,
   PackageManager,
   PackageManagersModule,

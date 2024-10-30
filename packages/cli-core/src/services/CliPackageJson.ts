@@ -16,6 +16,6 @@ registerProvider({
   provide: CliPackageJson,
   deps: [Configuration],
   useFactory(configuration: Configuration) {
-    return configuration.pkg || {};
+    return configuration.get("pkg", {});
   }
 });
