@@ -1,4 +1,4 @@
-import {parseOption} from "./parseOption";
+import {parseOption} from "./parseOption.js";
 
 describe("parseOptions", () => {
   it("should parse string --path <path>", () => {

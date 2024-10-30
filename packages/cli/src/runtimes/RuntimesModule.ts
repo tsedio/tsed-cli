@@ -1,25 +1,22 @@
 import {PackageManagersModule, ProjectPackageJson} from "@tsed/cli-core";
-import {Inject, Module} from "@tsed/di";
-import {NodeRuntime} from "./supports/NodeRuntime";
-import {BabelRuntime} from "./supports/BabelRuntime";
-import {WebpackRuntime} from "./supports/WebpackRuntime";
-import {BunRuntime} from "./supports/BunRuntime";
-import {SWCRuntime} from "./supports/SWCRuntime";
-import {BaseRuntime} from "./supports/BaseRuntime";
+import {Inject, inject, Module} from "@tsed/di";
+
+import {BabelRuntime} from "./supports/BabelRuntime.js";
+import {BaseRuntime} from "./supports/BaseRuntime.js";
+import {BunRuntime} from "./supports/BunRuntime.js";
+import {NodeRuntime} from "./supports/NodeRuntime.js";
+import {WebpackRuntime} from "./supports/WebpackRuntime.js";
 
 export interface RuntimeInitOptions extends Record<string, unknown> {
   runtime?: string;
 }
 
 @Module({
-  imports: [NodeRuntime, BabelRuntime, WebpackRuntime, SWCRuntime, BunRuntime]
+  imports: [NodeRuntime, BabelRuntime, WebpackRuntime, BunRuntime]
 })
 export class RuntimesModule {
-  @Inject()
-  protected projectPackageJson: ProjectPackageJson;
-
-  @Inject()
-  protected packagesManager: PackageManagersModule;
+  protected projectPackageJson = inject(ProjectPackageJson);
+  protected packagesManager = inject(PackageManagersModule);
 
   constructor(@Inject("runtime") protected runtimes: BaseRuntime[]) {
     this.runtimes = runtimes.filter((manager) => manager.has());
@@ -60,7 +57,7 @@ export class RuntimesModule {
 
     return {
       build: `${runtime.run("barrels")} && ${runtime.compile("src/index.ts", "dist/index.js")}`,
-      barrels: "barrelsby --config .barrelsby.json",
+      barrels: "barrels",
       start: `${runtime.run("barrels")} && ${runtime.startDev("src/index.ts")}`,
       "start:prod": `cross-env NODE_ENV=production ${runtime.startProd("dist/index.js")}`
     };

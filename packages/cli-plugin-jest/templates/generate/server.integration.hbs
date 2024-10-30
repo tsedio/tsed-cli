@@ -1,6 +1,6 @@
-import { PlatformTest } from "@tsed/common";
+import { PlatformTest } from "@tsed/platform-http/testing";
 import SuperTest from "supertest";
-import { {{symbolName}} } from "./{{symbolPathBasename}}";
+import { {{symbolName}} } from "./{{symbolPathBasename}}.js";
 
 describe("{{symbolName}}", () => {
   beforeEach(PlatformTest.bootstrap({{symbolName}}));

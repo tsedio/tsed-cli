@@ -1,21 +1,17 @@
-import {Inject, Injectable} from "@tsed/di";
-import {snakeCase} from "change-case";
-import {CliYaml} from "./CliYaml";
 import {setValue} from "@tsed/core";
+import {inject, Injectable} from "@tsed/di";
+import {snakeCase} from "change-case";
 import {join} from "path";
-import {CliFs} from "./CliFs";
-import {ProjectPackageJson} from "./ProjectPackageJson";
+
+import {CliFs} from "./CliFs.js";
+import {CliYaml} from "./CliYaml.js";
+import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
 @Injectable()
 export class CliDockerComposeYaml {
-  @Inject()
-  protected cliYaml: CliYaml;
-
-  @Inject()
-  protected fs: CliFs;
-
-  @Inject()
-  protected projectPackageJson: ProjectPackageJson;
+  protected cliYaml = inject(CliYaml);
+  protected fs = inject(CliFs);
+  protected projectPackageJson = inject(ProjectPackageJson);
 
   read() {
     const path = "docker-compose.yml";

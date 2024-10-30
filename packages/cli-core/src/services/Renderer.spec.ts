@@ -1,31 +1,49 @@
-import {FakeCliFs, normalizePath} from "@tsed/cli-testing";
-import Consolidate from "consolidate";
-import globby from "globby";
-import handlebars from "handlebars";
-import {TEMPLATE_DIR} from "../../../cli-plugin-jest/src/utils/templateDir";
-import {RootRendererService, SrcRendererService} from "./Renderer";
+import {join} from "node:path";
 
-jest.mock("consolidate");
-jest.mock("globby");
-jest.mock("handlebars");
+// @ts-ignore
+import {FakeCliFs, normalizePath} from "@tsed/cli-testing";
+import {DITest} from "@tsed/di";
+import Consolidate from "consolidate";
+import {globby} from "globby";
+import handlebars from "handlebars";
+
+import {getTemplateDirectory} from "../utils/index.js";
+import {CliFs} from "./CliFs.js";
+import {RootRendererService, SrcRendererService} from "./Renderer.js";
+
+const TEMPLATE_DIR = getTemplateDirectory(join(import.meta.url, "../../../cli-plugin-jest/src/utils"));
+
+vi.mock("consolidate");
+vi.mock("globby");
+vi.mock("handlebars");
 
 describe("Renderer", () => {
+  beforeEach(() => {
+    vi.mocked(globby as any).mockResolvedValue(["_partials/one.hbs", "_partials/two.hbs"]);
+
+    return DITest.create({
+      imports: [
+        {
+          token: CliFs,
+          useClass: FakeCliFs
+        }
+      ]
+    });
+  });
   afterEach(() => {
     FakeCliFs.entries.clear();
-    (globby as any as jest.SpyInstance).mockResolvedValue(["_partials/one.hbs", "_partials/two.hbs"]);
+    return DITest.reset();
   });
 
   describe("relativeFrom()", () => {
-    it("should return the revalite path from", () => {
+    it("should return the valid path from", () => {
       const service = new SrcRendererService();
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       expect(service.relativeFrom("/controller/users.spec.ts")).toEqual("..");
       expect(normalizePath(service.relativeFrom("/controller/users/users.spec.ts"))).toEqual("../..");
@@ -33,7 +51,7 @@ describe("Renderer", () => {
   });
   describe("render()", () => {
     it("should render a file from given option (baseDir)", async () => {
-      (globby as any as jest.SpyInstance).mockResolvedValue(["_partials/one.hbs", "_partials/two.hbs"]);
+      vi.mocked(globby as any).mockResolvedValue(["_partials/one.hbs", "_partials/two.hbs"]);
 
       const service = new RootRendererService();
       const path = "/init/myfile.ts.hbs";
@@ -42,22 +60,16 @@ describe("Renderer", () => {
         baseDir: "/init"
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       service.templateDir = "/tmpl";
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
-
-      service.fs = new FakeCliFs() as any;
 
       await service.render(path, data, options);
 
@@ -66,64 +78,52 @@ describe("Renderer", () => {
     });
     it("should render a file from given option (TEMPLATE_DIR)", async () => {
       const service = new RootRendererService();
-      const path = "/init/jest.config.js.hbs";
+      const path = "/init/vi.config.js.hbs";
       const data = {};
       const options = {
         baseDir: "/init",
         templateDir: TEMPLATE_DIR
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       service.templateDir = "/tmpl";
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
 
-      service.fs = new FakeCliFs() as any;
-
       await service.render(path, data, options);
 
-      expect(Consolidate.handlebars).toHaveBeenCalledWith(normalizePath(`${TEMPLATE_DIR}/init/jest.config.js.hbs`), {});
-      expect(FakeCliFs.getKeys()).toEqual(["/home", "/home/jest.config.js"]);
+      expect(Consolidate.handlebars).toHaveBeenCalledWith(normalizePath(`${TEMPLATE_DIR}/init/vi.config.js.hbs`), {});
+      expect(FakeCliFs.getKeys()).toEqual(["/home", "/home/vi.config.js"]);
     });
     it("should render a file from given option (TEMPLATE_DIR - without baseDir)", async () => {
       const service = new RootRendererService();
-      const path = "/jest.config.js.hbs";
+      const path = "/vi.config.js.hbs";
       const data = {};
       const options = {
         templateDir: `${TEMPLATE_DIR}/init`
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       service.templateDir = "/tmpl";
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
 
-      service.fs = new FakeCliFs() as any;
-
       await service.render(path, data, options);
 
-      expect(Consolidate.handlebars).toHaveBeenCalledWith(normalizePath(`${TEMPLATE_DIR}/init/jest.config.js.hbs`), {});
-      expect(FakeCliFs.getKeys()).toEqual(["/home", "/home/jest.config.js"]);
+      expect(Consolidate.handlebars).toHaveBeenCalledWith(normalizePath(`${TEMPLATE_DIR}/init/vi.config.js.hbs`), {});
+      expect(FakeCliFs.getKeys()).toEqual(["/home", "/home/vi.config.js"]);
     });
     it("should render a file from given option (baseDir with deep directory)", async () => {
       const service = new RootRendererService();
@@ -133,22 +133,16 @@ describe("Renderer", () => {
         baseDir: "/init"
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       service.templateDir = "/tmpl";
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
-
-      service.fs = new FakeCliFs() as any;
 
       await service.render(path, data, options);
 
@@ -164,22 +158,16 @@ describe("Renderer", () => {
         basename: "myFile.controller.ts"
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       service.templateDir = "/tmpl";
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
-
-      service.fs = new FakeCliFs() as any;
 
       await service.render(path, data, options);
 
@@ -203,22 +191,16 @@ describe("Renderer", () => {
         ...props
       };
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      service.configuration = {
-        project: {
-          rootDir: "/home",
-          srcDir: "/src"
-        }
-      };
+      service.configuration.set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
 
       service.templateDir = "/tmpl";
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       Consolidate.handlebars.mockReturnValue("content");
-
-      service.fs = new FakeCliFs() as any;
 
       await service.render(props.path, data, options);
 
@@ -229,7 +211,6 @@ describe("Renderer", () => {
   describe("loadPartials()", () => {
     it("should load partials", async () => {
       const rootRendererService = new RootRendererService();
-      rootRendererService.fs = new FakeCliFs() as any;
 
       rootRendererService.fs.writeFile("/templateDir/_partials/one.hbs", "content");
       rootRendererService.fs.writeFile("/templateDir/_partials/two.hbs", "content");

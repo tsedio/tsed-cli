@@ -1,15 +1,24 @@
-import {CliDefaultOptions, Command, CommandProvider, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
-import {paramCase, pascalCase} from "change-case";
+import {
+  type CliDefaultOptions,
+  Command,
+  type CommandProvider,
+  Inject,
+  inject,
+  ProjectPackageJson,
+  SrcRendererService
+} from "@tsed/cli-core";
+import {normalizePath} from "@tsed/normalize-path";
+import {kebabCase, pascalCase} from "change-case";
+import {globbySync} from "globby";
 import {basename, dirname, join} from "path";
-import globby from "globby";
-import normalizePath from "normalize-path";
-import {ClassNamePipe} from "../../pipes/ClassNamePipe";
-import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
-import {RoutePipe} from "../../pipes/RoutePipe";
-import {ProvidersInfoService} from "../../services/ProvidersInfoService";
-import {PROVIDER_TYPES} from "./ProviderTypes";
-import {ProjectConvention} from "../../interfaces/ProjectConvention";
-import {fillImports} from "../../utils/fillImports";
+
+import {ProjectConvention} from "../../interfaces/ProjectConvention.js";
+import {ClassNamePipe} from "../../pipes/ClassNamePipe.js";
+import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe.js";
+import {RoutePipe} from "../../pipes/RoutePipe.js";
+import {ProvidersInfoService} from "../../services/ProvidersInfoService.js";
+import {fillImports} from "../../utils/fillImports.js";
+import {PROVIDER_TYPES} from "./ProviderTypes.js";
 
 export interface GenerateCmdContext extends CliDefaultOptions {
   type: string;
@@ -62,7 +71,7 @@ const searchFactory = (list: any) => {
     }
   },
   options: {
-    "-r, --route <route>": {
+    "--route <route>": {
       type: String,
       description: "The route for the controller generated file"
     },
@@ -206,7 +215,7 @@ export class GenerateCmd implements CommandProvider {
     }
 
     const symbolName = this.classNamePipe.transform({name, type, format: ProjectConvention.DEFAULT});
-    const symbolParamName = paramCase(symbolName);
+    const symbolParamName = kebabCase(symbolName);
 
     return fillImports({
       ...ctx,
@@ -251,7 +260,7 @@ export class GenerateCmd implements CommandProvider {
             return this.srcRenderService.update("bin/index.ts", [
               {
                 type: "import",
-                content: `import {${ctx.symbolName}} from "./${basename(symbolPath)}";`
+                content: `import {${ctx.symbolName}} from "./${basename(symbolPath)}.js";`
               },
               {
                 type: "insert-after",
@@ -268,7 +277,7 @@ export class GenerateCmd implements CommandProvider {
   }
 
   getDirectories(dir: string) {
-    const directories = globby.sync("**/*", {
+    const directories = globbySync("**/*", {
       cwd: join(this.srcRenderService.rootDir, dir),
       ignore: ["__*"]
     });

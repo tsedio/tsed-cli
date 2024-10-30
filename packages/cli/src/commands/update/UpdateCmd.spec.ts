@@ -1,22 +1,24 @@
 import {NpmRegistryClient, ProjectPackageJson} from "@tsed/cli-core";
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {UpdateCmd} from "./UpdateCmd";
+
+import {UpdateCmd} from "./UpdateCmd.js";
 
 const versions = {
-  "7.0.0-alpha.4": {
+  "8.0.0-alpha.4": {
     version: "6.0.0-alpha.4",
     dependencies: {
       "@tsed/logger": "^5.5.0"
     },
     devDependencies: {}
   },
-  "7.0.0-alpha.3": {
+  "8.0.0-alpha.3": {
     version: "5.56.0"
   },
-  "7.0.0-alpha.2": {
+  "8.0.0-alpha.2": {
     version: "5.57.0"
   },
-  "7.0.0-alpha.1": {
+  "8.0.0-alpha.1": {
     version: "5.55.0"
   }
 };
@@ -26,7 +28,6 @@ describe("UpdateCmd", () => {
   describe("$prompt()", () => {
     it("should return prompts", async () => {
       const projectPkg = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       projectPkg.raw = {
         name: "project",
@@ -39,7 +40,7 @@ describe("UpdateCmd", () => {
 
       const npmClientRegistry = {
         info(pkg: string) {
-          if (pkg === "@tsed/common") {
+          if (pkg === "@tsed/platform-http") {
             return {versions};
           }
         }
@@ -57,7 +58,7 @@ describe("UpdateCmd", () => {
 
       expect(result).toEqual([
         {
-          choices: ["7.0.0-alpha.4", "7.0.0-alpha.3", "7.0.0-alpha.2", "7.0.0-alpha.1"],
+          choices: ["8.0.0-alpha.4", "8.0.0-alpha.3", "8.0.0-alpha.2", "8.0.0-alpha.1"],
           default: undefined,
           message: "Select a Ts.ED version",
           name: "version",
@@ -102,7 +103,7 @@ describe("UpdateCmd", () => {
         dependencies: {
           "@tsed/core": "5.50.1",
           "@tsed/di": "5.50.1",
-          "@tsed/common": "5.50.1",
+          "@tsed/platform-http": "5.50.1",
           "@tsed/logger": "5.4.0"
         },
         devDependencies: {
@@ -129,22 +130,23 @@ describe("UpdateCmd", () => {
         }
       ]);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       command.versions = versions;
 
       await command.$exec({
-        version: "7.0.0-alpha.4",
+        version: "8.0.0-alpha.4",
         verbose: false,
         rawArgs: []
       });
 
+      // @ts-ignore
       expect(command.projectPackage.dependencies).toEqual({
-        "@tsed/common": "7.0.0-alpha.4",
-        "@tsed/core": "7.0.0-alpha.4",
-        "@tsed/di": "7.0.0-alpha.4",
+        "@tsed/platform-http": "8.0.0-alpha.4",
+        "@tsed/core": "8.0.0-alpha.4",
+        "@tsed/di": "8.0.0-alpha.4",
         "@tsed/logger": "^5.5.0"
       });
+      // @ts-ignore
       expect(command.projectPackage.devDependencies).toEqual({
         "@tsed/cli-plugin-eslint": "1.5.0",
         "@tsed/cli-plugin-typeorm": "1.5.0"

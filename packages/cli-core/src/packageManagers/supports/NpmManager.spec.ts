@@ -1,11 +1,13 @@
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {NpmManager} from "./NpmManager";
-import {CliExeca} from "../../services";
+
+import {CliExeca} from "../../services/index.js";
+import {NpmManager} from "./NpmManager.js";
 
 async function getManagerFixture() {
   const cliExeca = {
-    runSync: jest.fn(),
-    run: jest.fn()
+    runSync: vi.fn(),
+    run: vi.fn()
   };
   const manager = await CliPlatformTest.invoke<NpmManager>(NpmManager, [
     {

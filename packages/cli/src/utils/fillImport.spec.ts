@@ -1,5 +1,5 @@
-import {ArchitectureConvention} from "../interfaces";
-import {fillImports} from "./fillImports";
+import {ArchitectureConvention} from "../interfaces/index.js";
+import {fillImports} from "./fillImports.js";
 
 describe("fillImports()", () => {
   it.each([
@@ -74,7 +74,7 @@ describe("fillImports()", () => {
       mongoose: true
     }
   ])(
-    "it should return barrels and imports files for ($architecture, oidc: $oidc, graphql: $graphql, swagger: $swagger, passportjs: $passportjs, express: $express, koa: $koa, mongoose: $mongoose)",
+    "should return barrels and imports files for ($architecture, oidc: $oidc, graphql: $graphql, swagger: $swagger, passportjs: $passportjs, express: $express, koa: $koa, mongoose: $mongoose)",
     (ctx) => {
       expect(fillImports(ctx)).toMatchSnapshot();
     }

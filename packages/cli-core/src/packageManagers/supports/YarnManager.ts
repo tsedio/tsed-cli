@@ -1,7 +1,8 @@
 import {Injectable} from "@tsed/di";
-import execa from "execa";
+import type {Options} from "execa";
 import {Observable} from "rxjs";
-import {BaseManager, ManagerCmdOpts} from "./BaseManager";
+
+import {BaseManager, type ManagerCmdOpts} from "./BaseManager.js";
 
 @Injectable({
   type: "package:manager"
@@ -18,7 +19,7 @@ export class YarnManager extends BaseManager {
     return this.run("add", ["-D", "--ignore-engines", ...deps], options);
   }
 
-  install(options: {verbose?: boolean} & execa.Options): Observable<any> {
+  install(options: {verbose?: boolean} & Options): Observable<any> {
     return this.run("install", [options.verbose && "--verbose"], options);
   }
 }

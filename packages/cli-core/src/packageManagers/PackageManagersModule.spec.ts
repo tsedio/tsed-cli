@@ -1,11 +1,13 @@
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {PackageManagersModule} from "./PackageManagersModule";
-import {YarnManager} from "./supports/YarnManager";
-import {NpmManager} from "./supports/NpmManager";
-import {CliFs} from "../services";
-import {PNpmManager} from "./supports/PNpmManager";
-import {YarnBerryManager} from "./supports/YarnBerryManager";
-import {BunManager} from "./supports/BunManager";
+
+import {CliFs} from "../services/index.js";
+import {PackageManagersModule} from "./PackageManagersModule.js";
+import {BunManager} from "./supports/BunManager.js";
+import {NpmManager} from "./supports/NpmManager.js";
+import {PNpmManager} from "./supports/PNpmManager.js";
+import {YarnBerryManager} from "./supports/YarnBerryManager.js";
+import {YarnManager} from "./supports/YarnManager.js";
 
 async function getModuleFixture() {
   const yarnManager = {
@@ -13,18 +15,18 @@ async function getModuleFixture() {
     has() {
       return true;
     },
-    add: jest.fn().mockReturnValue({
-      pipe: jest.fn()
+    add: vi.fn().mockReturnValue({
+      pipe: vi.fn()
     }),
-    addDev: jest.fn().mockReturnValue({
-      pipe: jest.fn()
+    addDev: vi.fn().mockReturnValue({
+      pipe: vi.fn()
     }),
-    install: jest.fn().mockReturnValue({
-      pipe: jest.fn()
+    install: vi.fn().mockReturnValue({
+      pipe: vi.fn()
     }),
-    init: jest.fn(),
-    runScript: jest.fn().mockReturnValue({
-      pipe: jest.fn()
+    init: vi.fn(),
+    runScript: vi.fn().mockReturnValue({
+      pipe: vi.fn()
     })
   };
 
@@ -33,16 +35,16 @@ async function getModuleFixture() {
     has() {
       return true;
     },
-    add: jest.fn(),
-    addDev: jest.fn(),
-    install: jest.fn(),
-    runScript: jest.fn()
+    add: vi.fn(),
+    addDev: vi.fn(),
+    install: vi.fn(),
+    runScript: vi.fn()
   };
 
   const cliFs = {
-    exists: jest.fn().mockReturnValue(true),
-    writeFileSync: jest.fn(),
-    readJsonSync: jest.fn().mockReturnValue({
+    exists: vi.fn().mockReturnValue(true),
+    writeFileSync: vi.fn(),
+    readJsonSync: vi.fn().mockReturnValue({
       scripts: {},
       dependencies: {},
       devDependencies: {}

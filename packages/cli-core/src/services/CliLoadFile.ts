@@ -1,17 +1,16 @@
-import {Inject, Injectable} from "@tsed/di";
+import {inject, Injectable} from "@tsed/di";
+import {default as Ajv, type Schema} from "ajv";
 import {extname} from "path";
-import Ajv, {Schema} from "ajv";
-import {CliYaml} from "./CliYaml";
-import {CliFs} from "./CliFs";
+
+import {CliFs} from "./CliFs.js";
+import {CliYaml} from "./CliYaml.js";
 
 @Injectable()
 export class CliLoadFile {
-  @Inject()
-  protected cliYaml: CliYaml;
+  protected cliYaml: CliYaml = inject(CliYaml);
+  protected cliFs = inject(CliFs);
 
-  @Inject()
-  protected cliFs: CliFs;
-
+  // @ts-ignore
   #ajv: Ajv;
 
   constructor() {
@@ -21,6 +20,7 @@ export class CliLoadFile {
       strict: false
     };
 
+    // @ts-ignore
     this.#ajv = new Ajv(options);
   }
 

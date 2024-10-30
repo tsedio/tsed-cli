@@ -1,12 +1,9 @@
-import {join} from "node:path";
 import {existsSync} from "node:fs";
 import {readFile} from "node:fs/promises";
+import {join} from "node:path";
 
 function resolveConfig() {
-  return [
-    join(process.cwd(), ".barrelsby.json"),
-    join(process.cwd(), ".barrels.json")
-  ].find((path) => {
+  return [join(process.cwd(), ".barrelsby.json"), join(process.cwd(), ".barrels.json")].find((path) => {
     return existsSync(path);
   });
 }

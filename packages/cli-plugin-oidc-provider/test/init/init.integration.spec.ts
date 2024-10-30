@@ -1,6 +1,7 @@
-import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
+import "../../src/index.js";
+
 import {InitCmd, TEMPLATE_DIR} from "@tsed/cli";
-import "@tsed/cli-plugin-oidc-provider";
+import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 
 describe("Init OIDC Provider project", () => {
   beforeEach(() =>
@@ -36,13 +37,13 @@ describe("Init OIDC Provider project", () => {
 
     const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
-    expect(content).toContain("import \"@tsed/oidc-provider\"");
-    expect(content).toContain("import {InteractionsController} from \"./controllers/oidc/InteractionsController\";");
+    expect(content).toContain('import "@tsed/oidc-provider"');
+    expect(content).toContain('import {InteractionsController} from "./controllers/oidc/InteractionsController.js";');
     expect(content).toMatchSnapshot();
 
     const configContent = FakeCliFs.entries.get("project-name/src/config/oidc/index.ts")!;
 
-    expect(configContent).toContain("path: \"/oidc\"");
+    expect(configContent).toContain('path: "/oidc"');
   });
   it("should generate a project with oidc and swagger", async () => {
     CliPlatformTest.setPackageJson({
@@ -68,12 +69,12 @@ describe("Init OIDC Provider project", () => {
 
     const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
-    expect(content).toContain("import \"@tsed/oidc-provider\"");
-    expect(content).toContain("import {InteractionsController} from \"./controllers/oidc/InteractionsController\";");
+    expect(content).toContain('import "@tsed/oidc-provider"');
+    expect(content).toContain('import {InteractionsController} from "./controllers/oidc/InteractionsController.js";');
     expect(content).toMatchSnapshot();
 
     const configContent = FakeCliFs.entries.get("project-name/src/config/oidc/index.ts")!;
 
-    expect(configContent).toContain("path: \"/oidc\"");
+    expect(configContent).toContain('path: "/oidc"');
   });
 });

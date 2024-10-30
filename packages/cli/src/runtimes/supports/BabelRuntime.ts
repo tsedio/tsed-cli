@@ -1,6 +1,7 @@
 import {Injectable} from "@tsed/di";
-import {NodeRuntime} from "./NodeRuntime";
 import {dirname} from "path";
+
+import {NodeRuntime} from "./NodeRuntime.js";
 
 @Injectable({
   type: "runtime"
@@ -9,12 +10,20 @@ export class BabelRuntime extends NodeRuntime {
   readonly name: string = "babel";
   readonly order: number = 1;
 
+  isCompiled() {
+    return false;
+  }
+
   files() {
     return ["/init/.babelrc.hbs"];
   }
 
   startDev(main: string): string {
     return `babel-watch --extensions .ts ${main}`;
+  }
+
+  startProd(args: string) {
+    return `${this.cmd} ${args}`;
   }
 
   compile(src: string, out: string) {
@@ -32,7 +41,8 @@ export class BabelRuntime extends NodeRuntime {
       "@babel/preset-typescript": "latest",
       "@babel/plugin-proposal-object-rest-spread": "latest",
       "babel-plugin-transform-typescript-metadata": "latest",
-      "babel-watch": "latest"
+      "babel-watch": "latest",
+      typescript: "latest"
     };
   }
 }

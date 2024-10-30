@@ -1,4 +1,4 @@
-import type {CliCore} from "../CliCore";
+import type {CliCore} from "../CliCore.js";
 
 export class CliError extends Error {
   name = "CLI_ERROR";

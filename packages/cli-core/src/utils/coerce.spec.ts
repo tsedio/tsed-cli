@@ -1,4 +1,4 @@
-import {coerce} from "./coerce";
+import {coerce} from "./coerce.js";
 
 describe("coerce", () => {
   it("should coerce given value", () => {

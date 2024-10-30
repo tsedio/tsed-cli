@@ -1,16 +1,18 @@
-import {catchError} from "@tsed/core";
-import {InitCmd} from "../../../src/commands/init/InitCmd";
-import {CliPlatformTest} from "@tsed/cli-testing";
 import {PackageManagersModule} from "@tsed/cli-core";
-import {RuntimesModule} from "../../runtimes/RuntimesModule";
+// @ts-ignore
+import {CliPlatformTest} from "@tsed/cli-testing";
+import {catchError} from "@tsed/core";
+
+import {InitCmd} from "../../../src/commands/init/InitCmd.js";
+import {RuntimesModule} from "../../runtimes/RuntimesModule.js";
 
 async function getServiceFixture() {
   const packageManagers = {
-    list: jest.fn().mockReturnValue([])
+    list: vi.fn().mockReturnValue([])
   };
 
   const runtimes = {
-    list: jest.fn().mockReturnValue(["node"])
+    list: vi.fn().mockReturnValue(["node"])
   };
 
   const service = await CliPlatformTest.invoke<InitCmd>(InitCmd, [
@@ -105,7 +107,7 @@ describe("InitCmd", () => {
       expect(result?.message).toEqual("Invalid selected runtime: undefined. Possible values: node.");
     });
 
-    it("should throw error (runtime)", async () => {
+    it("should throw error (runtime-2)", async () => {
       const {service, packageManagers} = await getServiceFixture();
 
       packageManagers.list.mockReturnValue(["yarn", "npm", "pnpm"]);

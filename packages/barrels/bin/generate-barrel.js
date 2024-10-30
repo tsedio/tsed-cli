@@ -1,5 +1,6 @@
 import {writeFile} from "node:fs/promises";
 import path, {dirname, join} from "node:path";
+
 import {globby} from "globby";
 
 // async function cleanIndex(cwd, excluded) {
@@ -16,17 +17,17 @@ import {globby} from "globby";
 // }
 
 export async function generateBarrels({exclude, directory, cwd}) {
-  const excluded = exclude
-    .map((path) => `!${path}`)
-    .concat(directory.map((path) => `!${path}/index.ts`));
+  const excluded = exclude.map((path) => `!${path}`).concat(directory.map((path) => `!${path}/index.ts`));
 
   const directories = (
-    await globby(directory.map((d) => {
+    await globby(
+      directory.map((d) => {
         return join(d, "*");
       }),
       {
         cwd
-      })
+      }
+    )
   ).reduce((set, file) => {
     return set.add(dirname(file));
   }, new Set());

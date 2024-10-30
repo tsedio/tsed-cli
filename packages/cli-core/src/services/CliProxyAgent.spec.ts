@@ -1,11 +1,14 @@
+import "../index.js";
+
+// @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 import tunnel from "tunnel";
-import {CliProxyAgent} from "./CliProxyAgent";
-import {CliConfiguration} from "./CliConfiguration";
-import {CliExeca} from "./CliExeca";
-import "../index";
 
-jest.mock("tunnel");
+import {CliConfiguration} from "./CliConfiguration.js";
+import {CliExeca} from "./CliExeca.js";
+import {CliProxyAgent} from "./CliProxyAgent.js";
+
+vi.mock("tunnel");
 
 describe("CliPlugins", () => {
   beforeEach(() =>
@@ -28,10 +31,10 @@ describe("CliPlugins", () => {
 
         await cliProxyAgent.resolveProxySettings();
 
-        expect(cliProxyAgent.proxySettings).toEqual({url: "http://login:password@host:3000"});
+        expect(cliProxyAgent.proxySettings.value).toEqual({url: "http://login:password@host:3000"});
       });
 
-      it("should get proxy url from env (HTTP_PROXY)", async () => {
+      it("should get proxy url from env (HTTP_PROXY -2)", async () => {
         const settings = CliPlatformTest.get(CliConfiguration);
 
         settings.set("proxy", {
@@ -43,13 +46,13 @@ describe("CliPlugins", () => {
 
         await cliProxyAgent.resolveProxySettings();
 
-        expect(cliProxyAgent.proxySettings).toEqual({strictSsl: false, url: "https://login:password@host:3000"});
+        expect(cliProxyAgent.proxySettings.value).toEqual({strictSsl: false, url: "https://login:password@host:3000"});
       });
     });
     describe("from npm config", () => {
       it("should get proxy url from (proxy)", async () => {
         const cliExeca = {
-          getAsync: jest.fn().mockImplementation((p: string, args: string[]) => {
+          getAsync: vi.fn().mockImplementation((p: string, args: string[]) => {
             if (args.includes("proxy")) {
               return Promise.resolve("https://login:password@host:3000");
             }
@@ -69,20 +72,19 @@ describe("CliPlugins", () => {
           }
         ]);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        cliProxyAgent.proxySettings.url = undefined;
+        cliProxyAgent.proxySettings.value.url = undefined;
 
         await cliProxyAgent.resolveProxySettings();
 
-        expect(cliProxyAgent.proxySettings).toEqual({
+        expect(cliProxyAgent.proxySettings.value).toEqual({
           url: "https://login:password@host:3000",
           strictSsl: false
         });
       });
       it("should get proxy url from (http-proxy)", async () => {
         const cliExeca = {
-          getAsync: jest.fn().mockImplementation((p: string, args: string[]) => {
+          getAsync: vi.fn().mockImplementation((p: string, args: string[]) => {
             if (args.includes("http-proxy")) {
               return Promise.resolve("https://login:password@host:3000");
             }
@@ -102,20 +104,19 @@ describe("CliPlugins", () => {
           }
         ]);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        cliProxyAgent.proxySettings.url = undefined;
+        cliProxyAgent.proxySettings.value.url = undefined;
 
         await cliProxyAgent.resolveProxySettings();
 
-        expect(cliProxyAgent.proxySettings).toEqual({
+        expect(cliProxyAgent.proxySettings.value).toEqual({
           url: "https://login:password@host:3000",
           strictSsl: true
         });
       });
       it("should get proxy url from (https-proxy)", async () => {
         const cliExeca = {
-          getAsync: jest.fn().mockImplementation((p: string, args: string[]) => {
+          getAsync: vi.fn().mockImplementation((p: string, args: string[]) => {
             if (args.includes("https-proxy")) {
               return Promise.resolve("https://login:password@host:3000");
             }
@@ -135,20 +136,19 @@ describe("CliPlugins", () => {
           }
         ]);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        cliProxyAgent.proxySettings.url = undefined;
+        cliProxyAgent.proxySettings.value.url = undefined;
 
         await cliProxyAgent.resolveProxySettings();
 
-        expect(cliProxyAgent.proxySettings).toEqual({
+        expect(cliProxyAgent.proxySettings.value).toEqual({
           url: "https://login:password@host:3000",
           strictSsl: true
         });
       });
       it("should get proxy url from (https-proxy) without credentials", async () => {
         const cliExeca = {
-          getAsync: jest.fn().mockImplementation((p: string, args: string[]) => {
+          getAsync: vi.fn().mockImplementation((p: string, args: string[]) => {
             if (args.includes("https-proxy")) {
               return Promise.resolve("https://host:3000");
             }
@@ -168,13 +168,12 @@ describe("CliPlugins", () => {
           }
         ]);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        cliProxyAgent.proxySettings.url = undefined;
+        cliProxyAgent.proxySettings.value.url = undefined;
 
         await cliProxyAgent.resolveProxySettings();
 
-        expect(cliProxyAgent.proxySettings).toEqual({
+        expect(cliProxyAgent.proxySettings.value).toEqual({
           url: "https://host:3000",
           strictSsl: true
         });

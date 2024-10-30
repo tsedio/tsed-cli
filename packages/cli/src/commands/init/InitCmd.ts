@@ -2,40 +2,42 @@ import {
   CliExeca,
   CliFs,
   CliLoadFile,
-  CliPackageJson,
+  cliPackageJson,
   CliPlugins,
   CliService,
   Command,
-  CommandProvider,
+  type CommandProvider,
   Configuration,
   createSubTasks,
   createTasksRunner,
   Inject,
+  inject,
   PackageManager,
   PackageManagersModule,
   ProjectPackageJson,
-  QuestionOptions,
+  type QuestionOptions,
   RootRendererService,
-  Task
+  type Task
 } from "@tsed/cli-core";
-import {paramCase, pascalCase} from "change-case";
+import {kebabCase, pascalCase} from "change-case";
 import {basename, join} from "path";
-import {DEFAULT_TSED_TAGS} from "../../constants";
-import {ArchitectureConvention} from "../../interfaces/ArchitectureConvention";
-import {ProjectConvention} from "../../interfaces/ProjectConvention";
-import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe";
-import {InitCmdContext} from "./interfaces/InitCmdContext";
-import {InitFileSchema} from "./config/InitFileSchema";
-import {mapToContext} from "./mappers/mapToContext";
-import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt";
-import {InitOptions} from "./interfaces/InitOptions";
-import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt";
-import {PlatformType} from "../../interfaces";
-import {fillImports} from "../../utils/fillImports";
-import {RuntimesModule} from "../../runtimes/RuntimesModule";
-import {NodeRuntime} from "../../runtimes/supports/NodeRuntime";
-import {BunRuntime} from "../../runtimes/supports/BunRuntime";
-import {InitPlatformsModule} from "../../platforms/InitPlatformsModule";
+
+import {DEFAULT_TSED_TAGS} from "../../constants/index.js";
+import {ArchitectureConvention} from "../../interfaces/ArchitectureConvention.js";
+import {PlatformType} from "../../interfaces/index.js";
+import {ProjectConvention} from "../../interfaces/ProjectConvention.js";
+import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe.js";
+import {InitPlatformsModule} from "../../platforms/InitPlatformsModule.js";
+import {RuntimesModule} from "../../runtimes/RuntimesModule.js";
+import {BunRuntime} from "../../runtimes/supports/BunRuntime.js";
+import {NodeRuntime} from "../../runtimes/supports/NodeRuntime.js";
+import {fillImports} from "../../utils/fillImports.js";
+import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt.js";
+import {InitFileSchema} from "./config/InitFileSchema.js";
+import type {InitCmdContext} from "./interfaces/InitCmdContext.js";
+import type {InitOptions} from "./interfaces/InitOptions.js";
+import {mapToContext} from "./mappers/mapToContext.js";
+import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt.js";
 
 @Command({
   name: "init",
@@ -102,44 +104,19 @@ import {InitPlatformsModule} from "../../platforms/InitPlatformsModule";
   disableReadUpPkg: true
 })
 export class InitCmd implements CommandProvider {
-  @Configuration()
-  protected configuration: Configuration;
-
-  @Inject()
-  protected cliPlugins: CliPlugins;
-
-  @Inject()
-  protected packageJson: ProjectPackageJson;
-
-  @Inject()
-  protected packageManagers: PackageManagersModule;
-
-  @Inject()
-  protected runtimes: RuntimesModule;
-
-  @Inject()
-  protected platforms: InitPlatformsModule;
-
-  @CliPackageJson()
-  protected cliPackageJson: CliPackageJson;
-
-  @Inject()
-  protected cliService: CliService;
-
-  @Inject()
-  protected cliLoadFile: CliLoadFile;
-
-  @Inject()
-  protected rootRenderer: RootRendererService;
-
-  @Inject()
-  protected outputFilePathPipe: OutputFilePathPipe;
-
-  @Inject()
-  protected execa: CliExeca;
-
-  @Inject()
-  protected fs: CliFs;
+  protected configuration = inject(Configuration);
+  protected cliPlugins = inject(CliPlugins);
+  protected packageJson = inject(ProjectPackageJson);
+  protected packageManagers = inject(PackageManagersModule);
+  protected runtimes = inject(RuntimesModule);
+  protected platforms = inject(InitPlatformsModule);
+  protected cliPackageJson = cliPackageJson();
+  protected cliService = inject(CliService);
+  protected cliLoadFile = inject(CliLoadFile);
+  protected rootRenderer = inject(RootRendererService);
+  protected outputFilePathPipe = inject(OutputFilePathPipe);
+  protected execa = inject(CliExeca);
+  protected fs = inject(CliFs);
 
   checkPrecondition(ctx: InitCmdContext) {
     const isValid = (types: any, value: any) => (value ? Object.values(types).includes(value) : true);
@@ -205,15 +182,15 @@ export class InitCmd implements CommandProvider {
         type: "input",
         name: "projectName",
         message: "What is your project name",
-        default: paramCase(initialOptions.root!),
+        default: kebabCase(initialOptions.root!),
         when: initialOptions.root !== ".",
         transformer(input: string) {
-          return paramCase(input);
+          return kebabCase(input);
         }
       },
       ...getFeaturesPrompt(
         runtimes,
-        packageManagers.filter((o) => o !== "bun"),
+        packageManagers.filter((o: string) => o !== "bun"),
         initialOptions
       )
     ];
@@ -225,11 +202,11 @@ export class InitCmd implements CommandProvider {
 
     this.runtimes.init(ctx);
 
-    this.runtimes.list().forEach((key) => {
+    this.runtimes.list().forEach((key: string) => {
       ctx[key] = ctx.runtime === key;
     });
 
-    this.packageManagers.list().forEach((key) => {
+    this.packageManagers.list().forEach((key: string) => {
       ctx[key] = ctx.packageManager === key;
     });
 
@@ -348,7 +325,7 @@ export class InitCmd implements CommandProvider {
   }
 
   resolveRootDir(ctx: Partial<InitCmdContext>) {
-    const rootDirName = paramCase(ctx.projectName || basename(this.packageJson.dir));
+    const rootDirName = kebabCase(ctx.projectName || basename(this.packageJson.dir));
 
     if (this.packageJson.dir.endsWith(rootDirName)) {
       ctx.projectName = ctx.projectName || rootDirName;
@@ -370,7 +347,6 @@ export class InitCmd implements CommandProvider {
 
   addDependencies(ctx: InitCmdContext) {
     this.packageJson.addDependencies({
-      "@tsed/common": ctx.tsedVersion,
       "@tsed/core": ctx.tsedVersion,
       "@tsed/di": ctx.tsedVersion,
       "@tsed/ajv": ctx.tsedVersion,
@@ -378,18 +354,18 @@ export class InitCmd implements CommandProvider {
       "@tsed/schema": ctx.tsedVersion,
       "@tsed/json-mapper": ctx.tsedVersion,
       "@tsed/openspec": ctx.tsedVersion,
+      "@tsed/platform-http": ctx.tsedVersion,
       "@tsed/platform-cache": ctx.tsedVersion,
       "@tsed/platform-exceptions": ctx.tsedVersion,
-      "@tsed/platform-log-middleware": ctx.tsedVersion,
+      "@tsed/platform-log-request": ctx.tsedVersion,
       "@tsed/platform-middlewares": ctx.tsedVersion,
       "@tsed/platform-params": ctx.tsedVersion,
       "@tsed/platform-response-filter": ctx.tsedVersion,
       "@tsed/platform-views": ctx.tsedVersion,
       "@tsed/logger": "latest",
-      "@tsed/logger-file": "latest",
       "@tsed/engines": "latest",
+      "@tsed/barrels": "latest",
       ajv: "latest",
-      barrelsby: "latest",
       "cross-env": "latest",
       dotenv: "latest",
       "dotenv-expand": "latest",
@@ -405,7 +381,6 @@ export class InitCmd implements CommandProvider {
         "@types/node": "latest",
         "@types/multer": "latest",
         tslib: "latest",
-        typescript: "latest",
         ...this.runtimes.get().devDependencies(),
         ...this.platforms.get(ctx.platform).devDependencies(ctx)
       },
@@ -453,16 +428,23 @@ export class InitCmd implements CommandProvider {
     ctx = {
       ...ctx,
       node: runtime instanceof NodeRuntime,
-      bun: runtime instanceof BunRuntime
+      bun: runtime instanceof BunRuntime,
+      compiled: runtime instanceof NodeRuntime && runtime.isCompiled()
     };
+
+    const pm2 = ctx.bun ? "bun" : ctx.compiled ? "node-compiled" : "node-loader";
 
     return this.rootRenderer.renderAll(
       [
         ...runtime.files(),
         "/init/.dockerignore.hbs",
         "/init/.gitignore.hbs",
-        "/init/.barrelsby.json.hbs",
-        "/init/processes.config.js.hbs",
+        "/init/.barrels.json.hbs",
+        {
+          path: `/init/pm2/${pm2}/processes.config.cjs.hbs`,
+          output: `processes.config.cjs`,
+          replaces: [`pm2/${pm2}`]
+        },
         "/init/docker-compose.yml.hbs",
         {
           path: `/init/docker/${packageManager.name}/Dockerfile.hbs`,
@@ -470,8 +452,10 @@ export class InitCmd implements CommandProvider {
           replaces: [`docker/${packageManager.name}`]
         },
         "/init/README.md.hbs",
-        "/init/tsconfig.compile.json.hbs",
         "/init/tsconfig.json.hbs",
+        "/init/tsconfig.base.json.hbs",
+        "/init/tsconfig.node.json.hbs",
+        ctx.testing && "/init/tsconfig.spec.json.hbs",
         "/init/src/index.ts.hbs",
         "/init/src/config/envs/index.ts.hbs",
         "/init/src/config/logger/index.ts.hbs",

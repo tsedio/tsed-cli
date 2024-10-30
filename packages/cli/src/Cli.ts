@@ -1,11 +1,9 @@
 import {CliCore} from "@tsed/cli-core";
 import chalk from "chalk";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import alias from "module-alias";
-import {PKG, TEMPLATE_DIR} from "./constants";
-import commands from "./commands";
-import {ArchitectureConvention, ProjectConvention} from "./interfaces";
+
+import commands from "./commands/index.js";
+import {PKG, TEMPLATE_DIR} from "./constants/index.js";
+import {ArchitectureConvention, ProjectConvention} from "./interfaces/index.js";
 
 export class Cli extends CliCore {
   static defaults = {
@@ -62,20 +60,9 @@ export class Cli extends CliCore {
     const {pkg} = opts;
 
     this.checkPrecondition(opts);
-    this.createAliases();
 
     await this.updateNotifier(pkg);
 
     return super.bootstrap(opts, Cli);
-  }
-
-  static createAliases() {
-    alias.addAliases({
-      "@tsed/core": require.resolve("@tsed/core"),
-      "@tsed/di": require.resolve("@tsed/di"),
-      "@tsed/schema": require.resolve("@tsed/schema"),
-      "@tsed/cli-core": require.resolve("@tsed/cli-core"),
-      "@tsed/cli": require.resolve("@tsed/cli")
-    });
   }
 }
