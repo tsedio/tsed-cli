@@ -1,6 +1,5 @@
 import {classOf} from "@tsed/core";
 import {
-  $emit,
   configuration,
   constant,
   destroyInjector,
@@ -13,6 +12,7 @@ import {
   Provider,
   runInContext
 } from "@tsed/di";
+import {$asyncEmit} from "@tsed/hooks";
 import {Argument, Command} from "commander";
 import Inquirer from "inquirer";
 // @ts-ignore
@@ -66,7 +66,7 @@ export class CliService {
    */
   public runLifecycle(cmdName: string, data: any = {}, $ctx: DIContext) {
     return runInContext($ctx, async () => {
-      await $emit("$loadPackageJson");
+      await $asyncEmit("$loadPackageJson");
 
       data = await this.beforePrompt(cmdName, data);
 
@@ -84,12 +84,12 @@ export class CliService {
 
       await this.exec(cmdName, data, $ctx);
     } catch (er) {
-      await $emit("$onFinish", er);
+      await $asyncEmit("$onFinish", er);
       await destroyInjector();
       throw er;
     }
 
-    await $emit("$onFinish");
+    await $asyncEmit("$onFinish");
     await destroyInjector();
   }
 

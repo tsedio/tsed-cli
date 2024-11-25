@@ -83,7 +83,8 @@
     "vitest": "2.1.1"
   },
   "peerDependencies": {
-    "@tsed/core": ">=8.0.0-rc.1",
-    "@tsed/di": ">=8.0.0-rc.1"
+    "@tsed/core": ">=8.0.0-rc.6",
+    "@tsed/di": ">=8.0.0-rc.6",
+    "@tsed/hooks": ">=8.0.0-rc.6"
   }
 }
