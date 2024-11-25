@@ -67,11 +67,12 @@
     "@swc/core": "1.7.26",
     "@swc/helpers": "^0.5.13",
     "@tsed/cli-core": "workspace:*",
-    "@tsed/core": ">=8.0.0-rc.1",
-    "@tsed/di": ">=8.0.0-rc.1",
+    "@tsed/core": ">=8.0.0-rc.6",
+    "@tsed/di": ">=8.0.0-rc.6",
+    "@tsed/hooks": ">=8.0.0-rc.6",
     "@tsed/logger": ">=6.2.1",
-    "@tsed/openspec": ">=8.0.0-rc.1",
-    "@tsed/schema": ">=8.0.0-rc.1",
+    "@tsed/openspec": ">=8.0.0-rc.6",
+    "@tsed/schema": ">=8.0.0-rc.6",
     "chalk": "^5.3.0",
     "change-case": "^5.4.4",
     "esm-module-alias": "^2.2.1",
@@ -89,10 +90,11 @@
   },
   "peerDependencies": {
     "@tsed/cli-core": "workspace:*",
-    "@tsed/core": ">=8.0.0-rc.1",
-    "@tsed/di": ">=8.0.0-rc.1",
+    "@tsed/core": ">=8.0.0-rc.6",
+    "@tsed/di": ">=8.0.0-rc.6",
+    "@tsed/hooks": ">=8.0.0-rc.6",
     "@tsed/logger": ">=6.2.1",
-    "@tsed/openspec": ">=8.0.0-rc.1",
-    "@tsed/schema": ">=8.0.0-rc.1"
+    "@tsed/openspec": ">=8.0.0-rc.6",
+    "@tsed/schema": ">=8.0.0-rc.6"
   }
 }

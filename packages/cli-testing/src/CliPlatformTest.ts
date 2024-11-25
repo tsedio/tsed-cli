@@ -1,5 +1,4 @@
 import {
-  $emit,
   CliCore,
   CliExeca,
   CliFs,
@@ -19,6 +18,7 @@ import {
 } from "@tsed/cli-core";
 import {Type} from "@tsed/core";
 import {DIContext, runInContext} from "@tsed/di";
+import {$asyncEmit} from "@tsed/hooks";
 import {v4} from "uuid";
 
 import {FakeCliExeca} from "./FakeCliExeca.js";
@@ -53,8 +53,8 @@ export class CliPlatformTest extends DITest {
       .addProvider(CliCore);
 
     await injector().load();
-    await $emit("$onReady");
-    await $emit("$loadPackageJson");
+    await $asyncEmit("$onReady");
+    await $asyncEmit("$loadPackageJson");
 
     CliPlatformTest.get(CliService).load();
   }
