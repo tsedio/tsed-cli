@@ -1,7 +1,7 @@
 {
   "name": "@tsed/barrels",
   "description": "A simple tool to generate barrels for your TypeScript project",
-  "version": "6.0.0-rc.3",
+  "version": "6.0.0-rc.4",
   "type": "module",
   "bin": "bin/barrels.js",
   "keywords": [
