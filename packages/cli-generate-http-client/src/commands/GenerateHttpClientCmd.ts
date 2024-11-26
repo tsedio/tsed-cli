@@ -145,8 +145,7 @@ export class GenerateHttpClientCmd implements CommandProvider {
         .replace("requestParams.headers.put = {};", "")
         .replace("(this.instance.defaults.headers || {})", "((this.instance.defaults.headers || {}) as any)");
 
-      console.log(`${$ctx.output}/${name}`, path.resolve(`${$ctx.output}/${name}`));
-      return this.fs.writeFile(`${$ctx.output}/${name}`, file.fileContent, {encoding: "utf8"});
+      return this.fs.writeFile(`${$ctx.output}/${name}.ts`, file.fileContent, {encoding: "utf8"});
     });
 
     return Promise.all(promises);
