@@ -69,7 +69,7 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
+      expect(content).toContain('import {application} from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
@@ -178,7 +178,7 @@ describe("Init cmd", () => {
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
+      expect(content).toContain('import {application} from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toContain('import * as pages from "./controllers/pages/index.js"');
@@ -270,7 +270,7 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
+      expect(content).toContain('import {application} from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
@@ -362,7 +362,7 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
+      expect(content).toContain('import {application} from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
@@ -455,7 +455,7 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
+      expect(content).toContain('import {application} from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
@@ -548,7 +548,7 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
+      expect(content).toContain('import {application} from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
@@ -649,7 +649,7 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
+      expect(content).toContain('import {application} from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
@@ -715,7 +715,7 @@ describe("Init cmd", () => {
       `);
 
       const content = FakeCliFs.entries.get("project-name/src/server.ts")!;
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
+      expect(content).toContain('import {application} from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
@@ -777,7 +777,7 @@ describe("Init cmd", () => {
 
       const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
 
-      expect(content).toContain('import {Configuration, Inject} from "@tsed/di"');
+      expect(content).toContain('import {application} from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-koa"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
