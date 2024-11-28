@@ -1,32 +1,3 @@
-import {Configuration, Inject, registerProvider} from "@tsed/di";
+import {injectable} from "@tsed/di";
 
-/**
- * Inject {{symbolName}} to the service, controller, etc...
- *
- * ## Usage
- *
- * ```typescript
- * import {Injectable} from "@tsed/di";
- * import {{{symbolName}}} from "./{{symbolName}}";
- *
- * @Injectable()
- * class MyService {
- *   @{{symbolName}}()
- *   private value: {{symbolName}};
- *
- *   // or
- *   constructor(@{{symbolName}}() private value: {{symbolName}}){}
- * }
- *
- * @decorator
- */
-export function {{symbolName}}() {
-  return Inject({{symbolName}});
-}
-
-export type {{symbolName}} = any; // implement type or interface for type checking
-
-registerProvider({
-  provide: {{symbolName}},
-  useValue: {}
-});
+export const {{symbolName}} = injectable(Symbol.for("{{symbolName}}")).value({}).token();

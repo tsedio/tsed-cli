@@ -1,6 +1,6 @@
 import {join} from "path";
-import {Configuration, Inject} from "@tsed/di";
-import {PlatformApplication} from "@tsed/platform-http";
+import {Configuration} from "@tsed/di";
+import {application} from "@tsed/platform-http";
 {{#forEach imports}}{{#if tsIngore}}
 // @ts-ignore
 {{/if}}import {{symbols}}{{#if symbols}} from {{/if}}"{{from}}";{{comment}}
@@ -53,9 +53,5 @@ import {PlatformApplication} from "@tsed/platform-http";
   ]
 })
 export class {{symbolName}} {
-  @Inject()
-  protected app: PlatformApplication;
-
-  @Configuration()
-  protected settings: Configuration;
+  protected app = application();
 }
