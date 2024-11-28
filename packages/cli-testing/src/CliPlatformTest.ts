@@ -4,26 +4,26 @@ import {
   CliFs,
   CliHttpClient,
   CliService,
+  configuration,
   createInjector,
   DITest,
   Env,
   getCommandMetadata,
+  injector,
   InjectorService,
+  logger,
   ProjectPackageJson,
   resolveConfiguration,
-  TokenProvider
+  type TokenProvider
 } from "@tsed/cli-core";
 import {Type} from "@tsed/core";
-import {FakeCliExeca} from "./FakeCliExeca";
-import {FakeCliFs} from "./FakeCliFs";
-import {FakeCliHttpClient} from "./FakeCliHttpClient";
 import {DIContext, runInContext} from "@tsed/di";
+import {$asyncEmit} from "@tsed/hooks";
 import {v4} from "uuid";
 
-export interface InvokeOptions {
-  token: TokenProvider;
-  use: any;
-}
+import {FakeCliExeca} from "./FakeCliExeca.js";
+import {FakeCliFs} from "./FakeCliFs.js";
+import {FakeCliHttpClient} from "./FakeCliHttpClient.js";
 
 export class CliPlatformTest extends DITest {
   static async bootstrap(options: Partial<TsED.Configuration> = {}) {
@@ -38,9 +38,9 @@ export class CliPlatformTest extends DITest {
       ...options
     });
 
-    DITest.injector = CliPlatformTest.createInjector(options);
+    CliPlatformTest.createInjector(options);
 
-    DITest.injector
+    injector()
       .addProvider(CliHttpClient, {
         useClass: FakeCliHttpClient
       })
@@ -52,9 +52,9 @@ export class CliPlatformTest extends DITest {
       })
       .addProvider(CliCore);
 
-    await DITest.injector.load();
-    await DITest.injector.emit("$onReady");
-    await DITest.injector.emit("$loadPackageJson");
+    await injector().load();
+    await $asyncEmit("$onReady");
+    await $asyncEmit("$loadPackageJson");
 
     CliPlatformTest.get(CliService).load();
   }
@@ -65,13 +65,13 @@ export class CliPlatformTest extends DITest {
       ...options
     });
 
-    DITest.injector = CliPlatformTest.createInjector(options);
+    CliPlatformTest.createInjector(options);
 
-    DITest.injector.addProvider(CliCore, {
+    injector().addProvider(CliCore, {
       useClass: rootModule
     });
 
-    await DITest.injector.load();
+    await injector().load();
   }
 
   /**
@@ -97,34 +97,6 @@ export class CliPlatformTest extends DITest {
     return injector;
   }
 
-  /**
-   * It injects services into the test function where you can alter, spy on, and manipulate them.
-   *
-   * The inject function has two parameters
-   *
-   * * an array of Service dependency injection tokens,
-   * * a test function whose parameters correspond exactly to each item in the injection token array.
-   *
-   * @param targets
-   * @param func
-   */
-  static inject<T>(targets: any[], func: (...args: any[]) => Promise<T> | T): () => Promise<T> {
-    return async (): Promise<T> => {
-      if (!DITest.hasInjector()) {
-        await CliPlatformTest.create();
-      }
-
-      const injector: InjectorService = DITest.injector;
-      const deps = [];
-
-      for (const target of targets) {
-        deps.push(injector.has(target) ? injector.get(target) : await injector.invoke(target));
-      }
-
-      return func(...deps);
-    };
-  }
-
   static setPackageJson(pkg: any) {
     const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
 
@@ -139,11 +111,11 @@ export class CliPlatformTest extends DITest {
   static exec(cmdName: string, initialData: any) {
     const $ctx = new DIContext({
       id: v4(),
-      injector: this.injector,
-      logger: this.injector.logger
+      injector: injector(),
+      logger: logger()
     });
 
-    const metadata = this.injector.settings
+    const metadata = configuration()
       .get("commands")
       .map((token: TokenProvider) => getCommandMetadata(token))
       .find((commandOpts: any) => cmdName === commandOpts.name);

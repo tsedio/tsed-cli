@@ -1,27 +1,60 @@
-import {ArchitectureConvention} from "./../interfaces/ArchitectureConvention";
-import {ProvidersInfoService} from "../services/ProvidersInfoService";
-import {ClassNamePipe} from "./ClassNamePipe";
-import {OutputFilePathPipe} from "./OutputFilePathPipe";
-import {normalizePath} from "@tsed/cli-testing";
+// @ts-ignore
+import {ProjectPackageJson} from "@tsed/cli-core";
+import {DITest} from "@tsed/di";
+import {normalizePath} from "@tsed/normalize-path";
+
+import {ProvidersInfoService} from "../services/ProvidersInfoService.js";
+import {ArchitectureConvention} from "./../interfaces/ArchitectureConvention.js";
+import {ClassNamePipe} from "./ClassNamePipe.js";
+import {OutputFilePathPipe} from "./OutputFilePathPipe.js";
+
+async function getPipeFixture(opts: any = {}) {
+  const providers = await DITest.invoke(ProvidersInfoService, []);
+  providers.add(opts.provider);
+
+  const classPipe = await DITest.invoke(ClassNamePipe, [
+    {
+      token: ProvidersInfoService,
+      use: providers
+    }
+  ]);
+
+  const pipe = await DITest.invoke(OutputFilePathPipe, [
+    {
+      token: ProvidersInfoService,
+      use: providers
+    },
+    {
+      token: ClassNamePipe,
+      use: classPipe
+    },
+    {
+      token: ProjectPackageJson,
+      use: {
+        preferences: opts.preferences || {}
+      }
+    }
+  ]);
+
+  return {
+    pipe,
+    providers,
+    classPipe
+  };
+}
 
 describe("OutputFilePathPipe", () => {
+  beforeEach(() => DITest.create());
+  afterEach(() => DITest.reset());
   describe("Ts.ED architecture", () => {
-    it("should return the output file", () => {
-      const providers = new ProvidersInfoService();
-      providers.add({
-        name: "Controller",
-        value: "controller",
-        model: "{{symbolName}}.controller"
+    it("should return the output file", async () => {
+      const {pipe} = await getPipeFixture({
+        provider: {
+          name: "Controller",
+          value: "controller",
+          model: "{{symbolName}}.controller"
+        }
       });
-
-      const classPipe = new ClassNamePipe();
-      classPipe.providers = providers;
-
-      const pipe = new OutputFilePathPipe(classPipe);
-      pipe.providers = providers;
-      pipe.projectPackageJson = {
-        preferences: {}
-      } as any;
 
       expect(normalizePath(pipe.transform({type: "controller", name: "test"}))).toEqual("controllers/TestController");
       expect(
@@ -35,22 +68,14 @@ describe("OutputFilePathPipe", () => {
       ).toEqual("other/TestController");
       expect(normalizePath(pipe.transform({type: "server", name: "server"}))).toEqual("Server");
     });
-    it("should return the output file (controller with subDir)", () => {
-      const providers = new ProvidersInfoService();
-      providers.add({
-        name: "Controller",
-        value: "controller",
-        model: "{{symbolName}}.controller"
+    it("should return the output file (controller with subDir)", async () => {
+      const {pipe} = await getPipeFixture({
+        provider: {
+          name: "Controller",
+          value: "controller",
+          model: "{{symbolName}}.controller"
+        }
       });
-
-      const classPipe = new ClassNamePipe();
-      classPipe.providers = providers;
-
-      const pipe = new OutputFilePathPipe(classPipe);
-      pipe.providers = providers;
-      pipe.projectPackageJson = {
-        preferences: {}
-      } as any;
 
       expect(
         normalizePath(
@@ -62,22 +87,14 @@ describe("OutputFilePathPipe", () => {
         )
       ).toEqual("controllers/rest/TestController");
     });
-    it("should return the output file (datasource)", () => {
-      const providers = new ProvidersInfoService();
-      providers.add({
-        name: "TypeORM Datasource",
-        value: "typeorm:datasource",
-        model: "{{symbolName}}.datasource"
+    it("should return the output file (datasource)", async () => {
+      const {pipe} = await getPipeFixture({
+        provider: {
+          name: "TypeORM Datasource",
+          value: "typeorm:datasource",
+          model: "{{symbolName}}.datasource"
+        }
       });
-
-      const classPipe = new ClassNamePipe();
-      classPipe.providers = providers;
-
-      const pipe = new OutputFilePathPipe(classPipe);
-      pipe.providers = providers;
-      pipe.projectPackageJson = {
-        preferences: {}
-      } as any;
 
       expect(
         normalizePath(
@@ -90,24 +107,17 @@ describe("OutputFilePathPipe", () => {
     });
   });
   describe("Angular architecture", () => {
-    it("should return the output file", () => {
-      const providers = new ProvidersInfoService();
-      providers.add({
-        name: "Controller",
-        value: "controller",
-        model: "{{symbolName}}.controller"
-      });
-
-      const classPipe = new ClassNamePipe();
-      classPipe.providers = providers;
-
-      const pipe = new OutputFilePathPipe(classPipe);
-      pipe.providers = providers;
-      pipe.projectPackageJson = {
+    it("should return the output file", async () => {
+      const {pipe} = await getPipeFixture({
+        provider: {
+          name: "Controller",
+          value: "controller",
+          model: "{{symbolName}}.controller"
+        },
         preferences: {
           architecture: ArchitectureConvention.FEATURE
         }
-      } as any;
+      });
 
       expect(normalizePath(pipe.transform({type: "controller", name: "test"}))).toEqual("TestController");
       expect(
@@ -121,24 +131,17 @@ describe("OutputFilePathPipe", () => {
       ).toEqual("TestController");
       expect(normalizePath(pipe.transform({type: "server", name: "server"}))).toEqual("Server");
     });
-    it("should return the output file (controller with subDir)", () => {
-      const providers = new ProvidersInfoService();
-      providers.add({
-        name: "Controller",
-        value: "controller",
-        model: "{{symbolName}}.controller"
-      });
-
-      const classPipe = new ClassNamePipe();
-      classPipe.providers = providers;
-
-      const pipe = new OutputFilePathPipe(classPipe);
-      pipe.providers = providers;
-      pipe.projectPackageJson = {
+    it("should return the output file (controller with subDir)", async () => {
+      const {pipe} = await getPipeFixture({
+        provider: {
+          name: "Controller",
+          value: "controller",
+          model: "{{symbolName}}.controller"
+        },
         preferences: {
           architecture: ArchitectureConvention.FEATURE
         }
-      } as any;
+      });
 
       expect(
         normalizePath(
@@ -150,24 +153,17 @@ describe("OutputFilePathPipe", () => {
         )
       ).toEqual("rest/TestController");
     });
-    it("should return the output file (datasource)", () => {
-      const providers = new ProvidersInfoService();
-      providers.add({
-        name: "TypeORM Datasource",
-        value: "typeorm:datasource",
-        model: "{{symbolName}}.datasource"
-      });
-
-      const classPipe = new ClassNamePipe();
-      classPipe.providers = providers;
-
-      const pipe = new OutputFilePathPipe(classPipe);
-      pipe.providers = providers;
-      pipe.projectPackageJson = {
+    it("should return the output file (datasource)", async () => {
+      const {pipe} = await getPipeFixture({
+        provider: {
+          name: "TypeORM Datasource",
+          value: "typeorm:datasource",
+          model: "{{symbolName}}.datasource"
+        },
         preferences: {
           architecture: ArchitectureConvention.FEATURE
         }
-      } as any;
+      });
 
       expect(
         normalizePath(

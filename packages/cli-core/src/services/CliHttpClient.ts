@@ -1,10 +1,11 @@
-import {Inject, Injectable} from "@tsed/di";
-import axios, {AxiosRequestConfig, Method} from "axios";
 import {cleanObject} from "@tsed/core";
+import {inject, Injectable} from "@tsed/di";
+import axios, {type AxiosRequestConfig, type Method} from "axios";
 import {stringify} from "querystring";
-import {CliProxyAgent} from "./CliProxyAgent";
-import {CliHttpLogClient} from "./CliHttpLogClient";
 import {URL} from "url";
+
+import {CliHttpLogClient} from "./CliHttpLogClient.js";
+import {CliProxyAgent} from "./CliProxyAgent.js";
 
 export interface CliHttpClientOptions extends AxiosRequestConfig, Record<string, unknown> {
   qs?: Record<string, unknown>;
@@ -13,8 +14,7 @@ export interface CliHttpClientOptions extends AxiosRequestConfig, Record<string,
 
 @Injectable()
 export class CliHttpClient extends CliHttpLogClient {
-  @Inject()
-  protected cliProxyAgent: CliProxyAgent;
+  protected cliProxyAgent = inject(CliProxyAgent);
 
   protected host: string;
 

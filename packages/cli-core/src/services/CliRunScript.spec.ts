@@ -1,10 +1,11 @@
-import {CliPlatformTest} from "@tsed/cli-testing";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import runScript from "@npmcli/run-script";
-import {CliRunScript} from "./CliRunScript";
+// @ts-ignore
+import {CliPlatformTest} from "@tsed/cli-testing";
 
-jest.mock("@npmcli/run-script");
+import {CliRunScript} from "./CliRunScript.js";
+
+vi.mock("@npmcli/run-script");
 
 describe("CliRunScript", () => {
   beforeEach(() => CliPlatformTest.create());

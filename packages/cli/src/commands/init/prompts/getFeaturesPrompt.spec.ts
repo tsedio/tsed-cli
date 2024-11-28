@@ -1,4 +1,4 @@
-import {getFeaturesPrompt} from "./getFeaturesPrompt";
+import {getFeaturesPrompt} from "./getFeaturesPrompt.js";
 
 describe("getFeaturesPrompt", () => {
   it("should add a provider info", () => {
@@ -6,15 +6,15 @@ describe("getFeaturesPrompt", () => {
 
     expect(prompt).toBeInstanceOf(Array);
     expect(prompt).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "choices": Array [
-            Object {
+      [
+        {
+          "choices": [
+            {
               "checked": true,
               "name": "Express.js",
               "value": "express",
             },
-            Object {
+            {
               "checked": false,
               "name": "Koa.js",
               "value": "koa",
@@ -24,14 +24,14 @@ describe("getFeaturesPrompt", () => {
           "name": "platform",
           "type": "list",
         },
-        Object {
-          "choices": Array [
-            Object {
+        {
+          "choices": [
+            {
               "checked": true,
               "name": "Ts.ED",
               "value": "arc_default",
             },
-            Object {
+            {
               "checked": false,
               "name": "Feature",
               "value": "feature",
@@ -41,14 +41,14 @@ describe("getFeaturesPrompt", () => {
           "name": "architecture",
           "type": "list",
         },
-        Object {
-          "choices": Array [
-            Object {
+        {
+          "choices": [
+            {
               "checked": true,
               "name": "Ts.ED",
               "value": "conv_default",
             },
-            Object {
+            {
               "checked": false,
               "name": "Angular",
               "value": "angular",
@@ -58,70 +58,70 @@ describe("getFeaturesPrompt", () => {
           "name": "convention",
           "type": "list",
         },
-        Object {
-          "choices": Array [
-            Object {
-              "dependencies": Object {
+        {
+          "choices": [
+            {
+              "dependencies": {
                 "@tsed/typegraphql": "{{tsedVersion}}",
               },
-              "devDependencies": Object {
+              "devDependencies": {
                 "@tsed/cli-plugin-typegraphql": "{{cliVersion}}",
               },
               "name": "TypeGraphQL",
               "value": "graphql",
             },
-            Object {
+            {
               "name": "Database",
               "value": "db",
             },
-            Object {
-              "devDependencies": Object {
+            {
+              "devDependencies": {
                 "@tsed/cli-plugin-passport": "{{cliVersion}}",
               },
               "name": "Passport.js",
               "value": "passportjs",
               "when": [Function],
             },
-            Object {
-              "dependencies": Object {
+            {
+              "dependencies": {
                 "@tsed/socketio": "{{tsedVersion}}",
                 "socket.io": "latest",
               },
               "name": "Socket.io",
               "value": "socketio",
             },
-            Object {
-              "dependencies": Object {
+            {
+              "dependencies": {
                 "@tsed/swagger": "{{tsedVersion}}",
               },
               "name": "Swagger",
               "value": "swagger",
             },
-            Object {
-              "devDependencies": Object {
+            {
+              "devDependencies": {
                 "@tsed/cli-plugin-oidc-provider": "{{cliVersion}}",
               },
               "name": "OpenID Connect provider",
               "value": "oidc",
             },
-            Object {
-              "dependencies": Object {},
-              "devDependencies": Object {
+            {
+              "dependencies": {},
+              "devDependencies": {
                 "@types/supertest": "latest",
                 "supertest": "latest",
               },
               "name": "Testing",
               "value": "testing",
             },
-            Object {
+            {
               "name": "Linter",
               "value": "linter",
             },
-            Object {
-              "dependencies": Object {
+            {
+              "dependencies": {
                 "@tsed/cli-core": "{{cliVersion}}",
               },
-              "devDependencies": Object {
+              "devDependencies": {
                 "@types/inquirer": "^8.2.4",
               },
               "name": "Commands",
@@ -132,24 +132,24 @@ describe("getFeaturesPrompt", () => {
           "name": "features",
           "type": "checkbox",
         },
-        Object {
-          "choices": Array [
-            Object {
-              "devDependencies": Object {
+        {
+          "choices": [
+            {
+              "devDependencies": {
                 "@tsed/cli-plugin-prisma": "{{cliVersion}}",
               },
               "name": "Prisma",
               "value": "prisma",
             },
-            Object {
-              "devDependencies": Object {
+            {
+              "devDependencies": {
                 "@tsed/cli-plugin-mongoose": "{{cliVersion}}",
               },
               "name": "Mongoose",
               "value": "mongoose",
             },
-            Object {
-              "devDependencies": Object {
+            {
+              "devDependencies": {
                 "@tsed/cli-plugin-typeorm": "{{cliVersion}}",
                 "typeorm": "latest",
               },
@@ -162,88 +162,88 @@ describe("getFeaturesPrompt", () => {
           "type": "list",
           "when": [Function],
         },
-        Object {
-          "choices": Array [
-            Object {
-              "dependencies": Object {
+        {
+          "choices": [
+            {
+              "dependencies": {
                 "mysql2": "latest",
               },
               "name": "MySQL",
               "value": "typeorm:mysql",
             },
-            Object {
-              "dependencies": Object {
+            {
+              "dependencies": {
                 "mariadb": "latest",
               },
               "name": "MariaDB",
               "value": "typeorm:mariadb",
             },
-            Object {
-              "dependencies": Object {
+            {
+              "dependencies": {
                 "pg": "latest",
               },
               "name": "Postgres",
               "value": "typeorm:postgres",
             },
-            Object {
-              "dependencies": Object {
+            {
+              "dependencies": {
                 "cockroachdb": "latest",
               },
               "name": "CockRoachDB",
               "value": "typeorm:cockroachdb",
             },
-            Object {
-              "dependencies": Object {
+            {
+              "dependencies": {
                 "sqlite3": "latest",
               },
               "name": "SQLite",
               "value": "typeorm:sqlite",
             },
-            Object {
-              "dependencies": Object {
+            {
+              "dependencies": {
                 "better-sqlite3": "latest",
               },
               "name": "Better SQLite3",
               "value": "typeorm:better-sqlite3",
             },
-            Object {
+            {
               "name": "Cordova",
               "value": "typeorm:cordova",
             },
-            Object {
+            {
               "name": "NativeScript",
               "value": "typeorm:nativescript",
             },
-            Object {
-              "dependencies": Object {
+            {
+              "dependencies": {
                 "oracledb": "latest",
               },
               "name": "Oracle",
               "value": "typeorm:oracle",
             },
-            Object {
-              "dependencies": Object {
+            {
+              "dependencies": {
                 "mssql": "latest",
               },
               "name": "MsSQL",
               "value": "typeorm:mssql",
             },
-            Object {
-              "dependencies": Object {
+            {
+              "dependencies": {
                 "mongodb": "latest",
               },
               "name": "MongoDB",
               "value": "typeorm:mongodb",
             },
-            Object {
+            {
               "name": "SQL.js",
               "value": "typeorm:sqljs",
             },
-            Object {
+            {
               "name": "ReactNative",
               "value": "typeorm:reactnative",
             },
-            Object {
+            {
               "name": "Expo",
               "value": "typeorm:expo",
             },
@@ -253,28 +253,21 @@ describe("getFeaturesPrompt", () => {
           "type": "list",
           "when": [Function],
         },
-        Object {
-          "choices": Array [
-            Object {
-              "devDependencies": Object {
+        {
+          "choices": [
+            {
+              "devDependencies": {
                 "@tsed/cli-plugin-vitest": "{{cliVersion}}",
               },
               "name": "Vitest",
               "value": "vitest",
             },
-            Object {
-              "devDependencies": Object {
+            {
+              "devDependencies": {
                 "@tsed/cli-plugin-jest": "{{cliVersion}}",
               },
               "name": "Jest",
               "value": "jest",
-            },
-            Object {
-              "devDependencies": Object {
-                "@tsed/cli-plugin-mocha": "{{cliVersion}}",
-              },
-              "name": "Mocha + Chai + Sinon",
-              "value": "mocha",
             },
           ],
           "message": "Choose unit framework",
@@ -282,11 +275,11 @@ describe("getFeaturesPrompt", () => {
           "type": "list",
           "when": [Function],
         },
-        Object {
-          "choices": Array [
-            Object {
+        {
+          "choices": [
+            {
               "checked": true,
-              "devDependencies": Object {
+              "devDependencies": {
                 "@tsed/cli-plugin-eslint": "{{cliVersion}}",
               },
               "name": "EsLint",
@@ -298,13 +291,13 @@ describe("getFeaturesPrompt", () => {
           "type": "list",
           "when": [Function],
         },
-        Object {
-          "choices": Array [
-            Object {
+        {
+          "choices": [
+            {
               "name": "Prettier",
               "value": "prettier",
             },
-            Object {
+            {
               "name": "Lint on commit",
               "value": "lintstaged",
             },
@@ -314,23 +307,23 @@ describe("getFeaturesPrompt", () => {
           "type": "checkbox",
           "when": [Function],
         },
-        Object {
+        {
           "default": "/oidc",
           "message": "Choose the OIDC base path server",
           "name": "oidcBasePath",
           "type": "input",
           "when": [Function],
         },
-        Object {
-          "choices": Array [
-            Object {
+        {
+          "choices": [
+            {
               "checked": true,
-              "name": "Node.js",
+              "name": "Node.js + SWC",
               "value": "node",
             },
-            Object {
+            {
               "checked": false,
-              "name": "Bun.js (experimental)",
+              "name": "Bun.js",
               "value": "bun",
             },
           ],
@@ -338,26 +331,26 @@ describe("getFeaturesPrompt", () => {
           "name": "runtime",
           "type": "list",
         },
-        Object {
-          "choices": Array [
-            Object {
+        {
+          "choices": [
+            {
               "checked": true,
               "name": "Yarn",
               "value": "yarn",
             },
-            Object {
+            {
               "checked": false,
               "name": "NPM",
               "value": "npm",
             },
-            Object {
+            {
               "checked": false,
-              "name": "PNPM (experimental)",
+              "name": "PNPM",
               "value": "pnpm",
             },
-            Object {
+            {
               "checked": false,
-              "name": "Bun.js (experimental)",
+              "name": "Bun.js",
               "value": "bun",
             },
           ],

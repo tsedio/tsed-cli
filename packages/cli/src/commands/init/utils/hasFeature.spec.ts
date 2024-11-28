@@ -1,4 +1,4 @@
-import {hasFeature, hasValue} from "./hasFeature";
+import {hasFeature, hasValue} from "./hasFeature.js";
 
 describe("hasValue", () => {
   it("should return false", () => {

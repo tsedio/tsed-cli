@@ -1,1 +1,1 @@
-export * from "./MyDataSource";
+export * from "./MyDataSource.js";

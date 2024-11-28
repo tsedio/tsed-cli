@@ -1,9 +1,11 @@
-import {Store, Type} from "@tsed/core";
-import {CommandStoreKeys} from "../domains/CommandStoreKeys";
-import {CommandParameters} from "../interfaces/CommandParameters";
-import {CommandMetadata} from "../interfaces/CommandMetadata";
+import {Store} from "@tsed/core";
+import type {TokenProvider} from "@tsed/di";
 
-export function getCommandMetadata(token: Type<any>): CommandMetadata {
+import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
+import type {CommandMetadata} from "../interfaces/CommandMetadata.js";
+import type {CommandParameters} from "../interfaces/CommandParameters.js";
+
+export function getCommandMetadata(token: TokenProvider): CommandMetadata {
   const {
     name,
     alias,

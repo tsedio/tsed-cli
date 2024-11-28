@@ -1,11 +1,11 @@
-import {insertAfter} from "./insertAfter";
+import {insertAfter} from "./insertAfter.js";
 
 describe("insertAfter", () => {
   it("should inject content after pattern", () => {
     const fileContent =
       "#!/usr/bin/env node\n" +
       'import {CliCore} from "@tsed/cli-core";\n' +
-      'import {config} from "../config";\n' +
+      'import {config} from "../config.js";\n' +
       "\n" +
       "CliCore.bootstrap({\n" +
       "  ...config,\n" +
@@ -19,7 +19,7 @@ describe("insertAfter", () => {
     expect(result2).toEqual(
       "#!/usr/bin/env node\n" +
         'import {CliCore} from "@tsed/cli-core";\n' +
-        'import {config} from "../config";\n' +
+        'import {config} from "../config.js";\n' +
         "\n" +
         "CliCore.bootstrap({\n" +
         "  ...config,\n" +

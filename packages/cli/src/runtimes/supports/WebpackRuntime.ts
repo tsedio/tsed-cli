@@ -1,6 +1,7 @@
-import {dirname} from "path";
 import {Injectable} from "@tsed/di";
-import {BabelRuntime} from "./BabelRuntime";
+import {dirname} from "path";
+
+import {BabelRuntime} from "./BabelRuntime.js";
 
 @Injectable({
   type: "runtime"
@@ -8,6 +9,10 @@ import {BabelRuntime} from "./BabelRuntime";
 export class WebpackRuntime extends BabelRuntime {
   readonly name = "webpack";
   readonly order: number = 2;
+
+  isCompiled() {
+    return true;
+  }
 
   files() {
     return [...super.files(), "/init/webpack.config.js.hbs"];
@@ -24,6 +29,7 @@ export class WebpackRuntime extends BabelRuntime {
   devDependencies() {
     return {
       ...super.devDependencies(),
+      typescript: "latest",
       "babel-loader": "latest",
       webpack: "latest",
       "webpack-cli": "latest"

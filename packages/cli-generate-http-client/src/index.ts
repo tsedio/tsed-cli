@@ -1,3 +1,3 @@
-export * from "./commands/GenerateHttpClientCmd";
+export * from "./commands/GenerateHttpClientCmd.js";
 
 export default {};

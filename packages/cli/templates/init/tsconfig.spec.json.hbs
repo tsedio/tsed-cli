@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "noEmit": true,
+    "types": [{{#if vitest}}
+      "vitest/globals",
+      "vitest/importMeta",
+      "vite/client",{{/if}}
+      "node",
+      "vitest"
+    ]
+  },
+  "include": [{{#if vitest}}
+    "vitest.config.mts",{{/if}}
+    "src/**/*"
+  ],
+  "exclude": [
+    "dist",
+    "coverage",
+    "node_modules"
+  ]
+}

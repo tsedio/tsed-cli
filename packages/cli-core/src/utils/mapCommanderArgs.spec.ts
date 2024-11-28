@@ -1,4 +1,4 @@
-import {mapCommanderArgs} from "./mapCommanderArgs";
+import {mapCommanderArgs} from "./mapCommanderArgs.js";
 
 describe("mapCommanderArgs", () => {
   it("should map args", () => {

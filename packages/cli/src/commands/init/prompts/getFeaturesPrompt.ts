@@ -1,6 +1,7 @@
 import {cleanObject, isFunction} from "@tsed/core";
-import {FeaturesMap, FeaturesPrompt} from "../config/FeaturesPrompt";
-import {InitOptions} from "../interfaces/InitOptions";
+
+import {FeaturesMap, FeaturesPrompt} from "../config/FeaturesPrompt.js";
+import type {InitOptions} from "../interfaces/InitOptions.js";
 
 function mapChoices(item: any, options: Partial<InitOptions>) {
   return item.choices.map((choice: string) => {

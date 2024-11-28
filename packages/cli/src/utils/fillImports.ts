@@ -1,4 +1,4 @@
-import {ArchitectureConvention, PlatformType} from "../interfaces";
+import {ArchitectureConvention, PlatformType} from "../interfaces/index.js";
 
 export function fillImports(ctx: any) {
   ctx = {...ctx};
@@ -19,6 +19,7 @@ export function fillImports(ctx: any) {
   );
 
   ctx.imports = [
+    {from: "@tsed/platform-log-request", comment: " // remove this import if you don't want log request"},
     ctx.express && {from: "@tsed/platform-express", comment: " // /!\\ keep this import"},
     ctx.koa && {from: "@tsed/platform-koa", comment: " // /!\\ keep this import"},
     {from: "@tsed/ajv"},
@@ -27,15 +28,15 @@ export function fillImports(ctx: any) {
     ctx.oidc && {from: "@tsed/oidc-provider"},
     ctx.passportjs && {from: "@tsed/passport"},
     ctx.graphql && {from: "@tsed/typegraphql"},
-    ctx.graphql && {from: "./datasources/index"},
-    ctx.graphql && {from: "./resolvers/index"},
-    {symbols: "{config}", from: "./config/index"},
-    {symbols: "* as rest", from: isFeature ? "./rest/index" : "./controllers/rest/index"},
+    ctx.graphql && {from: "./datasources/index.js"},
+    ctx.graphql && {from: "./resolvers/index.js"},
+    {symbols: "{config}", from: "./config/index.js"},
+    {symbols: "* as rest", from: isFeature ? "./rest/index.js" : "./controllers/rest/index.js"},
     (ctx.swagger || ctx.oidc) && {
       symbols: "* as pages",
-      from: isFeature ? "./pages/index" : "./controllers/pages/index"
+      from: isFeature ? "./pages/index.js" : "./controllers/pages/index.js"
     },
-    ctx.oidc && {symbols: "{InteractionsController}", from: "./controllers/oidc/InteractionsController"}
+    ctx.oidc && {symbols: "{InteractionsController}", from: "./controllers/oidc/InteractionsController.js"}
   ].filter(Boolean);
 
   return ctx;

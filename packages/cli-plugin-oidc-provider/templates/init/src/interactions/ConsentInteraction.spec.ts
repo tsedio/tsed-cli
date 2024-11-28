@@ -1,12 +1,12 @@
-import { PlatformTest } from "@tsed/common";
+import {PlatformTest} from "@tsed/platform-http";
 
-import { getOidcContextFixture } from "./__mock__/oidcContext.fixture";
-import { ConsentInteraction } from "./ConsentInteraction";
+import {getOidcContextFixture} from "./__mock__/oidcContext.fixture.js";
+import {ConsentInteraction} from "./ConsentInteraction.js";
 
 async function createInteractionFixture() {
   const interaction = await PlatformTest.invoke<ConsentInteraction>(ConsentInteraction, []);
 
-  return { interaction };
+  return {interaction};
 }
 
 describe("ConsentInteraction", () => {
@@ -15,7 +15,7 @@ describe("ConsentInteraction", () => {
 
   describe("$prompt()", () => {
     it("should return consent context", async () => {
-      const { interaction } = await createInteractionFixture();
+      const {interaction} = await createInteractionFixture();
       const oidcContext = getOidcContextFixture();
 
       const result = await interaction.$prompt(oidcContext);
@@ -36,15 +36,15 @@ describe("ConsentInteraction", () => {
   });
   describe("confirm()", () => {
     it("should control all consentement", async () => {
-      const { interaction } = await createInteractionFixture();
+      const {interaction} = await createInteractionFixture();
       const oidcContext = getOidcContextFixture();
       oidcContext.prompt.name = "consent";
 
       const grant = {
-        save: jest.fn().mockResolvedValue("grantId"),
-        addOIDCScope: jest.fn(),
-        addOIDCClaims: jest.fn(),
-        addResourceScope: jest.fn()
+        save: vi.fn().mockResolvedValue("grantId"),
+        addOIDCScope: vi.fn(),
+        addOIDCClaims: vi.fn(),
+        addResourceScope: vi.fn()
       };
 
       oidcContext.getGrant.mockResolvedValue(grant);
@@ -65,7 +65,7 @@ describe("ConsentInteraction", () => {
       expect(grant.addOIDCClaims).toHaveBeenCalledWith(["claims"]);
       expect(grant.addResourceScope).toHaveBeenCalledWith("indicator", "scopes");
       expect(grant.save).toHaveBeenCalledWith();
-      expect(oidcContext.interactionFinished).toHaveBeenCalledWith({ consent: { grantId: "grantId" } }, { mergeWithLastSubmission: true });
+      expect(oidcContext.interactionFinished).toHaveBeenCalledWith({consent: {grantId: "grantId"}}, {mergeWithLastSubmission: true});
     });
   });
 });

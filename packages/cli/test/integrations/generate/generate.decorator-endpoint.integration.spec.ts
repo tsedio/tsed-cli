@@ -1,7 +1,7 @@
-import {CliService, ProjectPackageJson} from "@tsed/cli-core";
+// @ts-ignore
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {resolve} from "path";
-import {GenerateCmd, TEMPLATE_DIR} from "../../../src";
+
+import {GenerateCmd, TEMPLATE_DIR} from "../../../src/index.js";
 
 describe("Generate endpoint decorator", () => {
   beforeEach(() =>
@@ -13,7 +13,7 @@ describe("Generate endpoint decorator", () => {
   afterEach(() => CliPlatformTest.reset());
 
   it("should generate a template with the right options", async () => {
-      CliPlatformTest.setPackageJson({
+    CliPlatformTest.setPackageJson({
       name: "",
       version: "1.0.0",
       description: "",

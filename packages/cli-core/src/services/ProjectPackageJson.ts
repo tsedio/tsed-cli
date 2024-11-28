@@ -1,11 +1,12 @@
 import {getValue, setValue} from "@tsed/core";
-import {Configuration, Injectable} from "@tsed/di";
+import {configuration, constant, inject, Injectable} from "@tsed/di";
 import {dirname, join} from "path";
-import readPkgUp from "read-pkg-up";
-import {PackageJson} from "../interfaces/PackageJson";
-import {ProjectPreferences} from "../interfaces/ProjectPreferences";
-import {CliFs} from "./CliFs";
-import {isValidVersion} from "../utils/isValidVersion";
+import {readPackageUpSync} from "read-pkg-up";
+
+import type {PackageJson} from "../interfaces/PackageJson.js";
+import type {ProjectPreferences} from "../interfaces/ProjectPreferences.js";
+import {isValidVersion} from "../utils/isValidVersion.js";
+import {CliFs} from "./CliFs.js";
 
 function sortKeys(obj: any) {
   return Object.entries(obj)
@@ -39,15 +40,16 @@ function mapPackages(deps: any) {
 export class ProjectPackageJson {
   public rewrite = false;
   public reinstall = false;
-
   public GH_TOKEN: string;
+  protected fs = inject(CliFs);
   private raw: PackageJson;
 
-  constructor(@Configuration() private configuration: Configuration, protected fs: CliFs) {
+  constructor() {
     this.setRaw({
       name: "",
       version: "1.0.0",
       description: "",
+      type: "module",
       scripts: {},
       dependencies: {},
       devDependencies: {}
@@ -59,11 +61,11 @@ export class ProjectPackageJson {
   }
 
   get dir() {
-    return String(this.configuration.project?.rootDir);
+    return String(constant("project.rootDir"));
   }
 
   set dir(dir: string) {
-    this.configuration.project.rootDir = dir;
+    configuration().set("project.rootDir", dir);
 
     this.read();
   }
@@ -105,7 +107,7 @@ export class ProjectPackageJson {
   }
 
   get preferences(): ProjectPreferences {
-    return this.raw[this.configuration.name];
+    return this.raw[constant<string>("name")!];
   }
 
   $loadPackageJson() {
@@ -123,12 +125,13 @@ export class ProjectPackageJson {
   }
 
   setRaw(pkg: any) {
-    const projectPreferences = this.configuration.defaultProjectPreferences;
-    const preferences = getValue(pkg, this.configuration.name);
+    const config = configuration();
+    const projectPreferences = config.get("defaultProjectPreferences");
+    const preferences = getValue(pkg, config.get("name"));
 
     this.raw = {
       ...pkg,
-      [this.configuration.name]: {
+      [config.get("name")]: {
         ...(projectPreferences && projectPreferences(pkg)),
         ...preferences
       }
@@ -193,7 +196,7 @@ export class ProjectPackageJson {
   }
 
   setPreference(key: keyof ProjectPreferences, value: any) {
-    setValue(this.raw, `${this.configuration.name}.${key}`, value);
+    setValue(this.raw, `${constant<string>("name")}.${key}`, value);
     this.rewrite = true;
 
     return;
@@ -223,6 +226,7 @@ export class ProjectPackageJson {
     this.raw = {
       ...originalPkg,
       ...this.raw,
+      type: "module",
       scripts: {
         ...(originalPkg.scripts || {}),
         ...(this.raw.scripts || {})
@@ -270,7 +274,7 @@ export class ProjectPackageJson {
     this.reinstall = false;
     this.rewrite = false;
 
-    const cwd = this.configuration.get("project.rootDir");
+    const cwd = constant<string>("project.rootDir");
     const pkgPath = join(String(cwd), "package.json");
 
     const pkg = this.fs.readJsonSync(pkgPath, {encoding: "utf8"});
@@ -290,9 +294,11 @@ export class ProjectPackageJson {
       ...pkg.devDependencies
     };
 
-    pkg[this.configuration.name] = {
-      ...this.raw[this.configuration.name],
-      ...pkg[this.configuration.name]
+    const name = constant<string>("name")!;
+
+    pkg[name] = {
+      ...this.raw[name],
+      ...pkg[name]
     };
 
     this.raw = pkg;
@@ -301,21 +307,21 @@ export class ProjectPackageJson {
   }
 
   protected getPackageJson() {
-    const cwd = this.configuration.get("project.rootDir");
-    const disableReadUpPkg = this.configuration.get("command.metadata.disableReadUpPkg");
-    const name = this.configuration.get("name");
+    const cwd = constant<string>("project.rootDir");
+    const disableReadUpPkg = constant<string>("command.metadata.disableReadUpPkg");
+    const name = constant<string>("name")!;
 
     const pkgPath = join(String(cwd), "package.json");
     const fileExists = this.fs.exists(pkgPath);
 
     if (!disableReadUpPkg && !fileExists) {
-      const result = readPkgUp.sync({
+      const result = readPackageUpSync({
         cwd
       });
 
       if (result && result.path) {
         const pkgPath = dirname(result.path);
-        this.configuration.set("project.root", pkgPath);
+        configuration().set("project.root", pkgPath);
 
         const pkg = this.fs.readJsonSync(result.path, {encoding: "utf8"});
 
@@ -325,7 +331,7 @@ export class ProjectPackageJson {
 
     if (disableReadUpPkg && fileExists) {
       const pkg = this.fs.readJsonSync(pkgPath, {encoding: "utf8"});
-      this.configuration.set("project.root", pkgPath);
+      configuration().set("project.root", pkgPath);
 
       return {...this.getEmptyPackageJson(name), ...pkg} as any;
     }

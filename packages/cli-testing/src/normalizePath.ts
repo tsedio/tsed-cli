@@ -1,9 +1,9 @@
 import {isString} from "@tsed/core";
-import normalize_path from "normalize-path";
+import {normalizePath as n} from "@tsed/normalize-path";
 
 export function normalizePath(item: any) {
   if (isString(item)) {
-    return normalize_path(item);
+    return n(item);
   }
 
   return item.map(normalizePath);

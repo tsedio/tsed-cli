@@ -1,9 +1,10 @@
-import {GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
-import {Inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, Tasks} from "@tsed/cli-core";
+import {type GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
+import {inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, type Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
-import {paramCase} from "change-case";
-import {PassportClient} from "../services/PassportClient";
-import {TEMPLATE_DIR} from "../utils/templateDir";
+import {kebabCase} from "change-case";
+
+import {PassportClient} from "../services/PassportClient.js";
+import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 export interface PassportGenerateOptions extends GenerateCmdContext {
   passportPackage: string;
@@ -11,16 +12,10 @@ export interface PassportGenerateOptions extends GenerateCmdContext {
 
 @Injectable()
 export class PassportGenerateHook {
-  @Inject()
-  projectPackageJson: ProjectPackageJson;
-
-  @Inject()
-  srcRenderService: SrcRendererService;
-
-  @Inject()
-  passportClient: PassportClient;
-
-  packages: any[];
+  protected projectPackageJson = inject(ProjectPackageJson);
+  protected srcRenderService = inject(SrcRendererService);
+  protected passportClient = inject(PassportClient);
+  protected packages: any[];
 
   constructor(private providersInfoService: ProvidersInfoService) {
     providersInfoService.add(
@@ -89,7 +84,7 @@ export class PassportGenerateHook {
   private mapOptions(options: PassportGenerateOptions) {
     return {
       ...options,
-      protocolName: paramCase(options.name),
+      protocolName: kebabCase(options.name),
       passportPackage: options.passportPackage
     };
   }

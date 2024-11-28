@@ -1,9 +1,9 @@
 import {Inject, Injectable} from "@tsed/di";
-import execa from "execa";
-import {Observable} from "rxjs";
-import {BaseManager, ManagerCmdOpts, ManagerCmdSyncOpts} from "./BaseManager";
 import {join} from "path";
-import {CliYaml} from "../../services/CliYaml";
+import {Observable} from "rxjs";
+
+import {CliYaml} from "../../services/CliYaml.js";
+import {BaseManager, type ManagerCmdOpts, type ManagerCmdSyncOpts} from "./BaseManager.js";
 
 @Injectable({
   type: "package:manager"
@@ -15,12 +15,12 @@ export class YarnBerryManager extends BaseManager {
   @Inject()
   protected cliYaml: CliYaml;
 
-  async init(options: ManagerCmdSyncOpts) {
+  async init(options: ManagerCmdOpts) {
     // init yarn v1
     this.install(options);
 
     // then switch write file
-    await this.cliYaml.write(join(options.cwd!, ".yarnrc.yml"), {
+    await this.cliYaml.write(join(String(options.cwd!), ".yarnrc.yml"), {
       nodeLinker: "node-modules"
     });
 
@@ -36,7 +36,7 @@ export class YarnBerryManager extends BaseManager {
     return this.run("add", ["-D", ...deps], options);
   }
 
-  install(options: {verbose?: boolean} & execa.Options): Observable<any> {
+  install(options: ManagerCmdOpts): Observable<any> {
     return this.run("install", [options.verbose && "--verbose"], options);
   }
 }

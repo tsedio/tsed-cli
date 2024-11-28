@@ -1,5 +1,5 @@
-import {CliPluginVitestModule} from "./CliPluginVitestModule";
+import {CliPluginVitestModule} from "./CliPluginVitestModule.js";
 
-export * from "./utils/templateDir";
+export * from "./utils/templateDir.js";
 
 export default CliPluginVitestModule;

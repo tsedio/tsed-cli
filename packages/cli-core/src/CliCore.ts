@@ -1,18 +1,19 @@
-import {Inject, InjectorService, Module} from "@tsed/di";
 import {Type} from "@tsed/core";
+import {inject, InjectorService, Module} from "@tsed/di";
 import chalk from "chalk";
 import {Command} from "commander";
 import {join, resolve} from "path";
-
-import {CliConfiguration} from "./services/CliConfiguration";
-import {CliPackageJson} from "./services/CliPackageJson";
-import {CliService} from "./services/CliService";
-import {ProjectPackageJson} from "./services/ProjectPackageJson";
-import {createInjector} from "./utils/createInjector";
-import {loadPlugins} from "./utils/loadPlugins";
-import {CliError} from "./domains/CliError";
 import semver from "semver";
-import {resolveConfiguration} from "./utils/resolveConfiguration";
+import updateNotifier from "update-notifier";
+
+import {CliError} from "./domains/CliError.js";
+import {CliConfiguration} from "./services/CliConfiguration.js";
+import {CliPackageJson} from "./services/CliPackageJson.js";
+import {CliService} from "./services/CliService.js";
+import {ProjectPackageJson} from "./services/ProjectPackageJson.js";
+import {createInjector} from "./utils/createInjector.js";
+import {loadPlugins} from "./utils/loadPlugins.js";
+import {resolveConfiguration} from "./utils/resolveConfiguration.js";
 
 function isHelpManual(argv: string[]) {
   return argv.includes("-h") || argv.includes("--help");
@@ -22,11 +23,8 @@ function isHelpManual(argv: string[]) {
   imports: [CliPackageJson, ProjectPackageJson, CliService, CliConfiguration]
 })
 export class CliCore {
-  @Inject()
-  readonly injector: InjectorService;
-
-  @Inject()
-  readonly cliService: CliService;
+  readonly injector = inject(InjectorService);
+  readonly cliService = inject(CliService);
 
   static checkNodeVersion(wanted: string, id: string) {
     if (!semver.satisfies(process.version, wanted)) {
@@ -52,7 +50,7 @@ export class CliCore {
 
     const injector = this.createInjector(settings);
 
-    settings.plugins && (await loadPlugins(injector));
+    settings.plugins && (await loadPlugins());
 
     await this.loadInjector(injector, module);
 
@@ -81,11 +79,8 @@ export class CliCore {
     injector.settings.set("loaded", true);
   }
 
-  // eslint-disable-next-line require-await
   static async updateNotifier(pkg: any) {
-    // const {default: updateNotifier} = await import("update-notifier");
-    //
-    // updateNotifier({pkg, updateCheckInterval: 0}).notify();
+    updateNotifier({pkg, updateCheckInterval: 0}).notify();
 
     return this;
   }

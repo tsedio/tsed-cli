@@ -7,7 +7,8 @@ import {
   ScriptsRendererService,
   SrcRendererService
 } from "@tsed/cli-core";
-import {TEMPLATE_DIR} from "../utils/templateDir";
+
+import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 @Injectable()
 export class JestInitHook {
@@ -29,7 +30,7 @@ export class JestInitHook {
       {
         title: "Generate files for jest",
         task: (ctx: any) => {
-          return this.rootRenderer.renderAll(["jest.config.js.hbs"], ctx, {
+          return this.rootRenderer.renderAll(["vi.config.js.hbs"], ctx, {
             templateDir: `${TEMPLATE_DIR}/init`
           });
         }

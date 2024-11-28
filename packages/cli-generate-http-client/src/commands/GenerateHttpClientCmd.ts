@@ -1,9 +1,9 @@
-import {CliFs, Command, CommandProvider, Inject, Type} from "@tsed/cli-core";
-import {Constant, InjectorService} from "@tsed/di";
+import {CliFs, Command, type CommandProvider, constant, inject, Type} from "@tsed/cli-core";
 import {isString} from "@tsed/core";
+import {InjectorService} from "@tsed/di";
 import {camelCase} from "change-case";
 import path, {join, resolve} from "path";
-import {generateApi, Hooks, RawRouteInfo, RouteNameInfo} from "swagger-typescript-api";
+import {generateApi, type Hooks, type RawRouteInfo, type RouteNameInfo} from "swagger-typescript-api";
 
 export interface GenerateHttpClientCtx {
   output: string;
@@ -48,17 +48,9 @@ export interface GenerateHttpClientOpts {
   }
 })
 export class GenerateHttpClientCmd implements CommandProvider {
-  @Inject()
-  injector: InjectorService;
-
-  @Inject()
-  protected fs: CliFs;
-
-  @Constant("server")
-  protected serverModule: Type<any>;
-
-  @Constant("httpClient", {hooks: {}})
-  protected options: Partial<GenerateHttpClientOpts>;
+  protected fs = inject(CliFs);
+  protected serverModule = constant<Type<any>>("server");
+  protected options = constant<Partial<GenerateHttpClientOpts>>("httpClient", {hooks: {}});
 
   $mapContext($ctx: GenerateHttpClientCtx) {
     return {...$ctx, output: resolve(join(process.cwd(), $ctx.output))};
@@ -143,8 +135,9 @@ export class GenerateHttpClientCmd implements CommandProvider {
       }
     } as any);
 
-    const promises = files.map(({content, name}) => {
-      content = content
+    const promises = files.map((file) => {
+      const name = file.fileName;
+      file.fileContent = file.fileContent
         .replace("class Api", `class ${$ctx.name}`)
         .replace(".then((response) => response.data)", ".then((response) => response.data as T)")
         .replace('requestParams.headers.common = { Accept: "*/*" };', "")
@@ -152,8 +145,7 @@ export class GenerateHttpClientCmd implements CommandProvider {
         .replace("requestParams.headers.put = {};", "")
         .replace("(this.instance.defaults.headers || {})", "((this.instance.defaults.headers || {}) as any)");
 
-      console.log(`${$ctx.output}/${name}`, path.resolve(`${$ctx.output}/${name}`));
-      return this.fs.writeFile(`${$ctx.output}/${name}`, content, {encoding: "utf8"});
+      return this.fs.writeFile(`${$ctx.output}/${name}.ts`, file.fileContent, {encoding: "utf8"});
     });
 
     return Promise.all(promises);
