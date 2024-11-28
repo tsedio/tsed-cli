@@ -87,11 +87,11 @@ module.exports = {
           {
             title: `Warehouse | ${title}`,
             text: "Warehouse",
-            link: "https://tsed.io/warehouse/",
+            link: "https://tsed.io/plugins/",
             items: [
               {
                 text: "Explore plugins",
-                link: "https://tsed.io/warehouse/"
+                link: "https://tsed.io/plugins/"
               },
               {
                 text: "Eslint",
