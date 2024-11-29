@@ -127,7 +127,7 @@
         "dir": "./docs/.vuepress/dist",
         "url": "https://github.com/tsedio/tsed-cli.git",
         "branch": "gh-pages",
-        "cname": "cli.tsed.io"
+        "cname": "cli.tsed.dev"
       }
     ]
   },
