@@ -1,7 +1,7 @@
 # @tsed/cli-core
 
 <p style="text-align: center" align="center">
- <a href="https://tsed.io" target="_blank"><img src="https://tsed.io/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
+ <a href="https://tsed.dev" target="_blank"><img src="https://tsed.dev/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
 </p>
 
 [![Build & Release](https://github.com/tsedio/tsed-cli/workflows/Build%20&%20Release/badge.svg?branch=master)](https://github.com/tsedio/tsed-cli/actions?query=workflow%3A%22Build+%26+Release%22)
@@ -29,7 +29,7 @@ cli-plugin and deploy it on npm registry.
 - Decorators,
 - Extensible with plugins architecture.
 
-Please refer to the [documentation](https://cli.tsed.io/) for more details.
+Please refer to the [documentation](https://cli.tsed.dev/) for more details.
 
 ## Installation
 
@@ -53,8 +53,8 @@ Here a structure directory example:
 │   └── index.ts
 ├── templates -- Template files
 ├── package.json
-├── tsconfig.json 
-└── tsconfig.compile.json 
+├── tsconfig.json
+└── tsconfig.compile.json
 ```
 
 ## Create package.json and tsconfig
@@ -70,12 +70,7 @@ The first step is to create the package.json with the following lines:
   "bin": {
     "tsed": "lib/bin/{{name}}.js"
   },
-  "files": [
-    "lib/bin/{{name}}.js",
-    "lib/bin",
-    "lib",
-    "templates"
-  ],
+  "files": ["lib/bin/{{name}}.js", "lib/bin", "lib", "templates"],
   "description": "An awesome CLI build on top of @tsed/cli-core",
   "dependencies": {
     "@tsed/cli-core": "1.3.1",
@@ -119,21 +114,13 @@ Then create tsconfig files one for the IDE (`tsconfig.json`):
     "importHelpers": true,
     "newLine": "LF",
     "noEmit": true,
-    "lib": [
-      "es7",
-      "dom",
-      "esnext.asynciterable"
-    ],
-    "typeRoots": [
-      "./node_modules/@types"
-    ]
+    "lib": ["es7", "dom", "esnext.asynciterable"],
+    "typeRoots": ["./node_modules/@types"]
   },
   "linterOptions": {
-    "exclude": [
-    ]
+    "exclude": []
   },
-  "exclude": [
-  ]
+  "exclude": []
 }
 ```
 
@@ -153,12 +140,7 @@ And another one to compile source (`tsconfig.compile.json`):
     "noEmit": false,
     "inlineSources": true
   },
-  "exclude": [
-    "node_modules",
-    "test",
-    "lib",
-    "**/*.spec.ts"
-  ]
+  "exclude": ["node_modules", "test", "lib", "**/*.spec.ts"]
 }
 ```
 
@@ -176,33 +158,23 @@ import {resolve} from "path";
 const pkg = require("../../package.json");
 const TEMPLATE_DIR = resolve(__dirname, "..", "..", "templates");
 
-CliCore
-  .bootstrap({
-    commands: [
-      AddCmd, // CommandProvider to install a plugin
-      // then add you commands
-    ],
-    
-    // optionals
-    name: "name", // replace by the cli name. This property will be used by Plugins command
-    pkg,
-    templateDir: TEMPLATE_DIR
-  })
-  .catch(console.error)
+CliCore.bootstrap({
+  commands: [
+    AddCmd // CommandProvider to install a plugin
+    // then add you commands
+  ],
+
+  // optionals
+  name: "name", // replace by the cli name. This property will be used by Plugins command
+  pkg,
+  templateDir: TEMPLATE_DIR
+}).catch(console.error);
 ```
 
 ## Create your first command
 
 ```typescript
-import {
-  Command,
-  CommandProvider,
-  ClassNamePipe,
-  OutputFilePathPipe,
-  Inject,
-  RoutePipe,
-  SrcRendererService
-} from "@tsed/cli-core";
+import {Command, CommandProvider, ClassNamePipe, OutputFilePathPipe, Inject, RoutePipe, SrcRendererService} from "@tsed/cli-core";
 
 export interface GenerateCmdContext {
   type: string;
@@ -296,12 +268,7 @@ export class GenerateCmd implements CommandProvider {
 Finally, create a handlebars template in templates directory:
 
 ```hbs
-import {Injectable} from "@tsed/di";
-
-@Injectable()
-export class {{symbolName}} {
-
-}
+import {Injectable} from "@tsed/di"; @Injectable() export class {{symbolName}} { }
 ```
 
 ## Run command in dev mode
@@ -325,11 +292,11 @@ Here other commands examples:
 - Init a project command: https://github.com/tsedio/tsed-cli/tree/master/packages/cli/src/commands/init/InitCmd
 - Generate command: https://github.com/tsedio/tsed-cli/tree/master/packages/cli/src/commands/generate/GenerateCmd
 - Plugin example: https://github.com/tsedio/tsed-cli/tree/master/packages/cli-plugin-mocha
-- Mono repo CLI:  https://github.com/tsedio/tsed-cli/tree/master
+- Mono repo CLI: https://github.com/tsedio/tsed-cli/tree/master
 
 ## Contributors
 
-Please read [contributing guidelines here](https://tsed.io/CONTRIBUTING.html)
+Please read [contributing guidelines here](https://tsed.dev/CONTRIBUTING.html)
 
 <a href="https://github.com/tsedio/ts-express-decorators/graphs/contributors"><img src="https://opencollective.com/tsed/contributors.svg?width=890" /></a>
 

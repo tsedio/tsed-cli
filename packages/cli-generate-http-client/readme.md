@@ -1,5 +1,5 @@
 <p style="text-align: center" align="center">
- <a href="https://tsed.io" target="_blank"><img src="https://tsed.io/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
+ <a href="https://tsed.dev" target="_blank"><img src="https://tsed.dev/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
 </p>
 
 <div align="center">
@@ -13,17 +13,16 @@
 
   <br />
 <div align="center">
-  <a href="https://tsed.io/">Website</a>
+  <a href="https://tsed.dev/">Website</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="https://tsed.io/getting-started.html">Getting started</a>
+  <a href="https://tsed.dev/getting-started.html">Getting started</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="https://api.tsed.io/rest/slack/tsedio/tsed">Slack</a>
+  <a href="https://slack.tsed.io">Slack</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
   <a href="https://twitter.com/TsED_io">Twitter</a>
 </div>
   <hr />
 </div>
-
 
 > Ts.ED CLI plugin. Generate your HttpClient from OpenApiSpec!
 
@@ -44,12 +43,12 @@ Then create or edit the `src/bin/index.ts` in your project:
 
 ```typescript
 #!/usr/bin/env node
-import { CliCore } from "@tsed/cli-core";
-import { GenerateHttpClientCmd } from "@tsed/cli-generate-http-client";
+import {CliCore} from "@tsed/cli-core";
+import {GenerateHttpClientCmd} from "@tsed/cli-generate-http-client";
 import configuration from "../config";
-import { CronCmd } from "./commands/CronCmd";
+import {CronCmd} from "./commands/CronCmd";
 import "./db/connections";
-import { Server } from "../Server";
+import {Server} from "../Server";
 
 CliCore.bootstrap({
   ...configuration,
@@ -77,17 +76,15 @@ Add a new script your `package.json`:
 
 ## Contributors
 
-Please read [contributing guidelines here](https://tsed.io/CONTRIBUTING.html)
+Please read [contributing guidelines here](https://tsed.dev/CONTRIBUTING.html)
 
 <a href="https://github.com/tsedio/ts-express-decorators/graphs/contributors"><img src="https://opencollective.com/tsed/contributors.svg?width=890" /></a>
-
 
 ## Backers
 
 Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/tsed#backer)]
 
 <a href="https://opencollective.com/tsed#backers" target="_blank"><img src="https://opencollective.com/tsed/tiers/backer.svg?width=890"></a>
-
 
 ## Sponsors
 

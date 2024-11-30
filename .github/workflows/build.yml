@@ -106,9 +106,9 @@ jobs:
             package.json
             packages/*/package.json
 
-      - name: "Trigger Website workflow"
-        run: |
-          curl -X POST  https://api.github.com/repos/tsedio/tsed-cli/actions/workflows/website.yml/dispatches \
-          -H 'Accept: application/vnd.github.everest-preview+json' \
-          -H 'Authorization: Bearer ${{secrets.GH_TOKEN}}' \
-          --data '{"ref": "production"}'
+#      - name: "Trigger Website workflow"
+#        run: |
+#          curl -X POST  https://api.github.com/repos/tsedio/tsed-cli/actions/workflows/website.yml/dispatches \
+#          -H 'Accept: application/vnd.github.everest-preview+json' \
+#          -H 'Authorization: Bearer ${{secrets.GH_TOKEN}}' \
+#          --data '{"ref": "production"}'
