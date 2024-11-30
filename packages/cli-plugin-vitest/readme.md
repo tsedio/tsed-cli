@@ -1,7 +1,7 @@
-# @tsed/cli-plugin-jest 
+# @tsed/cli-plugin-jest
 
 <p style="text-align: center" align="center">
- <a href="https://tsed.io" target="_blank"><img src="https://tsed.io/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
+ <a href="https://tsed.dev" target="_blank"><img src="https://tsed.dev/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
 </p>
 
 [![Build & Release](https://github.com/tsedio/tsed-cli/workflows/Build%20&%20Release/badge.svg?branch=master)](https://github.com/tsedio/tsed-cli/actions?query=workflow%3A%22Build+%26+Release%22)
@@ -10,7 +10,7 @@
 
 ## Features
 
-Please refer to the [documentation](https://cli.tsed.io/) for more details.
+Please refer to the [documentation](https://cli.tsed.dev/) for more details.
 
 ## Installation
 
@@ -19,10 +19,10 @@ npm install -g @tsed/cli-plugin-jest
 ```
 
 ## Contributors
-Please read [contributing guidelines here](https://tsed.io/CONTRIBUTING.html)
+
+Please read [contributing guidelines here](https://tsed.dev/CONTRIBUTING.html)
 
 <a href="https://github.com/tsedio/ts-express-decorators/graphs/contributors"><img src="https://opencollective.com/tsed/contributors.svg?width=890" /></a>
-
 
 ## Backers
 

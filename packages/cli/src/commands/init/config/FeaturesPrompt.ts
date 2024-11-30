@@ -353,7 +353,7 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
   //   type: "password",
   //   name: "GH_TOKEN",
   //   message:
-  //     "Enter GH_TOKEN to use the premium @tsedio/prisma package or leave blank (see https://tsed.io/tutorials/prisma-client.html)",
+  //     "Enter GH_TOKEN to use the premium @tsedio/prisma package or leave blank (see https://tsed.dev/tutorials/prisma-client.html)",
   //   when: hasValue("featuresDB.type", "prisma")
   // },
   {

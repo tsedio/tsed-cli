@@ -40,7 +40,7 @@
         <Button
           class="typeform-share"
           data-mode="popup"
-          href="https://tsed.io/contact.html">
+          href="https://tsed.dev/contact.html">
           <BxIcon name="bx-message-alt-dots" class="mr-1" />
           Contact us directly
         </Button>

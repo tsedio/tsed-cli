@@ -3,7 +3,7 @@ const team = require("../../team.json");
 const api = require("./public/api.json");
 const {version} = require("../../package.json");
 
-const url = "https://cli.tsed.io";
+const url = "https://cli.tsed.dev";
 const title = "Ts.ED CLI - CLI to bootstrap your Ts.ED project";
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
     ["meta", {property: "og:site_name", content: title}],
     ["meta", {property: "og:title", content: title}],
     ["meta", {property: "og:description", content: "A Node.js CLI to bootstrap and manage a Ts.ED project."}],
-    ["meta", {property: "og:image", content: "https://tsed.io/tsed-og.png"}],
+    ["meta", {property: "og:image", content: "https://tsed.dev/tsed-og.png"}],
     ["meta", {property: "og:image:width", content: "1024"}],
     ["meta", {property: "og:image:height", content: "1024"}],
     ["meta", {name: "twitter:title", content: title}],
@@ -49,11 +49,11 @@ module.exports = {
       end: new Date().getFullYear()
     },
     repo: "tsedio/tsed-cli",
-    githubProxyUrl: "https://api.tsed.io/rest/github/tsedio/tsed-cli",
-    openCollective: "https://api.tsed.io/rest/opencollective",
-    slackUrl: "https://api.tsed.io/rest/slack/tsedio/tsed",
+    githubProxyUrl: "https://api.tsed.dev/rest/github/tsedio/tsed-cli",
+    openCollective: "https://api.tsed.dev/rest/opencollective",
+    slackUrl: "https://slack.tsed.io",
     stackoverflowUrl: "https://stackoverflow.com/search?q=tsed",
-    sponsorUrl: "https://tsed.io/support.html",
+    sponsorUrl: "https://tsed.dev/support.html",
     twitterUrl: "https://twitter.com/TsED_io",
     editLinks: true,
     docsDir: "docs",
@@ -87,11 +87,11 @@ module.exports = {
           {
             title: `Warehouse | ${title}`,
             text: "Warehouse",
-            link: "https://tsed.io/plugins/",
+            link: "https://tsed.dev/plugins/",
             items: [
               {
                 text: "Explore plugins",
-                link: "https://tsed.io/plugins/"
+                link: "https://tsed.dev/plugins/"
               },
               {
                 text: "Eslint",
@@ -133,15 +133,15 @@ module.exports = {
             items: [
               {
                 text: "Ts.ED",
-                link: "http://tsed.io"
+                link: "http://tsed.dev"
               },
               {
                 text: "Ts.ED Logger",
-                link: "http://logger.tsed.io"
+                link: "http://logger.tsed.dev"
               },
               {
                 text: "Team",
-                link: "https://tsed.io/team.html"
+                link: "https://tsed.dev/team.html"
               },
               {
                 text: "Contributes",
@@ -149,7 +149,7 @@ module.exports = {
               },
               {
                 text: "Support",
-                link: "https://tsed.io/support.html"
+                link: "https://tsed.dev/support.html"
               },
               {
                 text: "License",
@@ -175,7 +175,7 @@ module.exports = {
           },
           {
             title: "Team", // required
-            path: "https://tsed.io/team.html",
+            path: "https://tsed.dev/team.html",
             collapsable: true // optional, defaults to true
           },
           {
@@ -185,7 +185,7 @@ module.exports = {
           },
           {
             title: "Support us", // required
-            link: "https://tsed.io/support.html",
+            link: "https://tsed.dev/support.html",
             collapsable: true // optional, defaults to true
           }
         ],
@@ -197,7 +197,7 @@ module.exports = {
               items: [
                 {
                   label: "Our team",
-                  url: "https://tsed.io/team.html"
+                  url: "https://tsed.dev/team.html"
                 },
                 {
                   label: "Contact us",
@@ -210,11 +210,11 @@ module.exports = {
               items: [
                 {
                   label: "Resources",
-                  url: "https://tsed.io/tutorials/index.html"
+                  url: "https://tsed.dev/tutorials/index.html"
                 },
                 {
                   label: "Chat with us",
-                  url: "https://api.tsed.io/rest/slack/tsedio/tsed"
+                  url: "https://slack.tsed.io"
                 },
                 {
                   label: "Contribution guide",
@@ -231,7 +231,7 @@ module.exports = {
                 },
                 {
                   label: "Sponsoring & donations",
-                  url: "https://tsed.io/support.html"
+                  url: "https://tsed.dev/support.html"
                 }
               ]
             }
