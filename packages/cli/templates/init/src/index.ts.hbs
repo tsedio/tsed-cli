@@ -22,12 +22,12 @@ try {
   const platform = await {{platformSymbol}}.bootstrap(Server);
   await platform.listen();
 
-  SIG_EVENTS.forEach((evt) => process.on(evt, close));
+  SIG_EVENTS.forEach((evt) => process.on(evt, () => platform.stop()));
 
   ["uncaughtException", "unhandledRejection"].forEach((evt) =>
     process.on(evt, async (error) => {
       $log.error({event: "SERVER_" + evt.toUpperCase(), message: error.message, stack: error.stack});
-      await stop();
+      await platform.stop();
     })
   );
 } catch (error) {
