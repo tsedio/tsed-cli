@@ -1,7 +1,7 @@
 {
   "name": "@tsed/cli-testing",
   "description": "Utils to test you CLI based on Ts.ED CLI",
-  "version": "6.0.3",
+  "version": "6.0.4",
   "type": "module",
   "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
