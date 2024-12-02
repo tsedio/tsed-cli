@@ -100,9 +100,9 @@ describe("Init cmd", () => {
           "name": "project-data",
           "scripts": {
             "barrels": "barrels",
-            "build": "yarn run barrels && swc src --out-dir dist -s",
+            "build": "yarn run barrels && swc src --out-dir dist -s  --strip-leading-paths",
             "start": "yarn run barrels && nodemon src/index.ts",
-            "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/register-esm src/index.js",
+            "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/esm-register src/index.js",
           },
           "tsed": {
             "packageManager": "yarn",
@@ -210,9 +210,9 @@ describe("Init cmd", () => {
           "name": "project-data",
           "scripts": {
             "barrels": "barrels",
-            "build": "yarn run barrels && swc src --out-dir dist -s",
+            "build": "yarn run barrels && swc src --out-dir dist -s  --strip-leading-paths",
             "start": "yarn run barrels && nodemon src/index.ts",
-            "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/register-esm src/index.js",
+            "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/esm-register src/index.js",
           },
           "tsed": {
             "packageManager": "yarn",
@@ -579,9 +579,9 @@ describe("Init cmd", () => {
           "name": "project-data",
           "scripts": {
             "barrels": "barrels",
-            "build": "npm run barrels && swc src --out-dir dist -s",
+            "build": "npm run barrels && swc src --out-dir dist -s  --strip-leading-paths",
             "start": "npm run barrels && nodemon src/index.ts",
-            "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/register-esm src/index.js",
+            "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/esm-register src/index.js",
           },
           "tsed": {
             "packageManager": "npm",
@@ -808,9 +808,9 @@ describe("Init cmd", () => {
           "name": "project-data",
           "scripts": {
             "barrels": "barrels",
-            "build": "yarn run barrels && swc src --out-dir dist -s",
+            "build": "yarn run barrels && swc src --out-dir dist -s  --strip-leading-paths",
             "start": "yarn run barrels && nodemon src/index.ts",
-            "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/register-esm src/index.js",
+            "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/esm-register src/index.js",
           },
           "tsed": {
             "packageManager": "yarn",

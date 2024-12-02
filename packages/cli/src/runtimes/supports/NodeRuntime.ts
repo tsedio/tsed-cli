@@ -19,11 +19,11 @@ export class NodeRuntime extends BaseRuntime {
   }
 
   startProd(main: string) {
-    return `${this.cmd} --import @swc-node/register/register-esm ${main.replace("dist", "src")}`;
+    return `${this.cmd} --import @swc-node/register/esm-register ${main.replace("dist", "src")}`;
   }
 
   compile(src: string, out: string) {
-    return `swc ${src.replace("/index.ts", "")} --out-dir ${out.replace("/index.js", "")} -s`;
+    return `swc ${src.replace("/index.ts", "")} --out-dir ${out.replace("/index.js", "")} -s  --strip-leading-paths`;
   }
 
   dependencies(): Record<string, any> {
