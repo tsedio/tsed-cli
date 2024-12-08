@@ -91,11 +91,8 @@ describe("getFeaturesPrompt", () => {
               "value": "socketio",
             },
             {
-              "dependencies": {
-                "@tsed/swagger": "{{tsedVersion}}",
-              },
-              "name": "Swagger",
-              "value": "swagger",
+              "name": "Documentation",
+              "value": "doc",
             },
             {
               "devDependencies": {
@@ -131,6 +128,28 @@ describe("getFeaturesPrompt", () => {
           "message": "Check the features needed for your project",
           "name": "features",
           "type": "checkbox",
+        },
+        {
+          "choices": [
+            {
+              "dependencies": {
+                "@tsed/swagger": "{{tsedVersion}}",
+              },
+              "name": "Swagger",
+              "value": "swagger",
+            },
+            {
+              "dependencies": {
+                "@tsed/scalar": "{{tsedVersion}}",
+              },
+              "name": "Scalar",
+              "value": "scalar",
+            },
+          ],
+          "message": "Choose a documentation plugin",
+          "name": "featuresDoc",
+          "type": "checkbox",
+          "when": [Function],
         },
         {
           "choices": [

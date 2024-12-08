@@ -21,18 +21,18 @@
 
 ## Getting started
 
-> **Important!** Ts.ED requires Node >= 14, Express >= 4 and TypeScript >= 4.
+> **Important!** Ts.ED requires Node >= 20.x or Bun.js and TypeScript >= 5.
 
 ```batch
 # install dependencies
-$ {{#if yarn}}yarn{{/if}}{{#if npm}}npm{{/if}} install
+$ {{#if yarn}}yarn{{/if}}{{#if npm}}npm{{/if}}{{#if pnpm}}pnpm{{/if}} install
 
 # serve
-$ {{#if yarn}}yarn{{/if}}{{#if npm}}npm run{{/if}} start
+$ {{#if yarn}}yarn{{/if}}{{#if npm}}npm run{{/if}}{{#if pnpm}}pnpm{{/if}} start
 
 # build for production
-$ {{#if yarn}}yarn{{/if}}{{#if npm}}npm run{{/if}} build
-$ {{#if yarn}}yarn{{/if}}{{#if npm}}npm run{{/if}} start:prod
+$ {{#if yarn}}yarn{{/if}}{{#if npm}}npm run{{/if}}{{#if pnpm}}pnpm{{/if}} build
+$ {{#if yarn}}yarn{{/if}}{{#if npm}}npm run{{/if}}{{#if pnpm}}pnpm{{/if}} start:prod
 ```
 
 ## Docker
