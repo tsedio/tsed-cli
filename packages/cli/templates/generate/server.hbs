@@ -29,6 +29,12 @@ import {application} from "@tsed/platform-http";
       path: "/doc",
       specVersion: "3.0.1"
     }
+  ],{{/if}}{{#if scalar}}
+  scalar: [
+    {
+      path: {{#if swagger}}"/scalar/doc"{{else}}"/doc"{{/if}},
+      specVersion: "3.0.1"
+    }
   ],{{/if}}
   middlewares: [{{#if express}}
     "cors",

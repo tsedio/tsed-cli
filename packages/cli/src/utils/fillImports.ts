@@ -24,6 +24,7 @@ export function fillImports(ctx: any) {
     ctx.koa && {from: "@tsed/platform-koa", comment: " // /!\\ keep this import"},
     {from: "@tsed/ajv"},
     ctx.swagger && {from: "@tsed/swagger"},
+    ctx.scalar && {from: "@tsed/scalar"},
     ctx.mongoose && {from: "@tsed/mongoose"},
     ctx.oidc && {from: "@tsed/oidc-provider"},
     ctx.passportjs && {from: "@tsed/passport"},

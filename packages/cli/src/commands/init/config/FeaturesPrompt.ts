@@ -15,11 +15,15 @@ export interface Feature {
 export enum FeatureType {
   GRAPHQL = "graphql",
   SOCKETIO = "socketio",
-  SWAGGER = "swagger",
   OIDC = "oidc",
   PASSPORTJS = "passportjs",
   COMMANDS = "commands",
   DB = "db",
+  DOC = "doc",
+
+  // DOC
+  SWAGGER = "swagger",
+  SCALAR = "scalar",
 
   // ORM
   PRISMA = "prisma",
@@ -70,6 +74,9 @@ export const FeaturesMap: Record<string, Feature> = {
       "@tsed/cli-plugin-typegraphql": "{{cliVersion}}"
     }
   },
+  [FeatureType.DOC]: {
+    name: "Documentation"
+  },
   [FeatureType.DB]: {
     name: "Database"
   },
@@ -91,6 +98,12 @@ export const FeaturesMap: Record<string, Feature> = {
     name: "Swagger",
     dependencies: {
       "@tsed/swagger": "{{tsedVersion}}"
+    }
+  },
+  [FeatureType.SCALAR]: {
+    name: "Scalar",
+    dependencies: {
+      "@tsed/scalar": "{{tsedVersion}}"
     }
   },
   [FeatureType.OIDC]: {
@@ -214,7 +227,6 @@ export const FeaturesMap: Record<string, Feature> = {
   },
   [FeatureType.MONGOOSE]: {
     name: "Mongoose",
-
     devDependencies: {
       "@tsed/cli-plugin-mongoose": "{{cliVersion}}"
     }
@@ -313,12 +325,19 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
       FeatureType.DB,
       FeatureType.PASSPORTJS,
       FeatureType.SOCKETIO,
-      FeatureType.SWAGGER,
+      FeatureType.DOC,
       FeatureType.OIDC,
       FeatureType.TESTING,
       FeatureType.LINTER,
       FeatureType.COMMANDS
     ]
+  },
+  {
+    type: "checkbox",
+    message: "Choose a documentation plugin",
+    name: "featuresDoc",
+    when: hasFeature(FeatureType.DOC),
+    choices: [FeatureType.SWAGGER, FeatureType.SCALAR]
   },
   {
     message: "Choose a ORM manager",
