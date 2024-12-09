@@ -1,9 +1,10 @@
-import {Inject, Injectable} from "@tsed/di";
+import {inject, Injectable} from "@tsed/di";
 import {join} from "path";
 import {Observable} from "rxjs";
 
+import {CliFs} from "../../services/CliFs.js";
 import {CliYaml} from "../../services/CliYaml.js";
-import {BaseManager, type ManagerCmdOpts, type ManagerCmdSyncOpts} from "./BaseManager.js";
+import {BaseManager, type ManagerCmdOpts} from "./BaseManager.js";
 
 @Injectable({
   type: "package:manager"
@@ -11,13 +12,21 @@ import {BaseManager, type ManagerCmdOpts, type ManagerCmdSyncOpts} from "./BaseM
 export class YarnBerryManager extends BaseManager {
   readonly name = "yarn_berry";
   readonly cmd = "yarn";
-
-  @Inject()
-  protected cliYaml: CliYaml;
+  protected verboseOpt = "";
+  protected cliYaml = inject(CliYaml);
+  protected fs = inject(CliFs);
 
   async init(options: ManagerCmdOpts) {
+    const lockFile = join(String(options.cwd!), "yarn.lock");
+
+    if (!this.fs.exists(lockFile)) {
+      this.fs.writeFileSync(lockFile, "");
+    }
+
     // init yarn v1
-    this.install(options);
+    try {
+      await this.install(options).toPromise();
+    } catch (er) {}
 
     // then switch write file
     await this.cliYaml.write(join(String(options.cwd!), ".yarnrc.yml"), {
@@ -37,6 +46,6 @@ export class YarnBerryManager extends BaseManager {
   }
 
   install(options: ManagerCmdOpts): Observable<any> {
-    return this.run("install", [options.verbose && "--verbose"], options);
+    return this.run("install", [], options);
   }
 }

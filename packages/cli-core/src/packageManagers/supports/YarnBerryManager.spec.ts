@@ -1,13 +1,17 @@
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 
-import {CliExeca, CliYaml} from "../../services/index.js";
+import {CliExeca, CliFs, CliYaml} from "../../services/index.js";
 import {YarnBerryManager} from "./YarnBerryManager.js";
 
 async function getManagerFixture() {
   const cliExeca = {
     runSync: vi.fn(),
     run: vi.fn()
+  };
+  const cliFs = {
+    exists: vi.fn(),
+    writeFileSync: vi.fn()
   };
   const cliYaml = {
     read: vi.fn(),
@@ -21,9 +25,13 @@ async function getManagerFixture() {
     {
       token: CliYaml,
       use: cliYaml
+    },
+    {
+      token: CliFs,
+      use: cliFs
     }
   ]);
-  return {cliExeca, cliYaml, manager};
+  return {cliExeca, cliYaml, cliFs, manager};
 }
 
 describe("YarnBerryManager", () => {
