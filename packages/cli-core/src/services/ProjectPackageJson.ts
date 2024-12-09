@@ -149,7 +149,9 @@ export class ProjectPackageJson {
   addDevDependencies(modules: {[key: string]: string | undefined}, scope: any = {}) {
     const replacer = (match: any, key: string) => getValue(key, scope);
     Object.entries(modules).forEach(([pkg, version]) => {
-      this.addDevDependency(pkg, (version || "").replace(/{{([\w.]+)}}/gi, replacer));
+      if (!this.dependencies[pkg]) {
+        this.addDevDependency(pkg, (version || "").replace(/{{([\w.]+)}}/gi, replacer));
+      }
     });
 
     return this;
