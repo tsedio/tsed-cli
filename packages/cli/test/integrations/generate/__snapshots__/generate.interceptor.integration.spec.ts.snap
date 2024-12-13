@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Generate Interceptor > should generate a template with the right options 1`] = `undefined`;

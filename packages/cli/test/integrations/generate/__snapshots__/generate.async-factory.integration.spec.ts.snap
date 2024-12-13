@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Generate AsyncFactory > should generate a template with the right options 1`] = `
+"import {Configuration, Inject, registerProvider} from "@tsed/di";
+
+export type Test = any; // implement type or interface for type checking
+export const Test = injectable(Symbol.for("Test")
+  .asyncFactory(async () => {
+    // retrieve custom configuration from settings (e.g.: \`@Configuration({hello: "value"})\`)
+    const hello = constant("hello");
+
+    return {hello};
+  })
+  .token();
+"
+`;

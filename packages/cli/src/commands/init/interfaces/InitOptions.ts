@@ -19,4 +19,5 @@ export interface InitOptions {
   runtime: "node" | "babel" | "swc" | "webpack" | "bun";
   oidcBasePath: string;
   file: string;
+  isV7: string;
 }

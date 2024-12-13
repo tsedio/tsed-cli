@@ -24,31 +24,8 @@ describe("Generate AsyncFactory", () => {
 
     await CliPlatformTest.exec("generate", {
       rootDir: "./project-data",
-      type: "async.factory",
+      type: "factory",
       name: "Test"
-    });
-
-    expect(FakeCliFs.getKeys()).toEqual(["project-name/src/services", "project-name/src/services/Test.ts"]);
-
-    const result = FakeCliFs.entries.get("project-name/src/services/Test.ts");
-
-    expect(result).toMatchSnapshot();
-  });
-  it("should generate a template with the right options (v7)", async () => {
-    CliPlatformTest.setPackageJson({
-      name: "",
-      version: "1.0.0",
-      description: "",
-      scripts: {},
-      dependencies: {},
-      devDependencies: {}
-    });
-
-    await CliPlatformTest.exec("generate", {
-      rootDir: "./project-data",
-      type: "async.factory",
-      name: "Test",
-      tsedVersion: "7.85.0"
     });
 
     expect(FakeCliFs.getKeys()).toEqual(["project-name/src/services", "project-name/src/services/Test.ts"]);

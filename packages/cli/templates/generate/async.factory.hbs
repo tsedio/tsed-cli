@@ -1,35 +1,11 @@
 import {Configuration, Inject, registerProvider} from "@tsed/di";
 
-/**
- * Inject {{symbolName}} to the service, controller, etc...
- *
- * ## Usage
- *
- * ```typescript
- * import {Injectable} from "@tsed/di";
- * import {{{symbolName}}} from "./{{symbolName}}";
- *
- * @Injectable()
- * class MyService {
- *   @{{symbolName}}()
- *   private factory: {{symbolName}};
- *
- *   // or
- *   constructor(@{{symbolName}}() private factory: {{symbolName}}){}
- * }
- *
- * @decorator
- */
-export function {{symbolName}}() {
-  return Inject({{symbolName}});
-}
-
 export type {{symbolName}} = any; // implement type or interface for type checking
+export const {{symbolName}} = injectable(Symbol.for("{{symbolName}}")
+  .asyncFactory(async () => {
+    // retrieve custom configuration from settings (e.g.: `@Configuration({hello: "value"})`)
+    const hello = constant("hello");
 
-registerProvider({
-  provide: {{symbolName}},
-  deps: [Configuration],
-  async useAsyncFactory(settings: Configuration) {
-    return {};
-  }
-});
+    return {hello};
+  })
+  .token();
