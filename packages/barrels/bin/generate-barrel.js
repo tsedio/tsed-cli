@@ -1,5 +1,6 @@
 import {writeFile} from "node:fs/promises";
 import path, {dirname, join} from "node:path";
+import {join as joinPosix} from "node:path/posix";
 
 import {globby} from "globby";
 
@@ -28,7 +29,7 @@ export async function generateBarrels({exclude, directory, cwd}) {
   const directories = (
     await globby(
       directory.map((d) => {
-        return join(d, "*");
+        return joinPosix(d, "*");
       }),
       {
         cwd
