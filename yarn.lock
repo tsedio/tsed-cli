@@ -2352,6 +2352,13 @@ __metadata:
     "@tsed/core": ">=8.3.1"
     "@tsed/di": ">=8.3.1"
     "@tsed/hooks": ">=8.3.1"
+  peerDependenciesMeta:
+    "@tsed/core":
+      optional: false
+    "@tsed/di":
+      optional: false
+    "@tsed/hooks":
+      optional: false
   languageName: unknown
   linkType: soft
 
@@ -2653,6 +2660,21 @@ __metadata:
     "@tsed/logger": ">=7.0.1"
     "@tsed/openspec": ">=8.0.0"
     "@tsed/schema": ">=8.0.0"
+  peerDependenciesMeta:
+    "@tsed/cli-core":
+      optional: false
+    "@tsed/core":
+      optional: false
+    "@tsed/di":
+      optional: false
+    "@tsed/hooks":
+      optional: false
+    "@tsed/logger":
+      optional: false
+    "@tsed/openspec":
+      optional: false
+    "@tsed/schema":
+      optional: false
   bin:
     tsed: lib/esm/bin/tsed.js
   languageName: unknown

@@ -285,7 +285,7 @@ describe("getFeaturesPrompt", () => {
               "devDependencies": {
                 "@tsed/cli-plugin-jest": "{{cliVersion}}",
               },
-              "name": "Jest",
+              "name": "Jest (unstable with ESM)",
               "value": "jest",
             },
           ],
