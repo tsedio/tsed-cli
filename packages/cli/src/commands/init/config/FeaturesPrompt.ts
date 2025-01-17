@@ -245,7 +245,7 @@ export const FeaturesMap: Record<string, Feature> = {
     }
   },
   [FeatureType.JEST]: {
-    name: "Jest",
+    name: "Jest (unstable with ESM)",
     devDependencies: {
       "@tsed/cli-plugin-jest": "{{cliVersion}}"
     }
