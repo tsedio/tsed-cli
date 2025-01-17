@@ -89,7 +89,6 @@
     "vitest": "2.1.1"
   },
   "peerDependencies": {
-    "@tsed/cli-core": "workspace:*",
     "@tsed/core": ">=8.0.0",
     "@tsed/di": ">=8.0.0",
     "@tsed/hooks": ">=8.0.0",
@@ -98,9 +97,6 @@
     "@tsed/schema": ">=8.0.0"
   },
   "peerDependenciesMeta": {
-    "@tsed/cli-core": {
-      "optional": false
-    },
     "@tsed/core": {
       "optional": false
     },
