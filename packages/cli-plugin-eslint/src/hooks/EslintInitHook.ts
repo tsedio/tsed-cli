@@ -79,8 +79,8 @@ export class EslintInitHook {
 
   addScripts(ctx: InitCmdContext) {
     this.packageJson.addScripts({
-      "test:lint": "eslint '**/*.{ts,js}'",
-      "test:lint:fix": "eslint '**/*.{ts,js}' --fix"
+      "test:lint": "eslint",
+      "test:lint:fix": "eslint --fix"
     });
 
     if (ctx.prettier) {
@@ -102,7 +102,8 @@ export class EslintInitHook {
         eslint: "latest",
         "eslint-config-prettier": "latest",
         "eslint-plugin-prettier": "latest",
-        "eslint-plugin-simple-import-sort": "latest"
+        "eslint-plugin-simple-import-sort": "latest",
+        globals: "latest"
       },
       ctx
     );
