@@ -1,7 +1,8 @@
+import {join} from "node:path";
+
 import {CliFs, normalizePath} from "@tsed/cli-core";
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {join} from "path";
 
 import {CliPrisma} from "./CliPrisma.js";
 

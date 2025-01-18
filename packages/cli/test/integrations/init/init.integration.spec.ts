@@ -1,8 +1,9 @@
+import {join} from "node:path";
+
 import {PackageManager} from "@tsed/cli-core";
 // @ts-ignore
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {ensureDirSync, writeFileSync} from "fs-extra";
-import {join} from "path";
 
 import {ArchitectureConvention, InitCmd, ProjectConvention, TEMPLATE_DIR} from "../../../src/index.js";
 

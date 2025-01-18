@@ -1,5 +1,6 @@
+import type {Stream} from "node:stream";
+
 import {Observable} from "rxjs";
-import type {Stream} from "stream";
 
 function or(option: false | any, alternate: string, required?: boolean) {
   const result = option === false ? false : option || alternate;

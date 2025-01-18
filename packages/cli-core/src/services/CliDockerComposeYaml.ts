@@ -1,7 +1,8 @@
+import {join} from "node:path";
+
 import {setValue} from "@tsed/core";
 import {inject, Injectable} from "@tsed/di";
 import {snakeCase} from "change-case";
-import {join} from "path";
 
 import {CliFs} from "./CliFs.js";
 import {CliYaml} from "./CliYaml.js";

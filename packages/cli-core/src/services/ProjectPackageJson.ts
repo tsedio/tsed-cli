@@ -1,6 +1,7 @@
+import {dirname, join} from "node:path";
+
 import {getValue, setValue} from "@tsed/core";
 import {configuration, constant, inject, Injectable} from "@tsed/di";
-import {dirname, join} from "path";
 import {readPackageUpSync} from "read-pkg-up";
 
 import type {PackageJson} from "../interfaces/PackageJson.js";

@@ -1,6 +1,7 @@
+import {dirname, join} from "node:path";
+
 import {inject, Injectable, ProjectPackageJson} from "@tsed/cli-core";
 import {Inject} from "@tsed/di";
-import {dirname, join} from "path";
 
 import {ArchitectureConvention, ProjectConvention} from "../interfaces/index.js";
 import {ProvidersInfoService} from "../services/ProvidersInfoService.js";

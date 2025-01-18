@@ -1,7 +1,8 @@
+import {URL} from "node:url";
+
 import {Configuration, Inject, inject, Injectable, refValue} from "@tsed/di";
 import {camelCase} from "change-case";
 import tunnel from "tunnel";
-import {URL} from "url";
 
 import {coerce} from "../utils/coerce.js";
 import {CliExeca} from "./CliExeca.js";

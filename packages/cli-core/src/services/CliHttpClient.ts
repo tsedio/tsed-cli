@@ -1,8 +1,9 @@
+import {stringify} from "node:querystring";
+import {URL} from "node:url";
+
 import {cleanObject} from "@tsed/core";
 import {inject, Injectable} from "@tsed/di";
 import axios, {type AxiosRequestConfig, type Method} from "axios";
-import {stringify} from "querystring";
-import {URL} from "url";
 
 import {CliHttpLogClient} from "./CliHttpLogClient.js";
 import {CliProxyAgent} from "./CliProxyAgent.js";

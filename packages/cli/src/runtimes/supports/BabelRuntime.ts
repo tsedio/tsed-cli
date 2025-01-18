@@ -1,5 +1,6 @@
+import {dirname} from "node:path";
+
 import {Injectable} from "@tsed/di";
-import {dirname} from "path";
 
 import {NodeRuntime} from "./NodeRuntime.js";
 

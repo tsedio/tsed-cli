@@ -153,7 +153,7 @@ Create a new file according to your project name (example: `name.ts`) and add th
 ```typescript
 #!/usr/bin/env node
 import {AddCmd, CliCore} from "@tsed/cli-core";
-import {resolve} from "path";
+import {resolve} from "node:path";
 
 const pkg = require("../../package.json");
 const TEMPLATE_DIR = resolve(__dirname, "..", "..", "templates");

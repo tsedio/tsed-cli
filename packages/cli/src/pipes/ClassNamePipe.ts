@@ -1,7 +1,8 @@
+import {basename} from "node:path";
+
 import {ProjectPackageJson} from "@tsed/cli-core";
 import {inject, Injectable} from "@tsed/di";
 import {kebabCase, pascalCase} from "change-case";
-import {basename} from "path";
 
 import {ProjectConvention} from "../interfaces/ProjectConvention.js";
 import {ProvidersInfoService} from "../services/ProvidersInfoService.js";
