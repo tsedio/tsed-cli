@@ -21,7 +21,7 @@ export class CliPluginJestModule {
     const runtime = this.runtimes.get();
 
     this.packageJson.addScripts({
-      "test:unit": "cross-env NODE_ENV=test jest",
+      "test:unit": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_ENV=test jest",
       "test:coverage": `${runtime.run("test:unit")} `
     });
   }
@@ -29,8 +29,8 @@ export class CliPluginJestModule {
   addDevDependencies() {
     this.packageJson.addDevDependencies({
       "@types/jest": "latest",
-      jest: "latest",
-      "ts-jest": "latest"
+      "@swc/jest": "latest",
+      jest: "latest"
     });
   }
 }

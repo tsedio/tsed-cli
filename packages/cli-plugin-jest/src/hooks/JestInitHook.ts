@@ -30,7 +30,7 @@ export class JestInitHook {
       {
         title: "Generate files for jest",
         task: (ctx: any) => {
-          return this.rootRenderer.renderAll(["jest.config.js.hbs"], ctx, {
+          return this.rootRenderer.renderAll(["jest.config.ts.hbs"], ctx, {
             templateDir: `${TEMPLATE_DIR}/init`
           });
         }
