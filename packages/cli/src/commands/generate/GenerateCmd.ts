@@ -1,16 +1,9 @@
-import {
-  type CliDefaultOptions,
-  Command,
-  type CommandProvider,
-  Inject,
-  inject,
-  ProjectPackageJson,
-  SrcRendererService
-} from "@tsed/cli-core";
+import {basename, dirname, join} from "node:path";
+
+import {type CliDefaultOptions, Command, type CommandProvider, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
 import {normalizePath} from "@tsed/normalize-path";
 import {kebabCase, pascalCase} from "change-case";
 import {globbySync} from "globby";
-import {basename, dirname, join} from "path";
 
 import {ProjectConvention} from "../../interfaces/ProjectConvention.js";
 import {ClassNamePipe} from "../../pipes/ClassNamePipe.js";

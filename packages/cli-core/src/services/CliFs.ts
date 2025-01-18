@@ -1,8 +1,9 @@
+import type {PathLike, WriteFileOptions} from "node:fs";
+import {join} from "node:path";
+
 import {Injectable} from "@tsed/di";
 import {normalizePath} from "@tsed/normalize-path";
-import type {PathLike, WriteFileOptions} from "fs";
 import Fs, {type EnsureDirOptions} from "fs-extra";
-import {join} from "path";
 
 @Injectable()
 export class CliFs {

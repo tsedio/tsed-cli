@@ -1,8 +1,9 @@
+import path, {join, resolve} from "node:path";
+
 import {CliFs, Command, type CommandProvider, constant, inject, Type} from "@tsed/cli-core";
 import {isString} from "@tsed/core";
 import {InjectorService} from "@tsed/di";
 import {camelCase} from "change-case";
-import path, {join, resolve} from "path";
 import {generateApi, type Hooks, type RawRouteInfo, type RouteNameInfo} from "swagger-typescript-api";
 
 export interface GenerateHttpClientCtx {

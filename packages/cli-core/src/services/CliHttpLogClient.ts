@@ -1,7 +1,8 @@
+import querystring from "node:querystring";
+
 import {getValue} from "@tsed/core";
 import {inject, Opts} from "@tsed/di";
 import {Logger} from "@tsed/logger";
-import querystring from "querystring";
 
 import {logToCurl} from "../utils/logToCurl.js";
 

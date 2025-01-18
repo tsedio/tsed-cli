@@ -61,7 +61,7 @@ exports[`Init OIDC Provider project > should generate a project with oidc 1`] = 
 `;
 
 exports[`Init OIDC Provider project > should generate a project with oidc 2`] = `
-"import {join} from "path";
+"import {join} from "node:path";
 import {Configuration} from "@tsed/di";
 import {application} from "@tsed/platform-http";
 import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
@@ -173,7 +173,7 @@ exports[`Init OIDC Provider project > should generate a project with oidc and sw
 `;
 
 exports[`Init OIDC Provider project > should generate a project with oidc and swagger 2`] = `
-"import {join} from "path";
+"import {join} from "node:path";
 import {Configuration} from "@tsed/di";
 import {application} from "@tsed/platform-http";
 import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request

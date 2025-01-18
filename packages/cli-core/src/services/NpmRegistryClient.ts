@@ -1,6 +1,7 @@
+import url from "node:url";
+
 import {inject, Injectable} from "@tsed/di";
 import registry_url from "registry-url";
-import url from "url";
 
 import type {PackageInfo} from "../interfaces/PackageJson.js";
 import {CliHttpClient} from "./CliHttpClient.js";

@@ -1,5 +1,6 @@
+import {join} from "node:path";
+
 import {inject, Injectable} from "@tsed/di";
-import {join} from "path";
 import {Observable} from "rxjs";
 
 import {CliFs} from "../../services/CliFs.js";

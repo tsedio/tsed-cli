@@ -1,6 +1,7 @@
+import {extname} from "node:path";
+
 import {inject, Injectable} from "@tsed/di";
 import {default as Ajv, type Schema} from "ajv";
-import {extname} from "path";
 
 import {CliFs} from "./CliFs.js";
 import {CliYaml} from "./CliYaml.js";

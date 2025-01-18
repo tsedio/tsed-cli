@@ -1,3 +1,5 @@
+import {basename, join} from "node:path";
+
 import {
   CliExeca,
   CliFs,
@@ -19,7 +21,6 @@ import {
   type Task
 } from "@tsed/cli-core";
 import {kebabCase, pascalCase} from "change-case";
-import {basename, join} from "path";
 
 import {DEFAULT_TSED_TAGS} from "../../constants/index.js";
 import {ArchitectureConvention} from "../../interfaces/ArchitectureConvention.js";

@@ -1,6 +1,7 @@
+import type {PathLike} from "node:fs";
+import * as fs from "node:fs";
+
 import {isString} from "@tsed/core";
-import type {PathLike} from "fs";
-import * as fs from "fs";
 import type {EnsureDirOptions, WriteFileOptions} from "fs-extra";
 
 import {normalizePath} from "./normalizePath.js";

@@ -1,4 +1,5 @@
-import {dirname, join} from "path";
+import {dirname, join} from "node:path";
+
 import {readPackageUpSync} from "read-pkg-up";
 
 const {path, packageJson} = readPackageUpSync({

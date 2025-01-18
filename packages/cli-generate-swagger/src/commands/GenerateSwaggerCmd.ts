@@ -1,5 +1,6 @@
+import path, {join, resolve} from "node:path";
+
 import {CliFs, CliYaml, Command, type CommandProvider, Constant, constant, Inject, inject, InjectorService, Type} from "@tsed/cli-core";
-import path, {join, resolve} from "path";
 
 export interface GenerateSwaggerCtx {
   output: string;

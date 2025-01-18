@@ -1,6 +1,7 @@
+import {join, resolve} from "node:path";
+
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
-import {join, resolve} from "path";
 
 import {CliExeca} from "./CliExeca.js";
 import {CliFs} from "./CliFs.js";

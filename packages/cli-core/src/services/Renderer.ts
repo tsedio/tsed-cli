@@ -1,5 +1,7 @@
 import "../utils/hbs/index.js";
 
+import {basename, dirname, join, relative} from "node:path";
+
 import {isString} from "@tsed/core";
 import {constant, inject, Injectable} from "@tsed/di";
 import {normalizePath} from "@tsed/normalize-path";
@@ -7,7 +9,6 @@ import Consolidate from "consolidate";
 import fs from "fs-extra";
 import {globby} from "globby";
 import handlebars from "handlebars";
-import {basename, dirname, join, relative} from "path";
 import {Observable} from "rxjs";
 
 import {insertAfter} from "../utils/renderer/insertAfter.js";
