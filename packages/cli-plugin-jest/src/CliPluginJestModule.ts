@@ -21,7 +21,6 @@ export class CliPluginJestModule {
     const runtime = this.runtimes.get();
 
     this.packageJson.addScripts({
-      test: `${runtime.run("test:lint")} && ${runtime.run("test:coverage")} `,
       "test:unit": "cross-env NODE_ENV=test jest",
       "test:coverage": `${runtime.run("test:unit")} `
     });

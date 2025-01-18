@@ -342,6 +342,16 @@ export class InitCmd implements CommandProvider {
 
   addScripts(ctx: InitCmdContext): void {
     this.packageJson.addScripts(this.runtimes.scripts(ctx));
+
+    if (ctx.eslint || ctx.testing) {
+      const runtime = this.runtimes.get();
+
+      const scripts = {
+        test: [ctx.eslint && runtime.run("test:lint"), ctx.testing && runtime.run("test:coverage")].filter(Boolean).join("&&")
+      };
+
+      this.packageJson.addScripts(scripts);
+    }
   }
 
   addDependencies(ctx: InitCmdContext) {
