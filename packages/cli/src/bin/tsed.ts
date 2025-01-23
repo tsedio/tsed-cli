@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 import {register} from "node:module";
+import {join} from "node:path";
 import {fileURLToPath, pathToFileURL} from "node:url";
 
 const EXT = process.env.CLI_MODE === "ts" ? "ts" : "js";
 
-register(pathToFileURL(`${import.meta.dirname}/../loaders/alias.hook.${EXT}`), {
+register(pathToFileURL(join(import.meta.dirname, `../loaders/alias.hook.${EXT}`)), {
   parentURL: import.meta.dirname,
   data: {
     "@tsed/core": fileURLToPath(import.meta.resolve("@tsed/core")),

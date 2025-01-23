@@ -4,6 +4,8 @@ let resolver: any = null;
 
 export async function initialize(aliases: Record<string, string>) {
   // Receives data from `register`.
+  console.debug("Initializing alias hook with aliases", aliases);
+
   resolver = generateAliasesResolver(aliases);
 }
 
