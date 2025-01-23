@@ -2676,7 +2676,6 @@ __metadata:
     chalk: "npm:^5.3.0"
     change-case: "npm:^5.4.4"
     cross-env: "npm:7.0.3"
-    esm-module-alias: "npm:^2.2.1"
     globby: "npm:^14.0.2"
     read-pkg-up: "npm:^11.0.0"
     semver: "npm:^7.6.3"
@@ -6700,13 +6699,6 @@ __metadata:
   bin:
     eslint: bin/eslint.js
   checksum: 10/38de03a51044a5f708c93302cff5e860355447d424f1a21fa67f5b2f0541d092d3f3807c0242820d9795553a3f1165db51769e9a042816334d05c86f015fdfef
-  languageName: node
-  linkType: hard
-
-"esm-module-alias@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "esm-module-alias@npm:2.2.1"
-  checksum: 10/2dda8bdde12b7b6fdfe7dd0efc4abe15c09af26f62cf5540d3df464dfe1be6a9a627105d5b6ea940f0be4d87c78c15db192fff821be7869b16cc9a1e678b8b31
   languageName: node
   linkType: hard
 
