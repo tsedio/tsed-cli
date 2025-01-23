@@ -8,11 +8,11 @@ const EXT = process.env.CLI_MODE === "ts" ? "ts" : "js";
 register(pathToFileURL(join(import.meta.dirname, `../loaders/alias.hook.${EXT}`)), {
   parentURL: import.meta.dirname,
   data: {
-    "@tsed/core": fileURLToPath(import.meta.resolve("@tsed/core")),
-    "@tsed/di": fileURLToPath(import.meta.resolve("@tsed/di")),
-    "@tsed/schema": fileURLToPath(import.meta.resolve("@tsed/schema")),
-    "@tsed/cli-core": fileURLToPath(import.meta.resolve("@tsed/cli-core")),
-    "@tsed/cli": fileURLToPath(import.meta.resolve("@tsed/cli"))
+    "@tsed/core": import.meta.resolve("@tsed/core"),
+    "@tsed/di": import.meta.resolve("@tsed/di"),
+    "@tsed/schema": import.meta.resolve("@tsed/schema"),
+    "@tsed/cli-core": import.meta.resolve("@tsed/cli-core"),
+    "@tsed/cli": import.meta.resolve("@tsed/cli")
   },
   transferList: []
 });
