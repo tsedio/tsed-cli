@@ -1,6 +1,6 @@
 {
   "name": "@tsed/typescript",
-  "version": "6.1.10-rc.3",
+  "version": "6.1.10",
   "description": "Util to compile source",
   "type": "module",
   "private": true,
