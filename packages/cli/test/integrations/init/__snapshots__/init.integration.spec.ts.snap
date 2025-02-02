@@ -17,10 +17,6 @@ import * as pages from "./pages/index.js";
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
   mount: {
     "/rest": [
       ...Object.values(rest)
@@ -48,10 +44,7 @@ import * as pages from "./pages/index.js";
     extensions: {
       ejs: "ejs"
     }
-  },
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  }
 })
 export class Server {
   protected app = application();
@@ -74,10 +67,6 @@ import * as rest from "./controllers/rest/index.js";
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
   mount: {
     "/rest": [
       ...Object.values(rest)
@@ -96,10 +85,7 @@ import * as rest from "./controllers/rest/index.js";
     extensions: {
       ejs: "ejs"
     }
-  },
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  }
 })
 export class Server {
   protected app = application();
@@ -122,10 +108,6 @@ import * as rest from "./controllers/rest/index.js";
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
   mount: {
     "/rest": [
       ...Object.values(rest)
@@ -144,10 +126,7 @@ import * as rest from "./controllers/rest/index.js";
     extensions: {
       ejs: "ejs"
     }
-  },
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  }
 })
 export class Server {
   protected app = application();
@@ -172,10 +151,6 @@ import * as pages from "./controllers/pages/index.js";
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
   mount: {
     "/rest": [
       ...Object.values(rest)
@@ -203,10 +178,7 @@ import * as pages from "./controllers/pages/index.js";
     extensions: {
       ejs: "ejs"
     }
-  },
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  }
 })
 export class Server {
   protected app = application();
@@ -229,10 +201,6 @@ import * as rest from "./controllers/rest/index.js";
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
   mount: {
     "/rest": [
       ...Object.values(rest)
@@ -251,10 +219,7 @@ import * as rest from "./controllers/rest/index.js";
     extensions: {
       ejs: "ejs"
     }
-  },
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  }
 })
 export class Server {
   protected app = application();
@@ -277,10 +242,6 @@ import * as rest from "./controllers/rest/index.js";
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
   mount: {
     "/rest": [
       ...Object.values(rest)
@@ -299,10 +260,7 @@ import * as rest from "./controllers/rest/index.js";
     extensions: {
       ejs: "ejs"
     }
-  },
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  }
 })
 export class Server {
   protected app = application();
@@ -327,10 +285,6 @@ import * as pages from "./controllers/pages/index.js";
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
   mount: {
     "/rest": [
       ...Object.values(rest)
@@ -358,10 +312,7 @@ import * as pages from "./controllers/pages/index.js";
     extensions: {
       ejs: "ejs"
     }
-  },
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  }
 })
 export class Server {
   protected app = application();
@@ -384,10 +335,6 @@ import * as rest from "./controllers/rest/index.js";
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
   mount: {
     "/rest": [
       ...Object.values(rest)
@@ -406,10 +353,52 @@ import * as rest from "./controllers/rest/index.js";
     extensions: {
       ejs: "ejs"
     }
+  }
+})
+export class Server {
+  protected app = application();
+}
+"
+`;
+
+exports[`Init cmd > Fastify.js > should generate a project with the right options 2`] = `
+"import {join} from "node:path";
+import {Configuration} from "@tsed/di";
+import {application} from "@tsed/platform-http";
+import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
+import "@tsed/platform-fastify"; // /!\\ keep this import
+import "@tsed/ajv";
+import {config} from "./config/index.js";
+import * as rest from "./controllers/rest/index.js";
+
+@Configuration({
+  ...config,
+  acceptMimes: ["application/json"],
+  httpPort: process.env.PORT || 8083,
+  httpsPort: false, // CHANGE
+  mount: {
+    "/rest": [
+      ...Object.values(rest)
+    ]
   },
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  plugins: [
+    "@fastify/accepts",
+    "@fastify/cookie",
+    {
+      use: "fastify-raw-body",
+      options: {
+        global: false,
+        runFirst: true
+      }
+    },
+    "@fastify/formbody"
+  ],
+  views: {
+    root: join(process.cwd(), "../views"),
+    extensions: {
+      ejs: "ejs"
+    }
+  }
 })
 export class Server {
   protected app = application();
@@ -432,10 +421,6 @@ import * as rest from "./controllers/rest/index.js";
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
   mount: {
     "/rest": [
       ...Object.values(rest)
@@ -452,10 +437,7 @@ import * as rest from "./controllers/rest/index.js";
     extensions: {
       ejs: "ejs"
     }
-  },
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  }
 })
 export class Server {
   protected app = application();

@@ -823,6 +823,101 @@ describe("Init cmd", () => {
       `);
     });
   });
+  describe("Fastify.js", () => {
+    it("should generate a project with the right options", async () => {
+      CliPlatformTest.setPackageJson({
+        name: "",
+        version: "1.0.0",
+        description: "",
+        scripts: {},
+        dependencies: {},
+        devDependencies: {}
+      });
+
+      await CliPlatformTest.exec("init", {
+        platform: "fastify",
+        rootDir: "./project-data",
+        projectName: "project-data",
+        tsedVersion: "5.58.1"
+      });
+
+      expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
+        [
+          "project-name",
+          "project-name/.barrels.json",
+          "project-name/.dockerignore",
+          "project-name/.gitignore",
+          "project-name/.swcrc",
+          "project-name/Dockerfile",
+          "project-name/README.md",
+          "project-name/docker-compose.yml",
+          "project-name/nodemon.json",
+          "project-name/package.json",
+          "project-name/processes.config.cjs",
+          "project-name/src",
+          "project-name/src/Server.ts",
+          "project-name/src/config",
+          "project-name/src/config/envs",
+          "project-name/src/config/envs/index.ts",
+          "project-name/src/config/index.ts",
+          "project-name/src/config/logger",
+          "project-name/src/config/logger/index.ts",
+          "project-name/src/controllers/rest",
+          "project-name/src/controllers/rest/HelloWorldController.ts",
+          "project-name/src/index.ts",
+          "project-name/tsconfig.base.json",
+          "project-name/tsconfig.json",
+          "project-name/tsconfig.node.json",
+        ]
+      `);
+
+      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
+
+      expect(content).toContain('import {application} from "@tsed/platform-http"');
+      expect(content).toContain('import "@tsed/platform-fastify"');
+      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toMatchSnapshot();
+
+      const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
+      expect(pkg).toMatchInlineSnapshot(`
+        {
+          "dependencies": {
+            "@tsed/ajv": "5.58.1",
+            "@tsed/core": "5.58.1",
+            "@tsed/di": "5.58.1",
+            "@tsed/exceptions": "5.58.1",
+            "@tsed/json-mapper": "5.58.1",
+            "@tsed/openspec": "5.58.1",
+            "@tsed/platform-cache": "5.58.1",
+            "@tsed/platform-exceptions": "5.58.1",
+            "@tsed/platform-fastify": "5.58.1",
+            "@tsed/platform-http": "5.58.1",
+            "@tsed/platform-log-request": "5.58.1",
+            "@tsed/platform-middlewares": "5.58.1",
+            "@tsed/platform-params": "5.58.1",
+            "@tsed/platform-response-filter": "5.58.1",
+            "@tsed/platform-views": "5.58.1",
+            "@tsed/schema": "5.58.1",
+          },
+          "description": "",
+          "devDependencies": {},
+          "name": "project-data",
+          "scripts": {
+            "barrels": "barrels",
+            "build": "yarn run barrels && swc src --out-dir dist -s  --strip-leading-paths",
+            "start": "yarn run barrels && nodemon src/index.ts",
+            "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/esm-register src/index.js",
+          },
+          "tsed": {
+            "packageManager": "yarn",
+            "runtime": "node",
+          },
+          "type": "module",
+          "version": "1.0.0",
+        }
+      `);
+    });
+  });
   describe("shared configuration", () => {
     it("should configuration directory", async () => {
       CliPlatformTest.setPackageJson({

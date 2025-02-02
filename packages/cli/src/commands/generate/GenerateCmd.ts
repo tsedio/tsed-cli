@@ -5,12 +5,14 @@ import {normalizePath} from "@tsed/normalize-path";
 import {kebabCase, pascalCase} from "change-case";
 import {globbySync} from "globby";
 
+import type {PlatformType} from "../../interfaces/index.js";
 import {ProjectConvention} from "../../interfaces/ProjectConvention.js";
 import {ClassNamePipe} from "../../pipes/ClassNamePipe.js";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe.js";
 import {RoutePipe} from "../../pipes/RoutePipe.js";
 import {ProvidersInfoService} from "../../services/ProvidersInfoService.js";
 import {fillImports} from "../../utils/fillImports.js";
+import {getFrameworksPrompt} from "../init/prompts/getFeaturesPrompt.js";
 import {PROVIDER_TYPES} from "./ProviderTypes.js";
 
 export interface GenerateCmdContext extends CliDefaultOptions {
@@ -18,7 +20,7 @@ export interface GenerateCmdContext extends CliDefaultOptions {
   name: string;
   route: string;
   directory: string;
-  platform: string;
+  platform: PlatformType;
   templateType: string;
   middlewarePosition: "before" | "after";
   symbolName: string;
@@ -132,24 +134,13 @@ export class GenerateCmd implements CommandProvider {
         when: !initialOptions.name
       },
       {
+        ...getFrameworksPrompt(),
         message: "Which platform?",
         type: "list",
         name: "platform",
         when(state: any) {
           return ["server"].includes(state.type || initialOptions.type);
-        },
-        choices: [
-          {
-            name: "Express.js",
-            checked: true,
-            value: "express"
-          },
-          {
-            name: "Koa.js",
-            checked: false,
-            value: "koa"
-          }
-        ]
+        }
       },
       {
         type: "input",
@@ -234,15 +225,28 @@ export class GenerateCmd implements CommandProvider {
     if (this.providersList.isMyProvider(ctx.type, GenerateCmd)) {
       const type = [ctx.type, ctx.templateType].filter(Boolean).join(".");
 
-      const template = `generate/${type}.hbs`;
+      let template = `generate/${type}.hbs`;
+
+      if (ctx.type === "server") {
+        template = `generate/server/${ctx.platform}/server.hbs`;
+      }
 
       return [
         {
           title: `Generate ${ctx.type} file to '${symbolPath}.ts'`,
-          task: () =>
-            this.srcRenderService.render(template, ctx, {
+          task: () => {
+            if (ctx.type === "server") {
+              return this.srcRenderService.render(template, ctx, {
+                baseDir: "generate",
+                basename: `${symbolPath}.ts`,
+                replaces: [`server/${ctx.platform}`]
+              });
+            }
+
+            return this.srcRenderService.render(template, ctx, {
               output: `${symbolPath}.ts`
-            })
+            });
+          }
         },
         {
           title: `Update bin/index`,

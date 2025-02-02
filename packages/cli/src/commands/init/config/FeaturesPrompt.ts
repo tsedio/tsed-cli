@@ -59,11 +59,15 @@ export enum FeatureType {
 export const FeaturesMap: Record<string, Feature> = {
   [PlatformType.EXPRESS]: {
     name: "Express.js",
-    checked: (options: any) => options.platform !== PlatformType.KOA
+    checked: (options: any) => options.platform === PlatformType.EXPRESS || !options.platform
   },
   [PlatformType.KOA]: {
     name: "Koa.js",
     checked: (options: any) => options.platform === PlatformType.KOA
+  },
+  [PlatformType.FASTIFY]: {
+    name: "Fastify.js (beta)",
+    checked: (options: any) => options.platform === PlatformType.FASTIFY
   },
   [FeatureType.GRAPHQL]: {
     name: "TypeGraphQL",
@@ -297,13 +301,15 @@ export const FeaturesMap: Record<string, Feature> = {
   }
 };
 
+export const FrameworksPrompt = {
+  message: "Choose the target Framework:",
+  type: "list",
+  name: "platform",
+  choices: [PlatformType.EXPRESS, PlatformType.KOA, PlatformType.FASTIFY]
+};
+
 export const FeaturesPrompt = (availableRuntimes: string[], availablePackageManagers: string[]) => [
-  {
-    message: "Choose the target Framework:",
-    type: "list",
-    name: "platform",
-    choices: [PlatformType.EXPRESS, PlatformType.KOA]
-  },
+  FrameworksPrompt,
   {
     message: "Choose the architecture for your project:",
     type: "list",

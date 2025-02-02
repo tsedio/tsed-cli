@@ -5,6 +5,7 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
   "architecture": "arc_default",
   "barrels": "["./src/controllers/rest","./src/controllers/pages"]",
   "express": false,
+  "fastify": false,
   "graphql": false,
   "imports": [
     {
@@ -43,6 +44,7 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
   "architecture": "arc_default",
   "barrels": "["./src/controllers/rest","./src/interactions"]",
   "express": false,
+  "fastify": false,
   "graphql": false,
   "imports": [
     {
@@ -85,6 +87,7 @@ exports[`fillImports() > should return barrels and imports files for ('arc_defau
   "architecture": "arc_default",
   "barrels": "["./src/controllers/rest","./src/controllers/pages","./src/interactions","./src/datasources","./src/resolvers"]",
   "express": false,
+  "fastify": false,
   "graphql": true,
   "imports": [
     {
@@ -145,6 +148,7 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
   "architecture": "feature",
   "barrels": "["./src/rest"]",
   "express": false,
+  "fastify": false,
   "graphql": false,
   "imports": [
     {
@@ -176,6 +180,7 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
   "architecture": "feature",
   "barrels": "["./src/rest","./src/pages"]",
   "express": false,
+  "fastify": false,
   "graphql": false,
   "imports": [
     {
@@ -214,6 +219,7 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
   "architecture": "feature",
   "barrels": "["./src/rest","./src/interactions"]",
   "express": false,
+  "fastify": false,
   "graphql": false,
   "imports": [
     {
@@ -256,6 +262,7 @@ exports[`fillImports() > should return barrels and imports files for ('feature',
   "architecture": "feature",
   "barrels": "["./src/rest","./src/pages","./src/interactions","./src/datasources","./src/resolvers"]",
   "express": false,
+  "fastify": false,
   "graphql": true,
   "imports": [
     {

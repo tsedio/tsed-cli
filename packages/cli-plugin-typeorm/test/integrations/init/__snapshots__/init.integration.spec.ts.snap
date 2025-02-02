@@ -15,10 +15,6 @@ import * as rest from "./controllers/rest/index.js";
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
   mount: {
     "/rest": [
       ...Object.values(rest)
@@ -37,10 +33,7 @@ import * as rest from "./controllers/rest/index.js";
     extensions: {
       ejs: "ejs"
     }
-  },
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  }
 })
 export class Server {
   protected app = application();
