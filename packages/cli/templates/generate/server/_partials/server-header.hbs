@@ -11,10 +11,6 @@ import {application} from "@tsed/platform-http";
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
   mount: {
     "{{route}}": [
       ...Object.values(rest)
@@ -36,28 +32,3 @@ import {application} from "@tsed/platform-http";
       specVersion: "3.0.1"
     }
   ],{{/if}}
-  middlewares: [{{#if express}}
-    "cors",
-    "cookie-parser",
-    "compression",
-    "method-override",
-    "json-parser",
-    { use: "urlencoded-parser", options: { extended: true }}{{/if}}{{#if koa}}
-    "@koa/cors",
-    "koa-compress",
-    "koa-override",
-    "koa-bodyparser"{{/if}}
-  ],
-  views: {
-    root: join(process.cwd(), "../views"),
-    extensions: {
-      ejs: "ejs"
-    }
-  },
-  exclude: [
-    "**/*.spec.ts"
-  ]
-})
-export class {{symbolName}} {
-  protected app = application();
-}

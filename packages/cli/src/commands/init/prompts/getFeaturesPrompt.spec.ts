@@ -19,6 +19,11 @@ describe("getFeaturesPrompt", () => {
               "name": "Koa.js",
               "value": "koa",
             },
+            {
+              "checked": false,
+              "name": "Fastify.js (beta)",
+              "value": "fastify",
+            },
           ],
           "message": "Choose the target Framework:",
           "name": "platform",

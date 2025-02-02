@@ -78,10 +78,6 @@ import {InteractionsController} from "./controllers/oidc/InteractionsController.
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
   mount: {
     "/rest": [
       ...Object.values(rest)
@@ -103,10 +99,7 @@ import {InteractionsController} from "./controllers/oidc/InteractionsController.
     extensions: {
       ejs: "ejs"
     }
-  },
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  }
 })
 export class Server {
   protected app = application();
@@ -191,10 +184,6 @@ import {InteractionsController} from "./controllers/oidc/InteractionsController.
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  ajv: {
-    returnsCoercedValues: true
-  },
   mount: {
     "/rest": [
       ...Object.values(rest)
@@ -223,10 +212,7 @@ import {InteractionsController} from "./controllers/oidc/InteractionsController.
     extensions: {
       ejs: "ejs"
     }
-  },
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  }
 })
 export class Server {
   protected app = application();

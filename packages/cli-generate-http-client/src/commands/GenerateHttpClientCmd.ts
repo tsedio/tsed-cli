@@ -84,7 +84,16 @@ export class GenerateHttpClientCmd implements CommandProvider {
         return platform.PlatformKoa;
       }
     } catch (er) {}
-    throw new Error("Unsupported platform. Please use Express.js or Koa.js platform.");
+
+    try {
+      // @ts-ignore
+      const platform = await import("@tsed/platform-fastify");
+
+      if (platform) {
+        return platform.PlatformFastify;
+      }
+    } catch (er) {}
+    throw new Error("Unsupported platform. Please use Express.js, Koa.js or Fastify.js platform.");
   }
 
   private async generate($ctx: GenerateHttpClientCtx) {

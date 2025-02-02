@@ -40,7 +40,7 @@ describe("InitCmd", () => {
           platform: "wrong"
         } as any);
       });
-      expect(result?.message).toEqual("Invalid selected platform: wrong. Possible values: express, koa.");
+      expect(result?.message).toEqual("Invalid selected platform: wrong. Possible values: express, koa, fastify.");
     });
 
     it("should throw error (architecture)", async () => {

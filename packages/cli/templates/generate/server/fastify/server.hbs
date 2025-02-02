@@ -1,0 +1,14 @@
+{{> server-header }}
+  plugins: [
+    "@fastify/accepts",
+    "@fastify/cookie",
+    {
+      use: "fastify-raw-body",
+      options: {
+        global: false,
+        runFirst: true
+      }
+    },
+    "@fastify/formbody"
+  ],
+{{> server-footer }}

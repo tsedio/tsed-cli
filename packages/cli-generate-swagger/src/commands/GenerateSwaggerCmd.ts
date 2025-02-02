@@ -56,6 +56,15 @@ export class GenerateSwaggerCmd implements CommandProvider {
       }
     } catch (er) {}
 
+    try {
+      // @ts-ignore
+      const platform = await import("@tsed/platform-fastify");
+
+      if (platform) {
+        return platform.PlatformFastify;
+      }
+    } catch (er) {}
+
     throw new Error("Unsupported platform. Please use Express.js or Koa.js platform.");
   }
 

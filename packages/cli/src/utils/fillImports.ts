@@ -22,6 +22,7 @@ export function fillImports(ctx: any) {
     {from: "@tsed/platform-log-request", comment: " // remove this import if you don't want log request"},
     ctx.express && {from: "@tsed/platform-express", comment: " // /!\\ keep this import"},
     ctx.koa && {from: "@tsed/platform-koa", comment: " // /!\\ keep this import"},
+    ctx.fastify && {from: "@tsed/platform-fastify", comment: " // /!\\ keep this import"},
     {from: "@tsed/ajv"},
     ctx.swagger && {from: "@tsed/swagger"},
     ctx.scalar && {from: "@tsed/scalar"},
