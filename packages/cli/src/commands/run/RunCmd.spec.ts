@@ -1,4 +1,4 @@
-ou// @ts-ignore
+// @ts-ignore
 import {CliFs, CliRunScript} from "@tsed/cli-core";
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
