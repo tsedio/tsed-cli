@@ -1,4 +1,4 @@
-// @ts-ignore
+ou// @ts-ignore
 import {CliFs, CliRunScript} from "@tsed/cli-core";
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
@@ -35,7 +35,7 @@ describe("RunCmd", () => {
       };
 
       await command.$exec(ctx as any);
-      expect(runScript.run).toHaveBeenCalledWith("node", ["--import", "@swc-node/register/register-esm", "src/bin/index.ts", "do", "-o"], {
+      expect(runScript.run).toHaveBeenCalledWith("node", ["--import", "@swc-node/register/esm-register", "src/bin/index.ts", "do", "-o"], {
         env: {
           ...process.env
         }
@@ -66,7 +66,7 @@ describe("RunCmd", () => {
       };
 
       await command.$exec(ctx as any);
-      expect(runScript.run).toHaveBeenCalledWith("node", ["--import", "@swc-node/register/register-esm", "src/bin/index.ts", "do", "-o"], {
+      expect(runScript.run).toHaveBeenCalledWith("node", ["--import", "@swc-node/register/esm-register", "src/bin/index.ts", "do", "-o"], {
         env: {
           ...process.env
         }
