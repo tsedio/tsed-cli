@@ -1,13 +1,14 @@
-// @ts-ignore
-import runScript from "@npmcli/run-script";
 import {inject, Injectable} from "@tsed/di";
 
 import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
 @Injectable()
 export class CliRunScript {
-  run(cmd: string, args: string[], options: any = {}) {
-    return runScript({
+  async run(cmd: string, args: string[], options: any = {}) {
+    // @ts-ignore
+    const mod = await import("@npmcli/run-script");
+
+    return (mod.default || mod)({
       event: "run",
       ...options,
       cmd: `${cmd} ${args.join(" ")}`,
