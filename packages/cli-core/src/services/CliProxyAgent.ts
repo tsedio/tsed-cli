@@ -2,7 +2,6 @@ import {URL} from "node:url";
 
 import {Configuration, Inject, inject, Injectable, refValue} from "@tsed/di";
 import {camelCase} from "change-case";
-import tunnel from "tunnel";
 
 import {coerce} from "../utils/coerce.js";
 import {CliExeca} from "./CliExeca.js";
@@ -24,6 +23,11 @@ export class CliProxyAgent {
   readonly proxySettings = refValue<CliProxySettings>("proxy", {} as never);
   protected projectPackageJson = Inject(ProjectPackageJson);
   protected cliExeca = inject(CliExeca);
+  protected tunnel: typeof import("tunnel");
+
+  async $onInit() {
+    this.tunnel = await import("tunnel");
+  }
 
   hasProxy() {
     return !!this.proxySettings.value.url;
@@ -46,8 +50,8 @@ export class CliProxyAgent {
 
       const method = camelCase([type, "over", protocol].join(" "));
 
-      if ((tunnel as any)[method]) {
-        return (tunnel as any)[method](options);
+      if ((this.tunnel as any)[method]) {
+        return (this.tunnel as any)[method](options);
       }
     }
 
