@@ -1,5 +1,5 @@
-import type {InitCmdContext} from "@tsed/cli";
-import {inject, Injectable, OnExec, OnPostInstall, PackageManagersModule, ProjectPackageJson, RootRendererService} from "@tsed/cli-core";
+import {type InitCmdContext, RootRendererService} from "@tsed/cli";
+import {inject, Injectable, OnExec, OnPostInstall, PackageManagersModule, ProjectPackageJson} from "@tsed/cli-core";
 
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
 

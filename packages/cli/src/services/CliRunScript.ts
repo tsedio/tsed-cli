@@ -1,6 +1,5 @@
+import {ProjectPackageJson} from "@tsed/cli-core";
 import {inject, Injectable} from "@tsed/di";
-
-import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
 @Injectable()
 export class CliRunScript {

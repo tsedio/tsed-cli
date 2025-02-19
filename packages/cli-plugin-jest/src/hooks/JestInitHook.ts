@@ -1,28 +1,12 @@
-import {
-  Inject,
-  Injectable,
-  OnExec,
-  ProjectPackageJson,
-  RootRendererService,
-  ScriptsRendererService,
-  SrcRendererService
-} from "@tsed/cli-core";
+import {RootRendererService} from "@tsed/cli";
+import {inject, Injectable, OnExec, ProjectPackageJson} from "@tsed/cli-core";
 
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 @Injectable()
 export class JestInitHook {
-  @Inject()
-  protected packageJson: ProjectPackageJson;
-
-  @Inject()
-  protected srcRenderer: SrcRendererService;
-
-  @Inject()
-  protected rootRenderer: RootRendererService;
-
-  @Inject()
-  protected scriptsRenderer: ScriptsRendererService;
+  protected packageJson = inject(ProjectPackageJson);
+  protected rootRenderer = inject(RootRendererService);
 
   @OnExec("init")
   onInitExec() {

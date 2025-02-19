@@ -1,8 +1,9 @@
 // @ts-ignore
-import {CliFs, CliRunScript} from "@tsed/cli-core";
+import {CliFs} from "@tsed/cli-core";
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
 
+import {CliRunScript} from "../../services/CliRunScript.js";
 import {RunCmd} from "./RunCmd.js";
 
 describe("RunCmd", () => {
