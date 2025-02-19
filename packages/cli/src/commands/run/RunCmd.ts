@@ -1,4 +1,6 @@
-import {CliFs, CliRunScript, Command, type CommandProvider, inject, normalizePath, ProjectPackageJson, type Tasks} from "@tsed/cli-core";
+import {CliFs, Command, type CommandProvider, inject, normalizePath, ProjectPackageJson, type Tasks} from "@tsed/cli-core";
+
+import {CliRunScript} from "../../services/CliRunScript.js";
 
 export interface RunCmdContext {
   production: boolean;

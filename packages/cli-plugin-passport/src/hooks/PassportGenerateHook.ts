@@ -1,5 +1,5 @@
-import {type GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
-import {inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, type Tasks} from "@tsed/cli-core";
+import {type GenerateCmdContext, ProvidersInfoService, SrcRendererService} from "@tsed/cli";
+import {inject, OnExec, OnPrompt, ProjectPackageJson, type Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {kebabCase} from "change-case";
 

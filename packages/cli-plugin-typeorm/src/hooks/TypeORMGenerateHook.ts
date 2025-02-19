@@ -1,5 +1,5 @@
-import {FeaturesMap, type GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
-import {CliDockerComposeYaml, inject, OnExec, OnPrompt, ProjectPackageJson, SrcRendererService, type Tasks} from "@tsed/cli-core";
+import {FeaturesMap, type GenerateCmdContext, ProvidersInfoService, SrcRendererService} from "@tsed/cli";
+import {CliDockerComposeYaml, inject, OnExec, OnPrompt, ProjectPackageJson, type Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {camelCase} from "change-case";
 

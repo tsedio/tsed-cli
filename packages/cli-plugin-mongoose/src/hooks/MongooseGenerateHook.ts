@@ -1,5 +1,5 @@
-import {type GenerateCmdContext, ProvidersInfoService} from "@tsed/cli";
-import {CliDockerComposeYaml, inject, OnExec, ProjectPackageJson, SrcRendererService, type Tasks} from "@tsed/cli-core";
+import {type GenerateCmdContext, ProvidersInfoService, SrcRendererService} from "@tsed/cli";
+import {CliDockerComposeYaml, inject, OnExec, ProjectPackageJson, type Tasks} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 import {camelCase, kebabCase} from "change-case";
 // @ts-ignore

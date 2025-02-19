@@ -1,6 +1,7 @@
 import {basename, join} from "node:path";
 
-import {inject, Injectable, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
+import {SrcRendererService} from "@tsed/cli";
+import {inject, Injectable, ProjectPackageJson} from "@tsed/cli-core";
 import {camelCase, constantCase, kebabCase} from "change-case";
 
 import {TEMPLATE_DIR} from "../utils/templateDir.js";

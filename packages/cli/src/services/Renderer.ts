@@ -2,6 +2,7 @@ import "../utils/hbs/index.js";
 
 import {basename, dirname, join, relative} from "node:path";
 
+import {CliFs} from "@tsed/cli-core";
 import {isString} from "@tsed/core";
 import {constant, inject, Injectable} from "@tsed/di";
 import {normalizePath} from "@tsed/normalize-path";
@@ -13,7 +14,6 @@ import {Observable} from "rxjs";
 
 import {insertAfter} from "../utils/renderer/insertAfter.js";
 import {insertImport} from "../utils/renderer/insertImport.js";
-import {CliFs} from "./CliFs.js";
 
 export interface RenderOptions {
   path: string;
