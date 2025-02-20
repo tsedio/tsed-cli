@@ -40,7 +40,7 @@
     "change-case": "^5.4.4",
     "commander": "^12.1.0",
     "enquirer": "^2.4.1",
-    "execa": "^8.0.1",
+    "execa": "^9.5.2",
     "figures": "^6.1.0",
     "fs-extra": "^11.2.0",
     "globby": "^14.0.2",
