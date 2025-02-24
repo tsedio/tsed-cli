@@ -11,10 +11,10 @@ describe("CliRunScript", () => {
   beforeEach(() => CliPlatformTest.create());
   afterEach(() => CliPlatformTest.reset());
 
-  it("should run a script", () => {
+  it("should run a script", async () => {
     const service = CliPlatformTest.get<CliRunScript>(CliRunScript);
 
-    service.run("ts-node", ["-o"], {
+    await service.run("ts-node", ["-o"], {
       env: {
         node: "env"
       }

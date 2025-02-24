@@ -13,3 +13,4 @@ export * from "./interfaces/index.js";
 export * from "./pipes/index.js";
 export * from "./runtimes/index.js";
 export * from "./services/ProvidersInfoService.js";
+export * from "./services/Renderer.js";

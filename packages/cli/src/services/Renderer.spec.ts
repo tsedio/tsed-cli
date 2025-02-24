@@ -1,5 +1,6 @@
 import {join} from "node:path";
 
+import {CliFs, getTemplateDirectory} from "@tsed/cli-core";
 // @ts-ignore
 import {FakeCliFs, normalizePath} from "@tsed/cli-testing";
 import {configuration, DITest} from "@tsed/di";
@@ -7,8 +8,6 @@ import Consolidate from "consolidate";
 import {globby} from "globby";
 import handlebars from "handlebars";
 
-import {getTemplateDirectory} from "../utils/index.js";
-import {CliFs} from "./CliFs.js";
 import {RootRendererService, SrcRendererService} from "./Renderer.js";
 
 const TEMPLATE_DIR = getTemplateDirectory(join(import.meta.url, "../../../cli-plugin-jest/src/utils"));

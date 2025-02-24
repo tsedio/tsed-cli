@@ -17,7 +17,6 @@ import {
   PackageManagersModule,
   ProjectPackageJson,
   type QuestionOptions,
-  RootRendererService,
   type Task
 } from "@tsed/cli-core";
 import {kebabCase, pascalCase} from "change-case";
@@ -31,6 +30,7 @@ import {InitPlatformsModule} from "../../platforms/InitPlatformsModule.js";
 import {RuntimesModule} from "../../runtimes/RuntimesModule.js";
 import {BunRuntime} from "../../runtimes/supports/BunRuntime.js";
 import {NodeRuntime} from "../../runtimes/supports/NodeRuntime.js";
+import {RootRendererService} from "../../services/Renderer.js";
 import {fillImports} from "../../utils/fillImports.js";
 import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt.js";
 import {InitFileSchema} from "./config/InitFileSchema.js";

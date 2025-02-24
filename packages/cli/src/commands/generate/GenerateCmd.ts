@@ -1,6 +1,6 @@
 import {basename, dirname, join} from "node:path";
 
-import {type CliDefaultOptions, Command, type CommandProvider, Inject, ProjectPackageJson, SrcRendererService} from "@tsed/cli-core";
+import {type CliDefaultOptions, Command, type CommandProvider, Inject, inject, ProjectPackageJson} from "@tsed/cli-core";
 import {normalizePath} from "@tsed/normalize-path";
 import {kebabCase, pascalCase} from "change-case";
 import {globbySync} from "globby";
@@ -11,6 +11,7 @@ import {ClassNamePipe} from "../../pipes/ClassNamePipe.js";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe.js";
 import {RoutePipe} from "../../pipes/RoutePipe.js";
 import {ProvidersInfoService} from "../../services/ProvidersInfoService.js";
+import {SrcRendererService} from "../../services/Renderer.js";
 import {fillImports} from "../../utils/fillImports.js";
 import {getFrameworksPrompt} from "../init/prompts/getFeaturesPrompt.js";
 import {PROVIDER_TYPES} from "./ProviderTypes.js";
@@ -94,11 +95,8 @@ export class GenerateCmd implements CommandProvider {
   @Inject()
   routePipe: RoutePipe;
 
-  @Inject()
-  srcRenderService: SrcRendererService;
-
-  @Inject()
-  projectPackageJson: ProjectPackageJson;
+  srcRenderService = inject(SrcRendererService);
+  projectPackageJson = inject(ProjectPackageJson);
 
   constructor(private providersList: ProvidersInfoService) {
     PROVIDER_TYPES.forEach((info) => {
