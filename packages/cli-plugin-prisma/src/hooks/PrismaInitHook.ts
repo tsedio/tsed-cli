@@ -10,7 +10,7 @@ export class PrismaInitHook {
   protected packageJson = inject(ProjectPackageJson);
   protected packageManagers = inject(PackageManagersModule);
 
-  @OnAdd("@tsed/cli-plugin-vitest")
+  @OnAdd("@tsed/cli-plugin-prisma")
   onAdd(ctx: InitCmdContext) {
     this.addScripts();
     this.addDependencies(ctx);
