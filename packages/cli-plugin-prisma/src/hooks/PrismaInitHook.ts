@@ -1,5 +1,5 @@
 import type {InitCmdContext} from "@tsed/cli";
-import {inject, OnExec, PackageManagersModule, ProjectPackageJson} from "@tsed/cli-core";
+import {inject, OnAdd, OnExec, PackageManagersModule, ProjectPackageJson} from "@tsed/cli-core";
 import {Injectable} from "@tsed/di";
 
 import {CliPrisma} from "../services/CliPrisma.js";
@@ -10,12 +10,15 @@ export class PrismaInitHook {
   protected packageJson = inject(ProjectPackageJson);
   protected packageManagers = inject(PackageManagersModule);
 
-  @OnExec("init")
-  onExec(ctx: InitCmdContext) {
+  @OnAdd("@tsed/cli-plugin-prisma")
+  onAdd(ctx: InitCmdContext) {
     this.addScripts();
     this.addDependencies(ctx);
     this.addDevDependencies(ctx);
+  }
 
+  @OnExec("init")
+  onExec() {
     return [
       {
         title: "Generate Prisma schema",
