@@ -1,7 +1,7 @@
 {
   "name": "@tsed/cli-plugin-passport",
   "description": "Ts.ED CLI plugin. Add Passport.js support",
-  "version": "6.1.17",
+  "version": "6.2.0",
   "type": "module",
   "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
