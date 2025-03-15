@@ -8,7 +8,7 @@ gettingStartedText: Getting started
 gettingStartedUrl: /getting-started/index.html
 messengerText: Discussions
 messengerIcon: bxl-slack
-messengerUrl: https://slack.tsed.io
+messengerUrl: https://slack.tsed.dev
 sponsorText: Sponsor @romakita
 sponsorUrl: https://github.com/sponsors/Romakita
 features:
