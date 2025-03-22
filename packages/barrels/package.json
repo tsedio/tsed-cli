@@ -16,7 +16,5 @@
   },
   "scripts": {
     "test": "node --test test/barrels.integration.spec.js"
-  },
-  "devDependencies": {},
-  "peerDependencies": {}
+  }
 }
