@@ -124,5 +124,5 @@
     "npmAccess": "public",
     "ghpages": []
   },
-  "packageManager": "yarn@4.1.0"
+  "packageManager": "yarn@4.7.0"
 }
