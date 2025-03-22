@@ -2635,7 +2635,7 @@ __metadata:
     lint-staged: "npm:15.2.10"
     listr2: "npm:^8.2.4"
     markdown-it: "npm:14.1.0"
-    prettier: "npm:3.3.3"
+    prettier: "npm:3.5.3"
     read-pkg-up: "npm:^11.0.0"
     registry-url: "npm:^6.0.1"
     rxjs: "npm:^7.8.1"
@@ -13078,7 +13078,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.3.3, prettier@npm:~3.3.3":
+"prettier@npm:3.5.3":
+  version: 3.5.3
+  resolution: "prettier@npm:3.5.3"
+  bin:
+    prettier: bin/prettier.cjs
+  checksum: 10/7050c08f674d9e49fbd9a4c008291d0715471f64e94cc5e4b01729affce221dfc6875c8de7e66b728c64abc9352eefb7eaae071b5f79d30081be207b53774b78
+  languageName: node
+  linkType: hard
+
+"prettier@npm:~3.3.3":
   version: 3.3.3
   resolution: "prettier@npm:3.3.3"
   bin:
