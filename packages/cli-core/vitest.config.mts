@@ -8,7 +8,7 @@ export default defineConfig(
     test: {
       ...presets.test,
       coverage: {
-        ...presets.test.coverage,
+        ...presets.test?.coverage,
         thresholds: {
           statements: 0,
           branches: 0,

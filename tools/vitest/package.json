@@ -13,5 +13,7 @@
   },
   "scripts": {
     "generate": "node index.js"
-  }
+  },
+  "dependencies": {},
+  "peerDependencies": {}
 }

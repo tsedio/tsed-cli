@@ -1,0 +1,30 @@
+{
+  "sourceMaps": "inline",
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "decorators": true,
+      "dynamicImport": true,
+      "tsx": true
+    },
+    "target": "esnext",
+    "externalHelpers": true,
+    "keepClassNames": true,
+    "transform": {
+      "useDefineForClassFields": false,
+      "legacyDecorator": true,
+      "decoratorMetadata": true,
+      "react": {
+        "pragma": "React.createElement",
+        "pragmaFrag": "React.Fragment",
+        "throwIfNamespace": true,
+        "development": false,
+        "useBuiltins": false,
+        "runtime": "automatic"
+      }
+    }
+  },
+  "module": {
+    "type": "es6"
+  }
+}

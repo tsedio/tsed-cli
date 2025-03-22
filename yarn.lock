@@ -2751,6 +2751,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tsed/integration@workspace:tools/integration":
+  version: 0.0.0-use.local
+  resolution: "@tsed/integration@workspace:tools/integration"
+  dependencies:
+    cross-env: "npm:7.0.3"
+    typescript: "npm:5.6.2"
+    vitest: "npm:2.1.1"
+  languageName: unknown
+  linkType: soft
+
 "@tsed/logger@npm:>=7.0.1":
   version: 7.0.1
   resolution: "@tsed/logger@npm:7.0.1"
