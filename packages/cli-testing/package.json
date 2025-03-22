@@ -9,6 +9,7 @@
   "typings": "./lib/types/index.d.ts",
   "exports": {
     ".": {
+      "cli-tsed-source": "./src/index.ts",
       "types": "./lib/types/index.d.ts",
       "import": "./lib/esm/index.js",
       "default": "./lib/esm/index.js"
@@ -16,7 +17,7 @@
   },
   "scripts": {
     "build": "yarn build:ts",
-    "build:ts": "tsc --build tsconfig.json"
+    "build:ts": "tsc --build tsconfig.esm.json"
   },
   "keywords": [
     "Ts.ED",
@@ -37,5 +38,6 @@
     "cross-env": "7.0.3",
     "typescript": "5.6.2",
     "vitest": "2.1.1"
-  }
+  },
+  "peerDependencies": {}
 }

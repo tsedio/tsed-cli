@@ -5,14 +5,12 @@
     "noEmit": true,
     "composite": false,
     "declarationMap": false,
-    "types": [
-      "vitest/globals",
-      "vitest/importMeta",
-      "vite/client",
-      "node",
-      "vitest"
-    ]
+    "types": ["vitest/globals", "vitest/importMeta", "vite/client", "node", "vitest"],
+    "paths": {
+      "@tsed/cli": ["./packages/cli/src/index.ts"],
+      "@tsed/cli-core": ["./packages/cli-core/src/index.ts"]
+    }
   },
-  "include": ["vitest.*.mts"],
-  "exclude": ["dist"]
+  "include": ["vitest.*.mts", "**/vitest.*.mts", "**/*.ts"],
+  "exclude": ["dist", "**/lib/**", "**/templates/**", "**/barrels/**", "./packages/**/project-name/**/*.ts"]
 }
