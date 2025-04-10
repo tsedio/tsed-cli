@@ -6,10 +6,11 @@ async function build() {
   const {
     directory = ["./src"],
     exclude = ["**/__mock__", "**/__mocks__", "**/*.spec.ts", "**/*.benchmark.ts"],
-    noSemicolon = false
+    noSemicolon = false,
+    singleQuotes = false
   } = await getConfig();
 
-  await generateBarrels({exclude, directory, cwd: process.cwd(), noSemicolon});
+  await generateBarrels({exclude, directory, cwd: process.cwd(), noSemicolon, singleQuotes});
 }
 
 await build();
