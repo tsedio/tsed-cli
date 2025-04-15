@@ -7,7 +7,7 @@
   "devDependencies": {
     "cross-env": "7.0.3",
     "typescript": "5.6.2",
-    "vitest": "3.0.9"
+    "vitest": "3.1.1"
   },
   "scripts": {
     "run-cmd": "cross-env NODE_ENV=development CLI_MODE=ts CI=true node --import @swc-node/register/esm-register index.ts",
