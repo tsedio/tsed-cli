@@ -11,7 +11,7 @@ export const presets = defineConfig({
   test: {
     globals: true,
     environment: "node",
-    exclude: ["**/templates/**", "**/.tmp/**"],
+    exclude: ["**/templates/**", "**/.tmp/**", "**/node_modules/**"],
     coverage: {
       enabled: true,
       provider: "v8",
@@ -26,7 +26,8 @@ export const presets = defineConfig({
         "**/__mocks__/**",
         "**/__mock__/**",
         "**/tests/**",
-        "**/index.ts"
+        "**/index.ts",
+        "**/node_modules/**"
       ]
     }
   },
