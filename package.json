@@ -78,12 +78,12 @@
     "@swc/core": "1.7.26",
     "@swc/helpers": "0.5.13",
     "@tsed/markdown-it-symbols": "3.20.8",
-    "@tsed/monorepo-utils": "2.3.10",
+    "@tsed/monorepo-utils": "2.3.12",
     "@tsed/ts-doc": "^4.1.0",
     "@types/node": "22.7.4",
     "@typescript-eslint/eslint-plugin": "8.7.0",
     "@typescript-eslint/parser": "8.7.0",
-    "@vitest/coverage-v8": "^2.1.1",
+    "@vitest/coverage-v8": "3.0.9",
     "concurrently": "9.0.1",
     "cross-env": "7.0.3",
     "eslint": "9.11.1",
@@ -103,7 +103,7 @@
     "ts-node": "^10.9.2",
     "typescript": "5.6.2",
     "unplugin-swc": "^1.5.1",
-    "vitest": "2.1.1"
+    "vitest": "3.0.9"
   },
   "directories": {
     "packages": "packages",
@@ -124,5 +124,5 @@
     "npmAccess": "public",
     "ghpages": []
   },
-  "packageManager": "yarn@4.1.0"
+  "packageManager": "yarn@4.7.0"
 }

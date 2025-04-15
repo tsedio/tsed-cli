@@ -17,9 +17,9 @@ jobs:
         node-version: [20.x]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
@@ -45,15 +45,13 @@ jobs:
             node-version: 20.x
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: yarn install --immutable
-      - name: Run build
-        run: yarn tsc --build
       - name: Run test
         run: yarn test
 
@@ -65,13 +63,15 @@ jobs:
         node-version: [20.x]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: yarn install --frozen-lockfile --network-timeout 500000
+      - name: Run build
+        run: yarn tsc --build
       - name: Run build
         run: yarn build
 
@@ -85,9 +85,9 @@ jobs:
         node-version: [20.x]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies

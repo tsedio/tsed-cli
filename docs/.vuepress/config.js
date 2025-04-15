@@ -51,7 +51,7 @@ module.exports = {
     repo: "tsedio/tsed-cli",
     githubProxyUrl: "https://api.tsed.dev/rest/github/tsedio/tsed-cli",
     openCollective: "https://api.tsed.dev/rest/opencollective",
-    slackUrl: "https://slack.tsed.io",
+    slackUrl: "https://slack.tsed.dev",
     stackoverflowUrl: "https://stackoverflow.com/search?q=tsed",
     sponsorUrl: "https://tsed.dev/support.html",
     twitterUrl: "https://twitter.com/TsED_io",
@@ -214,7 +214,7 @@ module.exports = {
                 },
                 {
                   label: "Chat with us",
-                  url: "https://slack.tsed.io"
+                  url: "https://slack.tsed.dev"
                 },
                 {
                   label: "Contribution guide",
