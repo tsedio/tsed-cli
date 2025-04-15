@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "@tsed/logger": ">=7.0.1",
-    "@tsed/normalize-path": ">=7.14.2",
+    "@tsed/normalize-path": ">=8.0.0",
     "@types/inquirer": "^9.0.7",
     "ajv": "^8.17.1",
     "axios": "^1.7.7",
