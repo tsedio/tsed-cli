@@ -1,7 +1,7 @@
 {
   "name": "@tsed/cli-plugin-oidc-provider",
   "description": "Ts.ED CLI plugin. Add OIDC Provider",
-  "version": "6.2.1",
+  "version": "6.3.0",
   "type": "module",
   "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
