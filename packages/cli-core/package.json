@@ -1,7 +1,7 @@
 {
   "name": "@tsed/cli-core",
   "description": "Build your CLI with TypeScript and Decorators",
-  "version": "6.2.1",
+  "version": "6.4.2",
   "type": "module",
   "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "@tsed/logger": ">=7.0.1",
-    "@tsed/normalize-path": ">=7.14.2",
+    "@tsed/normalize-path": ">=8.0.0",
     "@types/inquirer": "^9.0.7",
     "ajv": "^8.17.1",
     "axios": "^1.7.7",

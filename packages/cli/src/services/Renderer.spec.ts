@@ -199,6 +199,36 @@ describe("Renderer", () => {
       expect(Consolidate.handlebars).toHaveBeenCalledWith("/tmpl/init/src/controllers/pages/IndexController.ts.hbs", {});
       expect(FakeCliFs.getKeys()).toEqual(["/home/src/pages", "/home/src/pages/index.controller.ts"]);
     });
+    it("should render a file from given option (with replaces, output, baseDir)", async () => {
+      const service = new RootRendererService();
+
+      const props = {
+        path: "/generate/src/server/express/server.hbs",
+        basename: "Server.ts",
+        replaces: ["server/express"]
+      };
+
+      const data = {};
+
+      const options = {
+        baseDir: "/generate",
+        ...props
+      };
+
+      configuration().set("project", {
+        rootDir: "/home",
+        srcDir: "/src"
+      });
+
+      service.templateDir = "/tmpl";
+
+      // @ts-ignore
+      Consolidate.handlebars.mockReturnValue("content");
+
+      await service.render(props.path, data, options);
+
+      expect(FakeCliFs.getKeys()).toEqual(["/home/src", "/home/src/Server.ts"]);
+    });
   });
   describe("loadPartials()", () => {
     it("should load partials", async () => {

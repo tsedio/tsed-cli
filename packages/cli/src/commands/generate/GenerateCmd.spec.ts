@@ -108,6 +108,7 @@ describe("GenerateCmd", () => {
           symbolPathBasename: "Test",
           type: "controller",
           express: false,
+          fastify: false,
           koa: false,
           platformSymbol: undefined,
           barrels: '["./src/controllers/rest"]',
@@ -167,6 +168,7 @@ describe("GenerateCmd", () => {
           type: "controller",
           express: false,
           koa: false,
+          fastify: false,
           platformSymbol: undefined,
           barrels: '["./src/controllers/rest"]',
           imports: [

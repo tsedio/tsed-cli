@@ -68,7 +68,7 @@ import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt.js";
     "-p, --platform <platform>": {
       type: String,
       defaultValue: PlatformType.EXPRESS,
-      description: "Set the default platform for Ts.ED (express or koa)"
+      description: "Set the default platform for Ts.ED (express, koa or fastify)"
     },
     "--features <features...>": {
       type: Array,
