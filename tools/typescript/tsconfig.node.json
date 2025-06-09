@@ -24,7 +24,8 @@
     "noResolve": false,
     "preserveConstEnums": true,
     "verbatimModuleSyntax": true,
-    "sourceMap": true,
+    "sourceMap": false,
+    "declarationMap": false,
     "noEmit": true
   }
 }

@@ -6,3 +6,5 @@ tsconfig.*.json
 __mock__
 *.spec.js
 *.tsbuildinfo
+src
+vitest.config.mts

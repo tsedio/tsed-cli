@@ -30,5 +30,7 @@
     "start:g:prisma": "yarn run-cmd g service -r ./.tmp/init/awesome prisma",
     "start:generate:run": "yarn run-cmd generate -r ./.tmp/init/awesome",
     "start:typeorm:run": "yarn run-cmd typeorm entity:create -r ./.tmp/init/awesome --name User"
-  }
+  },
+  "dependencies": {},
+  "peerDependencies": {}
 }
