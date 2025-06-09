@@ -1,7 +1,7 @@
 {
   "name": "@tsed/cli-plugin-eslint",
   "description": "Ts.ED CLI plugin. Add EsLint support",
-  "version": "6.4.2",
+  "version": "6.4.3-rc.1",
   "type": "module",
   "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
@@ -29,6 +29,5 @@
   },
   "dependencies": {
     "tslib": "2.7.0"
-  },
-  "peerDependencies": {}
+  }
 }
