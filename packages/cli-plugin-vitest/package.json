@@ -1,7 +1,7 @@
 {
   "name": "@tsed/cli-plugin-vitest",
   "description": "Ts.ED CLI plugin. Add Jest support",
-  "version": "6.4.2",
+  "version": "6.4.3-rc.1",
   "type": "module",
   "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
