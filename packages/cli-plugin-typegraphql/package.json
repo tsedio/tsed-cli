@@ -1,7 +1,7 @@
 {
   "name": "@tsed/cli-plugin-typegraphql",
   "description": "Ts.ED CLI plugin. Add TypeGraphql support.",
-  "version": "6.4.3-rc.1",
+  "version": "6.4.3",
   "type": "module",
   "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
