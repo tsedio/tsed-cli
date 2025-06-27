@@ -2638,6 +2638,7 @@ __metadata:
     markdown-it: "npm:14.1.0"
     prettier: "npm:3.3.3"
     read-pkg-up: "npm:^11.0.0"
+    registry-auth-token: "npm:^5.1.0"
     registry-url: "npm:^6.0.1"
     rxjs: "npm:^7.8.1"
     semantic-release: "npm:24.1.2"
