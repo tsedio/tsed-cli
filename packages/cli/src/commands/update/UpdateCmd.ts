@@ -34,14 +34,15 @@ function isGreaterThan(a: any, b: string) {
 }
 
 function shouldUpdate(pkg: string) {
-  return pkg.includes("@tsed") && !pkg.includes("@tsed/cli") && !pkg.includes("@tsed/logger");
+  return pkg.includes("@tsed") && !pkg.includes("@tsed/cli") && !pkg.includes("@tsed/logger") && !pkg.includes("@tsed/barrels");
 }
 
 @Command({
   name: "update",
   description: "Update all Ts.ED packages used by your project",
   args: {},
-  options: {}
+  options: {},
+  disableReadUpPkg: true
 })
 export class UpdateCmd implements CommandProvider {
   protected npmRegistryClient = inject(NpmRegistryClient);
