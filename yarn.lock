@@ -2376,6 +2376,7 @@ __metadata:
     js-yaml: "npm:^4.1.0"
     listr2: "npm:^8.2.4"
     read-pkg-up: "npm:^11.0.0"
+    registry-auth-token: "npm:^5.1.0"
     registry-url: "npm:^6.0.1"
     rxjs: "npm:^7.8.1"
     semver: "npm:^7.6.3"
@@ -13520,6 +13521,15 @@ __metadata:
   dependencies:
     "@pnpm/npm-conf": "npm:^2.1.0"
   checksum: 10/0d7683b71ee418993e7872b389024b13645c4295eb7bb850d10728eaf46065db24ea4d47dc6cbb71a60d1aa4bef077b0d8b7363c9ac9d355fdba47bebdfb01dd
+  languageName: node
+  linkType: hard
+
+"registry-auth-token@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "registry-auth-token@npm:5.1.0"
+  dependencies:
+    "@pnpm/npm-conf": "npm:^2.1.0"
+  checksum: 10/620c897167e2e0e9308b9cdd0288f70d651d9ec554348c39a96d398bb91d444e8cb4b3c0dc1e19d4a8f1c10ade85163baf606e5c09959baa31179bdfb1f7434e
   languageName: node
   linkType: hard
 
