@@ -317,7 +317,14 @@ export class ProjectPackageJson {
     const pkgPath = join(String(cwd), "package.json");
     const fileExists = this.fs.exists(pkgPath);
 
-    if (!disableReadUpPkg && !fileExists) {
+    if (fileExists) {
+      const pkg = this.fs.readJsonSync(pkgPath, {encoding: "utf8"});
+      configuration().set("project.root", pkgPath);
+
+      return {...this.getEmptyPackageJson(name), ...pkg} as any;
+    }
+
+    if (!disableReadUpPkg) {
       const result = readPackageUpSync({
         cwd
       });
@@ -330,13 +337,6 @@ export class ProjectPackageJson {
 
         return {...this.getEmptyPackageJson(name), ...pkg} as any;
       }
-    }
-
-    if (disableReadUpPkg && fileExists) {
-      const pkg = this.fs.readJsonSync(pkgPath, {encoding: "utf8"});
-      configuration().set("project.root", pkgPath);
-
-      return {...this.getEmptyPackageJson(name), ...pkg} as any;
     }
 
     return this.getEmptyPackageJson(name);
