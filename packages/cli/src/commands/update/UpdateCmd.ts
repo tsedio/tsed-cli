@@ -41,7 +41,7 @@ function shouldUpdate(pkg: string) {
   name: "update",
   description: "Update all Ts.ED packages used by your project",
   args: {},
-  options: {},
+  options: {}
 })
 export class UpdateCmd implements CommandProvider {
   protected npmRegistryClient = inject(NpmRegistryClient);
