@@ -98,7 +98,7 @@
     "is-ci": "3.0.1",
     "lint-staged": "15.2.10",
     "markdown-it": "14.1.0",
-    "prettier": "3.3.3",
+    "prettier": "3.6.2",
     "semantic-release": "24.1.2",
     "semantic-release-slack-bot": "4.0.2",
     "ts-node": "^10.9.2",
