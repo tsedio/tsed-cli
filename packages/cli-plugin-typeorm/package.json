@@ -1,7 +1,7 @@
 {
   "name": "@tsed/cli-plugin-typeorm",
   "description": "Ts.ED CLI plugin. Add TypeORM support",
-  "version": "6.5.0",
+  "version": "6.6.0",
   "type": "module",
   "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
