@@ -32,7 +32,9 @@
     "listr"
   ],
   "dependencies": {
-    "@tsed/logger": ">=7.0.1",
+    "@tsed/logger": ">=8.0.0",
+    "@tsed/logger-pattern-layout": ">=8.0.0",
+    "@tsed/logger-std": ">=8.0.0",
     "@tsed/normalize-path": ">=8.0.0",
     "@types/inquirer": "^9.0.7",
     "ajv": "^8.17.1",

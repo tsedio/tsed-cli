@@ -1,3 +1,6 @@
+import "@tsed/logger-std";
+import "@tsed/logger/layouts/ColoredLayout";
+
 import {
   CliCore,
   CliExeca,
