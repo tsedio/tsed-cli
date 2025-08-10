@@ -1,4 +1,4 @@
-import {Injectable} from "@tsed/di";
+import {injectable} from "@tsed/di";
 import type {Options, SyncOptions} from "execa";
 import {execa, execaSync} from "execa";
 import {filter, mergeWith} from "rxjs/operators";
@@ -7,7 +7,6 @@ import split from "split";
 
 import {streamToObservable} from "../utils/streamToObservable.js";
 
-@Injectable()
 export class CliExeca {
   readonly raw = execa;
   readonly rawSync = execaSync;
@@ -38,3 +37,5 @@ export class CliExeca {
     return this.rawSync(cmd, args, opts).stdout;
   }
 }
+
+injectable(CliExeca);

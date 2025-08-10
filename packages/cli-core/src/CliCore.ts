@@ -4,7 +4,7 @@ import "@tsed/logger-std";
 import {join, resolve} from "node:path";
 
 import {Type} from "@tsed/core";
-import {inject, InjectorService, Module} from "@tsed/di";
+import {inject, injectable, InjectorService} from "@tsed/di";
 import chalk from "chalk";
 import {Command} from "commander";
 import semver from "semver";
@@ -23,9 +23,6 @@ function isHelpManual(argv: string[]) {
   return argv.includes("-h") || argv.includes("--help");
 }
 
-@Module({
-  imports: [CliPackageJson, ProjectPackageJson, CliService, CliConfiguration]
-})
 export class CliCore {
   readonly injector = inject(InjectorService);
   readonly cliService = inject(CliService);
@@ -126,3 +123,5 @@ export class CliCore {
     return this;
   }
 }
+
+injectable(CliCore).imports([CliPackageJson, ProjectPackageJson, CliService, CliConfiguration]);

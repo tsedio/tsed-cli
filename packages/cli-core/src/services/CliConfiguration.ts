@@ -1,6 +1,5 @@
-import {DIConfiguration, Injectable} from "@tsed/di";
+import {DIConfiguration, injectable} from "@tsed/di";
 
-@Injectable()
 export class CliConfiguration extends DIConfiguration {
   constructor() {
     super({
@@ -11,3 +10,5 @@ export class CliConfiguration extends DIConfiguration {
     });
   }
 }
+
+injectable(CliConfiguration);

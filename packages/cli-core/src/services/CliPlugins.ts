@@ -1,4 +1,4 @@
-import {constant, inject, Injectable} from "@tsed/di";
+import {constant, inject, injectable} from "@tsed/di";
 import chalk from "chalk";
 
 import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
@@ -18,7 +18,6 @@ function mapPlugins({package: {name, description = "", ...otherProps}}: any) {
   };
 }
 
-@Injectable()
 export class CliPlugins {
   name = constant<string>("name", "");
   readonly loadPlugins = loadPlugins;
@@ -71,3 +70,5 @@ export class CliPlugins {
     return name.startsWith(`@${this.name}/cli-plugin`) || name.includes(`${this.name}-cli-plugin`);
   }
 }
+
+injectable(CliPlugins);
