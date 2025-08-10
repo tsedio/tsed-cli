@@ -1,7 +1,7 @@
 import "@tsed/logger-std";
 import "@tsed/logger-pattern-layout";
 
-import {type DIConfigurationOptions, injector, InjectorService} from "@tsed/di";
+import {type DIConfigurationOptions, inject, injector, InjectorService} from "@tsed/di";
 import {Logger} from "@tsed/logger";
 
 import {CliConfiguration} from "../services/CliConfiguration.js";
@@ -16,7 +16,7 @@ export function getLogger() {
 function createConfiguration(injector: InjectorService): CliConfiguration & TsED.Configuration {
   injector.addProvider(CliConfiguration);
 
-  return injector.invoke<CliConfiguration & TsED.Configuration>(CliConfiguration);
+  return inject<CliConfiguration & TsED.Configuration>(CliConfiguration as any);
 }
 
 export function createInjector(settings: Partial<DIConfigurationOptions> = {}) {
