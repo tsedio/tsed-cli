@@ -4,7 +4,7 @@ import {basename, dirname, join, relative} from "node:path";
 
 import {CliFs} from "@tsed/cli-core";
 import {isString} from "@tsed/core";
-import {constant, inject, Injectable} from "@tsed/di";
+import {constant, inject, injectable} from "@tsed/di";
 import {normalizePath} from "@tsed/normalize-path";
 import Consolidate from "consolidate";
 import fs from "fs-extra";
@@ -187,23 +187,26 @@ export abstract class Renderer {
   }
 }
 
-@Injectable()
 export class RootRendererService extends Renderer {
   get rootDir() {
     return constant<string>("project.rootDir", "");
   }
 }
 
-@Injectable()
+injectable(RootRendererService);
+
 export class SrcRendererService extends Renderer {
   get rootDir() {
     return join(...([constant("project.rootDir"), constant("project.srcDir")].filter(Boolean) as string[]));
   }
 }
 
-@Injectable()
+injectable(SrcRendererService);
+
 export class ScriptsRendererService extends Renderer {
   get rootDir() {
     return join(...([constant("project.rootDir"), constant("project.scriptsDir")].filter(Boolean) as string[]));
   }
 }
+
+injectable(ScriptsRendererService);

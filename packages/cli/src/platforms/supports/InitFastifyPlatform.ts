@@ -1,10 +1,7 @@
-import {Injectable} from "@tsed/cli-core";
+import {injectable} from "@tsed/cli-core";
 
 import type {InitBasePlatform} from "./InitBasePlatform.js";
 
-@Injectable({
-  type: "platform:init"
-})
 export class InitFastifyPlatform implements InitBasePlatform {
   readonly name = "fastify";
 
@@ -28,3 +25,5 @@ export class InitFastifyPlatform implements InitBasePlatform {
     };
   }
 }
+
+injectable(InitFastifyPlatform).type("platform:init");

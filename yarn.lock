@@ -2362,9 +2362,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@tsed/cli-core@workspace:packages/cli-core"
   dependencies:
-    "@tsed/logger": "npm:>=8.0.0"
-    "@tsed/logger-pattern-layout": "npm:>=8.0.0"
-    "@tsed/logger-std": "npm:>=8.0.0"
+    "@tsed/logger": "npm:>=8.0.3"
+    "@tsed/logger-pattern-layout": "npm:>=8.0.3"
+    "@tsed/logger-std": "npm:>=8.0.3"
     "@tsed/normalize-path": "npm:>=8.0.0"
     "@tsed/typescript": "workspace:*"
     "@types/commander": "npm:2.12.2"
@@ -2617,8 +2617,8 @@ __metadata:
     "@swc/helpers": "npm:0.5.13"
     "@tsed/core": "npm:>=8.16.0-rc.1"
     "@tsed/di": "npm:>=8.16.0-rc.1"
-    "@tsed/logger": "npm:>=8.0.0"
-    "@tsed/logger-std": "npm:>=8.0.0"
+    "@tsed/logger": "npm:>=8.0.3"
+    "@tsed/logger-std": "npm:>=8.0.3"
     "@tsed/markdown-it-symbols": "npm:3.20.8"
     "@tsed/monorepo-utils": "npm:2.3.12"
     "@tsed/normalize-path": "npm:>=8.16.0-rc.1"
@@ -2699,8 +2699,8 @@ __metadata:
     "@tsed/core": "npm:>=8.16.0-rc.1"
     "@tsed/di": "npm:>=8.16.0-rc.1"
     "@tsed/hooks": "npm:>=8.16.0-rc.1"
-    "@tsed/logger": "npm:>=8.0.0"
-    "@tsed/logger-std": "npm:>=8.0.0"
+    "@tsed/logger": "npm:>=8.0.3"
+    "@tsed/logger-std": "npm:>=8.0.3"
     "@tsed/normalize-path": "npm:>=8.16.0-rc.1"
     "@tsed/openspec": "npm:>=8.16.0-rc.1"
     "@tsed/schema": "npm:>=8.16.0-rc.1"
@@ -2726,8 +2726,8 @@ __metadata:
     "@tsed/core": ">=8.0.0"
     "@tsed/di": ">=8.0.0"
     "@tsed/hooks": ">=8.0.0"
-    "@tsed/logger": ">=8.0.0"
-    "@tsed/logger-std": ">=8.0.0"
+    "@tsed/logger": ">=8.0.2"
+    "@tsed/logger-std": ">=8.0.2"
     "@tsed/openspec": ">=8.0.0"
     "@tsed/schema": ">=8.0.0"
   peerDependenciesMeta:
@@ -2801,36 +2801,36 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@tsed/logger-pattern-layout@npm:>=8.0.0":
-  version: 8.0.0
-  resolution: "@tsed/logger-pattern-layout@npm:8.0.0"
+"@tsed/logger-pattern-layout@npm:>=8.0.3":
+  version: 8.0.3
+  resolution: "@tsed/logger-pattern-layout@npm:8.0.3"
   dependencies:
     tslib: "npm:2.8.1"
-  checksum: 10/1a63a56e22c4f22dc7b1f4e96a0929daf806e999994d587ef4f62a0cb41512f12f4c9a85db7bcbc5afad759cae969844e374ba72923aafac33da5ec6e640fb3f
+  checksum: 10/c4eb4acd15d0a3ca97cf158cf71f73ad3f7ae5542e5d19e4963bf392b31670847184cc3677dd10fa352d5a1fb07e63466d51d20c3e84da21e5a39114837e0172
   languageName: node
   linkType: hard
 
-"@tsed/logger-std@npm:>=8.0.0":
-  version: 8.0.0
-  resolution: "@tsed/logger-std@npm:8.0.0"
+"@tsed/logger-std@npm:>=8.0.3":
+  version: 8.0.3
+  resolution: "@tsed/logger-std@npm:8.0.3"
   dependencies:
     colors: "npm:1.4.0"
     date-format: "npm:^4.0.14"
     semver: "npm:^7.7.2"
     tslib: "npm:2.8.1"
-  checksum: 10/7182f15d790ce79c9ecc7ec40664e90d376f32e397d1efb33563641bc8f3f5a8d9998588f48ed60f02df30636ca73648a0fb056ff201a4b59b64ef800c34f44c
+  checksum: 10/e12ceb229a576792e2fd3450c3b2edcd99550024f1ef6234bf2c939be1d638d0157a5986544a4bf47c53a17193b273305dca80c551fdecd96ce833fc99adb5ab
   languageName: node
   linkType: hard
 
-"@tsed/logger@npm:>=8.0.0":
-  version: 8.0.0
-  resolution: "@tsed/logger@npm:8.0.0"
+"@tsed/logger@npm:>=8.0.3":
+  version: 8.0.3
+  resolution: "@tsed/logger@npm:8.0.3"
   dependencies:
     colors: "npm:1.4.0"
     date-format: "npm:^4.0.14"
     semver: "npm:^7.7.2"
     tslib: "npm:2.8.1"
-  checksum: 10/4dc1221f2ec672aeb2c84119e2a66922d796e37162c56951b0a095db648903c1227a0c3e3c1a87d5d554c6388b223db64c2b7b6690f397eed288185753b9803d
+  checksum: 10/ec90abbd5962475c0388b437a9c41b1b9d6cb97d07d3a01db4a2a5ce5c607eb00ee572ce8f26bb3bfe9bfec6038f7a22be8baaec2f91f85674192bf49693708a
   languageName: node
   linkType: hard
 

@@ -1,10 +1,7 @@
-import {Injectable} from "@tsed/di";
+import {injectable} from "@tsed/di";
 
 import {BaseRuntime} from "./BaseRuntime.js";
 
-@Injectable({
-  type: "runtime"
-})
 export class BunRuntime extends BaseRuntime {
   readonly name = "bun";
   readonly cmd = "bun";
@@ -28,3 +25,5 @@ export class BunRuntime extends BaseRuntime {
     };
   }
 }
+
+injectable(BunRuntime).type("runtime");

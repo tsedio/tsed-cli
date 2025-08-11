@@ -1,6 +1,5 @@
 import "@tsed/logger-std";
 
-// import "@tsed/logger/layouts/ColoredLayout";
 import {join, resolve} from "node:path";
 
 import {Type} from "@tsed/core";

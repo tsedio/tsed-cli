@@ -1,10 +1,7 @@
-import {Injectable} from "@tsed/cli-core";
+import {injectable} from "@tsed/cli-core";
 
 import type {InitBasePlatform} from "./InitBasePlatform.js";
 
-@Injectable({
-  type: "platform:init"
-})
 export class InitExpressPlatform implements InitBasePlatform {
   readonly name = "express";
 
@@ -30,3 +27,5 @@ export class InitExpressPlatform implements InitBasePlatform {
     };
   }
 }
+
+injectable(InitExpressPlatform).type("platform:init");

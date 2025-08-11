@@ -1,10 +1,9 @@
 import {
   type CliDefaultOptions,
   CliPackageJson,
-  Command,
+  command,
   type CommandProvider,
   createSubTasks,
-  Inject,
   inject,
   NpmRegistryClient,
   PackageManagersModule,
@@ -37,12 +36,6 @@ function shouldUpdate(pkg: string) {
   return pkg.includes("@tsed") && !pkg.includes("@tsed/cli") && !pkg.includes("@tsed/logger") && !pkg.includes("@tsed/barrels");
 }
 
-@Command({
-  name: "update",
-  description: "Update all Ts.ED packages used by your project",
-  args: {},
-  options: {}
-})
 export class UpdateCmd implements CommandProvider {
   protected npmRegistryClient = inject(NpmRegistryClient);
   protected projectPackage = inject(ProjectPackageJson);
@@ -147,3 +140,10 @@ export class UpdateCmd implements CommandProvider {
     return version && isGreaterThan(version, this.cliPackage.version) ? version : this.cliPackage.version;
   }
 }
+
+command(UpdateCmd, {
+  name: "update",
+  description: "Update all Ts.ED packages used by your project",
+  args: {},
+  options: {}
+});

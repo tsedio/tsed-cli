@@ -1,6 +1,6 @@
 import {basename, dirname, join} from "node:path";
 
-import {type CliDefaultOptions, Command, type CommandProvider, Inject, inject, ProjectPackageJson} from "@tsed/cli-core";
+import {type CliDefaultOptions, command, type CommandProvider, inject, ProjectPackageJson} from "@tsed/cli-core";
 import {normalizePath} from "@tsed/normalize-path";
 import {kebabCase, pascalCase} from "change-case";
 import {globbySync} from "globby";
@@ -52,53 +52,15 @@ const searchFactory = (list: any) => {
   };
 };
 
-@Command({
-  name: "generate",
-  alias: "g",
-  description: "Generate a new provider class",
-  args: {
-    type: {
-      description: "Type of the provider (Injectable, Controller, Pipe, etc...)",
-      type: String
-    },
-    name: {
-      description: "Name of the class",
-      type: String
-    }
-  },
-  options: {
-    "--route <route>": {
-      type: String,
-      description: "The route for the controller generated file"
-    },
-    "-d, --directory <directory>": {
-      description: "Directory where the file must be generated",
-      type: String
-    },
-    "-t, --template-type <templateType>": {
-      description: "Directory where the file must be generated",
-      type: String
-    },
-    "-m, --middleware-position <templateType>": {
-      description: "Middleware position (before, after)",
-      type: String
-    }
-  }
-})
 export class GenerateCmd implements CommandProvider {
-  @Inject()
-  classNamePipe: ClassNamePipe;
+  protected classNamePipe = inject(ClassNamePipe);
+  protected outputFilePathPipe = inject(OutputFilePathPipe);
+  protected routePipe = inject(RoutePipe);
+  protected srcRenderService = inject(SrcRendererService);
+  protected projectPackageJson = inject(ProjectPackageJson);
+  protected providersList = inject(ProvidersInfoService);
 
-  @Inject()
-  outputFilePathPipe: OutputFilePathPipe;
-
-  @Inject()
-  routePipe: RoutePipe;
-
-  srcRenderService = inject(SrcRendererService);
-  projectPackageJson = inject(ProjectPackageJson);
-
-  constructor(private providersList: ProvidersInfoService) {
+  constructor() {
     PROVIDER_TYPES.forEach((info) => {
       this.providersList.add(
         {
@@ -288,3 +250,37 @@ export class GenerateCmd implements CommandProvider {
     return [...set];
   }
 }
+
+command(GenerateCmd, {
+  name: "generate",
+  alias: "g",
+  description: "Generate a new provider class",
+  args: {
+    type: {
+      description: "Type of the provider (Injectable, Controller, Pipe, etc...)",
+      type: String
+    },
+    name: {
+      description: "Name of the class",
+      type: String
+    }
+  },
+  options: {
+    "--route <route>": {
+      type: String,
+      description: "The route for the controller generated file"
+    },
+    "-d, --directory <directory>": {
+      description: "Directory where the file must be generated",
+      type: String
+    },
+    "-t, --template-type <templateType>": {
+      description: "Directory where the file must be generated",
+      type: String
+    },
+    "-m, --middleware-position <templateType>": {
+      description: "Middleware position (before, after)",
+      type: String
+    }
+  }
+});

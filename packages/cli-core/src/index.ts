@@ -4,6 +4,7 @@ import Inquirer from "inquirer";
 
 export * from "./CliCore.js";
 export * from "./decorators/index.js";
+export * from "./fn/command.js";
 export * from "./interfaces/index.js";
 export * from "./packageManagers/index.js";
 export * from "./services/index.js";
