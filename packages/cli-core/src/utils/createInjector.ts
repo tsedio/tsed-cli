@@ -1,6 +1,5 @@
 import "@tsed/logger-std";
 import "@tsed/logger-pattern-layout";
-import "@tsed/logger/layouts/ColoredLayout";
 
 import {type DIConfigurationOptions, injector, InjectorService} from "@tsed/di";
 import {Logger} from "@tsed/logger";

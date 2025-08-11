@@ -1,5 +1,4 @@
 import "@tsed/logger-std";
-import "@tsed/logger/layouts/ColoredLayout";
 
 import {CliCore} from "@tsed/cli-core";
 import chalk from "chalk";
