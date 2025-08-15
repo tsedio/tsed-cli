@@ -7,7 +7,7 @@ import {
   cliPackageJson,
   CliPlugins,
   CliService,
-  Command,
+  command,
   type CommandProvider,
   Configuration,
   createSubTasks,
@@ -39,70 +39,6 @@ import type {InitOptions} from "./interfaces/InitOptions.js";
 import {mapToContext} from "./mappers/mapToContext.js";
 import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt.js";
 
-@Command({
-  name: "init",
-  description: "Init a new Ts.ED project",
-  args: {
-    root: {
-      type: String,
-      defaultValue: ".",
-      description: "Root directory to initialize the Ts.ED project"
-    }
-  },
-  options: {
-    "-n, --project-name <projectName>": {
-      type: String,
-      defaultValue: "",
-      description: "Set the project name. By default, the project is the same as the name directory."
-    },
-    "-a, --arch <architecture>": {
-      type: String,
-      defaultValue: ArchitectureConvention.DEFAULT,
-      description: `Set the default architecture convention (${ArchitectureConvention.DEFAULT} or ${ArchitectureConvention.FEATURE})`
-    },
-    "-c, --convention <convention>": {
-      type: String,
-      defaultValue: ProjectConvention.DEFAULT,
-      description: `Set the default project convention (${ArchitectureConvention.DEFAULT} or ${ArchitectureConvention.FEATURE})`
-    },
-    "-p, --platform <platform>": {
-      type: String,
-      defaultValue: PlatformType.EXPRESS,
-      description: "Set the default platform for Ts.ED (express, koa or fastify)"
-    },
-    "--features <features...>": {
-      type: Array,
-      itemType: String,
-      defaultValue: [],
-      description: "List of the Ts.ED features."
-    },
-    "--runtime <runtime>": {
-      itemType: String,
-      defaultValue: "node",
-      description: "The default runtime used to run the project"
-    },
-    "-m, --package-manager <packageManager>": {
-      itemType: String,
-      defaultValue: PackageManager.YARN,
-      description: "The default package manager to install the project"
-    },
-    "-t, --tsed-version <version>": {
-      type: String,
-      defaultValue: DEFAULT_TSED_TAGS,
-      description: "Use a specific version of Ts.ED (format: 5.x.x)."
-    },
-    "-f, --file <path>": {
-      type: String,
-      description: "Location of a file in which the features are defined."
-    },
-    "-s, --skip-prompt": {
-      type: Boolean,
-      defaultValue: false,
-      description: "Skip the prompt."
-    }
-  },
-  disableReadUpPkg: true
-})
 export class InitCmd implements CommandProvider {
   protected configuration = inject(Configuration);
   protected cliPlugins = inject(CliPlugins);
@@ -486,3 +422,68 @@ export class InitCmd implements CommandProvider {
     );
   }
 }
+
+command(InitCmd, {
+  name: "init",
+  description: "Init a new Ts.ED project",
+  args: {
+    root: {
+      type: String,
+      defaultValue: ".",
+      description: "Root directory to initialize the Ts.ED project"
+    }
+  },
+  options: {
+    "-n, --project-name <projectName>": {
+      type: String,
+      defaultValue: "",
+      description: "Set the project name. By default, the project is the same as the name directory."
+    },
+    "-a, --arch <architecture>": {
+      type: String,
+      defaultValue: ArchitectureConvention.DEFAULT,
+      description: `Set the default architecture convention (${ArchitectureConvention.DEFAULT} or ${ArchitectureConvention.FEATURE})`
+    },
+    "-c, --convention <convention>": {
+      type: String,
+      defaultValue: ProjectConvention.DEFAULT,
+      description: `Set the default project convention (${ArchitectureConvention.DEFAULT} or ${ArchitectureConvention.FEATURE})`
+    },
+    "-p, --platform <platform>": {
+      type: String,
+      defaultValue: PlatformType.EXPRESS,
+      description: "Set the default platform for Ts.ED (express, koa or fastify)"
+    },
+    "--features <features...>": {
+      type: Array,
+      itemType: String,
+      defaultValue: [],
+      description: "List of the Ts.ED features."
+    },
+    "--runtime <runtime>": {
+      itemType: String,
+      defaultValue: "node",
+      description: "The default runtime used to run the project"
+    },
+    "-m, --package-manager <packageManager>": {
+      itemType: String,
+      defaultValue: PackageManager.YARN,
+      description: "The default package manager to install the project"
+    },
+    "-t, --tsed-version <version>": {
+      type: String,
+      defaultValue: DEFAULT_TSED_TAGS,
+      description: "Use a specific version of Ts.ED (format: 5.x.x)."
+    },
+    "-f, --file <path>": {
+      type: String,
+      description: "Location of a file in which the features are defined."
+    },
+    "-s, --skip-prompt": {
+      type: Boolean,
+      defaultValue: false,
+      description: "Skip the prompt."
+    }
+  },
+  disableReadUpPkg: true
+});

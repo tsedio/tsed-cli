@@ -1,10 +1,10 @@
 import "@tsed/logger-std";
 
-// import "@tsed/logger/layouts/ColoredLayout";
 import {join, resolve} from "node:path";
 
 import {Type} from "@tsed/core";
-import {inject, InjectorService, Module} from "@tsed/di";
+import {inject, injectable, InjectorService} from "@tsed/di";
+import {$asyncEmit} from "@tsed/hooks";
 import chalk from "chalk";
 import {Command} from "commander";
 import semver from "semver";
@@ -23,9 +23,6 @@ function isHelpManual(argv: string[]) {
   return argv.includes("-h") || argv.includes("--help");
 }
 
-@Module({
-  imports: [CliPackageJson, ProjectPackageJson, CliService, CliConfiguration]
-})
 export class CliCore {
   readonly injector = inject(InjectorService);
   readonly cliService = inject(CliService);
@@ -58,9 +55,9 @@ export class CliCore {
 
     await this.loadInjector(injector, module);
 
-    await injector.emit("$onReady");
+    await $asyncEmit("$onReady");
 
-    return injector.get<Cli>(CliCore)!;
+    return inject<Cli>(CliCore as any)!;
   }
 
   static async bootstrap(settings: Partial<TsED.Configuration>, module: Type = CliCore) {
@@ -78,7 +75,7 @@ export class CliCore {
 
     await injector.load();
     await injector.invoke(module);
-    await injector.emit("$afterInit");
+    await $asyncEmit("$afterInit");
 
     injector.settings.set("loaded", true);
   }
@@ -126,3 +123,5 @@ export class CliCore {
     return this;
   }
 }
+
+injectable(CliCore).imports([CliPackageJson, ProjectPackageJson, CliService, CliConfiguration]);

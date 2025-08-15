@@ -1,12 +1,11 @@
 import {extname} from "node:path";
 
-import {inject, Injectable} from "@tsed/di";
+import {inject, injectable} from "@tsed/di";
 import {default as Ajv, type Schema} from "ajv";
 
 import {CliFs} from "./CliFs.js";
 import {CliYaml} from "./CliYaml.js";
 
-@Injectable()
 export class CliLoadFile {
   protected cliYaml: CliYaml = inject(CliYaml);
   protected cliFs = inject(CliFs);
@@ -63,3 +62,5 @@ export class CliLoadFile {
     return config;
   }
 }
+
+injectable(CliLoadFile);

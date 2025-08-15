@@ -1,10 +1,7 @@
-import {Injectable} from "@tsed/cli-core";
+import {injectable} from "@tsed/cli-core";
 
 import type {InitBasePlatform} from "./InitBasePlatform.js";
 
-@Injectable({
-  type: "platform:init"
-})
 export class InitKoaPlatform implements InitBasePlatform {
   readonly name = "koa";
 
@@ -34,3 +31,5 @@ export class InitKoaPlatform implements InitBasePlatform {
     };
   }
 }
+
+injectable(InitKoaPlatform).type("platform:init");

@@ -1,14 +1,13 @@
 import {join} from "node:path";
 
 import {setValue} from "@tsed/core";
-import {inject, Injectable} from "@tsed/di";
+import {inject, injectable} from "@tsed/di";
 import {snakeCase} from "change-case";
 
 import {CliFs} from "./CliFs.js";
 import {CliYaml} from "./CliYaml.js";
 import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
-@Injectable()
 export class CliDockerComposeYaml {
   protected cliYaml = inject(CliYaml);
   protected fs = inject(CliFs);
@@ -93,3 +92,5 @@ export class CliDockerComposeYaml {
     }
   }
 }
+
+injectable(CliDockerComposeYaml);

@@ -6,7 +6,7 @@ import {
   DIContext,
   getContext,
   inject,
-  Injectable,
+  injectable,
   injector,
   logger,
   Provider,
@@ -34,7 +34,6 @@ import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
 Inquirer.registerPrompt("autocomplete", inquirer_autocomplete_prompt);
 
-@Injectable()
 export class CliService {
   readonly reinstallAfterRun = constant<boolean>("project.reinstallAfterRun", false);
   readonly program = new Command();
@@ -337,3 +336,5 @@ export class CliService {
     }, cmd);
   }
 }
+
+injectable(CliService);

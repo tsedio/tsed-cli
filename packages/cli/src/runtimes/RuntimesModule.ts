@@ -1,5 +1,5 @@
 import {PackageManagersModule, ProjectPackageJson} from "@tsed/cli-core";
-import {Inject, inject, Module} from "@tsed/di";
+import {Inject, inject, injectable, injectMany} from "@tsed/di";
 
 import {BabelRuntime} from "./supports/BabelRuntime.js";
 import {BaseRuntime} from "./supports/BaseRuntime.js";
@@ -11,15 +11,13 @@ export interface RuntimeInitOptions extends Record<string, unknown> {
   runtime?: string;
 }
 
-@Module({
-  imports: [NodeRuntime, BabelRuntime, WebpackRuntime, BunRuntime]
-})
 export class RuntimesModule {
   protected projectPackageJson = inject(ProjectPackageJson);
   protected packagesManager = inject(PackageManagersModule);
+  private runtimes: BaseRuntime[];
 
-  constructor(@Inject("runtime") protected runtimes: BaseRuntime[]) {
-    this.runtimes = runtimes.filter((manager) => manager.has());
+  constructor() {
+    this.runtimes = injectMany<BaseRuntime>("runtime").filter((manager) => manager.has());
   }
 
   init(ctx: RuntimeInitOptions) {
@@ -63,3 +61,5 @@ export class RuntimesModule {
     };
   }
 }
+
+injectable(RuntimesModule).imports([NodeRuntime, BabelRuntime, WebpackRuntime, BunRuntime]);

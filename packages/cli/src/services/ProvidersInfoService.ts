@@ -1,4 +1,5 @@
-import {Injectable, nameOf, Type} from "@tsed/cli-core";
+import {nameOf, Type} from "@tsed/cli-core";
+import {injectable} from "@tsed/di";
 
 export interface ProviderInfo {
   name: string;
@@ -8,7 +9,6 @@ export interface ProviderInfo {
   owner?: string;
 }
 
-@Injectable()
 export class ProvidersInfoService {
   readonly map: Map<string, ProviderInfo> = new Map();
 
@@ -57,3 +57,5 @@ export class ProvidersInfoService {
     return proposedProviders.length ? proposedProviders : providers;
   }
 }
+
+injectable(ProvidersInfoService);

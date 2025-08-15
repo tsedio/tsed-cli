@@ -1,13 +1,11 @@
 import {dirname, join} from "node:path";
 
-import {inject, Injectable, ProjectPackageJson} from "@tsed/cli-core";
-import {Inject} from "@tsed/di";
+import {inject, injectable, ProjectPackageJson} from "@tsed/cli-core";
 
 import {ArchitectureConvention, ProjectConvention} from "../interfaces/index.js";
 import {ProvidersInfoService} from "../services/ProvidersInfoService.js";
 import {ClassNamePipe} from "./ClassNamePipe.js";
 
-@Injectable()
 export class OutputFilePathPipe {
   protected providers = inject(ProvidersInfoService);
   protected projectPackageJson = inject(ProjectPackageJson);
@@ -27,3 +25,5 @@ export class OutputFilePathPipe {
     return join(baseDir, options.subDir || "", featureDir, this.classNamePipe.transform(options));
   }
 }
+
+injectable(OutputFilePathPipe);

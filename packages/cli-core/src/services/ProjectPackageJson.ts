@@ -1,7 +1,7 @@
 import {dirname, join} from "node:path";
 
 import {getValue, setValue} from "@tsed/core";
-import {configuration, constant, inject, Injectable} from "@tsed/di";
+import {configuration, constant, inject, injectable} from "@tsed/di";
 import {readPackageUpSync} from "read-pkg-up";
 
 import type {PackageJson} from "../interfaces/PackageJson.js";
@@ -37,7 +37,6 @@ function mapPackages(deps: any) {
   );
 }
 
-@Injectable({})
 export class ProjectPackageJson {
   public rewrite = false;
   public reinstall = false;
@@ -353,3 +352,5 @@ export class ProjectPackageJson {
     };
   }
 }
+
+injectable(ProjectPackageJson);

@@ -1,6 +1,5 @@
-import {Injectable, injector} from "@tsed/di";
+import {injectable, injector} from "@tsed/di";
 
-@Injectable()
 export class CliHooks {
   async emit(hookName: string, cmd: string, ...args: any[]) {
     const inj = injector();
@@ -25,3 +24,5 @@ export class CliHooks {
     return results.filter((o: any) => o !== undefined);
   }
 }
+
+injectable(CliHooks);

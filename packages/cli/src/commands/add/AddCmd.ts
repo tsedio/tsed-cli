@@ -1,7 +1,7 @@
 import {
   type CliDefaultOptions,
   CliPlugins,
-  Command,
+  command,
   type CommandProvider,
   createSubTasks,
   inject,
@@ -15,16 +15,6 @@ export interface AddCmdOptions extends CliDefaultOptions {
   name: string;
 }
 
-@Command({
-  name: "add",
-  description: "Add cli plugin to the current project",
-  args: {
-    name: {
-      description: "Npm package name of the cli plugin",
-      type: String
-    }
-  }
-})
 export class AddCmd implements CommandProvider {
   protected cliPlugins = inject(CliPlugins);
   protected packageJson = inject(ProjectPackageJson);
@@ -64,3 +54,14 @@ export class AddCmd implements CommandProvider {
     ];
   }
 }
+
+command(AddCmd, {
+  name: "add",
+  description: "Add cli plugin to the current project",
+  args: {
+    name: {
+      description: "Npm package name of the cli plugin",
+      type: String
+    }
+  }
+});

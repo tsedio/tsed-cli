@@ -1,13 +1,12 @@
 import {basename} from "node:path";
 
 import {ProjectPackageJson} from "@tsed/cli-core";
-import {inject, Injectable} from "@tsed/di";
+import {inject, injectable} from "@tsed/di";
 import {kebabCase, pascalCase} from "change-case";
 
 import {ProjectConvention} from "../interfaces/ProjectConvention.js";
 import {ProvidersInfoService} from "../services/ProvidersInfoService.js";
 
-@Injectable()
 export class ClassNamePipe {
   protected providers: ProvidersInfoService = inject(ProvidersInfoService);
   protected projectPackageJson = inject(ProjectPackageJson);
@@ -36,3 +35,5 @@ export class ClassNamePipe {
     return [...names].join(".").toLowerCase();
   }
 }
+
+injectable(ClassNamePipe);
