@@ -1,5 +1,6 @@
 import "@tsed/logger-std";
 
+import {ProjectClient} from "@tsed/cli";
 import {
   CliCore,
   CliExeca,
@@ -19,7 +20,7 @@ import {
   type TokenProvider
 } from "@tsed/cli-core";
 import {Type} from "@tsed/core";
-import {DIContext, runInContext} from "@tsed/di";
+import {DIContext, inject, runInContext} from "@tsed/di";
 import {$asyncEmit} from "@tsed/hooks";
 import {v4} from "uuid";
 
@@ -37,6 +38,7 @@ export class CliPlatformTest extends DITest {
         scriptsDir: "scripts",
         ...(options.project || {})
       },
+      disableReadUpPkg: true,
       ...options
     });
 
@@ -64,7 +66,8 @@ export class CliPlatformTest extends DITest {
   static async create(options: Partial<TsED.Configuration> = {}, rootModule: Type = CliCore) {
     options = resolveConfiguration({
       name: "tsed",
-      ...options
+      ...options,
+      disableReadUpPkg: true
     });
 
     CliPlatformTest.createInjector(options);
@@ -103,6 +106,7 @@ export class CliPlatformTest extends DITest {
     const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
 
     (projectPackageJson as any).setRaw(pkg);
+    inject(CliFs).writeJsonSync(projectPackageJson.path, pkg);
   }
 
   /**
