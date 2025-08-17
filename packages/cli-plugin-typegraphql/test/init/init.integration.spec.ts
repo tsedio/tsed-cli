@@ -72,13 +72,13 @@ describe("Init TypeGraphQL project", () => {
       ]
     `);
 
-    const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
+    const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
     expect(content).toMatchSnapshot();
     expect(content).toContain('import "@tsed/typegraphql"');
     expect(content).toContain('import "./datasources/index.js";');
     expect(content).toContain('import "./resolvers/index.js";');
 
-    const configContent = FakeCliFs.entries.get("project-name/src/config/index.ts")!;
+    const configContent = FakeCliFs.files.get("project-name/src/config/index.ts")!;
     expect(configContent).toMatchSnapshot();
   });
 });

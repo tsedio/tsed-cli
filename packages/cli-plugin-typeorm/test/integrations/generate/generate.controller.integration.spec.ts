@@ -35,11 +35,11 @@ describe("Generate DataSource", () => {
       "project-name/src/datasources/TestDatasource.ts"
     ]);
 
-    const datasource = FakeCliFs.entries.get("project-name/src/datasources/TestDatasource.ts");
+    const datasource = FakeCliFs.files.get("project-name/src/datasources/TestDatasource.ts");
 
     expect(datasource).toMatchSnapshot();
 
-    const dockerCompose = FakeCliFs.entries.get("project-name/docker-compose.yml");
+    const dockerCompose = FakeCliFs.files.get("project-name/docker-compose.yml");
     expect(dockerCompose).toMatchSnapshot();
   });
 });

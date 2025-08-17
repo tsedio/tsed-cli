@@ -36,7 +36,7 @@ describe("Generate Controller", () => {
       "project-name/src/controllers/TestController.ts"
     ]);
 
-    const result = FakeCliFs.entries.get("project-name/src/controllers/TestController.integration.spec.ts");
+    const result = FakeCliFs.files.get("project-name/src/controllers/TestController.integration.spec.ts");
     expect(result).toContain('import { PlatformTest } from "@tsed/platform-http/testing";');
     expect(result).toContain('import SuperTest from "supertest";');
     expect(result).toContain('import { Server } from "../Server.js";');
@@ -66,7 +66,7 @@ describe("Generate Controller", () => {
       "project-name/src/controllers/users/UserController.ts"
     ]);
 
-    const result = FakeCliFs.entries.get("project-name/src/controllers/users/UserController.integration.spec.ts");
+    const result = FakeCliFs.files.get("project-name/src/controllers/users/UserController.integration.spec.ts");
     expect(result).toContain('import { PlatformTest } from "@tsed/platform-http/testing";');
     expect(result).toContain('import SuperTest from "supertest";');
     expect(result).toContain('import { Server } from "../../Server.js";');

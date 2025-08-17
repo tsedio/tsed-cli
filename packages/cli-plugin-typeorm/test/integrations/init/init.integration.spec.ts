@@ -81,13 +81,13 @@ describe("TypeORM: Init cmd", () => {
       ]
     `);
 
-    const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
+    const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
     expect(content).toMatchSnapshot();
 
-    const datasource = FakeCliFs.entries.get("project-name/src/datasources/MysqlDatasource.ts")!;
+    const datasource = FakeCliFs.files.get("project-name/src/datasources/MysqlDatasource.ts")!;
     expect(datasource).toMatchSnapshot();
 
-    const spec = FakeCliFs.entries.get("project-name/src/datasources/MysqlDatasource.spec.ts")!;
+    const spec = FakeCliFs.files.get("project-name/src/datasources/MysqlDatasource.spec.ts")!;
     expect(spec).toMatchSnapshot();
   });
   it("should not generate database if any option is selected", async () => {

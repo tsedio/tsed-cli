@@ -35,13 +35,13 @@ describe("Init OIDC Provider project", () => {
 
     expect(FakeCliFs.getKeys()).toMatchSnapshot();
 
-    const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
+    const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
 
     expect(content).toContain('import "@tsed/oidc-provider"');
     expect(content).toContain('import {InteractionsController} from "./controllers/oidc/InteractionsController.js";');
     expect(content).toMatchSnapshot();
 
-    const configContent = FakeCliFs.entries.get("project-name/src/config/oidc/index.ts")!;
+    const configContent = FakeCliFs.files.get("project-name/src/config/oidc/index.ts")!;
 
     expect(configContent).toContain('path: "/oidc"');
   });
@@ -67,13 +67,13 @@ describe("Init OIDC Provider project", () => {
 
     expect(FakeCliFs.getKeys()).toMatchSnapshot();
 
-    const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
+    const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
 
     expect(content).toContain('import "@tsed/oidc-provider"');
     expect(content).toContain('import {InteractionsController} from "./controllers/oidc/InteractionsController.js";');
     expect(content).toMatchSnapshot();
 
-    const configContent = FakeCliFs.entries.get("project-name/src/config/oidc/index.ts")!;
+    const configContent = FakeCliFs.files.get("project-name/src/config/oidc/index.ts")!;
 
     expect(configContent).toContain('path: "/oidc"');
   });
