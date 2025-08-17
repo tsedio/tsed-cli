@@ -42,7 +42,7 @@ async function getModuleFixture() {
   };
 
   const cliFs = {
-    exists: vi.fn().mockReturnValue(true),
+    fileExistsSync: vi.fn().mockReturnValue(true),
     writeFileSync: vi.fn(),
     readJsonSync: vi.fn().mockReturnValue({
       scripts: {},

@@ -310,11 +310,11 @@ export class ProjectPackageJson {
 
   protected getPackageJson() {
     const cwd = constant<string>("project.rootDir");
-    const disableReadUpPkg = constant<string>("command.metadata.disableReadUpPkg");
+    const disableReadUpPkg = constant<string>("command.metadata.disableReadUpPkg", constant("disableReadUpPkg"));
     const name = constant<string>("name")!;
 
     const pkgPath = join(String(cwd), "package.json");
-    const fileExists = this.fs.exists(pkgPath);
+    const fileExists = this.fs.fileExistsSync(pkgPath);
 
     if (fileExists) {
       const pkg = this.fs.readJsonSync(pkgPath, {encoding: "utf8"});

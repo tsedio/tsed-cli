@@ -1,13 +1,18 @@
 import type {PathLike, WriteFileOptions} from "node:fs";
 import {join} from "node:path";
 
+import {RealFileSystemHost} from "@ts-morph/common";
 import {injectable} from "@tsed/di";
 import {normalizePath} from "@tsed/normalize-path";
 import Fs, {type EnsureDirOptions} from "fs-extra";
 
-export class CliFs {
+export class CliFs extends RealFileSystemHost {
   raw = Fs;
 
+  /**
+   * @deprecated
+   * @param path
+   */
   exists(path: string) {
     return this.raw.existsSync(path);
   }
@@ -17,11 +22,11 @@ export class CliFs {
   }
 
   readFile(file: string | Buffer | number, encoding?: any): Promise<string> {
-    return this.raw.readFile(file, encoding) as any;
+    return super.readFile(file as string, encoding) as any;
   }
 
   readFileSync(file: string | Buffer | number, encoding?: any) {
-    return this.raw.readFileSync(file, encoding) as any;
+    return super.readFileSync(file as string, encoding) as any;
   }
 
   async readJson(file: string, encoding?: any) {
@@ -38,6 +43,10 @@ export class CliFs {
 
   async writeJson(file: string | Buffer | number, data: any, options?: WriteFileOptions | string): Promise<any> {
     await this.raw.writeFile(file, JSON.stringify(data, null, 2), options || ({encoding: "utf8"} as any));
+  }
+
+  writeJsonSync(file: string | Buffer | number, data: any, options?: WriteFileOptions | string) {
+    this.raw.writeFileSync(file, JSON.stringify(data, null, 2), options || ({encoding: "utf8"} as any));
   }
 
   writeFileSync(path: PathLike | number, data: any, options?: WriteFileOptions) {
@@ -58,7 +67,7 @@ export class CliFs {
 
   findUpFile(root: string, file: string) {
     return [join(root, file), join(root, "..", file), join(root, "..", "..", file), join(root, "..", "..", "..", file)].find((path) =>
-      this.exists(path)
+      this.fileExistsSync(path)
     );
   }
 
