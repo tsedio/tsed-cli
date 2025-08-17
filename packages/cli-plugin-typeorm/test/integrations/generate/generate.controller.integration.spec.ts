@@ -31,6 +31,7 @@ describe("Generate DataSource", () => {
 
     expect(FakeCliFs.getKeys()).toEqual([
       "project-name/docker-compose.yml",
+      "project-name/package.json",
       "project-name/src/datasources",
       "project-name/src/datasources/TestDatasource.ts"
     ]);

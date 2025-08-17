@@ -28,7 +28,11 @@ describe("Generate Model", () => {
       name: "Product"
     });
 
-    expect(FakeCliFs.getKeys()).toEqual(["project-name/src/models", "project-name/src/models/ProductModel.ts"]);
+    expect(FakeCliFs.getKeys()).toEqual([
+      "project-name/package.json",
+      "project-name/src/models",
+      "project-name/src/models/ProductModel.ts"
+    ]);
 
     const result = FakeCliFs.files.get("project-name/src/models/ProductModel.ts");
     expect(result).toContain('import { Model, ObjectID } from "@tsed/mongoose";');

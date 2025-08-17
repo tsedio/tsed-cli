@@ -30,6 +30,7 @@ describe("Generate Controller", () => {
     });
 
     expect(FakeCliFs.getKeys()).toEqual([
+      "project-name/package.json",
       "project-name/src/controllers",
       "project-name/src/controllers/TestController.integration.spec.ts",
       "project-name/src/controllers/TestController.spec.ts",
@@ -60,6 +61,7 @@ describe("Generate Controller", () => {
     });
 
     expect(FakeCliFs.getKeys()).toEqual([
+      "project-name/package.json",
       "project-name/src/controllers/users",
       "project-name/src/controllers/users/UserController.integration.spec.ts",
       "project-name/src/controllers/users/UserController.spec.ts",

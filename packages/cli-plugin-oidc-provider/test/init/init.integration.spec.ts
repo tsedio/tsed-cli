@@ -38,7 +38,7 @@ describe("Init OIDC Provider project", () => {
     const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
 
     expect(content).toContain('import "@tsed/oidc-provider"');
-    expect(content).toContain('import {InteractionsController} from "./controllers/oidc/InteractionsController.js";');
+    expect(content).toContain('import { InteractionsController } from "./controllers/oidc/InteractionsController.js";');
     expect(content).toMatchSnapshot();
 
     const configContent = FakeCliFs.files.get("project-name/src/config/oidc/index.ts")!;
@@ -70,7 +70,7 @@ describe("Init OIDC Provider project", () => {
     const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
 
     expect(content).toContain('import "@tsed/oidc-provider"');
-    expect(content).toContain('import {InteractionsController} from "./controllers/oidc/InteractionsController.js";');
+    expect(content).toContain('import { InteractionsController } from "./controllers/oidc/InteractionsController.js";');
     expect(content).toMatchSnapshot();
 
     const configContent = FakeCliFs.files.get("project-name/src/config/oidc/index.ts")!;
