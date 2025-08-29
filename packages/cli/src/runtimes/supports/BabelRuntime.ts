@@ -13,7 +13,7 @@ export class BabelRuntime extends NodeRuntime {
   }
 
   files() {
-    return ["/init/.babelrc.hbs"];
+    return [".babelrc"];
   }
 
   startDev(main: string): string {

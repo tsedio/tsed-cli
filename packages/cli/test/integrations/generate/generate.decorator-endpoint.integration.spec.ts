@@ -13,14 +13,7 @@ describe("Generate endpoint decorator", () => {
   afterEach(() => CliPlatformTest.reset());
 
   it("should generate a template with the right options", async () => {
-    CliPlatformTest.setPackageJson({
-      name: "",
-      version: "1.0.0",
-      description: "",
-      scripts: {},
-      dependencies: {},
-      devDependencies: {}
-    });
+    await CliPlatformTest.initProject();
 
     await CliPlatformTest.exec("generate", {
       rootDir: "./project-data",
@@ -29,15 +22,49 @@ describe("Generate endpoint decorator", () => {
       name: "Test"
     });
 
-    expect(FakeCliFs.getKeys()).toEqual(["project-name/src/decorators", "project-name/src/decorators/Test.ts"]);
+    expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
+      [
+        "project-name",
+        "project-name/.barrels.json",
+        "project-name/.dockerignore",
+        "project-name/.gitignore",
+        "project-name/.swcrc",
+        "project-name/Dockerfile",
+        "project-name/README.md",
+        "project-name/docker-compose.yml",
+        "project-name/nodemon.json",
+        "project-name/package.json",
+        "project-name/processes.config.cjs",
+        "project-name/src/Server.ts",
+        "project-name/src/config/config.ts",
+        "project-name/src/config/logger/index.ts",
+        "project-name/src/config/utils/index.ts",
+        "project-name/src/controllers/pages/IndexController.ts",
+        "project-name/src/controllers/rest/HelloWorldController.ts",
+        "project-name/src/decorators/Test.ts",
+        "project-name/src/index.ts",
+        "project-name/tsconfig.base.json",
+        "project-name/tsconfig.json",
+        "project-name/tsconfig.node.json",
+      ]
+    `);
 
-    const result = FakeCliFs.entries.get("project-name/src/decorators/Test.ts");
+    const result = FakeCliFs.files.get("project-name/src/decorators/Test.ts");
 
-    expect(result).toContain('import {useDecorators} from "@tsed/core"');
-    expect(result).toContain('import {JsonEntityFn, JsonEntityStore} from "@tsed/schema"');
-    expect(result).toContain("export interface TestOptions {");
-    expect(result).toContain("export function Test(options: TestOptions): MethodDecorator");
-    expect(result).toContain("JsonEntityFn((entity: JsonEntityStore)");
-    expect(result).toContain("entity.store.set(Test, options)");
+    expect(result).toMatchInlineSnapshot(`
+      "import { useDecorators } from "@tsed/core";
+      import { Get } from "@tsed/schema";
+
+      export interface TestOptions {
+
+      }
+
+      export function Test(options: TestOptions = {}): MethodDecorator {
+        return useDecorators(
+          Get("/")
+        );
+      }
+      "
+    `);
   });
 });

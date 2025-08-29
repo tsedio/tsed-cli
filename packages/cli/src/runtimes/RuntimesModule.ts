@@ -1,5 +1,5 @@
-import {PackageManagersModule, ProjectPackageJson} from "@tsed/cli-core";
-import {Inject, inject, injectable, injectMany} from "@tsed/di";
+import {ProjectPackageJson} from "@tsed/cli-core";
+import {inject, injectable, injectMany} from "@tsed/di";
 
 import {BabelRuntime} from "./supports/BabelRuntime.js";
 import {BaseRuntime} from "./supports/BaseRuntime.js";
@@ -7,13 +7,13 @@ import {BunRuntime} from "./supports/BunRuntime.js";
 import {NodeRuntime} from "./supports/NodeRuntime.js";
 import {WebpackRuntime} from "./supports/WebpackRuntime.js";
 
-export interface RuntimeInitOptions extends Record<string, unknown> {
+export interface RuntimeInitOptions {
   runtime?: string;
+  packageManager?: string;
 }
 
 export class RuntimesModule {
   protected projectPackageJson = inject(ProjectPackageJson);
-  protected packagesManager = inject(PackageManagersModule);
   private runtimes: BaseRuntime[];
 
   constructor() {

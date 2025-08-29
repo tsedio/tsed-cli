@@ -1,16 +1,18 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Init cmd > Express.js > should generate a project with Arch FEATURE 2`] = `
-"import {join} from "node:path";
-import {Configuration} from "@tsed/di";
-import {application} from "@tsed/platform-http";
-import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
-import "@tsed/platform-express"; // /!\\ keep this import
-import "@tsed/ajv";
+"import "@tsed/ajv";
+import "@tsed/platform-log-request";
+
+import { Configuration } from "@tsed/di";
+import { application } from "@tsed/platform-http";
+import { join } from "node:path";
+
+import { config } from "@/config/config.js";
+import "@tsed/platform-express";
 import "@tsed/swagger";
-import {config} from "./config/index.js";
-import * as rest from "./rest/index.js";
 import * as pages from "./pages/index.js";
+import * as rest from "./rest/index.js";
 
 @Configuration({
   ...config,
@@ -18,17 +20,19 @@ import * as pages from "./pages/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [
-      ...Object.values(rest)
-    ],
-    "/": [
-      ...Object.values(pages)
-    ]
+    "/rest": [...Object.values(rest), ...Object.values(rest)],
+    "/": [...Object.values(pages), ...Object.values(pages)]
+  },
+  views: {
+    root: join(process.cwd(), "../views"),
+    extensions: {
+      ejs: "ejs"
+    }
   },
   swagger: [
     {
-      path: "/doc",
-      specVersion: "3.0.1"
+      "path": "/doc",
+      "specVersion": "3.1.0"
     }
   ],
   middlewares: [
@@ -37,14 +41,13 @@ import * as pages from "./pages/index.js";
     "compression",
     "method-override",
     "json-parser",
-    { use: "urlencoded-parser", options: { extended: true }}
-  ],
-  views: {
-    root: join(process.cwd(), "../views"),
-    extensions: {
-      ejs: "ejs"
+    {
+      "use": "urlencoded-parser",
+      "options": {
+        "extended": true
+      }
     }
-  }
+  ]
 })
 export class Server {
   protected app = application();
@@ -53,13 +56,15 @@ export class Server {
 `;
 
 exports[`Init cmd > Express.js > should generate a project with Babel 2`] = `
-"import {join} from "node:path";
-import {Configuration} from "@tsed/di";
-import {application} from "@tsed/platform-http";
-import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
-import "@tsed/platform-express"; // /!\\ keep this import
-import "@tsed/ajv";
-import {config} from "./config/index.js";
+"import "@tsed/ajv";
+import "@tsed/platform-log-request";
+
+import { Configuration } from "@tsed/di";
+import { application } from "@tsed/platform-http";
+import { join } from "node:path";
+
+import { config } from "@/config/config.js";
+import "@tsed/platform-express";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -68,9 +73,13 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [
-      ...Object.values(rest)
-    ]
+    "/rest": [...Object.values(rest), ...Object.values(rest)]
+  },
+  views: {
+    root: join(process.cwd(), "../views"),
+    extensions: {
+      ejs: "ejs"
+    }
   },
   middlewares: [
     "cors",
@@ -78,14 +87,13 @@ import * as rest from "./controllers/rest/index.js";
     "compression",
     "method-override",
     "json-parser",
-    { use: "urlencoded-parser", options: { extended: true }}
-  ],
-  views: {
-    root: join(process.cwd(), "../views"),
-    extensions: {
-      ejs: "ejs"
+    {
+      "use": "urlencoded-parser",
+      "options": {
+        "extended": true
+      }
     }
-  }
+  ]
 })
 export class Server {
   protected app = application();
@@ -94,13 +102,15 @@ export class Server {
 `;
 
 exports[`Init cmd > Express.js > should generate a project with Bun 2`] = `
-"import {join} from "node:path";
-import {Configuration} from "@tsed/di";
-import {application} from "@tsed/platform-http";
-import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
-import "@tsed/platform-express"; // /!\\ keep this import
-import "@tsed/ajv";
-import {config} from "./config/index.js";
+"import "@tsed/ajv";
+import "@tsed/platform-log-request";
+
+import { Configuration } from "@tsed/di";
+import { application } from "@tsed/platform-http";
+import { join } from "node:path";
+
+import { config } from "@/config/config.js";
+import "@tsed/platform-express";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -109,9 +119,13 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [
-      ...Object.values(rest)
-    ]
+    "/rest": [...Object.values(rest), ...Object.values(rest)]
+  },
+  views: {
+    root: join(process.cwd(), "../views"),
+    extensions: {
+      ejs: "ejs"
+    }
   },
   middlewares: [
     "cors",
@@ -119,14 +133,13 @@ import * as rest from "./controllers/rest/index.js";
     "compression",
     "method-override",
     "json-parser",
-    { use: "urlencoded-parser", options: { extended: true }}
-  ],
-  views: {
-    root: join(process.cwd(), "../views"),
-    extensions: {
-      ejs: "ejs"
+    {
+      "use": "urlencoded-parser",
+      "options": {
+        "extended": true
+      }
     }
-  }
+  ]
 })
 export class Server {
   protected app = application();
@@ -135,16 +148,18 @@ export class Server {
 `;
 
 exports[`Init cmd > Express.js > should generate a project with Convention ANGULAR 2`] = `
-"import {join} from "node:path";
-import {Configuration} from "@tsed/di";
-import {application} from "@tsed/platform-http";
-import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
-import "@tsed/platform-express"; // /!\\ keep this import
-import "@tsed/ajv";
+"import "@tsed/ajv";
+import "@tsed/platform-log-request";
+
+import { Configuration } from "@tsed/di";
+import { application } from "@tsed/platform-http";
+import { join } from "node:path";
+
+import { config } from "@/config/config.js";
+import "@tsed/platform-express";
 import "@tsed/swagger";
-import {config} from "./config/index.js";
-import * as rest from "./controllers/rest/index.js";
 import * as pages from "./controllers/pages/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
@@ -152,17 +167,19 @@ import * as pages from "./controllers/pages/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [
-      ...Object.values(rest)
-    ],
-    "/": [
-      ...Object.values(pages)
-    ]
+    "/rest": [...Object.values(rest), ...Object.values(rest)],
+    "/": [...Object.values(pages), ...Object.values(pages)]
+  },
+  views: {
+    root: join(process.cwd(), "../views"),
+    extensions: {
+      ejs: "ejs"
+    }
   },
   swagger: [
     {
-      path: "/doc",
-      specVersion: "3.0.1"
+      "path": "/doc",
+      "specVersion": "3.1.0"
     }
   ],
   middlewares: [
@@ -171,14 +188,13 @@ import * as pages from "./controllers/pages/index.js";
     "compression",
     "method-override",
     "json-parser",
-    { use: "urlencoded-parser", options: { extended: true }}
-  ],
-  views: {
-    root: join(process.cwd(), "../views"),
-    extensions: {
-      ejs: "ejs"
+    {
+      "use": "urlencoded-parser",
+      "options": {
+        "extended": true
+      }
     }
-  }
+  ]
 })
 export class Server {
   protected app = application();
@@ -187,13 +203,15 @@ export class Server {
 `;
 
 exports[`Init cmd > Express.js > should generate a project with NPM 2`] = `
-"import {join} from "node:path";
-import {Configuration} from "@tsed/di";
-import {application} from "@tsed/platform-http";
-import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
-import "@tsed/platform-express"; // /!\\ keep this import
-import "@tsed/ajv";
-import {config} from "./config/index.js";
+"import "@tsed/ajv";
+import "@tsed/platform-log-request";
+
+import { Configuration } from "@tsed/di";
+import { application } from "@tsed/platform-http";
+import { join } from "node:path";
+
+import { config } from "@/config/config.js";
+import "@tsed/platform-express";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -202,9 +220,13 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [
-      ...Object.values(rest)
-    ]
+    "/rest": [...Object.values(rest), ...Object.values(rest)]
+  },
+  views: {
+    root: join(process.cwd(), "../views"),
+    extensions: {
+      ejs: "ejs"
+    }
   },
   middlewares: [
     "cors",
@@ -212,14 +234,13 @@ import * as rest from "./controllers/rest/index.js";
     "compression",
     "method-override",
     "json-parser",
-    { use: "urlencoded-parser", options: { extended: true }}
-  ],
-  views: {
-    root: join(process.cwd(), "../views"),
-    extensions: {
-      ejs: "ejs"
+    {
+      "use": "urlencoded-parser",
+      "options": {
+        "extended": true
+      }
     }
-  }
+  ]
 })
 export class Server {
   protected app = application();
@@ -228,13 +249,15 @@ export class Server {
 `;
 
 exports[`Init cmd > Express.js > should generate a project with Webpack 2`] = `
-"import {join} from "node:path";
-import {Configuration} from "@tsed/di";
-import {application} from "@tsed/platform-http";
-import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
-import "@tsed/platform-express"; // /!\\ keep this import
-import "@tsed/ajv";
-import {config} from "./config/index.js";
+"import "@tsed/ajv";
+import "@tsed/platform-log-request";
+
+import { Configuration } from "@tsed/di";
+import { application } from "@tsed/platform-http";
+import { join } from "node:path";
+
+import { config } from "@/config/config.js";
+import "@tsed/platform-express";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -243,9 +266,13 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [
-      ...Object.values(rest)
-    ]
+    "/rest": [...Object.values(rest), ...Object.values(rest)]
+  },
+  views: {
+    root: join(process.cwd(), "../views"),
+    extensions: {
+      ejs: "ejs"
+    }
   },
   middlewares: [
     "cors",
@@ -253,14 +280,13 @@ import * as rest from "./controllers/rest/index.js";
     "compression",
     "method-override",
     "json-parser",
-    { use: "urlencoded-parser", options: { extended: true }}
-  ],
-  views: {
-    root: join(process.cwd(), "../views"),
-    extensions: {
-      ejs: "ejs"
+    {
+      "use": "urlencoded-parser",
+      "options": {
+        "extended": true
+      }
     }
-  }
+  ]
 })
 export class Server {
   protected app = application();
@@ -268,17 +294,19 @@ export class Server {
 "
 `;
 
-exports[`Init cmd > Express.js > should generate a project with swagger 2`] = `
-"import {join} from "node:path";
-import {Configuration} from "@tsed/di";
-import {application} from "@tsed/platform-http";
-import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
-import "@tsed/platform-express"; // /!\\ keep this import
-import "@tsed/ajv";
+exports[`Init cmd > Express.js > should generate a project with swagger 3`] = `
+"import "@tsed/ajv";
+import "@tsed/platform-log-request";
+
+import { Configuration } from "@tsed/di";
+import { application } from "@tsed/platform-http";
+import { join } from "node:path";
+
+import { config } from "@/config/config.js";
+import "@tsed/platform-express";
 import "@tsed/swagger";
-import {config} from "./config/index.js";
-import * as rest from "./controllers/rest/index.js";
 import * as pages from "./controllers/pages/index.js";
+import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
   ...config,
@@ -286,17 +314,19 @@ import * as pages from "./controllers/pages/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [
-      ...Object.values(rest)
-    ],
-    "/": [
-      ...Object.values(pages)
-    ]
+    "/rest": [...Object.values(rest), ...Object.values(rest)],
+    "/": [...Object.values(pages), ...Object.values(pages)]
+  },
+  views: {
+    root: join(process.cwd(), "../views"),
+    extensions: {
+      ejs: "ejs"
+    }
   },
   swagger: [
     {
-      path: "/doc",
-      specVersion: "3.0.1"
+      "path": "/doc",
+      "specVersion": "3.1.0"
     }
   ],
   middlewares: [
@@ -305,14 +335,13 @@ import * as pages from "./controllers/pages/index.js";
     "compression",
     "method-override",
     "json-parser",
-    { use: "urlencoded-parser", options: { extended: true }}
-  ],
-  views: {
-    root: join(process.cwd(), "../views"),
-    extensions: {
-      ejs: "ejs"
+    {
+      "use": "urlencoded-parser",
+      "options": {
+        "extended": true
+      }
     }
-  }
+  ]
 })
 export class Server {
   protected app = application();
@@ -321,13 +350,15 @@ export class Server {
 `;
 
 exports[`Init cmd > Express.js > should generate a project with the right options 2`] = `
-"import {join} from "node:path";
-import {Configuration} from "@tsed/di";
-import {application} from "@tsed/platform-http";
-import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
-import "@tsed/platform-express"; // /!\\ keep this import
-import "@tsed/ajv";
-import {config} from "./config/index.js";
+"import "@tsed/ajv";
+import "@tsed/platform-log-request";
+
+import { Configuration } from "@tsed/di";
+import { application } from "@tsed/platform-http";
+import { join } from "node:path";
+
+import { config } from "@/config/config.js";
+import "@tsed/platform-express";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -336,9 +367,13 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [
-      ...Object.values(rest)
-    ]
+    "/rest": [...Object.values(rest), ...Object.values(rest)]
+  },
+  views: {
+    root: join(process.cwd(), "../views"),
+    extensions: {
+      ejs: "ejs"
+    }
   },
   middlewares: [
     "cors",
@@ -346,14 +381,13 @@ import * as rest from "./controllers/rest/index.js";
     "compression",
     "method-override",
     "json-parser",
-    { use: "urlencoded-parser", options: { extended: true }}
-  ],
-  views: {
-    root: join(process.cwd(), "../views"),
-    extensions: {
-      ejs: "ejs"
+    {
+      "use": "urlencoded-parser",
+      "options": {
+        "extended": true
+      }
     }
-  }
+  ]
 })
 export class Server {
   protected app = application();
@@ -362,13 +396,15 @@ export class Server {
 `;
 
 exports[`Init cmd > Fastify.js > should generate a project with the right options 2`] = `
-"import {join} from "node:path";
-import {Configuration} from "@tsed/di";
-import {application} from "@tsed/platform-http";
-import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
-import "@tsed/platform-fastify"; // /!\\ keep this import
-import "@tsed/ajv";
-import {config} from "./config/index.js";
+"import "@tsed/ajv";
+import "@tsed/platform-log-request";
+
+import { Configuration } from "@tsed/di";
+import { application } from "@tsed/platform-http";
+import { join } from "node:path";
+
+import { config } from "@/config/config.js";
+import "@tsed/platform-fastify";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -377,28 +413,26 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [
-      ...Object.values(rest)
-    ]
+    "/rest": [...Object.values(rest), ...Object.values(rest)]
   },
-  plugins: [
-    "@fastify/accepts",
-    "@fastify/cookie",
-    {
-      use: "fastify-raw-body",
-      options: {
-        global: false,
-        runFirst: true
-      }
-    },
-    "@fastify/formbody"
-  ],
   views: {
     root: join(process.cwd(), "../views"),
     extensions: {
       ejs: "ejs"
     }
-  }
+  },
+  plugins: [
+    "@fastify/accepts",
+    "@fastify/cookie",
+    {
+      "use": "fastify-raw-body",
+      "options": {
+        "global": false,
+        "runFirst": true
+      }
+    },
+    "@fastify/formbody"
+  ]
 })
 export class Server {
   protected app = application();
@@ -407,13 +441,15 @@ export class Server {
 `;
 
 exports[`Init cmd > Koa.js > should generate a project with the right options 2`] = `
-"import {join} from "node:path";
-import {Configuration} from "@tsed/di";
-import {application} from "@tsed/platform-http";
-import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
-import "@tsed/platform-koa"; // /!\\ keep this import
-import "@tsed/ajv";
-import {config} from "./config/index.js";
+"import "@tsed/ajv";
+import "@tsed/platform-log-request";
+
+import { Configuration } from "@tsed/di";
+import { application } from "@tsed/platform-http";
+import { join } from "node:path";
+
+import { config } from "@/config/config.js";
+import "@tsed/platform-koa";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -422,22 +458,20 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [
-      ...Object.values(rest)
-    ]
+    "/rest": [...Object.values(rest), ...Object.values(rest)]
+  },
+  views: {
+    root: join(process.cwd(), "../views"),
+    extensions: {
+      ejs: "ejs"
+    }
   },
   middlewares: [
     "@koa/cors",
     "koa-compress",
     "koa-override",
     "koa-bodyparser"
-  ],
-  views: {
-    root: join(process.cwd(), "../views"),
-    extensions: {
-      ejs: "ejs"
-    }
-  }
+  ]
 })
 export class Server {
   protected app = application();

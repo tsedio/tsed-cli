@@ -1,7 +1,7 @@
 import {
-  type CliDefaultOptions,
   CliPackageJson,
   command,
+  type CommandData,
   type CommandProvider,
   createSubTasks,
   inject,
@@ -16,7 +16,7 @@ import semver from "semver";
 
 import {IGNORE_TAGS, IGNORE_VERSIONS, MINIMAL_TSED_VERSION} from "../../constants/index.js";
 
-export interface UpdateCmdContext extends CliDefaultOptions {
+export interface UpdateCmdContext extends CommandData {
   version: string;
 
   [key: string]: any;

@@ -30,7 +30,7 @@ describe("Init cmd", () => {
         devDependencies: {}
       });
 
-      await CliPlatformTest.exec("init", {
+      await CliPlatformTest.initProject({
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -52,15 +52,11 @@ describe("Init cmd", () => {
           "project-name/nodemon.json",
           "project-name/package.json",
           "project-name/processes.config.cjs",
-          "project-name/src",
           "project-name/src/Server.ts",
-          "project-name/src/config",
-          "project-name/src/config/envs",
-          "project-name/src/config/envs/index.ts",
-          "project-name/src/config/index.ts",
-          "project-name/src/config/logger",
+          "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
-          "project-name/src/controllers/rest",
+          "project-name/src/config/utils/index.ts",
+          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
@@ -69,13 +65,28 @@ describe("Init cmd", () => {
         ]
       `);
 
-      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {application} from "@tsed/platform-http"');
+      const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
+
+      expect(content).toContain('import { application } from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
 
-      const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
+      expect(FakeCliFs.files.get("project-name/.barrels.json")).toMatchInlineSnapshot(`
+        "{
+          "directory": [
+            "./src/controllers/rest"
+          ],
+          "exclude": [
+            "**/__mock__",
+            "**/__mocks__",
+            "**/*.spec.ts"
+          ],
+          "delete": true
+        }"
+      `);
+
+      const pkg = JSON.parse(FakeCliFs.files.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
         {
           "dependencies": {
@@ -115,7 +126,7 @@ describe("Init cmd", () => {
         }
       `);
 
-      const dockerFile = FakeCliFs.entries.get("project-name/Dockerfile")!;
+      const dockerFile = FakeCliFs.files.get("project-name/Dockerfile")!;
 
       expect(dockerFile).toContain(
         "COPY package.json yarn.lock tsconfig.json tsconfig.base.json tsconfig.node.json tsconfig.spec.json .barrels.json .swcrc ./"
@@ -123,8 +134,8 @@ describe("Init cmd", () => {
       expect(dockerFile).toContain("RUN yarn build");
       expect(dockerFile).toContain("RUN yarn install --pure-lockfile");
 
-      const indexContent = FakeCliFs.entries.get("project-name/src/index.ts")!;
-      expect(indexContent).toContain('import {Server} from "./Server.js"');
+      const indexContent = FakeCliFs.files.get("project-name/src/index.ts")!;
+      expect(indexContent).toContain('import { Server } from "./Server.js"');
     });
     it("should generate a project with swagger", async () => {
       CliPlatformTest.setPackageJson({
@@ -136,7 +147,7 @@ describe("Init cmd", () => {
         devDependencies: {}
       });
 
-      await CliPlatformTest.exec("init", {
+      await CliPlatformTest.initProject({
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -157,36 +168,44 @@ describe("Init cmd", () => {
           "project-name/nodemon.json",
           "project-name/package.json",
           "project-name/processes.config.cjs",
-          "project-name/src",
           "project-name/src/Server.ts",
-          "project-name/src/config",
-          "project-name/src/config/envs",
-          "project-name/src/config/envs/index.ts",
-          "project-name/src/config/index.ts",
-          "project-name/src/config/logger",
+          "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
-          "project-name/src/controllers/pages",
+          "project-name/src/config/utils/index.ts",
           "project-name/src/controllers/pages/IndexController.ts",
-          "project-name/src/controllers/rest",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
-          "project-name/views",
           "project-name/views/swagger.ejs",
         ]
       `);
 
-      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
+      expect(FakeCliFs.files.get("project-name/.barrels.json")).toMatchInlineSnapshot(`
+        "{
+          "directory": [
+            "./src/controllers/rest",
+            true
+          ],
+          "exclude": [
+            "**/__mock__",
+            "**/__mocks__",
+            "**/*.spec.ts"
+          ],
+          "delete": true
+        }"
+      `);
 
-      expect(content).toContain('import {application} from "@tsed/platform-http"');
+      const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
+
+      expect(content).toContain('import { application } from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toContain('import * as pages from "./controllers/pages/index.js"');
       expect(content).toMatchSnapshot();
 
-      const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
+      const pkg = JSON.parse(FakeCliFs.files.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
         {
           "dependencies": {
@@ -236,7 +255,7 @@ describe("Init cmd", () => {
         devDependencies: {}
       });
 
-      await CliPlatformTest.exec("init", {
+      await CliPlatformTest.initProject({
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -255,15 +274,11 @@ describe("Init cmd", () => {
           "project-name/docker-compose.yml",
           "project-name/package.json",
           "project-name/processes.config.cjs",
-          "project-name/src",
           "project-name/src/Server.ts",
-          "project-name/src/config",
-          "project-name/src/config/envs",
-          "project-name/src/config/envs/index.ts",
-          "project-name/src/config/index.ts",
-          "project-name/src/config/logger",
+          "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
-          "project-name/src/controllers/rest",
+          "project-name/src/config/utils/index.ts",
+          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
@@ -272,13 +287,13 @@ describe("Init cmd", () => {
         ]
       `);
 
-      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {application} from "@tsed/platform-http"');
+      const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
+      expect(content).toContain('import { application } from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
 
-      const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
+      const pkg = JSON.parse(FakeCliFs.files.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
         {
           "dependencies": {
@@ -328,7 +343,7 @@ describe("Init cmd", () => {
         devDependencies: {}
       });
 
-      await CliPlatformTest.exec("init", {
+      await CliPlatformTest.initProject({
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -348,15 +363,11 @@ describe("Init cmd", () => {
           "project-name/docker-compose.yml",
           "project-name/package.json",
           "project-name/processes.config.cjs",
-          "project-name/src",
           "project-name/src/Server.ts",
-          "project-name/src/config",
-          "project-name/src/config/envs",
-          "project-name/src/config/envs/index.ts",
-          "project-name/src/config/index.ts",
-          "project-name/src/config/logger",
+          "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
-          "project-name/src/controllers/rest",
+          "project-name/src/config/utils/index.ts",
+          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
@@ -365,13 +376,13 @@ describe("Init cmd", () => {
         ]
       `);
 
-      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {application} from "@tsed/platform-http"');
+      const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
+      expect(content).toContain('import { application } from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
 
-      const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
+      const pkg = JSON.parse(FakeCliFs.files.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
         {
           "dependencies": {
@@ -421,7 +432,7 @@ describe("Init cmd", () => {
         devDependencies: {}
       });
 
-      await CliPlatformTest.exec("init", {
+      await CliPlatformTest.initProject({
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -441,15 +452,11 @@ describe("Init cmd", () => {
           "project-name/docker-compose.yml",
           "project-name/package.json",
           "project-name/processes.config.cjs",
-          "project-name/src",
           "project-name/src/Server.ts",
-          "project-name/src/config",
-          "project-name/src/config/envs",
-          "project-name/src/config/envs/index.ts",
-          "project-name/src/config/index.ts",
-          "project-name/src/config/logger",
+          "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
-          "project-name/src/controllers/rest",
+          "project-name/src/config/utils/index.ts",
+          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
@@ -459,13 +466,13 @@ describe("Init cmd", () => {
         ]
       `);
 
-      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {application} from "@tsed/platform-http"');
+      const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
+      expect(content).toContain('import { application } from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
 
-      const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
+      const pkg = JSON.parse(FakeCliFs.files.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
         {
           "dependencies": {
@@ -515,7 +522,7 @@ describe("Init cmd", () => {
         devDependencies: {}
       });
 
-      await CliPlatformTest.exec("init", {
+      await CliPlatformTest.initProject({
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -536,15 +543,11 @@ describe("Init cmd", () => {
           "project-name/nodemon.json",
           "project-name/package.json",
           "project-name/processes.config.cjs",
-          "project-name/src",
           "project-name/src/Server.ts",
-          "project-name/src/config",
-          "project-name/src/config/envs",
-          "project-name/src/config/envs/index.ts",
-          "project-name/src/config/index.ts",
-          "project-name/src/config/logger",
+          "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
-          "project-name/src/controllers/rest",
+          "project-name/src/config/utils/index.ts",
+          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
@@ -553,13 +556,13 @@ describe("Init cmd", () => {
         ]
       `);
 
-      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-      expect(content).toContain('import {application} from "@tsed/platform-http"');
+      const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
+      expect(content).toContain('import { application } from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
 
-      const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
+      const pkg = JSON.parse(FakeCliFs.files.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
         {
           "dependencies": {
@@ -612,7 +615,7 @@ describe("Init cmd", () => {
         }
       });
 
-      await CliPlatformTest.exec("init", {
+      await CliPlatformTest.initProject({
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -634,37 +637,30 @@ describe("Init cmd", () => {
           "project-name/nodemon.json",
           "project-name/package.json",
           "project-name/processes.config.cjs",
-          "project-name/src",
-          "project-name/src/config",
-          "project-name/src/config/envs",
-          "project-name/src/config/envs/index.ts",
-          "project-name/src/config/index.ts",
-          "project-name/src/config/logger",
+          "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
-          "project-name/src/controllers/pages",
+          "project-name/src/config/utils/index.ts",
           "project-name/src/controllers/pages/index.controller.ts",
-          "project-name/src/controllers/rest",
           "project-name/src/controllers/rest/hello-world.controller.ts",
           "project-name/src/index.ts",
           "project-name/src/server.ts",
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
-          "project-name/views",
           "project-name/views/swagger.ejs",
         ]
       `);
 
-      const content = FakeCliFs.entries.get("project-name/src/server.ts")!;
-      expect(content).toContain('import {application} from "@tsed/platform-http"');
+      const content = FakeCliFs.files.get("project-name/src/server.ts")!;
+      expect(content).toContain('import { application } from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
       expect(content).toContain('import * as pages from "./controllers/pages/index.js"');
       expect(content).toContain("export class Server {");
 
-      const indexContent = FakeCliFs.entries.get("project-name/src/index.ts")!;
-      expect(indexContent).toContain('import {Server} from "./server.js"');
+      const indexContent = FakeCliFs.files.get("project-name/src/index.ts")!;
+      expect(indexContent).toContain('import { Server } from "./server.js"');
     });
     it("should generate a project with Arch FEATURE", async () => {
       CliPlatformTest.setPackageJson({
@@ -677,7 +673,7 @@ describe("Init cmd", () => {
         tsed: {}
       });
 
-      await CliPlatformTest.exec("init", {
+      await CliPlatformTest.initProject({
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -700,37 +696,30 @@ describe("Init cmd", () => {
           "project-name/nodemon.json",
           "project-name/package.json",
           "project-name/processes.config.cjs",
-          "project-name/src",
-          "project-name/src/config",
-          "project-name/src/config/envs",
-          "project-name/src/config/envs/index.ts",
-          "project-name/src/config/index.ts",
-          "project-name/src/config/logger",
+          "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
+          "project-name/src/config/utils/index.ts",
+          "project-name/src/index.controller.ts",
           "project-name/src/index.ts",
-          "project-name/src/pages",
-          "project-name/src/pages/index.controller.ts",
-          "project-name/src/rest",
           "project-name/src/rest/hello-world.controller.ts",
           "project-name/src/server.ts",
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
-          "project-name/views",
           "project-name/views/swagger.ejs",
         ]
       `);
 
-      const content = FakeCliFs.entries.get("project-name/src/server.ts")!;
-      expect(content).toContain('import {application} from "@tsed/platform-http"');
+      const content = FakeCliFs.files.get("project-name/src/server.ts")!;
+      expect(content).toContain('import { application } from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-express"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
       expect(content).toContain('import * as pages from "./pages/index.js"');
       expect(content).toContain("export class Server {");
 
-      const indexContent = FakeCliFs.entries.get("project-name/src/index.ts")!;
-      expect(indexContent).toContain('import {Server} from "./server.js"');
+      const indexContent = FakeCliFs.files.get("project-name/src/index.ts")!;
+      expect(indexContent).toContain('import { Server } from "./server.js"');
     });
   });
 
@@ -745,7 +734,7 @@ describe("Init cmd", () => {
         devDependencies: {}
       });
 
-      await CliPlatformTest.exec("init", {
+      await CliPlatformTest.initProject({
         platform: "koa",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -765,15 +754,11 @@ describe("Init cmd", () => {
           "project-name/nodemon.json",
           "project-name/package.json",
           "project-name/processes.config.cjs",
-          "project-name/src",
           "project-name/src/Server.ts",
-          "project-name/src/config",
-          "project-name/src/config/envs",
-          "project-name/src/config/envs/index.ts",
-          "project-name/src/config/index.ts",
-          "project-name/src/config/logger",
+          "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
-          "project-name/src/controllers/rest",
+          "project-name/src/config/utils/index.ts",
+          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
@@ -782,14 +767,14 @@ describe("Init cmd", () => {
         ]
       `);
 
-      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
+      const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
 
-      expect(content).toContain('import {application} from "@tsed/platform-http"');
+      expect(content).toContain('import { application } from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-koa"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
 
-      const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
+      const pkg = JSON.parse(FakeCliFs.files.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
         {
           "dependencies": {
@@ -841,7 +826,7 @@ describe("Init cmd", () => {
         devDependencies: {}
       });
 
-      await CliPlatformTest.exec("init", {
+      await CliPlatformTest.initProject({
         platform: "fastify",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -861,15 +846,11 @@ describe("Init cmd", () => {
           "project-name/nodemon.json",
           "project-name/package.json",
           "project-name/processes.config.cjs",
-          "project-name/src",
           "project-name/src/Server.ts",
-          "project-name/src/config",
-          "project-name/src/config/envs",
-          "project-name/src/config/envs/index.ts",
-          "project-name/src/config/index.ts",
-          "project-name/src/config/logger",
+          "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
-          "project-name/src/controllers/rest",
+          "project-name/src/config/utils/index.ts",
+          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
@@ -878,14 +859,14 @@ describe("Init cmd", () => {
         ]
       `);
 
-      const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
+      const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
 
-      expect(content).toContain('import {application} from "@tsed/platform-http"');
+      expect(content).toContain('import { application } from "@tsed/platform-http"');
       expect(content).toContain('import "@tsed/platform-fastify"');
       expect(content).toContain('import "@tsed/ajv"');
       expect(content).toMatchSnapshot();
 
-      const pkg = JSON.parse(FakeCliFs.entries.get("project-name/package.json")!);
+      const pkg = JSON.parse(FakeCliFs.files.get("project-name/package.json")!);
       expect(pkg).toMatchInlineSnapshot(`
         {
           "dependencies": {
@@ -937,7 +918,7 @@ describe("Init cmd", () => {
         devDependencies: {}
       });
 
-      await CliPlatformTest.exec("init", {
+      await CliPlatformTest.initProject({
         platform: "express",
         rootDir: "./project-data",
         projectName: "project-data",
@@ -947,7 +928,7 @@ describe("Init cmd", () => {
 
       try {
         FakeCliFs.getKeys().map((key: string) => {
-          const content = FakeCliFs.entries.get(key)!;
+          const content = FakeCliFs.files.get(key)!;
 
           if (content !== key) {
             writeFileSync(join(dir, "data", key), content, {encoding: "utf-8"});
@@ -970,18 +951,12 @@ describe("Init cmd", () => {
           "project-name/nodemon.json",
           "project-name/package.json",
           "project-name/processes.config.cjs",
-          "project-name/src",
           "project-name/src/Server.ts",
-          "project-name/src/bin",
-          "project-name/src/bin/HelloCommand.ts",
-          "project-name/src/bin/index.ts",
-          "project-name/src/config",
-          "project-name/src/config/envs",
-          "project-name/src/config/envs/index.ts",
-          "project-name/src/config/index.ts",
-          "project-name/src/config/logger",
+          "project-name/src/bin/commands/HelloCommand.ts",
+          "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
-          "project-name/src/controllers/rest",
+          "project-name/src/config/utils/index.ts",
+          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",

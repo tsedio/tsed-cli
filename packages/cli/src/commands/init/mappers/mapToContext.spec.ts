@@ -59,7 +59,8 @@ describe("mapToContext", () => {
       swagger: true,
       testing: true,
       typeorm: true,
-      runtime: "node"
+      runtime: "node",
+      typeormMariadb: true
     });
   });
 });

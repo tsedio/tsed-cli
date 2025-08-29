@@ -1,16 +1,20 @@
+import "./templates/index.js";
+
 export * from "./Cli.js";
 export * from "./commands/add/AddCmd.js";
 export * from "./commands/generate/GenerateCmd.js";
 export * from "./commands/init/config/FeaturesPrompt.js";
 export * from "./commands/init/config/FeaturesPrompt.js";
 export * from "./commands/init/InitCmd.js";
-export * from "./commands/init/interfaces/InitCmdContext.js";
-export * from "./commands/init/interfaces/InitOptions.js";
 export * from "./commands/init/prompts/getFeaturesPrompt.js";
 export * from "./commands/update/UpdateCmd.js";
 export * from "./constants/index.js";
+export * from "./fn/exec.js";
+export * from "./fn/render.js";
 export * from "./interfaces/index.js";
 export * from "./pipes/index.js";
 export * from "./runtimes/index.js";
-export * from "./services/ProvidersInfoService.js";
-export * from "./services/Renderer.js";
+export * from "./services/CliProjectService.js";
+export * from "./services/CliTemplatesService.js";
+export * from "./services/ProjectClient.js";
+export * from "./utils/defineTemplate.js";

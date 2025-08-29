@@ -11,7 +11,7 @@ import {
   type Task
 } from "@tsed/cli-core";
 
-export interface AddCmdOptions extends CliDefaultOptions {
+export interface AddCmdOptions extends CommandProvider {
   name: string;
 }
 
@@ -49,6 +49,10 @@ export class AddCmd implements CommandProvider {
       },
       {
         title: "Install plugins dependencies",
+        task: createSubTasks(() => this.cliPlugins.addPluginsDependencies(ctx), {...ctx, concurrent: false})
+      },
+      {
+        title: "Transform files",
         task: createSubTasks(() => this.cliPlugins.addPluginsDependencies(ctx), {...ctx, concurrent: false})
       }
     ];
