@@ -8,6 +8,8 @@ import {CliFs} from "./CliFs.js";
 import {CliYaml} from "./CliYaml.js";
 import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
+export type CliDatabases = "mysql" | "mariadb" | "sqlite" | "better-sqlite3" | "postgres" | "cockroachdb" | "mssql" | "oracle" | "mongodb";
+
 export class CliDockerComposeYaml {
   protected cliYaml = inject(CliYaml);
   protected fs = inject(CliFs);
@@ -31,7 +33,7 @@ export class CliDockerComposeYaml {
     return this.cliYaml.write(file, obj);
   }
 
-  async addDatabaseService(name: string, database: string) {
+  async addDatabaseService(name: string, database: CliDatabases | undefined) {
     const dockerCompose: any = await this.read();
     if (dockerCompose) {
       let value: any;

@@ -14,7 +14,7 @@ export interface CommandMetadata extends CommandParameters {
     [key: string]: CommandOptions;
   };
 
-  allowUnknownOption: boolean;
+  allowUnknownOption?: boolean;
 
   enableFeatures: string[];
 

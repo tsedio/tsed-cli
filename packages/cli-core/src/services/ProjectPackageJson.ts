@@ -110,6 +110,16 @@ export class ProjectPackageJson {
     return this.raw[constant<string>("name")!];
   }
 
+  fillWithPreferences<T extends {}>(ctx: T) {
+    return {
+      ...ctx,
+      packageManager: this.preferences.packageManager,
+      runtime: this.preferences.runtime,
+      architecture: this.preferences.architecture,
+      convention: this.preferences.convention
+    };
+  }
+
   $loadPackageJson() {
     return this.read();
   }
