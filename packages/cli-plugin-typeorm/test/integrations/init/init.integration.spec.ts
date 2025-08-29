@@ -46,7 +46,8 @@ describe("TypeORM: Init cmd", () => {
       yarn: true,
       express: true,
       koa: false,
-      platformSymbol: "PlatformExpress"
+      platformSymbol: "PlatformExpress",
+      route: "/rest"
     });
 
     expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
@@ -62,19 +63,12 @@ describe("TypeORM: Init cmd", () => {
         "project-name/nodemon.json",
         "project-name/package.json",
         "project-name/processes.config.cjs",
-        "project-name/src",
         "project-name/src/Server.ts",
-        "project-name/src/config",
         "project-name/src/config/config.ts",
-        "project-name/src/config/logger",
         "project-name/src/config/logger/index.ts",
-        "project-name/src/config/utils",
-        "project-name/src/config/utils/isProduction.ts",
-        "project-name/src/controllers/pages",
+        "project-name/src/config/utils/index.ts",
         "project-name/src/controllers/pages/IndexController.ts",
-        "project-name/src/controllers/rest",
         "project-name/src/controllers/rest/HelloWorldController.ts",
-        "project-name/src/datasources",
         "project-name/src/datasources/MysqlDatasource.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.base.json",
@@ -124,7 +118,8 @@ describe("TypeORM: Init cmd", () => {
       yarn: true,
       express: true,
       koa: false,
-      platformSymbol: "PlatformExpress"
+      platformSymbol: "PlatformExpress",
+      route: "/rest"
     });
 
     expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
@@ -140,17 +135,11 @@ describe("TypeORM: Init cmd", () => {
         "project-name/nodemon.json",
         "project-name/package.json",
         "project-name/processes.config.cjs",
-        "project-name/src",
         "project-name/src/Server.ts",
-        "project-name/src/config",
         "project-name/src/config/config.ts",
-        "project-name/src/config/logger",
         "project-name/src/config/logger/index.ts",
-        "project-name/src/config/utils",
-        "project-name/src/config/utils/isProduction.ts",
-        "project-name/src/controllers/pages",
+        "project-name/src/config/utils/index.ts",
         "project-name/src/controllers/pages/IndexController.ts",
-        "project-name/src/controllers/rest",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.base.json",

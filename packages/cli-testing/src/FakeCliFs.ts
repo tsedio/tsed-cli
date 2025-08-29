@@ -23,6 +23,11 @@ export class FakeCliFs implements FileSystemHost {
 
   exists(path: string): boolean {
     path = this.normalizePath(path);
+
+    if (path.includes("templates")) {
+      return fs.existsSync(join("/", path));
+    }
+
     return FakeCliFs.files.has(path) || FakeCliFs.files.has(path);
   }
 
@@ -32,8 +37,13 @@ export class FakeCliFs implements FileSystemHost {
 
   readFileSync(file: string | Buffer | number, encoding?: any): string {
     try {
-      if (isString(file) && (file.match(/_partials/) || file.includes("packages/cli"))) {
-        return fs.readFileSync(file, encoding) as any as string;
+      if (isString(file)) {
+        if (file.includes("templates")) {
+          return fs.readFileSync(join("/", file), encoding) as any as string;
+        }
+        if (file.match(/_partials/) || file.includes("packages/cli")) {
+          return fs.readFileSync(file, encoding) as any as string;
+        }
       }
     } catch (er) {}
 

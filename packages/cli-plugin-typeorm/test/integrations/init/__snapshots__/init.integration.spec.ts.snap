@@ -19,7 +19,7 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "undefined": [...Object.values(rest)]
+    "/rest": [...Object.values(rest), ...Object.values(rest), ...Object.values(rest)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -27,19 +27,19 @@ import * as rest from "./controllers/rest/index.js";
       ejs: "ejs"
     }
   },
-    middlewares: [
-          "cors",
-          "cookie-parser",
-          "compression",
-          "method-override",
-          "json-parser",
-          {
-            "use": "urlencoded-parser",
-            "options": {
-              "extended": true
-            }
-          }
-        ]
+  middlewares: [
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    {
+      "use": "urlencoded-parser",
+      "options": {
+        "extended": true
+      }
+    }
+  ]
 })
 export class Server {
   protected app = application();
@@ -48,12 +48,9 @@ export class Server {
 `;
 
 exports[`TypeORM: Init cmd > should generate a project with the right options 3`] = `
-"import {registerProvider} from "@tsed/di";
-import {DataSource} from "typeorm";
-import {Logger} from "@tsed/logger";
+"import { injectable, logger } from "@tsed/di";
+import { DataSource } from "typeorm";
 
-export const MysqlDatasource = Symbol.for("MysqlDatasource");
-export type MysqlDatasource = DataSource;
 export const mysqlDatasource = new DataSource({
   type: "mysql",
   entities: [],
@@ -64,24 +61,23 @@ export const mysqlDatasource = new DataSource({
   database: "test"
 });
 
+export const MysqlDatasource = injectable(Symbol.for("MysqlDatasource"))
+  .type("typeorm:datasource")
+  .asyncFactory(async () => {
+     await mysqlDatasource.initialize();
+     
+     logger().info("Connected with typeorm to database: Mysql");
 
-registerProvider<DataSource>({
-  provide: MysqlDatasource,
-  type: "typeorm:datasource",
-  deps: [Logger],
-  async useAsyncFactory(logger: Logger) {
-    await mysqlDatasource.initialize();
-
-    logger.info("Connected with typeorm to database: Mysql");
-
-    return mysqlDatasource;
-  },
-  hooks: {
+     return mysqlDatasource;
+  })
+  .hooks({
     $onDestroy(dataSource) {
       return dataSource.isInitialized && dataSource.close();
     }
-  }
-});
+  })
+  .token();
+  
+export type MysqlDatasource = DataSource;
 "
 `;
 

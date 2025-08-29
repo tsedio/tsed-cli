@@ -1,4 +1,7 @@
-import {inject, Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
+import "./templates/index.template.js";
+
+import type {RenderDataContext} from "@tsed/cli";
+import {Module, ProjectPackageJson} from "@tsed/cli-core";
 
 import {OidcProviderInitHook} from "./hooks/OidcProviderInitHook.js";
 
@@ -6,19 +9,20 @@ import {OidcProviderInitHook} from "./hooks/OidcProviderInitHook.js";
   imports: [OidcProviderInitHook]
 })
 export class CliPluginOidcProviderModule {
-  protected packageJson = inject(ProjectPackageJson);
+  $alterPackageJson(packageJson: ProjectPackageJson, data: RenderDataContext) {
+    if (data.oidc) {
+      packageJson.addDependencies({
+        "oidc-provider": "latest",
+        "@tsed/oidc-provider": "latest",
+        "@tsed/jwks": "latest",
+        "@tsed/adapters": "latest",
+        bcrypt: "latest"
+      });
+      packageJson.addDevDependencies({
+        "@types/oidc-provider": "latest"
+      });
+    }
 
-  @OnAdd("@tsed/cli-plugin-oidc-provider")
-  install() {
-    this.packageJson.addDependencies({
-      "oidc-provider": "latest",
-      "@tsed/oidc-provider": "latest",
-      "@tsed/jwks": "latest",
-      "@tsed/adapters": "latest",
-      bcrypt: "latest"
-    });
-    this.packageJson.addDevDependencies({
-      "@types/oidc-provider": "latest"
-    });
+    return packageJson;
   }
 }

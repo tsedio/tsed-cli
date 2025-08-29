@@ -1,60 +1,28 @@
-import type {InitCmdContext} from "@tsed/cli";
-import {inject, OnAdd, OnExec, PackageManagersModule, ProjectPackageJson} from "@tsed/cli-core";
-import {Injectable} from "@tsed/di";
+import type {AlterInitSubTasks, InitCmdContext} from "@tsed/cli";
+import {inject, PackageManagersModule, ProjectPackageJson, type Task} from "@tsed/cli-core";
+import {injectable} from "@tsed/di";
 
 import {CliPrisma} from "../services/CliPrisma.js";
 
-@Injectable()
-export class PrismaInitHook {
+export class PrismaInitHook implements AlterInitSubTasks {
   protected cliPrisma = inject(CliPrisma);
   protected packageJson = inject(ProjectPackageJson);
   protected packageManagers = inject(PackageManagersModule);
 
-  @OnAdd("@tsed/cli-plugin-prisma")
-  onAdd(ctx: InitCmdContext) {
-    this.addScripts();
-    this.addDependencies(ctx);
-    this.addDevDependencies(ctx);
-  }
-
-  @OnExec("init")
-  onExec() {
+  $alterInitSubTasks(tasks: Task[], data: InitCmdContext): Task[] | Promise<Task[]> {
     return [
+      ...tasks,
       {
         title: "Generate Prisma schema",
+        enabled: () => !!data.prisma,
         task: () => this.cliPrisma.init()
       },
       {
         title: "Add Ts.ED configuration to Prisma schema",
+        enabled: () => !!data.prisma,
         task: () => this.cliPrisma.patchPrismaSchema()
       }
     ];
-  }
-
-  addScripts() {
-    this.packageJson.addScripts({
-      "prisma:migrate": "npx prisma migrate dev --name init",
-      "prisma:generate": "npx prisma generate"
-    });
-  }
-
-  addDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDependencies(
-      {
-        "@tsed/prisma": "latest",
-        "@prisma/client": "latest"
-      },
-      ctx
-    );
-  }
-
-  addDevDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDevDependencies(
-      {
-        prisma: "latest"
-      },
-      ctx
-    );
   }
 
   $onFinish() {
@@ -70,3 +38,5 @@ export class PrismaInitHook {
     });
   }
 }
+
+injectable(PrismaInitHook);

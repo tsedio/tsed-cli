@@ -2652,6 +2652,7 @@ __metadata:
     "@tsed/openspec": "npm:>=8.16.0-rc.1"
     "@tsed/schema": "npm:>=8.16.0-rc.1"
     "@tsed/ts-doc": "npm:^4.1.0"
+    "@types/inquirer-autocomplete-prompt": "npm:3.0.3"
     "@types/node": "npm:22.7.4"
     "@typescript-eslint/eslint-plugin": "npm:8.7.0"
     "@typescript-eslint/parser": "npm:8.7.0"
@@ -2676,7 +2677,7 @@ __metadata:
     handlebars-helpers: "npm:^0.10.0"
     husky: "npm:9.1.6"
     inquirer: "npm:^9.3.7"
-    inquirer-autocomplete-prompt: "npm:^3.0.1"
+    inquirer-autocomplete-prompt: "npm:3.0.1"
     is-ci: "npm:3.0.1"
     js-yaml: "npm:^4.1.0"
     lerna: "npm:^8.1.8"
@@ -2741,8 +2742,6 @@ __metadata:
     cross-env: "npm:7.0.3"
     fs-extra: "npm:^11.2.0"
     globby: "npm:^14.0.2"
-    handlebars: "npm:^4.7.8"
-    handlebars-utils: "npm:^1.0.6"
     read-pkg-up: "npm:^11.0.0"
     rxjs: "npm:^7.8.1"
     semver: "npm:^7.6.3"
@@ -3134,6 +3133,25 @@ __metadata:
   dependencies:
     globby: "npm:*"
   checksum: 10/947ce406cd093771aee381279649db1380da5361225b3cd0517a43d7c5acef8a28720acead7fe4345bac9b2f038781674eb43ab3f83636ff6db79d496c517150
+  languageName: node
+  linkType: hard
+
+"@types/inquirer-autocomplete-prompt@npm:3.0.3":
+  version: 3.0.3
+  resolution: "@types/inquirer-autocomplete-prompt@npm:3.0.3"
+  dependencies:
+    "@types/inquirer": "npm:*"
+  checksum: 10/252e4c684bed4a45b8511008f742979a44dd8f1aa301b7b021b1176517c62c62822f6fa89dabd19811a29504c71b88341acafe203942733d7665b325f14ea95f
+  languageName: node
+  linkType: hard
+
+"@types/inquirer@npm:*":
+  version: 9.0.9
+  resolution: "@types/inquirer@npm:9.0.9"
+  dependencies:
+    "@types/through": "npm:*"
+    rxjs: "npm:^7.2.0"
+  checksum: 10/015ee6fa65d1d79c070c889906be3eceedd77aa08a4aea3d17b188c9d169b459994244525f054b60de0e28fe9c492df75527a7b63da16e06fcc09e54039ac652
   languageName: node
   linkType: hard
 
@@ -8907,7 +8925,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inquirer-autocomplete-prompt@npm:^3.0.1":
+"inquirer-autocomplete-prompt@npm:3.0.1, inquirer-autocomplete-prompt@npm:^3.0.1":
   version: 3.0.1
   resolution: "inquirer-autocomplete-prompt@npm:3.0.1"
   dependencies:

@@ -1,50 +1,112 @@
-import {type InitCmdContext, RootRendererService} from "@tsed/cli";
-import {inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
-import {Injectable} from "@tsed/di";
+import {join} from "node:path";
+
+import {type CliCommandHooks, ProjectClient, render, type RenderDataContext} from "@tsed/cli";
+import {injectable} from "@tsed/di";
+import {SyntaxKind} from "ts-morph";
 
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
-@Injectable()
-export class OidcProviderInitHook {
-  protected packageJson = inject(ProjectPackageJson);
-  protected rootRenderer = inject(RootRendererService);
+export class OidcProviderInitHook implements CliCommandHooks {
+  $alterRenderFiles(files: string[], data: RenderDataContext): string[] {
+    if (!data.oidc) {
+      return files;
+    }
 
-  @OnExec("init")
-  onExec(ctx: InitCmdContext) {
     return [
-      {
-        title: "Generate OIDC files",
-        task: () =>
-          this.rootRenderer.renderAll(
-            [
-              "/src/config/oidc/index.ts.hbs",
-              "/src/controllers/oidc/InteractionsController.ts",
-              ctx.jest && "/src/controllers/oidc/InteractionsController.spec.ts",
-              "/src/interactions/ConsentInteraction.ts",
-              ctx.jest && "/src/interactions/ConsentInteraction.spec.ts",
-              "/src/interactions/CustomInteraction.ts",
-              "/src/interactions/LoginInteraction.ts",
-              ctx.jest && "/src/interactions/LoginInteraction.spec.ts",
-              ctx.jest && "/src/interactions/__mock__/oidcContext.fixture.ts",
-              "/src/models/Account.ts",
-              "/src/services/Accounts.ts",
-              "/views/forms/consent-form.ejs",
-              "/views/forms/login-form.ejs",
-              "/views/forms/select-account-form.ejs",
-              "/views/partials/footer.ejs",
-              "/views/partials/header.ejs",
-              "/views/partials/login-help.ejs",
-              "/views/consent.ejs",
-              "/views/login.ejs",
-              "/views/repost.ejs",
-              "/views/select_account.ejs"
-            ],
-            ctx,
-            {
-              templateDir: `${TEMPLATE_DIR}/init`
-            }
-          )
-      }
+      ...files,
+      ...[
+        "/src/controllers/oidc/InteractionsController.ts",
+        data.testing && "/src/controllers/oidc/InteractionsController.spec.ts",
+        "/src/interactions/ConsentInteraction.ts",
+        data.testing && "/src/interactions/ConsentInteraction.spec.ts",
+        "/src/interactions/CustomInteraction.ts",
+        "/src/interactions/LoginInteraction.ts",
+        data.testing && "/src/interactions/LoginInteraction.spec.ts",
+        data.testing && "/src/interactions/__mock__/oidcContext.fixture.ts",
+        "/src/models/Account.ts",
+        "/src/services/Accounts.ts",
+        "/views/forms/consent-form.ejs",
+        "/views/forms/login-form.ejs",
+        "/views/forms/select-account-form.ejs",
+        "/views/partials/footer.ejs",
+        "/views/partials/header.ejs",
+        "/views/partials/login-help.ejs",
+        "/views/consent.ejs",
+        "/views/login.ejs",
+        "/views/repost.ejs",
+        "/views/select_account.ejs"
+      ]
+        .filter(Boolean)
+        .map((path: string) => join(TEMPLATE_DIR, path))
     ];
   }
+
+  async $alterProjectFiles(project: ProjectClient, data: RenderDataContext): ProjectClient {
+    if (!data.oidc) {
+      return project;
+    }
+
+    await render("oidc-provider.index", {
+      ...data,
+      name: "index"
+    });
+
+    this.updateServerFile(project);
+    this.updateConfigFile(project);
+
+    return project;
+  }
+
+  private updateServerFile(project: ProjectClient) {
+    const sourceFile = project.serverSourceFile!;
+
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: "@tsed/oidc-provider"
+    });
+
+    const importDeclaration = sourceFile.addImportDeclaration({
+      moduleSpecifier: "./controllers/oidc/InteractionsController.js",
+      namedImports: [{name: "InteractionsController"}]
+    });
+
+    importDeclaration.getNamedImports().find((value) => value.getName() === "InteractionsController");
+
+    project.addMountPath("/", "InteractionsController");
+  }
+
+  private updateConfigFile(project: ProjectClient) {
+    const sourceFile = project.configSourceFile!;
+    const options = project.findConfiguration("config");
+
+    if (!options) {
+      return;
+    }
+
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: "./oidc/index.js",
+      defaultImport: "oidcConfig"
+    });
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: "@tsed/adapters",
+      namedImports: [{name: "FileSyncAdapter"}]
+    });
+
+    project.getPropertyAssignment(options, {
+      name: "oidc",
+      kind: SyntaxKind.Identifier,
+      initializer: "oidcConfig"
+    });
+
+    project
+      .getPropertyAssignment(options, {
+        name: "adapters",
+        kind: SyntaxKind.ArrayLiteralExpression,
+        initializer: "[]"
+      })
+      .addElement("FileSyncAdapter");
+
+    return project;
+  }
 }
+
+injectable(OidcProviderInitHook);
