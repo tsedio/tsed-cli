@@ -297,11 +297,6 @@ export class FakeCliFs implements FileSystemHost {
     return matchGlobs(allFilePaths, patterns, this.getCurrentDirectory());
   }
 
-  $onDestroy() {
-    FakeCliFs.files.clear();
-    FakeCliFs.directories.clear();
-  }
-
   private normalizePath(path: any): string {
     return (normalizePath(path) as string).replace(/^\//, "") as string;
   }

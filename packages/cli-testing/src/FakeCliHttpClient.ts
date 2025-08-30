@@ -1,7 +1,6 @@
 import {CliHttpClient, type CliHttpClientOptions} from "@tsed/cli-core";
-import type {OnDestroy} from "@tsed/di";
 
-export class FakeCliHttpClient extends CliHttpClient implements OnDestroy {
+export class FakeCliHttpClient extends CliHttpClient {
   static entries = new Map<string, (endpoint: string, options: CliHttpClientOptions) => any>();
 
   get(endpoint: string, options: CliHttpClientOptions = {}): Promise<any> {
@@ -20,9 +19,5 @@ export class FakeCliHttpClient extends CliHttpClient implements OnDestroy {
     }
 
     return FakeCliHttpClient.entries.get(key)?.(endpoint, options);
-  }
-
-  $onDestroy() {
-    FakeCliHttpClient.entries.clear();
   }
 }

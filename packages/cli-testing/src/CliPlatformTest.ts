@@ -28,6 +28,16 @@ import {FakeCliFs} from "./FakeCliFs.js";
 import {FakeCliHttpClient} from "./FakeCliHttpClient.js";
 
 export class CliPlatformTest extends DITest {
+  static async reset() {
+    // Explicitly clear FakeCliFs static collections to prevent memory leaks
+    FakeCliFs.files.clear();
+    FakeCliFs.directories.clear();
+    FakeCliExeca.entries.clear();
+    FakeCliHttpClient.entries.clear();
+    // Call parent reset method
+    return super.reset();
+  }
+
   static async bootstrap(options: Partial<TsED.Configuration> = {}) {
     options = resolveConfiguration({
       name: "tsed",
