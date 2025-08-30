@@ -1,56 +1,69 @@
-import {basename, join} from "node:path";
+import {ProjectClient, render, type RenderDataContext} from "@tsed/cli";
+import {inject, injectable, ProjectPackageJson} from "@tsed/cli-core";
+import {camelCase} from "change-case";
+import {SyntaxKind} from "ts-morph";
 
-import {SrcRendererService} from "@tsed/cli";
-import {inject, Injectable, ProjectPackageJson} from "@tsed/cli-core";
-import {camelCase, constantCase, kebabCase} from "change-case";
-
-import {TEMPLATE_DIR} from "../utils/templateDir.js";
-
-@Injectable()
 export class CliMongoose {
   protected projectPackageJson = inject(ProjectPackageJson);
-  protected srcRenderer = inject(SrcRendererService);
 
-  async writeConfig(name: string, options: any = {}) {
-    await this.srcRenderer.render(
-      "config.hbs",
-      {
-        ...options,
-        symbolName: constantCase(name),
-        name: kebabCase(name)
-      },
-      {
-        output: `${kebabCase(name)}.config.ts`,
-        rootDir: join(this.srcRenderer.rootDir, "config", "mongoose"),
-        templateDir: TEMPLATE_DIR
-      }
-    );
+  async createMongooseConnection(project: ProjectClient, name: string) {
+    const obj = await render("mongoose.connection", {name});
 
-    return this.regenerateIndexConfig();
+    return this.updateMongooseConfig(project, obj!.symbolName!);
   }
 
-  async regenerateIndexConfig() {
-    const list = await this.srcRenderer.scan(["config/mongoose/*.config.ts"]);
+  async updateMongooseConfig(project: ProjectClient, name: string) {
+    const connectionSource = project.getSource(`{{srcDir}}/config/mongoose/${name}.ts`);
 
-    const configs = list.map((file) => {
-      const name = basename(file).replace(/\.config\.ts/gi, "");
+    const {options, source} = await this.getMongooseConfig(project);
 
-      return {
-        name,
-        symbolName: camelCase(name)
-      };
+    if (options && connectionSource) {
+      source.addImportDeclaration({
+        moduleSpecifier: `./${name}.js`,
+        defaultImport: camelCase(name)
+      });
+
+      options.addElement(camelCase(name));
+    }
+  }
+
+  async getMongooseConfig(project: ProjectClient) {
+    let source = project.getSource("{{srcDir}}/config/mongoose/index.ts");
+
+    if (!source) {
+      source = (await render("mongoose.index", {
+        name: "index"
+      }))!.source!;
+    }
+
+    // get default export options
+    const defaultExport = source.getStatement((statement) => {
+      return statement.isKind(SyntaxKind.ExportAssignment);
     });
 
-    return this.srcRenderer.render(
-      "index.hbs",
-      {
-        configs
-      },
-      {
-        templateDir: TEMPLATE_DIR,
-        output: "index.ts",
-        rootDir: join(this.srcRenderer.rootDir, "config", "mongoose")
-      }
-    );
+    return {source, options: defaultExport?.getFirstDescendantByKind(SyntaxKind.ArrayLiteralExpression)};
+  }
+
+  updateConfigFile(project: ProjectClient, data: RenderDataContext) {
+    const options = project.findConfiguration("config");
+    const configFile = project.configSourceFile;
+
+    if (!configFile || !options) {
+      return;
+    }
+
+    // set that in config.ts
+    configFile.addImportDeclaration({
+      moduleSpecifier: "./mongoose/index.js",
+      defaultImport: "mongooseConfig"
+    });
+
+    project.getPropertyAssignment(options, {
+      name: "mongoose",
+      kind: SyntaxKind.Identifier,
+      initializer: "mongooseConfig"
+    });
   }
 }
+
+injectable(CliMongoose);

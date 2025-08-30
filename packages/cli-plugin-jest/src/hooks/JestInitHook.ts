@@ -1,24 +1,22 @@
-import {RootRendererService} from "@tsed/cli";
-import {inject, Injectable, OnExec, ProjectPackageJson} from "@tsed/cli-core";
+import {type AlterInitSubTasks, type InitCmdContext, render} from "@tsed/cli";
+import type {Task} from "@tsed/cli-core";
+import {injectable} from "@tsed/di";
 
-import {TEMPLATE_DIR} from "../utils/templateDir.js";
-
-@Injectable()
-export class JestInitHook {
-  protected packageJson = inject(ProjectPackageJson);
-  protected rootRenderer = inject(RootRendererService);
-
-  @OnExec("init")
-  onInitExec() {
+export class JestInitHook implements AlterInitSubTasks {
+  $alterInitSubTasks(tasks: Task[], data: InitCmdContext) {
     return [
+      ...tasks,
       {
-        title: "Generate files for jest",
-        task: (ctx: any) => {
-          return this.rootRenderer.renderAll(["jest.config.ts.hbs"], ctx, {
-            templateDir: `${TEMPLATE_DIR}/init`
+        title: "Create jest configuration",
+        enabled: () => !!data.jest,
+        task: () => {
+          render("jest.config", {
+            symbolName: "jest.config"
           });
         }
       }
     ];
   }
 }
+
+injectable(JestInitHook);

@@ -1,16 +1,12 @@
-import {CliExeca, CliFs, Inject, ProjectPackageJson} from "@tsed/cli-core";
-import {Injectable} from "@tsed/di";
+import {join} from "node:path";
 
-@Injectable()
+import {CliExeca, CliFs, ProjectPackageJson} from "@tsed/cli-core";
+import {inject, injectable} from "@tsed/di";
+
 export class CliPrisma {
-  @Inject()
-  protected cliExeca: CliExeca;
-
-  @Inject()
-  protected cliFs: CliFs;
-
-  @Inject()
-  protected projectPackageJson: ProjectPackageJson;
+  protected cliExeca = inject(CliExeca);
+  protected cliFs = inject(CliFs);
+  protected projectPackageJson = inject(ProjectPackageJson);
 
   run(command: string, args: string[] = [], options: any = {}) {
     return this.cliExeca.run("npx", ["prisma", command, ...args], {
@@ -24,9 +20,9 @@ export class CliPrisma {
   }
 
   async patchPrismaSchema() {
-    const schemaPath = this.cliFs.join(this.projectPackageJson.dir, "prisma", "schema.prisma");
+    const schemaPath = join(this.projectPackageJson.dir, "prisma", "schema.prisma");
 
-    if (this.cliFs.exists(schemaPath)) {
+    if (this.cliFs.fileExistsSync(schemaPath)) {
       let content = await this.cliFs.readFile(schemaPath, "utf8");
 
       if (!content.includes("generator tsed")) {
@@ -43,3 +39,5 @@ export class CliPrisma {
     }
   }
 }
+
+injectable(CliPrisma);

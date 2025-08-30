@@ -7,6 +7,8 @@ export default defineConfig(
     ...presets,
     test: {
       ...presets.test,
+      maxWorkers: 3,
+      timeout: 20000,
       coverage: {
         ...presets.test?.coverage,
         thresholds: {

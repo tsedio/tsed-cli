@@ -3,3 +3,11 @@ export enum PlatformType {
   KOA = "koa",
   FASTIFY = "fastify"
 }
+
+declare global {
+  namespace TsED {
+    interface ProjectPreferences {
+      platform: PlatformType;
+    }
+  }
+}

@@ -1,3 +1,5 @@
+import "./templates/index.js";
+
 import {inject, Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 
 import {MongooseGenerateHook} from "./hooks/MongooseGenerateHook.js";

@@ -1,12 +1,25 @@
-import {Injectable} from "@tsed/cli-core";
+import {injectable} from "@tsed/cli-core";
+import {SyntaxKind} from "ts-morph";
 
+import type {ProjectClient} from "../../services/ProjectClient.js";
 import type {InitBasePlatform} from "./InitBasePlatform.js";
 
-@Injectable({
-  type: "platform:init"
-})
 export class InitKoaPlatform implements InitBasePlatform {
   readonly name = "koa";
+
+  alterProjectFiles(project: ProjectClient): void {
+    const options = project.findConfiguration("server");
+
+    if (options) {
+      const middlewares = ["@koa/cors", "koa-compress", "koa-override", "koa-bodyparser"];
+
+      project.getPropertyAssignment(options, {
+        name: "middlewares",
+        kind: SyntaxKind.ArrayLiteralExpression,
+        initializer: JSON.stringify(middlewares, null, 2)
+      });
+    }
+  }
 
   dependencies(ctx: any) {
     return {
@@ -34,3 +47,5 @@ export class InitKoaPlatform implements InitBasePlatform {
     };
   }
 }
+
+injectable(InitKoaPlatform).type("platform:init");

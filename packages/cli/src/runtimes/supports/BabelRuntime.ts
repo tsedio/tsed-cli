@@ -1,12 +1,9 @@
 import {dirname} from "node:path";
 
-import {Injectable} from "@tsed/di";
+import {injectable} from "@tsed/di";
 
 import {NodeRuntime} from "./NodeRuntime.js";
 
-@Injectable({
-  type: "runtime"
-})
 export class BabelRuntime extends NodeRuntime {
   readonly name: string = "babel";
   readonly order: number = 1;
@@ -16,7 +13,7 @@ export class BabelRuntime extends NodeRuntime {
   }
 
   files() {
-    return ["/init/.babelrc.hbs"];
+    return [".babelrc"];
   }
 
   startDev(main: string): string {
@@ -47,3 +44,5 @@ export class BabelRuntime extends NodeRuntime {
     };
   }
 }
+
+injectable(BabelRuntime).type("runtime");

@@ -67,6 +67,31 @@ describe("getFeaturesPrompt", () => {
           "choices": [
             {
               "dependencies": {
+                "@tsed/cli-core": "{{cliVersion}}",
+              },
+              "devDependencies": {
+                "@types/inquirer": "^8.2.4",
+              },
+              "name": "Commands",
+              "value": "commands",
+            },
+            {
+              "dependencies": {
+                "@tsed/config": "{{tsedVersion}}",
+              },
+              "name": "Configuration sources",
+              "value": "config",
+            },
+            {
+              "name": "Database",
+              "value": "db",
+            },
+            {
+              "name": "Documentation",
+              "value": "doc",
+            },
+            {
+              "dependencies": {
                 "@tsed/typegraphql": "{{tsedVersion}}",
               },
               "devDependencies": {
@@ -76,8 +101,15 @@ describe("getFeaturesPrompt", () => {
               "value": "graphql",
             },
             {
-              "name": "Database",
-              "value": "db",
+              "name": "Linter",
+              "value": "linter",
+            },
+            {
+              "devDependencies": {
+                "@tsed/cli-plugin-oidc-provider": "{{cliVersion}}",
+              },
+              "name": "OpenID Connect provider",
+              "value": "oidc",
             },
             {
               "devDependencies": {
@@ -96,17 +128,6 @@ describe("getFeaturesPrompt", () => {
               "value": "socketio",
             },
             {
-              "name": "Documentation",
-              "value": "doc",
-            },
-            {
-              "devDependencies": {
-                "@tsed/cli-plugin-oidc-provider": "{{cliVersion}}",
-              },
-              "name": "OpenID Connect provider",
-              "value": "oidc",
-            },
-            {
               "dependencies": {},
               "devDependencies": {
                 "@types/supertest": "latest",
@@ -115,24 +136,65 @@ describe("getFeaturesPrompt", () => {
               "name": "Testing",
               "value": "testing",
             },
-            {
-              "name": "Linter",
-              "value": "linter",
-            },
-            {
-              "dependencies": {
-                "@tsed/cli-core": "{{cliVersion}}",
-              },
-              "devDependencies": {
-                "@types/inquirer": "^8.2.4",
-              },
-              "name": "Commands",
-              "value": "commands",
-            },
           ],
           "message": "Check the features needed for your project",
           "name": "features",
           "type": "checkbox",
+        },
+        {
+          "choices": [
+            {
+              "name": "Envs",
+              "value": "config:envs",
+            },
+            {
+              "name": "Dotenv",
+              "value": "config:dotenv",
+            },
+            {
+              "name": "JSON",
+              "value": "config:json",
+            },
+            {
+              "name": "YAML",
+              "value": "config:yaml",
+            },
+            {
+              "dependencies": {
+                "@tsedio/config-ioredis": "{{tsedVersion}}",
+                "ioredis": "latest",
+              },
+              "name": "IORedis (Premium)",
+              "value": "config:ioredis",
+            },
+            {
+              "dependencies": {
+                "@tsedio/config-mongo": "{{tsedVersion}}",
+                "mongodb": "latest",
+              },
+              "name": "MongoDB (Premium)",
+              "value": "config:mongo",
+            },
+            {
+              "dependencies": {
+                "@tsedio/config-vault": "{{tsedVersion}}",
+              },
+              "name": "Vault (Premium)",
+              "value": "config:vault",
+            },
+            {
+              "dependencies": {
+                "@tsedio/config-postgres": "{{tsedVersion}}",
+                "pg": "latest",
+              },
+              "name": "Postgres (Premium)",
+              "value": "config:postgres",
+            },
+          ],
+          "message": "Choose configuration sources",
+          "name": "featuresConfig",
+          "type": "checkbox",
+          "when": [Function],
         },
         {
           "choices": [

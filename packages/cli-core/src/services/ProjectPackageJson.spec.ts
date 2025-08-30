@@ -12,7 +12,7 @@ const dir = import.meta.dirname;
 async function getProjectPackageJsonFixture() {
   const cliFs = {
     writeFileSync: vi.fn(),
-    exists: vi.fn().mockReturnValue(false),
+    fileExistsSync: vi.fn().mockReturnValue(false),
     readJsonSync: vi.fn().mockReturnValue({
       scripts: {},
       dependencies: {},

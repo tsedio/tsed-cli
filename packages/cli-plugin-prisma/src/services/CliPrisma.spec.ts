@@ -9,7 +9,7 @@ import {CliPrisma} from "./CliPrisma.js";
 async function createServiceFixture() {
   const cliFs = {
     join: (...args: string[]) => normalizePath(join(...args)),
-    exists: vi.fn(),
+    fileExistsSync: vi.fn(),
     readFile: vi.fn(),
     writeFile: vi.fn()
   };
@@ -44,7 +44,7 @@ describe("CliPrisma", () => {
         '  provider = "prisma-client-js"\n' +
         "}\n";
 
-      cliFs.exists.mockReturnValue(true);
+      cliFs.fileExistsSync.mockReturnValue(true);
       cliFs.readFile.mockResolvedValue(schema);
 
       await service.patchPrismaSchema();
@@ -66,7 +66,7 @@ describe("CliPrisma", () => {
         '  provider = "tsed-prisma"\n' +
         "}\n";
 
-      cliFs.exists.mockReturnValue(true);
+      cliFs.fileExistsSync.mockReturnValue(true);
       cliFs.readFile.mockResolvedValue(schema);
 
       await service.patchPrismaSchema();
@@ -85,7 +85,7 @@ describe("CliPrisma", () => {
         '  provider = "prisma-client-js"\n' +
         "}\n";
 
-      cliFs.exists.mockReturnValue(false);
+      cliFs.fileExistsSync.mockReturnValue(false);
       cliFs.readFile.mockResolvedValue(schema);
 
       await service.patchPrismaSchema();

@@ -1,3 +1,6 @@
+// Import templates to register them with the DI container
+import "./templates/index.js";
+
 import {RuntimesModule} from "@tsed/cli";
 import {inject, Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
 

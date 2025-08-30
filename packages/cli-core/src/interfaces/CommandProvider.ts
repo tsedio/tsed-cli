@@ -1,6 +1,15 @@
+import "inquirer-autocomplete-prompt";
+
 import type {Answers, QuestionCollection} from "inquirer";
+import AutocompletePrompt from "inquirer-autocomplete-prompt";
 
 import type {Tasks} from "./Tasks.js";
+
+declare module "inquirer" {
+  export interface QuestionMap<T extends Answers = Answers> {
+    autocomplete: AutocompletePrompt.AutocompleteQuestionOptions<T>;
+  }
+}
 
 export type QuestionOptions<T extends Answers = Answers> = QuestionCollection<T>;
 

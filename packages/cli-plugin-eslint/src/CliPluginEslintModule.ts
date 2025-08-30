@@ -1,8 +1,7 @@
-import {Module} from "@tsed/cli-core";
+import {injectable} from "@tsed/di";
 
 import {EslintInitHook} from "./hooks/EslintInitHook.js";
 
-@Module({
-  imports: [EslintInitHook]
-})
 export class CliPluginEslintModule {}
+
+injectable(CliPluginEslintModule).imports([EslintInitHook]);

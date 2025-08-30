@@ -17,7 +17,7 @@
     "**/helpers/**/*.ts",
     "node_modules",
     "**/lib/**",
-    "**/templates/**",
+    "packages/*/templates/**",
     "**/barrels/**"
   ]
 }

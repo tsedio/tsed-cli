@@ -40,6 +40,7 @@ describe("Command", () => {
     });
 
     expect(TestCommand.prototype.$exec).toHaveBeenCalledWith({
+      commandName: "test",
       bindLogger: true,
       argument: "subcmd",
       rawArgs: [],

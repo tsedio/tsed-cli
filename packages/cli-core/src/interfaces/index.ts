@@ -4,6 +4,7 @@ import type {CommandProvider} from "./CommandProvider.js";
 import type {PackageJson} from "./PackageJson.js";
 
 export * from "./CliDefaultOptions.js";
+export * from "./CommandData.js";
 export * from "./CommandMetadata.js";
 export * from "./CommandParameters.js";
 export * from "./CommandProvider.js";

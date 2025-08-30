@@ -1,45 +1,25 @@
-import type {InitCmdContext} from "@tsed/cli";
-import {CliDockerComposeYaml, inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
-import {Injectable} from "@tsed/di";
+import {type CliCommandHooks, ProjectClient, type RenderDataContext} from "@tsed/cli";
+import {inject, injectable} from "@tsed/di";
 
 import {CliMongoose} from "../services/CliMongoose.js";
 
-@Injectable()
-export class MongooseInitHook {
+export class MongooseInitHook implements CliCommandHooks {
   protected cliMongoose = inject(CliMongoose);
-  protected packageJson = inject(ProjectPackageJson);
-  protected cliDockerComposeYaml = inject(CliDockerComposeYaml);
 
-  @OnExec("init")
-  onExec(ctx: InitCmdContext) {
-    this.addScripts();
-    this.addDependencies(ctx);
-    this.addDevDependencies(ctx);
+  async $alterProjectFiles(project: ProjectClient, data: RenderDataContext): Promise<ProjectClient> {
+    if (data.commandName === "init" && data.mongoose) {
+      project.serverSourceFile?.addImportDeclaration({
+        moduleSpecifier: "@tsed/mongoose"
+      });
 
-    return [
-      {
-        title: "Generate Mongoose configuration",
-        task: () =>
-          this.cliMongoose.writeConfig("default", {
-            symbolName: "MONGOOSE_DEFAULT"
-          })
-      },
-      {
-        title: "Generate docker-compose configuration",
-        task: () => this.cliDockerComposeYaml.addDatabaseService("mongodb", "mongodb")
-      }
-    ];
-  }
+      await project.dockerCompose.addDatabaseService("mongodb", "mongodb");
 
-  addScripts() {
-    this.packageJson.addScripts({});
-  }
+      await this.cliMongoose.createMongooseConnection(project, "MONGOOSE_DEFAULT");
+      this.cliMongoose.updateConfigFile(project, data);
+    }
 
-  addDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDependencies({}, ctx);
-  }
-
-  addDevDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDevDependencies({}, ctx);
+    return project;
   }
 }
+
+injectable(MongooseInitHook);

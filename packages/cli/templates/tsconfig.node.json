@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.spec.ts", "dist", "node_modules", "**/helpers/*Fixture.ts", "**/__mock__/**", "coverage"],
+  "linterOptions": {
+    "exclude": []
+  }
+}

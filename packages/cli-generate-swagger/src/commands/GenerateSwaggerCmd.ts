@@ -1,22 +1,11 @@
 import path, {join, resolve} from "node:path";
 
-import {CliFs, CliYaml, Command, type CommandProvider, Constant, constant, Inject, inject, InjectorService, Type} from "@tsed/cli-core";
+import {CliFs, CliYaml, command, type CommandProvider, constant, inject, InjectorService, Type} from "@tsed/cli-core";
 
 export interface GenerateSwaggerCtx {
   output: string;
 }
 
-@Command({
-  name: "generate-swagger",
-  description: "Generate the client API from swagger spec",
-  options: {
-    "-o, --output <output>": {
-      required: true,
-      type: String,
-      description: "Path to generate files"
-    }
-  }
-})
 export class GenerateSwaggerCmd implements CommandProvider {
   protected fs = inject(CliFs);
   protected cliYaml = inject(CliYaml);
@@ -103,3 +92,15 @@ export class GenerateSwaggerCmd implements CommandProvider {
     await Promise.all([this.fs.writeJson(fileJson, spec), this.cliYaml.write(fileYaml, spec)]);
   }
 }
+
+command(GenerateSwaggerCmd, {
+  name: "generate-swagger",
+  description: "Generate the client API from swagger spec",
+  options: {
+    "-o, --output <output>": {
+      required: true,
+      type: String,
+      description: "Path to generate files"
+    }
+  }
+});

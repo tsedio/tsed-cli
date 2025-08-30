@@ -1,48 +1,55 @@
-import type {InitCmdContext} from "@tsed/cli";
-import {CliService, inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
-import {Injectable} from "@tsed/di";
+import {type CliCommandHooks, ProjectClient, type RenderDataContext} from "@tsed/cli";
+import {type CliDatabases, CliService, inject, ProjectPackageJson, type Task} from "@tsed/cli-core";
+import {injectable} from "@tsed/di";
 import {pascalCase} from "change-case";
 
-function getDatabase(ctx: InitCmdContext) {
-  return ctx.features.find((type) => type.includes("typeorm:"))?.split(":")[1] || "";
+function getDatabase(ctx: RenderDataContext): CliDatabases | undefined {
+  return ctx.features?.find((type) => type.includes("typeorm:"))?.split(":")[1] as CliDatabases;
 }
 
-@Injectable()
-export class TypeORMInitHook {
+export class TypeORMInitHook implements CliCommandHooks {
   protected cliService = inject(CliService);
-  protected packageJson = inject(ProjectPackageJson);
 
-  @OnExec("init")
-  onExec(ctx: InitCmdContext) {
-    this.addScripts();
-    this.addDependencies(ctx);
-    this.addDevDependencies(ctx);
-
-    const database = getDatabase(ctx);
-
-    if (!database) {
-      return [];
+  $alterPackageJson(packageJson: ProjectPackageJson, data: RenderDataContext) {
+    if (data.typeorm) {
+      packageJson.addScripts({
+        typeorm: "typeorm-ts-node-commonjs"
+      });
     }
 
-    return this.cliService.getTasks("generate", {
-      ...ctx,
-      type: "typeorm:dataSource",
-      name: pascalCase(database),
-      typeormDataSource: ctx.features.find((value) => value.startsWith("typeorm:"))
-    });
+    return packageJson;
   }
 
-  addScripts() {
-    this.packageJson.addScripts({
-      typeorm: "typeorm-ts-node-commonjs"
-    });
+  $alterProjectFiles(project: ProjectClient, data: RenderDataContext): ProjectClient {
+    if (data.typeorm) {
+      //set that in config.ts
+      project.serverSourceFile?.addImportDeclaration({
+        moduleSpecifier: "@tsed/typeorm"
+      });
+    }
+
+    return project;
   }
 
-  addDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDependencies({}, ctx);
-  }
+  async $alterInitSubTasks(tasks: Task[], data: RenderDataContext) {
+    const database = getDatabase(data);
 
-  addDevDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDevDependencies({}, ctx);
+    if (!database || !data.typeorm) {
+      return tasks;
+    }
+
+    const typeormDataSource = data.features?.find((value) => value.startsWith("typeorm:"));
+
+    return [
+      ...tasks,
+      ...(await this.cliService.getTasks("generate", {
+        ...data,
+        type: "typeorm:dataSource",
+        name: pascalCase(database),
+        typeormDataSource
+      }))
+    ];
   }
 }
+
+injectable(TypeORMInitHook);

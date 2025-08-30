@@ -1,4 +1,4 @@
-import {Configuration, Inject, inject, registerProvider} from "@tsed/di";
+import {constant, Inject, inject, injectable} from "@tsed/di";
 
 import {type PackageJson} from "../interfaces/PackageJson.js";
 
@@ -12,10 +12,6 @@ export function cliPackageJson() {
   return inject<PackageJson>(CliPackageJson);
 }
 
-registerProvider({
-  provide: CliPackageJson,
-  deps: [Configuration],
-  useFactory(configuration: Configuration) {
-    return configuration.get("pkg", {});
-  }
+injectable(CliPackageJson).factory(() => {
+  return constant("pkg", {});
 });
