@@ -77,7 +77,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.5.0",
     "@commitlint/config-conventional": "19.5.0",
-    "@swc/core": "1.7.26",
+    "@swc/core": "1.13.5",
     "@swc/helpers": "0.5.13",
     "@tsed/markdown-it-symbols": "3.20.8",
     "@tsed/monorepo-utils": "2.3.12",
