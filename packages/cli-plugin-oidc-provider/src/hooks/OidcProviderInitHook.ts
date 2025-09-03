@@ -1,5 +1,3 @@
-import {join} from "node:path";
-
 import {type CliCommandHooks, ProjectClient, render, type RenderDataContext} from "@tsed/cli";
 import {injectable} from "@tsed/di";
 import {SyntaxKind} from "ts-morph";
@@ -7,7 +5,7 @@ import {SyntaxKind} from "ts-morph";
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 export class OidcProviderInitHook implements CliCommandHooks {
-  $alterRenderFiles(files: string[], data: RenderDataContext): string[] {
+  $alterRenderFiles(files: string[], data: RenderDataContext) {
     if (!data.oidc) {
       return files;
     }
@@ -37,11 +35,16 @@ export class OidcProviderInitHook implements CliCommandHooks {
         "/views/select_account.ejs"
       ]
         .filter(Boolean)
-        .map((path: string) => join(TEMPLATE_DIR, path))
+        .map((path: string) => {
+          return {
+            id: path,
+            from: TEMPLATE_DIR
+          };
+        })
     ];
   }
 
-  async $alterProjectFiles(project: ProjectClient, data: RenderDataContext): ProjectClient {
+  async $alterProjectFiles(project: ProjectClient, data: RenderDataContext) {
     if (!data.oidc) {
       return project;
     }

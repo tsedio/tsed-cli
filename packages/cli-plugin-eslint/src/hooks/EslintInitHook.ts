@@ -1,14 +1,11 @@
-import {type CliCommandHooks, type InitCmdContext, render, type RenderDataContext, type RenderOptions} from "@tsed/cli";
+import {type CliCommandHooks, type InitCmdContext, render, type RenderDataContext} from "@tsed/cli";
 import {PackageManagersModule, ProjectPackageJson, type Task} from "@tsed/cli-core";
 import {inject, injectable} from "@tsed/di";
 
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 export class EslintInitHook implements CliCommandHooks {
-  $alterRenderFiles(
-    files: (string | RenderOptions)[],
-    data: RenderDataContext
-  ): (string | RenderOptions)[] | Promise<(string | RenderOptions)[]> {
+  $alterRenderFiles(files: string[], data: RenderDataContext) {
     if (!data.eslint) {
       return files;
     }
@@ -28,11 +25,11 @@ export class EslintInitHook implements CliCommandHooks {
         .filter(Boolean)
         .map((path) => {
           return {
-            path,
-            templateDir: `${TEMPLATE_DIR}/init`
+            id: "/" + path,
+            from: `${TEMPLATE_DIR}/init`
           };
         })
-    ] as (string | RenderOptions)[];
+    ];
   }
 
   $alterPackageJson(packageJson: ProjectPackageJson, data: RenderDataContext): ProjectPackageJson | Promise<ProjectPackageJson> {

@@ -25,6 +25,7 @@ describe("Eslint: Init cmd", () => {
 
     await CliPlatformTest.initProject({
       eslint: true,
+      lintstaged: true,
       prettier: true
     });
 
@@ -34,6 +35,14 @@ describe("Eslint: Init cmd", () => {
         "project-name/.barrels.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
+        "project-name/.husky/.gitignore",
+        "project-name/.husky/_/.gitignore",
+        "project-name/.husky/_/husky.sh",
+        "project-name/.husky/post-commit",
+        "project-name/.husky/pre-commit",
+        "project-name/.lintstagedrc.json",
+        "project-name/.prettierignore",
+        "project-name/.prettierrc",
         "project-name/.swcrc",
         "project-name/Dockerfile",
         "project-name/README.md",
@@ -60,6 +69,7 @@ describe("Eslint: Init cmd", () => {
         "yarn install",
         "yarn add --ignore-engines @tsed/logger @tsed/engines @tsed/barrels ajv cross-env dotenv dotenv-expand dotenv-flow @swc/core @swc/cli @swc/helpers @swc-node/register typescript body-parser cors compression cookie-parser express method-override",
         "yarn add -D --ignore-engines @types/node @types/multer tslib nodemon @types/cors @types/express @types/compression @types/cookie-parser @types/method-override",
+        "yarn run prepare",
         "yarn run test:lint:fix",
         "yarn run barrels",
       ]
@@ -145,6 +155,8 @@ describe("Eslint: Init cmd", () => {
         "project-name/.barrels.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
+        "project-name/.prettierignore",
+        "project-name/.prettierrc",
         "project-name/.swcrc",
         "project-name/Dockerfile",
         "project-name/README.md",
