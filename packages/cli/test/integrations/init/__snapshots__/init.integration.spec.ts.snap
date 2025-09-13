@@ -20,8 +20,8 @@ import * as rest from "./rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest), ...Object.values(rest)],
-    "/": [...Object.values(pages), ...Object.values(pages)]
+    "/rest": [...Object.values(rest)],
+    "/": [...Object.values(pages)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -73,7 +73,7 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest), ...Object.values(rest)]
+    "/rest": [...Object.values(rest)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -119,7 +119,7 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest), ...Object.values(rest)]
+    "/rest": [...Object.values(rest)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -167,8 +167,8 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest), ...Object.values(rest)],
-    "/": [...Object.values(pages), ...Object.values(pages)]
+    "/rest": [...Object.values(rest)],
+    "/": [...Object.values(pages)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -220,7 +220,7 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest), ...Object.values(rest)]
+    "/rest": [...Object.values(rest)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -266,7 +266,7 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest), ...Object.values(rest)]
+    "/rest": [...Object.values(rest)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -314,8 +314,8 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest), ...Object.values(rest)],
-    "/": [...Object.values(pages), ...Object.values(pages)]
+    "/rest": [...Object.values(rest)],
+    "/": [...Object.values(pages)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -349,6 +349,26 @@ export class Server {
 "
 `;
 
+exports[`Init cmd > Express.js > should generate a project with the right options > config file content 1`] = `
+"import { EnvsConfigSource } from "@tsed/config/envs";
+import { readFileSync } from "node:fs";
+import loggerConfig from "./logger/index.js";
+
+const pkg = JSON.parse(readFileSync("./package.json", { encoding: "utf8" }));
+/**
+ * This is the shared configuration for the application
+ */
+export const config: Partial<TsED.Configuration> = {
+  version: pkg.version,
+  ajv: {
+    returnsCoercedValues: true
+  },
+  logger: loggerConfig,
+  extends: [EnvsConfigSource]
+};
+"
+`;
+
 exports[`Init cmd > Express.js > should generate a project with the right options 2`] = `
 "import "@tsed/ajv";
 import "@tsed/platform-log-request";
@@ -367,7 +387,7 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest), ...Object.values(rest)]
+    "/rest": [...Object.values(rest)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -413,7 +433,7 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest), ...Object.values(rest)]
+    "/rest": [...Object.values(rest)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -458,7 +478,7 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest), ...Object.values(rest)]
+    "/rest": [...Object.values(rest)]
   },
   views: {
     root: join(process.cwd(), "../views"),

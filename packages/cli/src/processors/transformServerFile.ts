@@ -79,9 +79,4 @@ export function transformServerFile(project: ProjectClient, data: RenderDataCont
       project.addMountPath("/", "...Object.values(pages)");
     }
   }
-
-  sourceFile.organizeImports();
-  sourceFile.formatText({
-    indentSize: 2
-  });
 }

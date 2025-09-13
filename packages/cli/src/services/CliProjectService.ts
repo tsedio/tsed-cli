@@ -80,6 +80,9 @@ export class CliProjectService {
     await Promise.all(
       project.getSourceFiles().map((sourceFile) => {
         sourceFile.organizeImports();
+        sourceFile.formatText({
+          indentSize: 2
+        });
         return sourceFile.save();
       })
     );

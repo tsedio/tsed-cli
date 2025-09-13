@@ -230,7 +230,7 @@ export class InitCmd implements CommandProvider {
           async () => {
             const subTasks = [
               ...(await exec("generate", {
-                ...ctx,
+                //...ctx,
                 type: "controller",
                 route: "rest",
                 name: "HelloWorld",
@@ -238,7 +238,7 @@ export class InitCmd implements CommandProvider {
               })),
               ...(ctx.commands
                 ? await exec("generate", {
-                    ...ctx,
+                    //...ctx,
                     type: "command",
                     route: "hello",
                     name: "hello"

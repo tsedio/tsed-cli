@@ -136,6 +136,9 @@ describe("Init cmd", () => {
 
       const indexContent = FakeCliFs.files.get("project-name/src/index.ts")!;
       expect(indexContent).toContain('import { Server } from "./Server.js"');
+
+      const configContent = FakeCliFs.files.get("project-name/src/config/config.ts")!;
+      expect(configContent).toMatchSnapshot("config file content");
     });
     it("should generate a project with swagger", async () => {
       CliPlatformTest.setPackageJson({

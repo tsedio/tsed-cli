@@ -20,7 +20,6 @@ export function transformIndexFile(project: ProjectClient, data: RenderDataConte
     namedImports: [platformName]
   });
 
-  // replace PlatformBuilder with Platform<PlatformType>
   sourceFile.getImportDeclaration((declaration) => declaration.getModuleSpecifierValue() === "@tsed/platform-http")?.remove();
 
   sourceFile.getDescendantsOfKind(SyntaxKind.Identifier).map((identifier) => {
@@ -30,10 +29,5 @@ export function transformIndexFile(project: ProjectClient, data: RenderDataConte
       return identifier.rename(platformName);
     }
     return identifier;
-  });
-
-  sourceFile.organizeImports();
-  sourceFile.formatText({
-    indentSize: 2
   });
 }
