@@ -1,6 +1,6 @@
 {
   "name": "@tsed/integration",
-  "version": "6.6.3",
+  "version": "7.0.0-alpha.1",
   "private": true,
   "description": "Integration tests for Ts.ED",
   "type": "module",
