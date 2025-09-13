@@ -26,6 +26,7 @@ export enum FeatureType {
   CONFIG_DOTENV = "config:dotenv",
   CONFIG_JSON = "config:json",
   CONFIG_YAML = "config:yaml",
+  CONFIG_AWS_SECRETS = "config:aws_secrets",
   CONFIG_IOREDIS = "config:ioredis",
   CONFIG_MONGO = "config:mongo",
   CONFIG_VAULT = "config:vault",
@@ -177,7 +178,12 @@ export const FeaturesMap: Record<string, Feature> = {
   },
 
   [FeatureType.CONFIG_DOTENV]: {
-    name: "Dotenv"
+    name: "Dotenv",
+    dependencies: {
+      dotenv: "latest",
+      "dotenv-expand": "latest",
+      "dotenv-flow": "latest"
+    }
   },
 
   [FeatureType.CONFIG_JSON]: {
@@ -185,14 +191,29 @@ export const FeaturesMap: Record<string, Feature> = {
   },
 
   [FeatureType.CONFIG_YAML]: {
-    name: "YAML"
+    name: "YAML",
+    dependencies: {
+      "js-yaml": "latest"
+    }
+  },
+
+  [FeatureType.CONFIG_AWS_SECRETS]: {
+    name: "AWS Secrets Manager (Premium)",
+    dependencies: {
+      "@tsedio/config-source-aws-secrets": "latest",
+      "@aws-sdk/client-secrets-manager": "latest"
+    }
   },
 
   [FeatureType.CONFIG_IOREDIS]: {
     name: "IORedis (Premium)",
     dependencies: {
-      ioredis: "latest",
-      "@tsedio/config-ioredis": "{{tsedVersion}}"
+      "@tsedio/config-ioredis": "{{tsedVersion}}",
+      "@tsed/ioredis": "{{tsedVersion}}",
+      ioredis: "latest"
+    },
+    devDependencies: {
+      "@tsedio/testcontainers-redis": "latest"
     }
   },
 
@@ -200,14 +221,15 @@ export const FeaturesMap: Record<string, Feature> = {
     name: "MongoDB (Premium)",
     dependencies: {
       mongodb: "latest",
-      "@tsedio/config-mongo": "{{tsedVersion}}"
+      "@tsedio/config-mongo": "latest"
     }
   },
 
   [FeatureType.CONFIG_VAULT]: {
     name: "Vault (Premium)",
     dependencies: {
-      "@tsedio/config-vault": "{{tsedVersion}}"
+      "@tsedio/config-vault": "latest",
+      "node-vault": "latest"
     }
   },
 
@@ -215,7 +237,7 @@ export const FeaturesMap: Record<string, Feature> = {
     name: "Postgres (Premium)",
     dependencies: {
       pg: "latest",
-      "@tsedio/config-postgres": "{{tsedVersion}}"
+      "@tsedio/config-postgres": "latest"
     }
   },
 
@@ -421,6 +443,7 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
       FeatureType.CONFIG_DOTENV,
       FeatureType.CONFIG_JSON,
       FeatureType.CONFIG_YAML,
+      FeatureType.CONFIG_AWS_SECRETS,
       FeatureType.CONFIG_IOREDIS,
       FeatureType.CONFIG_MONGO,
       FeatureType.CONFIG_VAULT,

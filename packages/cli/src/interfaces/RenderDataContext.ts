@@ -44,6 +44,7 @@ export interface RenderDataContext extends CommandData, TsED.RenderDataContext {
   configYaml?: boolean;
   configIoredis?: boolean;
   configMongo?: boolean;
+  configAwsSecrets?: boolean;
   configVault?: boolean;
   configPostgres?: boolean;
   barrels?: string;

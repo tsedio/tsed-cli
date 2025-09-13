@@ -349,8 +349,15 @@ export class Server {
 "
 `;
 
-exports[`Init cmd > Express.js > should generate a project with the right options > config file content 1`] = `
-"import { EnvsConfigSource } from "@tsed/config/envs";
+exports[`Init cmd > Express.js > should generate a project with the many config source > config file content 1`] = `
+"import { DotenvConfigSource } from "@tsedio/config-envs/dotenv";
+import { JsonConfigSource } from "@tsedio/config-envs/json";
+import { YamlConfigSource } from "@tsedio/config-envs/yaml";
+import { IoredisConfigSource } from "@tsedio/config-ioredis";
+import { MongoConfigSource } from "@tsedio/config-mongo";
+import { PostgresConfigSource } from "@tsedio/config-postgres";
+import { AwsSecretsConfigSource } from "@tsedio/config-source-aws-secrets";
+import { VaultConfigSource } from "@tsedio/config-vault";
 import { readFileSync } from "node:fs";
 import loggerConfig from "./logger/index.js";
 
@@ -364,7 +371,127 @@ export const config: Partial<TsED.Configuration> = {
     returnsCoercedValues: true
   },
   logger: loggerConfig,
-  extends: [EnvsConfigSource]
+  extends: [
+    DotenvConfigSource,
+    withOptions(JsonConfigSource, {
+      path: "./config.json"
+    }),
+    withOptions(YamlConfigSource, {
+      path: "./config.yaml"
+    }),
+    withOptions(AwsSecretsConfigSource, {
+      name: "aws",
+      path: "/my-app/config", // Path prefix in Secrets Manager
+      region: "us-east-1", // AWS region
+      watch: true // Enable secrets watching
+      // validationSchema: object({}) // Optional: add a validation schema
+      // maxConcurrency: 10
+    }),
+    withOptions(VaultConfigSource, {
+      name: "vault",
+      endpoint: "http://localhost:8200", // Vault server URL
+      token: "your-vault-token", // Your Vault token
+      secretPath: "secret/data/myapp", // Path to your secret (KV v2 or v1, see below)
+      refreshInterval: 10000 // ⏱️ Polling interval in ms (default: 10s)
+      // Additional node-vault options
+
+      // validationSchema: object({}) // Optional: add a validation schema
+    }),
+    withOptions(IoredisConfigSource, {
+      name: "redis",
+      prefixKey: "my-config", // Optional: All config keys will be prefixed
+      url: "redis://localhost:6379" // Or use any Redis/Cluster options
+      // validationSchema: object({}) // Optional: add a validation schema
+    }),
+    withOptions(MongoConfigSource, {
+      name: "mongo",
+      url: "mongodb://localhost:27017", // MongoDB connection URL
+      database: "my_database", // Database name
+      collection: "config" // Collection used for config storage
+
+      // Additional MongoDB client options can be provided here
+
+      // ConfigSource options
+      // validationSchema: object({}) // Optional: add a validation schema
+    }),
+    withOptions(PostgresConfigSource, {
+      name: "postgres",
+      connectionString: "postgresql://postgres:postgres@localhost:5432/my_database", // PostgreSQL connection string
+      table: "config" // Table used for config storage
+
+      // Additional PostgresSQL client options can be provided here
+
+      // ConfigSource options
+      // validationSchema: object({}) // Optional: add a validation schema
+    })
+  ]
+};
+"
+`;
+
+exports[`Init cmd > Express.js > should generate a project with the many config source 2`] = `
+"import "@tsed/ajv";
+import "@tsed/platform-log-request";
+
+import { Configuration } from "@tsed/di";
+import { application } from "@tsed/platform-http";
+import { join } from "node:path";
+
+import { config } from "@/config/config.js";
+import "@tsed/platform-express";
+import * as rest from "./controllers/rest/index.js";
+
+@Configuration({
+  ...config,
+  acceptMimes: ["application/json"],
+  httpPort: process.env.PORT || 8083,
+  httpsPort: false, // CHANGE
+  mount: {
+    "/rest": [...Object.values(rest)]
+  },
+  views: {
+    root: join(process.cwd(), "../views"),
+    extensions: {
+      ejs: "ejs"
+    }
+  },
+  middlewares: [
+    "cors",
+    "cookie-parser",
+    "compression",
+    "method-override",
+    "json-parser",
+    {
+      "use": "urlencoded-parser",
+      "options": {
+        "extended": true
+      }
+    }
+  ]
+})
+export class Server {
+  protected app = application();
+}
+"
+`;
+
+exports[`Init cmd > Express.js > should generate a project with the right options > config file content 1`] = `
+"import { EnvsConfigSource } from "@tsedio/config-envs/envs";
+import { readFileSync } from "node:fs";
+import loggerConfig from "./logger/index.js";
+
+const pkg = JSON.parse(readFileSync("./package.json", { encoding: "utf8" }));
+/**
+ * This is the shared configuration for the application
+ */
+export const config: Partial<TsED.Configuration> = {
+  version: pkg.version,
+  ajv: {
+    returnsCoercedValues: true
+  },
+  logger: loggerConfig,
+  extends: [
+    EnvsConfigSource]
 };
 "
 `;

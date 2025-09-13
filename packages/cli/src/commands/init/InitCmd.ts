@@ -308,6 +308,7 @@ export class InitCmd implements CommandProvider {
       "@tsed/core": ctx.tsedVersion,
       "@tsed/di": ctx.tsedVersion,
       "@tsed/ajv": ctx.tsedVersion,
+      "@tsed/config": ctx.tsedVersion,
       "@tsed/exceptions": ctx.tsedVersion,
       "@tsed/schema": ctx.tsedVersion,
       "@tsed/json-mapper": ctx.tsedVersion,
@@ -326,9 +327,6 @@ export class InitCmd implements CommandProvider {
       "@tsed/barrels": "latest",
       ajv: "latest",
       "cross-env": "latest",
-      dotenv: "latest",
-      "dotenv-expand": "latest",
-      "dotenv-flow": "latest",
       ...this.runtimes.get().dependencies(),
       ...this.platforms.get(ctx.platform).dependencies(ctx)
     });

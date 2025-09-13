@@ -112,7 +112,7 @@ describe("Init TypeGraphQL project", () => {
 
     const configContent = FakeCliFs.files.get("project-name/src/config/config.ts")!;
     expect(configContent).toMatchInlineSnapshot(`
-      "import { EnvsConfigSource } from "@tsed/config/envs";
+      "import { EnvsConfigSource } from "@tsedio/config-envs/envs";
       import { readFileSync } from "node:fs";
       import loggerConfig from "./logger/index.js";
 
@@ -126,7 +126,8 @@ describe("Init TypeGraphQL project", () => {
           returnsCoercedValues: true
         },
         logger: loggerConfig,
-        extends: [EnvsConfigSource],
+        extends: [
+          EnvsConfigSource],
         graphql: {
           default: {
             path: "/graphql",

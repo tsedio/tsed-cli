@@ -1,11 +1,12 @@
 import {join} from "node:path";
 
-import {PackageManager} from "@tsed/cli-core";
+import {PackageManager, ProjectPackageJson} from "@tsed/cli-core";
 // @ts-ignore
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
+import {inject} from "@tsed/di";
 import {ensureDirSync, writeFileSync} from "fs-extra";
 
-import {ArchitectureConvention, InitCmd, ProjectConvention, TEMPLATE_DIR} from "../../../src/index.js";
+import {ArchitectureConvention, FeatureType, InitCmd, ProjectConvention, TEMPLATE_DIR} from "../../../src/index.js";
 
 const dir = import.meta.dirname;
 
@@ -94,6 +95,7 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
+            "@tsed/config": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -141,6 +143,187 @@ describe("Init cmd", () => {
       expect(indexContent).toContain('import { Server } from "./Server.js"');
 
       const configContent = FakeCliFs.files.get("project-name/src/config/config.ts")!;
+      expect(configContent).toMatchSnapshot("config file content");
+    });
+    it("should generate a project with the many config source", async () => {
+      CliPlatformTest.setPackageJson({
+        name: "",
+        version: "1.0.0",
+        description: "",
+        scripts: {},
+        dependencies: {},
+        devDependencies: {}
+      });
+
+      await CliPlatformTest.initProject({
+        platform: "express",
+        rootDir: "./project-data",
+        projectName: "project-data",
+        tsedVersion: "5.58.1",
+        packageManager: "yarn",
+        runtime: "node",
+        verbose: false,
+        root: ".",
+        arch: "arc_default",
+        convention: "conv_default",
+        skipPrompt: false,
+        rawArgs: [],
+        architecture: "arc_default",
+        commandName: "init",
+        features: [
+          "config",
+          "config:envs",
+          FeatureType.CONFIG_DOTENV,
+          FeatureType.CONFIG_JSON,
+          FeatureType.CONFIG_YAML,
+          FeatureType.CONFIG_AWS_SECRETS,
+          FeatureType.CONFIG_VAULT,
+          FeatureType.CONFIG_IOREDIS,
+          FeatureType.CONFIG_MONGO,
+          FeatureType.CONFIG_POSTGRES
+        ],
+        json: true,
+        node: true,
+        babel: false,
+        webpack: false,
+        bun: false,
+        npm: true,
+        yarn_berry: false,
+        yarn: false,
+        cliVersion: "6.6.3",
+        srcDir: "src",
+        bindLogger: true,
+        compiled: true
+      });
+
+      expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
+        [
+          "project-name",
+          "project-name/.barrels.json",
+          "project-name/.dockerignore",
+          "project-name/.gitignore",
+          "project-name/.swcrc",
+          "project-name/Dockerfile",
+          "project-name/README.md",
+          "project-name/docker-compose.yml",
+          "project-name/nodemon.json",
+          "project-name/package.json",
+          "project-name/processes.config.cjs",
+          "project-name/src/Server.ts",
+          "project-name/src/config/config.ts",
+          "project-name/src/config/logger/index.ts",
+          "project-name/src/config/utils/index.ts",
+          "project-name/src/controllers/pages/IndexController.ts",
+          "project-name/src/controllers/rest/HelloWorldController.ts",
+          "project-name/src/index.ts",
+          "project-name/tsconfig.base.json",
+          "project-name/tsconfig.json",
+          "project-name/tsconfig.node.json",
+        ]
+      `);
+
+      const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
+
+      expect(content).toContain('import { application } from "@tsed/platform-http"');
+      expect(content).toContain('import "@tsed/platform-express"');
+      expect(content).toContain('import "@tsed/ajv"');
+      expect(content).toMatchSnapshot();
+
+      expect(FakeCliFs.files.get("project-name/.barrels.json")).toMatchInlineSnapshot(`
+        "{
+          "directory": [
+            "./src/controllers/rest"
+          ],
+          "exclude": [
+            "**/__mock__",
+            "**/__mocks__",
+            "**/*.spec.ts"
+          ],
+          "delete": true
+        }"
+      `);
+
+      expect(inject(ProjectPackageJson).dependencies).toMatchInlineSnapshot(`
+        {
+          "@aws-sdk/client-secrets-manager": "latest",
+          "@swc-node/register": "latest",
+          "@swc/cli": "latest",
+          "@swc/core": "latest",
+          "@swc/helpers": "latest",
+          "@tsed/ajv": "5.58.1",
+          "@tsed/barrels": "latest",
+          "@tsed/config": "5.58.1",
+          "@tsed/core": "5.58.1",
+          "@tsed/di": "5.58.1",
+          "@tsed/engines": "latest",
+          "@tsed/exceptions": "5.58.1",
+          "@tsed/ioredis": "5.58.1",
+          "@tsed/json-mapper": "5.58.1",
+          "@tsed/logger": "latest",
+          "@tsed/openspec": "5.58.1",
+          "@tsed/platform-cache": "5.58.1",
+          "@tsed/platform-exceptions": "5.58.1",
+          "@tsed/platform-express": "5.58.1",
+          "@tsed/platform-http": "5.58.1",
+          "@tsed/platform-log-request": "5.58.1",
+          "@tsed/platform-middlewares": "5.58.1",
+          "@tsed/platform-multer": "5.58.1",
+          "@tsed/platform-params": "5.58.1",
+          "@tsed/platform-response-filter": "5.58.1",
+          "@tsed/platform-views": "5.58.1",
+          "@tsed/schema": "5.58.1",
+          "@tsedio/config-ioredis": "5.58.1",
+          "@tsedio/config-mongo": "latest",
+          "@tsedio/config-postgres": "latest",
+          "@tsedio/config-source-aws-secrets": "latest",
+          "@tsedio/config-vault": "latest",
+          "ajv": "latest",
+          "body-parser": "latest",
+          "compression": "latest",
+          "cookie-parser": "latest",
+          "cors": "latest",
+          "cross-env": "latest",
+          "dotenv": "latest",
+          "dotenv-expand": "latest",
+          "dotenv-flow": "latest",
+          "express": "latest",
+          "ioredis": "latest",
+          "js-yaml": "latest",
+          "method-override": "latest",
+          "mongodb": "latest",
+          "node-vault": "latest",
+          "pg": "latest",
+          "typescript": "latest",
+        }
+      `);
+      expect(inject(ProjectPackageJson).devDependencies).toMatchInlineSnapshot(`
+        {
+          "@tsedio/testcontainers-redis": "latest",
+          "@types/compression": "latest",
+          "@types/cookie-parser": "latest",
+          "@types/cors": "latest",
+          "@types/express": "latest",
+          "@types/method-override": "latest",
+          "@types/multer": "latest",
+          "@types/node": "latest",
+          "nodemon": "latest",
+          "tslib": "latest",
+        }
+      `);
+
+      const dockerFile = FakeCliFs.files.get("project-name/Dockerfile")!;
+
+      expect(dockerFile).toContain(
+        "COPY package.json yarn.lock tsconfig.json tsconfig.base.json tsconfig.node.json tsconfig.spec.json .barrels.json .swcrc ./"
+      );
+      expect(dockerFile).toContain("RUN yarn build");
+      expect(dockerFile).toContain("RUN yarn install --pure-lockfile");
+
+      const indexContent = FakeCliFs.files.get("project-name/src/index.ts")!;
+      expect(indexContent).toContain('import { Server } from "./Server.js"');
+
+      const configContent = FakeCliFs.files.get("project-name/src/config/config.ts")!;
+
       expect(configContent).toMatchSnapshot("config file content");
     });
     it("should generate a project with swagger", async () => {
@@ -216,6 +399,7 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
+            "@tsed/config": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -304,6 +488,7 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
+            "@tsed/config": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -393,6 +578,7 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
+            "@tsed/config": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -483,6 +669,7 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
+            "@tsed/config": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -573,6 +760,7 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
+            "@tsed/config": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -785,6 +973,7 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
+            "@tsed/config": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",
@@ -877,6 +1066,7 @@ describe("Init cmd", () => {
         {
           "dependencies": {
             "@tsed/ajv": "5.58.1",
+            "@tsed/config": "5.58.1",
             "@tsed/core": "5.58.1",
             "@tsed/di": "5.58.1",
             "@tsed/exceptions": "5.58.1",

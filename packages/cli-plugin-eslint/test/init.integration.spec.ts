@@ -67,7 +67,7 @@ describe("Eslint: Init cmd", () => {
     expect([...FakeCliExeca.entries.keys()]).toMatchInlineSnapshot(`
       [
         "yarn install",
-        "yarn add --ignore-engines @tsed/logger @tsed/engines @tsed/barrels ajv cross-env dotenv dotenv-expand dotenv-flow @swc/core @swc/cli @swc/helpers @swc-node/register typescript body-parser cors compression cookie-parser express method-override",
+        "yarn add --ignore-engines @tsed/logger @tsed/engines @tsed/barrels ajv cross-env @swc/core @swc/cli @swc/helpers @swc-node/register typescript body-parser cors compression cookie-parser express method-override",
         "yarn add -D --ignore-engines @types/node @types/multer tslib nodemon @types/cors @types/express @types/compression @types/cookie-parser @types/method-override",
         "yarn run prepare",
         "yarn run test:lint:fix",
@@ -181,7 +181,7 @@ describe("Eslint: Init cmd", () => {
     expect([...FakeCliExeca.entries.keys()]).toMatchInlineSnapshot(`
       [
         "yarn install",
-        "yarn add --ignore-engines @tsed/logger @tsed/engines @tsed/barrels ajv cross-env dotenv dotenv-expand dotenv-flow @swc/core @swc/cli @swc/helpers @swc-node/register typescript body-parser cors compression cookie-parser express method-override",
+        "yarn add --ignore-engines @tsed/logger @tsed/engines @tsed/barrels ajv cross-env @swc/core @swc/cli @swc/helpers @swc-node/register typescript body-parser cors compression cookie-parser express method-override",
         "yarn add -D --ignore-engines @types/node @types/multer tslib nodemon @types/cors @types/express @types/compression @types/cookie-parser @types/method-override",
         "yarn run test:lint:fix",
         "yarn run barrels",

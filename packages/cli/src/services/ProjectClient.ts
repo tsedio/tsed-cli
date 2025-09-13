@@ -232,7 +232,7 @@ export class ProjectClient extends Project {
     return undefined;
   }
 
-  addConfigSource(name: string, {content = name, moduleSpecifier = "@tsed/config/envs"} = {}) {
+  addConfigSource(name: string, {content = name, moduleSpecifier}: {content?: string; moduleSpecifier: string}) {
     const sourceFile = this.configSourceFile!;
     const options = this.findConfiguration("config");
 
@@ -256,7 +256,7 @@ export class ProjectClient extends Project {
         namedImports: [{name: name}]
       });
 
-      extendsConfig.addElement(content);
+      extendsConfig.addElement("\n" + content);
     }
   }
 }
