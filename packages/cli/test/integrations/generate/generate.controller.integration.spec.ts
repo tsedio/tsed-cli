@@ -59,7 +59,8 @@ describe("Generate Controller", () => {
         get() {
           return "hello";
         }
-      }"
+      }
+      "
     `);
   });
   it("should generate the template with the right options (complex path)", async () => {
@@ -110,7 +111,8 @@ describe("Generate Controller", () => {
         get() {
           return "hello";
         }
-      }"
+      }
+      "
     `);
   });
 });

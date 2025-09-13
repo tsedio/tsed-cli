@@ -56,9 +56,9 @@ describe("Generate Exception Filter", () => {
 
       @Catch(Error)
       export class HttpExceptionFilter implements ExceptionFilterMethods {
-         catch(exception: Exception, ctx: BaseContext) {
+        catch(exception: Exception, ctx: BaseContext) {
 
-         }
+        }
       }
       "
     `);

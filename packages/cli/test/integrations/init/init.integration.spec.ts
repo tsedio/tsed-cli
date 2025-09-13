@@ -14,7 +14,10 @@ describe("Init cmd", () => {
     return CliPlatformTest.bootstrap({
       templateDir: TEMPLATE_DIR,
       commands: [InitCmd],
-      argv: ["init"]
+      argv: ["init"],
+      logger: {
+        level: "info"
+      }
     });
   });
   afterEach(() => CliPlatformTest.reset());

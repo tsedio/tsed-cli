@@ -57,7 +57,8 @@ describe("Generate Model", () => {
       export class ProductModel {
         @ObjectID("id")
         _id: string;
-      }"
+      }
+      "
     `);
   });
 });

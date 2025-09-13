@@ -121,7 +121,7 @@ describe("Init integration", () => {
         httpPort: process.env.PORT || 8083,
         httpsPort: false, // CHANGE
         mount: {
-          "/rest": [...Object.values(rest), ...Object.values(rest)]
+          "/rest": [...Object.values(rest)]
         },
         views: {
           root: join(process.cwd(), "../views"),

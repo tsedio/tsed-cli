@@ -82,7 +82,7 @@ describe("Init TypeGraphQL project", () => {
         httpPort: process.env.PORT || 8083,
         httpsPort: false, // CHANGE
         mount: {
-          "/rest": [...Object.values(rest), ...Object.values(rest), ...Object.values(rest)]
+          "/rest": [...Object.values(rest), ...Object.values(rest)]
         },
         views: {
           root: join(process.cwd(), "../views"),
@@ -112,7 +112,8 @@ describe("Init TypeGraphQL project", () => {
 
     const configContent = FakeCliFs.files.get("project-name/src/config/config.ts")!;
     expect(configContent).toMatchInlineSnapshot(`
-      "import { readFileSync } from "node:fs";
+      "import { EnvsConfigSource } from "@tsed/config/envs";
+      import { readFileSync } from "node:fs";
       import loggerConfig from "./logger/index.js";
 
       const pkg = JSON.parse(readFileSync("./package.json", { encoding: "utf8" }));
@@ -125,6 +126,7 @@ describe("Init TypeGraphQL project", () => {
           returnsCoercedValues: true
         },
         logger: loggerConfig,
+        extends: [EnvsConfigSource],
         graphql: {
           default: {
             path: "/graphql",
@@ -146,13 +148,13 @@ describe("Init TypeGraphQL project", () => {
       @ResolverService(RecipeModel)
       export class RecipeResolver {
         protected service = inject(RecipeService);
-        
+
         @Query((returns) => RecipeModel)
         async recipe(@Arg("id") id: string) {
           return this.service.getById(id);
         }
-        
-        @Query((returns) => [RecipeModel], {description: "Get all items"})
+
+        @Query((returns) => [RecipeModel], { description: "Get all items" })
         recipes(): Promise<RecipeModel[]> {
           return this.service.findAll({});
         }
@@ -165,7 +167,7 @@ describe("Init TypeGraphQL project", () => {
     expect(recipeModelContent).toMatchInlineSnapshot(`
       "import { Field, ID, ObjectType } from "type-graphql";
 
-      @ObjectType({description: "Object representing cooking RecipeModel"})
+      @ObjectType({ description: "Object representing cooking RecipeModel" })
       export class RecipeModel {
         @Field((type) => ID)
         id: string;
