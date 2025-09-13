@@ -119,9 +119,6 @@ frameworks:
   - title: AWS
     href: https://tsed.dev/tutorials/aws.html
     src: /aws.png
-  - title: Handlebars
-    href: https://handlebarsjs.com/
-    src: https://handlebarsjs.com/images/handlebars_logo.png
 ---
 
 ::: slot hero-brand

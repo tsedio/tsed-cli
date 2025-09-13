@@ -39,10 +39,10 @@ npm install @tsed/core @tsed/di @tsed/cli-core
 
 ## Getting started
 
-Create CLI require some steps like create a package.json with the right information and create a structure directory
+Create CLI requires some steps like create a package.json with the right information and create a structure directory
 aligned with TypeScript to be compiled correctly for a npm deployment.
 
-Here a structure directory example:
+Here is a structure directory example:
 
 ```
 .
@@ -57,93 +57,6 @@ Here a structure directory example:
 └── tsconfig.compile.json
 ```
 
-## Create package.json and tsconfig
-
-The first step is to create the package.json with the following lines:
-
-```jsonc
-{
-  "name": "{{name}}",
-  "version": "1.0.0",
-  "main": "./lib/index.js",
-  "typings": "./lib/index.d.ts",
-  "bin": {
-    "tsed": "lib/bin/{{name}}.js"
-  },
-  "files": ["lib/bin/{{name}}.js", "lib/bin", "lib", "templates"],
-  "description": "An awesome CLI build on top of @tsed/cli-core",
-  "dependencies": {
-    "@tsed/cli-core": "1.3.1",
-    "tslib": "1.11.1"
-  },
-  "devDependencies": {
-    "@tsed/cli-testing": "1.3.1",
-    "ts-node": "latest",
-    "typescript": "latest"
-  },
-  "scripts": {
-    "build": "tsc --build tsconfig.compile.json",
-    "start:cmd:add": "cross-env NODE_ENV=development ts-node -r src/bin/{{name}}.ts add -r ./.tmp"
-  },
-  "engines": {
-    "node": ">=8.9"
-  },
-  "peerDependencies": {}
-}
-```
-
-Then create tsconfig files one for the IDE (`tsconfig.json`):
-
-```json
-{
-  "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2016",
-    "sourceMap": true,
-    "declaration": false,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "moduleResolution": "node",
-    "isolatedModules": false,
-    "suppressImplicitAnyIndexErrors": false,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "allowSyntheticDefaultImports": true,
-    "importHelpers": true,
-    "newLine": "LF",
-    "noEmit": true,
-    "lib": ["es7", "dom", "esnext.asynciterable"],
-    "typeRoots": ["./node_modules/@types"]
-  },
-  "linterOptions": {
-    "exclude": []
-  },
-  "exclude": []
-}
-```
-
-And another one to compile source (`tsconfig.compile.json`):
-
-```json
-{
-  "extends": "./tsconfig.compile.json",
-  "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "lib",
-    "moduleResolution": "node",
-    "declaration": true,
-    "noResolve": false,
-    "preserveConstEnums": true,
-    "sourceMap": true,
-    "noEmit": false,
-    "inlineSources": true
-  },
-  "exclude": ["node_modules", "test", "lib", "**/*.spec.ts"]
-}
-```
-
 ## Create the bin file
 
 The bin file is used by npm to create your node.js executable program when you install the node_module globally.
@@ -155,19 +68,13 @@ Create a new file according to your project name (example: `name.ts`) and add th
 import {AddCmd, CliCore} from "@tsed/cli-core";
 import {resolve} from "node:path";
 
-const pkg = require("../../package.json");
-const TEMPLATE_DIR = resolve(__dirname, "..", "..", "templates");
-
 CliCore.bootstrap({
   commands: [
     AddCmd // CommandProvider to install a plugin
     // then add you commands
   ],
-
   // optionals
-  name: "name", // replace by the cli name. This property will be used by Plugins command
-  pkg,
-  templateDir: TEMPLATE_DIR
+  name: "name" // replace by the cli name. This property will be used by Plugins command
 }).catch(console.error);
 ```
 
@@ -265,12 +172,6 @@ export class GenerateCmd implements CommandProvider {
 }
 ```
 
-Finally, create a handlebars template in templates directory:
-
-```hbs
-import {Injectable} from "@tsed/di"; @Injectable() export class {{symbolName}} { }
-```
-
 ## Run command in dev mode
 
 In your package.json add the following line in scripts property:
@@ -281,13 +182,13 @@ In your package.json add the following line in scripts property:
 }
 ```
 
-> Note: replace {{name}} by the name of you bin file located in src/bin.
+> Note: replace {{name}} by the name of your bin file located in src/bin.
 
 > Note 2: The option `-r ./.tmp` create a temporary directory to generate files with your command.
 
 ## More examples
 
-Here other commands examples:
+Here are other command examples:
 
 - Init a project command: https://github.com/tsedio/tsed-cli/tree/master/packages/cli/src/commands/init/InitCmd
 - Generate command: https://github.com/tsedio/tsed-cli/tree/master/packages/cli/src/commands/generate/GenerateCmd
