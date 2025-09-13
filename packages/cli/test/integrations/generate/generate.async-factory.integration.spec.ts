@@ -50,32 +50,33 @@ describe("Generate AsyncFactory", () => {
     const result = FakeCliFs.files.get("project-name/src/services/TestFactory.ts");
 
     expect(result).toMatchInlineSnapshot(`
-      "import {injectable} from "@tsed/di";
+      "import { injectable } from "@tsed/di";
 
       interface TestFactoryOptions {
-        
+
       }
-          
+
       declare global {
         namespace TsED {
           interface Configuration extends Record<string, any> {
             testFactory: Options;
           }
         }
-      }    
+      }
 
       export const TestFactory = injectable(Symbol.for("TestFactory"))
         .factory(async () => {
           const myConstant = constant<TestFactoryOptions>("testFactory");
-          
+
           // do something async
           await Promise.resolve();
-          
+
           return {};
         })
         .token();
-        
-      export type {{symbolName}} = typeof TestFactory;"
+
+      export type {{ symbolName }} = typeof TestFactory;
+      "
     `);
   });
 });

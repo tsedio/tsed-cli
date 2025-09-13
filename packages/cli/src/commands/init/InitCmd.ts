@@ -26,6 +26,7 @@ import {kebabCase} from "change-case";
 import {DEFAULT_TSED_TAGS, TEMPLATE_DIR} from "../../constants/index.js";
 import {exec} from "../../fn/exec.js";
 import {render} from "../../fn/render.js";
+import {taskOutput} from "../../fn/taskOutput.js";
 import {ArchitectureConvention} from "../../interfaces/ArchitectureConvention.js";
 import {type InitCmdContext, PlatformType} from "../../interfaces/index.js";
 import type {InitOptions} from "../../interfaces/InitCmdOptions.js";
@@ -214,13 +215,11 @@ export class InitCmd implements CommandProvider {
     return [
       {
         title: "Render base files",
-        task: async () => {
-          return this.renderFiles(ctx);
-        }
+        task: () => this.renderFiles(ctx)
       },
       {
         title: "Alter package json",
-        task: async () => {
+        task: () => {
           return $asyncAlter("$alterPackageJson", this.packageJson, [ctx]);
         }
       },
@@ -230,7 +229,7 @@ export class InitCmd implements CommandProvider {
           async () => {
             const subTasks = [
               ...(await exec("generate", {
-                ...ctx,
+                //...ctx,
                 type: "controller",
                 route: "rest",
                 name: "HelloWorld",
@@ -238,7 +237,7 @@ export class InitCmd implements CommandProvider {
               })),
               ...(ctx.commands
                 ? await exec("generate", {
-                    ...ctx,
+                    //...ctx,
                     type: "command",
                     route: "hello",
                     name: "hello"
@@ -309,6 +308,7 @@ export class InitCmd implements CommandProvider {
       "@tsed/core": ctx.tsedVersion,
       "@tsed/di": ctx.tsedVersion,
       "@tsed/ajv": ctx.tsedVersion,
+      "@tsed/config": ctx.tsedVersion,
       "@tsed/exceptions": ctx.tsedVersion,
       "@tsed/schema": ctx.tsedVersion,
       "@tsed/json-mapper": ctx.tsedVersion,
@@ -327,9 +327,6 @@ export class InitCmd implements CommandProvider {
       "@tsed/barrels": "latest",
       ajv: "latest",
       "cross-env": "latest",
-      dotenv: "latest",
-      "dotenv-expand": "latest",
-      "dotenv-flow": "latest",
       ...this.runtimes.get().dependencies(),
       ...this.platforms.get(ctx.platform).dependencies(ctx)
     });
@@ -409,9 +406,15 @@ export class InitCmd implements CommandProvider {
 
   async renderFiles(ctx: InitOptions) {
     // base files
+    let startTime = Date.now();
+
     await this.baseFiles(ctx);
 
+    taskOutput(`Base files rendered (${Date.now() - startTime}ms)`);
+
     const files = await $asyncAlter("$alterRenderFiles", [] as any[], [ctx]);
+
+    startTime = Date.now();
 
     const promises = files.map((option) => {
       if (!option) {
@@ -437,6 +440,7 @@ export class InitCmd implements CommandProvider {
     });
 
     await Promise.all(promises);
+    taskOutput(`Plugins files rendered (${Date.now() - startTime}ms)`);
   }
 }
 

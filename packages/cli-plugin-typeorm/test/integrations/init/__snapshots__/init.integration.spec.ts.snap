@@ -19,7 +19,7 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest), ...Object.values(rest), ...Object.values(rest)]
+    "/rest": [...Object.values(rest), ...Object.values(rest)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -64,11 +64,11 @@ export const mysqlDatasource = new DataSource({
 export const MysqlDatasource = injectable(Symbol.for("MysqlDatasource"))
   .type("typeorm:datasource")
   .asyncFactory(async () => {
-     await mysqlDatasource.initialize();
-     
-     logger().info("Connected with typeorm to database: Mysql");
+    await mysqlDatasource.initialize();
 
-     return mysqlDatasource;
+    logger().info("Connected with typeorm to database: Mysql");
+
+    return mysqlDatasource;
   })
   .hooks({
     $onDestroy(dataSource) {
@@ -76,7 +76,7 @@ export const MysqlDatasource = injectable(Symbol.for("MysqlDatasource"))
     }
   })
   .token();
-  
+
 export type MysqlDatasource = DataSource;
 "
 `;

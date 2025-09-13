@@ -68,11 +68,11 @@ describe("Generate DataSource", () => {
       export const TestDatasource = injectable(Symbol.for("TestDatasource"))
         .type("typeorm:datasource")
         .asyncFactory(async () => {
-           await testDatasource.initialize();
-           
-           logger().info("Connected with typeorm to database: Test");
+          await testDatasource.initialize();
 
-           return testDatasource;
+          logger().info("Connected with typeorm to database: Test");
+
+          return testDatasource;
         })
         .hooks({
           $onDestroy(dataSource) {
@@ -80,7 +80,7 @@ describe("Generate DataSource", () => {
           }
         })
         .token();
-        
+
       export type TestDatasource = DataSource;
       "
     `);

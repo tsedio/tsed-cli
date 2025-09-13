@@ -114,7 +114,7 @@ describe("Generate protocols", () => {
       })
       export class LocalProtocol implements OnVerify, OnInstall {
         async $onVerify(@Req() request: Req, @BodyParams() credentials: any) {
-          const {email, password} = credentials;
+          const { email, password } = credentials;
 
         }
 
@@ -133,6 +133,7 @@ describe("Generate protocols", () => {
         "@swc/helpers": "latest",
         "@tsed/ajv": "5.58.1",
         "@tsed/barrels": "latest",
+        "@tsed/config": "5.58.1",
         "@tsed/core": "5.58.1",
         "@tsed/di": "5.58.1",
         "@tsed/engines": "latest",
@@ -157,9 +158,6 @@ describe("Generate protocols", () => {
         "cookie-parser": "latest",
         "cors": "latest",
         "cross-env": "latest",
-        "dotenv": "latest",
-        "dotenv-expand": "latest",
-        "dotenv-flow": "latest",
         "express": "latest",
         "method-override": "latest",
         "passport-local": "1.0.0",
@@ -233,7 +231,7 @@ describe("Generate protocols", () => {
       })
       export class LocalProtocol implements OnVerify, OnInstall {
         async $onVerify(@Req() request: Req, @BodyParams() credentials: any) {
-          const {username, password} = credentials;
+          const { username, password } = credentials;
 
         }
 
@@ -298,9 +296,9 @@ describe("Generate protocols", () => {
         }
       })
       export class LocalProtocol implements OnVerify {
-        async $onVerify(@Req() req: Req, @Arg(0) jwtPayload: {sub: string}) {
+        async $onVerify(@Req() req: Req, @Arg(0) jwtPayload: { sub: string }) {
           const token = jwtPayload.sub;
-          
+
         }
       }
       "
@@ -371,7 +369,8 @@ describe("Generate protocols", () => {
         async $onInstall(strategy: Strategy) {
           refresh.use(strategy);
         }
-      }"
+      }
+      "
     `);
   });
   it("should generate the template (passport facebook)", async () => {
@@ -436,7 +435,8 @@ describe("Generate protocols", () => {
 
           // return user ? user : false;
         }
-      }"
+      }
+      "
     `);
   });
   it("should generate the template (passport generic)", async () => {

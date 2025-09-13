@@ -148,6 +148,11 @@ describe("getFeaturesPrompt", () => {
               "value": "config:envs",
             },
             {
+              "dependencies": {
+                "dotenv": "latest",
+                "dotenv-expand": "latest",
+                "dotenv-flow": "latest",
+              },
               "name": "Dotenv",
               "value": "config:dotenv",
             },
@@ -156,20 +161,35 @@ describe("getFeaturesPrompt", () => {
               "value": "config:json",
             },
             {
+              "dependencies": {
+                "js-yaml": "latest",
+              },
               "name": "YAML",
               "value": "config:yaml",
             },
             {
               "dependencies": {
+                "@aws-sdk/client-secrets-manager": "latest",
+                "@tsedio/config-source-aws-secrets": "latest",
+              },
+              "name": "AWS Secrets Manager (Premium)",
+              "value": "config:aws_secrets",
+            },
+            {
+              "dependencies": {
+                "@tsed/ioredis": "{{tsedVersion}}",
                 "@tsedio/config-ioredis": "{{tsedVersion}}",
                 "ioredis": "latest",
+              },
+              "devDependencies": {
+                "@tsedio/testcontainers-redis": "latest",
               },
               "name": "IORedis (Premium)",
               "value": "config:ioredis",
             },
             {
               "dependencies": {
-                "@tsedio/config-mongo": "{{tsedVersion}}",
+                "@tsedio/config-mongo": "latest",
                 "mongodb": "latest",
               },
               "name": "MongoDB (Premium)",
@@ -177,14 +197,15 @@ describe("getFeaturesPrompt", () => {
             },
             {
               "dependencies": {
-                "@tsedio/config-vault": "{{tsedVersion}}",
+                "@tsedio/config-vault": "latest",
+                "node-vault": "latest",
               },
               "name": "Vault (Premium)",
               "value": "config:vault",
             },
             {
               "dependencies": {
-                "@tsedio/config-postgres": "{{tsedVersion}}",
+                "@tsedio/config-postgres": "latest",
                 "pg": "latest",
               },
               "name": "Postgres (Premium)",

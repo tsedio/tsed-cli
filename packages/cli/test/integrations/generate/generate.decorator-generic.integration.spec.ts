@@ -60,7 +60,7 @@ describe("Generate generic decorator", () => {
 
       export function Test(options: TestOptions): any {
         return (...args: DecoratorParameters): any => {
-          switch(decoratorTypeOf(args)) {
+          switch (decoratorTypeOf(args)) {
             case DecoratorTypes.CLASS:
             case DecoratorTypes.PROP:
               console.log("do something")

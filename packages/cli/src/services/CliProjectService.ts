@@ -6,11 +6,9 @@ import {$asyncAlter} from "@tsed/hooks";
 import {normalizePath} from "@tsed/normalize-path";
 import {globbySync} from "globby";
 
+import {taskOutput} from "../fn/taskOutput.js";
 import type {RenderDataContext} from "../interfaces/RenderDataContext.js";
 import {PlatformsModule} from "../platforms/PlatformsModule.js";
-import {InitExpressPlatform} from "../platforms/supports/InitExpressPlatform.js";
-import {InitFastifyPlatform} from "../platforms/supports/InitFastifyPlatform.js";
-import {InitKoaPlatform} from "../platforms/supports/InitKoaPlatform.js";
 import {transformBinFile} from "../processors/transformBinFile.js";
 import {transformConfigFile} from "../processors/transformConfigFile.js";
 import {transformIndexFile} from "../processors/transformIndexFile.js";
@@ -35,15 +33,12 @@ export class CliProjectService {
     return this.get().getSource("Server.ts") ? "Server" : "server";
   }
 
-  get() {
-    if (this.project) {
-      return this.project;
-    }
+  create() {
+    taskOutput("Create typescript project");
 
     const fs = inject(CliFs);
 
     this.project = new ProjectClient({
-      // tsConfigFilePath: join(this.rootDir, "tsconfig.json"),
       rootDir: this.rootDir
     });
 
@@ -54,6 +49,12 @@ export class CliProjectService {
         overwrite: true
       });
     });
+  }
+
+  get() {
+    if (!this.project) {
+      this.create();
+    }
 
     return this.project;
   }
@@ -80,13 +81,20 @@ export class CliProjectService {
     await Promise.all(
       project.getSourceFiles().map((sourceFile) => {
         sourceFile.organizeImports();
+        sourceFile.formatText({
+          indentSize: 2
+        });
         return sourceFile.save();
       })
     );
   }
 
   async createFromTemplate(templateId: string, ctx: TemplateRenderOptions): Promise<TemplateRenderReturnType | undefined> {
+    const startTime = Date.now();
     const obj = await this.templates.render(templateId, ctx);
+
+    taskOutput(`Template ${templateId} rendered in ${Date.now() - startTime}ms`);
+
     const project = this.get();
 
     if (obj) {
@@ -119,4 +127,4 @@ export class CliProjectService {
   }
 }
 
-injectable(PlatformsModule).imports([InitExpressPlatform, InitKoaPlatform, InitFastifyPlatform]);
+injectable(CliProjectService);

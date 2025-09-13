@@ -53,6 +53,7 @@ describe("Init integration", () => {
         "@swc/helpers": "latest",
         "@tsed/ajv": "5.58.1",
         "@tsed/barrels": "latest",
+        "@tsed/config": "5.58.1",
         "@tsed/core": "5.58.1",
         "@tsed/di": "5.58.1",
         "@tsed/engines": "latest",
@@ -78,9 +79,6 @@ describe("Init integration", () => {
         "cookie-parser": "latest",
         "cors": "latest",
         "cross-env": "latest",
-        "dotenv": "latest",
-        "dotenv-expand": "latest",
-        "dotenv-flow": "latest",
         "express": "latest",
         "method-override": "latest",
         "passport": "latest",
@@ -121,7 +119,7 @@ describe("Init integration", () => {
         httpPort: process.env.PORT || 8083,
         httpsPort: false, // CHANGE
         mount: {
-          "/rest": [...Object.values(rest), ...Object.values(rest)]
+          "/rest": [...Object.values(rest)]
         },
         views: {
           root: join(process.cwd(), "../views"),

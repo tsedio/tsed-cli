@@ -21,8 +21,8 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest), ...Object.values(rest)],
-    "/": [...Object.values(pages), InteractionsController, ...Object.values(pages), InteractionsController]
+    "/rest": [...Object.values(rest)],
+    "/": [...Object.values(pages), InteractionsController]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -116,8 +116,8 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest), ...Object.values(rest)],
-    "/": [...Object.values(pages), InteractionsController, ...Object.values(pages), InteractionsController]
+    "/rest": [...Object.values(rest)],
+    "/": [...Object.values(pages), InteractionsController]
   },
   views: {
     root: join(process.cwd(), "../views"),

@@ -66,15 +66,11 @@ export class GenerateCmd implements CommandProvider {
       {
         title: `Generate ${ctx.type} file to '${symbolPath}.ts'`,
         skip: !this.templates.get(type),
-        task: () => {
-          this.projectService.createFromTemplate(type, ctx);
-        }
+        task: () => this.projectService.createFromTemplate(type, ctx)
       },
       {
         title: "Transform generated files",
-        task: () => {
-          return this.projectService.transformFiles(ctx);
-        }
+        task: () => this.projectService.transformFiles(ctx)
       }
     ];
   }

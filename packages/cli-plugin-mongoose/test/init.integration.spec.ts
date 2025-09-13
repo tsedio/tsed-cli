@@ -49,14 +49,16 @@ describe("Init integration", () => {
       "export default {
         id: "MongooseDefaultConnection",
         url: process.env.MONGOOSE_DEFAULT_CONNECTION_URL || "mongodb://localhost:27017/mongoose-default",
-        connectionOptions: { }
-      }"
+        connectionOptions: {}
+      }
+      "
     `);
     expect(FakeCliFs.files.get("project-name/src/config/mongoose/index.ts")).toMatchInlineSnapshot(`
       "import mongooseDefaultConnection from "./MongooseDefaultConnection.js";
 
       //keep this default 
-      export default [mongooseDefaultConnection];"
+      export default [mongooseDefaultConnection];
+      "
     `);
     expect(FakeCliFs.files.get("project-name/docker-compose.yml")).toMatchInlineSnapshot(`
       "services:
