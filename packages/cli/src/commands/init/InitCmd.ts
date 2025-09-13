@@ -26,6 +26,7 @@ import {kebabCase} from "change-case";
 import {DEFAULT_TSED_TAGS, TEMPLATE_DIR} from "../../constants/index.js";
 import {exec} from "../../fn/exec.js";
 import {render} from "../../fn/render.js";
+import {taskOutput} from "../../fn/taskOutput.js";
 import {ArchitectureConvention} from "../../interfaces/ArchitectureConvention.js";
 import {type InitCmdContext, PlatformType} from "../../interfaces/index.js";
 import type {InitOptions} from "../../interfaces/InitCmdOptions.js";
@@ -214,13 +215,11 @@ export class InitCmd implements CommandProvider {
     return [
       {
         title: "Render base files",
-        task: async () => {
-          return this.renderFiles(ctx);
-        }
+        task: () => this.renderFiles(ctx)
       },
       {
         title: "Alter package json",
-        task: async () => {
+        task: () => {
           return $asyncAlter("$alterPackageJson", this.packageJson, [ctx]);
         }
       },
@@ -409,9 +408,15 @@ export class InitCmd implements CommandProvider {
 
   async renderFiles(ctx: InitOptions) {
     // base files
+    let startTime = Date.now();
+
     await this.baseFiles(ctx);
 
+    taskOutput(`Base files rendered (${Date.now() - startTime}ms)`);
+
     const files = await $asyncAlter("$alterRenderFiles", [] as any[], [ctx]);
+
+    startTime = Date.now();
 
     const promises = files.map((option) => {
       if (!option) {
@@ -437,6 +442,7 @@ export class InitCmd implements CommandProvider {
     });
 
     await Promise.all(promises);
+    taskOutput(`Plugins files rendered (${Date.now() - startTime}ms)`);
   }
 }
 

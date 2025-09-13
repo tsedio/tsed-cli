@@ -2,6 +2,7 @@ import {classOf} from "@tsed/core";
 import {
   configuration,
   constant,
+  context,
   destroyInjector,
   DIContext,
   getContext,
@@ -176,7 +177,20 @@ export class CliService {
       ...(await instance.$exec(data)),
       ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, data)),
       ...(await $asyncAlter(`$alter${pascalCase(cmdName)}Tasks`, [], [data]))
-    ];
+    ].map((opts) => {
+      return {
+        ...opts,
+        task: async (arg, task) => {
+          context().set("currentTask", task);
+
+          const result = await opts.task(arg, task);
+
+          context().delete("currentTask");
+
+          return result;
+        }
+      };
+    });
   }
 
   public async getPostInstallTasks(cmdName: string, data: any) {

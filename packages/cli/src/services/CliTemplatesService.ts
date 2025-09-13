@@ -93,10 +93,11 @@ export class CliTemplatesService {
       const from = data.from || TEMPLATE_DIR;
       const fromPath = join(from!, templateId.replace("{{srcDir}}", "src"));
 
-      if (this.fs.fileExistsSync(fromPath)) {
+      if (await this.fs.fileExists(fromPath)) {
+        const content = await inject(CliFs).readFile(fromPath);
         return {
           templateId,
-          content: await inject(CliFs).readFile(fromPath),
+          content,
           outputPath: templateId.replace("{{srcDir}}", constant("project.srcDir", ""))
         };
       }
