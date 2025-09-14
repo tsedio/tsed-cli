@@ -367,6 +367,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/views",
           "project-name/views/swagger.ejs",
         ]
       `);
@@ -841,6 +842,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/views",
           "project-name/views/swagger.ejs",
         ]
       `);
@@ -900,6 +902,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/views",
           "project-name/views/swagger.ejs",
         ]
       `);

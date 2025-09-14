@@ -1,4 +1,4 @@
-import {join} from "node:path";
+import {dirname, join} from "node:path";
 
 import {CliDockerComposeYaml, CliFs, ProjectPackageJson} from "@tsed/cli-core";
 import {isString} from "@tsed/core";
@@ -80,6 +80,7 @@ export class ProjectClient extends Project {
       return source;
     }
 
+    await this.fs.ensureDir(dirname(path));
     await this.fs.writeFile(path, sourceFileText, {encoding: "utf-8"});
   }
 
