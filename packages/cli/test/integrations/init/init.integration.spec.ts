@@ -202,7 +202,9 @@ describe("Init cmd", () => {
           "project-name/.barrels.json",
           "project-name/.dockerignore",
           "project-name/.gitignore",
+          "project-name/.npmrc",
           "project-name/.swcrc",
+          "project-name/.yarnrc",
           "project-name/Dockerfile",
           "project-name/README.md",
           "project-name/docker-compose.yml",
@@ -325,6 +327,13 @@ describe("Init cmd", () => {
       const configContent = FakeCliFs.files.get("project-name/src/config/config.ts")!;
 
       expect(configContent).toMatchSnapshot("config file content");
+
+      const npmrcContent: any = FakeCliFs.files.get("project-name/.npmrc");
+      expect(npmrcContent.toString("utf8")).toMatchInlineSnapshot(`
+        "@tsedio:registry=https://npm.pkg.github.com
+        //npm.pkg.github.com/:_authToken=\${GH_TOKEN}
+        "
+      `);
     });
     it("should generate a project with swagger", async () => {
       CliPlatformTest.setPackageJson({

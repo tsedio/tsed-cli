@@ -9,6 +9,11 @@ export function mapToContext(options: any): InitOptions {
   options.features.forEach((feature: string) => {
     const [base, type] = feature.split(":");
 
+    if (feature?.endsWith(":premium")) {
+      feature = feature.replace(":premium", "");
+      options.premium = true;
+    }
+
     options[camelCase(base)] = true;
     type && (options[camelCase(type)] = true);
     feature && (options[camelCase(feature)] = true);

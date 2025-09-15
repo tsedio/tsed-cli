@@ -23,16 +23,3 @@ export function getFeaturesPrompt(runtimes: string[], availablePackageManagers: 
     });
   });
 }
-
-export function getFrameworksPrompt() {
-  return {
-    ...FrameworksPrompt,
-    choices: FrameworksPrompt.choices.map((choice: string, index) => {
-      return cleanObject({
-        ...FeaturesMap[choice],
-        checked: index === 0,
-        value: choice
-      });
-    })
-  };
-}

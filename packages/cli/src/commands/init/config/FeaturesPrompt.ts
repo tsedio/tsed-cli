@@ -1,5 +1,5 @@
 import {ArchitectureConvention, type InitOptions, PlatformType, ProjectConvention} from "../../../interfaces/index.js";
-import {hasFeature, hasValue} from "../utils/hasFeature.js";
+import {hasFeature, hasValue, hasValuePremium} from "../utils/hasFeature.js";
 import {isPlatform} from "../utils/isPlatform.js";
 
 export interface Feature {
@@ -26,11 +26,11 @@ export enum FeatureType {
   CONFIG_DOTENV = "config:dotenv",
   CONFIG_JSON = "config:json",
   CONFIG_YAML = "config:yaml",
-  CONFIG_AWS_SECRETS = "config:aws_secrets",
-  CONFIG_IOREDIS = "config:ioredis",
-  CONFIG_MONGO = "config:mongo",
-  CONFIG_VAULT = "config:vault",
-  CONFIG_POSTGRES = "config:postgres",
+  CONFIG_AWS_SECRETS = "config:aws_secrets:premium",
+  CONFIG_IOREDIS = "config:ioredis:premium",
+  CONFIG_MONGO = "config:mongo:premium",
+  CONFIG_VAULT = "config:vault:premium",
+  CONFIG_POSTGRES = "config:postgres:premium",
 
   // DOC
   SWAGGER = "swagger",
@@ -486,13 +486,13 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
     ],
     when: hasValue("featuresDB", FeatureType.TYPEORM)
   },
-  // {
-  //   type: "password",
-  //   name: "GH_TOKEN",
-  //   message:
-  //     "Enter GH_TOKEN to use the premium @tsedio package or leave blank (see https://tsed.dev/plugins/premium/install-premium-plugins.html)"
-  //   // when: hasValue("featuresDB.type", "prisma")
-  // },
+  {
+    type: "password",
+    name: "GH_TOKEN",
+    message:
+      "Enter GH_TOKEN to use the premium @tsedio package or leave blank (see https://tsed.dev/plugins/premium/install-premium-plugins.html)",
+    when: hasValuePremium()
+  },
   {
     message: "Choose unit framework",
     type: "list",

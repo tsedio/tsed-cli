@@ -168,7 +168,7 @@ export class InitCmd implements CommandProvider {
       [
         {
           title: "Write RC files",
-          skip: () => !ctx.GH_TOKEN,
+          skip: () => !ctx.premium,
           task: () => {
             return Promise.all([render(".npmrc", ctx), render(".yarnrc", ctx)]);
           }

@@ -21,6 +21,7 @@ export interface RenderDataContext extends CommandData, TsED.RenderDataContext {
   runtime: RuntimeTypes;
   features?: FeatureType[];
   root?: string;
+  premium?: boolean;
   projectName?: string;
   tsedVersion?: string;
   cliVersion?: string;

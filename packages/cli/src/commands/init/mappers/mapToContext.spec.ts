@@ -21,7 +21,8 @@ describe("mapToContext", () => {
         FeatureType.OIDC,
         FeatureType.TESTING,
         FeatureType.LINTER,
-        FeatureType.COMMANDS
+        FeatureType.COMMANDS,
+        FeatureType.CONFIG_POSTGRES
       ],
       featuresDB: FeatureType.TYPEORM,
       featuresTypeORM: FeatureType.TYPEORM_MARIADB,
@@ -32,6 +33,7 @@ describe("mapToContext", () => {
       architecture: "feature",
       commands: true,
       convention: "angular",
+      premium: true,
       db: true,
       features: [
         "graphql",
@@ -43,6 +45,7 @@ describe("mapToContext", () => {
         "testing",
         "linter",
         "commands",
+        "config:postgres:premium",
         "typeorm",
         "typeorm:mariadb"
       ],
@@ -50,6 +53,9 @@ describe("mapToContext", () => {
       linter: true,
       mariadb: true,
       oidc: true,
+      postgres: true,
+      config: true,
+      configPostgres: true,
       packageManager: "pnpm",
       passportjs: true,
       platform: "koa",

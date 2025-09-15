@@ -173,7 +173,7 @@ describe("getFeaturesPrompt", () => {
                 "@tsedio/config-source-aws-secrets": "latest",
               },
               "name": "AWS Secrets Manager (Premium)",
-              "value": "config:aws_secrets",
+              "value": "config:aws_secrets:premium",
             },
             {
               "dependencies": {
@@ -185,7 +185,7 @@ describe("getFeaturesPrompt", () => {
                 "@tsedio/testcontainers-redis": "latest",
               },
               "name": "IORedis (Premium)",
-              "value": "config:ioredis",
+              "value": "config:ioredis:premium",
             },
             {
               "dependencies": {
@@ -193,7 +193,7 @@ describe("getFeaturesPrompt", () => {
                 "mongodb": "latest",
               },
               "name": "MongoDB (Premium)",
-              "value": "config:mongo",
+              "value": "config:mongo:premium",
             },
             {
               "dependencies": {
@@ -201,7 +201,7 @@ describe("getFeaturesPrompt", () => {
                 "node-vault": "latest",
               },
               "name": "Vault (Premium)",
-              "value": "config:vault",
+              "value": "config:vault:premium",
             },
             {
               "dependencies": {
@@ -209,7 +209,7 @@ describe("getFeaturesPrompt", () => {
                 "pg": "latest",
               },
               "name": "Postgres (Premium)",
-              "value": "config:postgres",
+              "value": "config:postgres:premium",
             },
           ],
           "message": "Choose configuration sources",
@@ -358,6 +358,12 @@ describe("getFeaturesPrompt", () => {
           "message": "Which TypeORM you want to install?",
           "name": "featuresTypeORM",
           "type": "list",
+          "when": [Function],
+        },
+        {
+          "message": "Enter GH_TOKEN to use the premium @tsedio package or leave blank (see https://tsed.dev/plugins/premium/install-premium-plugins.html)",
+          "name": "GH_TOKEN",
+          "type": "password",
           "when": [Function],
         },
         {
