@@ -1,4 +1,5 @@
 import "@tsed/logger-std";
+import "./templates/index.js";
 
 import {CliCore} from "@tsed/cli-core";
 import chalk from "chalk";

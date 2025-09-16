@@ -1,5 +1,4 @@
-import type {QuestionOptions} from "@tsed/cli-core";
-import {injectable, type ProviderOpts} from "@tsed/di";
+import {injectable, type ProviderOpts, type QuestionOptions} from "@tsed/cli-core";
 
 import type {GenerateCmdContext} from "../interfaces/index.js";
 import type {TemplateRenderReturnType} from "../services/CliTemplatesService.js";

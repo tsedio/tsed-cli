@@ -42,7 +42,7 @@ export class CliProjectService {
       rootDir: this.rootDir
     });
 
-    const files = fs.globSync([join(constant("project.rootDir", process.cwd()), "**/*.ts")]);
+    const files = fs.globSync(["!**/node_modules/**", join(constant("project.rootDir", process.cwd()), "**/*.ts")]);
 
     files.forEach((file) => {
       this.project.createSourceFile(file, fs.readFileSync(file, "utf8"), {

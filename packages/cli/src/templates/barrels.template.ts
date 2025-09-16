@@ -14,7 +14,7 @@ export default defineTemplate({
   },
   render(_, data) {
     const barrels = $alter("$alterBarrels", {
-      directory: ["./src/controllers/rest", data.swagger || (data.oidc && "./src/controllers/pages")].filter(Boolean),
+      directory: ["./src/controllers/rest", (data.swagger || data.oidc) && "./src/controllers/pages"].filter(Boolean),
       exclude: ["**/__mock__", "**/__mocks__", "**/*.spec.ts"],
       delete: true
     });
