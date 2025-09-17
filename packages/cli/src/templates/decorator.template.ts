@@ -7,30 +7,32 @@ export default defineTemplate({
   fileName: "{{symbolName}}",
   outputDir: "{{srcDir}}/decorators",
 
-  prompts: (data: GenerateCmdContext) => [
-    {
-      type: "list",
-      name: "templateType",
-      message: "What kind of decorator do you want to create?",
-      when(state: any) {
-        return !!(["decorator"].includes(state.type || data.type) || data.templateType);
-      },
-      choices: [
-        {name: "Class Decorator", value: "class"},
-        {name: "Generic Decorator (class, property)", value: "generic"},
-        {name: "Method Decorator", value: "method"},
-        {name: "Parameter Decorator", value: "param"},
-        {name: "Property Decorator", value: "property"},
-        {name: "Property Decorator (with @Property)", value: "prop"},
-        {name: "Parameters Decorator", value: "parameters"},
-        {name: "Endpoint Decorator", value: "endpoint"},
-        {name: "Middleware Decorator", value: "middleware"}
-      ],
-      default: "class"
-    }
-  ],
-  render(symbolName: string, data: GenerateCmdContext) {
-    const type = data.templateType || "class";
+  prompts(context: GenerateCmdContext) {
+    return [
+      {
+        type: "list",
+        name: "templateType",
+        message: "What kind of decorator do you want to create?",
+        when(state: any) {
+          return !!(["decorator"].includes(state.type || context.type) || context.templateType);
+        },
+        choices: [
+          {name: "Class Decorator", value: "class"},
+          {name: "Generic Decorator (class, property)", value: "generic"},
+          {name: "Method Decorator", value: "method"},
+          {name: "Parameter Decorator", value: "param"},
+          {name: "Property Decorator", value: "property"},
+          {name: "Property Decorator (with @Property)", value: "prop"},
+          {name: "Parameters Decorator", value: "parameters"},
+          {name: "Endpoint Decorator", value: "endpoint"},
+          {name: "Middleware Decorator", value: "middleware"}
+        ],
+        default: "class"
+      }
+    ];
+  },
+  render(symbolName: string, context: GenerateCmdContext) {
+    const type = context.templateType || "class";
 
     switch (type) {
       case "class":

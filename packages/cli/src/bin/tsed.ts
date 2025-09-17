@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import "@swc-node/register/esm-register";
+
 import {register} from "node:module";
 import {join} from "node:path";
 import {pathToFileURL} from "node:url";

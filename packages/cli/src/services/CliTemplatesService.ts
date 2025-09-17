@@ -1,7 +1,8 @@
 import {join} from "node:path";
 
 import {CliFs} from "@tsed/cli-core";
-import {constant, inject, injectable, injectMany} from "@tsed/di";
+import {constant, inject, injectable, injectMany, logger} from "@tsed/di";
+import {globby} from "globby";
 import type {SourceFile} from "ts-morph";
 
 import {TEMPLATE_DIR} from "../constants/index.js";
@@ -32,26 +33,81 @@ export class CliTemplatesService {
   readonly rootDir = constant("project.rootDir", process.cwd());
   readonly fs = inject(CliFs);
 
+  #customTemplates: DefineTemplateOptions[];
+  #templates: Map<string, DefineTemplateOptions> = new Map();
+
   get srcDir() {
     return join(...([this.rootDir, constant("project.srcDir")].filter(Boolean) as string[]));
   }
 
+  get templatesDir() {
+    return join(this.rootDir, ".templates");
+  }
+
+  $onInit() {
+    return this.loadTemplates();
+  }
+
+  async loadTemplates() {
+    if (!this.#customTemplates?.length) {
+      const files = await globby("**/*.ts", {
+        cwd: this.templatesDir
+      });
+
+      const promises = files.map(async (file) => {
+        try {
+          const files = join(this.templatesDir, file);
+          const {default: token} = await import(files.replace(".ts", ".js"));
+
+          if (token) {
+            return inject(token);
+          }
+        } catch (er) {
+          logger().warn("Unable to load custom template %s: %s", file, (er as Error).message);
+        }
+      });
+
+      let customs = await Promise.all(promises);
+      this.#customTemplates = customs.map((template) => {
+        return {
+          ...template,
+          label: template.label + " (custom)"
+        };
+      });
+    }
+  }
+
+  getAll() {
+    const templates = injectMany<DefineTemplateOptions>("CLI_TEMPLATES");
+
+    const map = (this.#customTemplates || []).concat(templates).reduce((acc, template) => {
+      if (acc.has(template.id)) {
+        return acc;
+      }
+      return acc.set(template.id, template);
+    }, new Map());
+
+    return [...map.values()];
+  }
+
   find(id?: string) {
-    const templates = injectMany<DefineTemplateOptions>("CLI_TEMPLATES").filter((template) => !template.hidden);
+    const templates = this.getAll().filter((template) => !template.hidden);
 
-    id = id?.toLowerCase();
+    if (id) {
+      id = id?.toLowerCase();
 
-    const foundTemplates = templates.filter((template) => {
-      return template.label.toLowerCase().includes(id!) || template.id.includes(id!);
-    });
+      const foundTemplates = templates.filter((template) => {
+        return template.label.toLowerCase().includes(id!) || template.id.includes(id!);
+      });
 
-    return foundTemplates.length ? foundTemplates : templates;
+      return foundTemplates.length ? foundTemplates : templates;
+    }
+
+    return templates;
   }
 
   get(id: string) {
-    const templates = injectMany<DefineTemplateOptions>("CLI_TEMPLATES");
-
-    return templates.find((template) => template.id === id);
+    return this.getAll().find((template) => template.id === id);
   }
 
   async render(templateId: string, data: TemplateRenderOptions): Promise<TemplateRenderReturnType | undefined> {

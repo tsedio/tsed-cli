@@ -5,6 +5,7 @@ export default defineTemplate({
   label: "CLI Entry Point",
   description: "Create a new CLI entry point file",
   outputDir: "{{srcDir}}/bin",
+  hidden: true,
 
   render() {
     return `#!/usr/bin/env node

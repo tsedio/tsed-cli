@@ -55,5 +55,5 @@ export function defineTemplate(opts: DefineTemplateOptions) {
     provider.hooks(opts.hooks);
   }
 
-  return opts;
+  return provider.token();
 }

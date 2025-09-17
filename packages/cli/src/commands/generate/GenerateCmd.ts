@@ -1,19 +1,20 @@
 import {command, type CommandProvider, inject, ProjectPackageJson, type Task} from "@tsed/cli-core";
-import {pascalCase} from "change-case";
 
 import type {GenerateCmdContext} from "../../interfaces/GenerateCmdContext.js";
 import {CliProjectService} from "../../services/CliProjectService.js";
 import {CliTemplatesService} from "../../services/CliTemplatesService.js";
+import {addContextMethods} from "../../services/mappers/addContextMethods.js";
 import {mapDefaultTemplateOptions} from "../../services/mappers/mapDefaultTemplateOptions.js";
 import type {DefineTemplateOptions} from "../../utils/defineTemplate.js";
 
 const searchFactory = (list: DefineTemplateOptions[]) => {
+  const items = list.map((item) => ({name: item.label, value: item.id}));
   return (_: any, keyword: string) => {
     if (keyword) {
-      return list.filter((item) => item.label.toLowerCase().includes(keyword.toLowerCase()));
+      return items.filter((item) => item.name.toLowerCase().includes(keyword.toLowerCase()));
     }
 
-    return list;
+    return items;
   };
 };
 
@@ -23,9 +24,7 @@ export class GenerateCmd implements CommandProvider {
   protected templates = inject(CliTemplatesService);
 
   async $prompt(data: Partial<GenerateCmdContext>) {
-    data.getName = (state: {type?: string; name?: string}) =>
-      data.name || pascalCase(state.name || data.name || state.type || data.type || "");
-
+    data = addContextMethods(data as any);
     const templates = this.templates.find();
     const templatesPrompts = await Promise.all(
       templates
@@ -39,7 +38,7 @@ export class GenerateCmd implements CommandProvider {
       {
         type: "autocomplete",
         name: "type",
-        message: "Which type of provider?",
+        message: "Which template you want to use?",
         default: data.type,
         when: () => templates.length > 1,
         source: searchFactory(this.templates.find(data.type))

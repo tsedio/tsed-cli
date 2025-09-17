@@ -1,8 +1,5 @@
 import {defineTemplate} from "../utils/defineTemplate.js";
 import type {GenerateCmdContext} from "../interfaces/index.js";
-import {RoutePipe} from "../pipes/index.js";
-import {CliProjectService} from "../services/CliProjectService.js";
-import {inject} from "@tsed/di";
 
 export default defineTemplate({
   id: "controller",
@@ -10,31 +7,33 @@ export default defineTemplate({
   fileName: "{{symbolName}}.controller",
   outputDir: "{{srcDir}}/controllers",
 
-  prompts: (data: GenerateCmdContext) => [
-    {
-      type: "list",
-      name: "directory",
-      message: "Which directory?",
-      when(state) {
-        return !!(["controller"].includes(state.type || data.type) || data.directory);
+  prompts(context: GenerateCmdContext) {
+    return [
+      {
+        type: "list",
+        name: "directory",
+        message: "Which directory?",
+        when(state) {
+          return !!(["controller"].includes(state.type || context.type) || context.directory);
+        },
+        choices: context.getDirectories("controllers")
       },
-      choices: inject(CliProjectService).getDirectories("controllers")
-    },
-    {
-      type: "input",
-      name: "route",
-      message: "Which route?",
-      when(state) {
-        return !!(["controller"].includes(state.type || data.type) || data.route);
-      },
-      default: (state: any) => {
-        return inject(RoutePipe).transform(data.getName(state));
+      {
+        type: "input",
+        name: "route",
+        message: "Which route?",
+        when(state) {
+          return !!(["controller"].includes(state.type || context.type) || context.route);
+        },
+        default: (state: GenerateCmdContext) => {
+          return context.getRoute(state);
+        }
       }
-    }
-  ],
+    ];
+  },
 
-  render(symbolName: string, data: GenerateCmdContext) {
-    const route = inject(RoutePipe).transform(data.route);
+  render(symbolName: string, context: GenerateCmdContext) {
+    const route = context.getRoute(context.route);
 
     return `import {Controller} from "@tsed/di";
 import {Get} from "@tsed/schema";

@@ -36,7 +36,7 @@ ENV NODE_ENV production`;
 
 defineTemplate({
   id: "dockerfile.yarn",
-  label: "Dockerfile",
+  label: "Dockerfile (Yarn classic)",
   fileName: "Dockerfile",
   outputDir: ".",
   ext: null,
@@ -75,7 +75,7 @@ CMD ["pm2-runtime", "start", "processes.config.cjs", "--env", "production"]
 });
 defineTemplate({
   id: "dockerfile.yarn_berry",
-  label: "Dockerfile",
+  label: "Dockerfile (Yarn Berry)",
   fileName: "Dockerfile",
   outputDir: ".",
   ext: null,
@@ -118,7 +118,7 @@ CMD ["pm2-runtime", "start", "processes.config.cjs", "--env", "production"]
 
 defineTemplate({
   id: "dockerfile.npm",
-  label: "Dockerfile",
+  label: "Dockerfile (NPM)",
   fileName: "Dockerfile",
   outputDir: ".",
   ext: null,
@@ -157,7 +157,7 @@ CMD ["pm2-runtime", "start", "processes.config.cjs", "--env", "production"]`;
 
 defineTemplate({
   id: "dockerfile.pnpm",
-  label: "Dockerfile",
+  label: "Dockerfile (PNPM)",
   fileName: "Dockerfile",
   outputDir: ".",
   ext: null,
@@ -197,7 +197,7 @@ CMD ["pm2-runtime", "start", "processes.config.cjs", "--env", "production"]
 
 defineTemplate({
   id: "dockerfile.bun",
-  label: "Dockerfile",
+  label: "Dockerfile (Bun)",
   fileName: "Dockerfile",
   outputDir: ".",
   ext: null,

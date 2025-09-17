@@ -11,15 +11,15 @@ export default defineTemplate({
   preserveCase: true,
   hidden: true,
 
-  render(_, data: RenderDataContext) {
-    const pkgCmd = data.packageManager === PackageManager.YARN_BERRY ? "yarn" : data.packageManager;
+  render(_, context: RenderDataContext) {
+    const pkgCmd = context.packageManager === PackageManager.YARN_BERRY ? "yarn" : context.packageManager;
 
     return `<p style="text-align: center" align="center">
   <a href="https://tsed.dev" target="_blank"><img src="https://tsed.dev/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
 </p>
 
 <div align="center">
-  <h1>Ts.ED - ${data.projectName}</h1>
+  <h1>Ts.ED - ${context.projectName}</h1>
   <br />
   <div align="center">
     <a href="https://cli.tsed.dev/">Website</a>

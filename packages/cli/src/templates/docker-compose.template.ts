@@ -9,7 +9,7 @@ export default defineTemplate({
   outputDir: ".",
   ext: "yml",
   preserveCase: true,
-  render(_, data: RenderDataContext) {
+  render(_, context: RenderDataContext) {
     return `services:
   server:
     build:
@@ -19,7 +19,7 @@ export default defineTemplate({
         - http_proxy
         - https_proxy
         - no_proxy
-    image: ${data.projectName}/server:latest
+    image: ${context.projectName}/server:latest
     ports:
       - "8081:8081"
 `;

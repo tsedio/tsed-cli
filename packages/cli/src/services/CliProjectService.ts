@@ -89,18 +89,16 @@ export class CliProjectService {
     );
   }
 
-  async createFromTemplate(templateId: string, ctx: TemplateRenderOptions): Promise<TemplateRenderReturnType | undefined> {
-    const startTime = Date.now();
-    const obj = await this.templates.render(templateId, ctx);
-
-    taskOutput(`Template ${templateId} rendered in ${Date.now() - startTime}ms`);
-
+  async createFromTemplate(templateId: string, data: TemplateRenderOptions): Promise<TemplateRenderReturnType | undefined> {
+    const obj = await this.templates.render(templateId, data);
     const project = this.get();
 
     if (obj) {
       const sourceFile = await project.createSource(obj.outputPath, obj.content, {
         overwrite: true
       });
+
+      sourceFile && this.templates.get(templateId)?.hooks?.$afterCreateSourceFile?.(sourceFile, data);
 
       return {
         ...obj,

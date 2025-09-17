@@ -8,9 +8,10 @@ export default defineTemplate({
   fileName: "tsconfig",
   outputDir: ".",
   ext: "json",
+  hidden: true,
   preserveCase: true,
 
-  render(_, data: RenderDataContext) {
+  render(_, context: RenderDataContext) {
     const tsconfig = {
       extends: "./tsconfig.base.json",
       compilerOptions: {
@@ -25,7 +26,7 @@ export default defineTemplate({
       ]
     };
 
-    if (data.testing) {
+    if (context.testing) {
       tsconfig.references?.push({
         path: "./tsconfig.test.json"
       });

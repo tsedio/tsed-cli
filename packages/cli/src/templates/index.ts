@@ -30,3 +30,4 @@ import "./docker-compose.template.js";
 import "./dockerfile.template.js";
 import "./pm2.template.js";
 import "./readme.template.js";
+import "./new-template.template.js";
