@@ -17,4 +17,6 @@ export interface GenerateCmdContext extends RenderDataContext, TsED.GenerateOpti
   symbolPath: string;
   symbolPathBasename: string;
   getName: (state: Partial<GenerateCmdContext>) => string;
+  getRoute: (state: Partial<GenerateCmdContext> | string) => string;
+  getDirectories: (dir: string) => string[];
 }

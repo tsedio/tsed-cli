@@ -385,7 +385,7 @@ describe("Init cmd", () => {
         "{
           "directory": [
             "./src/controllers/rest",
-            true
+            "./src/controllers/pages"
           ],
           "exclude": [
             "**/__mock__",

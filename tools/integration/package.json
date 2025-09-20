@@ -26,6 +26,7 @@
     "start:generate": "yarn run-cmd generate -r ./.tmp/init/default",
     "start:generate:help": "yarn run-cmd generate -h",
     "start:generate:model": "yarn run-cmd generate model -r ./.tmp/init/awesome",
+    "start:template": "yarn run-cmd template -r ./.tmp/init/default",
     "start:g:model": "yarn run-cmd g model -r ./.tmp/init/awesome",
     "start:g:prisma": "yarn run-cmd g service -r ./.tmp/init/awesome prisma",
     "start:generate:run": "yarn run-cmd generate -r ./.tmp/init/awesome",

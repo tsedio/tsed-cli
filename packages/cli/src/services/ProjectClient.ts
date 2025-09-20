@@ -201,6 +201,34 @@ export class ProjectClient extends Project {
     );
   }
 
+  addConfigSource(name: string, {content = name, moduleSpecifier}: {content?: string; moduleSpecifier: string}) {
+    const sourceFile = this.configSourceFile!;
+    const options = this.findConfiguration("config");
+
+    if (!options) {
+      return;
+    }
+
+    const extendsConfig = this.getPropertyAssignment(options, {
+      name: "extends",
+      kind: SyntaxKind.ArrayLiteralExpression,
+      initializer: "[]"
+    });
+
+    const has = extendsConfig.getElements().some((expression) => {
+      return expression.getText().includes(name);
+    });
+
+    if (!has) {
+      sourceFile.addImportDeclaration({
+        moduleSpecifier,
+        namedImports: [{name: name}]
+      });
+
+      extendsConfig.addElement("\n" + content);
+    }
+  }
+
   protected findConfigurationDecorationOptions() {
     if (!this.serverSourceFile) {
       return;
@@ -231,33 +259,5 @@ export class ProjectClient extends Project {
     }
 
     return undefined;
-  }
-
-  addConfigSource(name: string, {content = name, moduleSpecifier}: {content?: string; moduleSpecifier: string}) {
-    const sourceFile = this.configSourceFile!;
-    const options = this.findConfiguration("config");
-
-    if (!options) {
-      return;
-    }
-
-    const extendsConfig = this.getPropertyAssignment(options, {
-      name: "extends",
-      kind: SyntaxKind.ArrayLiteralExpression,
-      initializer: "[]"
-    });
-
-    const has = extendsConfig.getElements().some((expression) => {
-      return expression.getText().includes(name);
-    });
-
-    if (!has) {
-      sourceFile.addImportDeclaration({
-        moduleSpecifier,
-        namedImports: [{name: name}]
-      });
-
-      extendsConfig.addElement("\n" + content);
-    }
   }
 }

@@ -8,13 +8,15 @@ export default defineTemplate({
   fileName: ".barrels",
   ext: "json",
   outputDir: ".",
+  hidden: true,
   preserveCase: true,
+
   prompts() {
     return [];
   },
-  render(_, data) {
+  render(_, context) {
     const barrels = $alter("$alterBarrels", {
-      directory: ["./src/controllers/rest", data.swagger || (data.oidc && "./src/controllers/pages")].filter(Boolean),
+      directory: ["./src/controllers/rest", (context.swagger || context.oidc) && "./src/controllers/pages"].filter(Boolean),
       exclude: ["**/__mock__", "**/__mocks__", "**/*.spec.ts"],
       delete: true
     });

@@ -8,8 +8,9 @@ export default defineTemplate({
   outputDir: "{{srcDir}}/config/logger",
   fileName: "index",
   preserveCase: true,
+  hidden: true,
 
-  render(_, data: RenderDataContext) {
+  render() {
     return `import {DILoggerOptions} from "@tsed/di";
 import {$log} from "@tsed/logger";
 import {isProduction} from "../utils/index.js";
