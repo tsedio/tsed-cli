@@ -1,7 +1,7 @@
 {
   "name": "@tsed/cli",
   "description": "CLI to bootstrap your Ts.ED project",
-  "version": "7.0.0-alpha.5",
+  "version": "7.0.0-alpha.6",
   "type": "module",
   "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
