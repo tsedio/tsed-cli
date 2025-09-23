@@ -44,6 +44,7 @@ describe("Generate AsyncFactory", () => {
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
+        "project-name/tsconfig.spec.json",
       ]
     `);
 
@@ -52,7 +53,7 @@ describe("Generate AsyncFactory", () => {
     expect(result).toMatchInlineSnapshot(`
       "import { defineTemplate } from "@tsed/cli";
 
-      defineTemplate({
+      export default defineTemplate({
         id: "test",
         label: "Test",
         fileName: "{{symbolName}}.services",
@@ -98,6 +99,7 @@ describe("Generate AsyncFactory", () => {
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
+        "project-name/tsconfig.spec.json",
       ]
     `);
 
@@ -191,6 +193,7 @@ describe("Generate AsyncFactory", () => {
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
+        "project-name/tsconfig.spec.json",
       ]
     `);
 

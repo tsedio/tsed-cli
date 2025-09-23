@@ -53,6 +53,7 @@ describe("cli-plugin-vitest", () => {
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
+        "project-name/tsconfig.spec.json",
         "project-name/vitest.config.ts",
       ]
     `);
@@ -99,6 +100,7 @@ describe("cli-plugin-vitest", () => {
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
+        "project-name/tsconfig.spec.json",
       ]
     `);
 

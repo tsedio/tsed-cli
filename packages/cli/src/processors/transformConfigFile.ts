@@ -4,24 +4,24 @@ import type {ProjectClient} from "../services/ProjectClient.js";
 export function transformConfigFile(project: ProjectClient, data: RenderDataContext) {
   if (!data.config && data.commandName === "init") {
     project.addConfigSource("EnvsConfigSource", {
-      moduleSpecifier: "@tsedio/config-envs/envs"
+      moduleSpecifier: "@tsed/config/envs"
     });
   }
 
   if (data.config) {
     if (data.configDotenv) {
       project.addConfigSource("DotenvConfigSource", {
-        moduleSpecifier: "@tsedio/config-envs/dotenv"
+        moduleSpecifier: "@tsed/config/dotenv"
       });
     } else if (data.configEnvs) {
       project.addConfigSource("EnvsConfigSource", {
-        moduleSpecifier: "@tsedio/config-envs/envs"
+        moduleSpecifier: "@tsed/config/envs"
       });
     }
 
     if (data.configJson) {
       project.addConfigSource("JsonConfigSource", {
-        moduleSpecifier: "@tsedio/config-envs/json",
+        moduleSpecifier: "@tsed/config/json",
         content: `withOptions(JsonConfigSource, {
       path: "./config.json"
     })`
@@ -29,7 +29,7 @@ export function transformConfigFile(project: ProjectClient, data: RenderDataCont
     }
     if (data.configYaml) {
       project.addConfigSource("YamlConfigSource", {
-        moduleSpecifier: "@tsedio/config-envs/yaml",
+        moduleSpecifier: "@tsed/config/yaml",
         content: `withOptions(YamlConfigSource, {
       path: "./config.yaml"
     })`

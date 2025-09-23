@@ -5,7 +5,7 @@ export default defineTemplate({
   id: "tsconfig.spec.json",
   label: "TSConfig spec",
   description: "Create a tsconfig.json file.",
-  fileName: "tsconfig",
+  fileName: "tsconfig.spec",
   outputDir: ".",
   ext: "json",
   preserveCase: true,

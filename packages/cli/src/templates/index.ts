@@ -24,7 +24,6 @@ import "./index.controller.template.js";
 import "./index.command.template.js";
 import "./index.logger.template.js";
 import "./index.config.utils.template.js";
-import "./tsconfig.template.js";
 import "./tsconfig.spec.template.js";
 import "./docker-compose.template.js";
 import "./dockerfile.template.js";

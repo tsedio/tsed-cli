@@ -22,7 +22,7 @@ defineTemplate({
     if (context.from === "new") {
       return `import {defineTemplate} from "@tsed/cli";
     
-defineTemplate({
+export default defineTemplate({
   id: "${context.templateId}",
   label: "${context.name}",
   fileName: "{{symbolName}}.services",

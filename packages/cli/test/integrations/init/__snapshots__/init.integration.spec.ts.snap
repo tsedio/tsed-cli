@@ -350,9 +350,9 @@ export class Server {
 `;
 
 exports[`Init cmd > Express.js > should generate a project with the many config source > config file content 1`] = `
-"import { DotenvConfigSource } from "@tsedio/config-envs/dotenv";
-import { JsonConfigSource } from "@tsedio/config-envs/json";
-import { YamlConfigSource } from "@tsedio/config-envs/yaml";
+"import { DotenvConfigSource } from "@tsed/config/dotenv";
+import { JsonConfigSource } from "@tsed/config/json";
+import { YamlConfigSource } from "@tsed/config/yaml";
 import { IoredisConfigSource } from "@tsedio/config-ioredis";
 import { MongoConfigSource } from "@tsedio/config-mongo";
 import { PostgresConfigSource } from "@tsedio/config-postgres";
@@ -476,7 +476,7 @@ export class Server {
 `;
 
 exports[`Init cmd > Express.js > should generate a project with the right options > config file content 1`] = `
-"import { EnvsConfigSource } from "@tsedio/config-envs/envs";
+"import { EnvsConfigSource } from "@tsed/config/envs";
 import { readFileSync } from "node:fs";
 import loggerConfig from "./logger/index.js";
 

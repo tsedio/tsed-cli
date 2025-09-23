@@ -57,6 +57,7 @@ describe("Init TypeGraphQL project", () => {
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
+        "project-name/tsconfig.spec.json",
       ]
     `);
 
@@ -112,7 +113,7 @@ describe("Init TypeGraphQL project", () => {
 
     const configContent = FakeCliFs.files.get("project-name/src/config/config.ts")!;
     expect(configContent).toMatchInlineSnapshot(`
-      "import { EnvsConfigSource } from "@tsedio/config-envs/envs";
+      "import { EnvsConfigSource } from "@tsed/config/envs";
       import { readFileSync } from "node:fs";
       import loggerConfig from "./logger/index.js";
 

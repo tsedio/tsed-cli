@@ -1,6 +1,7 @@
 import {command, type CommandProvider, inject, ProjectPackageJson} from "@tsed/cli-core";
 import {snakeCase} from "change-case";
 
+import {PKG} from "../../constants/index.js";
 import {render} from "../../fn/render.js";
 import type {RenderDataContext} from "../../interfaces/RenderDataContext.js";
 import {CliTemplatesService} from "../../services/CliTemplatesService.js";
@@ -83,6 +84,8 @@ export class CreateTemplateCommand implements CommandProvider {
   }
 
   $exec(ctx: CreateTemplateCmdContext & {symbolName: string; symbolPath: string}) {
+    this.projectPackageJson.addDevDependencies({"@tsed/cli": PKG.version});
+
     return [
       {
         title: "Generate " + ctx.from === "new" ? `new template ${ctx.templateId}` : `template ${ctx.templateId} from ${ctx.from}`,

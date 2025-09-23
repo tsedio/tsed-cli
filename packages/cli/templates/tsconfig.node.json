@@ -6,7 +6,7 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", ".templates/**/*"],
   "exclude": ["src/**/*.spec.ts", "dist", "node_modules", "**/helpers/*Fixture.ts", "**/__mock__/**", "coverage"],
   "linterOptions": {
     "exclude": []

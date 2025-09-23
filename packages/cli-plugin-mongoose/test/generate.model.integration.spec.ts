@@ -45,6 +45,7 @@ describe("Generate Model", () => {
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
+        "project-name/tsconfig.spec.json",
       ]
     `);
 

@@ -66,6 +66,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/tsconfig.spec.json",
         ]
       `);
 
@@ -144,6 +145,40 @@ describe("Init cmd", () => {
 
       const configContent = FakeCliFs.files.get("project-name/src/config/config.ts")!;
       expect(configContent).toMatchSnapshot("config file content");
+
+      const tsconfigContent: any = FakeCliFs.files.get("project-name/tsconfig.json")!;
+      expect(tsconfigContent.toString("utf8")).toMatchInlineSnapshot(`
+        "{
+          "extends": "./tsconfig.base.json",
+          "references": [
+            {
+              "path": "./tsconfig.node.json"
+            },
+            {
+              "path": "./tsconfig.spec.json"
+            }
+          ]
+        }"
+      `);
+
+      const tsconfigNodeContent: any = FakeCliFs.files.get("project-name/tsconfig.node.json")!;
+      expect(tsconfigNodeContent.toString("utf8")).toMatchInlineSnapshot(`
+        "{
+          "extends": "./tsconfig.base.json",
+          "compilerOptions": {
+            "baseUrl": ".",
+            "paths": {
+              "@/*": ["src/*"]
+            }
+          },
+          "include": ["src/**/*", ".templates/**/*"],
+          "exclude": ["src/**/*.spec.ts", "dist", "node_modules", "**/helpers/*Fixture.ts", "**/__mock__/**", "coverage"],
+          "linterOptions": {
+            "exclude": []
+          }
+        }
+        "
+      `);
     });
     it("should generate a project with the many config source", async () => {
       CliPlatformTest.setPackageJson({
@@ -221,6 +256,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/tsconfig.spec.json",
         ]
       `);
 
@@ -376,6 +412,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/tsconfig.spec.json",
           "project-name/views",
           "project-name/views/swagger.ejs",
         ]
@@ -484,6 +521,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/tsconfig.spec.json",
         ]
       `);
 
@@ -574,6 +612,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/tsconfig.spec.json",
         ]
       `);
 
@@ -664,6 +703,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/tsconfig.spec.json",
           "project-name/webpack.config.js",
         ]
       `);
@@ -756,6 +796,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/tsconfig.spec.json",
         ]
       `);
 
@@ -851,6 +892,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/tsconfig.spec.json",
           "project-name/views",
           "project-name/views/swagger.ejs",
         ]
@@ -911,6 +953,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/tsconfig.spec.json",
           "project-name/views",
           "project-name/views/swagger.ejs",
         ]
@@ -970,6 +1013,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/tsconfig.spec.json",
         ]
       `);
 
@@ -1063,6 +1107,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/tsconfig.spec.json",
         ]
       `);
 
@@ -1161,6 +1206,7 @@ describe("Init cmd", () => {
           "project-name/processes.config.cjs",
           "project-name/src/Server.ts",
           "project-name/src/bin/commands/HelloCommand.ts",
+          "project-name/src/bin/index.ts",
           "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
           "project-name/src/config/utils/index.ts",
@@ -1170,6 +1216,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/tsconfig.spec.json",
         ]
       `);
     });

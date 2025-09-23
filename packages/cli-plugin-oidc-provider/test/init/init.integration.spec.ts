@@ -65,6 +65,7 @@ describe(
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
+          "project-name/tsconfig.spec.json",
           "project-name/views",
           "project-name/views/consent.ejs",
           "project-name/views/forms",

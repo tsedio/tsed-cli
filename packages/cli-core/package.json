@@ -32,6 +32,7 @@
     "listr"
   ],
   "dependencies": {
+    "@ts-morph/common": "0.28.0",
     "@tsed/logger": ">=8.0.3",
     "@tsed/logger-pattern-layout": ">=8.0.3",
     "@tsed/logger-std": ">=8.0.3",

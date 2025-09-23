@@ -379,7 +379,7 @@ export class InitCmd implements CommandProvider {
     // files with higher priority
     const promises = [
       "tsconfig.base.json",
-      "tsconfig.config.json",
+      "tsconfig.json",
       "tsconfig.spec.json",
       "tsconfig.node.json",
       "docker-compose.yml",
@@ -392,6 +392,7 @@ export class InitCmd implements CommandProvider {
       "index.config.util",
       "index.logger",
       "index.controller",
+      ctx.commands && "index.command",
       "barrels",
       "readme",
       `pm2.${pm2}`,
