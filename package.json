@@ -63,7 +63,7 @@
     "inquirer": "^9.3.7",
     "inquirer-autocomplete-prompt": "^3.0.1",
     "js-yaml": "^4.1.0",
-    "lerna": "^8.1.8",
+    "lerna": "^9.0.0",
     "listr2": "^8.2.4",
     "read-pkg-up": "^11.0.0",
     "registry-auth-token": "^5.1.0",
