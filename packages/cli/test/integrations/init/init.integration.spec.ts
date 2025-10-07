@@ -158,7 +158,8 @@ describe("Init cmd", () => {
               "path": "./tsconfig.spec.json"
             }
           ]
-        }"
+        }
+        "
       `);
 
       const tsconfigNodeContent: any = FakeCliFs.files.get("project-name/tsconfig.node.json")!;
