@@ -61,6 +61,7 @@ describe("Init integration", () => {
         "@tsed/exceptions": "5.58.1",
         "@tsed/json-mapper": "5.58.1",
         "@tsed/logger": "latest",
+        "@tsed/logger-std": "latest",
         "@tsed/openspec": "5.58.1",
         "@tsed/passport": "5.58.1",
         "@tsed/platform-cache": "5.58.1",

@@ -323,6 +323,7 @@ export class InitCmd implements CommandProvider {
       "@tsed/platform-views": ctx.tsedVersion,
       "@tsed/platform-multer": ctx.tsedVersion,
       "@tsed/logger": "latest",
+      "@tsed/logger-std": "latest",
       "@tsed/engines": "latest",
       "@tsed/barrels": "latest",
       ajv: "latest",

@@ -11,7 +11,9 @@ export default defineTemplate({
   hidden: true,
 
   render() {
-    return `import {DILoggerOptions} from "@tsed/di";
+    return `import "@tsed/logger-std";
+import "@tsed/logger/layouts/JsonLayout.js";
+import {DILoggerOptions} from "@tsed/di";
 import {$log} from "@tsed/logger";
 import {isProduction} from "../utils/index.js";
 
