@@ -2,9 +2,9 @@ import "../index.js";
 
 // @ts-ignore
 import {CliPlatformTest} from "@tsed/cli-testing";
+import {configuration} from "@tsed/di";
 import tunnel from "tunnel";
 
-import {CliConfiguration} from "./CliConfiguration.js";
 import {CliExeca} from "./CliExeca.js";
 import {CliProxyAgent} from "./CliProxyAgent.js";
 
@@ -21,9 +21,7 @@ describe("CliPlugins", () => {
   describe("resolveProxySettings()", () => {
     describe("from env", () => {
       it("should get proxy url from env (HTTP_PROXY)", async () => {
-        const settings = CliPlatformTest.get(CliConfiguration);
-
-        settings.set("proxy", {
+        configuration().set("proxy", {
           url: "http://login:password@host:3000"
         });
 
@@ -35,9 +33,7 @@ describe("CliPlugins", () => {
       });
 
       it("should get proxy url from env (HTTP_PROXY -2)", async () => {
-        const settings = CliPlatformTest.get(CliConfiguration);
-
-        settings.set("proxy", {
+        configuration().set("proxy", {
           strictSsl: false,
           url: "https://login:password@host:3000"
         });
@@ -183,9 +179,7 @@ describe("CliPlugins", () => {
 
   describe("get()", () => {
     it("should fetch data through a proxy (http to http)", async () => {
-      const settings = CliPlatformTest.get(CliConfiguration);
-
-      settings.set("proxy", {
+      configuration().set("proxy", {
         url: "http://login:password@host:3000",
         strictSsl: false
       });
@@ -204,9 +198,7 @@ describe("CliPlugins", () => {
       });
     });
     it("should fetch data through a proxy (http to https)", async () => {
-      const settings = CliPlatformTest.get(CliConfiguration);
-
-      settings.set("proxy", {
+      configuration().set("proxy", {
         url: "https://login:password@host:3000",
         strictSsl: false
       });
@@ -225,9 +217,7 @@ describe("CliPlugins", () => {
       });
     });
     it("should fetch data through a proxy (https to https)", async () => {
-      const settings = CliPlatformTest.get(CliConfiguration);
-
-      settings.set("proxy", {
+      configuration().set("proxy", {
         url: "https://login:password@host:3000",
         strictSsl: false
       });
@@ -246,9 +236,7 @@ describe("CliPlugins", () => {
       });
     });
     it("should fetch data through a proxy (https to http)", async () => {
-      const settings = CliPlatformTest.get(CliConfiguration);
-
-      settings.set("proxy", {
+      configuration().set("proxy", {
         url: "http://login:password@host:3000",
         strictSsl: true
       });
