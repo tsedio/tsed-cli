@@ -26,6 +26,23 @@ export class CliCore {
   readonly injector = inject(InjectorService);
   readonly cliService = inject(CliService);
 
+  static checkPrecondition(settings: any) {
+    const {pkg} = settings;
+
+    this.checkPackage(pkg);
+
+    if (pkg?.engines?.node) {
+      this.checkNodeVersion(pkg.engines.node, pkg.name);
+    }
+  }
+
+  static checkPackage(pkg: any) {
+    if (!pkg) {
+      console.log(chalk.red(`settings.pkg is required. Require the package.json of your CLI when you bootstrap the CLI.`));
+      process.exit(1);
+    }
+  }
+
   static checkNodeVersion(wanted: string, id: string) {
     if (!semver.satisfies(process.version, wanted)) {
       console.log(
@@ -60,13 +77,20 @@ export class CliCore {
   }
 
   static async bootstrap(settings: Partial<TsED.Configuration>, module: Type = CliCore) {
+    if (settings.checkPrecondition) {
+      this.checkPrecondition(settings);
+    }
+    if (settings.updateNotifier) {
+      await this.updateNotifier(settings.pkg);
+    }
+
     const cli = await this.create(settings, module);
 
     return cli.bootstrap();
   }
 
   static async loadInjector(injector: InjectorService, module: Type = CliCore) {
-    await injector.emit("$beforeInit");
+    await $asyncEmit("$beforeInit");
 
     injector.addProvider(CliCore, {
       useClass: module

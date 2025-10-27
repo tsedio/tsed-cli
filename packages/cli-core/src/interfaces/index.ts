@@ -36,7 +36,7 @@ declare global {
        */
       templateDir?: string;
       /**
-       *
+       * A function that return default projet settings set in fresh project.
        * @param pkg
        */
       defaultProjectPreferences?: (pkg?: any) => Record<string, any>;
@@ -53,6 +53,14 @@ declare global {
        * Enable plugins loading
        */
       plugins: boolean;
+      /**
+       * Check version and node version before running a command
+       */
+      checkPrecondition?: boolean;
+      /**
+       * Display available update on terminal before running a command
+       */
+      updateNotifier?: boolean;
     }
   }
 }

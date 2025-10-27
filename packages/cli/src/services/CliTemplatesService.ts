@@ -32,9 +32,9 @@ export type TemplateRenderReturnType = {
 export class CliTemplatesService {
   readonly rootDir = constant("project.rootDir", process.cwd());
   readonly fs = inject(CliFs);
+  readonly renderedFiles: TemplateRenderReturnType[] = [];
 
   #customTemplates: DefineTemplateOptions[];
-  #templates: Map<string, DefineTemplateOptions> = new Map();
 
   get srcDir() {
     return join(...([this.rootDir, constant("project.srcDir")].filter(Boolean) as string[]));
@@ -136,7 +136,7 @@ export class CliTemplatesService {
 
       const outputPath = `${filePath}${template.ext ? "." + template.ext : ""}`;
 
-      return {
+      return this.pushRenderResult({
         templateId,
         content: render,
         outputPath,
@@ -144,20 +144,27 @@ export class CliTemplatesService {
         symbolName: opts.symbolName,
         symbolPath: opts.symbolPath,
         symbolPathBasename: opts.symbolPathBasename
-      };
+      });
     } else {
       const from = data.from || TEMPLATE_DIR;
       const fromPath = join(from!, templateId.replace("{{srcDir}}", "src"));
 
       if (await this.fs.fileExists(fromPath)) {
         const content = await inject(CliFs).readFile(fromPath);
-        return {
+
+        return this.pushRenderResult({
           templateId,
           content,
           outputPath: templateId.replace("{{srcDir}}", constant("project.srcDir", ""))
-        };
+        });
       }
     }
+  }
+
+  protected pushRenderResult(renderedFile: TemplateRenderReturnType) {
+    this.renderedFiles.push(renderedFile);
+
+    return renderedFile;
   }
 }
 

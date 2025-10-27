@@ -1,8 +1,9 @@
+import "@tsed/logger-std";
 import "./templates/index.js";
 
-export * from "./Cli.js";
 export * from "./commands/add/AddCmd.js";
 export * from "./commands/generate/GenerateCmd.js";
+export {default as commands} from "./commands/index.js";
 export * from "./commands/init/config/FeaturesPrompt.js";
 export * from "./commands/init/config/FeaturesPrompt.js";
 export * from "./commands/init/InitCmd.js";
@@ -18,3 +19,4 @@ export * from "./services/CliProjectService.js";
 export * from "./services/CliTemplatesService.js";
 export * from "./services/ProjectClient.js";
 export * from "./utils/defineTemplate.js";
+export {CliCore} from "@tsed/cli-core";

@@ -6,7 +6,7 @@ import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 import {inject} from "@tsed/di";
 import {ensureDirSync, writeFileSync} from "fs-extra";
 
-import {ArchitectureConvention, FeatureType, InitCmd, ProjectConvention, TEMPLATE_DIR} from "../../../src/index.js";
+import {ArchitectureConvention, CliTemplatesService, FeatureType, InitCmd, ProjectConvention, TEMPLATE_DIR} from "../../../src/index.js";
 
 const dir = import.meta.dirname;
 
@@ -971,6 +971,34 @@ describe("Init cmd", () => {
 
       const indexContent = FakeCliFs.files.get("project-name/src/index.ts")!;
       expect(indexContent).toContain('import { Server } from "./server.js"');
+
+      const resultFiles = inject(CliTemplatesService).renderedFiles.map((f) => f.outputPath);
+
+      expect(resultFiles.sort()).toMatchInlineSnapshot(`
+        [
+          ".barrels.json",
+          ".dockerignore",
+          ".gitignore",
+          ".swcrc",
+          "/views/swagger.ejs",
+          "Dockerfile",
+          "README.md",
+          "docker-compose.yml",
+          "nodemon.json",
+          "processes.config.cjs",
+          "src/config/config.ts",
+          "src/config/logger/index.ts",
+          "src/config/utils/index.ts",
+          "src/index.controller.ts",
+          "src/index.ts",
+          "src/rest/hello-world.controller.ts",
+          "src/server.ts",
+          "tsconfig.base.json",
+          "tsconfig.json",
+          "tsconfig.node.json",
+          "tsconfig.spec.json",
+        ]
+      `);
     });
   });
 
