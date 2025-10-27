@@ -11,7 +11,6 @@ import semver from "semver";
 import updateNotifier from "update-notifier";
 
 import {CliError} from "./domains/CliError.js";
-import {CliConfiguration} from "./services/CliConfiguration.js";
 import {CliPackageJson} from "./services/CliPackageJson.js";
 import {CliService} from "./services/CliService.js";
 import {ProjectPackageJson} from "./services/ProjectPackageJson.js";
@@ -124,4 +123,4 @@ export class CliCore {
   }
 }
 
-injectable(CliCore).imports([CliPackageJson, ProjectPackageJson, CliService, CliConfiguration]);
+injectable(CliCore).imports([CliPackageJson, ProjectPackageJson, CliService]);

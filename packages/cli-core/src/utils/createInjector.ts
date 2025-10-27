@@ -1,10 +1,9 @@
 import "@tsed/logger-std";
 import "@tsed/logger-pattern-layout";
 
-import {inject, injector, InjectorService, type LOGGER} from "@tsed/di";
+import {injector} from "@tsed/di";
 import {Logger} from "@tsed/logger";
 
-import {CliConfiguration} from "../services/CliConfiguration.js";
 import {ProjectPackageJson} from "../services/ProjectPackageJson.js";
 
 let logger: Logger;
@@ -25,20 +24,20 @@ export function getLogger() {
   return logger;
 }
 
-function createConfiguration(injector: InjectorService): CliConfiguration & TsED.Configuration {
-  injector.addProvider(CliConfiguration);
-
-  return inject<CliConfiguration & TsED.Configuration>(CliConfiguration as any);
-}
-
 export function createInjector(settings: Partial<TsED.Configuration> = {}) {
   const inj = injector();
-  inj.settings = createConfiguration(inj);
   logger = inj.logger = new Logger(settings.name || "CLI");
 
   inj.addProvider(ProjectPackageJson);
 
-  inj.settings.set(settings);
+  inj.settings.set({
+    ...settings,
+    project: {
+      root: process.cwd(),
+      srcDir: "src",
+      ...(settings.project || {})
+    }
+  } as TsED.Configuration);
 
   /* istanbul ignore next */
   if (inj.settings.env === "test") {
