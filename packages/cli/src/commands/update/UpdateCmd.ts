@@ -1,10 +1,9 @@
 import {
-  type CliDefaultOptions,
   CliPackageJson,
-  Command,
+  command,
+  type CommandData,
   type CommandProvider,
   createSubTasks,
-  Inject,
   inject,
   NpmRegistryClient,
   PackageManagersModule,
@@ -17,7 +16,7 @@ import semver from "semver";
 
 import {IGNORE_TAGS, IGNORE_VERSIONS, MINIMAL_TSED_VERSION} from "../../constants/index.js";
 
-export interface UpdateCmdContext extends CliDefaultOptions {
+export interface UpdateCmdContext extends CommandData {
   version: string;
 
   [key: string]: any;
@@ -37,12 +36,6 @@ function shouldUpdate(pkg: string) {
   return pkg.includes("@tsed") && !pkg.includes("@tsed/cli") && !pkg.includes("@tsed/logger") && !pkg.includes("@tsed/barrels");
 }
 
-@Command({
-  name: "update",
-  description: "Update all Ts.ED packages used by your project",
-  args: {},
-  options: {}
-})
 export class UpdateCmd implements CommandProvider {
   protected npmRegistryClient = inject(NpmRegistryClient);
   protected projectPackage = inject(ProjectPackageJson);
@@ -147,3 +140,10 @@ export class UpdateCmd implements CommandProvider {
     return version && isGreaterThan(version, this.cliPackage.version) ? version : this.cliPackage.version;
   }
 }
+
+command(UpdateCmd, {
+  name: "update",
+  description: "Update all Ts.ED packages used by your project",
+  args: {},
+  options: {}
+});

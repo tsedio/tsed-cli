@@ -13,14 +13,7 @@ describe("Generate Response Filter", () => {
   afterEach(() => CliPlatformTest.reset());
 
   it("should generate a template with the right options", async () => {
-    CliPlatformTest.setPackageJson({
-      name: "",
-      version: "1.0.0",
-      description: "",
-      scripts: {},
-      dependencies: {},
-      devDependencies: {}
-    });
+    await CliPlatformTest.initProject();
 
     await CliPlatformTest.exec("generate", {
       rootDir: "./project-data",
@@ -28,14 +21,47 @@ describe("Generate Response Filter", () => {
       name: "JSON"
     });
 
-    expect(FakeCliFs.getKeys()).toEqual(["project-name/src/filters", "project-name/src/filters/JsonResponseFilter.ts"]);
+    expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
+      [
+        "project-name",
+        "project-name/.barrels.json",
+        "project-name/.dockerignore",
+        "project-name/.gitignore",
+        "project-name/.swcrc",
+        "project-name/Dockerfile",
+        "project-name/README.md",
+        "project-name/docker-compose.yml",
+        "project-name/nodemon.json",
+        "project-name/package.json",
+        "project-name/processes.config.cjs",
+        "project-name/src/Server.ts",
+        "project-name/src/config/config.ts",
+        "project-name/src/config/logger/index.ts",
+        "project-name/src/config/utils/index.ts",
+        "project-name/src/controllers/pages/IndexController.ts",
+        "project-name/src/controllers/rest/HelloWorldController.ts",
+        "project-name/src/filters/JsonResponseFilter.ts",
+        "project-name/src/index.ts",
+        "project-name/tsconfig.base.json",
+        "project-name/tsconfig.json",
+        "project-name/tsconfig.node.json",
+        "project-name/tsconfig.spec.json",
+      ]
+    `);
 
-    const result = FakeCliFs.entries.get("project-name/src/filters/JsonResponseFilter.ts");
+    const result = FakeCliFs.files.get("project-name/src/filters/JsonResponseFilter.ts");
 
-    expect(result).toContain('import {ResponseFilter, ResponseFilterMethods} from "@tsed/platform-response-filter";');
-    expect(result).toContain('import {BaseContext} from "@tsed/di";');
-    expect(result).toContain('@ResponseFilter("text/xml")');
-    expect(result).toContain("export class XmlResponseFilter implements ResponseFilterMethods");
-    expect(result).toContain("transform(data: any, ctx: BaseContext)");
+    expect(result).toMatchInlineSnapshot(`
+      "import { BaseContext } from "@tsed/di";
+      import { ResponseFilter, ResponseFilterMethods } from "@tsed/platform-response-filter";
+
+      @ResponseFilter("text/xml")
+      export class JsonResponseFilter implements ResponseFilterMethods {
+        transform(data: any, ctx: BaseContext) {
+          return jsToXML(data);
+        }
+      }
+      "
+    `);
   });
 });

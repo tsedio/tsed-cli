@@ -1,17 +1,16 @@
 import "@tsed/logger-std";
 
-// import "@tsed/logger/layouts/ColoredLayout";
 import {join, resolve} from "node:path";
 
 import {Type} from "@tsed/core";
-import {inject, InjectorService, Module} from "@tsed/di";
+import {inject, injectable, InjectorService} from "@tsed/di";
+import {$asyncEmit} from "@tsed/hooks";
 import chalk from "chalk";
 import {Command} from "commander";
 import semver from "semver";
 import updateNotifier from "update-notifier";
 
 import {CliError} from "./domains/CliError.js";
-import {CliConfiguration} from "./services/CliConfiguration.js";
 import {CliPackageJson} from "./services/CliPackageJson.js";
 import {CliService} from "./services/CliService.js";
 import {ProjectPackageJson} from "./services/ProjectPackageJson.js";
@@ -23,12 +22,26 @@ function isHelpManual(argv: string[]) {
   return argv.includes("-h") || argv.includes("--help");
 }
 
-@Module({
-  imports: [CliPackageJson, ProjectPackageJson, CliService, CliConfiguration]
-})
 export class CliCore {
   readonly injector = inject(InjectorService);
   readonly cliService = inject(CliService);
+
+  static checkPrecondition(settings: any) {
+    const {pkg} = settings;
+
+    this.checkPackage(pkg);
+
+    if (pkg?.engines?.node) {
+      this.checkNodeVersion(pkg.engines.node, pkg.name);
+    }
+  }
+
+  static checkPackage(pkg: any) {
+    if (!pkg) {
+      console.log(chalk.red(`settings.pkg is required. Require the package.json of your CLI when you bootstrap the CLI.`));
+      process.exit(1);
+    }
+  }
 
   static checkNodeVersion(wanted: string, id: string) {
     if (!semver.satisfies(process.version, wanted)) {
@@ -58,19 +71,26 @@ export class CliCore {
 
     await this.loadInjector(injector, module);
 
-    await injector.emit("$onReady");
+    await $asyncEmit("$onReady");
 
-    return injector.get<Cli>(CliCore)!;
+    return inject<Cli>(CliCore as any)!;
   }
 
   static async bootstrap(settings: Partial<TsED.Configuration>, module: Type = CliCore) {
+    if (settings.checkPrecondition) {
+      this.checkPrecondition(settings);
+    }
+    if (settings.updateNotifier) {
+      await this.updateNotifier(settings.pkg);
+    }
+
     const cli = await this.create(settings, module);
 
     return cli.bootstrap();
   }
 
   static async loadInjector(injector: InjectorService, module: Type = CliCore) {
-    await injector.emit("$beforeInit");
+    await $asyncEmit("$beforeInit");
 
     injector.addProvider(CliCore, {
       useClass: module
@@ -78,7 +98,7 @@ export class CliCore {
 
     await injector.load();
     await injector.invoke(module);
-    await injector.emit("$afterInit");
+    await $asyncEmit("$afterInit");
 
     injector.settings.set("loaded", true);
   }
@@ -126,3 +146,5 @@ export class CliCore {
     return this;
   }
 }
+
+injectable(CliCore).imports([CliPackageJson, ProjectPackageJson, CliService]);

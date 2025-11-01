@@ -1,7 +1,7 @@
 import {
   type CliDefaultOptions,
   CliPlugins,
-  Command,
+  command,
   type CommandProvider,
   createSubTasks,
   inject,
@@ -11,20 +11,10 @@ import {
   type Task
 } from "@tsed/cli-core";
 
-export interface AddCmdOptions extends CliDefaultOptions {
+export interface AddCmdOptions extends CommandProvider {
   name: string;
 }
 
-@Command({
-  name: "add",
-  description: "Add cli plugin to the current project",
-  args: {
-    name: {
-      description: "Npm package name of the cli plugin",
-      type: String
-    }
-  }
-})
 export class AddCmd implements CommandProvider {
   protected cliPlugins = inject(CliPlugins);
   protected packageJson = inject(ProjectPackageJson);
@@ -60,7 +50,22 @@ export class AddCmd implements CommandProvider {
       {
         title: "Install plugins dependencies",
         task: createSubTasks(() => this.cliPlugins.addPluginsDependencies(ctx), {...ctx, concurrent: false})
+      },
+      {
+        title: "Transform files",
+        task: createSubTasks(() => this.cliPlugins.addPluginsDependencies(ctx), {...ctx, concurrent: false})
       }
     ];
   }
 }
+
+command(AddCmd, {
+  name: "add",
+  description: "Add cli plugin to the current project",
+  args: {
+    name: {
+      description: "Npm package name of the cli plugin",
+      type: String
+    }
+  }
+});

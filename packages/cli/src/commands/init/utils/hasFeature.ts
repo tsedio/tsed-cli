@@ -7,3 +7,7 @@ export function hasValue(expression: string, value: string | string[]) {
 export function hasFeature(feature: string) {
   return (ctx: any): boolean => !!ctx.features.find((item: string) => item === feature);
 }
+
+export function hasValuePremium() {
+  return (ctx: any): boolean => !!ctx.features.find((item: string) => item.endsWith(":premium"));
+}

@@ -13,5 +13,5 @@
     }
   },
   "include": ["vitest.*.mts", "**/vitest.*.mts", "**/*.ts"],
-  "exclude": ["dist", "**/lib/**", "**/templates/**", "**/barrels/**", "./packages/**/project-name/**/*.ts"]
+  "exclude": ["dist", "**/lib/**", "packages/*/templates/**", "**/barrels/**", "./packages/**/project-name/**/*.ts"]
 }

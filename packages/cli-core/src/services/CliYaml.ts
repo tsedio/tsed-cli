@@ -1,9 +1,8 @@
-import {inject, Injectable} from "@tsed/di";
+import {inject, injectable} from "@tsed/di";
 import JsYaml from "js-yaml";
 
 import {CliFs} from "./CliFs.js";
 
-@Injectable()
 export class CliYaml {
   protected fs = inject(CliFs);
 
@@ -19,3 +18,5 @@ export class CliYaml {
     return this.fs.writeFile(path, content, {encoding: "utf8"});
   }
 }
+
+injectable(CliYaml);

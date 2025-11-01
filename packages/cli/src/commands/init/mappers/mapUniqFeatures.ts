@@ -1,5 +1,5 @@
+import type {InitOptions} from "../../../interfaces/InitCmdOptions.js";
 import {FeatureType} from "../config/FeaturesPrompt.js";
-import type {InitOptions} from "../interfaces/InitOptions.js";
 import type {InitPromptAnswers} from "../interfaces/InitPromptAnswers.js";
 
 export function mapUniqFeatures(answers: InitPromptAnswers & any): InitOptions {

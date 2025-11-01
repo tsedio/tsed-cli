@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`transformConfig > should render config file with default convention > default-convention 1`] = `
+"import { readFileSync } from "node:fs";
+import loggerConfig from "./logger/index.js";
+
+const pkg = JSON.parse(readFileSync("./package.json", { encoding: "utf8" }));
+/**
+ * This is the shared configuration for the application
+ */
+export const config: Partial<TsED.Configuration> = {
+  version: pkg.version,
+  ajv: {
+    returnsCoercedValues: true
+  },
+  logger: loggerConfig
+};
+"
+`;

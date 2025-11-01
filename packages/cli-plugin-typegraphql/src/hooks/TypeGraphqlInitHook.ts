@@ -1,36 +1,78 @@
-import {type InitCmdContext, RootRendererService} from "@tsed/cli";
-import {inject, OnExec, ProjectPackageJson} from "@tsed/cli-core";
-import {Injectable} from "@tsed/di";
+import {type CliCommandHooks, exec, type InitCmdContext, ProjectClient, type RenderDataContext} from "@tsed/cli";
+import {createSubTasks, type Task} from "@tsed/cli-core";
+import {injectable} from "@tsed/di";
+import {SyntaxKind} from "ts-morph";
 
-import {TEMPLATE_DIR} from "../utils/templateDir.js";
-
-@Injectable()
-export class TypeGraphqlInitHook {
-  protected packageJson = inject(ProjectPackageJson);
-  protected rootRenderer = inject(RootRendererService);
-
-  @OnExec("init")
-  onExec(ctx: InitCmdContext) {
+export class TypeGraphqlInitHook implements CliCommandHooks {
+  async $alterInitSubTasks(tasks: Task[], data: InitCmdContext) {
     return [
+      ...tasks,
       {
-        title: "Generate files",
-        task: () =>
-          this.rootRenderer.renderAll(
-            [
-              "/src/datasources/index.ts",
-              "/src/datasources/MyDataSource.ts",
-              "/src/resolvers/recipes/Recipe.ts",
-              "/src/resolvers/recipes/RecipeNotFoundError.ts",
-              "/src/resolvers/recipes/RecipeResolver.ts",
-              "/src/resolvers/index.ts",
-              "/src/services/RecipeService.ts"
-            ],
-            ctx,
-            {
-              templateDir: `${TEMPLATE_DIR}/init`
-            }
-          )
+        title: "Generate initial resolver",
+        enabled: () => !!data.graphql,
+        task: createSubTasks(
+          await exec("generate", {
+            ...data,
+            type: "typegraphql.resolver",
+            name: "Recipe"
+          }),
+          {...data, concurrent: false}
+        )
       }
     ];
   }
+
+  $alterProjectFiles(project: ProjectClient, data: RenderDataContext) {
+    if (!data.graphql) {
+      return project;
+    }
+
+    if (data.commandName !== "init") {
+      return project;
+    }
+
+    if (project.serverSourceFile) {
+      project.serverSourceFile.addImportDeclaration({
+        moduleSpecifier: "@tsed/typegraphql"
+      });
+      project.serverSourceFile.addImportDeclaration({
+        moduleSpecifier: "./graphql/datasources/index.js"
+      });
+      project.serverSourceFile.addImportDeclaration({
+        moduleSpecifier: "./graphql/resolvers/index.js"
+      });
+    }
+
+    const options = project.findConfiguration("config");
+
+    if (!options) {
+      return project;
+    }
+
+    const graphql = project.getPropertyAssignment(options, {
+      name: "graphql",
+      kind: SyntaxKind.ObjectLiteralExpression,
+      initializer: "{}"
+    });
+
+    const defaultGraphql = project.getPropertyAssignment(graphql, {
+      name: "default",
+      kind: SyntaxKind.ObjectLiteralExpression,
+      initializer: "{}"
+    });
+    project.getPropertyAssignment(defaultGraphql, {
+      name: "path",
+      kind: SyntaxKind.StringLiteral,
+      initializer: '"/graphql"'
+    });
+    project.getPropertyAssignment(defaultGraphql, {
+      name: "buildSchemaOptions",
+      kind: SyntaxKind.ObjectLiteralExpression,
+      initializer: "{}"
+    });
+
+    return project;
+  }
 }
+
+injectable(TypeGraphqlInitHook);

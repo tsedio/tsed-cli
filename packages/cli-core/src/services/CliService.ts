@@ -2,27 +2,30 @@ import {classOf} from "@tsed/core";
 import {
   configuration,
   constant,
+  context,
   destroyInjector,
   DIContext,
   getContext,
   inject,
-  Injectable,
+  injectable,
   injector,
   logger,
   Provider,
   runInContext
 } from "@tsed/di";
-import {$asyncEmit} from "@tsed/hooks";
+import {$asyncAlter, $asyncEmit} from "@tsed/hooks";
+import {pascalCase} from "change-case";
 import {Argument, Command} from "commander";
 import Inquirer from "inquirer";
-// @ts-ignore
 import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
 import {v4} from "uuid";
 
 import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
+import type {CommandData} from "../interfaces/CommandData.js";
 import type {CommandMetadata} from "../interfaces/CommandMetadata.js";
 import type {CommandArg, CommandOptions} from "../interfaces/CommandParameters.js";
 import type {CommandProvider} from "../interfaces/CommandProvider.js";
+import type {Task} from "../interfaces/index.js";
 import {PackageManagersModule} from "../packageManagers/index.js";
 import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner.js";
 import {getCommandMetadata} from "../utils/getCommandMetadata.js";
@@ -34,7 +37,6 @@ import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
 Inquirer.registerPrompt("autocomplete", inquirer_autocomplete_prompt);
 
-@Injectable()
 export class CliService {
   readonly reinstallAfterRun = constant<boolean>("project.reinstallAfterRun", false);
   readonly program = new Command();
@@ -64,7 +66,7 @@ export class CliService {
    * @param data
    * @param $ctx
    */
-  public runLifecycle(cmdName: string, data: any = {}, $ctx: DIContext) {
+  public runLifecycle(cmdName: string, data: CommandData = {}, $ctx: DIContext) {
     return runInContext($ctx, async () => {
       await $asyncEmit("$loadPackageJson");
 
@@ -77,7 +79,7 @@ export class CliService {
     });
   }
 
-  public async dispatch(cmdName: string, data: any, $ctx: DIContext) {
+  public async dispatch(cmdName: string, data: CommandData, $ctx: DIContext) {
     try {
       $ctx.set("dispatchCmd", cmdName);
       $ctx.set("data", data);
@@ -114,19 +116,19 @@ export class CliService {
   /**
    * Run prompt for a given command
    * @param cmdName
-   * @param ctx Initial data
+   * @param data Initial data
    */
-  public async beforePrompt(cmdName: string, ctx: any = {}) {
+  public async beforePrompt(cmdName: string, data: CommandData = {}) {
     const provider = this.commands.get(cmdName);
     const instance = inject<CommandProvider>(provider.useClass)!;
-    const verbose = ctx.verbose;
+    const verbose = data.verbose;
 
     if (instance.$beforePrompt) {
-      ctx = await instance.$beforePrompt(JSON.parse(JSON.stringify(ctx)));
-      ctx.verbose = verbose;
+      data = await instance.$beforePrompt(JSON.parse(JSON.stringify(data)));
+      data.verbose = verbose;
     }
 
-    return ctx;
+    return data;
   }
 
   /**
@@ -134,7 +136,7 @@ export class CliService {
    * @param cmdName
    * @param ctx Initial data
    */
-  public async prompt(cmdName: string, ctx: any = {}) {
+  public async prompt(cmdName: string, ctx: CommandData = {}) {
     const provider = this.commands.get(cmdName);
     const instance = inject<CommandProvider>(provider.useClass)!;
 
@@ -160,7 +162,7 @@ export class CliService {
    * @param cmdName
    * @param data
    */
-  public async getTasks(cmdName: string, data: any) {
+  public async getTasks(cmdName: string, data: any): Promise<Task[]> {
     const $ctx = getContext()!;
     const provider = this.commands.get(cmdName);
     const instance = inject<CommandProvider>(provider.token)!;
@@ -171,7 +173,24 @@ export class CliService {
       await instance.$beforeExec(data);
     }
 
-    return [...(await instance.$exec(data)), ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, data))];
+    return [
+      ...(await instance.$exec(data)),
+      ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, data)),
+      ...(await $asyncAlter(`$alter${pascalCase(cmdName)}Tasks`, [], [data]))
+    ].map((opts) => {
+      return {
+        ...opts,
+        task: async (arg, task) => {
+          context().set("currentTask", task);
+
+          const result = await opts.task(arg, task);
+
+          context().delete("currentTask");
+
+          return result;
+        }
+      };
+    });
   }
 
   public async getPostInstallTasks(cmdName: string, data: any) {
@@ -183,6 +202,7 @@ export class CliService {
     return [
       ...(instance.$postInstall ? await instance.$postInstall(data) : []),
       ...(await this.hooks.emit(CommandStoreKeys.POST_INSTALL_HOOKS, cmdName, data)),
+      ...(await $asyncAlter(`$alter${pascalCase(cmdName)}PostInstallTasks`, [] as Task[], [data])),
       ...(instance.$afterPostInstall ? await instance.$afterPostInstall(data) : [])
     ];
   }
@@ -204,7 +224,7 @@ export class CliService {
       );
       const allOpts = mapCommanderOptions(commandName, this.program.commands);
 
-      const data = {
+      const data: CommandData = {
         ...allOpts,
         verbose: !!this.program.opts().verbose,
         ...mappedArgs,
@@ -251,10 +271,12 @@ export class CliService {
       .forEach((provider) => this.build(provider));
   }
 
-  private mapData(cmdName: string, data: any, $ctx: DIContext) {
+  private mapData(cmdName: string, data: CommandData, $ctx: DIContext) {
     const provider = this.commands.get(cmdName);
     const instance = inject<CommandProvider>(provider.useClass)!;
     const verbose = data.verbose;
+
+    data.commandName ||= cmdName;
 
     if (instance.$mapContext) {
       data = instance.$mapContext(JSON.parse(JSON.stringify(data)));
@@ -267,7 +289,7 @@ export class CliService {
       logger().level = "info";
     }
 
-    data.bindLogger = $ctx.get("command").bindLogger;
+    data.bindLogger = $ctx.get("command")?.bindLogger;
 
     $ctx.set("data", data);
 
@@ -337,3 +359,5 @@ export class CliService {
     }, cmd);
   }
 }
+
+injectable(CliService);

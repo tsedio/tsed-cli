@@ -67,6 +67,31 @@ describe("getFeaturesPrompt", () => {
           "choices": [
             {
               "dependencies": {
+                "@tsed/cli-core": "{{cliVersion}}",
+              },
+              "devDependencies": {
+                "@types/inquirer": "^8.2.4",
+              },
+              "name": "Commands",
+              "value": "commands",
+            },
+            {
+              "dependencies": {
+                "@tsed/config": "{{tsedVersion}}",
+              },
+              "name": "Configuration sources",
+              "value": "config",
+            },
+            {
+              "name": "Database",
+              "value": "db",
+            },
+            {
+              "name": "Documentation",
+              "value": "doc",
+            },
+            {
+              "dependencies": {
                 "@tsed/typegraphql": "{{tsedVersion}}",
               },
               "devDependencies": {
@@ -76,8 +101,15 @@ describe("getFeaturesPrompt", () => {
               "value": "graphql",
             },
             {
-              "name": "Database",
-              "value": "db",
+              "name": "Linter",
+              "value": "linter",
+            },
+            {
+              "devDependencies": {
+                "@tsed/cli-plugin-oidc-provider": "{{cliVersion}}",
+              },
+              "name": "OpenID Connect provider",
+              "value": "oidc",
             },
             {
               "devDependencies": {
@@ -96,17 +128,6 @@ describe("getFeaturesPrompt", () => {
               "value": "socketio",
             },
             {
-              "name": "Documentation",
-              "value": "doc",
-            },
-            {
-              "devDependencies": {
-                "@tsed/cli-plugin-oidc-provider": "{{cliVersion}}",
-              },
-              "name": "OpenID Connect provider",
-              "value": "oidc",
-            },
-            {
               "dependencies": {},
               "devDependencies": {
                 "@types/supertest": "latest",
@@ -115,24 +136,86 @@ describe("getFeaturesPrompt", () => {
               "name": "Testing",
               "value": "testing",
             },
-            {
-              "name": "Linter",
-              "value": "linter",
-            },
-            {
-              "dependencies": {
-                "@tsed/cli-core": "{{cliVersion}}",
-              },
-              "devDependencies": {
-                "@types/inquirer": "^8.2.4",
-              },
-              "name": "Commands",
-              "value": "commands",
-            },
           ],
           "message": "Check the features needed for your project",
           "name": "features",
           "type": "checkbox",
+        },
+        {
+          "choices": [
+            {
+              "name": "Envs",
+              "value": "config:envs",
+            },
+            {
+              "dependencies": {
+                "dotenv": "latest",
+                "dotenv-expand": "latest",
+                "dotenv-flow": "latest",
+              },
+              "name": "Dotenv",
+              "value": "config:dotenv",
+            },
+            {
+              "name": "JSON",
+              "value": "config:json",
+            },
+            {
+              "dependencies": {
+                "js-yaml": "latest",
+              },
+              "name": "YAML",
+              "value": "config:yaml",
+            },
+            {
+              "dependencies": {
+                "@aws-sdk/client-secrets-manager": "latest",
+                "@tsedio/config-source-aws-secrets": "latest",
+              },
+              "name": "AWS Secrets Manager (Premium)",
+              "value": "config:aws_secrets:premium",
+            },
+            {
+              "dependencies": {
+                "@tsed/ioredis": "{{tsedVersion}}",
+                "@tsedio/config-ioredis": "{{tsedVersion}}",
+                "ioredis": "latest",
+              },
+              "devDependencies": {
+                "@tsedio/testcontainers-redis": "latest",
+              },
+              "name": "IORedis (Premium)",
+              "value": "config:ioredis:premium",
+            },
+            {
+              "dependencies": {
+                "@tsedio/config-mongo": "latest",
+                "mongodb": "latest",
+              },
+              "name": "MongoDB (Premium)",
+              "value": "config:mongo:premium",
+            },
+            {
+              "dependencies": {
+                "@tsedio/config-vault": "latest",
+                "node-vault": "latest",
+              },
+              "name": "Vault (Premium)",
+              "value": "config:vault:premium",
+            },
+            {
+              "dependencies": {
+                "@tsedio/config-postgres": "latest",
+                "pg": "latest",
+              },
+              "name": "Postgres (Premium)",
+              "value": "config:postgres:premium",
+            },
+          ],
+          "message": "Choose configuration sources",
+          "name": "featuresConfig",
+          "type": "checkbox",
+          "when": [Function],
         },
         {
           "choices": [
@@ -275,6 +358,12 @@ describe("getFeaturesPrompt", () => {
           "message": "Which TypeORM you want to install?",
           "name": "featuresTypeORM",
           "type": "list",
+          "when": [Function],
+        },
+        {
+          "message": "Enter GH_TOKEN to use the premium @tsedio package or leave blank (see https://tsed.dev/plugins/premium/install-premium-plugins.html)",
+          "name": "GH_TOKEN",
+          "type": "password",
           "when": [Function],
         },
         {

@@ -1,4 +1,4 @@
-import {CliFs, Command, type CommandProvider, inject, normalizePath, ProjectPackageJson, type Tasks} from "@tsed/cli-core";
+import {CliFs, command, type CommandProvider, inject, normalizePath, ProjectPackageJson, type Tasks} from "@tsed/cli-core";
 
 import {CliRunScript} from "../../services/CliRunScript.js";
 
@@ -8,25 +8,6 @@ export interface RunCmdContext {
   rawArgs: string[];
 }
 
-@Command({
-  name: "run",
-  description: "Run a project level command",
-  args: {
-    command: {
-      description: "The project command",
-      type: String,
-      required: true
-    }
-  },
-  options: {
-    "-p, --production": {
-      type: Boolean,
-      defaultValue: false,
-      description: "Set production profile to NODE_ENV"
-    }
-  },
-  allowUnknownOption: true
-})
 export class RunCmd implements CommandProvider {
   protected fs = inject(CliFs);
   protected projectPackageJson = inject(ProjectPackageJson);
@@ -44,3 +25,23 @@ export class RunCmd implements CommandProvider {
     return [];
   }
 }
+
+command(RunCmd, {
+  name: "run",
+  description: "Run a project level command",
+  args: {
+    command: {
+      description: "The project command",
+      type: String,
+      required: true
+    }
+  },
+  options: {
+    "-p, --production": {
+      type: Boolean,
+      defaultValue: false,
+      description: "Set production profile to NODE_ENV"
+    }
+  },
+  allowUnknownOption: true
+});

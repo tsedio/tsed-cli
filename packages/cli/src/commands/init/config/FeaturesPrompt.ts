@@ -1,6 +1,5 @@
-import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../interfaces/index.js";
-import type {InitOptions} from "../interfaces/InitOptions.js";
-import {hasFeature, hasValue} from "../utils/hasFeature.js";
+import {ArchitectureConvention, type InitOptions, PlatformType, ProjectConvention} from "../../../interfaces/index.js";
+import {hasFeature, hasValue, hasValuePremium} from "../utils/hasFeature.js";
 import {isPlatform} from "../utils/isPlatform.js";
 
 export interface Feature {
@@ -17,9 +16,21 @@ export enum FeatureType {
   SOCKETIO = "socketio",
   OIDC = "oidc",
   PASSPORTJS = "passportjs",
+  CONFIG = "config",
   COMMANDS = "commands",
   DB = "db",
   DOC = "doc",
+
+  // CONFIG
+  CONFIG_ENVS = "config:envs",
+  CONFIG_DOTENV = "config:dotenv",
+  CONFIG_JSON = "config:json",
+  CONFIG_YAML = "config:yaml",
+  CONFIG_AWS_SECRETS = "config:aws_secrets:premium",
+  CONFIG_IOREDIS = "config:ioredis:premium",
+  CONFIG_MONGO = "config:mongo:premium",
+  CONFIG_VAULT = "config:vault:premium",
+  CONFIG_POSTGRES = "config:postgres:premium",
 
   // DOC
   SWAGGER = "swagger",
@@ -46,7 +57,7 @@ export enum FeatureType {
   TYPEORM_REACTNATIVE = "typeorm:reactnative",
   TYPEORM_EXPO = "typeorm:expo",
 
-  // TESTING
+  // TESTING & LINTER
   TESTING = "testing",
   JEST = "jest",
   VITEST = "vitest",
@@ -153,6 +164,84 @@ export const FeaturesMap: Record<string, Feature> = {
     name: "Feature",
     checked: false
   },
+
+  /// CONFIGURATION SOURCES
+  [FeatureType.CONFIG]: {
+    name: "Configuration sources",
+    dependencies: {
+      "@tsed/config": "{{tsedVersion}}"
+    }
+  },
+
+  [FeatureType.CONFIG_ENVS]: {
+    name: "Envs"
+  },
+
+  [FeatureType.CONFIG_DOTENV]: {
+    name: "Dotenv",
+    dependencies: {
+      dotenv: "latest",
+      "dotenv-expand": "latest",
+      "dotenv-flow": "latest"
+    }
+  },
+
+  [FeatureType.CONFIG_JSON]: {
+    name: "JSON"
+  },
+
+  [FeatureType.CONFIG_YAML]: {
+    name: "YAML",
+    dependencies: {
+      "js-yaml": "latest"
+    }
+  },
+
+  [FeatureType.CONFIG_AWS_SECRETS]: {
+    name: "AWS Secrets Manager (Premium)",
+    dependencies: {
+      "@tsedio/config-source-aws-secrets": "latest",
+      "@aws-sdk/client-secrets-manager": "latest"
+    }
+  },
+
+  [FeatureType.CONFIG_IOREDIS]: {
+    name: "IORedis (Premium)",
+    dependencies: {
+      "@tsedio/config-ioredis": "{{tsedVersion}}",
+      "@tsed/ioredis": "{{tsedVersion}}",
+      ioredis: "latest"
+    },
+    devDependencies: {
+      "@tsedio/testcontainers-redis": "latest"
+    }
+  },
+
+  [FeatureType.CONFIG_MONGO]: {
+    name: "MongoDB (Premium)",
+    dependencies: {
+      mongodb: "latest",
+      "@tsedio/config-mongo": "latest"
+    }
+  },
+
+  [FeatureType.CONFIG_VAULT]: {
+    name: "Vault (Premium)",
+    dependencies: {
+      "@tsedio/config-vault": "latest",
+      "node-vault": "latest"
+    }
+  },
+
+  [FeatureType.CONFIG_POSTGRES]: {
+    name: "Postgres (Premium)",
+    dependencies: {
+      pg: "latest",
+      "@tsedio/config-postgres": "latest"
+    }
+  },
+
+  /// TYPEORM
   [FeatureType.TYPEORM_MYSQL]: {
     name: "MySQL",
     dependencies: {
@@ -242,6 +331,8 @@ export const FeaturesMap: Record<string, Feature> = {
       typeorm: "latest"
     }
   },
+
+  /// TESTING
   [FeatureType.VITEST]: {
     name: "Vitest",
     devDependencies: {
@@ -254,6 +345,8 @@ export const FeaturesMap: Record<string, Feature> = {
       "@tsed/cli-plugin-jest": "{{cliVersion}}"
     }
   },
+
+  // LINTER
   [FeatureType.ESLINT]: {
     name: "EsLint",
     checked: true,
@@ -267,6 +360,7 @@ export const FeaturesMap: Record<string, Feature> = {
   [FeatureType.LINT_STAGED]: {
     name: "Lint on commit"
   },
+
   node: {
     name: "Node.js + SWC",
     checked: true
@@ -327,6 +421,7 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
     name: "features",
     message: "Check the features needed for your project",
     choices: [
+      FeatureType.CONFIG,
       FeatureType.GRAPHQL,
       FeatureType.DB,
       FeatureType.PASSPORTJS,
@@ -336,6 +431,23 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
       FeatureType.TESTING,
       FeatureType.LINTER,
       FeatureType.COMMANDS
+    ].sort((a, b) => a.localeCompare(b))
+  },
+  {
+    type: "checkbox",
+    message: "Choose configuration sources",
+    name: "featuresConfig",
+    when: hasFeature(FeatureType.CONFIG),
+    choices: [
+      FeatureType.CONFIG_ENVS,
+      FeatureType.CONFIG_DOTENV,
+      FeatureType.CONFIG_JSON,
+      FeatureType.CONFIG_YAML,
+      FeatureType.CONFIG_AWS_SECRETS,
+      FeatureType.CONFIG_IOREDIS,
+      FeatureType.CONFIG_MONGO,
+      FeatureType.CONFIG_VAULT,
+      FeatureType.CONFIG_POSTGRES
     ]
   },
   {
@@ -374,13 +486,13 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
     ],
     when: hasValue("featuresDB", FeatureType.TYPEORM)
   },
-  // {
-  //   type: "password",
-  //   name: "GH_TOKEN",
-  //   message:
-  //     "Enter GH_TOKEN to use the premium @tsedio/prisma package or leave blank (see https://tsed.dev/tutorials/prisma-client.html)",
-  //   when: hasValue("featuresDB.type", "prisma")
-  // },
+  {
+    type: "password",
+    name: "GH_TOKEN",
+    message:
+      "Enter GH_TOKEN to use the premium @tsedio package or leave blank (see https://tsed.dev/plugins/premium/install-premium-plugins.html)",
+    when: hasValuePremium()
+  },
   {
     message: "Choose unit framework",
     type: "list",

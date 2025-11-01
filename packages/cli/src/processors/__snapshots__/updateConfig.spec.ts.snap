@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`updateConfig > should render config file with default convention > default-convention 1`] = `
+"// @ts-nocheck
+import { readFileSync } from "node:fs";
+
+import { FileSyncAdapter } from "@tsed/adapters";
+import loggerConfig from "./logger/index.js";
+import mongooseConfig from "./mongoose/index.js";
+import oidcConfig from "./oidc/index.js";
+
+const pkg = JSON.parse(readFileSync("./package.json", { encoding: "utf8" }));
+/**
+ * This is the shared configuration for the application
+ */
+export const config: Partial<TsED.Configuration> = {
+  version: pkg.version,
+  ajv: {
+    returnsCoercedValues: true
+  },
+  logger: loggerConfig,
+  mongoose: mongooseConfig,
+  graphql: {
+    default: {
+      path: "/graphql",
+      buildSchemaOptions: {}
+    }
+  },
+  oidc: oidcConfig,
+  adapters: [FileSyncAdapter]
+};
+"
+`;

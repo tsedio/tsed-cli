@@ -1,4 +1,4 @@
-import {Inject, Injectable} from "@tsed/di";
+import {Inject, injectable} from "@tsed/di";
 import {EMPTY, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 
@@ -27,9 +27,6 @@ export interface InstallOptions {
   [key: string]: any;
 }
 
-@Injectable({
-  imports: [YarnManager, YarnBerryManager, NpmManager, PNpmManager, BunManager]
-})
 export class PackageManagersModule {
   @Inject()
   protected projectPackageJson: ProjectPackageJson;
@@ -165,3 +162,5 @@ export class PackageManagersModule {
     return this.get().runScript(scriptName, options).pipe(errorPipe());
   }
 }
+
+injectable(PackageManagersModule).imports([YarnManager, YarnBerryManager, NpmManager, PNpmManager, BunManager]);

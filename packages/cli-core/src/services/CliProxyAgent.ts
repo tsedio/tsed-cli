@@ -1,6 +1,6 @@
 import {URL} from "node:url";
 
-import {Configuration, Inject, inject, Injectable, refValue} from "@tsed/di";
+import {inject, injectable, refValue} from "@tsed/di";
 import {camelCase} from "change-case";
 
 import {coerce} from "../utils/coerce.js";
@@ -12,16 +12,9 @@ export interface CliProxySettings {
   strictSsl: boolean;
 }
 
-@Injectable()
-@Configuration({
-  proxy: {
-    url: process.env.HTTPS_PROXY || process.env.HTTP_PROXY,
-    strictSsl: process.env.NODE_TLS_REJECT_UNAUTHORIZED !== undefined ? process.env.NODE_TLS_REJECT_UNAUTHORIZED !== "0" : true
-  }
-})
 export class CliProxyAgent {
   readonly proxySettings = refValue<CliProxySettings>("proxy", {} as never);
-  protected projectPackageJson = Inject(ProjectPackageJson);
+  protected projectPackageJson = inject(ProjectPackageJson);
   protected cliExeca = inject(CliExeca);
   protected tunnel: typeof import("tunnel");
 
@@ -99,3 +92,10 @@ export class CliProxyAgent {
     }
   }
 }
+
+injectable(CliProxyAgent).configuration({
+  proxy: {
+    url: process.env.HTTPS_PROXY || process.env.HTTP_PROXY,
+    strictSsl: process.env.NODE_TLS_REJECT_UNAUTHORIZED !== undefined ? process.env.NODE_TLS_REJECT_UNAUTHORIZED !== "0" : true
+  }
+});

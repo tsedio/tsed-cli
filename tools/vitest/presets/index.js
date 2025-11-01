@@ -19,13 +19,14 @@ export const presets = defineConfig({
       all: true,
       include: ["src/**/*.{tsx,ts}"],
       exclude: [
-        "**/templates/**",
         "**/*.spec.{ts,tsx}",
         "**/*.stories.{ts,tsx}",
         "**/*.d.ts",
         "**/__mocks__/**",
+        "**/__fixtures__/**",
         "**/__mock__/**",
         "**/tests/**",
+        "**/interfaces/**",
         "**/index.ts",
         "**/node_modules/**"
       ]

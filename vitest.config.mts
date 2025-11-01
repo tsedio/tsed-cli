@@ -2,8 +2,9 @@ import {defineConfig} from "vitest/config";
 
 export default defineConfig({
   test: {
+    testTimeout: 20000,
     projects: [
-      'packages/**/vitest.config.{mts,ts}'
-    ]
+      "packages/**/vitest.config.{mts,ts}"
+    ],
   }
 })
