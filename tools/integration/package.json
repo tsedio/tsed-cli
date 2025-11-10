@@ -11,6 +11,8 @@
   },
   "scripts": {
     "run-cmd": "cross-env NODE_ENV=development CLI_MODE=ts CI=true node --import @swc-node/register/esm-register index.ts",
+    "run-mcp": "npx @modelcontextprotocol/inspector node -e NODE_ENV=development -e CLI_MODE=ts -e CI=true --import @swc-node/register/esm-register mcp.ts",
+    "run-mcp:standalone": "cross-env NODE_ENV=development CLI_MODE=ts CI=true node --import @swc-node/register/esm-register mcp.ts",
     "start:help": "yarn run-cmd -h",
     "start:help:g": "yarn run-cmd generate -h",
     "start:help:i": "yarn run-cmd init -h",

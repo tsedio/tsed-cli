@@ -5,7 +5,9 @@
     "paths": {
       "@tsed/cli": ["./packages/cli/src/index.ts"],
       "@tsed/cli/bin": ["./packages/cli/src/bin/tsed.ts"],
-      "@tsed/cli-core": ["./packages/cli-core/src/index.ts"]
+      "@tsed/cli/bin/mcp": ["./packages/cli/src/bin/tsed-mcp.ts"],
+      "@tsed/cli-core": ["./packages/cli-core/src/index.ts"],
+      "@tsed/cli-mcp": ["./packages/cli-mcp/src/index.ts"]
     }
   },
   "include": ["**/*.ts"]
