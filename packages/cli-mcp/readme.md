@@ -5,156 +5,204 @@
 </p>
 
 [![Build & Release](https://github.com/tsedio/tsed-cli/workflows/Build%20&%20Release/badge.svg?branch=master)](https://github.com/tsedio/tsed-cli/actions?query=workflow%3A%22Build+%26+Release%22)
-[![npm version](https://badge.fury.io/js/%40tsed%2Fcli.svg)](https://badge.fury.io/js/%40tsed%2Fcli)
-[![Known Vulnerabilities](https://snyk.io/test/github/tsedio/tsed-cli/badge.svg)](https://snyk.io/test/github/tsedio/tsed-cli)
+[![npm version](https://img.shields.io/npm/v/%40tsed/cli-mcp.svg)](https://www.npmjs.com/package/@tsed/cli-mcp)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![backers](https://opencollective.com/tsed/tiers/badge.svg)](https://opencollective.com/tsed)
 
-> CLI for the Ts.ED framework
+> Model Context Protocol (MCP) server tooling for Ts.ED and the Ts.ED CLI.
 
-## Features
+This package provides:
 
-Please refer to the [documentation](https://cli.tsed.dev/) for more details.
+- A lightweight bootstrapper to run an MCP server over stdio (`CLIMCPServer`).
+- Simple helpers to declare MCP entities with Ts.ED DI context: `defineTool`, `defineResource`, and `definePrompt`.
+- Utilities to bridge `@tsed/schema` and Zod for MCP schemas.
 
-## Requirement
+It can be used to expose Ts.ED CLI features to your AI client (e.g., Claude Desktop) or to build your own MCP server in a Ts.ED application or script.
 
-The CLI needs at least Node.js v12 and NPM v7/8.
+## Requirements
+
+- Node.js >= 14 (per package `engines`)
+- ESM module support
 
 ## Installation
 
 ```bash
-npm install -g @tsed/cli
+# with npm
+npm i @tsed/cli-mcp
+# or with yarn
+yarn add @tsed/cli-mcp
+# or with pnpm
+pnpm add @tsed/cli-mcp
 ```
 
-## Proxy configuration
+## Quick start
 
-Ts.ED CLI uses the npm proxy configuration.
-Use these commands to configure the proxy:
+The fastest way to start an MCP server is to:
 
-```sh
-npm config set proxy http://username:password@host:port
-npm config set https-proxy http://username:password@host:port
-```
+1. Define one or more tools/resources/prompts with the helpers.
+2. Bootstrap the server with `CLIMCPServer.bootstrap`.
 
-Or you can edit directly your ~/.npmrc file:
+### 1) Define a Tool
 
-```
-proxy=http://username:password@host:port
-https-proxy=http://username:password@host:port
-https_proxy=http://username:password@host:port
-```
+```ts
+import {defineTool} from "@tsed/cli-mcp";
+import {s} from "@tsed/schema"; // or use zod directly
 
-> Note: The following environment variables can be also used to configure the proxy `HTTPS_PROXY`, `HTTP_PROXY`
-> and `NODE_TLS_REJECT_UNAUTHORIZED`.
-
-## Commands
-
-```shell
-Usage: tsed [options] [command]
-
-Options:
-  -V, --version                       output the version number
-  -h, --help                          display help for command
-
-Commands:
-  add [options] [name]                Add cli plugin to the current project
-  generate|g [options] [type] [name]  Generate a new provider class
-  update [options]                    Update all Ts.ED packages used by your project
-  init [options] [root]               Init a new Ts.ED project
-  run [options] <command>             Run a project level command
-  help [command]                      display help for commands
-```
-
-## Init project
-
-```shell
-Usage: tsed init [options] [root]
-
-Init a new Ts.ED project
-
-Arguments:
-  root                                    Root directory to initialize the Ts.ED project (default: ".")
-
-Options:
-  -n, --project-name <projectName>        Set the project name. By default, the project is the same as the name directory. (default: "")
-  -a, --arch <architecture>               Set the default architecture convention (default or feature) (default: "default")
-  -c, --convention <convention>           Set the default project convention (default or feature) (default: "default")
-  -p, --platform <platform>               Set the default platform for Ts.ED (express or koa) (default: "express")
-  --features <features...>                List of the Ts.ED features. (default: [])
-  -m, --package-manager <packageManager>  The default package manager to install the project (default: "yarn")
-  -t, --tsed-version <version>            Use a specific version of Ts.ED (format: 5.x.x). (default: "latest")
-  -f, --file <path>                       Location of a file in which the features are defined.
-  -s, --skip-prompt                       Skip the prompt. (default: false)
-  -r, --root-dir <path>                   Project root directory
-  --verbose                               Verbose mode
-  -h, --help                              display help for command
-```
-
-Interactive prompt:
-
-```shell
-tsed init .
-```
-
-Skip prompt:
-
-```shell
-tsed init . --platform express --package-manager yarn --features swagger,jest,eslint,lintstaged,prettier --skip-prompt
-```
-
-## Use file to generate project
-
-A file can be defined to generate project. For example create a `tsed.template.yml` and add this code:
-
-```yaml
-projectName: project-example
-platform: express
-architecture: default
-convention: default
-skipPrompt: true
-packageManager: yarn
-features:
-  - graphql
-  - socketio
-  - swagger
-  - oidc
-  - passportjs
-  - commands
-  - db
-  - prisma
-  - mongoose
-  - typeorm
-  - typeorm:mysql
-  - testing
-  - jest
-  - mocha
-  - linter
-  - eslint
-  - lintstaged
-  - prettier
-  - bundler
-  - babel
-  - babel:webpack
-```
-
-> Note: The CLI support `yml` and `json` file!
-
-Then:
-
-```shell
-tsed init . --file ./tsed.template.yml
-```
-
-## Run Cli from code
-
-```typescript
-import {Cli} from "@tsed/cli";
-
-Cli.dispatch("init", {
-  //... init options
+export const helloTool = defineTool({
+  name: "hello",
+  title: "Hello",
+  description: "Returns a friendly greeting",
+  inputSchema: s.object({name: s.string().required()}), // also supports Zod
+  outputSchema: s.object({message: s.string().required()}),
+  async handler({name}) {
+    return {
+      content: [],
+      structuredContent: {message: `Hello, ${name}!`}
+    };
+  }
 });
 ```
+
+### 2) Define a Resource (optional)
+
+```ts
+import {defineResource} from "@tsed/cli-mcp";
+
+export const configResource = defineResource({
+  name: "config",
+  uri: "config://app",
+  title: "Application Config",
+  description: "Current app configuration",
+  mimeType: "text/plain",
+  handler(uri) {
+    return {
+      contents: [
+        {
+          uri: uri.href,
+          text: "App configuration here"
+        }
+      ]
+    };
+  }
+});
+```
+
+### 3) Define a Prompt (optional)
+
+```ts
+import {definePrompt} from "@tsed/cli-mcp";
+import {z} from "zod";
+
+export const reviewPrompt = definePrompt({
+  name: "review-code",
+  title: "Code review",
+  description: "Review code for best practices and potential issues",
+  argsSchema: z.object({code: z.string()}),
+  handler: ({code}) => ({
+    messages: [
+      {
+        role: "user",
+        content: {type: "text", text: `Please review this code:\n\n${code}`}
+      }
+    ]
+  })
+});
+```
+
+### 4) Bootstrap the MCP server (stdio)
+
+```ts
+import {CLIMCPServer} from "@tsed/cli-mcp";
+import type {TokenProvider} from "@tsed/di";
+import {helloTool} from "./tools/helloTool";
+import {configResource} from "./resources/configResource";
+import {reviewPrompt} from "./prompts/reviewPrompt";
+
+await CLIMCPServer.bootstrap({
+  name: "my-mcp-server",
+  version: "0.0.0",
+  tools: [helloTool],
+  resources: [configResource],
+  prompts: [reviewPrompt]
+});
+```
+
+The server will start over stdio using `@modelcontextprotocol/sdk`'s `StdioServerTransport`. You can then register it in any MCP-compatible client.
+
+## Using with Ts.ED CLI
+
+The Ts.ED CLI ships a binary that exposes CLI features over MCP using this package. Once installed, you can run:
+
+```bash
+npx tsed-mcp
+```
+
+One built‑in example tool is `generate-file`, which leverages the CLI generators:
+
+```ts
+import {defineTool} from "@tsed/cli-mcp";
+import {object, string, array, number} from "@tsed/schema";
+import {inject} from "@tsed/di";
+import {CliProjectService} from "@tsed/cli";
+import {CliTemplatesService} from "@tsed/cli";
+
+export const generateTool = defineTool({
+  name: "generate-file",
+  title: "Generate file",
+  description: "Generate a new Ts.ED provider class depending on the given parameters.",
+  inputSchema: object({
+    type: string().required(),
+    name: string().required(),
+    route: string(),
+    directory: string(),
+    templateType: string(),
+    middlewarePosition: string()
+  }),
+  outputSchema: object({
+    files: array().items(string()),
+    count: number()
+  }),
+  async handler(args) {
+    const project = inject(CliProjectService);
+    const templates = inject(CliTemplatesService);
+    // map args to template options, render and transform files...
+    await project.createFromTemplate(args.type as any, args as any);
+    await project.transformFiles(args as any);
+    return {content: [], structuredContent: {files: templates.renderedFiles, count: templates.renderedFiles.length}};
+  }
+});
+```
+
+## API Overview
+
+- `defineTool(options)`
+  - Registers an MCP tool inside Ts.ED DI and ensures the handler runs inside a `DIContext`.
+  - Accepts `inputSchema`/`outputSchema` as `@tsed/schema` or Zod. `@tsed/schema` is automatically converted to Zod.
+- `defineResource(options)`
+  - Registers an MCP resource (static `uri` or `template`) with a DI‑aware handler.
+- `definePrompt(options)`
+  - Registers a reusable prompt template available to clients.
+- `CLIMCPServer.bootstrap(settings)`
+  - Creates the Ts.ED injector, loads plugins, registers provided tools/resources/prompts, and starts MCP over stdio.
+
+### Schema note
+
+This package includes a small helper to convert `@tsed/schema` to Zod at runtime so you can write your schemas once:
+
+```ts
+import {s} from "@tsed/schema";
+// under the hood we transform JsonSchema -> Zod for MCP SDK
+```
+
+## Configuration reference
+
+`CLIMCPServer.bootstrap(settings: Partial<TsED.Configuration>)` supports all usual Ts.ED CLI settings plus:
+
+- `name`: MCP server name (string)
+- `version`: MCP server version (string)
+- `tools`: `TokenProvider[]` returned by `defineTool`
+- `resources`: `TokenProvider[]` returned by `defineResource`
+- `prompts`: `TokenProvider[]` returned by `definePrompt`
+- `logger.level`: log level (e.g., `info`, `debug`)
 
 ## Contributors
 
@@ -177,7 +225,7 @@ website. [[Become a sponsor](https://opencollective.com/tsed#sponsor)]
 
 The MIT License (MIT)
 
-Copyright (c) 2016 - 2023 Romain Lenzotti
+Copyright (c) 2016 - Today Romain Lenzotti
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation the

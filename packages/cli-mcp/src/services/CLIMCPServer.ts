@@ -8,7 +8,12 @@ import {MCP_SERVER} from "./McpServerFactory.js";
 
 export class CLIMCPServer {
   protected constructor(settings: Partial<TsED.Configuration>) {
-    createInjector(settings);
+    createInjector({
+      ...settings,
+      logger: {
+        disableCliFormat: true
+      }
+    });
   }
 
   static async bootstrap(settings: Partial<TsED.Configuration>) {
