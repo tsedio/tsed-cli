@@ -30,11 +30,14 @@ export type TemplateRenderReturnType = {
 };
 
 export class CliTemplatesService {
-  readonly rootDir = constant("project.rootDir", process.cwd());
   readonly fs = inject(CliFs);
   readonly renderedFiles: TemplateRenderReturnType[] = [];
 
   #customTemplates: DefineTemplateOptions[];
+
+  get rootDir() {
+    return constant("project.rootDir", "");
+  }
 
   get srcDir() {
     return join(...([this.rootDir, constant("project.srcDir")].filter(Boolean) as string[]));
