@@ -62,8 +62,7 @@ export class CliPlatformTest extends DITest {
       })
       .addProvider(CliExeca, {
         useClass: FakeCliExeca
-      })
-      .addProvider(CliCore);
+      });
 
     await injector().load();
     await $asyncEmit("$onReady");
@@ -93,7 +92,7 @@ export class CliPlatformTest extends DITest {
     });
   }
 
-  static async create(options: Partial<TsED.Configuration> = {}, rootModule: Type = CliCore) {
+  static async create(options: Partial<TsED.Configuration> = {}) {
     options = resolveConfiguration({
       name: "tsed",
       ...options,
@@ -101,10 +100,6 @@ export class CliPlatformTest extends DITest {
     });
 
     CliPlatformTest.createInjector(options);
-
-    injector().addProvider(CliCore, {
-      useClass: rootModule
-    });
 
     await injector().load();
   }
