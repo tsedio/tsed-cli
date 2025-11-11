@@ -20,7 +20,7 @@ MVP visant un comportement très proche du CLI Ts.ED en mode MCP (stdio). Pas de
 - Les resources sont strictement lecture seule et ne modifient jamais le CWD.
 - Variable d’environnement supportée (optionnelle):
   - `TSED_MCP_WORKSPACE`: CWD initial par défaut si défini (sinon `process.cwd()`).
-- Resource d’info: `tsed://server/info` → `{ pid, serverCwd, projectCwd, projectVersion, tsedCliVersion?, mcpSdkVersion?, projectExists }`.
+- Resource d’info: `tsed://server/info` → `{ pid, serverCwd, projectCwd, tsedCliVersion, mcpSdkVersion, projectExists }`.
 
 ## 3) Tools (API d’actions)
 
@@ -86,7 +86,7 @@ MVP visant un comportement très proche du CLI Ts.ED en mode MCP (stdio). Pas de
 - `tsed://server/info` (server-info)
   - Process et versions:
     ```
-    { pid, serverCwd, projectCwd, projectVersion, tsedCliVersion, mcpSdkVersion, projectExists }
+    { pid, serverCwd, projectCwd, tsedCliVersion, mcpSdkVersion, projectExists }
     ```
 - `tsed://project/info` (project-info)
   - Snapshot projet courant (lié au CWD fixé) sans effet de bord:

@@ -4,6 +4,8 @@ import type {GenerateCmdContext} from "../interfaces/index.js";
 export default defineTemplate({
   id: "decorator",
   label: "Decorator",
+  description:
+    "Scaffold a custom decorator with variants (class, generic, method, parameter, property, endpoint, middleware) in src/decorators.",
   fileName: "{{symbolName}}",
   outputDir: "{{srcDir}}/decorators",
 

@@ -4,6 +4,7 @@ import type {GenerateCmdContext} from "../interfaces/index.js";
 export default defineTemplate({
   id: "controller",
   label: "Controller",
+  description: "Create a new controller class with a sample GET endpoint in src/controllers.",
   fileName: "{{symbolName}}.controller",
   outputDir: "{{srcDir}}/controllers",
 

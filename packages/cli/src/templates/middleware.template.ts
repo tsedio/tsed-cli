@@ -4,6 +4,7 @@ import {defineTemplate} from "../utils/defineTemplate.js";
 export default defineTemplate({
   id: "middleware",
   label: "Middleware",
+  description: "Create a middleware class implementing MiddlewareMethods in src/middlewares.",
   fileName: "{{symbolName}}.middleware",
   outputDir: "{{srcDir}}/middlewares",
 

@@ -3,6 +3,7 @@ import {defineTemplate} from "../utils/defineTemplate.js";
 export default defineTemplate({
   id: "model",
   label: "Model",
+  description: "Create a model class with a sample @Property in src/models.",
   fileName: "{{symbolName}}.model",
   outputDir: "{{srcDir}}/models",
 

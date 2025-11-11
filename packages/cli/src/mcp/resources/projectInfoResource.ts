@@ -27,6 +27,7 @@ export const projectInfoResource = defineResource({
     const info = {
       cwd: projectPackage.cwd,
       pkg: projectPackage.toJSON(),
+      isInitialized: !!projectPackage.preferences?.packageManager,
       preferences: {
         convention: projectPackage.preferences.convention,
         packageManager: projectPackage.preferences.packageManager,

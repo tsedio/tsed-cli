@@ -7,7 +7,7 @@ import {CliTemplatesService} from "../../services/CliTemplatesService.js";
 export const listTemplatesTool = defineTool({
   name: "list-templates",
   title: "List templates",
-  description: "List available Ts.ED templates for generation. Optionally filter by type substring.",
+  description: "List available Ts.ED templates for generation (tsed generate). Optionally filter by type substring.",
   inputSchema: object({
     type: string().description("Filter by template id/label substring (case-insensitive).")
   }),

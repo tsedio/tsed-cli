@@ -3,6 +3,7 @@ import {defineTemplate} from "../utils/defineTemplate.js";
 export default defineTemplate({
   id: "prisma.service",
   label: "Prisma Service",
+  description: "Generate a service based on PrismaClient with $onInit/$onDestroy hooks to manage the database connection.",
   fileName: "prisma.service",
   outputDir: "{{srcDir}}/services",
 

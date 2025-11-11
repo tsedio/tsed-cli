@@ -4,6 +4,7 @@ import {camelCase, pascalCase} from "change-case";
 export default defineTemplate({
   id: "async.factory",
   label: "Async Factory",
+  description: "Generate an async factory token for Ts.ED DI in src/services.",
   fileName: "{{symbolName}}.factory?",
   outputDir: "{{srcDir}}/services",
 

@@ -3,6 +3,7 @@ import {defineTemplate} from "../utils/defineTemplate.js";
 export default defineTemplate({
   id: "pipe",
   label: "Pipe",
+  description: "Create a custom pipe class implementing PipeMethods in src/pipes.",
   fileName: "{{symbolName}}.pipe",
   outputDir: "{{srcDir}}/pipes",
 

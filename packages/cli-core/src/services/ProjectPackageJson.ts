@@ -76,7 +76,7 @@ export class ProjectPackageJson {
   }
 
   get cwd() {
-    return String(constant("project.rootDir"));
+    return String(constant("project.rootDir", ""));
   }
 
   get name() {

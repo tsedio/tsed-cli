@@ -4,6 +4,7 @@ import {camelCase, pascalCase} from "change-case";
 export default defineTemplate({
   id: "factory",
   label: "Factory",
+  description: "Generate a synchronous factory token for Ts.ED DI in src/services.",
   fileName: "{{symbolName}}.factory?",
   outputDir: "{{srcDir}}/services",
 
