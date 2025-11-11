@@ -125,6 +125,7 @@ describe("Init cmd", () => {
           },
           "tsed": {
             "packageManager": "yarn",
+            "platform": "express",
             "runtime": "node",
           },
           "type": "module",
@@ -477,6 +478,7 @@ describe("Init cmd", () => {
           },
           "tsed": {
             "packageManager": "yarn",
+            "platform": "express",
             "runtime": "node",
           },
           "type": "module",
@@ -567,6 +569,7 @@ describe("Init cmd", () => {
           },
           "tsed": {
             "packageManager": "bun",
+            "platform": "express",
             "runtime": "bun",
           },
           "type": "module",
@@ -658,6 +661,7 @@ describe("Init cmd", () => {
           },
           "tsed": {
             "packageManager": "yarn",
+            "platform": "express",
             "runtime": "babel",
           },
           "type": "module",
@@ -750,6 +754,7 @@ describe("Init cmd", () => {
           },
           "tsed": {
             "packageManager": "yarn",
+            "platform": "express",
             "runtime": "webpack",
           },
           "type": "module",
@@ -842,6 +847,7 @@ describe("Init cmd", () => {
           },
           "tsed": {
             "packageManager": "npm",
+            "platform": "express",
             "runtime": "node",
           },
           "type": "module",
@@ -1088,6 +1094,7 @@ describe("Init cmd", () => {
           },
           "tsed": {
             "packageManager": "yarn",
+            "platform": "koa",
             "runtime": "node",
           },
           "type": "module",
@@ -1182,6 +1189,7 @@ describe("Init cmd", () => {
           },
           "tsed": {
             "packageManager": "yarn",
+            "platform": "fastify",
             "runtime": "node",
           },
           "type": "module",

@@ -29,11 +29,10 @@ export function createInjector(settings: Partial<TsED.Configuration> = {}) {
   logger = inj.logger = new Logger(settings.name || "CLI");
 
   inj.addProvider(ProjectPackageJson);
-
   inj.settings.set({
     ...settings,
     project: {
-      root: process.cwd(),
+      // root: process.cwd(),
       srcDir: "src",
       ...(settings.project || {})
     }

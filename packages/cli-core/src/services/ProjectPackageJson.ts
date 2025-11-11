@@ -60,14 +60,23 @@ export class ProjectPackageJson {
     return join(this.dir, "package.json");
   }
 
+  /**
+   * @deprecated
+   */
   get dir() {
-    return String(constant("project.rootDir"));
+    return this.cwd;
   }
 
+  /**
+   * @deprecated
+   * @param dir
+   */
   set dir(dir: string) {
-    configuration().set("project.rootDir", dir);
+    this.setCWD(dir);
+  }
 
-    this.read();
+  get cwd() {
+    return String(constant("project.rootDir"));
   }
 
   get name() {
@@ -110,6 +119,12 @@ export class ProjectPackageJson {
     return this.raw[constant<string>("name")!];
   }
 
+  setCWD(dir: string) {
+    configuration().set("project.rootDir", dir);
+
+    this.read();
+  }
+
   fillWithPreferences<T extends {}>(ctx: T) {
     return {
       ...ctx,
@@ -131,6 +146,7 @@ export class ProjectPackageJson {
   read() {
     const pkg = this.getPackageJson();
     this.setRaw(pkg);
+
     return this;
   }
 
@@ -286,7 +302,7 @@ export class ProjectPackageJson {
     this.reinstall = false;
     this.rewrite = false;
 
-    const cwd = constant<string>("project.rootDir");
+    const cwd = this.cwd;
     const pkgPath = join(String(cwd), "package.json");
 
     const pkg = this.fs.readJsonSync(pkgPath, {encoding: "utf8"});

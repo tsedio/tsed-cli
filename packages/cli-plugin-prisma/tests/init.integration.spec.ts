@@ -157,7 +157,7 @@ describe("Prisma: Init cmd", () => {
           "packageManager": "yarn",
           "architecture": "arc_default",
           "convention": "conv_default",
-          "platform": "conv_default"
+          "platform": "express"
         },
         "type": "module"
       }"

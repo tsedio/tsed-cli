@@ -161,7 +161,7 @@ export class InitCmd implements CommandProvider {
     ctx.runtime && this.packageJson.setPreference("runtime", ctx.runtime);
     ctx.architecture && this.packageJson.setPreference("architecture", ctx.architecture);
     ctx.convention && this.packageJson.setPreference("convention", ctx.convention);
-    ctx.platform && this.packageJson.setPreference("platform", ctx.convention);
+    ctx.platform && this.packageJson.setPreference("platform", ctx.platform);
     ctx.GH_TOKEN && this.packageJson.setGhToken(ctx.GH_TOKEN);
 
     await createTasksRunner(
@@ -296,7 +296,7 @@ export class InitCmd implements CommandProvider {
       const runtime = this.runtimes.get();
 
       const scripts = {
-        test: [ctx.eslint && runtime.run("test:lint"), ctx.testing && runtime.run("test:coverage")].filter(Boolean).join("&&")
+        test: [ctx.eslint && runtime.run("test:lint"), ctx.testing && runtime.run("test:coverage")].filter(Boolean).join(" && ")
       };
 
       this.packageJson.addScripts(scripts);

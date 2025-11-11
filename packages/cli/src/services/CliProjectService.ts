@@ -19,7 +19,10 @@ import {CliTemplatesService, type TemplateRenderOptions, type TemplateRenderRetu
 export class CliProjectService {
   readonly templates = inject(CliTemplatesService);
   private project: ProjectClient;
-  private rootDir = constant("project.rootDir", process.cwd());
+
+  get rootDir() {
+    return constant("project.rootDir", "");
+  }
 
   get srcDir() {
     return join(...([this.rootDir, constant("project.srcDir")].filter(Boolean) as string[]));
@@ -42,7 +45,7 @@ export class CliProjectService {
       rootDir: this.rootDir
     });
 
-    const files = fs.globSync(["!**/node_modules/**", join(constant("project.rootDir", process.cwd()), "**/*.ts")]);
+    const files = fs.globSync(["!**/node_modules/**", join(this.rootDir, "**/*.ts")]);
 
     files.forEach((file) => {
       this.project.createSourceFile(file, fs.readFileSync(file, "utf8"), {

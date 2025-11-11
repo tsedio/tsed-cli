@@ -2643,15 +2643,15 @@ __metadata:
     "@commitlint/config-conventional": "npm:19.5.0"
     "@swc/core": "npm:1.7.26"
     "@swc/helpers": "npm:0.5.13"
-    "@tsed/core": "npm:>=8.17.3"
-    "@tsed/di": "npm:>=8.17.3"
+    "@tsed/core": "npm:>=8.18.0"
+    "@tsed/di": "npm:>=8.18.0"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/logger-std": "npm:>=8.0.3"
     "@tsed/markdown-it-symbols": "npm:3.20.8"
     "@tsed/monorepo-utils": "npm:3.0.0"
-    "@tsed/normalize-path": "npm:>=8.17.3"
-    "@tsed/openspec": "npm:>=8.17.3"
-    "@tsed/schema": "npm:>=8.17.3"
+    "@tsed/normalize-path": "npm:>=8.18.0"
+    "@tsed/openspec": "npm:>=8.18.0"
+    "@tsed/schema": "npm:>=8.18.0"
     "@tsed/ts-doc": "npm:^4.1.0"
     "@types/inquirer-autocomplete-prompt": "npm:3.0.3"
     "@types/node": "npm:22.7.4"
@@ -2723,14 +2723,14 @@ __metadata:
     "@swc/core": "npm:1.7.26"
     "@swc/helpers": "npm:^0.5.13"
     "@tsed/cli-core": "workspace:*"
-    "@tsed/core": "npm:>=8.17.3"
-    "@tsed/di": "npm:>=8.17.3"
-    "@tsed/hooks": "npm:>=8.17.3"
+    "@tsed/core": "npm:>=8.18.0"
+    "@tsed/di": "npm:>=8.18.0"
+    "@tsed/hooks": "npm:>=8.18.0"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/logger-std": "npm:>=8.0.3"
-    "@tsed/normalize-path": "npm:>=8.17.3"
-    "@tsed/openspec": "npm:>=8.17.3"
-    "@tsed/schema": "npm:>=8.17.3"
+    "@tsed/normalize-path": "npm:>=8.18.0"
+    "@tsed/openspec": "npm:>=8.18.0"
+    "@tsed/schema": "npm:>=8.18.0"
     "@tsed/typescript": "workspace:*"
     "@types/change-case": "npm:^2.3.1"
     "@types/consolidate": "npm:0.14.4"
@@ -2741,6 +2741,7 @@ __metadata:
     cross-env: "npm:7.0.3"
     fs-extra: "npm:^11.2.0"
     globby: "npm:^14.0.2"
+    json-schema-to-zod: "npm:2.6.1"
     read-pkg-up: "npm:^11.0.0"
     rxjs: "npm:^7.8.1"
     semver: "npm:^7.6.3"
@@ -2773,22 +2774,23 @@ __metadata:
       optional: false
   bin:
     tsed: lib/esm/bin/tsed.js
+    tsed-mcp: lib/esm/bin/tsed-mcp.js
   languageName: unknown
   linkType: soft
 
-"@tsed/core@npm:>=8.17.3":
-  version: 8.17.3
-  resolution: "@tsed/core@npm:8.17.3"
+"@tsed/core@npm:>=8.18.0":
+  version: 8.18.2
+  resolution: "@tsed/core@npm:8.18.2"
   dependencies:
     reflect-metadata: "npm:^0.2.2"
     tslib: "npm:2.7.0"
-  checksum: 10/ddf752c0ff4b365d7d6163b14f00c52eb9feda4f997be204dbaca1ee8eaedcbb3147a755d1d72de66ee6e1fa07a8ca883a4e20fb1af68bfb2b562370ecd9942a
+  checksum: 10/b2800e2d71bed97633780047354d2d8805f7dee86910297cde62486f697df503ed93eaf650668e39340a17314cf39dc99a52875c069590550a6eee0f74c7e19c
   languageName: node
   linkType: hard
 
-"@tsed/di@npm:>=8.17.3":
-  version: 8.17.3
-  resolution: "@tsed/di@npm:8.17.3"
+"@tsed/di@npm:>=8.18.0":
+  version: 8.18.2
+  resolution: "@tsed/di@npm:8.18.2"
   dependencies:
     tslib: "npm:2.7.0"
     uuid: "npm:^10.0.0"
@@ -2803,17 +2805,17 @@ __metadata:
       optional: false
     "@tsed/logger":
       optional: false
-  checksum: 10/63a169338337dc8ff79ea48228b64b031e6e8bbc7eaadfb3124c39fc08345ab712c923662a0ba18a45de1ab55969cd66bafcc97db874de45d8bfcd62d9d6e32b
+  checksum: 10/5bb136218f6dc95208cf67b68881ef24e639ec8e6a64d484fad34a2051970c7f8e28c32ac12f80130f24764868c12a158dbf69eeb18d0bfb89fd3b30bc436bb3
   languageName: node
   linkType: hard
 
-"@tsed/hooks@npm:>=8.17.3":
-  version: 8.17.3
-  resolution: "@tsed/hooks@npm:8.17.3"
+"@tsed/hooks@npm:>=8.18.0":
+  version: 8.18.2
+  resolution: "@tsed/hooks@npm:8.18.2"
   dependencies:
     reflect-metadata: "npm:^0.2.2"
     tslib: "npm:2.7.0"
-  checksum: 10/d10382e44c9fa05ad9cc995b5b05ede3ac849dd83cd0aaf2363dcee62a8d4e0ed0ba1df9f20554560ecae28a3f46b9d35a4a3fabae13a2334ac848e6490b879d
+  checksum: 10/cbcc6e33fbaf07751dd14c1a8a1e55109a644cb3b229f5bb25e0ed71378ed1c2deba6103ecea1c530b9af1fb50e0a0517f333e61389b0b710f0c99566347450c
   languageName: node
   linkType: hard
 
@@ -2910,28 +2912,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsed/normalize-path@npm:>=8.17.3":
-  version: 8.17.3
-  resolution: "@tsed/normalize-path@npm:8.17.3"
+"@tsed/normalize-path@npm:>=8.18.0":
+  version: 8.18.2
+  resolution: "@tsed/normalize-path@npm:8.18.2"
   dependencies:
     normalize-path: "npm:3.0.0"
     tslib: "npm:2.7.0"
-  checksum: 10/aa405ef69592ba37f22f21a5f653cc32829781c80adb41e846d95f6239fbcc612bdb70ef61dfbbb185cb047762ac7b09c09d74bd43e3cfc87f27c3f31fc0ec53
+  checksum: 10/59609f694e53d99e71ec054664372a79f892f097c3f003afbaaaf1defc9ec1fc5d27dc23e9c01d18c063b083f6882d771595a1b1f706d537d4d3f5b26221ab67
   languageName: node
   linkType: hard
 
-"@tsed/openspec@npm:8.17.3, @tsed/openspec@npm:>=8.17.3":
-  version: 8.17.3
-  resolution: "@tsed/openspec@npm:8.17.3"
-  checksum: 10/2a12d4948f7a367ca637fd66ac485df00ecd255a6a60b3bcf01e65ca8b7736923c8f79dbb3d65b76a98cc72899aa80ad447bb732d03e7b24fa62ab8cc3e7f214
+"@tsed/openspec@npm:8.18.2, @tsed/openspec@npm:>=8.18.0":
+  version: 8.18.2
+  resolution: "@tsed/openspec@npm:8.18.2"
+  checksum: 10/2ed970acb36c88bf600a3064ba65931a8a2830f1975eb14790b309077a628c2cac2a7dde0c86d94cc52993c782d105fadf70cd9faf842783bdbd8642d7a2c019
   languageName: node
   linkType: hard
 
-"@tsed/schema@npm:>=8.17.3":
-  version: 8.17.3
-  resolution: "@tsed/schema@npm:8.17.3"
+"@tsed/schema@npm:>=8.18.0":
+  version: 8.18.2
+  resolution: "@tsed/schema@npm:8.18.2"
   dependencies:
-    "@tsed/openspec": "npm:8.17.3"
+    "@tsed/openspec": "npm:8.18.2"
     change-case: "npm:^5.4.4"
     json-schema: "npm:0.4.0"
     picomatch: "npm:4.0.2"
@@ -2946,7 +2948,7 @@ __metadata:
       optional: false
     "@tsed/openspec":
       optional: false
-  checksum: 10/2d2cc0ba5fe2df9bb69b23bbc2e2e8ca00351872070797211770961bcc80102607695766e2b9321026fc5ebb4c932b880866589dc8fb59d44f7c7f0440d87ba0
+  checksum: 10/fdb9c120e9afa12e62f6466a4046457e916e612a7b9dbb2e7bbaafb685b96d19dfd5a0ebc098af1754e673f23471432062727cf173731241774d4b112c2775cb
   languageName: node
   linkType: hard
 
@@ -9302,6 +9304,15 @@ __metadata:
   version: 3.0.2
   resolution: "json-parse-even-better-errors@npm:3.0.2"
   checksum: 10/6f04ea6c9ccb783630a59297959247e921cc90b917b8351197ca7fd058fccc7079268fd9362be21ba876fc26aa5039369dd0a2280aae49aae425784794a94927
+  languageName: node
+  linkType: hard
+
+"json-schema-to-zod@npm:2.6.1":
+  version: 2.6.1
+  resolution: "json-schema-to-zod@npm:2.6.1"
+  bin:
+    json-schema-to-zod: dist/cjs/cli.js
+  checksum: 10/08eb873512762a74ce073458f47e865931b1a7f7cff0a31fbce9b9d43841a85d05a718ca491909845179900cda981b1fe198ba46063fcd554185214ce29083c9
   languageName: node
   linkType: hard
 
