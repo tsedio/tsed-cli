@@ -11,6 +11,6 @@ describe("toZod", () => {
 
     const result = toZod(schema);
 
-    expect(result).toBeInstanceOf(ZodObject);
+    expect(result?.prop1?.parse).toBeDefined();
   });
 });

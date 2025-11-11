@@ -1,26 +1,24 @@
-import type {
-  ReadResourceCallback,
-  ReadResourceTemplateCallback,
-  ResourceMetadata,
-  ResourceTemplate
-} from "@modelcontextprotocol/sdk/server/mcp.js";
+import type {ReadResourceCallback, ResourceMetadata} from "@modelcontextprotocol/sdk/server/mcp.js";
 import {injectable} from "@tsed/cli-core";
 import {DIContext, injector, logger, runInContext, type TokenProvider} from "@tsed/di";
 import {v4} from "uuid";
 
-export type ResourceProps = ResourceMetadata & {
+type ResourceBaseProps = ResourceMetadata & {
   token?: TokenProvider;
   name: string;
-} & (
-    | {
-        uri: string;
-        handler: ReadResourceCallback;
-      }
-    | {
-        template: ResourceTemplate;
-        handler: ReadResourceTemplateCallback;
-      }
-  );
+};
+
+type ResourceReadProps = ResourceBaseProps & {
+  uri: string;
+  handler: ReadResourceCallback;
+};
+
+type ResourceTemplateProps = ResourceBaseProps & {
+  uri: string;
+  handler: ReadResourceCallback;
+};
+
+export type ResourceProps = ResourceReadProps | ResourceTemplateProps;
 
 /**
  * Resources can also expose data to LLMs, but unlike tools shouldn't perform significant computation or have side effects.
@@ -50,7 +48,9 @@ export type ResourceProps = ResourceMetadata & {
  *
  * @param options
  */
-export function defineResource(options: ResourceProps) {
+export function defineResource(options: ResourceReadProps): TokenProvider;
+export function defineResource(options: ResourceTemplateProps): TokenProvider;
+export function defineResource(options: ResourceProps): TokenProvider {
   const provider = injectable(options.token || Symbol.for(`MCP:RESOURCE:${options.name}`))
     .type("CLI_MCP_RESOURCES")
     .factory(() => ({
