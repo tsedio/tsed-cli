@@ -1,17 +1,15 @@
 import {extname} from "node:path";
 
 import {inject, injectable} from "@tsed/di";
-import {default as Ajv, type Schema} from "ajv";
+import type {JsonSchema} from "@tsed/schema";
 
+import {validate} from "../utils/validate.js";
 import {CliFs} from "./CliFs.js";
 import {CliYaml} from "./CliYaml.js";
 
 export class CliLoadFile {
   protected cliYaml: CliYaml = inject(CliYaml);
   protected cliFs = inject(CliFs);
-
-  // @ts-ignore
-  #ajv: Ajv;
 
   constructor() {
     const options = {
@@ -27,7 +25,7 @@ export class CliLoadFile {
   /**
    * Load a configuration file from yaml, json
    */
-  async loadFile<Model = any>(path: string, schema?: Schema): Promise<Model> {
+  async loadFile<Model = any>(path: string, schema?: JsonSchema<Model>): Promise<Model> {
     let config: any;
     const ext = extname(path);
 
@@ -40,23 +38,19 @@ export class CliLoadFile {
     }
 
     if (schema) {
-      const validate = this.#ajv.compile(schema);
-
-      const isValid = validate(config);
+      const {isValid, errors, value} = validate(config, schema);
 
       if (!isValid) {
-        const [error] = validate.errors!;
+        const [error] = errors!;
 
         throw new Error(
-          [
-            `${error.instancePath.replace(/\//gi, ".")} `,
-            error.message,
-            error.params?.allowedValues && `. Allowed values: ${error.params?.allowedValues}`
-          ]
+          [`${error.path.replace(/\//gi, ".")} `, error.message, error.expected && `. Allowed values: ${error.expected}`]
             .filter(Boolean)
             .join("")
         );
       }
+
+      return value as Model;
     }
 
     return config;

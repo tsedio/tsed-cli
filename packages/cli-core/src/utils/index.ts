@@ -8,3 +8,4 @@ export * from "./mapCommanderArgs.js";
 export * from "./mapCommanderOptions.js";
 export * from "./parseOption.js";
 export * from "./resolveConfiguration.js";
+export * from "./validate.js";
