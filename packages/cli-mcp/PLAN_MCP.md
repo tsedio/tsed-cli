@@ -73,13 +73,15 @@ MVP visant un comportement très proche du CLI Ts.ED en mode MCP (stdio). Pas de
 }
 ```
 
-- Output (à standardiser dans M2):
+- Output (standardisé M2):
 
 ```
-{ files?: string[]; count?: number; symbolPath?: string; logs?: string[] }
+{ files: string[]; count: number; symbolPath?: string; logs?: string[]; warnings?: string[] }
 ```
 
 - Implémentation: `CliProjectService.createFromTemplate(type, ctx)` puis `transformFiles(ctx)`; lister les fichiers via `CliTemplatesService.renderedFiles`.
+- Validation des arguments: fusionner le schéma global `{ type, name }` avec le schéma spécifique du template via `mergeSchema(baseSchema, template.schema)`, sérialiser en JSON Schema (`toJSON()`), puis valider avec Ajv. En cas d’échec, retourner `E_ARGS_INVALID`.
+- Gestion d’état par appel: utiliser le DIContext (fourni par `defineTool`) pour stocker/vider `renderedFiles` via `$ctx.set("renderedFiles", [])` avant exécution et `$ctx.set("renderedFiles", rendered)` après. Le contexte est détruit en fin d’appel (`ctx.destroy()`).
 
 ## 4) Resources (lecture seule)
 

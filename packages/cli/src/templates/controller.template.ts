@@ -1,5 +1,6 @@
 import {defineTemplate} from "../utils/defineTemplate.js";
 import type {GenerateCmdContext} from "../interfaces/index.js";
+import {object, string} from "@tsed/schema";
 
 export default defineTemplate({
   id: "controller",
@@ -7,6 +8,12 @@ export default defineTemplate({
   description: "Create a new controller class with a sample GET endpoint in src/controllers.",
   fileName: "{{symbolName}}.controller",
   outputDir: "{{srcDir}}/controllers",
+
+  // Validation schema specific to this template (do not include global fields `type` and `name`)
+  schema: object({
+    route: string().pattern(/^\//).description("Route starting with '/' (e.g., '/users')"),
+    directory: string().description("Sub-directory under src/controllers")
+  }),
 
   prompts(context: GenerateCmdContext) {
     return [

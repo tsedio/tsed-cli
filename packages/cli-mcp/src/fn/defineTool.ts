@@ -69,9 +69,18 @@ export function defineTool<Input, Output = undefined>(options: ToolProps<Input, 
           platform: "MCP"
         });
 
-        return runInContext($ctx, () => {
-          return options.handler(args as Input, extra);
-        });
+        try {
+          return await runInContext($ctx, () => {
+            return options.handler(args as Input, extra);
+          });
+        } finally {
+          // Ensure per-invocation context is destroyed to avoid leaks
+          try {
+            await $ctx.destroy();
+          } catch {
+            // ignore
+          }
+        }
       }
     }));
 

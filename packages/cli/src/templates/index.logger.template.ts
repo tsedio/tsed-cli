@@ -1,5 +1,4 @@
 import {defineTemplate} from "../utils/defineTemplate.js";
-import {ProjectConvention, type RenderDataContext} from "../interfaces/index.js";
 
 export default defineTemplate({
   id: "index.logger",

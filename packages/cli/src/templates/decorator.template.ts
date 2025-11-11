@@ -1,5 +1,18 @@
 import {defineTemplate} from "../utils/defineTemplate.js";
 import type {GenerateCmdContext} from "../interfaces/index.js";
+import {s} from "@tsed/schema";
+
+const choices = [
+  {name: "Class Decorator", value: "class"},
+  {name: "Generic Decorator (class, property)", value: "generic"},
+  {name: "Method Decorator", value: "method"},
+  {name: "Parameter Decorator", value: "param"},
+  {name: "Property Decorator", value: "property"},
+  {name: "Property Decorator (with @Property)", value: "prop"},
+  {name: "Parameters Decorator", value: "parameters"},
+  {name: "Endpoint Decorator", value: "endpoint"},
+  {name: "Middleware Decorator", value: "middleware"}
+];
 
 export default defineTemplate({
   id: "decorator",
@@ -8,6 +21,15 @@ export default defineTemplate({
     "Scaffold a custom decorator with variants (class, generic, method, parameter, property, endpoint, middleware) in src/decorators.",
   fileName: "{{symbolName}}",
   outputDir: "{{srcDir}}/decorators",
+
+  schema: s.object({
+    templateType: s
+      .string()
+      .enum("class", "generic", "method", "param", "property", "prop", "parameters", "endpoint", "middleware")
+      .customKey("x-choices", choices)
+      .default("class")
+      .description("sub-type of the template to generate the decorator")
+  }),
 
   prompts(context: GenerateCmdContext) {
     return [
@@ -18,17 +40,7 @@ export default defineTemplate({
         when(state: any) {
           return !!(["decorator"].includes(state.type || context.type) || context.templateType);
         },
-        choices: [
-          {name: "Class Decorator", value: "class"},
-          {name: "Generic Decorator (class, property)", value: "generic"},
-          {name: "Method Decorator", value: "method"},
-          {name: "Parameter Decorator", value: "param"},
-          {name: "Property Decorator", value: "property"},
-          {name: "Property Decorator (with @Property)", value: "prop"},
-          {name: "Parameters Decorator", value: "parameters"},
-          {name: "Endpoint Decorator", value: "endpoint"},
-          {name: "Middleware Decorator", value: "middleware"}
-        ],
+        choices,
         default: "class"
       }
     ];

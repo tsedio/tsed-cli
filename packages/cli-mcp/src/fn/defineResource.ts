@@ -65,9 +65,17 @@ export function defineResource(options: ResourceProps): TokenProvider {
           platform: "MCP"
         });
 
-        return runInContext($ctx, () => {
-          return (options.handler as any)(...args);
-        });
+        try {
+          return await runInContext($ctx, () => {
+            return (options.handler as any)(...args);
+          });
+        } finally {
+          try {
+            await $ctx.destroy();
+          } catch {
+            // ignore
+          }
+        }
       }
     }));
 
