@@ -1,5 +1,4 @@
 import {s, string} from "@tsed/schema";
-import {ZodObject} from "zod";
 
 import {toZod} from "./toZod.js";
 
