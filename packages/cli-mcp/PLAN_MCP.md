@@ -57,7 +57,38 @@ MVP visant un comportement très proche du CLI Ts.ED en mode MCP (stdio). Pas de
 { items: [{ id: string; type: string; label?: string; description?: string }] }
 ```
 
-### 3.3 generate-file (exécution immédiate)
+### 3.3 get-template (détails schéma et choix)
+
+- Rôle: retourner la définition complète d’un template sélectionné, incluant son schéma spécifique (sans `type`/`name`) et les choix résolus pour certaines propriétés.
+- Input:
+
+```
+{ id: string }
+```
+
+- Output:
+
+```
+{
+  id: string;
+  label?: string;
+  description?: string;
+  schema?: object;  // JSON Schema des propriétés spécifiques au template (sans `type`/`name`)
+  choices?: Record<string, {
+    items: Array<{ value: string; label?: string; description?: string; homepage?: string }>;
+    fetchedAt?: string; // ISO
+    ttlMs?: number;     // durée de cache indicative
+    source?: "remote" | "local";
+    truncated?: boolean;
+  }>;
+}
+```
+
+- Notes:
+  - Les `choices` peuvent être dynamiques (ex: stratégies Passport) et sont déjà mis en cache côté serveur.
+  - La validation reste basée sur le schéma standard; les `choices` servent à guider l’UX/LLM, pas à valider.
+
+### 3.4 generate-file (exécution immédiate)
 
 - ≃ `tsed g`
 - Input:
