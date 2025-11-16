@@ -13,7 +13,7 @@ export function validate<Value>(value: unknown, schema: JsonSchema<Value>) {
 
   const result = validate(value);
 
-  if (result) {
+  if (!result) {
     const errors = (validate.errors || []).map((e) => ({
       path: e.instancePath || e.schemaPath,
       message: e.message,
