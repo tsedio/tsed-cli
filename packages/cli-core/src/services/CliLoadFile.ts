@@ -11,17 +11,6 @@ export class CliLoadFile {
   protected cliYaml: CliYaml = inject(CliYaml);
   protected cliFs = inject(CliFs);
 
-  constructor() {
-    const options = {
-      verbose: false,
-      coerceTypes: true,
-      strict: false
-    };
-
-    // @ts-ignore
-    this.#ajv = new Ajv(options);
-  }
-
   /**
    * Load a configuration file from yaml, json
    */

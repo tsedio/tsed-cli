@@ -1,7 +1,12 @@
 import type {JsonSchema} from "@tsed/schema";
 import {Ajv} from "ajv";
 
-const ajv = new Ajv({allErrors: true, strict: false});
+const ajv = new Ajv({
+  verbose: false,
+  coerceTypes: true,
+  strict: false,
+  allErrors: true
+});
 
 export function validate<Value>(value: unknown, schema: JsonSchema<Value>) {
   const validate = ajv.compile(schema.toJSON());
