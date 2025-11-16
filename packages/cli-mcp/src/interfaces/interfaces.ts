@@ -6,6 +6,9 @@ declare global {
       prompts?: TokenProvider[];
       resources?: TokenProvider[];
       tools?: TokenProvider[];
+      mcp?: {
+        mode: "streamable-http" | "stdio";
+      };
     }
   }
 }

@@ -76,6 +76,7 @@
     "@types/change-case": "^2.3.1",
     "@types/consolidate": "0.14.4",
     "cross-env": "7.0.3",
+    "express": "5.1.0",
     "typescript": "5.6.2",
     "vitest": "3.2.4"
   },

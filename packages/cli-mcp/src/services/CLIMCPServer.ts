@@ -11,7 +11,7 @@ export class CLIMCPServer {
     createInjector({
       ...settings,
       logger: {
-        disableCliFormat: true
+        level: "info"
       }
     });
   }
