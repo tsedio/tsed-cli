@@ -68,35 +68,30 @@ export class CliService {
    */
   public runLifecycle(cmdName: string, data: CommandData = {}, $ctx: DIContext) {
     return runInContext($ctx, async () => {
+      $ctx.set("dispatchCmd", cmdName);
+
       await $asyncEmit("$loadPackageJson");
 
-      data = await this.beforePrompt(cmdName, data);
+      data = await this.beforePrompt(cmdName, data, $ctx);
+      data = await this.prompt(cmdName, data, $ctx);
 
-      $ctx.set("data", data);
+      try {
+        await this.exec(cmdName, data, $ctx);
+      } catch (er) {
+        await $asyncEmit("$onFinish", [data, er]);
+        await destroyInjector();
+        throw er;
+      }
 
-      data = await this.prompt(cmdName, data);
-      await this.dispatch(cmdName, data, $ctx);
-    });
-  }
-
-  public async dispatch(cmdName: string, data: CommandData, $ctx: DIContext) {
-    try {
-      $ctx.set("dispatchCmd", cmdName);
-      $ctx.set("data", data);
-
-      await this.exec(cmdName, data, $ctx);
-    } catch (er) {
-      await $asyncEmit("$onFinish", er);
+      await $asyncEmit("$onFinish", [data]);
       await destroyInjector();
-      throw er;
-    }
-
-    await $asyncEmit("$onFinish");
-    await destroyInjector();
+    });
   }
 
   public async exec(cmdName: string, data: any, $ctx: DIContext) {
     const initialTasks = await this.getTasks(cmdName, data);
+
+    $ctx.set("data", data);
 
     if (initialTasks.length) {
       const tasks = [
@@ -109,7 +104,11 @@ export class CliService {
         ...(await this.getPostInstallTasks(cmdName, data))
       ];
 
-      return createTasksRunner(tasks, this.mapData(cmdName, data, $ctx));
+      data = this.mapData(cmdName, data, $ctx);
+
+      $ctx.set("data", data);
+
+      return createTasksRunner(tasks, data);
     }
   }
 
@@ -117,16 +116,21 @@ export class CliService {
    * Run prompt for a given command
    * @param cmdName
    * @param data Initial data
+   * @param $ctx
    */
-  public async beforePrompt(cmdName: string, data: CommandData = {}) {
+  public async beforePrompt(cmdName: string, data: CommandData = {}, $ctx: DIContext) {
     const provider = this.commands.get(cmdName);
     const instance = inject<CommandProvider>(provider.useClass)!;
     const verbose = data.verbose;
+
+    $ctx.set("data", data);
 
     if (instance.$beforePrompt) {
       data = await instance.$beforePrompt(JSON.parse(JSON.stringify(data)));
       data.verbose = verbose;
     }
+
+    $ctx.set("data", data);
 
     return data;
   }
@@ -134,27 +138,32 @@ export class CliService {
   /**
    * Run prompt for a given command
    * @param cmdName
-   * @param ctx Initial data
+   * @param data
+   * @param $ctx
    */
-  public async prompt(cmdName: string, ctx: CommandData = {}) {
+  public async prompt(cmdName: string, data: CommandData = {}, $ctx: DIContext) {
     const provider = this.commands.get(cmdName);
     const instance = inject<CommandProvider>(provider.useClass)!;
 
+    $ctx.set("data", data);
+
     if (instance.$prompt) {
       const questions = [
-        ...((await instance.$prompt(ctx)) as any[]),
-        ...(await this.hooks.emit(CommandStoreKeys.PROMPT_HOOKS, cmdName, ctx))
+        ...((await instance.$prompt(data)) as any[]),
+        ...(await this.hooks.emit(CommandStoreKeys.PROMPT_HOOKS, cmdName, data))
       ];
 
       if (questions.length) {
-        ctx = {
-          ...ctx,
+        data = {
+          ...data,
           ...((await Inquirer.prompt(questions)) as any)
         };
       }
     }
 
-    return ctx;
+    $ctx.set("data", data);
+
+    return data;
   }
 
   /**

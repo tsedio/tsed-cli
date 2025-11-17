@@ -94,7 +94,7 @@ export class InitCmd implements CommandProvider {
 
   async $beforePrompt(initialOptions: Partial<InitOptions>) {
     if (initialOptions.file) {
-      const file = join(this.packageJson.dir, initialOptions.file);
+      const file = join(this.packageJson.cwd, initialOptions.file);
 
       return {
         ...initialOptions,
@@ -273,9 +273,9 @@ export class InitCmd implements CommandProvider {
   }
 
   resolveRootDir(ctx: Partial<InitOptions>) {
-    const rootDirName = kebabCase(ctx.projectName || basename(this.packageJson.dir));
+    const rootDirName = kebabCase(ctx.projectName || basename(this.packageJson.cwd));
 
-    if (this.packageJson.dir.endsWith(rootDirName)) {
+    if (this.packageJson.cwd.endsWith(rootDirName)) {
       ctx.projectName = ctx.projectName || rootDirName;
       ctx.root = ".";
       return;
@@ -284,7 +284,7 @@ export class InitCmd implements CommandProvider {
     ctx.projectName = ctx.projectName || rootDirName;
 
     if (ctx.root && ctx.root !== ".") {
-      this.packageJson.dir = join(this.packageJson.dir, rootDirName);
+      this.packageJson.setCWD(join(this.packageJson.cwd, rootDirName));
       ctx.root = ".";
     }
   }

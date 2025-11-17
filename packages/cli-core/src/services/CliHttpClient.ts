@@ -63,10 +63,12 @@ export class CliHttpClient extends CliHttpLogClient {
   }
 
   protected getRequestParameters(method: Method, endpoint: string, options: CliHttpClientOptions) {
+    const url = (this.host || "") + endpoint.replace(this.host || "", "");
+
     options = {
       method,
-      url: (this.host || "") + endpoint.replace(this.host || "", ""),
       ...options,
+      url,
       params: options.params || options.qs,
       data: options.data,
       headers: {
@@ -76,7 +78,7 @@ export class CliHttpClient extends CliHttpLogClient {
       }
     };
 
-    this.configureProxy(endpoint, options);
+    this.configureProxy(url, options);
 
     return options;
   }

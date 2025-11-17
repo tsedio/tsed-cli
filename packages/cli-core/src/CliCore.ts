@@ -78,7 +78,7 @@ export class CliCore {
       name: settings.name || "tsed",
       argv,
       project: {
-        // rootDir: this.getProjectRoot(argv),
+        rootDir: this.getProjectRoot(argv),
         srcDir: "src",
         scriptsDir: "scripts",
         ...(settings.project || {})
