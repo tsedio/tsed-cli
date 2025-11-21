@@ -31,6 +31,9 @@ CLIMCPServer.bootstrap({
   templateDir: TEMPLATE_DIR,
   tools,
   resources,
+  mcp: {
+    mode: process.env.args?.includes("--http") || process.env.USE_MCP_HTTP ? "streamable-http" : "stdio"
+  },
   defaultProjectPreferences() {
     return {
       convention: ProjectConvention.DEFAULT,

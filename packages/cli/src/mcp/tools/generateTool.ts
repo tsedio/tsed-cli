@@ -12,8 +12,15 @@ export const generateTool = defineTool({
   title: "Generate file",
   description: "Generate a new Ts.ED provider class depending on the given parameters.",
   inputSchema: object({
-    id: string().required().description("The id of the file to generate (e.g., 'model', 'controller', 'service')."),
-    name: string().required().description("The name of the class to generate.")
+    id: string().required().description("The template id of the file to generate (e.g., 'controller', 'service', 'model')."),
+    name: string().required().description("The name of the class to generate."),
+    properties: object()
+      .unknown()
+      .optional()
+      .description(
+        "Additional properties to generate file depending on the given template id. For example controller accept extra properties. Run 'list-templates' and/or 'get-template' to discover extra properties available for the template."
+      )
+      .default({})
   }),
   outputSchema: object({
     files: array().items(string()).description("List of generated files."),
@@ -22,7 +29,7 @@ export const generateTool = defineTool({
     logs: array().items(string()).optional().description("Execution logs"),
     warnings: array().items(string()).optional().description("Non blocking warnings")
   }),
-  async handler(args) {
+  async handler({id, name, properties}) {
     const projectService = inject(CliProjectService);
     const templates = inject(CliTemplatesService);
     const projectPackage = inject(ProjectPackageJson);
@@ -55,7 +62,7 @@ export const generateTool = defineTool({
       };
     }
 
-    const ctx = mapDefaultTemplateOptions({...args, type: args.id});
+    const ctx = mapDefaultTemplateOptions({...properties, type: id, name});
 
     const {type} = ctx;
 
@@ -75,9 +82,8 @@ export const generateTool = defineTool({
     }
 
     // validate the schema of the resolved template
-    if (template.schema) {
-      const {id, name, ...additionalProps} = args;
-      const {isValid, errors} = validate(additionalProps, template.schema);
+    if (template.schema && properties) {
+      const {isValid, errors} = validate(properties, template.schema);
 
       if (!isValid) {
         return {
@@ -97,6 +103,7 @@ export const generateTool = defineTool({
     await projectService.transformFiles(ctx as any);
 
     const rendered = templates.getRenderedFiles();
+
     const files = rendered.map((f) => f.outputPath);
     const count = files.length;
     const symbolPath = ctx.symbolPath || rendered[0]?.symbolPath || rendered[0]?.outputPath;

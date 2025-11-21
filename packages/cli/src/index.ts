@@ -1,5 +1,6 @@
 import "@tsed/logger-std";
 import "./templates/index.js";
+import "./services/CliStats.js";
 
 export * from "./commands/add/AddCmd.js";
 export * from "./commands/generate/GenerateCmd.js";
