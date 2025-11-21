@@ -1,4 +1,4 @@
-import {Inject} from "@tsed/di";
+import {inject} from "@tsed/di";
 import type {Options, SyncOptions} from "execa";
 import {Observable} from "rxjs";
 
@@ -12,9 +12,7 @@ export abstract class BaseManager {
   abstract readonly cmd: string;
 
   protected verboseOpt = "--verbose";
-
-  @Inject(CliExeca)
-  protected cliExeca: CliExeca;
+  protected cliExeca = inject(CliExeca);
 
   has() {
     try {
