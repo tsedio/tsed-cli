@@ -45,13 +45,15 @@ export class CliProjectService {
       rootDir: this.rootDir
     });
 
-    const files = fs.globSync(["!**/node_modules/**", join(this.rootDir, "**/*.ts")]);
+    const files = fs.globSync([join(this.rootDir, "**/*.ts"), "!node_modules", "!node_modules/**", "!**/node_modules/**"]);
 
-    files.forEach((file) => {
-      this.project.createSourceFile(file, fs.readFileSync(file, "utf8"), {
-        overwrite: true
+    files
+      .filter((file) => !file.includes("node_modules"))
+      .forEach((file) => {
+        this.project.createSourceFile(file, fs.readFileSync(file, "utf8"), {
+          overwrite: true
+        });
       });
-    });
   }
 
   get() {

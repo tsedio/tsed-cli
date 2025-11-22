@@ -1,0 +1,115 @@
+{
+  "name": "@tsed/cli-mcp",
+  "description": "MCP CLI for Ts.ED.",
+  "version": "7.0.0-alpha.6",
+  "type": "module",
+  "main": "./lib/esm/index.js",
+  "source": "./src/index.ts",
+  "module": "./lib/esm/index.js",
+  "typings": "./lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "cli-tsed-source": "./src/index.ts",
+      "types": "./lib/types/index.d.ts",
+      "import": "./lib/esm/index.js",
+      "default": "./lib/esm/index.js"
+    }
+  },
+  "scripts": {
+    "build": "yarn build:ts",
+    "build:ts": "tsc --build tsconfig.esm.json",
+    "test": "vitest run",
+    "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
+  },
+  "bin": {
+    "tsed": "lib/esm/bin/tsed.js",
+    "tsed-mcp": "lib/esm/bin/tsed-mcp.js"
+  },
+  "files": [
+    "lib/esm/bin/tsed.js",
+    "lib/esm/bin/tsed-mcp.js",
+    "lib/esm/bin",
+    "lib",
+    "templates"
+  ],
+  "keywords": [
+    "Ts.ED",
+    "cli",
+    "typescript",
+    "framework",
+    "rest",
+    "api",
+    "express",
+    "decorators"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.19.1",
+    "@swc-node/register": "^1.10.9",
+    "@swc/core": "1.7.26",
+    "@swc/helpers": "^0.5.13",
+    "@tsed/cli-core": "workspace:*",
+    "@tsed/core": ">=8.18.0",
+    "@tsed/di": ">=8.18.0",
+    "@tsed/hooks": ">=8.18.0",
+    "@tsed/logger": ">=8.0.3",
+    "@tsed/logger-std": ">=8.0.3",
+    "@tsed/normalize-path": ">=8.18.0",
+    "@tsed/openspec": ">=8.18.0",
+    "@tsed/schema": ">=8.18.0",
+    "chalk": "^5.3.0",
+    "change-case": "^5.4.4",
+    "consolidate": "^1.0.4",
+    "create-frame": "^1.0.0",
+    "fs-extra": "^11.2.0",
+    "globby": "^14.0.2",
+    "read-pkg-up": "^11.0.0",
+    "rxjs": "^7.8.1",
+    "semver": "^7.6.3",
+    "ts-morph": "27.0.0",
+    "tslib": "^2.7.0"
+  },
+  "devDependencies": {
+    "@tsed/typescript": "workspace:*",
+    "@types/change-case": "^2.3.1",
+    "@types/consolidate": "0.14.4",
+    "cross-env": "7.0.3",
+    "express": "5.1.0",
+    "typescript": "5.6.2",
+    "vitest": "3.2.4"
+  },
+  "peerDependencies": {
+    "@tsed/core": ">=8.0.0",
+    "@tsed/di": ">=8.0.0",
+    "@tsed/hooks": ">=8.0.0",
+    "@tsed/logger": ">=8.0.2",
+    "@tsed/logger-std": ">=8.0.2",
+    "@tsed/openspec": ">=8.0.0",
+    "@tsed/schema": ">=8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@tsed/core": {
+      "optional": false
+    },
+    "@tsed/di": {
+      "optional": false
+    },
+    "@tsed/hooks": {
+      "optional": false
+    },
+    "@tsed/logger": {
+      "optional": false
+    },
+    "@tsed/logger-std": {
+      "optional": false
+    },
+    "@tsed/openspec": {
+      "optional": false
+    },
+    "@tsed/schema": {
+      "optional": false
+    }
+  }
+}

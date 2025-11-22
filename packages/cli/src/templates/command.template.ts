@@ -4,6 +4,7 @@ import {kebabCase} from "change-case";
 export default defineTemplate({
   id: "command",
   label: "Command",
+  description: "Create a CLI command provider with prompts, context mapping and tasks in src/bin/commands.",
   fileName: "{{symbolName}}.command",
   outputDir: "{{srcDir}}/bin/commands",
   render(symbolName: string) {

@@ -37,6 +37,7 @@ ENV NODE_ENV production`;
 defineTemplate({
   id: "dockerfile.yarn",
   label: "Dockerfile (Yarn classic)",
+  description: "Generate a multi-stage Dockerfile for production builds using Yarn classic.",
   fileName: "Dockerfile",
   outputDir: ".",
   ext: null,
@@ -76,6 +77,7 @@ CMD ["pm2-runtime", "start", "processes.config.cjs", "--env", "production"]
 defineTemplate({
   id: "dockerfile.yarn_berry",
   label: "Dockerfile (Yarn Berry)",
+  description: "Generate a multi-stage Dockerfile for production builds using Yarn Berry (modern Yarn).",
   fileName: "Dockerfile",
   outputDir: ".",
   ext: null,
@@ -119,6 +121,7 @@ CMD ["pm2-runtime", "start", "processes.config.cjs", "--env", "production"]
 defineTemplate({
   id: "dockerfile.npm",
   label: "Dockerfile (NPM)",
+  description: "Generate a multi-stage Dockerfile for production builds using NPM.",
   fileName: "Dockerfile",
   outputDir: ".",
   ext: null,
@@ -158,6 +161,7 @@ CMD ["pm2-runtime", "start", "processes.config.cjs", "--env", "production"]`;
 defineTemplate({
   id: "dockerfile.pnpm",
   label: "Dockerfile (PNPM)",
+  description: "Generate a multi-stage Dockerfile for production builds using PNPM.",
   fileName: "Dockerfile",
   outputDir: ".",
   ext: null,
@@ -198,6 +202,7 @@ CMD ["pm2-runtime", "start", "processes.config.cjs", "--env", "production"]
 defineTemplate({
   id: "dockerfile.bun",
   label: "Dockerfile (Bun)",
+  description: "Generate a multi-stage Dockerfile for production builds using Bun.",
   fileName: "Dockerfile",
   outputDir: ".",
   ext: null,

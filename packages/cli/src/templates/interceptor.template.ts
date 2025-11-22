@@ -3,6 +3,7 @@ import {defineTemplate} from "../utils/defineTemplate.js";
 export default defineTemplate({
   id: "interceptor",
   label: "Interceptor",
+  description: "Create an interceptor class that can transform requests/responses in src/interceptors.",
   fileName: "{{symbolName}}.interceptor",
   outputDir: "{{srcDir}}/interceptors",
 

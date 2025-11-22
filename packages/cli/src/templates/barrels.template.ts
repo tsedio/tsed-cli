@@ -11,9 +11,6 @@ export default defineTemplate({
   hidden: true,
   preserveCase: true,
 
-  prompts() {
-    return [];
-  },
   render(_, context) {
     const barrels = $alter("$alterBarrels", {
       directory: [

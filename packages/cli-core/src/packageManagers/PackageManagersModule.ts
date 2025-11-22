@@ -1,4 +1,4 @@
-import {Inject, injectable} from "@tsed/di";
+import {Inject, inject, injectable, injectMany} from "@tsed/di";
 import {EMPTY, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 
@@ -28,12 +28,10 @@ export interface InstallOptions {
 }
 
 export class PackageManagersModule {
-  @Inject()
-  protected projectPackageJson: ProjectPackageJson;
-
-  constructor(@Inject("package:manager") protected packageManagers: BaseManager[]) {
-    this.packageManagers = packageManagers.filter((manager) => manager.has());
-  }
+  protected projectPackageJson = inject(ProjectPackageJson);
+  protected packageManagers: BaseManager[] = injectMany<BaseManager>("package:manager").filter((manager) => {
+    return manager.has();
+  });
 
   init(options: InstallOptions = {}) {
     const packageManager = this.get(options.packageManager);
@@ -41,7 +39,7 @@ export class PackageManagersModule {
 
     options = {
       ...options,
-      cwd: this.projectPackageJson.dir,
+      cwd: this.projectPackageJson.cwd,
       env: {
         ...process.env,
         GH_TOKEN: this.projectPackageJson.GH_TOKEN
@@ -63,7 +61,7 @@ export class PackageManagersModule {
 
     options = {
       ...options,
-      cwd: this.projectPackageJson.dir,
+      cwd: this.projectPackageJson.cwd,
       env: {
         ...process.env,
         GH_TOKEN: this.projectPackageJson.GH_TOKEN
@@ -125,12 +123,12 @@ export class PackageManagersModule {
     name = name || "yarn";
 
     let selectedPackageManager = this.packageManagers.find((manager) => manager.name === name);
-
     if (!selectedPackageManager) {
       selectedPackageManager = this.packageManagers.find((manager) => manager.name === "npm")!;
     }
 
     this.projectPackageJson.setPreference("packageManager", selectedPackageManager.name);
+    console.log("==", name, selectedPackageManager);
 
     return selectedPackageManager;
   }

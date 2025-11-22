@@ -2,6 +2,7 @@ import {defineTemplate, type GenerateCmdContext, ProjectClient, render, type Ren
 import {inject} from "@tsed/di";
 import {PassportClient} from "../services/PassportClient.js";
 import {ProjectPackageJson, type Task} from "@tsed/cli-core";
+import {s} from "@tsed/schema";
 
 declare global {
   namespace TsED {
@@ -20,6 +21,15 @@ export default defineTemplate({
   label: "Passport Protocol",
   fileName: "{{symbolName}}.protocol",
   outputDir: "{{srcDir}}/protocols",
+
+  schema: s.object({
+    passportPackage: s
+      .string()
+      .customKey("x-choices", () => {
+        return inject(PassportClient).getChoices();
+      })
+      .description("Passport package selected to generate the template")
+  }),
 
   prompts() {
     return [

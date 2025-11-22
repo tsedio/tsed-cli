@@ -20,7 +20,7 @@ export class CliHttpLogClient {
   }
 
   protected onSuccess(options: Record<string, unknown>) {
-    return this.logger.debug({
+    this.logger.debug({
       ...this.formatLog(options),
       status: "OK"
     });

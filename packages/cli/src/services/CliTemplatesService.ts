@@ -1,7 +1,7 @@
 import {join} from "node:path";
 
 import {CliFs} from "@tsed/cli-core";
-import {constant, inject, injectable, injectMany, logger} from "@tsed/di";
+import {constant, context, inject, injectable, injectMany, logger} from "@tsed/di";
 import {globby} from "globby";
 import type {SourceFile} from "ts-morph";
 
@@ -31,7 +31,7 @@ export type TemplateRenderReturnType = {
 
 export class CliTemplatesService {
   readonly fs = inject(CliFs);
-  readonly renderedFiles: TemplateRenderReturnType[] = [];
+  // readonly renderedFiles: TemplateRenderReturnType[] = [];
 
   #customTemplates: DefineTemplateOptions[];
 
@@ -80,7 +80,7 @@ export class CliTemplatesService {
     }
   }
 
-  getAll() {
+  getAll(): DefineTemplateOptions[] {
     const templates = injectMany<DefineTemplateOptions>("CLI_TEMPLATES");
 
     const map = (this.#customTemplates || []).concat(templates).reduce((acc, template) => {
@@ -109,7 +109,7 @@ export class CliTemplatesService {
     return templates;
   }
 
-  get(id: string) {
+  get(id: string): DefineTemplateOptions | undefined {
     return this.getAll().find((template) => template.id === id);
   }
 
@@ -164,8 +164,18 @@ export class CliTemplatesService {
     }
   }
 
+  getRenderedFiles(): TemplateRenderReturnType[] {
+    const $ctx = context();
+
+    if (!$ctx?.has("renderedFiles")) {
+      $ctx?.set("renderedFiles", []);
+    }
+
+    return $ctx?.get("renderedFiles") || [];
+  }
+
   protected pushRenderResult(renderedFile: TemplateRenderReturnType) {
-    this.renderedFiles.push(renderedFile);
+    this.getRenderedFiles().push(renderedFile);
 
     return renderedFile;
   }

@@ -9,6 +9,7 @@
     "paths": {
       "@tsed/cli": ["./packages/cli/src/index.ts"],
       "@tsed/cli-core": ["./packages/cli-core/src/index.ts"],
+      "@tsed/cli-mcp": ["./packages/cli-mcp/src/index.ts"],
       "@tsed/cli-testing": ["./packages/cli-testing/src/index.ts"]
     }
   },

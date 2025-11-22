@@ -1,5 +1,6 @@
 import {catchAsyncError} from "@tsed/core";
 import {DITest} from "@tsed/di";
+import {s} from "@tsed/schema";
 
 import {CliLoadFile} from "./CliLoadFile.js";
 
@@ -23,21 +24,15 @@ describe("CliLoadFile", () => {
 
   it("should not validate the schema", async () => {
     const service = DITest.get<CliLoadFile>(CliLoadFile);
-
-    const error = await catchAsyncError(() =>
-      service.loadFile(import.meta.dirname + "/__mock__/settings.yml", {
-        type: "object",
-        additionalProperties: true,
-        properties: {
-          platform: {
-            type: "string",
-            enum: ["koa"]
-          }
-        }
+    const CustomSchema = s
+      .object({
+        platform: s.string().enum("koa")
       })
-    );
+      .unknown();
 
-    expect(error?.message).toEqual(".platform must be equal to one of the allowed values. Allowed values: koa");
+    const error = await catchAsyncError(() => service.loadFile(import.meta.dirname + "/__mock__/settings.yml", CustomSchema));
+
+    expect(error?.message).toEqual(".platform must be equal to one of the allowed values");
   });
 
   it("should load json file", async () => {

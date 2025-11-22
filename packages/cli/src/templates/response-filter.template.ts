@@ -3,6 +3,7 @@ import {defineTemplate} from "../utils/defineTemplate.js";
 export default defineTemplate({
   id: "response-filter",
   label: "Response Filter",
+  description: "Create a response filter that transforms output data (e.g., to XML) in src/filters.",
   fileName: "{{symbolName}}.response-filter",
   outputDir: "{{srcDir}}/filters",
 

@@ -37,7 +37,7 @@ import {BunRuntime} from "../../runtimes/supports/BunRuntime.js";
 import {NodeRuntime} from "../../runtimes/supports/NodeRuntime.js";
 import {CliProjectService} from "../../services/CliProjectService.js";
 import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt.js";
-import {InitFileSchema} from "./config/InitFileSchema.js";
+import {InitSchema} from "./config/InitSchema.js";
 import {mapToContext} from "./mappers/mapToContext.js";
 import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt.js";
 
@@ -94,11 +94,11 @@ export class InitCmd implements CommandProvider {
 
   async $beforePrompt(initialOptions: Partial<InitOptions>) {
     if (initialOptions.file) {
-      const file = join(this.packageJson.dir, initialOptions.file);
+      const file = join(this.packageJson.cwd, initialOptions.file);
 
       return {
         ...initialOptions,
-        ...(await this.cliLoadFile.loadFile(file, InitFileSchema))
+        ...(await this.cliLoadFile.loadFile(file, InitSchema))
       };
     }
 
@@ -154,7 +154,7 @@ export class InitCmd implements CommandProvider {
   }
 
   async $beforeExec(ctx: InitOptions): Promise<any> {
-    this.fs.ensureDirSync(this.packageJson.dir);
+    this.fs.ensureDirSync(this.packageJson.cwd);
 
     ctx.projectName && (this.packageJson.name = ctx.projectName);
     ctx.packageManager && this.packageJson.setPreference("packageManager", ctx.packageManager);
@@ -273,9 +273,9 @@ export class InitCmd implements CommandProvider {
   }
 
   resolveRootDir(ctx: Partial<InitOptions>) {
-    const rootDirName = kebabCase(ctx.projectName || basename(this.packageJson.dir));
+    const rootDirName = kebabCase(ctx.projectName || basename(this.packageJson.cwd));
 
-    if (this.packageJson.dir.endsWith(rootDirName)) {
+    if (this.packageJson.cwd.endsWith(rootDirName)) {
       ctx.projectName = ctx.projectName || rootDirName;
       ctx.root = ".";
       return;
@@ -284,7 +284,7 @@ export class InitCmd implements CommandProvider {
     ctx.projectName = ctx.projectName || rootDirName;
 
     if (ctx.root && ctx.root !== ".") {
-      this.packageJson.dir = join(this.packageJson.dir, rootDirName);
+      this.packageJson.setCWD(join(this.packageJson.cwd, rootDirName));
       ctx.root = ".";
     }
   }

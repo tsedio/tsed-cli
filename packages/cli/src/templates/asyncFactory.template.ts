@@ -4,6 +4,7 @@ import {camelCase, pascalCase} from "change-case";
 export default defineTemplate({
   id: "async.factory",
   label: "Async Factory",
+  description: "Generate an async factory token for Ts.ED DI in src/services.",
   fileName: "{{symbolName}}.factory?",
   outputDir: "{{srcDir}}/services",
 
@@ -11,7 +12,7 @@ export default defineTemplate({
     const camelName = camelCase(symbolName);
     const optName = pascalCase(symbolName + "Options");
 
-    return `import {injectable} from "@tsed/di";
+    return `import {injectable, constant} from "@tsed/di";
 
 interface ${optName} {
   
@@ -20,7 +21,7 @@ interface ${optName} {
 declare global {
   namespace TsED {
     interface Configuration extends Record<string, any> {
-      ${camelName}: Options;
+      ${camelName}: ${optName};
     }
   }
 }    
@@ -36,6 +37,6 @@ export const ${symbolName} = injectable(Symbol.for("${symbolName}"))
   })
   .token();
   
-export type {{symbolName}} = typeof ${symbolName};`;
+export type ${symbolName} = typeof ${symbolName};`;
   }
 });

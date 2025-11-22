@@ -1,4 +1,5 @@
 import {injectable, type ProviderOpts, type QuestionOptions} from "@tsed/cli-core";
+import type {JsonSchema} from "@tsed/schema";
 
 import type {GenerateCmdContext} from "../interfaces/index.js";
 import type {TemplateRenderReturnType} from "../services/CliTemplatesService.js";
@@ -33,6 +34,11 @@ export type DefineTemplateOptions = {
    * If `true` the directory structure will be preserved when generating the file.
    */
   preserveDirectory?: boolean;
+  /**
+   * Optional Ts.ED Schema describing template-specific arguments (exclude global fields like `type` and `name`).
+   * Can be provided as a JsonSchema builder result (from @tsed/schema DSL) or any object exposing `toJSON()` to JSON Schema.
+   */
+  schema?: JsonSchema;
 
   render(
     symbolName: string,

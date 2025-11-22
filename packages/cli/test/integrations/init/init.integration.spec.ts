@@ -3,7 +3,7 @@ import {join} from "node:path";
 import {PackageManager, ProjectPackageJson} from "@tsed/cli-core";
 // @ts-ignore
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
-import {inject} from "@tsed/di";
+import {DIContext, inject, runInContext} from "@tsed/di";
 import {ensureDirSync, writeFileSync} from "fs-extra";
 
 import {ArchitectureConvention, CliTemplatesService, FeatureType, InitCmd, ProjectConvention, TEMPLATE_DIR} from "../../../src/index.js";
@@ -928,17 +928,22 @@ describe("Init cmd", () => {
         tsed: {}
       });
 
-      await CliPlatformTest.initProject({
-        platform: "express",
-        rootDir: "./project-data",
-        projectName: "project-data",
-        tsedVersion: "5.58.1",
-        convention: ProjectConvention.ANGULAR,
-        architecture: ArchitectureConvention.FEATURE,
-        swagger: true
+      const $ctx = new DIContext({
+        id: ""
       });
 
-      expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
+      await runInContext($ctx, async () => {
+        await CliPlatformTest.initProject({
+          platform: "express",
+          rootDir: "./project-data",
+          projectName: "project-data",
+          tsedVersion: "5.58.1",
+          convention: ProjectConvention.ANGULAR,
+          architecture: ArchitectureConvention.FEATURE,
+          swagger: true
+        });
+
+        expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
         [
           "project-name",
           "project-name/.barrels.json",
@@ -967,20 +972,22 @@ describe("Init cmd", () => {
         ]
       `);
 
-      const content = FakeCliFs.files.get("project-name/src/server.ts")!;
-      expect(content).toContain('import { application } from "@tsed/platform-http"');
-      expect(content).toContain('import "@tsed/platform-express"');
-      expect(content).toContain('import "@tsed/ajv"');
-      expect(content).toMatchSnapshot();
-      expect(content).toContain('import * as pages from "./pages/index.js"');
-      expect(content).toContain("export class Server {");
+        const content = FakeCliFs.files.get("project-name/src/server.ts")!;
+        expect(content).toContain('import { application } from "@tsed/platform-http"');
+        expect(content).toContain('import "@tsed/platform-express"');
+        expect(content).toContain('import "@tsed/ajv"');
+        expect(content).toMatchSnapshot();
+        expect(content).toContain('import * as pages from "./pages/index.js"');
+        expect(content).toContain("export class Server {");
 
-      const indexContent = FakeCliFs.files.get("project-name/src/index.ts")!;
-      expect(indexContent).toContain('import { Server } from "./server.js"');
+        const indexContent = FakeCliFs.files.get("project-name/src/index.ts")!;
+        expect(indexContent).toContain('import { Server } from "./server.js"');
 
-      const resultFiles = inject(CliTemplatesService).renderedFiles.map((f) => f.outputPath);
+        const resultFiles = inject(CliTemplatesService)
+          .getRenderedFiles()
+          .map((f) => f.outputPath);
 
-      expect(resultFiles.sort()).toMatchInlineSnapshot(`
+        expect(resultFiles.sort()).toMatchInlineSnapshot(`
         [
           ".barrels.json",
           ".dockerignore",
@@ -1005,6 +1012,7 @@ describe("Init cmd", () => {
           "tsconfig.spec.json",
         ]
       `);
+      });
     });
   });
 

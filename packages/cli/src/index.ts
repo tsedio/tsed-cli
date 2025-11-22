@@ -1,5 +1,6 @@
 import "@tsed/logger-std";
 import "./templates/index.js";
+import "./services/CliStats.js";
 
 export * from "./commands/add/AddCmd.js";
 export * from "./commands/generate/GenerateCmd.js";
@@ -13,6 +14,8 @@ export * from "./constants/index.js";
 export * from "./fn/exec.js";
 export * from "./fn/render.js";
 export * from "./interfaces/index.js";
+export {default as resources} from "./mcp/resources/index.js";
+export {default as tools} from "./mcp/tools/index.js";
 export * from "./pipes/index.js";
 export * from "./runtimes/index.js";
 export * from "./services/CliProjectService.js";
