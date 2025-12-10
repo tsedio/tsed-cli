@@ -1,6 +1,6 @@
 import type {BaseCommandOptions, CommandArg, CommandOpts} from "./CommandOptions.js";
 
-export interface CommandMetadata extends BaseCommandOptions {
+export interface CommandMetadata extends BaseCommandOptions<any> {
   /**
    * CommandProvider arguments
    */

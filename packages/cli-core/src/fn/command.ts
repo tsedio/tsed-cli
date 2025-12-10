@@ -4,9 +4,9 @@ import {type FactoryTokenProvider, injectable, type TokenProvider} from "@tsed/d
 import type {CommandOptions} from "../interfaces/CommandOptions.js";
 import type {CommandProvider} from "../interfaces/index.js";
 
-export function command(options: CommandOptions) {
+export function command<Input>(options: CommandOptions<Input>) {
   if (!options.token) {
-    return injectable<FactoryTokenProvider<CommandProvider>>(Symbol.for(`COMMAND_${options.name}`) as any)
+    return injectable<FactoryTokenProvider<CommandProvider<Input>>>(Symbol.for(`COMMAND_${options.name}`) as any)
       .type("command")
       .set("command", options)
       .factory(() => {
@@ -18,5 +18,5 @@ export function command(options: CommandOptions) {
       });
   }
 
-  return injectable<Type<CommandProvider>>(options.token).type("command").set("command", options);
+  return injectable<Type<CommandProvider<Input>>>(options.token).type("command").set("command", options);
 }
