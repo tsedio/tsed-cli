@@ -89,21 +89,27 @@ export class EslintInitHook implements CliCommandHooks {
     return packageJson;
   }
 
+  $alterInitSubTasks(tasks: Task[], data: InitCmdContext) {
+    return [
+      ...tasks,
+      {
+        title: "Add eslint configuration",
+        task: () => {
+          return render("eslint.config", {
+            ...data,
+            name: "eslint.config"
+          });
+        }
+      }
+    ];
+  }
+
   $alterInitPostInstallTasks(tasks: Task[], data: InitCmdContext): Task[] | Promise<Task[]> {
     const packageJson = inject(ProjectPackageJson);
     const packageManagers = inject(PackageManagersModule);
 
     return [
       ...tasks,
-      {
-        title: "Add eslint configuration",
-        task: () => {
-          render("eslint.config", {
-            ...data,
-            name: "eslint.config"
-          });
-        }
-      },
       {
         title: "Add husky prepare task",
         skip: !data.lintstaged,

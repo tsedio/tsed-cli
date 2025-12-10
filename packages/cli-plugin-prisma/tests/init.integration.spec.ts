@@ -91,10 +91,7 @@ describe("Prisma: Init cmd", () => {
         "yarn install",
         "yarn add --ignore-engines @tsed/logger @tsed/logger-std @tsed/engines @tsed/barrels ajv cross-env @swc/core @swc/cli @swc/helpers @swc-node/register typescript body-parser cors compression cookie-parser express method-override",
         "yarn add -D --ignore-engines @types/node @types/multer tslib nodemon @types/cors @types/express @types/compression @types/cookie-parser @types/method-override",
-        "yarn add --ignore-engines @tsed/logger @tsed/logger-std @tsed/engines @tsed/barrels ajv cross-env @swc/core @swc/cli @swc/helpers @swc-node/register typescript body-parser cors compression cookie-parser express method-override @tsed/prisma @prisma/client",
-        "yarn add -D --ignore-engines @types/node @types/multer tslib nodemon @types/cors @types/express @types/compression @types/cookie-parser @types/method-override prisma",
         "npx prisma init",
-        "yarn run barrels",
       ]
     `);
 
@@ -125,9 +122,7 @@ describe("Prisma: Init cmd", () => {
           "build": "yarn run barrels && swc src --out-dir dist -s  --strip-leading-paths",
           "barrels": "barrels",
           "start": "yarn run barrels && nodemon src/index.ts",
-          "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/esm-register src/index.js",
-          "prisma:migrate": "npx prisma migrate dev --name init",
-          "prisma:generate": "npx prisma generate"
+          "start:prod": "cross-env NODE_ENV=production node --import @swc-node/register/esm-register src/index.js"
         },
         "dependencies": {
           "@tsed/ajv": "5.58.1",

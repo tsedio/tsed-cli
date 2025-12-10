@@ -39,8 +39,7 @@ export class CliPlugins {
       return {
         title: `Run plugin '${chalk.cyan(plugin)}'`,
         task: () => {
-          return $asyncEmit("$onAddPlugin", plugin, ctx);
-          // return this.cliHooks.emit(CommandStoreKeys.ADD, plugin, ctx);
+          return $asyncEmit("$onAddPlugin", [plugin, ctx]);
         }
       };
     });
