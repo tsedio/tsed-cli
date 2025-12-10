@@ -1,1 +1,1 @@
-import "@tsed/cli/bin/mcp";
+import "@tsed/cli/bin";

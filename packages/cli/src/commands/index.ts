@@ -1,8 +1,9 @@
 import {AddCmd} from "./add/AddCmd.js";
 import {GenerateCmd} from "./generate/GenerateCmd.js";
 import {InitCmd} from "./init/InitCmd.js";
+import {McpCommand} from "./mcp/McpCommand.js";
 import {RunCmd} from "./run/RunCmd.js";
 import {CreateTemplateCommand} from "./template/CreateTemplateCommand.js";
 import {UpdateCmd} from "./update/UpdateCmd.js";
 
-export default [AddCmd, InitCmd, GenerateCmd, UpdateCmd, RunCmd, CreateTemplateCommand];
+export default [AddCmd, InitCmd, GenerateCmd, UpdateCmd, RunCmd, CreateTemplateCommand, McpCommand];

@@ -37,7 +37,7 @@ import {BunRuntime} from "../../runtimes/supports/BunRuntime.js";
 import {NodeRuntime} from "../../runtimes/supports/NodeRuntime.js";
 import {CliProjectService} from "../../services/CliProjectService.js";
 import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt.js";
-import {InitSchema} from "./config/InitSchema.js";
+import {InitFileSchema} from "./config/InitFileSchema.js";
 import {mapToContext} from "./mappers/mapToContext.js";
 import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt.js";
 
@@ -92,20 +92,16 @@ export class InitCmd implements CommandProvider {
     }
   }
 
-  async $beforePrompt(initialOptions: Partial<InitOptions>) {
+  async $prompt(initialOptions: Partial<InitOptions>): Promise<QuestionOptions> {
     if (initialOptions.file) {
       const file = join(this.packageJson.cwd, initialOptions.file);
 
-      return {
+      initialOptions = {
         ...initialOptions,
-        ...(await this.cliLoadFile.loadFile(file, InitSchema))
+        ...(await this.cliLoadFile.loadFile(file, InitFileSchema))
       };
     }
 
-    return initialOptions;
-  }
-
-  $prompt(initialOptions: Partial<InitOptions>): QuestionOptions {
     if (initialOptions.skipPrompt) {
       return [];
     }
@@ -153,7 +149,7 @@ export class InitCmd implements CommandProvider {
     } as InitOptions;
   }
 
-  async $beforeExec(ctx: InitOptions): Promise<any> {
+  async $exec(ctx: InitOptions): Promise<Task[]> {
     this.fs.ensureDirSync(this.packageJson.cwd);
 
     ctx.projectName && (this.packageJson.name = ctx.projectName);
@@ -199,9 +195,7 @@ export class InitCmd implements CommandProvider {
       ],
       ctx
     );
-  }
 
-  async $exec(ctx: InitOptions): Promise<Task[]> {
     this.checkPrecondition(ctx);
     const runtime = this.runtimes.get();
 

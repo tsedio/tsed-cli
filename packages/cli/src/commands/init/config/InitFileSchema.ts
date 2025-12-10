@@ -1,10 +1,10 @@
 import {PackageManager} from "@tsed/cli-core";
 import {s} from "@tsed/schema";
 
-import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../interfaces/index.js";
+import {PlatformType, ProjectConvention} from "../../../interfaces/index.js";
 import {FeatureType} from "./FeaturesPrompt.js";
 
-export const InitSchema = s
+export const InitFileSchema = s
   .object({
     tsedVersion: s.string().optional().description("The CLI will use the given tsed version to generate the project"),
     projectName: s.string().optional().description("The project name"),

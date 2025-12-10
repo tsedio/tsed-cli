@@ -2,6 +2,7 @@ import type {McpServer} from "@modelcontextprotocol/sdk/server/mcp.js";
 import type {RequestHandlerExtra} from "@modelcontextprotocol/sdk/shared/protocol.js";
 import type {CallToolResult, ServerNotification, ServerRequest, Tool} from "@modelcontextprotocol/sdk/types.js";
 import {injectable} from "@tsed/cli-core";
+import {isArrowFn} from "@tsed/core";
 import {DIContext, injector, logger, runInContext, type TokenProvider} from "@tsed/di";
 import {JsonSchema} from "@tsed/schema";
 import {v4} from "uuid";
@@ -17,7 +18,7 @@ type ToolConfig = Parameters<McpServer["registerTool"]>[1];
 export type ToolProps<Input, Output> = Omit<ToolConfig, "inputSchema" | "outputSchema"> & {
   token?: TokenProvider;
   name: string;
-  inputSchema?: JsonSchema<Input> | Tool["inputSchema"];
+  inputSchema?: JsonSchema<Input> | (() => JsonSchema<Input>) | Tool["inputSchema"];
   outputSchema?: JsonSchema<Output> | Tool["outputSchema"];
   handler: ToolCallback<Input>;
 };
@@ -57,7 +58,7 @@ export function defineTool<Input, Output = undefined>(options: ToolProps<Input, 
     .type("CLI_MCP_TOOLS")
     .factory(() => ({
       ...options,
-      inputSchema: toZod(options.inputSchema),
+      inputSchema: toZod(isArrowFn(options.inputSchema) ? options.inputSchema() : options.inputSchema),
       outputSchema: toZod(options.outputSchema),
       async handler(args: Input, extra: RequestHandlerExtra<ServerRequest, ServerNotification>) {
         const $ctx = new DIContext({
@@ -73,6 +74,21 @@ export function defineTool<Input, Output = undefined>(options: ToolProps<Input, 
           return await runInContext($ctx, () => {
             return options.handler(args as Input, extra);
           });
+        } catch (er) {
+          $ctx.logger.error({
+            event: "MCP_TOOL_ERROR",
+            tool: options.name,
+            error_message: er.message,
+            stack: er.stack
+          });
+
+          return {
+            content: [],
+            structuredContent: {
+              code: "E_MCP_TOOL_ERROR",
+              message: er.message
+            }
+          };
         } finally {
           // Ensure per-invocation context is destroyed to avoid leaks
           try {

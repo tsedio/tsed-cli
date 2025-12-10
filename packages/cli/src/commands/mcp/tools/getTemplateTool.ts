@@ -2,8 +2,8 @@ import {defineTool} from "@tsed/cli-mcp";
 import {inject} from "@tsed/di";
 import {s} from "@tsed/schema";
 
-import {CliTemplatesService} from "../../services/CliTemplatesService.js";
-import {resolveSchema} from "../../utils/resolveSchema.js";
+import {CliTemplatesService} from "../../../services/CliTemplatesService.js";
+import {resolveSchema} from "../../../utils/resolveSchema.js";
 
 export const getTemplateTool = defineTool({
   name: "get-template",
