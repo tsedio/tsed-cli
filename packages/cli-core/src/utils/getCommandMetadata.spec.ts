@@ -27,7 +27,8 @@ describe("getCommandMetadata", () => {
       disableReadUpPkg: false,
       enableFeatures: [],
       bindLogger: true,
-      options: {}
+      options: {},
+      token: TestCmd
     });
 
     expect(getCommandMetadata(TestCmd2)).toEqual({
@@ -39,7 +40,8 @@ describe("getCommandMetadata", () => {
       disableReadUpPkg: false,
       enableFeatures: [],
       bindLogger: false,
-      options: {}
+      options: {},
+      token: TestCmd2
     });
   });
 });

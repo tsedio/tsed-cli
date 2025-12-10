@@ -1,6 +1,6 @@
-import type {CommandArg, CommandOptions, CommandParameters} from "./CommandParameters.js";
+import type {BaseCommandOptions, CommandArg, CommandOpts} from "./CommandOptions.js";
 
-export interface CommandMetadata extends CommandParameters {
+export interface CommandMetadata extends BaseCommandOptions {
   /**
    * CommandProvider arguments
    */
@@ -11,7 +11,7 @@ export interface CommandMetadata extends CommandParameters {
    * CommandProvider options
    */
   options: {
-    [key: string]: CommandOptions;
+    [key: string]: CommandOpts;
   };
 
   allowUnknownOption?: boolean;

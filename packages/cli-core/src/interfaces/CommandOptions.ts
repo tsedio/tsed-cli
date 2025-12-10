@@ -1,4 +1,7 @@
 import {Type} from "@tsed/core";
+import type {TokenProvider} from "@tsed/di";
+
+import type {CommandProvider} from "./CommandProvider.js";
 
 export interface CommandArg {
   /**
@@ -23,7 +26,7 @@ export interface CommandArg {
   required?: boolean;
 }
 
-export interface CommandOptions {
+export interface CommandOpts {
   /**
    * Description of the commander.option()
    */
@@ -51,7 +54,7 @@ export interface CommandOptions {
   customParser?: (value: any) => any;
 }
 
-export interface CommandParameters {
+export interface BaseCommandOptions {
   /**
    * name commands
    */
@@ -72,7 +75,7 @@ export interface CommandParameters {
    * CommandProvider options
    */
   options?: {
-    [key: string]: CommandOptions;
+    [key: string]: CommandOpts;
   };
 
   allowUnknownOption?: boolean;
@@ -80,6 +83,19 @@ export interface CommandParameters {
   enableFeatures?: string[];
 
   disableReadUpPkg?: boolean;
+}
+
+interface FunctionalCommandOptions extends BaseCommandOptions {
+  prompt?: CommandProvider["$prompt"];
+  handler: CommandProvider["$exec"];
 
   [key: string]: any;
 }
+
+interface ClassCommandOptions extends BaseCommandOptions {
+  token: TokenProvider<CommandProvider>;
+
+  [key: string]: any;
+}
+
+export type CommandOptions = ClassCommandOptions | FunctionalCommandOptions;

@@ -1,9 +1,8 @@
 import {Store} from "@tsed/core";
 import type {TokenProvider} from "@tsed/di";
 
-import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
 import type {CommandMetadata} from "../interfaces/CommandMetadata.js";
-import type {CommandParameters} from "../interfaces/CommandParameters.js";
+import type {CommandOptions} from "../interfaces/CommandOptions.js";
 
 export function getCommandMetadata(token: TokenProvider): CommandMetadata {
   const {
@@ -17,7 +16,7 @@ export function getCommandMetadata(token: TokenProvider): CommandMetadata {
     disableReadUpPkg,
     bindLogger = true,
     ...opts
-  } = Store.from(token)?.get(CommandStoreKeys.COMMAND) as CommandParameters;
+  } = Store.from(token)?.get("command") as CommandOptions;
 
   return {
     name,
