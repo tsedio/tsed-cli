@@ -75,7 +75,8 @@ export class GenerateCmd implements CommandProvider {
   }
 }
 
-command(GenerateCmd, {
+command({
+  token: GenerateCmd,
   name: "generate",
   alias: "g",
   description: "Generate a new provider class",

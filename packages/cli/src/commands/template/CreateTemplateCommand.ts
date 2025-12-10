@@ -97,7 +97,8 @@ export class CreateTemplateCommand implements CommandProvider {
   }
 }
 
-command(CreateTemplateCommand, {
+command({
+  token: CreateTemplateCommand,
   name: "template",
   description: "Create a custom template that can be selected in tsed generate command",
   args: {

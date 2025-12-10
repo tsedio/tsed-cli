@@ -446,7 +446,8 @@ export class InitCmd implements CommandProvider {
   }
 }
 
-command(InitCmd, {
+command({
+  token: InitCmd,
   name: "init",
   description: "Init a new Ts.ED project",
   args: {
