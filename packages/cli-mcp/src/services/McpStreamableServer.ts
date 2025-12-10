@@ -1,4 +1,5 @@
 import type {McpServer} from "@modelcontextprotocol/sdk/server/mcp.js";
+import {logger} from "@tsed/di";
 
 export async function mcpStreamableServer(server: McpServer) {
   const {StreamableHTTPServerTransport} = await import("@modelcontextprotocol/sdk/server/streamableHttp.js");
@@ -25,12 +26,23 @@ export async function mcpStreamableServer(server: McpServer) {
 
   const port = parseInt(process.env.PORT || "3000");
 
-  app
-    .listen(port, () => {
-      console.log(`Demo MCP Server running on http://localhost:${port}/mcp`);
-    })
-    .on("error", (error: any) => {
-      console.error("Server error:", error);
-      process.exit(1);
-    });
+  return new Promise((resolve, reject) => {
+    app
+      .listen(port, () => {
+        logger().info({
+          event: "MCP_STREAMABLE_SERVER",
+          state: "OK",
+          message: `Running http://localhost:${port}/mcp`
+        });
+      })
+      .on("close", () => resolve(true))
+      .on("error", (error: any) => {
+        logger().error({
+          event: "MCP_STREAMABLE_SERVER",
+          state: "KO",
+          message: error.message
+        });
+        reject(error);
+      });
+  });
 }
