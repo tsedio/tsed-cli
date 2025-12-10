@@ -167,7 +167,8 @@ export class GenerateHttpClientCmd implements CommandProvider {
   }
 }
 
-command(GenerateHttpClientCmd, {
+command({
+  token: GenerateHttpClientCmd,
   name: "generate-http-client",
   description: "Generate the client API from swagger spec",
   options: {

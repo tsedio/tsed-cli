@@ -93,7 +93,8 @@ export class GenerateSwaggerCmd implements CommandProvider {
   }
 }
 
-command(GenerateSwaggerCmd, {
+command({
+  token: GenerateSwaggerCmd,
   name: "generate-swagger",
   description: "Generate the client API from swagger spec",
   options: {
