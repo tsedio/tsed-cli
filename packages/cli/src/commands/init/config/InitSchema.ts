@@ -80,218 +80,196 @@ export const InitSchema = () =>
         .items(s.enums(FeatureType))
         .prompt("Choose the features needed for your project")
         .description("List of features to enable (swagger, graphql, prisma, etc.).")
-        .choices(
-          [
-            {
-              label: "Commands",
-              value: FeatureType.COMMANDS
-            },
-            {
-              label: "Configuration sources",
-              value: FeatureType.CONFIG,
-              items: [
-                {
-                  label: "Envs",
-                  value: FeatureType.CONFIG_ENVS
-                },
-                {
-                  label: "Dotenv",
-                  value: FeatureType.CONFIG_DOTENV
-                },
-                {
-                  label: "JSON",
-                  value: FeatureType.CONFIG_JSON
-                },
-                {
-                  label: "YAML",
-                  value: FeatureType.CONFIG_YAML
-                },
-                {
-                  label: "AWS Secrets Manager (Premium)",
-                  value: FeatureType.CONFIG_AWS_SECRETS
-                },
-                {
-                  label: "IORedis (Premium)",
-                  value: FeatureType.CONFIG_IOREDIS
-                },
-                {
-                  label: "MongoDB (Premium)",
-                  value: FeatureType.CONFIG_MONGO
-                },
-                {
-                  label: "Vault (Premium)",
-                  value: FeatureType.CONFIG_VAULT
-                },
-                {
-                  label: "Postgres (Premium)",
-                  value: FeatureType.CONFIG_POSTGRES
-                }
-              ]
-            },
-            {
-              label: "ORM",
-              value: FeatureType.ORM,
-              items: [
-                {
-                  label: "Prisma",
-                  value: FeatureType.PRISMA
-                },
-                {
-                  label: "Mongoose",
-                  value: FeatureType.MONGOOSE
-                },
-                {
-                  label: "TypeORM",
-                  value: FeatureType.TYPEORM,
-                  items: [
-                    {
-                      label: "MySQL",
-                      value: FeatureType.TYPEORM_MYSQL
-                    },
-                    {
-                      label: "MariaDB",
-                      value: "db:typeorm:mariadb"
-                    },
-                    {
-                      label: "Postgres",
-                      value: "db:typeorm:postgres"
-                    },
-                    {
-                      label: "CockRoachDB",
-                      value: "db:typeorm:cockroachdb"
-                    },
-                    {
-                      label: "SQLite",
-                      value: "db:typeorm:sqlite"
-                    },
-                    {
-                      label: "Better SQLite3",
-                      value: "db:typeorm:better-sqlite3"
-                    },
-                    {
-                      label: "Cordova",
-                      value: "db:typeorm:cordova"
-                    },
-                    {
-                      label: "NativeScript",
-                      value: "db:typeorm:nativescript"
-                    },
-                    {
-                      label: "Oracle",
-                      value: "db:typeorm:oracle"
-                    },
-                    {
-                      label: "MsSQL",
-                      value: "db:typeorm:mssql"
-                    },
-                    {
-                      label: "MongoDB",
-                      value: "db:typeorm:mongodb"
-                    },
-                    {
-                      label: "SQL.js",
-                      value: "db:typeorm:sqljs"
-                    },
-                    {
-                      label: "ReactNative",
-                      value: "db:typeorm:reactnative"
-                    },
-                    {
-                      label: "Expo",
-                      value: "db:typeorm:expo"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              label: "Documentation",
-              value: "doc",
-              items: [
-                {
-                  label: "Swagger",
-                  value: "doc:swagger"
-                },
-                {
-                  label: "Scalar",
-                  value: "doc:scalar"
-                }
-              ]
-            },
-            {
-              label: "TypeGraphQL",
-              value: "graphql",
-              items: []
-            },
-            {
-              label: "Linter",
-              value: "linter",
-              items: [
-                {
-                  label: "EsLint",
-                  value: "linter:eslint"
-                },
-                {
-                  label: "Prettier",
-                  value: "linter:prettier"
-                },
-                {
-                  label: "Lint on commit",
-                  value: "linter:lintstaged"
-                }
-              ]
-            },
-            {
-              label: "OpenID Connect provider",
-              value: "oidc",
-              items: []
-            },
-            {
-              label: "Passport.js",
-              value: "passportjs",
-              items: []
-            },
-            {
-              label: "Socket.io",
-              value: "socketio",
-              items: []
-            },
-            {
-              label: "Testing",
-              value: "testing",
-              items: [
-                {
-                  label: "Vitest",
-                  value: "testing:vitest"
-                },
-                {
-                  label: "Jest (unstable with ESM)",
-                  value: "testing:jest"
-                }
-              ]
-            }
-          ]
-          // Object.values(FeatureType)
-          //   .filter((value) => !value.includes(":"))
-          //   .sort()
-          //   .map((key) => {
-          //     if (FeaturesMap[key]) {
-          //       return {
-          //         label: FeaturesMap[key]!.name,
-          //         value: key,
-          //         items: Object.entries(FeaturesMap)
-          //           .filter(([value]) => {
-          //             return value.startsWith(key + ":");
-          //           })
-          //           .map(([value, feature]) => ({
-          //             label: feature.name,
-          //             value: value
-          //           }))
-          //       };
-          //     }
-          //   })
-          //   .filter(Boolean) as {label: string; value: string}[]
-        )
+        .choices([
+          {
+            label: "Commands",
+            value: FeatureType.COMMANDS
+          },
+          {
+            label: "Configuration sources",
+            value: FeatureType.CONFIG,
+            items: [
+              {
+                label: "Envs",
+                value: FeatureType.CONFIG_ENVS
+              },
+              {
+                label: "Dotenv",
+                value: FeatureType.CONFIG_DOTENV
+              },
+              {
+                label: "JSON",
+                value: FeatureType.CONFIG_JSON
+              },
+              {
+                label: "YAML",
+                value: FeatureType.CONFIG_YAML
+              },
+              {
+                label: "AWS Secrets Manager (Premium)",
+                value: FeatureType.CONFIG_AWS_SECRETS
+              },
+              {
+                label: "IORedis (Premium)",
+                value: FeatureType.CONFIG_IOREDIS
+              },
+              {
+                label: "MongoDB (Premium)",
+                value: FeatureType.CONFIG_MONGO
+              },
+              {
+                label: "Vault (Premium)",
+                value: FeatureType.CONFIG_VAULT
+              },
+              {
+                label: "Postgres (Premium)",
+                value: FeatureType.CONFIG_POSTGRES
+              }
+            ]
+          },
+          {
+            label: "ORM",
+            value: FeatureType.ORM,
+            items: [
+              {
+                label: "Prisma",
+                value: FeatureType.PRISMA
+              },
+              {
+                label: "Mongoose",
+                value: FeatureType.MONGOOSE
+              },
+              {
+                label: "TypeORM",
+                value: FeatureType.TYPEORM,
+                items: [
+                  {
+                    label: "MySQL",
+                    value: FeatureType.TYPEORM_MYSQL
+                  },
+                  {
+                    label: "MariaDB",
+                    value: "db:typeorm:mariadb"
+                  },
+                  {
+                    label: "Postgres",
+                    value: "db:typeorm:postgres"
+                  },
+                  {
+                    label: "CockRoachDB",
+                    value: "db:typeorm:cockroachdb"
+                  },
+                  {
+                    label: "SQLite",
+                    value: "db:typeorm:sqlite"
+                  },
+                  {
+                    label: "Better SQLite3",
+                    value: "db:typeorm:better-sqlite3"
+                  },
+                  {
+                    label: "Cordova",
+                    value: "db:typeorm:cordova"
+                  },
+                  {
+                    label: "NativeScript",
+                    value: "db:typeorm:nativescript"
+                  },
+                  {
+                    label: "Oracle",
+                    value: "db:typeorm:oracle"
+                  },
+                  {
+                    label: "MsSQL",
+                    value: "db:typeorm:mssql"
+                  },
+                  {
+                    label: "MongoDB",
+                    value: "db:typeorm:mongodb"
+                  },
+                  {
+                    label: "SQL.js",
+                    value: "db:typeorm:sqljs"
+                  },
+                  {
+                    label: "ReactNative",
+                    value: "db:typeorm:reactnative"
+                  },
+                  {
+                    label: "Expo",
+                    value: "db:typeorm:expo"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            label: "Documentation",
+            value: "doc",
+            items: [
+              {
+                label: "Swagger",
+                value: "doc:swagger"
+              },
+              {
+                label: "Scalar",
+                value: "doc:scalar"
+              }
+            ]
+          },
+          {
+            label: "TypeGraphQL",
+            value: "graphql",
+            items: []
+          },
+          {
+            label: "Linter",
+            value: "linter",
+            items: [
+              {
+                label: "EsLint",
+                value: "linter:eslint"
+              },
+              {
+                label: "Prettier",
+                value: "linter:prettier"
+              },
+              {
+                label: "Lint on commit",
+                value: "linter:lintstaged"
+              }
+            ]
+          },
+          {
+            label: "OpenID Connect provider",
+            value: "oidc",
+            items: []
+          },
+          {
+            label: "Passport.js",
+            value: "passportjs",
+            items: []
+          },
+          {
+            label: "Socket.io",
+            value: "socketio",
+            items: []
+          },
+          {
+            label: "Testing",
+            value: "testing",
+            items: [
+              {
+                label: "Vitest",
+                value: "testing:vitest"
+              },
+              {
+                label: "Jest (unstable with ESM)",
+                value: "testing:jest"
+              }
+            ]
+          }
+        ])
         .opt("--features <features...>"),
       runtime: s
         .enums<RuntimeTypes[]>(inject(RuntimesModule).list() as any[])

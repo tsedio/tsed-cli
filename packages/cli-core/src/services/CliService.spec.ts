@@ -180,15 +180,19 @@ describe("CliService", () => {
       name: "generate",
       description: "Generate something",
       alias: undefined,
-      args: {
-        blueprint: {
-          description: "Blueprint name",
-          required: true,
-          type: String
-        }
+      getOptions() {
+        return {
+          args: {
+            blueprint: {
+              description: "Blueprint name",
+              required: true,
+              type: String
+            }
+          },
+          options: {},
+          allowUnknownOption: false
+        };
       },
-      options: {},
-      allowUnknownOption: false,
       enableFeatures: [],
       disableReadUpPkg: false,
       bindLogger: true,
@@ -228,9 +232,13 @@ describe("CliService", () => {
       name: "deploy",
       description: "Deploy something",
       alias: undefined,
-      args: {},
-      options: {},
-      allowUnknownOption: false,
+      getOptions() {
+        return {
+          args: {},
+          options: {},
+          allowUnknownOption: false
+        };
+      },
       enableFeatures: [],
       disableReadUpPkg: false,
       bindLogger: true,

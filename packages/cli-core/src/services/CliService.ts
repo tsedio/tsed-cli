@@ -185,20 +185,22 @@ export class CliService {
   }
 
   public createCommand(metadata: CommandMetadata) {
-    const {args, name, options, description, alias, allowUnknownOption, inputSchema} = metadata;
+    const {name, description, alias, inputSchema} = metadata;
 
     if (this.commands.has(name)) {
       return this.commands.get(name).command;
     }
 
-    let cmd = this.program.command(name);
+    const {args, options, allowUnknownOption} = metadata.getOptions();
 
     const onAction = (commandName: string) => {
       const [, ...rawArgs] = cmd.args;
+
       const mappedArgs = mapCommanderArgs(
         args,
         this.program.args.filter((arg) => commandName === arg)
       );
+
       const allOpts = mapCommanderOptions(commandName, this.program.commands);
 
       let data: CommandData = {
@@ -240,6 +242,8 @@ export class CliService {
 
       return this.runLifecycle(name, data, $ctx);
     };
+
+    let cmd = this.program.command(name);
 
     if (alias) {
       cmd = cmd.alias(alias);

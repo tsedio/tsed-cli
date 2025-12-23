@@ -20,7 +20,11 @@ class TestCmd2 {}
 
 describe("getCommandMetadata", () => {
   it("should return command metadata", () => {
-    expect(getCommandMetadata(TestCmd)).toEqual({
+    const {getOptions, ...result} = getCommandMetadata(TestCmd);
+    expect({
+      ...result,
+      ...getOptions()
+    }).toEqual({
       args: {},
       allowUnknownOption: false,
       description: "description",
@@ -33,8 +37,13 @@ describe("getCommandMetadata", () => {
       options: {},
       token: TestCmd
     });
-
-    expect(getCommandMetadata(TestCmd2)).toEqual({
+  });
+  it("should return command metadata (2)", () => {
+    const {getOptions, ...result} = getCommandMetadata(TestCmd2);
+    expect({
+      ...result,
+      ...getOptions()
+    }).toEqual({
       args: {},
       allowUnknownOption: false,
       description: "description",
@@ -78,7 +87,7 @@ describe("getCommandMetadata", () => {
     expect(metadata.inputSchema).toBe(schema);
 
     // args mapped from property with `arg`
-    expect(metadata.args).toEqual(
+    expect(metadata.getOptions().args).toEqual(
       expect.objectContaining({
         filename: expect.objectContaining({
           description: "The file to process",
@@ -89,7 +98,7 @@ describe("getCommandMetadata", () => {
     );
 
     // options mapped from properties with `opt`, including customParser from root schema
-    expect(metadata.options).toEqual(
+    expect(metadata.getOptions().options).toEqual(
       expect.objectContaining({
         "--verbose": expect.objectContaining({
           description: "Enable verbose mode",
@@ -124,7 +133,7 @@ describe("getCommandMetadata", () => {
 
     expect(metadata.inputSchema).toBeTypeOf("function");
     // getCommandMetadata resolves the function and maps options
-    expect(metadata.options).toEqual(
+    expect(metadata.getOptions().options).toEqual(
       expect.objectContaining({
         "-c": expect.objectContaining({
           description: "Count",

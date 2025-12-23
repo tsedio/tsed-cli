@@ -12,7 +12,6 @@ import {
   createSubTasks,
   createTasksRunner,
   inject,
-  PackageManager,
   PackageManagersModule,
   ProjectPackageJson,
   type QuestionOptions,
@@ -23,7 +22,7 @@ import {constant} from "@tsed/di";
 import {$asyncAlter} from "@tsed/hooks";
 import {kebabCase} from "change-case";
 
-import {DEFAULT_TSED_TAGS, TEMPLATE_DIR} from "../../constants/index.js";
+import {TEMPLATE_DIR} from "../../constants/index.js";
 import {exec} from "../../fn/exec.js";
 import {render} from "../../fn/render.js";
 import {taskOutput} from "../../fn/taskOutput.js";
@@ -53,44 +52,6 @@ export class InitCmd implements CommandProvider {
   protected project = inject(CliProjectService);
   protected execa = inject(CliExeca);
   protected fs = inject(CliFs);
-
-  checkPrecondition(ctx: InitOptions) {
-    const isValid = (types: any, value: any) => (value ? Object.values(types).includes(value) : true);
-
-    if (!isValid(PlatformType, ctx.platform)) {
-      throw new Error(`Invalid selected platform: ${ctx.platform}. Possible values: ${Object.values(PlatformType).join(", ")}.`);
-    }
-
-    if (!isValid(ArchitectureConvention, ctx.architecture)) {
-      throw new Error(
-        `Invalid selected architecture: ${ctx.architecture}. Possible values: ${Object.values(ArchitectureConvention).join(", ")}.`
-      );
-    }
-
-    if (!isValid(ProjectConvention, ctx.convention)) {
-      throw new Error(`Invalid selected convention: ${ctx.convention}. Possible values: ${Object.values(ProjectConvention).join(", ")}.`);
-    }
-
-    const runtimes = this.runtimes.list();
-    if (!runtimes.includes(ctx.runtime)) {
-      throw new Error(`Invalid selected runtime: ${ctx.runtime}. Possible values: ${runtimes.join(", ")}.`);
-    }
-
-    const managers = this.packageManagers.list();
-    if (!managers.includes(ctx.packageManager)) {
-      throw new Error(`Invalid selected package manager: ${ctx.packageManager}. Possible values: ${managers.join(", ")}.`);
-    }
-
-    if (ctx.features) {
-      ctx.features.forEach((value) => {
-        const feature = FeaturesMap[value.toLowerCase()];
-
-        if (!feature) {
-          throw new Error(`Invalid selected feature: ${value}. Possible values: ${Object.values(FeatureType).join(", ")}.`);
-        }
-      });
-    }
-  }
 
   async $prompt(initialOptions: Partial<InitOptions>): Promise<QuestionOptions> {
     if (initialOptions.file) {
@@ -196,7 +157,6 @@ export class InitCmd implements CommandProvider {
       ctx
     );
 
-    this.checkPrecondition(ctx);
     const runtime = this.runtimes.get();
 
     ctx = {
@@ -444,64 +404,6 @@ command({
   token: InitCmd,
   name: "init",
   description: "Init a new Ts.ED project",
-  args: {
-    root: {
-      type: String,
-      defaultValue: ".",
-      description: "Root directory to initialize the Ts.ED project"
-    }
-  },
-  options: {
-    "-n, --project-name <projectName>": {
-      type: String,
-      defaultValue: "",
-      description: "Set the project name. By default, the project is the same as the name directory."
-    },
-    "-a, --arch <architecture>": {
-      type: String,
-      defaultValue: ArchitectureConvention.DEFAULT,
-      description: `Set the default architecture convention (${ArchitectureConvention.DEFAULT} or ${ArchitectureConvention.FEATURE})`
-    },
-    "-c, --convention <convention>": {
-      type: String,
-      defaultValue: ProjectConvention.DEFAULT,
-      description: `Set the default project convention (${ArchitectureConvention.DEFAULT} or ${ArchitectureConvention.FEATURE})`
-    },
-    "-p, --platform <platform>": {
-      type: String,
-      defaultValue: PlatformType.EXPRESS,
-      description: "Set the default platform for Ts.ED (express, koa or fastify)"
-    },
-    "--features <features...>": {
-      type: Array,
-      itemType: String,
-      defaultValue: [],
-      description: "List of the Ts.ED features."
-    },
-    "--runtime <runtime>": {
-      itemType: String,
-      defaultValue: "node",
-      description: "The default runtime used to run the project"
-    },
-    "-m, --package-manager <packageManager>": {
-      itemType: String,
-      defaultValue: PackageManager.YARN,
-      description: "The default package manager to install the project"
-    },
-    "-t, --tsed-version <version>": {
-      type: String,
-      defaultValue: DEFAULT_TSED_TAGS,
-      description: "Use a specific version of Ts.ED (format: 5.x.x)."
-    },
-    "-f, --file <path>": {
-      type: String,
-      description: "Location of a file in which the features are defined."
-    },
-    "-s, --skip-prompt": {
-      type: Boolean,
-      defaultValue: false,
-      description: "Skip the prompt."
-    }
-  },
+  inputSchema: InitSchema,
   disableReadUpPkg: true
 });

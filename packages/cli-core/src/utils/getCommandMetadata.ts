@@ -19,44 +19,48 @@ export function getCommandMetadata(token: TokenProvider): CommandMetadata {
     ...opts
   } = Store.from(token)?.get("command") as CommandOptions<any>;
 
-  if (inputSchema) {
-    const schema = isArrowFn(inputSchema) ? inputSchema() : inputSchema;
-
-    Object.entries(schema.get<JsonSchema[]>("properties") || {})?.forEach(([propertyKey, propertySchema]) => {
-      const base = {
-        type: propertySchema.getTarget(),
-        itemType: propertySchema.isCollection ? propertySchema.get("items").getTarget() : undefined,
-        description: propertySchema.get<string>("description") || "",
-        defaultValue: propertySchema.get<string>("default"),
-        required: schema.isRequired(propertyKey)
-      };
-
-      const opt = propertySchema.get<string>("x-opt");
-
-      if (opt) {
-        options[opt] = {
-          ...base,
-          customParser: schema.get("custom-parser")
-        } satisfies CommandOpts;
-      } else {
-        args[propertyKey] = base satisfies CommandArg;
-      }
-    });
-
-    opts.allowUnknownOption = !!schema.get("additionalProperties");
-  }
-
   return {
     name,
     inputSchema,
     alias,
-    args,
     description,
-    options,
     enableFeatures: enableFeatures || [],
     disableReadUpPkg: !!disableReadUpPkg,
     bindLogger,
     ...opts,
-    allowUnknownOption: !!opts.allowUnknownOption
+    getOptions() {
+      if (inputSchema) {
+        const schema = isArrowFn(inputSchema) ? inputSchema() : inputSchema;
+
+        Object.entries(schema.get<JsonSchema[]>("properties") || {})?.forEach(([propertyKey, propertySchema]) => {
+          const base = {
+            type: propertySchema.getTarget(),
+            itemType: propertySchema.isCollection ? propertySchema.get("items").getTarget() : undefined,
+            description: propertySchema.get<string>("description") || "",
+            defaultValue: propertySchema.get<string>("default"),
+            required: schema.isRequired(propertyKey)
+          };
+
+          const opt = propertySchema.get<string>("x-opt");
+
+          if (opt) {
+            options[opt] = {
+              ...base,
+              customParser: schema.get("custom-parser")
+            } satisfies CommandOpts;
+          } else {
+            args[propertyKey] = base satisfies CommandArg;
+          }
+        });
+
+        opts.allowUnknownOption = !!schema.get("additionalProperties");
+      }
+
+      return {
+        args,
+        options,
+        allowUnknownOption: !!opts.allowUnknownOption
+      };
+    }
   };
 }
