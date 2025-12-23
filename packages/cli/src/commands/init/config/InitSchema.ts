@@ -312,5 +312,3 @@ export const InitSchema = () =>
       skipPrompt: s.boolean().optional().default(false).description("Skip the prompt installation").opt("-s, --skip-prompt")
     })
     .unknown();
-
-// export type InitOptions = s.infer<ReturnType<typeof InitSchema>>;
