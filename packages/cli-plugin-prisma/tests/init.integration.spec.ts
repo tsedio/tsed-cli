@@ -46,7 +46,7 @@ describe("Prisma: Init cmd", () => {
       db: true,
       typeorm: true,
       mysql: true,
-      features: [FeatureType.DB, FeatureType.PRISMA],
+      features: [FeatureType.ORM, FeatureType.PRISMA],
       srcDir: "src",
       pnpm: false,
       npm: false,

@@ -39,7 +39,7 @@ describe("TypeORM: Init cmd", () => {
       db: true,
       typeorm: true,
       mysql: true,
-      features: [FeatureType.DB, FeatureType.TYPEORM, FeatureType.TYPEORM_MYSQL],
+      features: [FeatureType.ORM, FeatureType.TYPEORM, FeatureType.TYPEORM_MYSQL],
       srcDir: "src",
       pnpm: false,
       npm: false,

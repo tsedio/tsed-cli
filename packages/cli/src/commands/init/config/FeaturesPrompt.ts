@@ -18,7 +18,7 @@ export enum FeatureType {
   PASSPORTJS = "passportjs",
   CONFIG = "config",
   COMMANDS = "commands",
-  DB = "db",
+  ORM = "orm",
   DOC = "doc",
 
   // CONFIG
@@ -33,38 +33,38 @@ export enum FeatureType {
   CONFIG_POSTGRES = "config:postgres:premium",
 
   // DOC
-  SWAGGER = "swagger",
-  SCALAR = "scalar",
+  SWAGGER = "doc:swagger",
+  SCALAR = "doc:scalar",
 
   // ORM
-  PRISMA = "prisma",
-  MONGOOSE = "mongoose",
+  PRISMA = "orm:prisma",
+  MONGOOSE = "orm:mongoose",
 
   // TYPEORM
-  TYPEORM = "typeorm",
-  TYPEORM_MYSQL = "typeorm:mysql",
-  TYPEORM_MARIADB = "typeorm:mariadb",
-  TYPEORM_POSTGRES = "typeorm:postgres",
-  TYPEORM_COCKROACHDB = "typeorm:cockroachdb",
-  TYPEORM_SQLITE = "typeorm:sqlite",
-  TYPEORM_BETTER_SQLITE3 = "typeorm:better-sqlite3",
-  TYPEORM_CORDOVA = "typeorm:cordova",
-  TYPEORM_NATIVESCRIPT = "typeorm:nativescript",
-  TYPEORM_ORACLE = "typeorm:oracle",
-  TYPEORM_MSSQL = "typeorm:mssql",
-  TYPEORM_MONGODB = "typeorm:mongodb",
-  TYPEORM_SQLJS = "typeorm:sqljs",
-  TYPEORM_REACTNATIVE = "typeorm:reactnative",
-  TYPEORM_EXPO = "typeorm:expo",
+  TYPEORM = "orm:typeorm",
+  TYPEORM_MYSQL = "orm:typeorm:mysql",
+  TYPEORM_MARIADB = "orm:typeorm:mariadb",
+  TYPEORM_POSTGRES = "orm:typeorm:postgres",
+  TYPEORM_COCKROACHDB = "orm:typeorm:cockroachdb",
+  TYPEORM_SQLITE = "orm:typeorm:sqlite",
+  TYPEORM_BETTER_SQLITE3 = "orm:typeorm:better-sqlite3",
+  TYPEORM_CORDOVA = "orm:typeorm:cordova",
+  TYPEORM_NATIVESCRIPT = "orm:typeorm:nativescript",
+  TYPEORM_ORACLE = "orm:typeorm:oracle",
+  TYPEORM_MSSQL = "orm:typeorm:mssql",
+  TYPEORM_MONGODB = "orm:typeorm:mongodb",
+  TYPEORM_SQLJS = "orm:typeorm:sqljs",
+  TYPEORM_REACTNATIVE = "orm:typeorm:reactnative",
+  TYPEORM_EXPO = "orm:typeorm:expo",
 
   // TESTING & LINTER
   TESTING = "testing",
-  JEST = "jest",
-  VITEST = "vitest",
+  JEST = "testing:jest",
+  VITEST = "testing:vitest",
   LINTER = "linter",
-  ESLINT = "eslint",
-  LINT_STAGED = "lintstaged",
-  PRETTIER = "prettier"
+  ESLINT = "linter:eslint",
+  LINT_STAGED = "linter:lintstaged",
+  PRETTIER = "linter:prettier"
 }
 
 export const FeaturesMap: Record<string, Feature> = {
@@ -92,7 +92,7 @@ export const FeaturesMap: Record<string, Feature> = {
   [FeatureType.DOC]: {
     name: "Documentation"
   },
-  [FeatureType.DB]: {
+  [FeatureType.ORM]: {
     name: "Database"
   },
   [FeatureType.PASSPORTJS]: {
@@ -419,11 +419,11 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
   {
     type: "checkbox",
     name: "features",
-    message: "Check the features needed for your project",
+    message: "Choose the features needed for your project",
     choices: [
       FeatureType.CONFIG,
       FeatureType.GRAPHQL,
-      FeatureType.DB,
+      FeatureType.ORM,
       FeatureType.PASSPORTJS,
       FeatureType.SOCKETIO,
       FeatureType.DOC,
@@ -461,7 +461,7 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
     message: "Choose a ORM manager",
     type: "list",
     name: "featuresDB",
-    when: hasFeature(FeatureType.DB),
+    when: hasFeature(FeatureType.ORM),
     choices: [FeatureType.PRISMA, FeatureType.MONGOOSE, FeatureType.TYPEORM]
   },
   {

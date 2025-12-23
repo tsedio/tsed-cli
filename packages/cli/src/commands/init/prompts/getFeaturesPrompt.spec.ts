@@ -83,10 +83,6 @@ describe("getFeaturesPrompt", () => {
               "value": "config",
             },
             {
-              "name": "Database",
-              "value": "db",
-            },
-            {
               "name": "Documentation",
               "value": "doc",
             },
@@ -110,6 +106,10 @@ describe("getFeaturesPrompt", () => {
               },
               "name": "OpenID Connect provider",
               "value": "oidc",
+            },
+            {
+              "name": "Database",
+              "value": "orm",
             },
             {
               "devDependencies": {
@@ -137,7 +137,7 @@ describe("getFeaturesPrompt", () => {
               "value": "testing",
             },
           ],
-          "message": "Check the features needed for your project",
+          "message": "Choose the features needed for your project",
           "name": "features",
           "type": "checkbox",
         },
@@ -224,14 +224,14 @@ describe("getFeaturesPrompt", () => {
                 "@tsed/swagger": "{{tsedVersion}}",
               },
               "name": "Swagger",
-              "value": "swagger",
+              "value": "doc:swagger",
             },
             {
               "dependencies": {
                 "@tsed/scalar": "{{tsedVersion}}",
               },
               "name": "Scalar",
-              "value": "scalar",
+              "value": "doc:scalar",
             },
           ],
           "message": "Choose a documentation plugin",
@@ -246,14 +246,14 @@ describe("getFeaturesPrompt", () => {
                 "@tsed/cli-plugin-prisma": "{{cliVersion}}",
               },
               "name": "Prisma",
-              "value": "prisma",
+              "value": "orm:prisma",
             },
             {
               "devDependencies": {
                 "@tsed/cli-plugin-mongoose": "{{cliVersion}}",
               },
               "name": "Mongoose",
-              "value": "mongoose",
+              "value": "orm:mongoose",
             },
             {
               "devDependencies": {
@@ -261,7 +261,7 @@ describe("getFeaturesPrompt", () => {
                 "typeorm": "latest",
               },
               "name": "TypeORM",
-              "value": "typeorm",
+              "value": "orm:typeorm",
             },
           ],
           "message": "Choose a ORM manager",
@@ -276,83 +276,83 @@ describe("getFeaturesPrompt", () => {
                 "mysql2": "latest",
               },
               "name": "MySQL",
-              "value": "typeorm:mysql",
+              "value": "orm:typeorm:mysql",
             },
             {
               "dependencies": {
                 "mariadb": "latest",
               },
               "name": "MariaDB",
-              "value": "typeorm:mariadb",
+              "value": "orm:typeorm:mariadb",
             },
             {
               "dependencies": {
                 "pg": "latest",
               },
               "name": "Postgres",
-              "value": "typeorm:postgres",
+              "value": "orm:typeorm:postgres",
             },
             {
               "dependencies": {
                 "cockroachdb": "latest",
               },
               "name": "CockRoachDB",
-              "value": "typeorm:cockroachdb",
+              "value": "orm:typeorm:cockroachdb",
             },
             {
               "dependencies": {
                 "sqlite3": "latest",
               },
               "name": "SQLite",
-              "value": "typeorm:sqlite",
+              "value": "orm:typeorm:sqlite",
             },
             {
               "dependencies": {
                 "better-sqlite3": "latest",
               },
               "name": "Better SQLite3",
-              "value": "typeorm:better-sqlite3",
+              "value": "orm:typeorm:better-sqlite3",
             },
             {
               "name": "Cordova",
-              "value": "typeorm:cordova",
+              "value": "orm:typeorm:cordova",
             },
             {
               "name": "NativeScript",
-              "value": "typeorm:nativescript",
+              "value": "orm:typeorm:nativescript",
             },
             {
               "dependencies": {
                 "oracledb": "latest",
               },
               "name": "Oracle",
-              "value": "typeorm:oracle",
+              "value": "orm:typeorm:oracle",
             },
             {
               "dependencies": {
                 "mssql": "latest",
               },
               "name": "MsSQL",
-              "value": "typeorm:mssql",
+              "value": "orm:typeorm:mssql",
             },
             {
               "dependencies": {
                 "mongodb": "latest",
               },
               "name": "MongoDB",
-              "value": "typeorm:mongodb",
+              "value": "orm:typeorm:mongodb",
             },
             {
               "name": "SQL.js",
-              "value": "typeorm:sqljs",
+              "value": "orm:typeorm:sqljs",
             },
             {
               "name": "ReactNative",
-              "value": "typeorm:reactnative",
+              "value": "orm:typeorm:reactnative",
             },
             {
               "name": "Expo",
-              "value": "typeorm:expo",
+              "value": "orm:typeorm:expo",
             },
           ],
           "message": "Which TypeORM you want to install?",
@@ -373,14 +373,14 @@ describe("getFeaturesPrompt", () => {
                 "@tsed/cli-plugin-vitest": "{{cliVersion}}",
               },
               "name": "Vitest",
-              "value": "vitest",
+              "value": "testing:vitest",
             },
             {
               "devDependencies": {
                 "@tsed/cli-plugin-jest": "{{cliVersion}}",
               },
               "name": "Jest (unstable with ESM)",
-              "value": "jest",
+              "value": "testing:jest",
             },
           ],
           "message": "Choose unit framework",
@@ -396,7 +396,7 @@ describe("getFeaturesPrompt", () => {
                 "@tsed/cli-plugin-eslint": "{{cliVersion}}",
               },
               "name": "EsLint",
-              "value": "eslint",
+              "value": "linter:eslint",
             },
           ],
           "message": "Choose linter tools framework",
@@ -408,11 +408,11 @@ describe("getFeaturesPrompt", () => {
           "choices": [
             {
               "name": "Prettier",
-              "value": "prettier",
+              "value": "linter:prettier",
             },
             {
               "name": "Lint on commit",
-              "value": "lintstaged",
+              "value": "linter:lintstaged",
             },
           ],
           "message": "Choose extra linter tools",
