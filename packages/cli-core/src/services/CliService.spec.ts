@@ -2,8 +2,10 @@
 import {CliPlatformTest} from "@tsed/cli-testing";
 import {Store} from "@tsed/core";
 import {DIContext, injector, logger} from "@tsed/di";
+import {s} from "@tsed/schema";
 import {Command} from "commander";
 
+import type {CommandMetadata} from "../interfaces/CommandMetadata.js";
 import {CliService} from "./CliService.js";
 
 describe("CliService", () => {
@@ -165,5 +167,91 @@ describe("CliService", () => {
     Store.from(duplicateProvider.token).set("command", {name: "generate", description: "dup"} as any);
 
     expect(() => service["build"](duplicateProvider)).toThrow("The generate command is already registered");
+  });
+
+  it("should validate command inputs via inputSchema before running lifecycle", async () => {
+    const service = await CliPlatformTest.invoke<CliService>(CliService);
+    const schema = s.object({
+      blueprint: s.string().required(),
+      feature: s.string().required(),
+      count: s.number().required()
+    });
+    const metadata: CommandMetadata = {
+      name: "generate",
+      description: "Generate something",
+      alias: undefined,
+      args: {
+        blueprint: {
+          description: "Blueprint name",
+          required: true,
+          type: String
+        }
+      },
+      options: {},
+      allowUnknownOption: false,
+      enableFeatures: [],
+      disableReadUpPkg: false,
+      bindLogger: true,
+      inputSchema: schema
+    };
+
+    const cmd = service.createCommand(metadata);
+    const runLifecycle = vi.spyOn(service, "runLifecycle").mockResolvedValue(undefined as never);
+
+    service.program.args = ["controller"];
+    cmd.args = ["generate", "controller"];
+    cmd.setOptionValue("feature", "rest");
+    cmd.setOptionValue("count", "3");
+
+    await (cmd as any)._actionHandler(["controller"]);
+
+    expect(runLifecycle).toHaveBeenCalledTimes(1);
+    const [, data, ctx] = runLifecycle.mock.calls[0];
+    expect(data).toEqual(
+      expect.objectContaining({
+        blueprint: "controller",
+        feature: "rest",
+        count: 3,
+        verbose: false,
+        rawArgs: ["controller"]
+      })
+    );
+    expect(ctx).toBeInstanceOf(DIContext);
+  });
+
+  it("should report validation errors and skip lifecycle when inputSchema fails", async () => {
+    const service = await CliPlatformTest.invoke<CliService>(CliService);
+    const schema = s.object({
+      feature: s.string().required()
+    });
+    const metadata: CommandMetadata = {
+      name: "deploy",
+      description: "Deploy something",
+      alias: undefined,
+      args: {},
+      options: {},
+      allowUnknownOption: false,
+      enableFeatures: [],
+      disableReadUpPkg: false,
+      bindLogger: true,
+      inputSchema: schema
+    };
+    const cmd = service.createCommand(metadata);
+    const runLifecycle = vi.spyOn(service, "runLifecycle").mockResolvedValue(undefined as never);
+    const log = logger();
+    const errorSpy = vi.spyOn(log, "error").mockReturnValue(undefined as never);
+
+    cmd.args = ["deploy"];
+    service.program.args = [];
+
+    expect(() => (cmd as any)._actionHandler(["missing-required"])).toThrow("Validation error");
+
+    expect(runLifecycle).not.toHaveBeenCalled();
+    expect(errorSpy).toHaveBeenCalledWith({
+      event: "VALIDATION_ERROR",
+      errors: expect.any(Array)
+    });
+
+    errorSpy.mockRestore();
   });
 });

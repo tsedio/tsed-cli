@@ -1,4 +1,4 @@
-import {classOf} from "@tsed/core";
+import {classOf, isArrowFn} from "@tsed/core";
 import {
   configuration,
   constant,
@@ -28,7 +28,7 @@ import type {Task} from "../interfaces/index.js";
 import {PackageManagersModule} from "../packageManagers/index.js";
 import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner.js";
 import {getCommandMetadata} from "../utils/getCommandMetadata.js";
-import {mapCommanderOptions} from "../utils/index.js";
+import {mapCommanderOptions, validate} from "../utils/index.js";
 import {mapCommanderArgs} from "../utils/mapCommanderArgs.js";
 import {parseOption} from "../utils/parseOption.js";
 import {CliHooks} from "./CliHooks.js";
@@ -185,7 +185,7 @@ export class CliService {
   }
 
   public createCommand(metadata: CommandMetadata) {
-    const {args, name, options, description, alias, allowUnknownOption} = metadata;
+    const {args, name, options, description, alias, allowUnknownOption, inputSchema} = metadata;
 
     if (this.commands.has(name)) {
       return this.commands.get(name).command;
@@ -201,13 +201,28 @@ export class CliService {
       );
       const allOpts = mapCommanderOptions(commandName, this.program.commands);
 
-      const data: CommandData = {
+      let data: CommandData = {
         ...allOpts,
         verbose: !!this.program.opts().verbose,
         ...mappedArgs,
         ...cmd.opts(),
         rawArgs
       };
+
+      if (inputSchema) {
+        const {isValid, errors, value} = validate(data, isArrowFn(inputSchema) ? inputSchema() : inputSchema);
+
+        if (isValid) {
+          data = value;
+        } else {
+          logger().error({
+            event: "VALIDATION_ERROR",
+            errors
+          });
+
+          throw new Error("Validation error");
+        }
+      }
 
       const $ctx = new DIContext({
         id: v4(),
