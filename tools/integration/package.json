@@ -19,6 +19,7 @@
     "start:help:i": "yarn run-cmd init -h",
     "start:version": "yarn run-cmd --version",
     "start:init:help": "yarn run-cmd init -h",
+    "start:init:options": "yarn run-cmd init-options --indent 2",
     "start:init:test": "yarn run-cmd init init -r ./.tmp/init/default --features=oidc --arch=default --convention=conv_default --platform=express --package-manager=npm --skip-prompt .",
     "start:init:test:jest": "yarn run-cmd init -r ./.tmp/init/default --features=jest --arch=default --convention=conv_default --platform=express --package-manager=npm --skip-prompt .",
     "start:init:run": "yarn run-cmd init -r ./.tmp/init/default",
