@@ -10,7 +10,6 @@ export function getCommandMetadata(token: TokenProvider): CommandMetadata {
     name,
     alias,
     args = {},
-    allowUnknownOption,
     description,
     options = {},
     enableFeatures,
@@ -32,21 +31,19 @@ export function getCommandMetadata(token: TokenProvider): CommandMetadata {
         required: schema.isRequired(propertyKey)
       };
 
-      const opt = propertySchema.get<string>("opt");
+      const opt = propertySchema.get<string>("x-opt");
 
       if (opt) {
         options[opt] = {
           ...base,
           customParser: schema.get("custom-parser")
         } satisfies CommandOpts;
-      }
-
-      const arg = propertySchema.get<string>("arg");
-
-      if (arg) {
-        args[arg] = base satisfies CommandArg;
+      } else {
+        args[propertyKey] = base satisfies CommandArg;
       }
     });
+
+    opts.allowUnknownOption = !!schema.get("additionalProperties");
   }
 
   return {
@@ -56,10 +53,10 @@ export function getCommandMetadata(token: TokenProvider): CommandMetadata {
     args,
     description,
     options,
-    allowUnknownOption: !!allowUnknownOption,
     enableFeatures: enableFeatures || [],
     disableReadUpPkg: !!disableReadUpPkg,
     bindLogger,
-    ...opts
+    ...opts,
+    allowUnknownOption: !!opts.allowUnknownOption
   };
 }

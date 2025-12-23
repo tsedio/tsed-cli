@@ -60,7 +60,7 @@ describe("getCommandMetadata", () => {
 
     // enrich properties with metadata used by getCommandMetadata
     const props = schema.get("properties") as any;
-    props.filename.set("arg", "file").set("description", "The file to process").set("default", "index.ts");
+    props.filename.set("arg", "filename").set("description", "The file to process").set("default", "index.ts");
     props.verbose.set("opt", "--verbose").set("description", "Enable verbose mode").set("default", false);
     props.list.set("opt", "--list").set("description", "List of items");
 
@@ -80,7 +80,7 @@ describe("getCommandMetadata", () => {
     // args mapped from property with `arg`
     expect(metadata.args).toEqual(
       expect.objectContaining({
-        file: expect.objectContaining({
+        filename: expect.objectContaining({
           description: "The file to process",
           defaultValue: "index.ts",
           type: String

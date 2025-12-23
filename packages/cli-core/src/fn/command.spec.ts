@@ -26,7 +26,7 @@ describe("command()", () => {
 
     const handler: CommandProvider["$exec"] = vi.fn();
     const prompt: CommandProvider["$prompt"] = vi.fn();
-    const options: CommandOptions = {
+    const options: CommandOptions<any> = {
       name: "test",
       description: "description",
       handler,
@@ -59,7 +59,7 @@ describe("command()", () => {
       $exec(): any {}
     }
 
-    const options: CommandOptions = {
+    const options: CommandOptions<any> = {
       name: "test-class",
       description: "description",
       token: TestCommand

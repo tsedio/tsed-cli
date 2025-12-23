@@ -89,6 +89,8 @@ export interface BaseCommandOptions<Input> {
   enableFeatures?: string[];
 
   disableReadUpPkg?: boolean;
+
+  bindLogger?: boolean;
 }
 
 interface FunctionalCommandOptions<Input> extends BaseCommandOptions<Input> {
@@ -98,8 +100,8 @@ interface FunctionalCommandOptions<Input> extends BaseCommandOptions<Input> {
   [key: string]: any;
 }
 
-interface ClassCommandOptions<Input> extends BaseCommandOptions<Input> {
-  token: TokenProvider<CommandProvider<Input>>;
+export interface ClassCommandOptions<Input> extends BaseCommandOptions<Input> {
+  token: TokenProvider<CommandProvider>;
 
   [key: string]: any;
 }
