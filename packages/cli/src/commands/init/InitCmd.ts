@@ -37,7 +37,7 @@ import {BunRuntime} from "../../runtimes/supports/BunRuntime.js";
 import {NodeRuntime} from "../../runtimes/supports/NodeRuntime.js";
 import {CliProjectService} from "../../services/CliProjectService.js";
 import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt.js";
-import {InitFileSchema} from "./config/InitFileSchema.js";
+import {InitSchema} from "./config/InitSchema.js";
 import {mapToContext} from "./mappers/mapToContext.js";
 import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt.js";
 
@@ -98,7 +98,7 @@ export class InitCmd implements CommandProvider {
 
       initialOptions = {
         ...initialOptions,
-        ...(await this.cliLoadFile.loadFile(file, InitFileSchema))
+        ...(await this.cliLoadFile.loadFile(file, InitSchema()))
       };
     }
 
