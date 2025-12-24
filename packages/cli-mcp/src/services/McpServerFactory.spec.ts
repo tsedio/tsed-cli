@@ -65,23 +65,10 @@ describe("McpServerFactory", () => {
         injector().settings.set("mcp.mode", "stdio");
 
         const result = inject(MCP_SERVER);
-        const loggerSpy = vi.spyOn(logger(), "info");
 
         await result.connect();
 
-        expect(loggerSpy).toHaveBeenCalledWith({event: "MCP_SERVER_CONNECT"});
-        expect(loggerSpy).toHaveBeenCalledWith({event: "MCP_SERVER_CONNECTED"});
         expect(mcpStdioServer).toHaveBeenCalledWith(result.server);
-      });
-      it("should log connection events", async () => {
-        const result = injector().invoke(MCP_SERVER);
-        const loggerSpy = vi.spyOn(logger(), "info");
-
-        await result.connect();
-
-        expect(loggerSpy).toHaveBeenCalledTimes(2);
-        expect(loggerSpy).toHaveBeenNthCalledWith(1, {event: "MCP_SERVER_CONNECT"});
-        expect(loggerSpy).toHaveBeenNthCalledWith(2, {event: "MCP_SERVER_CONNECTED"});
       });
     });
     describe("http", () => {
@@ -102,10 +89,9 @@ describe("McpServerFactory", () => {
         const result = inject(MCP_SERVER);
         const loggerSpy = vi.spyOn(logger(), "info");
 
-        await result.connect();
+        await result.connect("streamable-http");
 
-        expect(loggerSpy).toHaveBeenCalledWith({event: "MCP_SERVER_CONNECT"});
-        expect(loggerSpy).toHaveBeenCalledWith({event: "MCP_SERVER_CONNECTED"});
+        expect(loggerSpy).toHaveBeenCalledWith({event: "MCP_SERVER_CONNECT", mode: "streamable-http"});
         expect(mcpStreamableServer).toHaveBeenCalled();
       });
     });

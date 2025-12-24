@@ -3,9 +3,9 @@ import {defineTool} from "@tsed/cli-mcp";
 import {inject} from "@tsed/di";
 import {array, number, object, string} from "@tsed/schema";
 
-import {CliProjectService} from "../../services/CliProjectService.js";
-import {CliTemplatesService} from "../../services/CliTemplatesService.js";
-import {mapDefaultTemplateOptions} from "../../services/mappers/mapDefaultTemplateOptions.js";
+import {CliProjectService} from "../../../services/CliProjectService.js";
+import {CliTemplatesService} from "../../../services/CliTemplatesService.js";
+import {mapDefaultTemplateOptions} from "../../../services/mappers/mapDefaultTemplateOptions.js";
 
 export const generateTool = defineTool({
   name: "generate-file",

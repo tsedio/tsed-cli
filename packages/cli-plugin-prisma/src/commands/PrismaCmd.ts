@@ -19,7 +19,8 @@ export class PrismaCmd implements CommandProvider {
   }
 }
 
-command(PrismaCmd, {
+command({
+  token: PrismaCmd,
   name: "prisma",
   description: "Run a prisma command",
   args: {

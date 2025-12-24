@@ -1,4 +1,5 @@
 import {McpServer} from "@modelcontextprotocol/sdk/server/mcp.js";
+import {DITest} from "@tsed/di";
 import {beforeEach, describe, expect, it, vi} from "vitest";
 
 import {mcpStdioServer} from "./McpStdioServer.js";
@@ -15,6 +16,7 @@ describe("mcpStdioServer", () => {
   let mockServer: McpServer;
   let mockConnect: any;
 
+  beforeEach(() => DITest.create());
   beforeEach(async () => {
     vi.clearAllMocks();
 

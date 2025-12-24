@@ -1,4 +1,5 @@
 import {Type} from "@tsed/core";
+import type {FactoryTokenProvider, TokenProvider} from "@tsed/di";
 
 import type {CommandProvider} from "./CommandProvider.js";
 import type {PackageJson} from "./PackageJson.js";
@@ -6,7 +7,7 @@ import type {PackageJson} from "./PackageJson.js";
 export * from "./CliDefaultOptions.js";
 export * from "./CommandData.js";
 export * from "./CommandMetadata.js";
-export * from "./CommandParameters.js";
+export * from "./CommandOptions.js";
 export * from "./CommandProvider.js";
 export * from "./PackageJson.js";
 export * from "./ProjectPreferences.js";
@@ -18,7 +19,7 @@ declare global {
       /**
        * Load given commands
        */
-      commands: Type<CommandProvider>[];
+      commands: TokenProvider<CommandProvider>[];
       /**
        * Init Cli with defined argv
        */

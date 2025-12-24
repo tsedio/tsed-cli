@@ -128,7 +128,6 @@ export class PackageManagersModule {
     }
 
     this.projectPackageJson.setPreference("packageManager", selectedPackageManager.name);
-    console.log("==", name, selectedPackageManager);
 
     return selectedPackageManager;
   }

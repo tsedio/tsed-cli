@@ -59,7 +59,8 @@ export class AddCmd implements CommandProvider {
   }
 }
 
-command(AddCmd, {
+command({
+  token: AddCmd,
   name: "add",
   description: "Add cli plugin to the current project",
   args: {

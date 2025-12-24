@@ -1,4 +1,4 @@
-import {classOf} from "@tsed/core";
+import {classOf, isArrowFn} from "@tsed/core";
 import {
   configuration,
   constant,
@@ -20,16 +20,15 @@ import Inquirer from "inquirer";
 import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
 import {v4} from "uuid";
 
-import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
 import type {CommandData} from "../interfaces/CommandData.js";
 import type {CommandMetadata} from "../interfaces/CommandMetadata.js";
-import type {CommandArg, CommandOptions} from "../interfaces/CommandParameters.js";
+import type {CommandArg, CommandOpts} from "../interfaces/CommandOptions.js";
 import type {CommandProvider} from "../interfaces/CommandProvider.js";
 import type {Task} from "../interfaces/index.js";
 import {PackageManagersModule} from "../packageManagers/index.js";
 import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner.js";
 import {getCommandMetadata} from "../utils/getCommandMetadata.js";
-import {mapCommanderOptions} from "../utils/index.js";
+import {mapCommanderOptions, validate} from "../utils/index.js";
 import {mapCommanderArgs} from "../utils/mapCommanderArgs.js";
 import {parseOption} from "../utils/parseOption.js";
 import {CliHooks} from "./CliHooks.js";
@@ -72,7 +71,6 @@ export class CliService {
 
       await $asyncEmit("$loadPackageJson");
 
-      data = await this.beforePrompt(cmdName, data, $ctx);
       data = await this.prompt(cmdName, data, $ctx);
 
       try {
@@ -89,20 +87,20 @@ export class CliService {
   }
 
   public async exec(cmdName: string, data: any, $ctx: DIContext) {
-    const initialTasks = await this.getTasks(cmdName, data);
+    const tasks = await this.getTasks(cmdName, data);
 
     $ctx.set("data", data);
 
-    if (initialTasks.length) {
-      const tasks = [
-        ...initialTasks,
-        {
-          title: "Install dependencies",
-          enabled: () => this.reinstallAfterRun && (this.projectPkg.rewrite || this.projectPkg.reinstall),
-          task: createSubTasks(() => this.packageManagers.install(data), {...data, concurrent: false})
-        },
-        ...(await this.getPostInstallTasks(cmdName, data))
-      ];
+    if (tasks.length) {
+      if (this.reinstallAfterRun && (this.projectPkg.rewrite || this.projectPkg.reinstall)) {
+        tasks.push(
+          {
+            title: "Install dependencies",
+            task: createSubTasks(() => this.packageManagers.install(data), {...data, concurrent: false})
+          },
+          ...(await this.getPostInstallTasks(cmdName, data))
+        );
+      }
 
       data = this.mapData(cmdName, data, $ctx);
 
@@ -115,43 +113,17 @@ export class CliService {
   /**
    * Run prompt for a given command
    * @param cmdName
-   * @param data Initial data
-   * @param $ctx
-   */
-  public async beforePrompt(cmdName: string, data: CommandData = {}, $ctx: DIContext) {
-    const provider = this.commands.get(cmdName);
-    const instance = inject<CommandProvider>(provider.useClass)!;
-    const verbose = data.verbose;
-
-    $ctx.set("data", data);
-
-    if (instance.$beforePrompt) {
-      data = await instance.$beforePrompt(JSON.parse(JSON.stringify(data)));
-      data.verbose = verbose;
-    }
-
-    $ctx.set("data", data);
-
-    return data;
-  }
-
-  /**
-   * Run prompt for a given command
-   * @param cmdName
    * @param data
    * @param $ctx
    */
   public async prompt(cmdName: string, data: CommandData = {}, $ctx: DIContext) {
     const provider = this.commands.get(cmdName);
-    const instance = inject<CommandProvider>(provider.useClass)!;
+    const instance = inject<CommandProvider>(provider.token)!;
 
     $ctx.set("data", data);
 
     if (instance.$prompt) {
-      const questions = [
-        ...((await instance.$prompt(data)) as any[]),
-        ...(await this.hooks.emit(CommandStoreKeys.PROMPT_HOOKS, cmdName, data))
-      ];
+      const questions = [...((await instance.$prompt(data)) as any[])];
 
       if (questions.length) {
         data = {
@@ -178,15 +150,12 @@ export class CliService {
 
     data = this.mapData(cmdName, data, $ctx);
 
-    if (instance.$beforeExec) {
-      await instance.$beforeExec(data);
-    }
+    const tasks = [];
 
-    return [
-      ...(await instance.$exec(data)),
-      ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, data)),
-      ...(await $asyncAlter(`$alter${pascalCase(cmdName)}Tasks`, [], [data]))
-    ].map((opts) => {
+    tasks.push(...((await instance.$exec(data)) || []));
+    tasks.push(...(await $asyncAlter(`$alter${pascalCase(cmdName)}Tasks`, [], [data])));
+
+    return tasks.map((opts) => {
       return {
         ...opts,
         task: async (arg, task) => {
@@ -204,42 +173,58 @@ export class CliService {
 
   public async getPostInstallTasks(cmdName: string, data: any) {
     const provider = this.commands.get(cmdName);
-    const instance = inject<CommandProvider>(provider.useClass)!;
+    const instance = inject<CommandProvider>(provider.token)!;
 
     data = this.mapData(cmdName, data, getContext()!);
 
     return [
       ...(instance.$postInstall ? await instance.$postInstall(data) : []),
-      ...(await this.hooks.emit(CommandStoreKeys.POST_INSTALL_HOOKS, cmdName, data)),
       ...(await $asyncAlter(`$alter${pascalCase(cmdName)}PostInstallTasks`, [] as Task[], [data])),
       ...(instance.$afterPostInstall ? await instance.$afterPostInstall(data) : [])
     ];
   }
 
   public createCommand(metadata: CommandMetadata) {
-    const {args, name, options, description, alias, allowUnknownOption} = metadata;
+    const {name, description, alias, inputSchema} = metadata;
 
     if (this.commands.has(name)) {
       return this.commands.get(name).command;
     }
 
-    let cmd = this.program.command(name);
+    const {args, options, allowUnknownOption} = metadata.getOptions();
 
     const onAction = (commandName: string) => {
       const [, ...rawArgs] = cmd.args;
+
       const mappedArgs = mapCommanderArgs(
         args,
         this.program.args.filter((arg) => commandName === arg)
       );
+
       const allOpts = mapCommanderOptions(commandName, this.program.commands);
 
-      const data: CommandData = {
+      let data: CommandData = {
         ...allOpts,
         verbose: !!this.program.opts().verbose,
         ...mappedArgs,
         ...cmd.opts(),
         rawArgs
       };
+
+      if (inputSchema) {
+        const {isValid, errors, value} = validate(data, isArrowFn(inputSchema) ? inputSchema() : inputSchema);
+
+        if (isValid) {
+          data = value;
+        } else {
+          logger().error({
+            event: "VALIDATION_ERROR",
+            errors
+          });
+
+          throw new Error("Validation error");
+        }
+      }
 
       const $ctx = new DIContext({
         id: v4(),
@@ -258,6 +243,8 @@ export class CliService {
       return this.runLifecycle(name, data, $ctx);
     };
 
+    let cmd = this.program.command(name);
+
     if (alias) {
       cmd = cmd.alias(alias);
     }
@@ -274,7 +261,7 @@ export class CliService {
     return cmd;
   }
 
-  private load() {
+  load() {
     injector()
       .getProviders("command")
       .forEach((provider) => this.build(provider));
@@ -282,7 +269,7 @@ export class CliService {
 
   private mapData(cmdName: string, data: CommandData, $ctx: DIContext) {
     const provider = this.commands.get(cmdName);
-    const instance = inject<CommandProvider>(provider.useClass)!;
+    const instance = inject<CommandProvider>(provider.token)!;
     const verbose = data.verbose;
 
     data.commandName ||= cmdName;
@@ -309,8 +296,8 @@ export class CliService {
    * Build command and sub-commands
    * @param provider
    */
-  private build(provider: Provider<any>) {
-    const metadata = getCommandMetadata(provider.useClass);
+  private build(provider: Provider) {
+    const metadata = getCommandMetadata(provider.token);
 
     if (metadata.name) {
       if (this.commands.has(metadata.name)) {
@@ -331,7 +318,7 @@ export class CliService {
    * @param options
    * @param allowUnknownOptions
    */
-  private buildOption(subCommand: Command, options: {[key: string]: CommandOptions}, allowUnknownOptions: boolean) {
+  private buildOption(subCommand: Command, options: {[key: string]: CommandOpts}, allowUnknownOptions: boolean) {
     Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
       const fn = (v: any) => {
         return parseOption(v, options);

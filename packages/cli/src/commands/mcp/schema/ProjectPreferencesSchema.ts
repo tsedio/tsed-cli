@@ -1,8 +1,8 @@
 import {PackageManager} from "@tsed/cli-core";
 import {s} from "@tsed/schema";
 
-import {PlatformType} from "../../interfaces/PlatformType.js";
-import {ProjectConvention} from "../../interfaces/ProjectConvention.js";
+import {PlatformType} from "../../../interfaces/PlatformType.js";
+import {ProjectConvention} from "../../../interfaces/ProjectConvention.js";
 
 export const ProjectPreferenceSchema = s
   .object({

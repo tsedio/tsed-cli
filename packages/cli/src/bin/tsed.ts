@@ -21,7 +21,7 @@ register(pathToFileURL(join(import.meta.dirname, `../loaders/alias.hook.${EXT}`)
   transferList: []
 });
 
-const {commands, CliCore, PKG, TEMPLATE_DIR, ArchitectureConvention, ProjectConvention} = await import("../index.js");
+const {tools, commands, resources, CliCore, PKG, TEMPLATE_DIR, ArchitectureConvention, ProjectConvention} = await import("../index.js");
 
 CliCore.bootstrap({
   name: "tsed",
@@ -31,6 +31,8 @@ CliCore.bootstrap({
   updateNotifier: true,
   checkPrecondition: true,
   commands,
+  tools,
+  resources,
   defaultProjectPreferences() {
     return {
       convention: ProjectConvention.DEFAULT,

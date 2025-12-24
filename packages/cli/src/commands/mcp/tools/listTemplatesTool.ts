@@ -2,8 +2,8 @@ import {defineTool} from "@tsed/cli-mcp";
 import {inject} from "@tsed/di";
 import {array, object, string} from "@tsed/schema";
 
-import {CliTemplatesService} from "../../services/CliTemplatesService.js";
-import {summarizeSchema} from "../../utils/summarizeSchema.js";
+import {CliTemplatesService} from "../../../services/CliTemplatesService.js";
+import {summarizeSchema} from "../../../utils/summarizeSchema.js";
 
 export const listTemplatesTool = defineTool({
   name: "list-templates",

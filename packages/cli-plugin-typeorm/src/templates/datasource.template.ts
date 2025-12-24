@@ -78,7 +78,7 @@ export default defineTemplate({
         name: "typeormDataSource",
         message: "Which database type?",
         when(state: any) {
-          return state.type === "typeorm:datasource";
+          return state.type === "orm:typeorm:datasource";
         },
         source: (state: any, keyword: string) => {
           if (keyword) {

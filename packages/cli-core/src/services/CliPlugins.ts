@@ -1,7 +1,7 @@
 import {constant, inject, injectable} from "@tsed/di";
+import {$asyncEmit} from "@tsed/hooks";
 import chalk from "chalk";
 
-import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
 import type {Task} from "../interfaces/index.js";
 import {PackageManagersModule} from "../packageManagers/PackageManagersModule.js";
 import {createSubTasks} from "../utils/createTasksRunner.js";
@@ -39,7 +39,7 @@ export class CliPlugins {
       return {
         title: `Run plugin '${chalk.cyan(plugin)}'`,
         task: () => {
-          return this.cliHooks.emit(CommandStoreKeys.ADD, plugin, ctx);
+          return $asyncEmit("$onAddPlugin", [plugin, ctx]);
         }
       };
     });

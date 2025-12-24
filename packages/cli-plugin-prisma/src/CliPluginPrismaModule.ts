@@ -1,5 +1,5 @@
 import type {InitCmdContext} from "@tsed/cli";
-import {inject, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
+import {inject, ProjectPackageJson} from "@tsed/cli-core";
 import {injectable} from "@tsed/di";
 
 import {PrismaCmd} from "./commands/PrismaCmd.js";
@@ -8,11 +8,12 @@ import {PrismaInitHook} from "./hooks/PrismaInitHook.js";
 export class CliPluginPrismaModule {
   protected packageJson = inject(ProjectPackageJson);
 
-  @OnAdd("@tsed/cli-plugin-prisma")
-  onAdd(ctx: InitCmdContext) {
-    this.addScripts();
-    this.addDependencies(ctx);
-    this.addDevDependencies(ctx);
+  $onAddPlugin(plugin: string, ctx: InitCmdContext) {
+    if (plugin == "@tsed/cli-plugin-prisma") {
+      this.addScripts();
+      this.addDependencies(ctx);
+      this.addDevDependencies(ctx);
+    }
   }
 
   addScripts() {

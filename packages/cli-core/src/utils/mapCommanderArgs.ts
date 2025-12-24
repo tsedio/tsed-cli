@@ -1,6 +1,6 @@
 import {isArray, isClass, Type} from "@tsed/core";
 
-import type {CommandArg} from "../interfaces/CommandParameters.js";
+import type {CommandArg} from "../interfaces/CommandOptions.js";
 
 function mapValue(value: any, {type, itemType}: {type?: Type<any>; itemType?: Type<any>}) {
   if (!value) {

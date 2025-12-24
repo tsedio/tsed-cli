@@ -141,9 +141,8 @@ export class UpdateCmd implements CommandProvider {
   }
 }
 
-command(UpdateCmd, {
+command({
+  token: UpdateCmd,
   name: "update",
-  description: "Update all Ts.ED packages used by your project",
-  args: {},
-  options: {}
+  description: "Update all Ts.ED packages used by your project"
 });

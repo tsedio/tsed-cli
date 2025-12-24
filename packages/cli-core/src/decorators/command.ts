@@ -1,8 +1,8 @@
 import {command} from "../fn/command.js";
-import type {CommandParameters} from "../interfaces/CommandParameters.js";
+import type {BaseCommandOptions} from "../interfaces/CommandOptions.js";
 
-export function Command(options: CommandParameters): ClassDecorator {
+export function Command<Input = any>(options: BaseCommandOptions<Input>): ClassDecorator {
   return (token) => {
-    command(token, options);
+    command({...options, token});
   };
 }

@@ -1,4 +1,10 @@
 import {Type} from "@tsed/core";
+import type {TokenProvider} from "@tsed/di";
+import type {JsonSchema} from "@tsed/schema";
+import type {Answers} from "inquirer";
+
+import type {CommandProvider, QuestionOptions} from "./CommandProvider.js";
+import type {Tasks} from "./Tasks.js";
 
 export interface CommandArg {
   /**
@@ -23,7 +29,7 @@ export interface CommandArg {
   required?: boolean;
 }
 
-export interface CommandOptions {
+export interface CommandOpts {
   /**
    * Description of the commander.option()
    */
@@ -51,7 +57,7 @@ export interface CommandOptions {
   customParser?: (value: any) => any;
 }
 
-export interface CommandParameters {
+export interface BaseCommandOptions<Input> {
   /**
    * name commands
    */
@@ -68,11 +74,14 @@ export interface CommandParameters {
   args?: {
     [key: string]: CommandArg;
   };
+
+  inputSchema?: JsonSchema<Input> | (() => JsonSchema<Input>);
+
   /**
    * CommandProvider options
    */
   options?: {
-    [key: string]: CommandOptions;
+    [key: string]: CommandOpts;
   };
 
   allowUnknownOption?: boolean;
@@ -81,5 +90,20 @@ export interface CommandParameters {
 
   disableReadUpPkg?: boolean;
 
+  bindLogger?: boolean;
+}
+
+interface FunctionalCommandOptions<Input> extends BaseCommandOptions<Input> {
+  prompt?<T extends Answers = Answers>(initialOptions: Partial<Input>): QuestionOptions<T> | Promise<QuestionOptions<T>>;
+  handler: (data: Input) => Tasks | Promise<Tasks> | any | Promise<any>;
+
   [key: string]: any;
 }
+
+export interface ClassCommandOptions<Input> extends BaseCommandOptions<Input> {
+  token: TokenProvider<CommandProvider>;
+
+  [key: string]: any;
+}
+
+export type CommandOptions<Input> = ClassCommandOptions<Input> | FunctionalCommandOptions<Input>;

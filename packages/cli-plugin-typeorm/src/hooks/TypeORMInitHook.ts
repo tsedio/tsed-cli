@@ -4,7 +4,7 @@ import {injectable} from "@tsed/di";
 import {pascalCase} from "change-case";
 
 function getDatabase(ctx: RenderDataContext): CliDatabases | undefined {
-  return ctx.features?.find((type) => type.includes("typeorm:"))?.split(":")[1] as CliDatabases;
+  return ctx.features?.find((type) => type.includes("orm:typeorm:"))?.split(":")[2] as CliDatabases;
 }
 
 export class TypeORMInitHook implements CliCommandHooks {
@@ -38,7 +38,7 @@ export class TypeORMInitHook implements CliCommandHooks {
       return tasks;
     }
 
-    const typeormDataSource = data.features?.find((value) => value.startsWith("typeorm:"));
+    const typeormDataSource = data.features?.find((value) => value.startsWith("orm:typeorm:"));
 
     return [
       ...tasks,

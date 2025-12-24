@@ -9,7 +9,7 @@ import {mcpStreamableServer} from "./McpStreamableServer.js";
 
 export const MCP_SERVER = injectable(McpServer)
   .factory(() => {
-    const mode = constant<"streamable-http" | "stdio">("mcp.mode");
+    const defaultMode = constant<"streamable-http" | "stdio">("mcp.mode");
     const name = constant<string>("name")!;
 
     const server = new McpServer({
@@ -42,16 +42,14 @@ export const MCP_SERVER = injectable(McpServer)
 
     return {
       server,
-      async connect() {
-        logger().info({event: "MCP_SERVER_CONNECT"});
-
+      async connect(mode: "streamable-http" | "stdio" | undefined = defaultMode) {
         if (mode === "streamable-http") {
+          logger().info({event: "MCP_SERVER_CONNECT", mode});
+
           await mcpStreamableServer(server);
         } else {
           await mcpStdioServer(server);
         }
-
-        logger().info({event: "MCP_SERVER_CONNECTED"});
       }
     };
   })

@@ -26,7 +26,8 @@ export class RunCmd implements CommandProvider {
   }
 }
 
-command(RunCmd, {
+command({
+  token: RunCmd,
   name: "run",
   description: "Run a project level command",
   args: {
