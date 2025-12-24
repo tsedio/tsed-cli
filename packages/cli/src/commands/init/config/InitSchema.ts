@@ -6,10 +6,12 @@ import {DEFAULT_TSED_TAGS} from "../../../constants/index.js";
 import {ArchitectureConvention, PlatformType, ProjectConvention} from "../../../interfaces/index.js";
 import type {RuntimeTypes} from "../../../interfaces/RuntimeTypes.js";
 import {RuntimesModule} from "../../../runtimes/RuntimesModule.js";
-import {FeaturesMap, FeatureType} from "../../init/config/FeaturesPrompt.js";
+import {FeatureType} from "../../init/config/FeaturesPrompt.js";
 
-export const InitSchema = () =>
-  s
+export const InitSchema = () => {
+  const availablePackageManagers = inject(PackageManagersModule).list();
+  const availableRuntimes = inject(RuntimesModule).list();
+  return s
     .object({
       root: s.string().description("Current working directory to initialize Ts.ED project").default("."),
       projectName: s
@@ -272,27 +274,56 @@ export const InitSchema = () =>
         ])
         .opt("--features <features...>"),
       runtime: s
-        .enums<RuntimeTypes[]>(inject(RuntimesModule).list() as any[])
+        .enums<RuntimeTypes[]>(availableRuntimes as any[])
+        .prompt("Choose the runtime:")
+        .choices(
+          [
+            {
+              label: "Node.js + SWC",
+              value: "node"
+            },
+            {
+              label: "Node.js + Babel",
+              value: "babel"
+            },
+            {
+              label: "Node.js + Webpack",
+              value: "webpack"
+            },
+            {
+              label: "Bun",
+              value: "bun"
+            }
+          ].filter((o) => availableRuntimes.includes(o.value))
+        )
         .default("node")
         .description("Runtime (node, bun, ...).")
         .opt("--runtime <runtime>"),
       packageManager: s
-        .enums<PackageManager[]>(inject(PackageManagersModule).list() as any[])
+        .enums<PackageManager[]>(availablePackageManagers as any[])
+        .prompt("Choose the package manager:")
+        .when((answers) => answers.runtime !== "bun")
         .default(PackageManager.NPM)
-        .choices([
-          {
-            label: FeaturesMap[PackageManager.NPM]!.name,
-            value: PackageManager.NPM
-          },
-          {
-            label: FeaturesMap[PackageManager.YARN_BERRY]!.name,
-            value: PackageManager.YARN_BERRY
-          },
-          {
-            label: FeaturesMap[PackageManager.PNPM]!.name,
-            value: PackageManager.PNPM
-          }
-        ])
+        .choices(
+          [
+            {
+              label: "NPM",
+              value: PackageManager.NPM
+            },
+            {
+              label: "Yarn Berry",
+              value: PackageManager.YARN_BERRY
+            },
+            {
+              label: "PNPM",
+              value: PackageManager.PNPM
+            },
+            {
+              label: "Bun.js",
+              value: PackageManager.BUN
+            }
+          ].filter((o) => availablePackageManagers.includes(o.value))
+        )
         .description("Package manager (npm, pnpm, yarn, bun).")
         .opt("-m, --package-manager <packageManager>"),
       GH_TOKEN: s
@@ -312,3 +343,4 @@ export const InitSchema = () =>
       skipPrompt: s.boolean().optional().default(false).description("Skip the prompt installation").opt("-s, --skip-prompt")
     })
     .unknown();
+};

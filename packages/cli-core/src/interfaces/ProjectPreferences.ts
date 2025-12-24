@@ -2,7 +2,8 @@ export enum PackageManager {
   YARN = "yarn",
   YARN_BERRY = "yarn_berry",
   NPM = "npm",
-  PNPM = "pnpm"
+  PNPM = "pnpm",
+  BUN = "bun"
 }
 
 declare global {

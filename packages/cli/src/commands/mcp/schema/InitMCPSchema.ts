@@ -7,5 +7,5 @@ export const InitMCPSchema = () => {
     .object({
       cwd: s.string().required().description("Current working directory to initialize Ts.ED project")
     })
-    .merge(InitSchema().omit("root", "skipPrompt", "file"));
+    .merge(InitSchema().omit("root", "skipPrompt", "file", "GH_TOKEN"));
 };

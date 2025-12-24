@@ -9,7 +9,8 @@ import {InitMCPSchema} from "../schema/InitMCPSchema.js";
 export const initProjectTool = defineTool({
   name: "init-project",
   title: "Initialize Ts.ED project",
-  description: "Initialize a new Ts.ED project in the current workspace (sans Listr/logs).",
+  description:
+    "Initialize a new Ts.ED project in the current workspace. Fetch `tsed://init/options`, ask the user which platform, features, and other options they want, then pass the selected values here along with `cwd`.",
   inputSchema: InitMCPSchema,
   outputSchema: s.object({
     files: s.array().items(s.string()).description("List of generated files."),
