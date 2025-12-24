@@ -4,7 +4,7 @@ import {inject} from "@tsed/di";
 import {s} from "@tsed/schema";
 
 const McpSchema = s.object({
-  http: s.boolean().default(false).description("Run MCP using HTTP server").customKey("opt", "--http")
+  http: s.boolean().default(false).description("Run MCP using HTTP server").opt("--http")
 });
 
 export const McpCommand = command({
