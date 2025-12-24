@@ -47,9 +47,9 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.25.1",
     "@npmcli/run-script": "9.0.0",
-    "@swc-node/register": "^1.10.9",
-    "@swc/core": "1.7.26",
-    "@swc/helpers": "^0.5.13",
+    "@swc-node/register": "^1.11.1",
+    "@swc/core": "^1.15.7",
+    "@swc/helpers": "^0.5.17",
     "@tsed/cli-core": "workspace:*",
     "@tsed/cli-mcp": "workspace:*",
     "@tsed/core": ">=8.21.0",

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import "@swc-node/register/esm-register";
+import "./ts-mode.js";
 
 import {register} from "node:module";
 import {join} from "node:path";
