@@ -11,7 +11,7 @@ import {FeaturesMap, FeatureType} from "../../init/config/FeaturesPrompt.js";
 export const InitSchema = () =>
   s
     .object({
-      root: s.string().required().description("Current working directory to initialize Ts.ED project"),
+      root: s.string().description("Current working directory to initialize Ts.ED project").default("."),
       projectName: s
         .string()
         .optional()

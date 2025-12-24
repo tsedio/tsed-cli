@@ -46,7 +46,7 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.19.1",
+    "@modelcontextprotocol/sdk": "^1.25.1",
     "@swc-node/register": "^1.10.9",
     "@swc/core": "1.7.26",
     "@swc/helpers": "^0.5.13",
@@ -69,7 +69,8 @@
     "rxjs": "^7.8.1",
     "semver": "^7.6.3",
     "ts-morph": "27.0.0",
-    "tslib": "^2.7.0"
+    "tslib": "^2.7.0",
+    "zod": "3.25.76"
   },
   "devDependencies": {
     "@tsed/typescript": "workspace:*",

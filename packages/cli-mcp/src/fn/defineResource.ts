@@ -1,4 +1,4 @@
-import type {ReadResourceCallback, ResourceMetadata} from "@modelcontextprotocol/sdk/server/mcp.js";
+import type {ReadResourceCallback, ResourceMetadata, ResourceTemplate} from "@modelcontextprotocol/sdk/server/mcp.js";
 import {injectable} from "@tsed/cli-core";
 import {DIContext, injector, logger, runInContext, type TokenProvider} from "@tsed/di";
 import {v4} from "uuid";
@@ -6,16 +6,15 @@ import {v4} from "uuid";
 type ResourceBaseProps = ResourceMetadata & {
   token?: TokenProvider;
   name: string;
+  handler: ReadResourceCallback;
 };
 
 type ResourceReadProps = ResourceBaseProps & {
   uri: string;
-  handler: ReadResourceCallback;
 };
 
 type ResourceTemplateProps = ResourceBaseProps & {
-  uri: string;
-  handler: ReadResourceCallback;
+  template: ResourceTemplate;
 };
 
 export type ResourceProps = ResourceReadProps | ResourceTemplateProps;
