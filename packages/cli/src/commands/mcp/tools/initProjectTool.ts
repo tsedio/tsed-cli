@@ -47,8 +47,6 @@ export const initProjectTool = defineTool({
       ...(input as any)
     } as any;
 
-    cliService.load();
-
     await cliService.exec("init", initialOptions, context());
 
     // Collect rendered files from templates service (same pattern as generateTool)

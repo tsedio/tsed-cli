@@ -1,4 +1,3 @@
-import {createInjector} from "@tsed/cli-core";
 import {DITest, injector} from "@tsed/di";
 import {s} from "@tsed/schema";
 import {beforeEach, describe, expect, it, vi} from "vitest";
@@ -69,7 +68,7 @@ describe("defineTool", () => {
     const extra = {} as any;
     const result = await instance.handler({param: "value"}, extra);
 
-    expect(result.content[0].text).toBe("Success");
+    expect(result.content[0]).toEqual({type: "text", text: "Success"});
   });
 
   it("should handle JsonSchema inputSchema", () => {

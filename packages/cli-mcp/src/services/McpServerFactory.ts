@@ -1,3 +1,4 @@
+import type {ResourceTemplate} from "@modelcontextprotocol/sdk/server/mcp.js";
 import {McpServer} from "@modelcontextprotocol/sdk/server/mcp.js";
 import {constant, inject, injectable, logger, type TokenProvider} from "@tsed/di";
 
@@ -21,13 +22,13 @@ export const MCP_SERVER = injectable(McpServer)
 
     tools.map((token) => {
       const {name, handler, ...opts} = inject<ToolProps<any, any>>(token);
-      server.registerTool(name, opts as any, handler);
+      server.registerTool(name, opts as any, handler as any);
     });
 
     const resources = constant<TokenProvider[]>("resources", []);
 
     resources.map((token) => {
-      const {name, uri, template, handler, ...opts} = inject<ResourceProps>(token);
+      const {name, handler, uri, template, ...opts} = inject<ResourceProps & {uri?: string; template: ResourceTemplate}>(token);
 
       server.registerResource(name, (uri || template) as any, opts, handler as any);
     });

@@ -212,7 +212,8 @@ export class CliService {
       };
 
       if (inputSchema) {
-        const {isValid, errors, value} = validate(data, isArrowFn(inputSchema) ? inputSchema() : inputSchema);
+        const schema = isArrowFn(inputSchema) ? inputSchema() : inputSchema;
+        const {isValid, errors, value} = validate(data, schema);
 
         if (isValid) {
           data = value;
