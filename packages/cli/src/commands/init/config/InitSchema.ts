@@ -151,55 +151,55 @@ export const InitSchema = () => {
                   },
                   {
                     label: "MariaDB",
-                    value: "db:typeorm:mariadb"
+                    value: FeatureType.TYPEORM_MARIADB
                   },
                   {
                     label: "Postgres",
-                    value: "db:typeorm:postgres"
+                    value: FeatureType.TYPEORM_POSTGRES
                   },
                   {
                     label: "CockRoachDB",
-                    value: "db:typeorm:cockroachdb"
+                    value: FeatureType.TYPEORM_COCKROACHDB
                   },
                   {
                     label: "SQLite",
-                    value: "db:typeorm:sqlite"
+                    value: FeatureType.TYPEORM_SQLITE
                   },
                   {
                     label: "Better SQLite3",
-                    value: "db:typeorm:better-sqlite3"
+                    value: FeatureType.TYPEORM_BETTER_SQLITE3
                   },
                   {
                     label: "Cordova",
-                    value: "db:typeorm:cordova"
+                    value: FeatureType.TYPEORM_CORDOVA
                   },
                   {
                     label: "NativeScript",
-                    value: "db:typeorm:nativescript"
+                    value: FeatureType.TYPEORM_NATIVESCRIPT
                   },
                   {
                     label: "Oracle",
-                    value: "db:typeorm:oracle"
+                    value: FeatureType.TYPEORM_ORACLE
                   },
                   {
                     label: "MsSQL",
-                    value: "db:typeorm:mssql"
+                    value: FeatureType.TYPEORM_MSSQL
                   },
                   {
                     label: "MongoDB",
-                    value: "db:typeorm:mongodb"
+                    value: FeatureType.TYPEORM_MONGODB
                   },
                   {
                     label: "SQL.js",
-                    value: "db:typeorm:sqljs"
+                    value: FeatureType.TYPEORM_SQLJS
                   },
                   {
                     label: "ReactNative",
-                    value: "db:typeorm:reactnative"
+                    value: FeatureType.TYPEORM_REACTNATIVE
                   },
                   {
                     label: "Expo",
-                    value: "db:typeorm:expo"
+                    value: FeatureType.TYPEORM_EXPO
                   }
                 ]
               }
@@ -226,48 +226,48 @@ export const InitSchema = () => {
           },
           {
             label: "Linter",
-            value: "linter",
+            value: FeatureType.LINTER,
             items: [
               {
                 label: "EsLint",
-                value: "linter:eslint"
+                value: FeatureType.ESLINT
               },
               {
                 label: "Prettier",
-                value: "linter:prettier"
+                value: FeatureType.PRETTIER
               },
               {
                 label: "Lint on commit",
-                value: "linter:lintstaged"
+                value: FeatureType.LINT_STAGED
               }
             ]
           },
           {
             label: "OpenID Connect provider",
-            value: "oidc",
+            value: FeatureType.OIDC,
             items: []
           },
           {
             label: "Passport.js",
-            value: "passportjs",
+            value: FeatureType.PASSPORTJS,
             items: []
           },
           {
             label: "Socket.io",
-            value: "socketio",
+            value: FeatureType.SOCKETIO,
             items: []
           },
           {
             label: "Testing",
-            value: "testing",
+            value: FeatureType.TESTING,
             items: [
               {
                 label: "Vitest",
-                value: "testing:vitest"
+                value: FeatureType.VITEST
               },
               {
                 label: "Jest (unstable with ESM)",
-                value: "testing:jest"
+                value: FeatureType.JEST
               }
             ]
           }

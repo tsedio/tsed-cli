@@ -395,15 +395,13 @@ export const FeaturesMap: Record<string, Feature> = {
   }
 };
 
-export const FrameworksPrompt = {
-  message: "Choose the target Framework:",
-  type: "list",
-  name: "platform",
-  choices: [PlatformType.EXPRESS, PlatformType.KOA, PlatformType.FASTIFY]
-};
-
 export const FeaturesPrompt = (availableRuntimes: string[], availablePackageManagers: string[]) => [
-  FrameworksPrompt,
+  {
+    message: "Choose the target Framework:",
+    type: "list",
+    name: "platform",
+    choices: [PlatformType.EXPRESS, PlatformType.KOA, PlatformType.FASTIFY]
+  },
   {
     message: "Choose the architecture for your project:",
     type: "list",
