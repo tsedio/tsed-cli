@@ -10,7 +10,7 @@ export function transformConfigFile(project: ProjectClient, data: RenderDataCont
 
   if (data.config) {
     if (data.configDotenv) {
-      project.addConfigSource("DotenvConfigSource", {
+      project.addConfigSource("DotEnvsConfigSource", {
         moduleSpecifier: "@tsed/config/dotenv"
       });
     } else if (data.configEnvs) {

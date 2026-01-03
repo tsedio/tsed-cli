@@ -350,7 +350,7 @@ export class Server {
 `;
 
 exports[`Init cmd > Express.js > should generate a project with the many config source > config file content 1`] = `
-"import { DotenvConfigSource } from "@tsed/config/dotenv";
+"import { DotEnvsConfigSource } from "@tsed/config/dotenv";
 import { JsonConfigSource } from "@tsed/config/json";
 import { YamlConfigSource } from "@tsed/config/yaml";
 import { IoredisConfigSource } from "@tsedio/config-ioredis";
@@ -372,7 +372,7 @@ export const config: Partial<TsED.Configuration> = {
   },
   logger: loggerConfig,
   extends: [
-    DotenvConfigSource,
+    DotEnvsConfigSource,
     withOptions(JsonConfigSource, {
       path: "./config.json"
     }),

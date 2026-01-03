@@ -38,7 +38,7 @@ describe("initProjectTool", () => {
     templates = {
       getRenderedFiles: vi.fn().mockReturnValue([]),
       $onInit: vi.fn()
-    };
+    } as any;
 
     injector()
       .addProvider(CliService, {
