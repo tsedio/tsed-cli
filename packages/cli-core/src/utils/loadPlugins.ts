@@ -1,4 +1,4 @@
-import {GlobalProviders, injector, logger} from "@tsed/di";
+import {injector, lazyInject, logger} from "@tsed/di";
 import chalk from "chalk";
 import figures from "figures";
 
@@ -19,29 +19,32 @@ export async function loadPlugins() {
     .filter((mod) => mod.startsWith(`@${name}/cli-plugin`) || mod.includes(`${name}-cli-plugin`))
     .map(async (mod) => {
       try {
-        const {default: plugin} = await fs.importModule(mod, rootDir);
-
-        if (!$inj.has(plugin)) {
-          const provider = GlobalProviders.get(plugin)?.clone();
-
-          if (provider?.imports.length) {
-            await all(
-              provider.imports.map(async (token: any) => {
-                $inj.add(token, GlobalProviders.get(token)?.clone());
-
-                if ($inj.settings.get("loaded")) {
-                  await $inj.invoke(token);
-                }
-              })
-            );
-          }
-
-          $inj.add(plugin, provider);
-
-          if ($inj.settings.get("loaded")) {
-            await $inj.invoke(plugin);
-          }
+        if ($inj.settings.get("loaded")) {
+          logger().info("Try to load ", mod);
+          await lazyInject(() => fs.importModule(mod, rootDir));
         }
+
+        // if (!$inj.has(plugin)) {
+        //   const provider = GlobalProviders.get(plugin)?.clone();
+        //
+        //   if (provider?.imports.length) {
+        //     await all(
+        //       provider.imports.map(async (token: any) => {
+        //         $inj.add(token, GlobalProviders.get(token)?.clone());
+        //
+        //         if ($inj.settings.get("loaded")) {
+        //           await $inj.invoke(token);
+        //         }
+        //       })
+        //     );
+        //   }
+        //
+        //   $inj.add(plugin, provider);
+        //
+        //   if ($inj.settings.get("loaded")) {
+        //     await $inj.invoke(plugin);
+        //   }
+        // }
         logger().info(chalk.green(figures.tick), mod, "module loaded");
       } catch (er) {
         logger().warn(chalk.red(figures.cross), "Fail to load plugin", mod);

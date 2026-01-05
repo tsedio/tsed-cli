@@ -27,6 +27,7 @@ export default defineTemplate({
   render(_, data: RenderDataContext) {
     const imports = [
       'import typescriptEslint from "@typescript-eslint/eslint-plugin";',
+      'import typescriptParser from "@typescript-eslint/parser";',
       data.prettier ? 'import pluginPrettierRecommended from "eslint-plugin-prettier/recommended";' : "",
       'import pluginSimpleImportSort from "eslint-plugin-simple-import-sort";',
       data.vitest ? 'import vitest from "eslint-plugin-vitest";' : "",
@@ -47,7 +48,8 @@ export default [
       parser: typescriptParser,
       parserOptions: {
         ecmaVersion: "latest",
-        sourceType: "module"
+        sourceType: "module",
+        tsconfigRootDir: join(import.meta.dirname, "tsconfig.eslint.json")
       },
       globals: {
         ...globals.node

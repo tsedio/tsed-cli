@@ -1,6 +1,7 @@
 import {type CliCommandHooks, type InitCmdContext, render, type RenderDataContext} from "@tsed/cli";
 import {PackageManagersModule, ProjectPackageJson, type Task} from "@tsed/cli-core";
-import {inject, injectable} from "@tsed/di";
+import {inject, injectable, logger} from "@tsed/di";
+import chalk from "chalk";
 
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
@@ -33,6 +34,8 @@ export class EslintInitHook implements CliCommandHooks {
   }
 
   $alterPackageJson(packageJson: ProjectPackageJson, data: RenderDataContext): ProjectPackageJson | Promise<ProjectPackageJson> {
+    logger().info("Alter package.json dependencies by eslint plugin");
+
     packageJson.addScripts({
       "test:lint": "eslint",
       "test:lint:fix": "eslint --fix"

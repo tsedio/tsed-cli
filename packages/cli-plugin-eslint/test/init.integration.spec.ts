@@ -79,6 +79,7 @@ describe("Eslint: Init cmd", () => {
 
     expect(content).toMatchInlineSnapshot(`
       "import typescriptEslint from "@typescript-eslint/eslint-plugin";
+      import typescriptParser from "@typescript-eslint/parser";
       import pluginPrettierRecommended from "eslint-plugin-prettier/recommended";
       import pluginSimpleImportSort from "eslint-plugin-simple-import-sort";
       import globals from "globals";
@@ -95,7 +96,8 @@ describe("Eslint: Init cmd", () => {
             parser: typescriptParser,
             parserOptions: {
               ecmaVersion: "latest",
-              sourceType: "module"
+              sourceType: "module",
+              tsconfigRootDir: join(import.meta.dirname, "tsconfig.eslint.json")
             },
             globals: {
               ...globals.node
@@ -191,6 +193,7 @@ describe("Eslint: Init cmd", () => {
 
     expect(content).toMatchInlineSnapshot(`
       "import typescriptEslint from "@typescript-eslint/eslint-plugin";
+      import typescriptParser from "@typescript-eslint/parser";
       import pluginPrettierRecommended from "eslint-plugin-prettier/recommended";
       import pluginSimpleImportSort from "eslint-plugin-simple-import-sort";
       import vitest from "eslint-plugin-vitest";
@@ -208,7 +211,8 @@ describe("Eslint: Init cmd", () => {
             parser: typescriptParser,
             parserOptions: {
               ecmaVersion: "latest",
-              sourceType: "module"
+              sourceType: "module",
+              tsconfigRootDir: join(import.meta.dirname, "tsconfig.eslint.json")
             },
             globals: {
               ...globals.node
