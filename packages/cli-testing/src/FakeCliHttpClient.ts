@@ -15,6 +15,10 @@ export class FakeCliHttpClient extends CliHttpClient {
     }
 
     if (!FakeCliHttpClient.entries.has(key)) {
+      if (key.includes("https://tsed.dev/ai/AGENTS.md")) {
+        return Promise.resolve("AGENTS.md content");
+      }
+
       process.stdout.write("Entries missing for FakeCliHttpClient: " + key + "\n");
     }
 

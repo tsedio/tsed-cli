@@ -1,5 +1,6 @@
 // Import all templates to register them with the DI container
 import "./asyncFactory.template.js";
+import "./agents.template.js";
 import "./command.template.js";
 import "./controller.template.js";
 import "./decorator.template.js";

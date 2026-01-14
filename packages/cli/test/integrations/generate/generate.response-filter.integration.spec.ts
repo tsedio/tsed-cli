@@ -28,6 +28,7 @@ describe("Generate Response Filter", () => {
         "project-name/.dockerignore",
         "project-name/.gitignore",
         "project-name/.swcrc",
+        "project-name/AGENTS.md",
         "project-name/Dockerfile",
         "project-name/README.md",
         "project-name/docker-compose.yml",

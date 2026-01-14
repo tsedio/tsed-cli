@@ -348,6 +348,7 @@ export class InitCmd implements CommandProvider {
       ctx.commands && "index.command",
       "barrels",
       "readme",
+      "agents",
       `pm2.${pm2}`,
       ctx.swagger && "/views/swagger.ejs",
       ...runtime.files()
