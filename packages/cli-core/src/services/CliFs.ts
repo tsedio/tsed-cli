@@ -66,9 +66,9 @@ export class CliFs extends RealFileSystemHost {
   }
 
   findUpFile(root: string, file: string) {
-    return [join(root, file), join(root, "..", file), join(root, "..", "..", file), join(root, "..", "..", "..", file)].find((path) =>
-      this.fileExistsSync(path)
-    );
+    return [join(root, file), join(root, "..", file), join(root, "..", "..", file), join(root, "..", "..", "..", file)].find((path) => {
+      return this.fileExistsSync(path) || this.raw.existsSync(path);
+    });
   }
 
   async importModule(mod: string, root: string = process.cwd()) {

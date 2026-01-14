@@ -22,7 +22,6 @@ export class CliPlugins {
   name = constant<string>("name", "");
   readonly loadPlugins = loadPlugins;
   private npmRegistryClient = inject(NpmRegistryClient);
-  private cliHooks = inject(CliHooks);
   private packageJson = inject(ProjectPackageJson);
   private packageManagers = inject(PackageManagersModule);
 

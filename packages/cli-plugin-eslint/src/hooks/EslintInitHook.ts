@@ -1,7 +1,6 @@
 import {type CliCommandHooks, type InitCmdContext, render, type RenderDataContext} from "@tsed/cli";
 import {PackageManagersModule, ProjectPackageJson, type Task} from "@tsed/cli-core";
 import {inject, injectable, logger} from "@tsed/di";
-import chalk from "chalk";
 
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
 

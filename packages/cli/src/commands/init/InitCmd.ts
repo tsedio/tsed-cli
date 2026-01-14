@@ -26,7 +26,7 @@ import {TEMPLATE_DIR} from "../../constants/index.js";
 import {exec} from "../../fn/exec.js";
 import {render} from "../../fn/render.js";
 import {taskOutput} from "../../fn/taskOutput.js";
-import {type InitCmdContext} from "../../interfaces/index.js";
+import type {InitCmdContext} from "../../interfaces/index.js";
 import type {InitOptions} from "../../interfaces/InitCmdOptions.js";
 import {PlatformsModule} from "../../platforms/PlatformsModule.js";
 import {RuntimesModule} from "../../runtimes/RuntimesModule.js";
