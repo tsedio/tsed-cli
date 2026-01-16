@@ -26,6 +26,7 @@ export default defineTemplate({
 
   render(_, data: RenderDataContext) {
     const imports = [
+      'import {join} from "node:path";',
       'import typescriptEslint from "@typescript-eslint/eslint-plugin";',
       'import typescriptParser from "@typescript-eslint/parser";',
       data.prettier ? 'import pluginPrettierRecommended from "eslint-plugin-prettier/recommended";' : "",
