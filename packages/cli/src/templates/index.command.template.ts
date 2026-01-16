@@ -13,7 +13,7 @@ export default defineTemplate({
     return `#!/usr/bin/env node
 import {CliCore} from "@tsed/cli-core";
 import {config} from "@/config/config.js";
-import * commands from "@/bin/commands/index.js";
+import * as commands from "@/bin/commands/index.js";
 
 CliCore.bootstrap({
   ...config,

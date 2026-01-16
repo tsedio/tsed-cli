@@ -88,6 +88,7 @@ exports[`Init OIDC Provider project > should generate a project with oidc and sw
   "project-name/views/forms/consent-form.ejs",
   "project-name/views/forms/login-form.ejs",
   "project-name/views/forms/select-account-form.ejs",
+  "project-name/views/home.ejs",
   "project-name/views/login.ejs",
   "project-name/views/partials",
   "project-name/views/partials/footer.ejs",
@@ -95,7 +96,6 @@ exports[`Init OIDC Provider project > should generate a project with oidc and sw
   "project-name/views/partials/login-help.ejs",
   "project-name/views/repost.ejs",
   "project-name/views/select_account.ejs",
-  "project-name/views/swagger.ejs",
 ]
 `;
 

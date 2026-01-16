@@ -49,7 +49,6 @@ describe("Init TypeGraphQL project", () => {
         "project-name/src/config/config.ts",
         "project-name/src/config/logger/index.ts",
         "project-name/src/config/utils/index.ts",
-        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/graphql/models/RecipeModel.ts",
         "project-name/src/graphql/resolvers/RecipeResolver.ts",
@@ -59,6 +58,8 @@ describe("Init TypeGraphQL project", () => {
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
         "project-name/tsconfig.spec.json",
+        "project-name/views",
+        "project-name/views/home.ejs",
       ]
     `);
 
@@ -74,6 +75,7 @@ describe("Init TypeGraphQL project", () => {
       import { config } from "@/config/config.js";
       import "@tsed/platform-express";
       import "@tsed/typegraphql";
+      import * as pages from "./controllers/pages/index.js";
       import * as rest from "./controllers/rest/index.js";
       import "./graphql/datasources/index.js";
       import "./graphql/resolvers/index.js";
@@ -84,7 +86,8 @@ describe("Init TypeGraphQL project", () => {
         httpPort: process.env.PORT || 8083,
         httpsPort: false, // CHANGE
         mount: {
-          "/rest": [...Object.values(rest), ...Object.values(rest)]
+          "/rest": [...Object.values(rest), ...Object.values(rest)],
+          "/": [...Object.values(pages), ...Object.values(pages)]
         },
         views: {
           root: join(process.cwd(), "../views"),

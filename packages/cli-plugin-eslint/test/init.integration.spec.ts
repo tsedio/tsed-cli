@@ -58,13 +58,14 @@ describe("Eslint: Init cmd", () => {
         "project-name/src/config/config.ts",
         "project-name/src/config/logger/index.ts",
         "project-name/src/config/utils/index.ts",
-        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
         "project-name/tsconfig.spec.json",
+        "project-name/views",
+        "project-name/views/home.ejs",
       ]
     `);
 
@@ -79,7 +80,8 @@ describe("Eslint: Init cmd", () => {
     const content = FakeCliFs.files.get("project-name/eslint.config.mjs")!;
 
     expect(content).toMatchInlineSnapshot(`
-      "import typescriptEslint from "@typescript-eslint/eslint-plugin";
+      "import {join} from "node:path";
+      import typescriptEslint from "@typescript-eslint/eslint-plugin";
       import typescriptParser from "@typescript-eslint/parser";
       import pluginPrettierRecommended from "eslint-plugin-prettier/recommended";
       import pluginSimpleImportSort from "eslint-plugin-simple-import-sort";
@@ -173,13 +175,14 @@ describe("Eslint: Init cmd", () => {
         "project-name/src/config/config.ts",
         "project-name/src/config/logger/index.ts",
         "project-name/src/config/utils/index.ts",
-        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
         "project-name/tsconfig.spec.json",
+        "project-name/views",
+        "project-name/views/home.ejs",
       ]
     `);
 
@@ -194,7 +197,8 @@ describe("Eslint: Init cmd", () => {
     const content = FakeCliFs.files.get("project-name/eslint.config.mjs")!;
 
     expect(content).toMatchInlineSnapshot(`
-      "import typescriptEslint from "@typescript-eslint/eslint-plugin";
+      "import {join} from "node:path";
+      import typescriptEslint from "@typescript-eslint/eslint-plugin";
       import typescriptParser from "@typescript-eslint/parser";
       import pluginPrettierRecommended from "eslint-plugin-prettier/recommended";
       import pluginSimpleImportSort from "eslint-plugin-simple-import-sort";
