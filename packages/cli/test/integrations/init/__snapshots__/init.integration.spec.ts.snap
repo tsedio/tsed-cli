@@ -65,6 +65,7 @@ import { join } from "node:path";
 
 import { config } from "@/config/config.js";
 import "@tsed/platform-express";
+import * as pages from "./controllers/pages/index.js";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -73,7 +74,8 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest)]
+    "/rest": [...Object.values(rest)],
+    "/": [...Object.values(pages)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -111,6 +113,7 @@ import { join } from "node:path";
 
 import { config } from "@/config/config.js";
 import "@tsed/platform-express";
+import * as pages from "./controllers/pages/index.js";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -119,7 +122,8 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest)]
+    "/rest": [...Object.values(rest)],
+    "/": [...Object.values(pages)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -212,6 +216,7 @@ import { join } from "node:path";
 
 import { config } from "@/config/config.js";
 import "@tsed/platform-express";
+import * as pages from "./controllers/pages/index.js";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -220,7 +225,8 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest)]
+    "/rest": [...Object.values(rest)],
+    "/": [...Object.values(pages)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -258,6 +264,7 @@ import { join } from "node:path";
 
 import { config } from "@/config/config.js";
 import "@tsed/platform-express";
+import * as pages from "./controllers/pages/index.js";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -266,7 +273,8 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest)]
+    "/rest": [...Object.values(rest)],
+    "/": [...Object.values(pages)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -439,6 +447,7 @@ import { join } from "node:path";
 
 import { config } from "@/config/config.js";
 import "@tsed/platform-express";
+import * as pages from "./controllers/pages/index.js";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -447,7 +456,8 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest)]
+    "/rest": [...Object.values(rest)],
+    "/": [...Object.values(pages)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -506,6 +516,7 @@ import { join } from "node:path";
 
 import { config } from "@/config/config.js";
 import "@tsed/platform-express";
+import * as pages from "./controllers/pages/index.js";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -514,7 +525,8 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest)]
+    "/rest": [...Object.values(rest)],
+    "/": [...Object.values(pages)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -552,6 +564,7 @@ import { join } from "node:path";
 
 import { config } from "@/config/config.js";
 import "@tsed/platform-fastify";
+import * as pages from "./controllers/pages/index.js";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -560,7 +573,8 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest)]
+    "/rest": [...Object.values(rest)],
+    "/": [...Object.values(pages)]
   },
   views: {
     root: join(process.cwd(), "../views"),
@@ -597,6 +611,7 @@ import { join } from "node:path";
 
 import { config } from "@/config/config.js";
 import "@tsed/platform-koa";
+import * as pages from "./controllers/pages/index.js";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -605,7 +620,8 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [...Object.values(rest)]
+    "/rest": [...Object.values(rest)],
+    "/": [...Object.values(pages)]
   },
   views: {
     root: join(process.cwd(), "../views"),

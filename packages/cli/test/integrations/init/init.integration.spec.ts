@@ -61,13 +61,14 @@ describe("Init cmd", () => {
           "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
           "project-name/src/config/utils/index.ts",
-          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
           "project-name/tsconfig.spec.json",
+          "project-name/views",
+          "project-name/views/home.ejs",
         ]
       `);
 
@@ -81,7 +82,8 @@ describe("Init cmd", () => {
       expect(FakeCliFs.files.get("project-name/.barrels.json")).toMatchInlineSnapshot(`
         "{
           "directory": [
-            "./src/controllers/rest"
+            "./src/controllers/rest",
+            "./src/controllers/pages"
           ],
           "exclude": [
             "**/__mock__",
@@ -254,13 +256,14 @@ describe("Init cmd", () => {
           "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
           "project-name/src/config/utils/index.ts",
-          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
           "project-name/tsconfig.spec.json",
+          "project-name/views",
+          "project-name/views/home.ejs",
         ]
       `);
 
@@ -274,7 +277,8 @@ describe("Init cmd", () => {
       expect(FakeCliFs.files.get("project-name/.barrels.json")).toMatchInlineSnapshot(`
         "{
           "directory": [
-            "./src/controllers/rest"
+            "./src/controllers/rest",
+            "./src/controllers/pages"
           ],
           "exclude": [
             "**/__mock__",
@@ -420,7 +424,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.node.json",
           "project-name/tsconfig.spec.json",
           "project-name/views",
-          "project-name/views/swagger.ejs",
+          "project-name/views/home.ejs",
         ]
       `);
 
@@ -523,13 +527,14 @@ describe("Init cmd", () => {
           "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
           "project-name/src/config/utils/index.ts",
-          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
           "project-name/tsconfig.spec.json",
+          "project-name/views",
+          "project-name/views/home.ejs",
         ]
       `);
 
@@ -616,13 +621,14 @@ describe("Init cmd", () => {
           "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
           "project-name/src/config/utils/index.ts",
-          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
           "project-name/tsconfig.spec.json",
+          "project-name/views",
+          "project-name/views/home.ejs",
         ]
       `);
 
@@ -709,13 +715,14 @@ describe("Init cmd", () => {
           "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
           "project-name/src/config/utils/index.ts",
-          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
           "project-name/tsconfig.spec.json",
+          "project-name/views",
+          "project-name/views/home.ejs",
           "project-name/webpack.config.js",
         ]
       `);
@@ -804,13 +811,14 @@ describe("Init cmd", () => {
           "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
           "project-name/src/config/utils/index.ts",
-          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
           "project-name/tsconfig.spec.json",
+          "project-name/views",
+          "project-name/views/home.ejs",
         ]
       `);
 
@@ -910,7 +918,7 @@ describe("Init cmd", () => {
           "project-name/tsconfig.node.json",
           "project-name/tsconfig.spec.json",
           "project-name/views",
-          "project-name/views/swagger.ejs",
+          "project-name/views/home.ejs",
         ]
       `);
 
@@ -977,7 +985,7 @@ describe("Init cmd", () => {
             "project-name/tsconfig.node.json",
             "project-name/tsconfig.spec.json",
             "project-name/views",
-            "project-name/views/swagger.ejs",
+            "project-name/views/home.ejs",
           ]
         `);
 
@@ -1002,7 +1010,7 @@ describe("Init cmd", () => {
             ".dockerignore",
             ".gitignore",
             ".swcrc",
-            "/views/swagger.ejs",
+            "/views/home.ejs",
             "AGENTS.md",
             "Dockerfile",
             "README.md",
@@ -1061,13 +1069,14 @@ describe("Init cmd", () => {
           "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
           "project-name/src/config/utils/index.ts",
-          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
           "project-name/tsconfig.spec.json",
+          "project-name/views",
+          "project-name/views/home.ejs",
         ]
       `);
 
@@ -1157,13 +1166,14 @@ describe("Init cmd", () => {
           "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
           "project-name/src/config/utils/index.ts",
-          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
           "project-name/tsconfig.spec.json",
+          "project-name/views",
+          "project-name/views/home.ejs",
         ]
       `);
 
@@ -1268,13 +1278,14 @@ describe("Init cmd", () => {
           "project-name/src/config/config.ts",
           "project-name/src/config/logger/index.ts",
           "project-name/src/config/utils/index.ts",
-          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/tsconfig.base.json",
           "project-name/tsconfig.json",
           "project-name/tsconfig.node.json",
           "project-name/tsconfig.spec.json",
+          "project-name/views",
+          "project-name/views/home.ejs",
         ]
       `);
     });

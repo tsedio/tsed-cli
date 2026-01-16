@@ -344,13 +344,13 @@ export class InitCmd implements CommandProvider {
       "index",
       "index.config.util",
       "index.logger",
-      "index.controller",
+      ctx.swagger && "index.controller",
       ctx.commands && "index.command",
       "barrels",
       "readme",
       "agents",
       `pm2.${pm2}`,
-      ctx.swagger && "/views/swagger.ejs",
+      "/views/home.ejs",
       ...runtime.files()
     ].map((id) => {
       return id && render(id, ctx);

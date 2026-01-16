@@ -40,7 +40,6 @@ describe("Generate generic decorator", () => {
         "project-name/src/config/config.ts",
         "project-name/src/config/logger/index.ts",
         "project-name/src/config/utils/index.ts",
-        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/decorators/Test.ts",
         "project-name/src/index.ts",
@@ -48,6 +47,8 @@ describe("Generate generic decorator", () => {
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
         "project-name/tsconfig.spec.json",
+        "project-name/views",
+        "project-name/views/home.ejs",
       ]
     `);
 

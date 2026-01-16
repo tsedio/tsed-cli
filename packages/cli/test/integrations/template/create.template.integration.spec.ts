@@ -39,13 +39,14 @@ describe("Generate AsyncFactory", () => {
         "project-name/src/config/config.ts",
         "project-name/src/config/logger/index.ts",
         "project-name/src/config/utils/index.ts",
-        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
         "project-name/tsconfig.spec.json",
+        "project-name/views",
+        "project-name/views/home.ejs",
       ]
     `);
 
@@ -95,13 +96,14 @@ describe("Generate AsyncFactory", () => {
         "project-name/src/config/config.ts",
         "project-name/src/config/logger/index.ts",
         "project-name/src/config/utils/index.ts",
-        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
         "project-name/tsconfig.spec.json",
+        "project-name/views",
+        "project-name/views/home.ejs",
       ]
     `);
 
@@ -190,13 +192,14 @@ describe("Generate AsyncFactory", () => {
         "project-name/src/config/config.ts",
         "project-name/src/config/logger/index.ts",
         "project-name/src/config/utils/index.ts",
-        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
         "project-name/tsconfig.spec.json",
+        "project-name/views",
+        "project-name/views/home.ejs",
       ]
     `);
 

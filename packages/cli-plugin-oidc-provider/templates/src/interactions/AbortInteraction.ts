@@ -1,7 +1,6 @@
 import {Inject} from "@tsed/platform-http";
 import {Interaction, OidcCtx, OidcProvider, InteractionMethods} from "@tsed/oidc-provider";
-import {View} from "@tsed/platform-views";
-import {Name} from "@tsed/schema";
+import {View, Name} from "@tsed/schema";
 
 @Interaction({
   name: "abort"
