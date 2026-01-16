@@ -13,11 +13,7 @@ export default defineTemplate({
 
   render(_, context) {
     const barrels = $alter("$alterBarrels", {
-      directory: [
-        "./src/controllers/rest",
-        context.commands && "./src/bin/commands",
-        (context.swagger || context.oidc) && "./src/controllers/pages"
-      ].filter(Boolean),
+      directory: ["./src/controllers/rest", context.commands && "./src/bin/commands", "./src/controllers/pages"].filter(Boolean),
       exclude: ["**/__mock__", "**/__mocks__", "**/*.spec.ts"],
       delete: true
     });

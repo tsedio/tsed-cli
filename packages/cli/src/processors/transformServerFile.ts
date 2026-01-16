@@ -70,13 +70,11 @@ export function transformServerFile(project: ProjectClient, data: RenderDataCont
 
     project.addMountPath(data.route || "/rest", "...Object.values(rest)");
 
-    if (data.swagger || data.oidc) {
-      sourceFile.addImportDeclaration({
-        moduleSpecifier: isFeature ? "./pages/index.js" : "./controllers/pages/index.js",
-        namespaceImport: "pages"
-      });
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: isFeature ? "./pages/index.js" : "./controllers/pages/index.js",
+      namespaceImport: "pages"
+    });
 
-      project.addMountPath("/", "...Object.values(pages)");
-    }
+    project.addMountPath("/", "...Object.values(pages)");
   }
 }

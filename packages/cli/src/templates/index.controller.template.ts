@@ -8,33 +8,41 @@ export default defineTemplate({
   fileName: "index.controller",
   hidden: true,
 
-  render() {
+  render(_, ctx) {
     return `import {Constant, Controller} from "@tsed/di";
 import {HeaderParams} from "@tsed/platform-params";
-import {View} from "@tsed/platform-views";
-import {SwaggerSettings} from "@tsed/swagger";
+import {View} from "@tsed/schema";
+${ctx.swagger ? 'import type {SwaggerSettings} from "@tsed/swagger";' : ""}
 import {Hidden, Get, Returns} from "@tsed/schema";
 
 @Hidden()
 @Controller("/")
 export class IndexController {
-  @Constant("swagger", [])
-  private swagger: SwaggerSettings[];
+  ${
+    ctx.swagger
+      ? `@Constant("swagger", [])
+  private swagger: SwaggerSettings[];`
+      : ""
+  }
 
   @Get("/")
-  @View("swagger.ejs")
+  @View("home.ejs")
   @(Returns(200, String).ContentType("text/html"))
   get(@HeaderParams("x-forwarded-proto") protocol: string, @HeaderParams("host") host: string) {
     const hostUrl = \`\${protocol || "http"}://\${host}\`;
 
     return {
       BASE_URL: hostUrl,
-      docs: this.swagger.map((conf) => {
+      docs: ${
+        ctx.swagger
+          ? `this.swagger.map((conf) => {
         return {
           url: hostUrl + conf.path,
           ...conf
         };
-      })
+      })`
+          : "[]"
+      }
     };
   }
 }`;
