@@ -2,6 +2,7 @@ import "@tsed/logger-std";
 
 import {join, resolve} from "node:path";
 
+import {PromptCancelledError} from "@tsed/cli-prompts";
 import {constant, inject, injector} from "@tsed/di";
 import {$asyncEmit} from "@tsed/hooks";
 import chalk from "chalk";
@@ -118,6 +119,11 @@ export class CliCore {
 
       await cliService.parseArgs(constant("argv")!);
     } catch (er) {
+      if (er instanceof PromptCancelledError) {
+        console.log(chalk.yellow("Prompt cancelled."));
+        return this;
+      }
+
       throw new CliError({origin: er, cli: this});
     }
 

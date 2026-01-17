@@ -1,9 +1,9 @@
+import type {PromptQuestion} from "@tsed/cli-prompts";
 import {Type} from "@tsed/core";
 import type {TokenProvider} from "@tsed/di";
 import type {JsonSchema} from "@tsed/schema";
-import type {Answers} from "inquirer";
 
-import type {CommandProvider, QuestionOptions} from "./CommandProvider.js";
+import type {CommandProvider} from "./CommandProvider.js";
 import type {Tasks} from "./Tasks.js";
 
 export interface CommandArg {
@@ -94,8 +94,9 @@ export interface BaseCommandOptions<Input> {
 }
 
 interface FunctionalCommandOptions<Input> extends BaseCommandOptions<Input> {
-  prompt?<T extends Answers = Answers>(initialOptions: Partial<Input>): QuestionOptions<T> | Promise<QuestionOptions<T>>;
   handler: (data: Input) => Tasks | Promise<Tasks> | any | Promise<any>;
+
+  prompt?(initialOptions: Partial<Input>): PromptQuestion[] | Promise<PromptQuestion[]>;
 
   [key: string]: any;
 }

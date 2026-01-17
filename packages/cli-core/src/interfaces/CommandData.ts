@@ -9,4 +9,5 @@ export interface CommandData extends TsED.InitialCommandData {
   verbose?: boolean;
   bindLogger?: boolean;
   rawArgs?: string[];
+  [key: string]: any;
 }

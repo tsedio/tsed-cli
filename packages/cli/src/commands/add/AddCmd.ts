@@ -1,5 +1,4 @@
 import {
-  type CliDefaultOptions,
   CliPlugins,
   command,
   type CommandProvider,
@@ -7,7 +6,7 @@ import {
   inject,
   PackageManagersModule,
   ProjectPackageJson,
-  type QuestionOptions,
+  type PromptQuestion,
   type Task
 } from "@tsed/cli-core";
 
@@ -20,7 +19,7 @@ export class AddCmd implements CommandProvider {
   protected packageJson = inject(ProjectPackageJson);
   protected packageManagers = inject(PackageManagersModule);
 
-  $prompt(initialOptions: any): QuestionOptions {
+  $prompt(initialOptions: any): PromptQuestion[] {
     return [
       {
         type: "autocomplete",

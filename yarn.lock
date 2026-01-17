@@ -113,6 +113,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@clack/core@npm:^0.3.3":
+  version: 0.3.5
+  resolution: "@clack/core@npm:0.3.5"
+  dependencies:
+    picocolors: "npm:^1.0.0"
+    sisteransi: "npm:^1.0.5"
+  checksum: 10/329840301b91df2957d6d3a5832946d6a3c8683aeccf98b77f559c518a9e7b75f5e59392228a51fc97ae950cf21438f1b77fb5529affd93df0106f52d9cc0881
+  languageName: node
+  linkType: hard
+
+"@clack/prompts@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "@clack/prompts@npm:0.7.0"
+  dependencies:
+    "@clack/core": "npm:^0.3.3"
+    is-unicode-supported: "npm:*"
+    picocolors: "npm:^1.0.0"
+    sisteransi: "npm:^1.0.5"
+  checksum: 10/2ca1f84b1d36c5d08794994f6f96b86287e0b96f8b6a7483eceb98bbd34a7f9f0012775df8bf29a6d86737b48f52ac18809bdcf14c0453d1a43c7cf4da671a26
+  languageName: node
+  linkType: hard
+
 "@colors/colors@npm:1.5.0":
   version: 1.5.0
   resolution: "@colors/colors@npm:1.5.0"
@@ -671,13 +693,6 @@ __metadata:
   version: 3.0.2
   resolution: "@hutson/parse-repository-url@npm:3.0.2"
   checksum: 10/dae0656f2e77315a3027ab9ca438ed344bf78a5fda7b145f65a1fface20dfb17e94e1d31e146c8b76de4657c21020aabc72dc53b53941c9f5fe2c27416559283
-  languageName: node
-  linkType: hard
-
-"@inquirer/figures@npm:^1.0.3":
-  version: 1.0.6
-  resolution: "@inquirer/figures@npm:1.0.6"
-  checksum: 10/1b9023d331c41f09d0848b8920885d535cdaf52edd782009e003b2f3b2df6a6a6a26fb8ecd05eb3c3df3df9d080e042ca525438a1513cdcc4410f3eefce3e4e0
   languageName: node
   linkType: hard
 
@@ -2784,6 +2799,7 @@ __metadata:
   resolution: "@tsed/cli-core@workspace:packages/cli-core"
   dependencies:
     "@ts-morph/common": "npm:0.28.0"
+    "@tsed/cli-prompts": "workspace:*"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/logger-pattern-layout": "npm:>=8.0.3"
     "@tsed/logger-std": "npm:>=8.0.3"
@@ -2793,7 +2809,6 @@ __metadata:
     "@types/figures": "npm:3.0.1"
     "@types/fs-extra": "npm:^11.0.4"
     "@types/globby": "npm:9.1.0"
-    "@types/inquirer": "npm:^9.0.7"
     "@types/js-yaml": "npm:4.0.9"
     "@types/semver": "npm:7.5.8"
     "@types/tunnel": "npm:0.0.7"
@@ -2807,13 +2822,10 @@ __metadata:
     commander: "npm:^12.1.0"
     cross-env: "npm:7.0.3"
     deps: "npm:^1.0.0"
-    enquirer: "npm:^2.4.1"
     execa: "npm:^8.0.1"
     figures: "npm:^6.1.0"
     fs-extra: "npm:^11.2.0"
     globby: "npm:^14.0.2"
-    inquirer: "npm:^9.3.7"
-    inquirer-autocomplete-prompt: "npm:^3.0.1"
     js-yaml: "npm:^4.1.0"
     listr2: "npm:^8.2.4"
     read-pkg-up: "npm:^11.0.0"
@@ -3094,10 +3106,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@tsed/cli-prompts@workspace:*, @tsed/cli-prompts@workspace:packages/cli-prompts":
+  version: 0.0.0-use.local
+  resolution: "@tsed/cli-prompts@workspace:packages/cli-prompts"
+  dependencies:
+    "@clack/prompts": "npm:^0.7.0"
+    "@tsed/core": "npm:>=8.21.0"
+    "@tsed/di": "npm:>=8.21.0"
+    "@tsed/hooks": "npm:>=8.21.0"
+    "@tsed/logger": "npm:>=8.0.3"
+    "@tsed/typescript": "workspace:*"
+    typescript: "npm:5.6.2"
+    vitest: "npm:3.2.4"
+  languageName: unknown
+  linkType: soft
+
 "@tsed/cli-root@workspace:.":
   version: 0.0.0-use.local
   resolution: "@tsed/cli-root@workspace:."
   dependencies:
+    "@clack/prompts": "npm:^0.7.0"
     "@commitlint/cli": "npm:19.5.0"
     "@commitlint/config-conventional": "npm:19.5.0"
     "@swc/core": "npm:1.7.26"
@@ -3112,7 +3140,6 @@ __metadata:
     "@tsed/openspec": "npm:>=8.21.0"
     "@tsed/schema": "npm:>=8.21.0"
     "@tsed/ts-doc": "npm:^4.1.0"
-    "@types/inquirer-autocomplete-prompt": "npm:3.0.3"
     "@types/node": "npm:22.7.4"
     "@typescript-eslint/eslint-plugin": "npm:8.7.0"
     "@typescript-eslint/parser": "npm:8.7.0"
@@ -3134,8 +3161,6 @@ __metadata:
     fs-extra: "npm:^11.2.0"
     gflow: "npm:^5.1.4"
     husky: "npm:9.1.6"
-    inquirer: "npm:^9.3.7"
-    inquirer-autocomplete-prompt: "npm:3.0.1"
     is-ci: "npm:3.0.1"
     js-yaml: "npm:^4.1.0"
     lerna: "npm:^8.1.8"
@@ -3607,35 +3632,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/inquirer-autocomplete-prompt@npm:3.0.3":
-  version: 3.0.3
-  resolution: "@types/inquirer-autocomplete-prompt@npm:3.0.3"
-  dependencies:
-    "@types/inquirer": "npm:*"
-  checksum: 10/252e4c684bed4a45b8511008f742979a44dd8f1aa301b7b021b1176517c62c62822f6fa89dabd19811a29504c71b88341acafe203942733d7665b325f14ea95f
-  languageName: node
-  linkType: hard
-
-"@types/inquirer@npm:*":
-  version: 9.0.9
-  resolution: "@types/inquirer@npm:9.0.9"
-  dependencies:
-    "@types/through": "npm:*"
-    rxjs: "npm:^7.2.0"
-  checksum: 10/015ee6fa65d1d79c070c889906be3eceedd77aa08a4aea3d17b188c9d169b459994244525f054b60de0e28fe9c492df75527a7b63da16e06fcc09e54039ac652
-  languageName: node
-  linkType: hard
-
-"@types/inquirer@npm:^9.0.7":
-  version: 9.0.7
-  resolution: "@types/inquirer@npm:9.0.7"
-  dependencies:
-    "@types/through": "npm:*"
-    rxjs: "npm:^7.2.0"
-  checksum: 10/84cefdd10d7ca747ae2338ea35518020abbc28f7670ade446e367c4cd333153618b374d30830253f31a9567dd26e7f3093fb3cd20210af5ba27a1a91b89bb97e
-  languageName: node
-  linkType: hard
-
 "@types/js-yaml@npm:4.0.9":
   version: 4.0.9
   resolution: "@types/js-yaml@npm:4.0.9"
@@ -3741,15 +3737,6 @@ __metadata:
   version: 2.0.25
   resolution: "@types/swagger-schema-official@npm:2.0.25"
   checksum: 10/0ceec569f8841e327fcafa64e67722ae3f1e107254b7654505515ec5d05df79c03e79d8161445abef0ede5313b960e4d46d151bf2430eb171658f6d7522edd8d
-  languageName: node
-  linkType: hard
-
-"@types/through@npm:*":
-  version: 0.0.33
-  resolution: "@types/through@npm:0.0.33"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10/fd0b73f873a64ed5366d1d757c42e5dbbb2201002667c8958eda7ca02fff09d73de91360572db465ee00240c32d50c6039ea736d8eca374300f9664f93e8da39
   languageName: node
   linkType: hard
 
@@ -4302,13 +4289,6 @@ __metadata:
   dependencies:
     type-fest: "npm:^0.21.3"
   checksum: 10/8661034456193ffeda0c15c8c564a9636b0c04094b7f78bd01517929c17c504090a60f7a75f949f5af91289c264d3e1001d91492c1bd58efc8e100500ce04de2
-  languageName: node
-  linkType: hard
-
-"ansi-escapes@npm:^6.0.0":
-  version: 6.2.1
-  resolution: "ansi-escapes@npm:6.2.1"
-  checksum: 10/3b064937dc8a0645ed8094bc8b09483ee718f3aa3139746280e6c2ea80e28c0a3ce66973d0f33e88e60021abbf67e5f877deabfc810e75edf8a19dfa128850be
   languageName: node
   linkType: hard
 
@@ -6846,16 +6826,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enquirer@npm:^2.4.1":
-  version: 2.4.1
-  resolution: "enquirer@npm:2.4.1"
-  dependencies:
-    ansi-colors: "npm:^4.1.1"
-    strip-ansi: "npm:^6.0.1"
-  checksum: 10/b3726486cd98f0d458a851a03326a2a5dd4d84f37ff94ff2a2960c915e0fc865865da3b78f0877dc36ac5c1189069eca603e82ec63d5bc6b0dd9985bf6426d7a
-  languageName: node
-  linkType: hard
-
 "enquirer@npm:~2.3.6":
   version: 2.3.6
   resolution: "enquirer@npm:2.3.6"
@@ -7752,16 +7722,6 @@ __metadata:
   dependencies:
     escape-string-regexp: "npm:^1.0.5"
   checksum: 10/0e5bba8d2b8847c6844a476113d8d283af8757143d7760cc1a5422cceec5e8dd68c15ba50e0847597bc2c4e3865711657aeef394478c6ddce8aed7e0cd18beca
-  languageName: node
-  linkType: hard
-
-"figures@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "figures@npm:5.0.0"
-  dependencies:
-    escape-string-regexp: "npm:^5.0.0"
-    is-unicode-supported: "npm:^1.2.0"
-  checksum: 10/951d18be2f450c90462c484eff9bda705293319bc2f17b250194a0cf1a291600db4cb283a6ce199d49380c95b08d85d822ce4b18d2f9242663fd5895476d667c
   languageName: node
   linkType: hard
 
@@ -9260,21 +9220,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inquirer-autocomplete-prompt@npm:3.0.1, inquirer-autocomplete-prompt@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "inquirer-autocomplete-prompt@npm:3.0.1"
-  dependencies:
-    ansi-escapes: "npm:^6.0.0"
-    figures: "npm:^5.0.0"
-    picocolors: "npm:^1.0.0"
-    run-async: "npm:^2.4.1"
-    rxjs: "npm:^7.5.6"
-  peerDependencies:
-    inquirer: ^9.1.0
-  checksum: 10/758eb9a4487ffcd02fb6ea95a2751fa7aeac0d6a45f06ada07b2733406a693eb1f545f5d14dd2d688ddb84492ac5bb3a6cc70024cfbd8081e6660351c5a8c78e
-  languageName: node
-  linkType: hard
-
 "inquirer@npm:>=9.2.13":
   version: 9.2.13
   resolution: "inquirer@npm:9.2.13"
@@ -9339,26 +9284,6 @@ __metadata:
     through: "npm:^2.3.6"
     wrap-ansi: "npm:^7.0.0"
   checksum: 10/879e462bec401ea1c89ee219359cd321ac7eee623571c34c584b4c6db52d12584f4955dca5889966f417f8af7b6aff96a7bdac8039771871f9e32acfbcceaab4
-  languageName: node
-  linkType: hard
-
-"inquirer@npm:^9.3.7":
-  version: 9.3.7
-  resolution: "inquirer@npm:9.3.7"
-  dependencies:
-    "@inquirer/figures": "npm:^1.0.3"
-    ansi-escapes: "npm:^4.3.2"
-    cli-width: "npm:^4.1.0"
-    external-editor: "npm:^3.1.0"
-    mute-stream: "npm:1.0.0"
-    ora: "npm:^5.4.1"
-    run-async: "npm:^3.0.0"
-    rxjs: "npm:^7.8.1"
-    string-width: "npm:^4.2.3"
-    strip-ansi: "npm:^6.0.1"
-    wrap-ansi: "npm:^6.2.0"
-    yoctocolors-cjs: "npm:^2.1.2"
-  checksum: 10/92d0a0f55701e05a8dd3624eab0c03c6e96de18285cefdbef4edc5c1a77c8283361700e088db275ec5d5b36c45ff9428127125d78428e07ea4c5574f55b17176
   languageName: node
   linkType: hard
 
@@ -9868,6 +9793,13 @@ __metadata:
   dependencies:
     text-extensions: "npm:^2.0.0"
   checksum: 10/e26ade26a6aa6b26c3f00c913871c3c1ceb5a2a5ca4380aac3f0e092b151ad8e2ce4cee1060fb7a13a5684fa55ce62c9df04fa7723b180c82a34ae4c0fa34adb
+  languageName: node
+  linkType: hard
+
+"is-unicode-supported@npm:*":
+  version: 2.1.0
+  resolution: "is-unicode-supported@npm:2.1.0"
+  checksum: 10/f254e3da6b0ab1a57a94f7273a7798dd35d1d45b227759f600d0fa9d5649f9c07fa8d3c8a6360b0e376adf916d151ec24fc9a50c5295c58bae7ca54a76a063f9
   languageName: node
   linkType: hard
 
@@ -14501,7 +14433,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"run-async@npm:^2.4.0, run-async@npm:^2.4.1":
+"run-async@npm:^2.4.0":
   version: 2.4.1
   resolution: "run-async@npm:2.4.1"
   checksum: 10/c79551224dafa26ecc281cb1efad3510c82c79116aaf681f8a931ce70fdf4ca880d58f97d3b930a38992c7aad7955a08e065b32ec194e1dd49d7790c874ece50
@@ -14524,7 +14456,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:>=7.8.1, rxjs@npm:^7.2.0, rxjs@npm:^7.5.6, rxjs@npm:^7.8.1":
+"rxjs@npm:>=7.8.1, rxjs@npm:^7.8.1":
   version: 7.8.1
   resolution: "rxjs@npm:7.8.1"
   dependencies:
@@ -15013,6 +14945,13 @@ __metadata:
     "@sigstore/tuf": "npm:^2.3.1"
     "@sigstore/verify": "npm:^1.1.0"
   checksum: 10/e0e4fcc889b7351908aceaa19508cc49ac6d7c4ff014c113d41bf53566db3e878934a00487e9a6deb2d71a375b530af232e7be9dab11c79b89eaa61308fed92f
+  languageName: node
+  linkType: hard
+
+"sisteransi@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "sisteransi@npm:1.0.5"
+  checksum: 10/aba6438f46d2bfcef94cf112c835ab395172c75f67453fe05c340c770d3c402363018ae1ab4172a1026a90c47eaccf3af7b6ff6fa749a680c2929bd7fa2b37a4
   languageName: node
   linkType: hard
 
@@ -17388,13 +17327,6 @@ __metadata:
   version: 1.0.0
   resolution: "yocto-queue@npm:1.0.0"
   checksum: 10/2cac84540f65c64ccc1683c267edce396b26b1e931aa429660aefac8fbe0188167b7aee815a3c22fa59a28a58d898d1a2b1825048f834d8d629f4c2a5d443801
-  languageName: node
-  linkType: hard
-
-"yoctocolors-cjs@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "yoctocolors-cjs@npm:2.1.2"
-  checksum: 10/d731e3ba776a0ee19021d909787942933a6c2eafb2bbe85541f0c59aa5c7d475ce86fcb860d5803105e32244c3dd5ba875b87c4c6bf2d6f297da416aa54e556f
   languageName: node
   linkType: hard
 

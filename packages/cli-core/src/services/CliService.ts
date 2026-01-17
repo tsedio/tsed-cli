@@ -1,3 +1,4 @@
+import {PromptRunner} from "@tsed/cli-prompts";
 import {classOf, isArrowFn} from "@tsed/core";
 import {
   configuration,
@@ -16,8 +17,6 @@ import {
 import {$asyncAlter, $asyncEmit} from "@tsed/hooks";
 import {pascalCase} from "change-case";
 import {Argument, Command} from "commander";
-import Inquirer from "inquirer";
-import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
 import {v4} from "uuid";
 
 import type {CommandData} from "../interfaces/CommandData.js";
@@ -34,8 +33,6 @@ import {parseOption} from "../utils/parseOption.js";
 import {CliHooks} from "./CliHooks.js";
 import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
-Inquirer.registerPrompt("autocomplete", inquirer_autocomplete_prompt);
-
 export class CliService {
   readonly reinstallAfterRun = constant<boolean>("project.reinstallAfterRun", false);
   readonly program = new Command();
@@ -43,6 +40,7 @@ export class CliService {
   protected hooks = inject(CliHooks);
   protected projectPkg = inject(ProjectPackageJson);
   protected packageManagers = inject(PackageManagersModule);
+  protected promptRunner = inject(PromptRunner);
   private commands = new Map();
 
   /**
@@ -71,18 +69,18 @@ export class CliService {
 
       await $asyncEmit("$loadPackageJson");
 
-      data = await this.prompt(cmdName, data, $ctx);
-
       try {
+        data = await this.prompt(cmdName, data, $ctx);
+
         await this.exec(cmdName, data, $ctx);
+
+        await $asyncEmit("$onFinish", [data]);
       } catch (er) {
         await $asyncEmit("$onFinish", [data, er]);
-        await destroyInjector();
         throw er;
+      } finally {
+        await destroyInjector();
       }
-
-      await $asyncEmit("$onFinish", [data]);
-      await destroyInjector();
     });
   }
 
@@ -123,12 +121,14 @@ export class CliService {
     $ctx.set("data", data);
 
     if (instance.$prompt) {
-      const questions = [...((await instance.$prompt(data)) as any[])];
+      const questions = await instance.$prompt(data);
 
-      if (questions.length) {
+      if (questions) {
+        const answers = await this.promptRunner.run(questions, data);
+
         data = {
           ...data,
-          ...((await Inquirer.prompt(questions)) as any)
+          ...answers
         };
       }
     }

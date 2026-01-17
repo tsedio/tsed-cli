@@ -14,9 +14,9 @@ import {
   inject,
   PackageManagersModule,
   ProjectPackageJson,
-  type QuestionOptions,
   type Task
 } from "@tsed/cli-core";
+import type {PromptQuestion} from "@tsed/cli-prompts";
 import {isString} from "@tsed/core";
 import {constant} from "@tsed/di";
 import {$asyncAlter} from "@tsed/hooks";
@@ -51,7 +51,7 @@ export class InitCmd implements CommandProvider {
   protected execa = inject(CliExeca);
   protected fs = inject(CliFs);
 
-  async $prompt(initialOptions: Partial<InitOptions>): Promise<QuestionOptions> {
+  async $prompt(initialOptions: Partial<InitOptions>): Promise<PromptQuestion[]> {
     if (initialOptions.file) {
       const file = join(this.packageJson.cwd, initialOptions.file);
 

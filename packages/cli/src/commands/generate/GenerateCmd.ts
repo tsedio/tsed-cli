@@ -1,4 +1,4 @@
-import {command, type CommandProvider, inject, ProjectPackageJson, type Task} from "@tsed/cli-core";
+import {command, type CommandProvider, inject, ProjectPackageJson, type PromptQuestion, type Task} from "@tsed/cli-core";
 
 import type {GenerateCmdContext} from "../../interfaces/GenerateCmdContext.js";
 import {CliProjectService} from "../../services/CliProjectService.js";
@@ -27,12 +27,10 @@ export class GenerateCmd implements CommandProvider {
     data = addContextMethods(data as any);
     const templates = this.templates.find();
     const templatesPrompts = await Promise.all(
-      templates
-        .filter((template) => template.prompts)
-        .map((template) => {
-          return template.prompts!(data as GenerateCmdContext);
-        })
+      templates.filter((template) => template.prompts).map((template) => template.prompts!(data as GenerateCmdContext))
     );
+
+    const additionalPrompts = templatesPrompts.flat() as PromptQuestion[];
 
     return [
       {
@@ -50,8 +48,8 @@ export class GenerateCmd implements CommandProvider {
         default: data.getName,
         when: !data.name
       },
-      ...templatesPrompts.flat()
-    ];
+      ...additionalPrompts
+    ] satisfies PromptQuestion[];
   }
 
   $mapContext(ctx: Partial<GenerateCmdContext>): GenerateCmdContext {

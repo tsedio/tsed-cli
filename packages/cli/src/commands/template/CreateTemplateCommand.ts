@@ -1,4 +1,4 @@
-import {command, type CommandProvider, inject, ProjectPackageJson} from "@tsed/cli-core";
+import {command, type CommandProvider, inject, ProjectPackageJson, type PromptQuestion} from "@tsed/cli-core";
 import {snakeCase} from "change-case";
 
 import {PKG} from "../../constants/index.js";
@@ -67,7 +67,7 @@ export class CreateTemplateCommand implements CommandProvider {
         default: data.name,
         when: !data.name
       }
-    ];
+    ] satisfies PromptQuestion[];
   }
 
   $mapContext(ctx: Partial<any>): any {

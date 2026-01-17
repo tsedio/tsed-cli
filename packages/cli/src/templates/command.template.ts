@@ -10,7 +10,8 @@ export default defineTemplate({
   render(symbolName: string) {
     const symbolParamName = kebabCase(symbolName);
 
-    return `import {Command, CommandProvider, QuestionOptions} from "@tsed/cli-core";
+    return `import {Command, CommandProvider} from "@tsed/cli-core";
+import type {PromptOptions} from "@tsed/cli-prompts";
 
 export interface ${symbolName}Context {
 }
@@ -26,9 +27,10 @@ export interface ${symbolName}Context {
 })
 export class ${symbolName} implements CommandProvider {
   /**
-   *  Ask questions with Inquirer. Return an empty array or don't implement the method to skip this step
+   *  Ask questions with the Ts.ED prompt runner (powered by @clack/prompts).
+   *  Return an empty array or don't implement the method to skip this step.
    */
-  async $prompt(initialOptions: Partial<${symbolName}Context>): Promise<QuestionOptions> {
+  async $prompt(initialOptions: Partial<${symbolName}Context>): Promise<PromptOptions[]> {
     return [];
   }
 
