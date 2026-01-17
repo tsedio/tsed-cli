@@ -69,9 +69,6 @@ describe("getFeaturesPrompt", () => {
               "dependencies": {
                 "@tsed/cli-core": "{{cliVersion}}",
               },
-              "devDependencies": {
-                "@types/inquirer": "^8.2.4",
-              },
               "name": "Commands",
               "value": "commands",
             },
