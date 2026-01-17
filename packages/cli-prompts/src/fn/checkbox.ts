@@ -1,5 +1,5 @@
 import {multiselect} from "@clack/prompts";
-import {isArray} from "@tsed/core/utils/isArray";
+import {isArray} from "@tsed/core/utils/isArray.js";
 
 import type {NormalizedPromptQuestion} from "../interfaces/NormalizedPromptQuestion.js";
 import type {NormalizedChoice} from "../utils/normalizeChoices.js";

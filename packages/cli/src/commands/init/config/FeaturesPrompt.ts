@@ -1,3 +1,7 @@
+import {CliHttpClient} from "@tsed/cli-core";
+import {PassportClient} from "@tsed/cli-plugin-passport";
+import {inject} from "@tsed/di";
+
 import {ArchitectureConvention, type InitOptions, PlatformType, ProjectConvention} from "../../../interfaces/index.js";
 import {hasFeature, hasValue, hasValuePremium} from "../utils/hasFeature.js";
 import {isPlatform} from "../utils/isPlatform.js";
@@ -480,6 +484,24 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
       FeatureType.TYPEORM_EXPO
     ],
     when: hasValue("featuresDB", FeatureType.TYPEORM)
+  },
+  {
+    type: "autocomplete",
+    name: "passportPackage",
+    message: "Which passport package ?",
+    when: hasFeature("passport"),
+    async source(_: any, input: string): Promise<any[]> {
+      const result = await inject(CliHttpClient).get<any[]>(`https://www.passportjs.org/packages/-/all.json`, {});
+
+      return Object.values(result)
+        .filter((o) => {
+          return o.name?.startsWith("passport-");
+        })
+        .filter((item) => ({
+          name: `${item.name} - ${item.description}`,
+          value: item.name
+        }));
+    }
   },
   {
     type: "password",
