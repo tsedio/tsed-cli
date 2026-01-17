@@ -15,17 +15,6 @@ export interface CreateTemplateCmdContext extends RenderDataContext {
   template?: DefineTemplateOptions;
 }
 
-const searchFactory = (list: DefineTemplateOptions[]) => {
-  const items = list.map((item) => ({name: item.label, value: item.id}));
-  return (_: any, keyword: string) => {
-    if (keyword) {
-      return items.filter((item) => item.name.toLowerCase().includes(keyword.toLowerCase()));
-    }
-
-    return items;
-  };
-};
-
 export class CreateTemplateCommand implements CommandProvider {
   protected projectPackageJson = inject(ProjectPackageJson);
   protected templates = inject(CliTemplatesService);
@@ -51,7 +40,7 @@ export class CreateTemplateCommand implements CommandProvider {
         when: (ctx: CreateTemplateCmdContext) => {
           return ctx.from === "existing";
         },
-        source: searchFactory(this.templates.find())
+        source: () => this.templates.find().map((item) => ({name: item.label, value: item.id}))
       },
       {
         type: "confirm",

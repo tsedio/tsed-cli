@@ -27,9 +27,7 @@ export class AddCmd implements CommandProvider {
         message: "Which cli plugin ?",
         default: initialOptions.name,
         when: !initialOptions.name,
-        source: (state: any, keyword: string) => {
-          return this.cliPlugins.searchPlugins(keyword);
-        }
+        source: () => this.cliPlugins.searchPlugins()
       }
     ];
   }

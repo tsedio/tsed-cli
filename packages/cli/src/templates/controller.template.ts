@@ -24,7 +24,12 @@ export default defineTemplate({
         when(state) {
           return !!(["controller"].includes(state.type || context.type) || context.directory);
         },
-        choices: context.getDirectories("controllers")
+        choices: context.getDirectories("controllers").map((value) => {
+          return {
+            label: value,
+            value
+          };
+        })
       },
       {
         type: "input",

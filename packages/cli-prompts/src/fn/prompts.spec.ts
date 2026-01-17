@@ -6,14 +6,13 @@ import {input} from "./input.js";
 import {list} from "./list.js";
 import {password} from "./password.js";
 
-const SEARCH_ACTION = "__tsed_cli_search_again__";
-
 const clack = vi.hoisted(() => ({
   text: vi.fn(),
   select: vi.fn(),
   multiselect: vi.fn(),
   confirm: vi.fn(),
   password: vi.fn(),
+  autocomplete: vi.fn(),
   note: vi.fn(),
   isCancel: vi.fn().mockReturnValue(false),
   cancel: vi.fn()
@@ -28,6 +27,7 @@ describe("prompt handlers", () => {
     clack.multiselect.mockReset();
     clack.confirm.mockReset();
     clack.password.mockReset();
+    clack.autocomplete.mockReset();
     clack.note.mockReset();
     clack.isCancel.mockReset().mockReturnValue(false);
     clack.cancel.mockReset();
@@ -36,50 +36,51 @@ describe("prompt handlers", () => {
   it("input should resolve responses from clack text prompt", async () => {
     clack.text.mockResolvedValue("Jane Doe");
 
-    const result = await input(
-      {
-        type: "input",
-        name: "fullName",
-        message: "Your name?",
-        default: "John"
-      },
-      {}
-    );
+    const result = await input({
+      type: "input",
+      name: "fullName",
+      message: "Your name?",
+      default: "John"
+    });
 
-    expect(clack.text).toHaveBeenCalledWith({message: "Your name?", initialValue: "John"});
+    expect(clack.text).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: "Your name?",
+        initialValue: "John"
+      })
+    );
     expect(result).toBe("Jane Doe");
   });
 
   it("password should mask the prompt by default", async () => {
     clack.password.mockResolvedValue("secret");
 
-    const result = await password(
-      {
-        type: "password",
-        name: "token",
-        message: "Token?"
-      },
-      {}
-    );
+    const result = await password({
+      type: "password",
+      name: "token",
+      message: "Token?"
+    });
 
-    expect(clack.password).toHaveBeenCalledWith({message: "Token?", mask: "•"});
+    expect(clack.password).toHaveBeenCalledWith(expect.objectContaining({message: "Token?"}));
     expect(result).toBe("secret");
   });
 
   it("confirm should pass boolean default as initialValue", async () => {
     clack.confirm.mockResolvedValue(true);
 
-    const result = await confirm(
-      {
-        type: "confirm",
-        name: "proceed",
-        message: "Continue?",
-        default: false
-      },
-      {}
-    );
+    const result = await confirm({
+      type: "confirm",
+      name: "proceed",
+      message: "Continue?",
+      default: false
+    });
 
-    expect(clack.confirm).toHaveBeenCalledWith({message: "Continue?", initialValue: false});
+    expect(clack.confirm).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: "Continue?",
+        initialValue: false
+      })
+    );
     expect(result).toBe(true);
   });
 
@@ -87,89 +88,85 @@ describe("prompt handlers", () => {
     clack.select.mockResolvedValue("b");
     const choices = normalizeChoices(["a", "b"]);
 
-    const result = await list(
-      {
-        type: "list",
-        name: "choice",
-        message: "Pick",
-        choices
-      },
-      {}
-    );
-
-    expect(clack.select).toHaveBeenCalledWith({
+    const result = await list({
+      type: "list",
+      name: "choice",
       message: "Pick",
-      options: choices.map((choice) => ({label: choice.label, value: choice.value, hint: choice.hint})),
-      initialValue: "a",
-      maxItems: undefined
+      choices
     });
+
+    expect(clack.select).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: "Pick",
+        options: choices.map((choice) => ({label: choice.label, value: choice.value, hint: choice.hint})),
+        initialValue: "a"
+      })
+    );
     expect(result).toBe("b");
   });
 
   it("checkbox should respect default values", async () => {
     clack.multiselect.mockResolvedValue(["two"]);
 
-    const result = await checkbox(
-      {
-        type: "checkbox",
-        name: "features",
-        message: "Select",
-        choices: [
-          {label: "One", value: "one"},
-          {label: "Two", value: "two", checked: true}
-        ],
-        default: ["two"]
-      },
-      {}
-    );
-
-    expect(clack.multiselect).toHaveBeenCalledWith({
+    const result = await checkbox({
+      type: "checkbox",
+      name: "features",
       message: "Select",
-      options: [
-        {label: "One", value: "one", hint: undefined},
-        {label: "Two", value: "two", hint: undefined}
+      choices: [
+        {label: "One", value: "one"},
+        {label: "Two", value: "two", checked: true}
       ],
-      initialValues: ["two"]
+      default: ["two"]
     });
+
+    expect(clack.multiselect).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: "Select",
+        options: [
+          {label: "One", value: "one", hint: undefined},
+          {label: "Two", value: "two", hint: undefined}
+        ],
+        initialValues: ["two"]
+      })
+    );
     expect(result).toEqual(["two"]);
   });
 
   it("list should throw when no choices are provided", async () => {
     await expect(
-      list(
-        {
-          type: "list",
-          name: "empty",
-          message: "Empty",
-          choices: []
-        },
-        {}
-      )
+      list({
+        type: "list",
+        name: "empty",
+        message: "Empty",
+        choices: []
+      })
     ).rejects.toThrow('Question "empty" does not provide any choices');
   });
 
-  it("autocomplete should support search flow and selection", async () => {
-    clack.select.mockResolvedValueOnce(SEARCH_ACTION).mockResolvedValueOnce("beta");
-    clack.text.mockResolvedValueOnce("b");
+  it("autocomplete should delegate to clack autocomplete with normalized choices", async () => {
+    const choices = normalizeChoices(["alpha", "beta"]);
+    clack.autocomplete.mockResolvedValue("beta");
 
     const result = await autocomplete(
       {
         type: "autocomplete",
         name: "plugin",
         message: "Plugin?",
-        pageSize: 5,
-        source: (answers, keyword = "") => {
-          expect(answers).toHaveProperty("prefilled", true);
-          return Promise.resolve(["alpha", "beta"].filter((entry) => entry.includes(keyword)));
-        }
+        choices
       },
-      {prefilled: true}
+      {}
     );
 
-    expect(clack.text).toHaveBeenCalledWith({
-      message: "Plugin? (no matches, type to search)",
-      initialValue: ""
-    });
+    expect(clack.autocomplete).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: "Plugin?",
+        options: choices.map((choice) => ({
+          label: choice.label,
+          value: choice.value,
+          hint: choice.hint
+        }))
+      })
+    );
     expect(result).toBe("beta");
   });
 });

@@ -2,10 +2,8 @@ import {PromptCancelledError} from "../errors/PromptCancelledError.js";
 import type {PromptQuestion} from "../interfaces/PromptQuestion.js";
 import {applyTransforms} from "./applyTransforms.js";
 import {ensureNotCancelled} from "./ensureNotCancelled.js";
-import {getValidationError} from "./getValidationError.js";
 import {normalizeChoices} from "./normalizeChoices.js";
 import {normalizeQuestion} from "./normalizeQuestion.js";
-import {CONTINUE, processPrompt} from "./processPrompt.js";
 import {resolveListDefault} from "./resolveListDefault.js";
 import {resolveMaybe} from "./resolveMaybe.js";
 import {shouldAsk} from "./shouldAsk.js";
@@ -57,19 +55,6 @@ describe("prompt utils", () => {
     expect(ensureNotCancelled("ok")).toBe("ok");
   });
 
-  it("getValidationError should map validator return values", async () => {
-    const question: PromptQuestion = {
-      type: "input",
-      name: "foo",
-      message: "Foo",
-      validate: vi.fn().mockResolvedValueOnce(false).mockResolvedValueOnce("nope").mockResolvedValue(true)
-    };
-
-    expect(await getValidationError(question, {}, "first")).toBe("Invalid value.");
-    expect(await getValidationError(question, {}, "second")).toBe("nope");
-    expect(await getValidationError(question, {}, "third")).toBeUndefined();
-  });
-
   it("normalizeChoices should convert primitive and object choices", () => {
     const result = normalizeChoices([{name: "Foo", value: 1, short: "F"}, "bar"]);
 
@@ -96,38 +81,8 @@ describe("prompt utils", () => {
     expect(normalized.message).toBe("Pick one");
     expect(normalized.default).toBe("b");
     expect(normalized.choices).toEqual([{label: "alpha", value: "a", hint: undefined, checked: undefined}]);
-    await normalized.source?.({temp: "x"}, "kw");
-    expect(source).toHaveBeenCalledWith({previous: true, temp: "x"}, "kw");
-  });
-
-  it("processPrompt should keep looping until validation passes", async () => {
-    const question: PromptQuestion = {
-      type: "input",
-      name: "foo",
-      message: "Foo",
-      validate: vi.fn().mockResolvedValueOnce("Error").mockResolvedValue(true)
-    };
-    const cb = vi.fn().mockResolvedValue("value");
-
-    const result = await processPrompt(question, {}, cb);
-
-    expect(result).toBe("value");
-    expect(cb).toHaveBeenCalledTimes(2);
-    expect(clack.note).toHaveBeenCalledWith("Error", "Validation error");
-  });
-
-  it("processPrompt should honor CONTINUE sentinel", async () => {
-    const question: PromptQuestion = {
-      type: "input",
-      name: "foo",
-      message: "Foo"
-    };
-    const cb = vi.fn().mockResolvedValueOnce(CONTINUE).mockResolvedValueOnce("done");
-
-    const result = await processPrompt(question, {}, cb);
-
-    expect(result).toBe("done");
-    expect(cb).toHaveBeenCalledTimes(2);
+    await normalized.source?.({temp: "x"});
+    expect(source).toHaveBeenCalledWith({temp: "x"});
   });
 
   it("resolveListDefault should prefer explicit defaults, then checked, then first value", () => {

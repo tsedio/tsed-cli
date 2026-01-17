@@ -7,15 +7,8 @@ import {addContextMethods} from "../../services/mappers/addContextMethods.js";
 import {mapDefaultTemplateOptions} from "../../services/mappers/mapDefaultTemplateOptions.js";
 import type {DefineTemplateOptions} from "../../utils/defineTemplate.js";
 
-const searchFactory = (list: DefineTemplateOptions[]) => {
-  const items = list.map((item) => ({name: item.label, value: item.id}));
-  return (_: any, keyword: string) => {
-    if (keyword) {
-      return items.filter((item) => item.name.toLowerCase().includes(keyword.toLowerCase()));
-    }
-
-    return items;
-  };
+const mapChoices = (list: DefineTemplateOptions[]) => {
+  return list.map((item) => ({label: item.label, value: item.id}));
 };
 
 export class GenerateCmd implements CommandProvider {
@@ -39,7 +32,7 @@ export class GenerateCmd implements CommandProvider {
         message: "Which template you want to use?",
         default: data.type,
         when: () => templates.length > 1,
-        source: searchFactory(this.templates.find(data.type))
+        choices: mapChoices(this.templates.find(data.type))
       },
       {
         type: "input",

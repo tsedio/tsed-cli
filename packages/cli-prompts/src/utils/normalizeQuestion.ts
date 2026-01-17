@@ -19,13 +19,5 @@ export async function normalizeQuestion(question: PromptQuestion, answers: Recor
     normalized.choices = normalizeChoices([...question.choices]);
   }
 
-  if ("source" in question && question.source) {
-    const source = question.source;
-
-    normalized.source = (state: Record<string, any>, keyword?: string) => {
-      return source({...answers, ...state}, keyword);
-    };
-  }
-
   return normalized;
 }

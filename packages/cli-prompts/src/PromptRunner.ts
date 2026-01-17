@@ -3,6 +3,8 @@ import {injectable} from "@tsed/di";
 import * as fn from "./fn/index.js";
 import type {NormalizedPromptQuestion} from "./interfaces/NormalizedPromptQuestion.js";
 import type {PromptQuestion} from "./interfaces/PromptQuestion.js";
+import {applyTransforms} from "./utils/applyTransforms.js";
+import {ensureNotCancelled} from "./utils/ensureNotCancelled.js";
 import {normalizeQuestion} from "./utils/normalizeQuestion.js";
 import {shouldAsk} from "./utils/shouldAsk.js";
 
@@ -35,7 +37,10 @@ export class PromptRunner {
       throw new Error(`Unsupported prompt type: ${type as string}`);
     }
 
-    return fn[type](question as never, answers);
+    const result = await fn[type](question as never, answers);
+    const value = ensureNotCancelled(result);
+
+    return applyTransforms(question, answers, value);
   }
 }
 

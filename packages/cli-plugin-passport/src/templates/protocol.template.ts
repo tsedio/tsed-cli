@@ -40,8 +40,8 @@ export default defineTemplate({
         when(state) {
           return ["protocol"].includes(state.type);
         },
-        source(_, input): Promise<any[]> {
-          return inject(PassportClient).getChoices(input);
+        source(): Promise<any[]> {
+          return inject(PassportClient).getChoices();
         }
       }
     ];

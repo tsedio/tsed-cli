@@ -1,3 +1,5 @@
+import type {AutocompleteOptions, ConfirmOptions, MultiSelectOptions, PasswordOptions, SelectOptions, TextOptions} from "@clack/prompts";
+import type {Option} from "@clack/prompts";
 type MaybePromise<T> = T | Promise<T>;
 
 /**
@@ -8,15 +10,11 @@ export type PromptType = "input" | "password" | "confirm" | "list" | "checkbox" 
 /**
  * Represents a single choice entry usable by select, checkbox, and autocomplete prompts.
  */
-export interface PromptChoice<Value = any> {
+export type PromptChoice<Value = any> = Option<Value> & {
   /**
    * Human friendly label displayed in the prompt list.
    */
   name?: string;
-  /**
-   * Raw value returned when the choice is selected.
-   */
-  value?: Value;
   /**
    * Optional short label shown beside the main choice name.
    */
@@ -29,7 +27,7 @@ export interface PromptChoice<Value = any> {
    * For checkbox prompts, marks the choice as checked by default.
    */
   checked?: boolean;
-}
+};
 
 /**
  * Choice definition accepted by prompts. A plain value will be coerced to a `PromptChoice`.
@@ -40,11 +38,6 @@ export type PromptChoiceInput<Value = any> = PromptChoice<Value> | Value;
  * Transforms user input before it becomes part of the command context.
  */
 export type PromptTransformer = (input: any, answers: Record<string, any>, flags?: {isFinal?: boolean}) => any;
-
-/**
- * Validates the user input, returning `true`, `false`, or an error string.
- */
-export type PromptValidator = (input: any, answers: Record<string, any>) => MaybePromise<boolean | string>;
 
 /**
  * Filters the answer into a different representation before persistence.
@@ -85,17 +78,9 @@ export interface PromptBaseQuestion<Value = any> {
    */
   transformer?: PromptTransformer;
   /**
-   * Validates user input. Return `false`/string to display an error.
-   */
-  validate?: PromptValidator;
-  /**
    * Mutates the stored answer after validation.
    */
   filter?: PromptFilter;
-  /**
-   * Optional max number of rows visible in select/checkbox prompts.
-   */
-  pageSize?: number;
   /**
    * Whether select prompts loop when reaching boundaries.
    */
@@ -105,59 +90,63 @@ export interface PromptBaseQuestion<Value = any> {
 /**
  * Plain text prompt.
  */
-export interface PromptInputQuestion extends PromptBaseQuestion<string> {
+export interface PromptInputQuestion extends PromptBaseQuestion<string>, Omit<TextOptions, "message"> {
   type: "input";
 }
 
 /**
  * Hidden text prompt (e.g., passwords or tokens).
  */
-export interface PromptPasswordQuestion extends PromptBaseQuestion<string> {
+export interface PromptPasswordQuestion extends PromptBaseQuestion<string>, Omit<PasswordOptions, "message"> {
   type: "password";
-  /**
-   * Character used to mask input (default: •). Set `false` to show raw input.
-   */
-  mask?: string | boolean;
 }
 
 /**
  * Boolean confirmation prompt (yes/no).
  */
-export interface PromptConfirmQuestion extends PromptBaseQuestion<boolean> {
+export interface PromptConfirmQuestion extends PromptBaseQuestion<boolean>, Omit<ConfirmOptions, "message"> {
   type: "confirm";
 }
 
 /**
  * Single-select prompt with predefined choices.
  */
-export interface PromptListQuestion extends PromptBaseQuestion<any> {
+export interface PromptListQuestion<Value = any> extends PromptBaseQuestion<Value>, Omit<SelectOptions<Value>, "message" | "options"> {
   type: "list";
   /**
    * Available choices displayed to the user.
    */
-  choices: PromptChoiceInput[];
+  choices: string[] | PromptChoice<Value>[];
 }
 
 /**
  * Multi-select prompt where the result is an array of chosen values.
  */
-export interface PromptCheckboxQuestion extends PromptBaseQuestion<any[]> {
+export interface PromptCheckboxQuestion<Value = any>
+  extends PromptBaseQuestion<Value[]>,
+    Omit<MultiSelectOptions<Value>, "message" | "options"> {
   type: "checkbox";
   /**
    * Available choices displayed to the user.
    */
-  choices: PromptChoiceInput[];
+  choices: string[] | PromptChoice<Value>[];
 }
 
 /**
  * Searchable prompt that fetches choices dynamically.
  */
-export interface PromptAutocompleteQuestion extends PromptBaseQuestion<any> {
+export interface PromptAutocompleteQuestion<Value = any>
+  extends PromptBaseQuestion<Value>,
+    Omit<AutocompleteOptions<Value>, "message" | "options"> {
   type: "autocomplete";
   /**
    * Async loader returning the set of choices filtered by the keyword.
    */
-  source: (answers: Record<string, any>, keyword?: string) => MaybePromise<PromptChoiceInput[]>;
+  source?: (answers: Record<string, any>) => MaybePromise<PromptChoice<Value>[]>;
+  /**
+   * Available choices displayed to the user.
+   */
+  choices?: string[] | PromptChoiceInput<Value>[];
 }
 
 /**
