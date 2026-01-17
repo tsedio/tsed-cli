@@ -8,9 +8,9 @@ import {
   NpmRegistryClient,
   PackageManagersModule,
   ProjectPackageJson,
-  type QuestionOptions,
   type Task
 } from "@tsed/cli-core";
+import type {PromptQuestion} from "@tsed/cli-prompts";
 import {getValue} from "@tsed/core";
 import semver from "semver";
 
@@ -44,7 +44,7 @@ export class UpdateCmd implements CommandProvider {
 
   private versions: any;
 
-  async $prompt(initialOptions: Partial<UpdateCmdContext>): Promise<QuestionOptions> {
+  async $prompt(initialOptions: Partial<UpdateCmdContext>): Promise<PromptQuestion[]> {
     const versions = await this.getAvailableVersions();
 
     return [

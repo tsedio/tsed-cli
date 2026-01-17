@@ -116,7 +116,7 @@ export class GenerateCmd implements CommandProvider {
   srcRenderService: SrcRendererService;
 
   /**
-   * Prompt use Inquirer.js to print questions (see Inquirer.js for more details)
+   * Prompts run through the Ts.ED prompt runner (powered by `@clack/prompts`) to gather inputs
    */
   $prompt(initialOptions: Partial<GenerateCmdContext>) {
     return [

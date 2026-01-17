@@ -2,13 +2,13 @@ import {injectable} from "@tsed/di";
 
 import * as fn from "./fn/index.js";
 import type {NormalizedPromptQuestion} from "./interfaces/NormalizedPromptQuestion.js";
-import type {PromptQuestion, QuestionOptions} from "./interfaces/PromptQuestion.js";
+import type {PromptQuestion} from "./interfaces/PromptQuestion.js";
 import {normalizeQuestion} from "./utils/normalizeQuestion.js";
 import {shouldAsk} from "./utils/shouldAsk.js";
 
 export class PromptRunner {
-  async run(questions: QuestionOptions | undefined, initialAnswers: Record<string, any> = {}) {
-    const queue = ([] as QuestionOptions[]).concat(questions ?? []).filter(Boolean) as unknown as PromptQuestion[];
+  async run(questions: PromptQuestion[] | undefined, initialAnswers: Record<string, any> = {}) {
+    const queue = ([] as PromptQuestion[]).concat(questions ?? []).filter(Boolean);
 
     const answers = {...initialAnswers};
     const collected: Record<string, any> = {};

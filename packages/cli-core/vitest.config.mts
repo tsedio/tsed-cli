@@ -7,6 +7,7 @@ export default defineConfig(
     ...presets,
     test: {
       ...presets.test,
+      setupFiles: ["reflect-metadata"],
       coverage: {
         ...presets.test?.coverage,
         thresholds: {

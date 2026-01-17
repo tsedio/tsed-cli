@@ -1,4 +1,4 @@
-import {injectable, type ProviderOpts, type QuestionOptions} from "@tsed/cli-core";
+import {injectable, type PromptQuestion, type ProviderOpts} from "@tsed/cli-core";
 import type {JsonSchema} from "@tsed/schema";
 
 import type {GenerateCmdContext} from "../interfaces/index.js";
@@ -44,7 +44,7 @@ export type DefineTemplateOptions = {
     symbolName: string,
     data: GenerateCmdContext
   ): Promise<string | undefined | TemplateRenderReturnType> | string | undefined | TemplateRenderReturnType;
-  prompts?(data: GenerateCmdContext): QuestionOptions<GenerateCmdContext>[] | Promise<QuestionOptions<GenerateCmdContext>[]>;
+  prompts?(data: GenerateCmdContext): PromptQuestion[] | Promise<PromptQuestion[]>;
 
   hooks?: ProviderOpts["hooks"];
 };

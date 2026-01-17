@@ -169,6 +169,36 @@ describe("CliService", () => {
     expect(() => service["build"](duplicateProvider)).toThrow("The generate command is already registered");
   });
 
+  it("should merge answers provided by the PromptRunner", async () => {
+    const service = await CliPlatformTest.invoke<CliService>(CliService);
+    const token = class Prompted {};
+    const instance = {
+      $prompt: vi.fn().mockResolvedValue([{type: "input", name: "foo", message: "Foo"}])
+    };
+
+    injector().addProvider(token, {
+      useValue: instance
+    });
+
+    service["commands"].set("prompted", {token} as any);
+    (service as any).promptRunner = {
+      run: vi.fn().mockResolvedValue({foo: "bar"})
+    };
+
+    const $ctx = new DIContext({
+      id: "ctx",
+      injector: injector(),
+      logger: logger(),
+      level: "info",
+      platform: "CLI"
+    });
+
+    const data = await service["prompt"]("prompted", {}, $ctx);
+
+    expect(data.foo).toBe("bar");
+    expect((service as any).promptRunner.run).toHaveBeenCalledWith([{type: "input", name: "foo", message: "Foo"}], {});
+  });
+
   it("should validate command inputs via inputSchema before running lifecycle", async () => {
     const service = await CliPlatformTest.invoke<CliService>(CliService);
     const schema = s.object({

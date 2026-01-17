@@ -1,25 +1,14 @@
-import "inquirer-autocomplete-prompt";
-
-import type {Answers, QuestionCollection} from "inquirer";
-import AutocompletePrompt from "inquirer-autocomplete-prompt";
+import type {PromptQuestion} from "@tsed/cli-prompts";
 
 import type {Tasks} from "./Tasks.js";
 
-declare module "inquirer" {
-  export interface QuestionMap<T extends Answers = Answers> {
-    autocomplete: AutocompletePrompt.AutocompleteQuestionOptions<T>;
-  }
-}
-
-export type QuestionOptions<T extends Answers = Answers> = QuestionCollection<T>;
-
 export interface CommandProvider<Ctx = any> {
   /**
-   * Hook to create the main prompt for the command
-   * See https://github.com/enquirer/enquirer for more detail on question configuration.
+   * Hook to create the main prompt for the command. Refer to {@link PromptQuestion}
+   * for supported question attributes.
    * @param initialOptions
    */
-  $prompt?<T extends Answers = Answers>(initialOptions: Partial<Ctx>): QuestionOptions<T> | Promise<QuestionOptions<T>>;
+  $prompt?(initialOptions: Partial<Ctx>): PromptQuestion[] | Promise<PromptQuestion[]>;
 
   /**
    * Hook to map options

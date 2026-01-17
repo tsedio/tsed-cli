@@ -1,5 +1,4 @@
-import {Type} from "@tsed/core";
-import type {FactoryTokenProvider, TokenProvider} from "@tsed/di";
+import type {TokenProvider} from "@tsed/di";
 
 import type {CommandProvider} from "./CommandProvider.js";
 import type {PackageJson} from "./PackageJson.js";

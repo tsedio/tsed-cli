@@ -170,8 +170,3 @@ export type PromptQuestion =
   | PromptListQuestion
   | PromptCheckboxQuestion
   | PromptAutocompleteQuestion;
-
-/**
- * Allows providing a single question or an array of questions from `$prompt`.
- */
-export type QuestionOptions = PromptQuestion | PromptQuestion[];
