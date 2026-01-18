@@ -10,7 +10,7 @@ export * from "./CommandOptions.js";
 export * from "./CommandProvider.js";
 export * from "./PackageJson.js";
 export * from "./ProjectPreferences.js";
-export * from "./Tasks.js";
+export type {Task, TaskLogger, TaskOptions, TaskRunnerOptions, Tasks} from "@tsed/cli-tasks";
 
 declare global {
   namespace TsED {

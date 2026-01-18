@@ -128,7 +128,12 @@ describe("Generate AsyncFactory", () => {
                   "controller"
                 ].includes(state.type || context.type) || context.directory);
               },
-              choices: context.getDirectories("controllers")
+              choices: context.getDirectories("controllers").map((value) => {
+                return {
+                  label: value,
+                  value
+                };
+              })
             },
             {
               type: "input",
@@ -224,7 +229,12 @@ describe("Generate AsyncFactory", () => {
                   "controller"
                 ].includes(state.type || context.type) || context.directory);
               },
-              choices: context.getDirectories("controllers")
+              choices: context.getDirectories("controllers").map((value) => {
+                return {
+                  label: value,
+                  value
+                };
+              })
             },
             {
               type: "input",

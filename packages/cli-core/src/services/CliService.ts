@@ -1,4 +1,5 @@
 import {PromptRunner} from "@tsed/cli-prompts";
+import {createSubTasks, createTasksRunner} from "@tsed/cli-tasks";
 import {classOf, isArrowFn} from "@tsed/core";
 import {
   configuration,
@@ -25,7 +26,6 @@ import type {CommandArg, CommandOpts} from "../interfaces/CommandOptions.js";
 import type {CommandProvider} from "../interfaces/CommandProvider.js";
 import type {Task} from "../interfaces/index.js";
 import {PackageManagersModule} from "../packageManagers/index.js";
-import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner.js";
 import {getCommandMetadata} from "../utils/getCommandMetadata.js";
 import {mapCommanderOptions, validate} from "../utils/index.js";
 import {mapCommanderArgs} from "../utils/mapCommanderArgs.js";
@@ -287,6 +287,7 @@ export class CliService {
     }
 
     data.bindLogger = $ctx.get("command")?.bindLogger;
+    data.logger = logger();
 
     $ctx.set("data", data);
 

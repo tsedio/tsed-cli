@@ -61,7 +61,6 @@
     "fs-extra": "^11.2.0",
     "js-yaml": "^4.1.0",
     "lerna": "^8.1.8",
-    "listr2": "^8.2.4",
     "read-pkg-up": "^11.0.0",
     "registry-auth-token": "^5.1.0",
     "registry-url": "^6.0.1",

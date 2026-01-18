@@ -1,0 +1,38 @@
+{
+  "name": "@tsed/cli-tasks",
+  "description": "Task runner helpers shared across Ts.ED CLI packages",
+  "version": "7.0.0-alpha.6",
+  "type": "module",
+  "main": "./lib/esm/index.js",
+  "source": "./src/index.ts",
+  "module": "./lib/esm/index.js",
+  "typings": "./lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "cli-tsed-source": "./src/index.ts",
+      "types": "./lib/types/index.d.ts",
+      "import": "./lib/esm/index.js",
+      "default": "./lib/esm/index.js"
+    }
+  },
+  "scripts": {
+    "build": "yarn build:ts",
+    "build:ts": "tsc --build tsconfig.esm.json",
+    "test": "vitest run",
+    "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
+  },
+  "keywords": [
+    "cli",
+    "tasks",
+    "listr",
+    "tsed"
+  ],
+  "dependencies": {
+    "listr2": "^8.2.4"
+  },
+  "devDependencies": {
+    "@tsed/typescript": "workspace:*",
+    "typescript": "5.6.2",
+    "vitest": "3.2.4"
+  }
+}

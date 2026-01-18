@@ -1,4 +1,5 @@
 import {CliHttpClient} from "@tsed/cli-core";
+import type {PromptQuestion} from "@tsed/cli-prompts";
 import {inject} from "@tsed/di";
 
 import {ArchitectureConvention, type InitOptions, PlatformType, ProjectConvention} from "../../../interfaces/index.js";
@@ -395,160 +396,160 @@ export const FeaturesMap: Record<string, Feature> = {
   }
 };
 
-export const FeaturesPrompt = (availableRuntimes: string[], availablePackageManagers: string[]) => [
-  {
-    message: "Choose the target Framework:",
-    type: "list",
-    name: "platform",
-    choices: [PlatformType.EXPRESS, PlatformType.KOA, PlatformType.FASTIFY]
-  },
-  {
-    message: "Choose the architecture for your project:",
-    type: "list",
-    name: "architecture",
-    choices: [ArchitectureConvention.DEFAULT, ArchitectureConvention.FEATURE]
-  },
-  {
-    message: "Choose the convention file styling:",
-    type: "list",
-    name: "convention",
-    choices: [ProjectConvention.DEFAULT, ProjectConvention.ANGULAR]
-  },
-  {
-    type: "checkbox",
-    name: "features",
-    message: "Choose the features needed for your project",
-    choices: [
-      FeatureType.CONFIG,
-      FeatureType.GRAPHQL,
-      FeatureType.ORM,
-      FeatureType.PASSPORTJS,
-      FeatureType.SOCKETIO,
-      FeatureType.DOC,
-      FeatureType.OIDC,
-      FeatureType.TESTING,
-      FeatureType.LINTER,
-      FeatureType.COMMANDS
-    ].sort((a, b) => a.localeCompare(b))
-  },
-  {
-    type: "checkbox",
-    message: "Choose configuration sources",
-    name: "featuresConfig",
-    when: hasFeature(FeatureType.CONFIG),
-    choices: [
-      FeatureType.CONFIG_ENVS,
-      FeatureType.CONFIG_DOTENV,
-      FeatureType.CONFIG_JSON,
-      FeatureType.CONFIG_YAML,
-      FeatureType.CONFIG_AWS_SECRETS,
-      FeatureType.CONFIG_IOREDIS,
-      FeatureType.CONFIG_MONGO,
-      FeatureType.CONFIG_VAULT,
-      FeatureType.CONFIG_POSTGRES
-    ]
-  },
-  {
-    type: "checkbox",
-    message: "Choose a documentation plugin",
-    name: "featuresDoc",
-    when: hasFeature(FeatureType.DOC),
-    choices: [FeatureType.SWAGGER, FeatureType.SCALAR]
-  },
-  {
-    message: "Choose a ORM manager",
-    type: "list",
-    name: "featuresDB",
-    when: hasFeature(FeatureType.ORM),
-    choices: [FeatureType.PRISMA, FeatureType.MONGOOSE, FeatureType.TYPEORM]
-  },
-  {
-    type: "list",
-    name: "featuresTypeORM",
-    message: "Which TypeORM you want to install?",
-    choices: [
-      FeatureType.TYPEORM_MYSQL,
-      FeatureType.TYPEORM_MARIADB,
-      FeatureType.TYPEORM_POSTGRES,
-      FeatureType.TYPEORM_COCKROACHDB,
-      FeatureType.TYPEORM_SQLITE,
-      FeatureType.TYPEORM_BETTER_SQLITE3,
-      FeatureType.TYPEORM_CORDOVA,
-      FeatureType.TYPEORM_NATIVESCRIPT,
-      FeatureType.TYPEORM_ORACLE,
-      FeatureType.TYPEORM_MSSQL,
-      FeatureType.TYPEORM_MONGODB,
-      FeatureType.TYPEORM_SQLJS,
-      FeatureType.TYPEORM_REACTNATIVE,
-      FeatureType.TYPEORM_EXPO
-    ],
-    when: hasValue("featuresDB", FeatureType.TYPEORM)
-  },
-  {
-    type: "autocomplete",
-    name: "passportPackage",
-    message: "Which passport package ?",
-    when: hasFeature(FeatureType.PASSPORTJS),
-    async source(_: any, input: string): Promise<any[]> {
-      const result = await inject(CliHttpClient).get<any[]>(`https://www.passportjs.org/packages/-/all.json`, {});
+export const FeaturesPrompt = (availableRuntimes: string[], availablePackageManagers: string[]) =>
+  [
+    {
+      message: "Choose the target Framework:",
+      type: "list",
+      name: "platform",
+      choices: [PlatformType.EXPRESS, PlatformType.KOA, PlatformType.FASTIFY]
+    },
+    {
+      message: "Choose the architecture for your project:",
+      type: "list",
+      name: "architecture",
+      choices: [ArchitectureConvention.DEFAULT, ArchitectureConvention.FEATURE]
+    },
+    {
+      message: "Choose the convention file styling:",
+      type: "list",
+      name: "convention",
+      choices: [ProjectConvention.DEFAULT, ProjectConvention.ANGULAR]
+    },
+    {
+      type: "checkbox",
+      name: "features",
+      message: "Choose the features needed for your project",
+      choices: [
+        FeatureType.CONFIG,
+        FeatureType.GRAPHQL,
+        FeatureType.ORM,
+        FeatureType.PASSPORTJS,
+        FeatureType.SOCKETIO,
+        FeatureType.DOC,
+        FeatureType.OIDC,
+        FeatureType.TESTING,
+        FeatureType.LINTER,
+        FeatureType.COMMANDS
+      ].sort((a, b) => a.localeCompare(b))
+    },
+    {
+      type: "checkbox",
+      message: "Choose configuration sources",
+      name: "featuresConfig",
+      when: hasFeature(FeatureType.CONFIG),
+      choices: [
+        FeatureType.CONFIG_ENVS,
+        FeatureType.CONFIG_DOTENV,
+        FeatureType.CONFIG_JSON,
+        FeatureType.CONFIG_YAML,
+        FeatureType.CONFIG_AWS_SECRETS,
+        FeatureType.CONFIG_IOREDIS,
+        FeatureType.CONFIG_MONGO,
+        FeatureType.CONFIG_VAULT,
+        FeatureType.CONFIG_POSTGRES
+      ]
+    },
+    {
+      type: "checkbox",
+      message: "Choose a documentation plugin",
+      name: "featuresDoc",
+      when: hasFeature(FeatureType.DOC),
+      choices: [FeatureType.SWAGGER, FeatureType.SCALAR]
+    },
+    {
+      message: "Choose a ORM manager",
+      type: "list",
+      name: "featuresDB",
+      when: hasFeature(FeatureType.ORM),
+      choices: [FeatureType.PRISMA, FeatureType.MONGOOSE, FeatureType.TYPEORM]
+    },
+    {
+      type: "list",
+      name: "featuresTypeORM",
+      message: "Which TypeORM you want to install?",
+      choices: [
+        FeatureType.TYPEORM_MYSQL,
+        FeatureType.TYPEORM_MARIADB,
+        FeatureType.TYPEORM_POSTGRES,
+        FeatureType.TYPEORM_COCKROACHDB,
+        FeatureType.TYPEORM_SQLITE,
+        FeatureType.TYPEORM_BETTER_SQLITE3,
+        FeatureType.TYPEORM_CORDOVA,
+        FeatureType.TYPEORM_NATIVESCRIPT,
+        FeatureType.TYPEORM_ORACLE,
+        FeatureType.TYPEORM_MSSQL,
+        FeatureType.TYPEORM_MONGODB,
+        FeatureType.TYPEORM_SQLJS,
+        FeatureType.TYPEORM_REACTNATIVE,
+        FeatureType.TYPEORM_EXPO
+      ],
+      when: hasValue("featuresDB", FeatureType.TYPEORM)
+    },
+    {
+      type: "autocomplete",
+      name: "passportPackage",
+      message: "Which passport package ?",
+      when: hasFeature(FeatureType.PASSPORTJS),
+      async source(_: any): Promise<any[]> {
+        const result = await inject(CliHttpClient).get<any[]>(`https://www.passportjs.org/packages/-/all.json`, {});
 
-      return Object.values(result)
-        .filter((o) => {
-          return o.name?.startsWith("passport-");
-        })
-        .filter((item) => item.name.toLowerCase().includes(input.toLowerCase()))
-        .map((item) => ({
-          name: `${item.name} - ${item.description}`,
-          value: item.name
-        }));
+        return Object.values(result)
+          .filter((o) => {
+            return o.name && o.name?.startsWith("passport-");
+          })
+          .map((item) => ({
+            name: `${item.name} - ${item.description}`,
+            value: item.name
+          }));
+      }
+    },
+    {
+      type: "password",
+      name: "GH_TOKEN",
+      message:
+        "Enter GH_TOKEN to use the premium @tsedio package or leave blank (see https://tsed.dev/plugins/premium/install-premium-plugins.html)",
+      when: hasValuePremium()
+    },
+    {
+      message: "Choose unit framework",
+      type: "list",
+      name: "featuresTesting",
+      when: hasFeature(FeatureType.TESTING),
+      choices: [FeatureType.VITEST, FeatureType.JEST]
+    },
+    {
+      message: "Choose linter tools framework",
+      type: "list",
+      name: "featuresLinter",
+      when: hasFeature(FeatureType.LINTER),
+      choices: [FeatureType.ESLINT]
+    },
+    {
+      message: "Choose extra linter tools",
+      type: "checkbox",
+      name: "featuresExtraLinter",
+      when: hasFeature(FeatureType.LINTER),
+      choices: [FeatureType.PRETTIER, FeatureType.LINT_STAGED]
+    },
+    {
+      message: "Choose the OIDC base path server",
+      name: "oidcBasePath",
+      default: "/oidc",
+      when: hasFeature(FeatureType.OIDC),
+      type: "input"
+    },
+    {
+      message: "Choose the runtime:",
+      type: "list",
+      name: "runtime",
+      choices: availableRuntimes
+    },
+    {
+      message: "Choose the package manager:",
+      type: "list",
+      name: "packageManager",
+      when: hasValue("runtime", ["node", "babel", "swc", "webpack"]),
+      choices: availablePackageManagers
     }
-  },
-  {
-    type: "password",
-    name: "GH_TOKEN",
-    message:
-      "Enter GH_TOKEN to use the premium @tsedio package or leave blank (see https://tsed.dev/plugins/premium/install-premium-plugins.html)",
-    when: hasValuePremium()
-  },
-  {
-    message: "Choose unit framework",
-    type: "list",
-    name: "featuresTesting",
-    when: hasFeature(FeatureType.TESTING),
-    choices: [FeatureType.VITEST, FeatureType.JEST]
-  },
-  {
-    message: "Choose linter tools framework",
-    type: "list",
-    name: "featuresLinter",
-    when: hasFeature(FeatureType.LINTER),
-    choices: [FeatureType.ESLINT]
-  },
-  {
-    message: "Choose extra linter tools",
-    type: "checkbox",
-    name: "featuresExtraLinter",
-    when: hasFeature(FeatureType.LINTER),
-    choices: [FeatureType.PRETTIER, FeatureType.LINT_STAGED]
-  },
-  {
-    message: "Choose the OIDC base path server",
-    name: "oidcBasePath",
-    default: "/oidc",
-    when: hasFeature(FeatureType.OIDC),
-    type: "input"
-  },
-  {
-    message: "Choose the runtime:",
-    type: "list",
-    name: "runtime",
-    choices: availableRuntimes
-  },
-  {
-    message: "Choose the package manager:",
-    type: "list",
-    name: "packageManager",
-    when: hasValue("runtime", ["node", "babel", "swc", "webpack"]),
-    choices: availablePackageManagers
-  }
-];
+  ] satisfies PromptQuestion[];

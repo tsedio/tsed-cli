@@ -358,6 +358,13 @@ describe("getFeaturesPrompt", () => {
           "when": [Function],
         },
         {
+          "message": "Which passport package ?",
+          "name": "passportPackage",
+          "source": [Function],
+          "type": "autocomplete",
+          "when": [Function],
+        },
+        {
           "message": "Enter GH_TOKEN to use the premium @tsedio package or leave blank (see https://tsed.dev/plugins/premium/install-premium-plugins.html)",
           "name": "GH_TOKEN",
           "type": "password",

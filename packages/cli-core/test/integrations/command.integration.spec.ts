@@ -39,13 +39,15 @@ describe("Command", () => {
       argv: [require.resolve("ts-node"), "src/bin/tsed.ts", "test", "subcmd"]
     });
 
-    expect(TestCommand.prototype.$exec).toHaveBeenCalledWith({
-      commandName: "test",
-      bindLogger: true,
-      argument: "subcmd",
-      rawArgs: [],
-      rootDir: undefined,
-      verbose: false
-    });
+    expect(TestCommand.prototype.$exec).toHaveBeenCalledWith(
+      expect.objectContaining({
+        commandName: "test",
+        bindLogger: true,
+        argument: "subcmd",
+        rawArgs: [],
+        verbose: false
+      })
+    );
+    expect((TestCommand.prototype.$exec as any).mock.calls[0][0].logger).toBeDefined();
   });
 });

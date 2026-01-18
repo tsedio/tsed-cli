@@ -2821,6 +2821,7 @@ __metadata:
   dependencies:
     "@ts-morph/common": "npm:0.28.0"
     "@tsed/cli-prompts": "workspace:*"
+    "@tsed/cli-tasks": "workspace:*"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/logger-pattern-layout": "npm:>=8.0.3"
     "@tsed/logger-std": "npm:>=8.0.3"
@@ -2848,7 +2849,6 @@ __metadata:
     fs-extra: "npm:^11.2.0"
     globby: "npm:^14.0.2"
     js-yaml: "npm:^4.1.0"
-    listr2: "npm:^8.2.4"
     read-pkg-up: "npm:^11.0.0"
     registry-auth-token: "npm:^5.1.0"
     registry-url: "npm:^6.0.1"
@@ -3186,7 +3186,6 @@ __metadata:
     js-yaml: "npm:^4.1.0"
     lerna: "npm:^8.1.8"
     lint-staged: "npm:15.2.10"
-    listr2: "npm:^8.2.4"
     markdown-it: "npm:14.1.0"
     prettier: "npm:3.3.3"
     read-pkg-up: "npm:^11.0.0"
@@ -3202,6 +3201,17 @@ __metadata:
     typescript: "npm:5.6.2"
     unplugin-swc: "npm:^1.5.1"
     update-notifier: "npm:^7.3.1"
+    vitest: "npm:3.2.4"
+  languageName: unknown
+  linkType: soft
+
+"@tsed/cli-tasks@workspace:*, @tsed/cli-tasks@workspace:packages/cli-tasks":
+  version: 0.0.0-use.local
+  resolution: "@tsed/cli-tasks@workspace:packages/cli-tasks"
+  dependencies:
+    "@tsed/typescript": "workspace:*"
+    listr2: "npm:^8.2.4"
+    typescript: "npm:5.6.2"
     vitest: "npm:3.2.4"
   languageName: unknown
   linkType: soft

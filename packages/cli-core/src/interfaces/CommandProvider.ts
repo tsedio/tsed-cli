@@ -1,6 +1,5 @@
 import type {PromptQuestion} from "@tsed/cli-prompts";
-
-import type {Tasks} from "./Tasks.js";
+import type {Tasks} from "@tsed/cli-tasks";
 
 export interface CommandProvider<Ctx = any> {
   /**

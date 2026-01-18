@@ -1,12 +1,11 @@
+import {createSubTasks} from "@tsed/cli-tasks";
 import {constant, inject, injectable} from "@tsed/di";
 import {$asyncEmit} from "@tsed/hooks";
 import chalk from "chalk";
 
 import type {Task} from "../interfaces/index.js";
 import {PackageManagersModule} from "../packageManagers/PackageManagersModule.js";
-import {createSubTasks} from "../utils/createTasksRunner.js";
 import {loadPlugins} from "../utils/loadPlugins.js";
-import {CliHooks} from "./CliHooks.js";
 import {NpmRegistryClient} from "./NpmRegistryClient.js";
 import {ProjectPackageJson} from "./ProjectPackageJson.js";
 

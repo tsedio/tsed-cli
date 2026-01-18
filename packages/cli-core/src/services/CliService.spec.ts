@@ -48,13 +48,14 @@ describe("CliService", () => {
           commandName: "generate"
         })
       );
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         verbose: true,
         tsed: "yes",
         flag: true,
         commandName: "generate",
         bindLogger: $ctx.get("command")!.bindLogger
       });
+      expect(result.logger).toBe(logger());
       expect(logger().level.toLowerCase()).toBe("debug");
     } finally {
       logger().level = originalLevel;
