@@ -10,7 +10,7 @@ import {
   type InitCmdContext,
   render
 } from "@tsed/cli";
-import {ProjectPackageJson, type Task, type Tasks} from "@tsed/cli-core";
+import {ProjectPackageJson, type Task} from "@tsed/cli-core";
 import {inject, injectable} from "@tsed/di";
 
 export class CliPluginVitestModule implements AlterInitSubTasks, AlterPackageJson, AlterGenerateTasks {
@@ -46,7 +46,7 @@ export class CliPluginVitestModule implements AlterInitSubTasks, AlterPackageJso
     ];
   }
 
-  $alterGenerateTasks(tasks: Task[], data: GenerateCmdContext): Tasks {
+  $alterGenerateTasks(tasks: Task[], data: GenerateCmdContext): Task[] {
     const {symbolPath} = data;
 
     return [
