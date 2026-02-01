@@ -32,7 +32,7 @@ Please refer to the [documentation](https://cli.tsed.dev/) for more details.
 
 ## Recent Updates
 
-- Introduced `@tsed/cli-tasks`, a shared task-runner package that wraps Listr2 so commands, plugins, and templates can depend on Ts.ED helpers without pulling Listr directly.
+- Introduced `@tsed/cli-tasks`, a shared task-runner package powered by `@clack/prompts` so commands, plugins, and templates share a consistent renderer without pulling Listr directly.
 
 ## Installation
 

@@ -24,11 +24,15 @@
   "keywords": [
     "cli",
     "tasks",
-    "listr",
+    "clack",
     "tsed"
   ],
   "dependencies": {
-    "listr2": "^8.2.4"
+    "@clack/prompts": ">=1.0.0-alpha.10",
+    "@tsed/core": ">=8.21.0",
+    "@tsed/di": ">=8.21.0",
+    "@tsed/hooks": ">=8.21.0",
+    "@tsed/logger": ">=8.0.3"
   },
   "devDependencies": {
     "@tsed/typescript": "workspace:*",

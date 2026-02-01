@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/tsedio/tsed-cli",
   "dependencies": {
-    "@clack/prompts": "^0.7.0",
+    "@clack/prompts": "^1.0.0-alpha.10",
     "@tsed/core": ">=8.21.0",
     "@tsed/di": ">=8.21.0",
     "@tsed/logger": ">=8.0.3",
