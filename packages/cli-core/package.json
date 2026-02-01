@@ -29,7 +29,7 @@
     "decorators",
     "commander.js",
     "prompts",
-    "listr"
+    "clack"
   ],
   "dependencies": {
     "@ts-morph/common": "0.28.0",

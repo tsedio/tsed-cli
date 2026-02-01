@@ -152,7 +152,7 @@ export class GenerateCmd implements CommandProvider {
   }
 
   /**
-   * Perform action like generate files. The tasks returned by $exec method rely on @tsed/cli-tasks helpers so you don't have to depend on Listr directly.
+   * Perform action like generate files. The tasks returned by $exec method rely on the @clack/prompts-powered @tsed/cli-tasks helpers.
    */
   async $exec(options: GenerateCmdContext) {
     const {outputFile, ...data} = options;
