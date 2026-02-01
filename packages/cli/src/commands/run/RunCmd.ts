@@ -1,4 +1,4 @@
-import {CliFs, command, type CommandProvider, inject, normalizePath, ProjectPackageJson, type Tasks} from "@tsed/cli-core";
+import {CliFs, command, type CommandProvider, inject, normalizePath, ProjectPackageJson} from "@tsed/cli-core";
 import {logger} from "@tsed/di";
 
 import {CliRunScript} from "../../services/CliRunScript.js";
@@ -14,7 +14,7 @@ export class RunCmd implements CommandProvider {
   protected projectPackageJson = inject(ProjectPackageJson);
   protected runScript = inject(CliRunScript);
 
-  async $exec(ctx: RunCmdContext): Promise<Tasks> {
+  async $exec(ctx: RunCmdContext) {
     const cmd = "node";
     const args = ["--import", "@swc-node/register/esm-register"];
     const path = normalizePath("src/bin/index.ts");
@@ -24,8 +24,6 @@ export class RunCmd implements CommandProvider {
     await this.runScript.run(cmd, [...args, path, ctx.command, ...ctx.rawArgs], {
       env: process.env
     });
-
-    return [];
   }
 }
 

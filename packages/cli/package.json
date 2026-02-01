@@ -52,6 +52,8 @@
     "@swc/helpers": "^0.5.17",
     "@tsed/cli-core": "workspace:*",
     "@tsed/cli-mcp": "workspace:*",
+    "@tsed/cli-prompts": "workspace:*",
+    "@tsed/cli-tasks": "workspace:*",
     "@tsed/core": ">=8.21.0",
     "@tsed/di": ">=8.21.0",
     "@tsed/hooks": ">=8.21.0",

@@ -9,14 +9,13 @@ import {
   command,
   type CommandProvider,
   Configuration,
-  createSubTasks,
-  createTasksRunner,
   inject,
   PackageManagersModule,
   ProjectPackageJson,
   type Task
 } from "@tsed/cli-core";
 import type {PromptQuestion} from "@tsed/cli-prompts";
+import {tasks} from "@tsed/cli-tasks";
 import {isString} from "@tsed/core";
 import {constant} from "@tsed/di";
 import {$asyncAlter} from "@tsed/hooks";
@@ -108,7 +107,7 @@ export class InitCmd implements CommandProvider {
     } as InitOptions;
   }
 
-  async $exec(ctx: InitOptions): Promise<Task[]> {
+  preExec(ctx: InitOptions) {
     this.fs.ensureDirSync(this.packageJson.cwd);
 
     ctx.projectName && (this.packageJson.name = ctx.projectName);
@@ -119,7 +118,7 @@ export class InitCmd implements CommandProvider {
     ctx.platform && this.packageJson.setPreference("platform", ctx.platform);
     ctx.GH_TOKEN && this.packageJson.setGhToken(ctx.GH_TOKEN);
 
-    await createTasksRunner(
+    return tasks(
       [
         {
           title: "Write RC files",
@@ -139,21 +138,22 @@ export class InitCmd implements CommandProvider {
             this.addFeatures(ctx);
           }
         },
-        {
-          title: "Install plugins",
-          task: createSubTasks(() => this.packageManagers.install(ctx), {...ctx, concurrent: false})
-        },
+        this.packageManagers.task("Install plugins", ctx),
         {
           title: "Load plugins",
           task: () => this.cliPlugins.loadPlugins()
         },
         {
           title: "Install plugins dependencies",
-          task: createSubTasks(() => this.cliPlugins.addPluginsDependencies(ctx), {...ctx, concurrent: false})
+          task: () => this.cliPlugins.addPluginsDependencies(ctx)
         }
       ],
       ctx
     );
+  }
+
+  async $exec(ctx: InitOptions): Promise<Task[]> {
+    await this.preExec(ctx);
 
     const runtime = this.runtimes.get();
 
@@ -171,36 +171,33 @@ export class InitCmd implements CommandProvider {
       },
       {
         title: "Alter package json",
-        task: () => {
-          return $asyncAlter("$alterPackageJson", this.packageJson, [ctx]);
+        task: async () => {
+          await $asyncAlter("$alterPackageJson", this.packageJson, [ctx]);
         }
       },
       {
         title: "Generate additional project files",
-        task: createSubTasks(
-          async () => {
-            const subTasks = [
-              ...(await exec("generate", {
-                //...ctx,
-                type: "controller",
-                route: "rest",
-                name: "HelloWorld",
-                directory: "rest"
-              })),
-              ...(ctx.commands
-                ? await exec("generate", {
-                    //...ctx,
-                    type: "command",
-                    route: "hello",
-                    name: "hello"
-                  })
-                : [])
-            ];
+        task: async () => {
+          const subTasks = [
+            ...(await exec("generate", {
+              //...ctx,
+              type: "controller",
+              route: "rest",
+              name: "HelloWorld",
+              directory: "rest"
+            })),
+            ...(ctx.commands
+              ? await exec("generate", {
+                  //...ctx,
+                  type: "command",
+                  route: "hello",
+                  name: "hello"
+                })
+              : [])
+          ];
 
-            return $asyncAlter("$alterInitSubTasks", subTasks, [ctx]);
-          },
-          {...ctx, concurrent: false}
-        )
+          return $asyncAlter("$alterInitSubTasks", subTasks, [ctx]);
+        }
       },
       {
         title: "transform generated files to the project configuration",
