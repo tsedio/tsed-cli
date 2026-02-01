@@ -137,7 +137,7 @@ export interface PromptCheckboxQuestion<Value = any>
  */
 export interface PromptAutocompleteQuestion<Value = any>
   extends PromptBaseQuestion<Value>,
-    Omit<AutocompleteOptions<Value>, "message" | "options"> {
+    Omit<AutocompleteOptions<Value>, "message" | "options" | "filter"> {
   type: "autocomplete";
   /**
    * Async loader returning the set of choices filtered by the keyword.
