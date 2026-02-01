@@ -8,6 +8,7 @@ export * from "./packageManagers/index.js";
 export * from "./services/index.js";
 export * from "./utils/index.js";
 export * from "@tsed/cli-prompts";
+export * from "@tsed/cli-tasks";
 export * from "@tsed/core";
 export * from "@tsed/di";
 export * from "@tsed/logger";

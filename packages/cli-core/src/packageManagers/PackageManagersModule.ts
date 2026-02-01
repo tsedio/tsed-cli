@@ -1,4 +1,5 @@
-import {Inject, inject, injectable, injectMany} from "@tsed/di";
+import type {Task} from "@tsed/cli-tasks";
+import {inject, injectable, injectMany} from "@tsed/di";
 import {EMPTY, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 
@@ -52,7 +53,15 @@ export class PackageManagersModule {
     return packageManager.init(options as any);
   }
 
-  install(options: InstallOptions = {}) {
+  task(title: string, ctx: InstallOptions = {}): Task {
+    return {
+      title,
+      type: "progress",
+      task: () => this.install(ctx)
+    };
+  }
+
+  install(options: InstallOptions = {}): Task[] {
     const packageManager = this.get(options.packageManager);
     options.packageManager = packageManager.name;
 
@@ -68,21 +77,10 @@ export class PackageManagersModule {
       }
     };
 
-    const errorPipe = () =>
-      catchError((error: any) => {
-        if (error.stderr.startsWith("error Your lockfile needs to be updated")) {
-          return throwError(
-            new Error(`yarn.lock file is outdated. Run ${packageManager.name}, commit the updated lockfile and try again.`)
-          );
-        }
-
-        return throwError(error);
-      });
-
     return [
       {
         title: "Write package.json",
-        enabled: () => this.projectPackageJson.rewrite,
+        skip: () => !this.projectPackageJson.rewrite,
         task: () => {
           this.projectPackageJson.write();
         }
@@ -90,22 +88,27 @@ export class PackageManagersModule {
       {
         title: `Installing dependencies using ${packageManager.name}`,
         skip: () => !this.projectPackageJson.reinstall,
-        task: () => packageManager.install(options as any) // .pipe(errorPipe())
+        task: () => packageManager.install(options as any)
       },
       {
         title: `Add dependencies using ${packageManager.name}`,
-        skip: () => !deps.length,
-        task: () => packageManager.add(deps, options as any) //.pipe(errorPipe())
+        enabled: !!deps.length,
+        task: () => packageManager.add(deps, options as any)
       },
       {
         title: `Add devDependencies using ${packageManager.name}`,
-        skip: () => !devDeps.length,
-        task: () => packageManager.addDev(devDeps, options as any) //.pipe(errorPipe())
+        enabled: !!devDeps.length,
+        task: () => packageManager.addDev(devDeps, options as any)
+      },
+      {
+        title: `Installing dependencies using ${packageManager.name}`,
+        skip: () => !this.projectPackageJson.reinstall,
+        task: () => packageManager.install(options as any)
       },
       {
         title: "Refresh",
         task: () => {
-          this.projectPackageJson.refresh();
+          return this.projectPackageJson.refresh();
         }
       }
     ];

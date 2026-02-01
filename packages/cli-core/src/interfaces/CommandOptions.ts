@@ -1,10 +1,10 @@
 import type {PromptQuestion} from "@tsed/cli-prompts";
+import type {MaybePromise, Task} from "@tsed/cli-tasks";
 import {Type} from "@tsed/core";
 import type {TokenProvider} from "@tsed/di";
 import type {JsonSchema} from "@tsed/schema";
 
 import type {CommandProvider} from "./CommandProvider.js";
-import type {Tasks} from "./Tasks.js";
 
 export interface CommandArg {
   /**
@@ -89,12 +89,10 @@ export interface BaseCommandOptions<Input> {
   enableFeatures?: string[];
 
   disableReadUpPkg?: boolean;
-
-  bindLogger?: boolean;
 }
 
 interface FunctionalCommandOptions<Input> extends BaseCommandOptions<Input> {
-  handler: (data: Input) => Tasks | Promise<Tasks> | any | Promise<any>;
+  handler: (data: Input) => MaybePromise<Task<Input>[] | void>;
 
   prompt?(initialOptions: Partial<Input>): PromptQuestion[] | Promise<PromptQuestion[]>;
 

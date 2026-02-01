@@ -1,9 +1,9 @@
 import {PromptRunner} from "@tsed/cli-prompts";
+import {concat, tasks as tasksRunner} from "@tsed/cli-tasks";
 import {classOf, isArrowFn} from "@tsed/core";
 import {
   configuration,
   constant,
-  context,
   destroyInjector,
   DIContext,
   getContext,
@@ -25,7 +25,6 @@ import type {CommandArg, CommandOpts} from "../interfaces/CommandOptions.js";
 import type {CommandProvider} from "../interfaces/CommandProvider.js";
 import type {Task} from "../interfaces/index.js";
 import {PackageManagersModule} from "../packageManagers/index.js";
-import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner.js";
 import {getCommandMetadata} from "../utils/getCommandMetadata.js";
 import {mapCommanderOptions, validate} from "../utils/index.js";
 import {mapCommanderArgs} from "../utils/mapCommanderArgs.js";
@@ -91,20 +90,14 @@ export class CliService {
 
     if (tasks.length) {
       if (this.reinstallAfterRun && (this.projectPkg.rewrite || this.projectPkg.reinstall)) {
-        tasks.push(
-          {
-            title: "Install dependencies",
-            task: createSubTasks(() => this.packageManagers.install(data), {...data, concurrent: false})
-          },
-          ...(await this.getPostInstallTasks(cmdName, data))
-        );
+        tasks.push(this.packageManagers.task("Install dependencies", data), ...(await this.getPostInstallTasks(cmdName, data)));
       }
 
       data = this.mapData(cmdName, data, $ctx);
 
       $ctx.set("data", data);
 
-      return createTasksRunner(tasks, data);
+      return tasksRunner(tasks, data);
     }
   }
 
@@ -150,25 +143,7 @@ export class CliService {
 
     data = this.mapData(cmdName, data, $ctx);
 
-    const tasks = [];
-
-    tasks.push(...((await instance.$exec(data)) || []));
-    tasks.push(...(await $asyncAlter(`$alter${pascalCase(cmdName)}Tasks`, [], [data])));
-
-    return tasks.map((opts) => {
-      return {
-        ...opts,
-        task: async (arg, task) => {
-          context().set("currentTask", task);
-
-          const result = await opts.task(arg, task);
-
-          context().delete("currentTask");
-
-          return result;
-        }
-      };
-    });
+    return concat(await instance.$exec(data), await $asyncAlter(`$alter${pascalCase(cmdName)}Tasks`, [], [data]));
   }
 
   public async getPostInstallTasks(cmdName: string, data: any) {
@@ -177,11 +152,11 @@ export class CliService {
 
     data = this.mapData(cmdName, data, getContext()!);
 
-    return [
-      ...(instance.$postInstall ? await instance.$postInstall(data) : []),
-      ...(await $asyncAlter(`$alter${pascalCase(cmdName)}PostInstallTasks`, [] as Task[], [data])),
-      ...(instance.$afterPostInstall ? await instance.$afterPostInstall(data) : [])
-    ];
+    return concat(
+      await instance.$postInstall?.(data),
+      await $asyncAlter(`$alter${pascalCase(cmdName)}PostInstallTasks`, [] as Task[], [data]),
+      await instance.$afterPostInstall?.(data)
+    );
   }
 
   public createCommand(metadata: CommandMetadata) {
@@ -286,7 +261,7 @@ export class CliService {
       logger().level = "info";
     }
 
-    data.bindLogger = $ctx.get("command")?.bindLogger;
+    data.logger = logger();
 
     $ctx.set("data", data);
 

@@ -44,7 +44,7 @@ export class ${symbolName} implements CommandProvider {
     };
   }
   /**
-   *  This step run your tasks with Listr module
+   *  This step runs your tasks via the @clack/prompts-based @tsed/cli-tasks helpers.
    */
   async $exec(ctx: ${symbolName}Context): Promise<any> {
     return [

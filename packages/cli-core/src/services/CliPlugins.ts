@@ -4,9 +4,7 @@ import chalk from "chalk";
 
 import type {Task} from "../interfaces/index.js";
 import {PackageManagersModule} from "../packageManagers/PackageManagersModule.js";
-import {createSubTasks} from "../utils/createTasksRunner.js";
 import {loadPlugins} from "../utils/loadPlugins.js";
-import {CliHooks} from "./CliHooks.js";
 import {NpmRegistryClient} from "./NpmRegistryClient.js";
 import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
@@ -43,18 +41,7 @@ export class CliPlugins {
       };
     });
 
-    return [
-      ...tasks,
-      {
-        title: "Install",
-        task: createSubTasks(
-          () => {
-            return this.packageManagers.install(ctx);
-          },
-          {...ctx, concurrent: false}
-        )
-      }
-    ];
+    return [...tasks, this.packageManagers.task("Install dependencies", ctx)];
   }
 
   protected getKeyword(keyword: string) {

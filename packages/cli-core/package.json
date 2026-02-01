@@ -29,11 +29,12 @@
     "decorators",
     "commander.js",
     "prompts",
-    "listr"
+    "clack"
   ],
   "dependencies": {
     "@ts-morph/common": "0.28.0",
     "@tsed/cli-prompts": "workspace:*",
+    "@tsed/cli-tasks": "workspace:*",
     "@tsed/logger": ">=8.0.3",
     "@tsed/logger-pattern-layout": ">=8.0.3",
     "@tsed/logger-std": ">=8.0.3",
@@ -48,7 +49,6 @@
     "fs-extra": "^11.2.0",
     "globby": "^14.0.2",
     "js-yaml": "^4.1.0",
-    "listr2": "^8.2.4",
     "read-pkg-up": "^11.0.0",
     "registry-auth-token": "^5.1.0",
     "registry-url": "^6.0.1",

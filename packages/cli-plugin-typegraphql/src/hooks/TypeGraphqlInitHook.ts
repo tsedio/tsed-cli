@@ -1,5 +1,5 @@
 import {type CliCommandHooks, exec, type InitCmdContext, ProjectClient, type RenderDataContext} from "@tsed/cli";
-import {createSubTasks, type Task} from "@tsed/cli-core";
+import {type Task} from "@tsed/cli-core";
 import {injectable} from "@tsed/di";
 import {SyntaxKind} from "ts-morph";
 
@@ -10,14 +10,12 @@ export class TypeGraphqlInitHook implements CliCommandHooks {
       {
         title: "Generate initial resolver",
         enabled: () => !!data.graphql,
-        task: createSubTasks(
-          await exec("generate", {
+        task: () =>
+          exec("generate", {
             ...data,
             type: "typegraphql.resolver",
             name: "Recipe"
-          }),
-          {...data, concurrent: false}
-        )
+          })
       }
     ];
   }

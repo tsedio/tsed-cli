@@ -35,7 +35,7 @@ describe("CliService", () => {
       level: "info",
       platform: "CLI"
     });
-    $ctx.set("command", {bindLogger: vi.fn()});
+    $ctx.set("command", {});
 
     const originalLevel = logger().level;
     try {
@@ -48,13 +48,13 @@ describe("CliService", () => {
           commandName: "generate"
         })
       );
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         verbose: true,
         tsed: "yes",
         flag: true,
-        commandName: "generate",
-        bindLogger: $ctx.get("command")!.bindLogger
+        commandName: "generate"
       });
+      expect(result.logger).toBe(logger());
       expect(logger().level.toLowerCase()).toBe("debug");
     } finally {
       logger().level = originalLevel;
@@ -225,7 +225,6 @@ describe("CliService", () => {
       },
       enableFeatures: [],
       disableReadUpPkg: false,
-      bindLogger: true,
       inputSchema: schema
     };
 
@@ -271,7 +270,6 @@ describe("CliService", () => {
       },
       enableFeatures: [],
       disableReadUpPkg: false,
-      bindLogger: true,
       inputSchema: schema
     };
     const cmd = service.createCommand(metadata);

@@ -1,11 +1,11 @@
 import {type AlterGenerateTasks, CliProjectService, type GenerateCmdContext, render} from "@tsed/cli";
-import {inject, type Task, type Tasks} from "@tsed/cli-core";
+import {inject, type Task} from "@tsed/cli-core";
 import {injectable} from "@tsed/di";
 
 export class JestGenerateHook implements AlterGenerateTasks {
   protected projectService = inject(CliProjectService);
 
-  $alterGenerateTasks(tasks: Task[], data: GenerateCmdContext): Tasks {
+  $alterGenerateTasks(tasks: Task[], data: GenerateCmdContext): Task[] {
     const {symbolPath} = data;
 
     return [

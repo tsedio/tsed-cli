@@ -30,6 +30,10 @@
 
 Please refer to the [documentation](https://cli.tsed.dev/) for more details.
 
+## Recent Updates
+
+- Introduced `@tsed/cli-tasks`, a shared task-runner package powered by `@clack/prompts` so commands, plugins, and templates share a consistent renderer without pulling Listr directly.
+
 ## Installation
 
 ```bash

@@ -1,5 +1,4 @@
 export * from "./createInjector.js";
-export * from "./createTasksRunner.js";
 export * from "./getCommandMetadata.js";
 export * from "./getTemplateDirectory.js";
 export * from "./loadPlugins.js";

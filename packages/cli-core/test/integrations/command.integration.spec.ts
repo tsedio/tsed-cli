@@ -1,6 +1,7 @@
+import type {Task} from "@tsed/cli-tasks";
 import {execa} from "execa";
 
-import {CliCore, Command, type CommandProvider, type Tasks} from "../../src/index.js";
+import {CliCore, Command, type CommandProvider} from "../../src/index.js";
 
 vi.mock("execa");
 
@@ -26,7 +27,7 @@ describe("Command", () => {
       }
     })
     class TestCommand implements CommandProvider {
-      $exec(options: any): Promise<Tasks> {
+      $exec(options: any): Promise<Task[]> {
         return Promise.resolve([]);
       }
     }
@@ -39,13 +40,14 @@ describe("Command", () => {
       argv: [require.resolve("ts-node"), "src/bin/tsed.ts", "test", "subcmd"]
     });
 
-    expect(TestCommand.prototype.$exec).toHaveBeenCalledWith({
-      commandName: "test",
-      bindLogger: true,
-      argument: "subcmd",
-      rawArgs: [],
-      rootDir: undefined,
-      verbose: false
-    });
+    expect(TestCommand.prototype.$exec).toHaveBeenCalledWith(
+      expect.objectContaining({
+        commandName: "test",
+        argument: "subcmd",
+        rawArgs: [],
+        verbose: false
+      })
+    );
+    expect((TestCommand.prototype.$exec as any).mock.calls[0][0].logger).toBeDefined();
   });
 });

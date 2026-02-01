@@ -2,7 +2,6 @@ import {
   CliPlugins,
   command,
   type CommandProvider,
-  createSubTasks,
   inject,
   PackageManagersModule,
   ProjectPackageJson,
@@ -36,21 +35,18 @@ export class AddCmd implements CommandProvider {
     this.packageJson.addDevDependency(ctx.name, "latest");
 
     return [
-      {
-        title: "Install plugins",
-        task: createSubTasks(() => this.packageManagers.install(ctx as any), {...ctx, concurrent: false})
-      },
+      this.packageManagers.task("Install plugins", ctx),
       {
         title: "Load plugins",
         task: () => this.cliPlugins.loadPlugins()
       },
       {
         title: "Install plugins dependencies",
-        task: createSubTasks(() => this.cliPlugins.addPluginsDependencies(ctx), {...ctx, concurrent: false})
+        task: () => this.cliPlugins.addPluginsDependencies(ctx)
       },
       {
         title: "Transform files",
-        task: createSubTasks(() => this.cliPlugins.addPluginsDependencies(ctx), {...ctx, concurrent: false})
+        task: () => this.cliPlugins.addPluginsDependencies(ctx)
       }
     ];
   }

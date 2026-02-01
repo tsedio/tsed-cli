@@ -3,7 +3,6 @@ import {
   command,
   type CommandData,
   type CommandProvider,
-  createSubTasks,
   inject,
   NpmRegistryClient,
   PackageManagersModule,
@@ -92,12 +91,7 @@ export class UpdateCmd implements CommandProvider {
       });
     }
 
-    return [
-      {
-        title: "Update packages",
-        task: createSubTasks(() => this.packageManagers.install(), {...ctx, concurrent: false})
-      }
-    ];
+    return [this.packageManagers.task("Update dependencies", ctx)];
   }
 
   private async getAvailableVersions() {
