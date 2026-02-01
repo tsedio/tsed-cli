@@ -115,6 +115,7 @@ vi.mock("@clack/prompts", () => ({
 }));
 
 const {logMock, progressInstances, spinnerInstances, taskLogInstances} = clack;
+const originalNodeEnv = process.env.NODE_ENV;
 
 describe("TaskLogger", () => {
   beforeEach(() => {
@@ -122,13 +123,17 @@ describe("TaskLogger", () => {
     progressInstances.length = 0;
     spinnerInstances.length = 0;
     taskLogInstances.length = 0;
+    process.env.NODE_ENV = "development";
 
     return DITest.create({
       env: "test"
     });
   });
 
-  afterEach(() => DITest.reset());
+  afterEach(() => {
+    process.env.NODE_ENV = originalNodeEnv;
+    return DITest.reset();
+  });
 
   it("logs start/done using the default log prompt", () => {
     const logger = TaskLogger.from({
@@ -278,6 +283,26 @@ describe("TaskLogger", () => {
     expect(infoSpy).toHaveBeenCalledWith({
       title: "Verbose task",
       message: "report payload"
+    });
+  });
+
+  it("does not emit context logger output when NODE_ENV=test", async () => {
+    process.env.NODE_ENV = "test";
+    const ctx = DITest.createDIContext();
+
+    await runInContext(ctx, () => {
+      const scopedLogger = contextLogger();
+      const infoSpy = vi.spyOn(scopedLogger, "info");
+
+      const logger = new TaskLogger({
+        title: "Suppressed task",
+        index: 0,
+        type: "log",
+        verbose: true
+      });
+
+      logger.message("should not show");
+      expect(infoSpy).not.toHaveBeenCalled();
     });
   });
 
