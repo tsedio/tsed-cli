@@ -1,5 +1,5 @@
 import type {PromptQuestion} from "@tsed/cli-prompts";
-import type {Tasks} from "@tsed/cli-tasks";
+import type {MaybePromise, Task} from "@tsed/cli-tasks";
 
 export interface CommandProvider<Ctx = any> {
   /**
@@ -19,13 +19,13 @@ export interface CommandProvider<Ctx = any> {
    * Run a command
    * @param ctx
    */
-  $exec(ctx: Ctx): Tasks | Promise<Tasks> | any | Promise<any>;
+  $exec(ctx: Ctx): MaybePromise<Task<Ctx>[] | void>;
 
   /**
    * Run commands after the npm/yarn install
    * @param ctx
    */
-  $postInstall?(ctx: Ctx): Tasks | Promise<Tasks> | any | Promise<any>;
+  $postInstall?(ctx: Ctx): MaybePromise<Task<Ctx>[] | void>;
 
-  $afterPostInstall?(ctx: Ctx): Tasks | Promise<Tasks> | any | Promise<any>;
+  $afterPostInstall?(ctx: Ctx): MaybePromise<Task<Ctx>[] | void>;
 }

@@ -13,8 +13,7 @@ class TestCmd {}
 @Command({
   name: "name",
   description: "description",
-  alias: "g",
-  bindLogger: false
+  alias: "g"
 })
 class TestCmd2 {}
 
@@ -33,7 +32,6 @@ describe("getCommandMetadata", () => {
       inputSchema: undefined,
       disableReadUpPkg: false,
       enableFeatures: [],
-      bindLogger: true,
       options: {},
       token: TestCmd
     });
@@ -52,7 +50,6 @@ describe("getCommandMetadata", () => {
       inputSchema: undefined,
       disableReadUpPkg: false,
       enableFeatures: [],
-      bindLogger: false,
       options: {},
       token: TestCmd2
     });

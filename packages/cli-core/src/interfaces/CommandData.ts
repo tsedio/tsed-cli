@@ -7,7 +7,6 @@ declare global {
 export interface CommandData extends TsED.InitialCommandData {
   commandName?: string;
   verbose?: boolean;
-  bindLogger?: boolean;
   rawArgs?: string[];
   [key: string]: any;
 }

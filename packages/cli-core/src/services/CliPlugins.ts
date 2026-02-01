@@ -1,4 +1,3 @@
-import {createSubTasks} from "@tsed/cli-tasks";
 import {constant, inject, injectable} from "@tsed/di";
 import {$asyncEmit} from "@tsed/hooks";
 import chalk from "chalk";
@@ -42,18 +41,7 @@ export class CliPlugins {
       };
     });
 
-    return [
-      ...tasks,
-      {
-        title: "Install",
-        task: createSubTasks(
-          () => {
-            return this.packageManagers.install(ctx);
-          },
-          {...ctx, concurrent: false}
-        )
-      }
-    ];
+    return [...tasks, this.packageManagers.task("Install dependencies", ctx)];
   }
 
   protected getKeyword(keyword: string) {

@@ -1,3 +1,4 @@
+import {taskLogger} from "@tsed/cli-tasks";
 import {injector, lazyInject, logger} from "@tsed/di";
 import chalk from "chalk";
 import figures from "figures";
@@ -18,13 +19,13 @@ export async function loadPlugins() {
     .map(async (mod) => {
       try {
         if ($inj.settings.get("loaded")) {
-          logger().info("Try to load ", mod);
+          taskLogger().info(`Try to load ${mod}`);
           await lazyInject(() => fs.importModule(mod, projectPackageJson.cwd));
         }
 
-        logger().info(chalk.green(figures.tick), mod, "module loaded");
+        taskLogger().info(`${mod} module loaded`);
       } catch (er) {
-        logger().warn(chalk.red(figures.cross), "Fail to load plugin", mod, er.message);
+        taskLogger().warn(`Fail to load plugin ${mod} ${er.message}`);
       }
     });
 

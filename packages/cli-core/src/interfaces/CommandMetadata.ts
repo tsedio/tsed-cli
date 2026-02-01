@@ -3,7 +3,6 @@ import type {BaseCommandOptions, CommandArg, CommandOpts} from "./CommandOptions
 export interface CommandMetadata extends Omit<BaseCommandOptions<any>, "args" | "options" | "allowUnknownOption"> {
   enableFeatures: string[];
   disableReadUpPkg: boolean;
-  bindLogger: boolean;
 
   getOptions(): {
     /**
