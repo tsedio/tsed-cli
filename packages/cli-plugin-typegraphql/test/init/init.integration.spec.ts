@@ -49,6 +49,7 @@ describe("Init TypeGraphQL project", () => {
         "project-name/src/config/config.ts",
         "project-name/src/config/logger/index.ts",
         "project-name/src/config/utils/index.ts",
+        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/graphql/models/RecipeModel.ts",
         "project-name/src/graphql/resolvers/RecipeResolver.ts",

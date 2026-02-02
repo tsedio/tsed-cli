@@ -341,7 +341,7 @@ export class InitCmd implements CommandProvider {
       "index",
       "index.config.util",
       "index.logger",
-      ctx.swagger && "index.controller",
+      "index.controller",
       ctx.commands && "index.command",
       "barrels",
       "readme",

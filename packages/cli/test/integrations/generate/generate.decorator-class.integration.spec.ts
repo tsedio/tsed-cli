@@ -39,6 +39,7 @@ describe("Generate class decorator", () => {
         "project-name/src/config/config.ts",
         "project-name/src/config/logger/index.ts",
         "project-name/src/config/utils/index.ts",
+        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/decorators/Test.ts",
         "project-name/src/index.ts",

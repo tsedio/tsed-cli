@@ -37,6 +37,7 @@ describe("Init integration", () => {
         "project-name/src/config/mongoose/MongooseDefaultConnection.ts",
         "project-name/src/config/mongoose/index.ts",
         "project-name/src/config/utils/index.ts",
+        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.base.json",

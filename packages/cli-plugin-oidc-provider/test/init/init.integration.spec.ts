@@ -52,6 +52,7 @@ describe(
           "project-name/src/config/utils/index.ts",
           "project-name/src/controllers/oidc/InteractionsController.spec.ts",
           "project-name/src/controllers/oidc/InteractionsController.ts",
+          "project-name/src/controllers/pages/IndexController.ts",
           "project-name/src/controllers/rest/HelloWorldController.ts",
           "project-name/src/index.ts",
           "project-name/src/interactions/ConsentInteraction.spec.ts",
