@@ -1,9 +1,9 @@
-import {isArray} from "@tsed/core/utils/isArray";
-import {isBoolean} from "@tsed/core/utils/isBoolean";
-import {isFunction} from "@tsed/core/utils/isFunction";
-import {isObservable} from "@tsed/core/utils/isObservable";
-import {isPromise} from "@tsed/core/utils/isPromise";
-import {isString} from "@tsed/core/utils/isString";
+import {isArray} from "@tsed/core/utils/isArray.js";
+import {isBoolean} from "@tsed/core/utils/isBoolean.js";
+import {isFunction} from "@tsed/core/utils/isFunction.js";
+import {isObservable} from "@tsed/core/utils/isObservable.js";
+import {isPromise} from "@tsed/core/utils/isPromise.js";
+import {isString} from "@tsed/core/utils/isString.js";
 import {context} from "@tsed/di";
 
 import {TaskLogger, type TaskLoggerOptions} from "./domain/TaskLogger.js";

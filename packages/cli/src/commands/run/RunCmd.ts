@@ -1,4 +1,5 @@
 import {CliFs, command, type CommandProvider, inject, normalizePath, ProjectPackageJson} from "@tsed/cli-core";
+import {taskLogger} from "@tsed/cli-tasks";
 import {logger} from "@tsed/di";
 
 import {CliRunScript} from "../../services/CliRunScript.js";
@@ -19,7 +20,7 @@ export class RunCmd implements CommandProvider {
     const args = ["--import", "@swc-node/register/esm-register"];
     const path = normalizePath("src/bin/index.ts");
 
-    logger().info(`Run ${cmd} ${[...args, path, ctx.command, ...ctx.rawArgs].join(" ")}`);
+    taskLogger().info(`Run ${cmd} ${[...args, path, ctx.command, ...ctx.rawArgs].join(" ")}`);
 
     await this.runScript.run(cmd, [...args, path, ctx.command, ...ctx.rawArgs], {
       env: process.env
