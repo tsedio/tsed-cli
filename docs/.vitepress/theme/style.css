@@ -1,0 +1,28 @@
+.is-home .vp-doc.container .VPContainer {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+.box a {
+    color: var(--vp-c-brand-1);
+}
+
+/*.VPNavBarMenu > div:nth-child(3),*/
+/*.VPNavBarMenu > div:nth-child(4) {*/
+/*    .menu {*/
+/*        right: -200px;*/
+/*        max-width: 650px;*/
+/*        width: min(90vw, 650px);*/
+
+/*        .VPMenu .items {*/
+/*            @apply grid grid-cols-3 gap-4;*/
+
+/*            .VPMenuGroup {*/
+/*                margin-top: 0;*/
+/*                padding-top: 0;*/
+/*                border-top: none;*/
+/*            }*/
+/*        }*/
+/*    }*/
+/*}*/
