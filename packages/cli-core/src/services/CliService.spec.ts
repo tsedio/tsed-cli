@@ -35,7 +35,7 @@ describe("CliService", () => {
       level: "info",
       platform: "CLI"
     });
-    $ctx.set("command", {});
+    $ctx.set("command", {renderMode: "raw"});
 
     const originalLevel = logger().level;
     try {
@@ -52,7 +52,8 @@ describe("CliService", () => {
         verbose: true,
         tsed: "yes",
         flag: true,
-        commandName: "generate"
+        commandName: "generate",
+        renderMode: $ctx.get("command")!.renderMode
       });
       expect(result.logger).toBe(logger());
       expect(logger().level.toLowerCase()).toBe("debug");
@@ -225,6 +226,7 @@ describe("CliService", () => {
       },
       enableFeatures: [],
       disableReadUpPkg: false,
+      renderMode: "raw",
       inputSchema: schema
     };
 
@@ -270,6 +272,7 @@ describe("CliService", () => {
       },
       enableFeatures: [],
       disableReadUpPkg: false,
+      renderMode: "default",
       inputSchema: schema
     };
     const cmd = service.createCommand(metadata);

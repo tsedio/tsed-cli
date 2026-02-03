@@ -210,6 +210,7 @@ export class InitCmd implements CommandProvider {
 
   $afterPostInstall() {
     return [
+      this.packageManagers.task("Check installed dependencies"),
       {
         title: "Generate barrels files",
         task: () => {

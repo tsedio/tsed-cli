@@ -261,6 +261,7 @@ export class CliService {
       logger().level = "info";
     }
 
+    data.renderMode = $ctx.get("command")?.renderMode;
     data.logger = logger();
 
     $ctx.set("data", data);

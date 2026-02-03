@@ -6,7 +6,7 @@ export interface TaskLoggerOptions {
   index: number;
   type?: "group" | "taskLog" | "log" | "spinner" | "progress";
   parent?: TaskLogger;
-  verbose?: boolean;
+  renderMode?: "default" | "raw";
 }
 
 export class TaskLogger {
@@ -14,19 +14,19 @@ export class TaskLogger {
   public max: number;
   #title: string;
   #logger: any;
-  #verbose: boolean | undefined;
   #parent: TaskLogger | undefined;
   #index: number;
+  #renderMode: TaskLoggerOptions["renderMode"];
 
   constructor(opts: TaskLoggerOptions) {
     this.#title = opts.title;
     this.type = opts.type;
     this.#parent = opts.parent;
-    this.#verbose = opts.verbose;
+    this.#renderMode = opts.renderMode || "default";
 
     this.#logger = this.create({
       ...opts,
-      verbose: this.#verbose
+      renderMode: this.#renderMode
     });
   }
 
@@ -92,7 +92,7 @@ export class TaskLogger {
 
   advance() {
     if (this.isReady && this.type === "progress") {
-      if (this.isRaw()) {
+      if (this.isRawRender()) {
         this.info(`${this.title} [${this.#index}/${this.parent!.max}]`);
       } else {
         const it = Math.round((1 / this.parent!.max) * 100);
@@ -227,7 +227,7 @@ export class TaskLogger {
   protected create(opts: TaskLoggerOptions) {
     const {type, title, parent} = opts;
 
-    if (this.isRaw()) {
+    if (this.isRawRender()) {
       const success = (message: string) => {
         !this.isEnvTest() &&
           contextLogger()?.info({
@@ -309,8 +309,8 @@ export class TaskLogger {
     }
   }
 
-  private isRaw() {
-    return this.#verbose || this.isEnvTest();
+  private isRawRender() {
+    return this.#renderMode === "raw" || this.isEnvTest();
   }
 
   private isEnvTest() {

@@ -10,13 +10,22 @@ import {TaskLogger, type TaskLoggerOptions} from "./domain/TaskLogger.js";
 import type {Task} from "./interfaces/Task.js";
 
 export interface TasksOptions {
-  verbose?: TaskLoggerOptions["verbose"];
+  renderMode?: TaskLoggerOptions["renderMode"];
+  verbose?: boolean;
 }
 
 export async function tasks<T = any>(list: Task[], ctx: T & TasksOptions, parent?: TaskLogger) {
+  const renderMode = ctx.verbose ? "raw" : ctx.renderMode || "default";
+  const muteLogger = renderMode === "default" && !parent;
   const items = list.filter((task) => isEnabled(task));
 
   parent && (parent.max = items.length);
+
+  const level = context().logger.level;
+
+  if (muteLogger) {
+    context().logger.level = "error";
+  }
 
   for (let i = 0; i < items.length; i++) {
     const task = items[i];
@@ -26,7 +35,7 @@ export async function tasks<T = any>(list: Task[], ctx: T & TasksOptions, parent
       title: task.title,
       type: task.type,
       parent,
-      verbose: ctx.verbose
+      renderMode
     });
 
     try {
@@ -52,6 +61,10 @@ export async function tasks<T = any>(list: Task[], ctx: T & TasksOptions, parent
       taskLogger.error(er);
       throw er;
     }
+  }
+
+  if (muteLogger) {
+    context().logger.level = level;
   }
 }
 

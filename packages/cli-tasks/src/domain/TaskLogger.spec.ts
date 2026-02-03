@@ -240,7 +240,7 @@ describe("TaskLogger", () => {
     expect(grandChildLogger).toBeDefined();
   });
 
-  it("routes verbose output through the context logger", async () => {
+  it("routes raw render output through the context logger", async () => {
     const ctx = DITest.createDIContext();
     let infoSpy!: MockInstance;
     let warnSpy!: MockInstance;
@@ -256,7 +256,7 @@ describe("TaskLogger", () => {
         title: "Verbose task",
         index: 0,
         type: "log",
-        verbose: true
+        renderMode: "raw"
       });
 
       logger.message("hello");
@@ -298,7 +298,7 @@ describe("TaskLogger", () => {
         title: "Suppressed task",
         index: 0,
         type: "log",
-        verbose: true
+        renderMode: "raw"
       });
 
       logger.message("should not show");

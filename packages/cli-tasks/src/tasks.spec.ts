@@ -1,4 +1,4 @@
-import {DITest, runInContext} from "@tsed/di";
+import {context, DITest, runInContext} from "@tsed/di";
 import {Observable} from "rxjs";
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
 
@@ -53,6 +53,10 @@ function mockTaskLoggers() {
   });
 
   return loggers;
+}
+
+function getLevelLabel(level: any) {
+  return typeof level === "string" ? level : level?.levelStr;
 }
 
 describe("tasks()", () => {
@@ -177,6 +181,62 @@ describe("tasks()", () => {
     expect(order).toEqual(["sync", "async"]);
     expect(loggers.get("Child sync")?.start).toHaveBeenCalledTimes(1);
     expect(loggers.get("Child async")?.done).toHaveBeenCalledTimes(1);
+  });
+
+  it("temporarily mutes the DI logger when using the default render mode at the root level", async () => {
+    mockTaskLoggers();
+    const ctx = DITest.createDIContext();
+    const diLogger = ctx.logger as any;
+    const originalLevel = diLogger.level;
+    diLogger.level = "info";
+    const observedLevels: string[] = [];
+
+    await runInContext(ctx, () =>
+      tasks(
+        [
+          {
+            title: "Muted task",
+            task: () => {
+              observedLevels.push(getLevelLabel(context().logger.level));
+            }
+          }
+        ],
+        {}
+      )
+    );
+
+    expect(observedLevels).toEqual(["ERROR"]);
+    expect(getLevelLabel(diLogger.level)).toBe("INFO");
+    diLogger.level = originalLevel;
+  });
+
+  it("keeps the DI logger level unchanged when render mode is raw", async () => {
+    mockTaskLoggers();
+    const ctx = DITest.createDIContext();
+    const diLogger = ctx.logger as any;
+    const originalLevel = diLogger.level;
+    diLogger.level = "warn";
+    const observedLevels: string[] = [];
+
+    await runInContext(ctx, () =>
+      tasks(
+        [
+          {
+            title: "Raw mode task",
+            task: () => {
+              observedLevels.push(getLevelLabel(context().logger.level));
+            }
+          }
+        ],
+        {
+          renderMode: "raw"
+        }
+      )
+    );
+
+    expect(observedLevels).toEqual(["WARN"]);
+    expect(getLevelLabel(diLogger.level)).toBe("WARN");
+    diLogger.level = originalLevel;
   });
 });
 

@@ -15,6 +15,7 @@ export function getCommandMetadata(token: TokenProvider): CommandMetadata {
     enableFeatures,
     disableReadUpPkg,
     inputSchema,
+    renderMode,
     ...opts
   } = Store.from(token)?.get("command") as CommandOptions<any>;
 
@@ -25,6 +26,7 @@ export function getCommandMetadata(token: TokenProvider): CommandMetadata {
     description,
     enableFeatures: enableFeatures || [],
     disableReadUpPkg: !!disableReadUpPkg,
+    renderMode,
     ...opts,
     getOptions() {
       if (inputSchema) {

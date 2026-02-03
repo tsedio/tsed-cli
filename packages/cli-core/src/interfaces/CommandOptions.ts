@@ -1,5 +1,5 @@
 import type {PromptQuestion} from "@tsed/cli-prompts";
-import type {MaybePromise, Task} from "@tsed/cli-tasks";
+import type {MaybePromise, Task, TasksOptions} from "@tsed/cli-tasks";
 import {Type} from "@tsed/core";
 import type {TokenProvider} from "@tsed/di";
 import type {JsonSchema} from "@tsed/schema";
@@ -89,6 +89,8 @@ export interface BaseCommandOptions<Input> {
   enableFeatures?: string[];
 
   disableReadUpPkg?: boolean;
+
+  renderMode?: TasksOptions["renderMode"];
 }
 
 interface FunctionalCommandOptions<Input> extends BaseCommandOptions<Input> {
