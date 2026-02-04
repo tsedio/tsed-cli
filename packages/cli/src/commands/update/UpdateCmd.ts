@@ -1,23 +1,21 @@
 import {
-  type CliDefaultOptions,
   CliPackageJson,
-  Command,
+  command,
+  type CommandData,
   type CommandProvider,
-  createSubTasks,
-  Inject,
   inject,
   NpmRegistryClient,
   PackageManagersModule,
   ProjectPackageJson,
-  type QuestionOptions,
   type Task
 } from "@tsed/cli-core";
+import type {PromptQuestion} from "@tsed/cli-prompts";
 import {getValue} from "@tsed/core";
 import semver from "semver";
 
 import {IGNORE_TAGS, IGNORE_VERSIONS, MINIMAL_TSED_VERSION} from "../../constants/index.js";
 
-export interface UpdateCmdContext extends CliDefaultOptions {
+export interface UpdateCmdContext extends CommandData {
   version: string;
 
   [key: string]: any;
@@ -34,15 +32,9 @@ function isGreaterThan(a: any, b: string) {
 }
 
 function shouldUpdate(pkg: string) {
-  return pkg.includes("@tsed") && !pkg.includes("@tsed/cli") && !pkg.includes("@tsed/logger");
+  return pkg.includes("@tsed") && !pkg.includes("@tsed/cli") && !pkg.includes("@tsed/logger") && !pkg.includes("@tsed/barrels");
 }
 
-@Command({
-  name: "update",
-  description: "Update all Ts.ED packages used by your project",
-  args: {},
-  options: {}
-})
 export class UpdateCmd implements CommandProvider {
   protected npmRegistryClient = inject(NpmRegistryClient);
   protected projectPackage = inject(ProjectPackageJson);
@@ -51,7 +43,7 @@ export class UpdateCmd implements CommandProvider {
 
   private versions: any;
 
-  async $prompt(initialOptions: Partial<UpdateCmdContext>): Promise<QuestionOptions> {
+  async $prompt(initialOptions: Partial<UpdateCmdContext>): Promise<PromptQuestion[]> {
     const versions = await this.getAvailableVersions();
 
     return [
@@ -99,12 +91,7 @@ export class UpdateCmd implements CommandProvider {
       });
     }
 
-    return [
-      {
-        title: "Update packages",
-        task: createSubTasks(() => this.packageManagers.install(), {...ctx, concurrent: false})
-      }
-    ];
+    return [this.packageManagers.task("Update dependencies", ctx)];
   }
 
   private async getAvailableVersions() {
@@ -147,3 +134,9 @@ export class UpdateCmd implements CommandProvider {
     return version && isGreaterThan(version, this.cliPackage.version) ? version : this.cliPackage.version;
   }
 }
+
+command({
+  token: UpdateCmd,
+  name: "update",
+  description: "Update all Ts.ED packages used by your project"
+});

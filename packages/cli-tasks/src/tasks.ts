@@ -1,0 +1,144 @@
+import {isArray} from "@tsed/core/utils/isArray.js";
+import {isBoolean} from "@tsed/core/utils/isBoolean.js";
+import {isFunction} from "@tsed/core/utils/isFunction.js";
+import {isObservable} from "@tsed/core/utils/isObservable.js";
+import {isPromise} from "@tsed/core/utils/isPromise.js";
+import {isString} from "@tsed/core/utils/isString.js";
+import {context} from "@tsed/di";
+
+import {TaskLogger, type TaskLoggerOptions} from "./domain/TaskLogger.js";
+import type {Task} from "./interfaces/Task.js";
+
+export interface TasksOptions {
+  renderMode?: TaskLoggerOptions["renderMode"];
+  verbose?: boolean;
+}
+
+export async function tasks<T = any>(list: Task[], ctx: T & TasksOptions, parent?: TaskLogger) {
+  const renderMode = ctx.verbose ? "raw" : ctx.renderMode || "default";
+  const muteLogger = renderMode === "default" && !parent;
+  const items = list.filter((task) => isEnabled(task));
+
+  parent && (parent.max = items.length);
+
+  const level = context().logger.level;
+
+  if (muteLogger) {
+    context().logger.level = "error";
+  }
+
+  for (let i = 0; i < items.length; i++) {
+    const task = items[i];
+
+    const taskLogger = TaskLogger.from({
+      index: i,
+      title: task.title,
+      type: task.type,
+      parent,
+      renderMode
+    });
+
+    try {
+      if (!(await isExecutable(task, ctx))) {
+        taskLogger.skip();
+        continue;
+      }
+
+      taskLogger.start();
+
+      context().set("TASK_LOGGER", taskLogger);
+
+      const result = await resolveTaskResult(task.task(ctx, taskLogger), taskLogger);
+
+      context().delete("TASK_LOGGER");
+
+      if (isArray(result)) {
+        await tasks(result, ctx, taskLogger);
+      }
+
+      taskLogger.done();
+    } catch (er) {
+      taskLogger.error(er);
+      throw er;
+    }
+  }
+
+  if (muteLogger) {
+    context().logger.level = level;
+  }
+}
+
+function resolveTaskResult(result: any, logger: TaskLogger): Promise<any> | any {
+  if (!result) {
+    return result;
+  }
+
+  if (isPromise(result)) {
+    return result;
+  }
+
+  if (isObservable(result)) {
+    return new Promise((resolve, reject) => {
+      let subscription: any;
+      subscription = result.subscribe({
+        next(value: unknown) {
+          if (isString(value)) {
+            logger.message(value);
+          }
+        },
+        complete() {
+          subscription?.unsubscribe?.();
+          resolve(undefined);
+        },
+        error(err: any) {
+          subscription?.unsubscribe?.();
+          reject(err);
+        }
+      });
+    });
+  }
+
+  return result;
+}
+
+export async function concat(...args: (Task[] | void | undefined)[]) {
+  const tasks: Task[] = [];
+
+  for (const arg of args) {
+    if (isArray(arg)) {
+      tasks.push(...arg);
+    }
+  }
+
+  return tasks;
+}
+
+function isEnabled(item: Task<any>) {
+  return isBoolean(item.enabled) ? item.enabled : true;
+}
+
+async function isExecutable<CTX = any>(item: Task, ctx: CTX): Promise<boolean> {
+  if (isFunction(item.enabled)) {
+    const isEnable = await item.enabled(ctx);
+
+    if (!isEnable) {
+      return false;
+    }
+  }
+
+  if ("skip" in item) {
+    const isSkipped = isFunction(item.skip) ? await item.skip(ctx) : item.skip;
+
+    if (isSkipped) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * @deprecated use tasks function instead
+ */
+export const createTasksRunner = tasks;
+export const createSubTasks = tasks;

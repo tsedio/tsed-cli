@@ -1,6 +1,6 @@
-import path, {join, resolve} from "node:path";
+import {join, resolve} from "node:path";
 
-import {CliFs, Command, type CommandProvider, constant, inject, Type} from "@tsed/cli-core";
+import {CliFs, command, type CommandProvider, constant, inject, Type} from "@tsed/cli-core";
 import {isString} from "@tsed/core";
 import {InjectorService} from "@tsed/di";
 import {camelCase} from "change-case";
@@ -19,35 +19,6 @@ export interface GenerateHttpClientOpts {
   transformOperationId?(operationId: string, routeNameInfo: RouteNameInfo, raw: RawRouteInfo): string;
 }
 
-@Command({
-  name: "generate-http-client",
-  description: "Generate the client API from swagger spec",
-  options: {
-    "-s, --suffix <suffix>": {
-      required: false,
-      type: String,
-      defaultValue: "Model",
-      description: "The suffix applied on model"
-    },
-    "-t, --type <type>": {
-      required: false,
-      type: String,
-      defaultValue: "axios",
-      description: "The client type by the Http client (axios or fetch)"
-    },
-    "-n, --name <name>": {
-      required: false,
-      type: String,
-      defaultValue: "ApiClient",
-      description: "The class name of the generated client"
-    },
-    "-o, --output <output>": {
-      required: true,
-      type: String,
-      description: "Path to generate files"
-    }
-  }
-})
 export class GenerateHttpClientCmd implements CommandProvider {
   protected fs = inject(CliFs);
   protected serverModule = constant<Type<any>>("server");
@@ -195,3 +166,34 @@ export class GenerateHttpClientCmd implements CommandProvider {
     return routeNameInfo;
   }
 }
+
+command({
+  token: GenerateHttpClientCmd,
+  name: "generate-http-client",
+  description: "Generate the client API from swagger spec",
+  options: {
+    "-s, --suffix <suffix>": {
+      required: false,
+      type: String,
+      defaultValue: "Model",
+      description: "The suffix applied on model"
+    },
+    "-t, --type <type>": {
+      required: false,
+      type: String,
+      defaultValue: "axios",
+      description: "The client type by the Http client (axios or fetch)"
+    },
+    "-n, --name <name>": {
+      required: false,
+      type: String,
+      defaultValue: "ApiClient",
+      description: "The class name of the generated client"
+    },
+    "-o, --output <output>": {
+      required: true,
+      type: String,
+      description: "Path to generate files"
+    }
+  }
+});

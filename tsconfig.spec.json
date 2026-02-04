@@ -9,9 +9,12 @@
     "paths": {
       "@tsed/cli": ["./packages/cli/src/index.ts"],
       "@tsed/cli-core": ["./packages/cli-core/src/index.ts"],
-      "@tsed/cli-testing": ["./packages/cli-testing/src/index.ts"]
+      "@tsed/cli-mcp": ["./packages/cli-mcp/src/index.ts"],
+      "@tsed/cli-testing": ["./packages/cli-testing/src/index.ts"],
+      "@tsed/cli-prompts": ["./packages/cli-prompts/src/index.ts"],
+      "@tsed/cli-tasks": ["./packages/cli-tasks/src/index.ts"]
     }
   },
   "include": ["vitest.*.mts", "**/vitest.*.mts", "**/*.ts"],
-  "exclude": ["dist", "**/lib/**", "**/templates/**", "**/barrels/**", "./packages/**/project-name/**/*.ts"]
+  "exclude": ["dist", "**/lib/**", "packages/*/templates/**", "**/barrels/**", "./packages/**/project-name/**/*.ts", "**/docs/**"]
 }

@@ -1,9 +1,8 @@
-import {StoreSet, useDecorators} from "@tsed/core";
-import {Injectable} from "@tsed/di";
+import {command} from "../fn/command.js";
+import type {BaseCommandOptions} from "../interfaces/CommandOptions.js";
 
-import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
-import type {CommandParameters} from "../interfaces/CommandParameters.js";
-
-export function Command(options: CommandParameters): ClassDecorator {
-  return useDecorators(Injectable({type: "command"}), StoreSet(CommandStoreKeys.COMMAND, options)) as any;
+export function Command<Input = any>(options: BaseCommandOptions<Input>): ClassDecorator {
+  return (token) => {
+    command({...options, token});
+  };
 }

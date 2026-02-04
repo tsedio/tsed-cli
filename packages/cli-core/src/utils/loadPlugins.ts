@@ -1,4 +1,5 @@
-import {GlobalProviders, injector, logger} from "@tsed/di";
+import {taskLogger} from "@tsed/cli-tasks";
+import {injector, lazyInject, logger} from "@tsed/di";
 import chalk from "chalk";
 import figures from "figures";
 
@@ -10,8 +11,6 @@ const all = (promises: any[]) => Promise.all(promises);
 export async function loadPlugins() {
   const $inj = injector();
   const name = $inj.settings.get("name");
-  const rootDir = $inj.settings.get("project.rootDir");
-
   const projectPackageJson = $inj.invoke<ProjectPackageJson>(ProjectPackageJson);
   const fs = $inj.invoke<CliFs>(CliFs);
 
@@ -19,32 +18,14 @@ export async function loadPlugins() {
     .filter((mod) => mod.startsWith(`@${name}/cli-plugin`) || mod.includes(`${name}-cli-plugin`))
     .map(async (mod) => {
       try {
-        const {default: plugin} = await fs.importModule(mod, rootDir);
-
-        if (!$inj.has(plugin)) {
-          const provider = GlobalProviders.get(plugin)?.clone();
-
-          if (provider?.imports.length) {
-            await all(
-              provider.imports.map(async (token: any) => {
-                $inj.add(token, GlobalProviders.get(token)?.clone());
-
-                if ($inj.settings.get("loaded")) {
-                  await $inj.invoke(token);
-                }
-              })
-            );
-          }
-
-          $inj.add(plugin, provider);
-
-          if ($inj.settings.get("loaded")) {
-            await $inj.invoke(plugin);
-          }
+        if ($inj.settings.get("loaded")) {
+          taskLogger().info(`Try to load ${mod}`);
+          await lazyInject(() => fs.importModule(mod, projectPackageJson.cwd));
         }
-        logger().info(chalk.green(figures.tick), mod, "module loaded");
+
+        taskLogger().info(`${mod} module loaded`);
       } catch (er) {
-        logger().warn(chalk.red(figures.cross), "Fail to load plugin", mod);
+        taskLogger().warn(`Fail to load plugin ${mod} ${er.message}`);
       }
     });
 

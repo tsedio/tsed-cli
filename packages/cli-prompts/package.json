@@ -1,0 +1,36 @@
+{
+  "name": "@tsed/cli-prompts",
+  "description": "Prompt runner and schema shared across Ts.ED CLIs",
+  "version": "7.0.0-alpha.6",
+  "type": "module",
+  "main": "./lib/esm/index.js",
+  "source": "./src/index.ts",
+  "module": "./lib/esm/index.js",
+  "typings": "./lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "cli-tsed-source": "./src/index.ts",
+      "types": "./lib/types/index.d.ts",
+      "import": "./lib/esm/index.js",
+      "default": "./lib/esm/index.js"
+    }
+  },
+  "scripts": {
+    "build": "yarn build:ts",
+    "build:ts": "tsc --build tsconfig.esm.json",
+    "test": "vitest run",
+    "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
+  },
+  "dependencies": {
+    "@clack/prompts": ">=1.0.0-alpha.10",
+    "@tsed/core": ">=8.21.0",
+    "@tsed/di": ">=8.21.0",
+    "@tsed/hooks": ">=8.21.0",
+    "@tsed/logger": ">=8.0.3"
+  },
+  "devDependencies": {
+    "@tsed/typescript": "workspace:*",
+    "typescript": "5.6.2",
+    "vitest": "3.2.4"
+  }
+}

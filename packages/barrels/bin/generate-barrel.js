@@ -4,6 +4,16 @@ import {join as joinPosix} from "node:path/posix";
 
 import {globby} from "globby";
 
+function preprocess(str) {
+  return str.replace(/\./g, "\u0001").replace(/\//g, "\u0002");
+}
+
+function compare(a, b) {
+  const pa = preprocess(a);
+  const pb = preprocess(b);
+  return pa < pb ? -1 : pa > pb ? 1 : 0;
+}
+
 async function generateIndex(directory, {cwd, excluded, noSemicolon, singleQuotes}) {
   const baseIndex = join(cwd, directory?.path ?? directory);
 
@@ -13,7 +23,7 @@ async function generateIndex(directory, {cwd, excluded, noSemicolon, singleQuote
   const quote = singleQuotes ? "'" : '"';
 
   const exports = files
-    .sort((a, b) => a.localeCompare(b))
+    .sort((a, b) => compare(a, b))
     .map((file) => {
       // TODO set .js after all configuration are ok to resolve .js
       return `export * from ${quote}./${file.replace(".ts", ".js")}${quote}${noSemicolon ? "" : ";"}`;

@@ -1,0 +1,30 @@
+# Repository Guidelines
+
+## Project Structure & Module Organization
+
+Yarn 4 + Lerna workspaces organize sources under `packages/*`: `cli` hosts command entrypoints and generator templates, `cli-core` handles DI/prompt infrastructure, `cli-mcp` exposes MCP servers and tools, while `cli-plugin-*` packages bundle framework-specific blueprints plus their own tests. `cli-testing` provides shared harnesses, templates live in `packages/cli/templates`, artifacts land in `dist/`, VuePress + TSDoc files stay in `docs/`, and `tools/*` holds automation scripts (TypeScript references, ESLint, Vitest installers).
+
+## Build, Test, and Development Commands
+
+- `yarn build`: runs `monorepo build --verbose` across every workspace.
+- `yarn build:references`: refreshes TS project references after renaming or adding packages.
+- `yarn test`: executes the Vitest suite once; add `--coverage` for V8 reports.
+- `yarn lint` / `yarn lint:fix`: applies the flat ESLint config + Prettier formatting used in CI.
+- `yarn docs:serve` / `yarn docs:build`: runs `lerna run build && tsdoc` then serves or builds the VuePress site.
+
+## Coding Style & Naming Conventions
+
+Author TypeScript ES modules with 2-space indentation, double quotes, and trailing commas per the shared Prettier rules. Favor named exports and keep command providers in `packages/cli/src/commands/**/NameCmd.ts`, suffixing classes with `Cmd`. Tests and utilities mirror their source paths, ending in `.spec.ts` or `.integration.spec.ts`. Plugin packages follow `cli-plugin-<feature>` naming; templates underneath use kebab-case folder names. Keep import blocks sorted (enforced by `eslint-plugin-simple-import-sort`) and reserve default exports for entry aggregators such as `packages/cli/src/index.ts`.
+
+## Testing Guidelines
+
+Vitest powers both unit and integration coverage. Co-locate fast tests next to implementation files, while scenario-heavy suites live under `packages/*/test/**`. Use `yarn vitest packages/cli/src/commands/init/InitCmd.spec.ts` to focus a file, prefer `.integration.spec.ts` when exercising generators end-to-end, and ship PRs with `yarn test --coverage` so CI can enforce thresholds. Mock filesystem access via helpers in `cli-testing` instead of touching the real disk.
+
+- Favor targeted commands (`yarn workspace <pkg> vitest run path/to/spec.ts`) to keep feedback tight before running the full `yarn test`.
+- When code touches DI helpers (e.g., `context()`, `runInContext`), spin up a scoped container with `DITest.create()`/`DITest.reset()` instead of mocking `@tsed/di`, and wrap async work in `runInContext`.
+- Keep specs deterministic: stub process spawning through `CliExeca`, fake filesystem writes via `cli-testing`, and avoid live network access.
+- Assert observable/logging side effects explicitly so task orchestration regressions (skips, nested tasks, streaming logs) are caught in unit suites.
+
+## Commit & Pull Request Guidelines
+
+Commit messages must satisfy Conventional Commits (see `commitlint.config.js`); scope by workspace, e.g., `feat(cli-plugin-prisma): expand seed template`. Keep subjects under 200 characters and describe behavior, not implementation minutiae. Before opening a pull request, run `yarn build`, `yarn test`, and `yarn lint`, update docs/templates when behavior changes, and link the relevant issue. Summaries should highlight user-facing changes, test evidence, and screenshots or logs when generator output shifts.

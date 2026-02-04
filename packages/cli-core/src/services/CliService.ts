@@ -1,4 +1,6 @@
-import {classOf} from "@tsed/core";
+import {PromptRunner} from "@tsed/cli-prompts";
+import {concat, tasks as tasksRunner} from "@tsed/cli-tasks";
+import {classOf, isArrowFn} from "@tsed/core";
 import {
   configuration,
   constant,
@@ -6,35 +8,30 @@ import {
   DIContext,
   getContext,
   inject,
-  Injectable,
+  injectable,
   injector,
   logger,
   Provider,
   runInContext
 } from "@tsed/di";
-import {$asyncEmit} from "@tsed/hooks";
+import {$asyncAlter, $asyncEmit} from "@tsed/hooks";
+import {pascalCase} from "change-case";
 import {Argument, Command} from "commander";
-import Inquirer from "inquirer";
-// @ts-ignore
-import inquirer_autocomplete_prompt from "inquirer-autocomplete-prompt";
 import {v4} from "uuid";
 
-import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
+import type {CommandData} from "../interfaces/CommandData.js";
 import type {CommandMetadata} from "../interfaces/CommandMetadata.js";
-import type {CommandArg, CommandOptions} from "../interfaces/CommandParameters.js";
+import type {CommandArg, CommandOpts} from "../interfaces/CommandOptions.js";
 import type {CommandProvider} from "../interfaces/CommandProvider.js";
+import type {Task} from "../interfaces/index.js";
 import {PackageManagersModule} from "../packageManagers/index.js";
-import {createSubTasks, createTasksRunner} from "../utils/createTasksRunner.js";
 import {getCommandMetadata} from "../utils/getCommandMetadata.js";
-import {mapCommanderOptions} from "../utils/index.js";
+import {mapCommanderOptions, validate} from "../utils/index.js";
 import {mapCommanderArgs} from "../utils/mapCommanderArgs.js";
 import {parseOption} from "../utils/parseOption.js";
 import {CliHooks} from "./CliHooks.js";
 import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
-Inquirer.registerPrompt("autocomplete", inquirer_autocomplete_prompt);
-
-@Injectable()
 export class CliService {
   readonly reinstallAfterRun = constant<boolean>("project.reinstallAfterRun", false);
   readonly program = new Command();
@@ -42,6 +39,7 @@ export class CliService {
   protected hooks = inject(CliHooks);
   protected projectPkg = inject(ProjectPackageJson);
   protected packageManagers = inject(PackageManagersModule);
+  protected promptRunner = inject(PromptRunner);
   private commands = new Map();
 
   /**
@@ -64,95 +62,73 @@ export class CliService {
    * @param data
    * @param $ctx
    */
-  public runLifecycle(cmdName: string, data: any = {}, $ctx: DIContext) {
+  public runLifecycle(cmdName: string, data: CommandData = {}, $ctx: DIContext) {
     return runInContext($ctx, async () => {
+      $ctx.set("dispatchCmd", cmdName);
+
       await $asyncEmit("$loadPackageJson");
 
-      data = await this.beforePrompt(cmdName, data);
+      try {
+        data = await this.prompt(cmdName, data, $ctx);
 
-      $ctx.set("data", data);
+        await this.exec(cmdName, data, $ctx);
 
-      data = await this.prompt(cmdName, data);
-      await this.dispatch(cmdName, data, $ctx);
+        await $asyncEmit("$onFinish", [data]);
+      } catch (er) {
+        await $asyncEmit("$onFinish", [data, er]);
+        throw er;
+      } finally {
+        await destroyInjector();
+      }
     });
   }
 
-  public async dispatch(cmdName: string, data: any, $ctx: DIContext) {
-    try {
-      $ctx.set("dispatchCmd", cmdName);
+  public async exec(cmdName: string, data: any, $ctx: DIContext) {
+    const tasks = await this.getTasks(cmdName, data);
+
+    $ctx.set("data", data);
+
+    if (tasks.length) {
+      if (this.reinstallAfterRun && (this.projectPkg.rewrite || this.projectPkg.reinstall)) {
+        tasks.push(this.packageManagers.task("Install dependencies", data), ...(await this.getPostInstallTasks(cmdName, data)));
+      }
+
+      data = this.mapData(cmdName, data, $ctx);
+
       $ctx.set("data", data);
 
-      await this.exec(cmdName, data, $ctx);
-    } catch (er) {
-      await $asyncEmit("$onFinish", er);
-      await destroyInjector();
-      throw er;
-    }
-
-    await $asyncEmit("$onFinish");
-    await destroyInjector();
-  }
-
-  public async exec(cmdName: string, data: any, $ctx: DIContext) {
-    const initialTasks = await this.getTasks(cmdName, data);
-
-    if (initialTasks.length) {
-      const tasks = [
-        ...initialTasks,
-        {
-          title: "Install dependencies",
-          enabled: () => this.reinstallAfterRun && (this.projectPkg.rewrite || this.projectPkg.reinstall),
-          task: createSubTasks(() => this.packageManagers.install(data), {...data, concurrent: false})
-        },
-        ...(await this.getPostInstallTasks(cmdName, data))
-      ];
-
-      return createTasksRunner(tasks, this.mapData(cmdName, data, $ctx));
+      return tasksRunner(tasks, data);
     }
   }
 
   /**
    * Run prompt for a given command
    * @param cmdName
-   * @param ctx Initial data
+   * @param data
+   * @param $ctx
    */
-  public async beforePrompt(cmdName: string, ctx: any = {}) {
+  public async prompt(cmdName: string, data: CommandData = {}, $ctx: DIContext) {
     const provider = this.commands.get(cmdName);
-    const instance = inject<CommandProvider>(provider.useClass)!;
-    const verbose = ctx.verbose;
+    const instance = inject<CommandProvider>(provider.token)!;
 
-    if (instance.$beforePrompt) {
-      ctx = await instance.$beforePrompt(JSON.parse(JSON.stringify(ctx)));
-      ctx.verbose = verbose;
-    }
-
-    return ctx;
-  }
-
-  /**
-   * Run prompt for a given command
-   * @param cmdName
-   * @param ctx Initial data
-   */
-  public async prompt(cmdName: string, ctx: any = {}) {
-    const provider = this.commands.get(cmdName);
-    const instance = inject<CommandProvider>(provider.useClass)!;
+    $ctx.set("data", data);
 
     if (instance.$prompt) {
-      const questions = [
-        ...((await instance.$prompt(ctx)) as any[]),
-        ...(await this.hooks.emit(CommandStoreKeys.PROMPT_HOOKS, cmdName, ctx))
-      ];
+      const questions = await instance.$prompt(data);
 
-      if (questions.length) {
-        ctx = {
-          ...ctx,
-          ...((await Inquirer.prompt(questions)) as any)
+      if (questions) {
+        const answers = await this.promptRunner.run(questions, data);
+
+        data = {
+          ...data,
+          ...answers
         };
       }
     }
 
-    return ctx;
+    $ctx.set("data", data);
+
+    return data;
   }
 
   /**
@@ -160,57 +136,71 @@ export class CliService {
    * @param cmdName
    * @param data
    */
-  public async getTasks(cmdName: string, data: any) {
+  public async getTasks(cmdName: string, data: any): Promise<Task[]> {
     const $ctx = getContext()!;
     const provider = this.commands.get(cmdName);
     const instance = inject<CommandProvider>(provider.token)!;
 
     data = this.mapData(cmdName, data, $ctx);
 
-    if (instance.$beforeExec) {
-      await instance.$beforeExec(data);
-    }
-
-    return [...(await instance.$exec(data)), ...(await this.hooks.emit(CommandStoreKeys.EXEC_HOOKS, cmdName, data))];
+    return concat(await instance.$exec(data), await $asyncAlter(`$alter${pascalCase(cmdName)}Tasks`, [], [data]));
   }
 
   public async getPostInstallTasks(cmdName: string, data: any) {
     const provider = this.commands.get(cmdName);
-    const instance = inject<CommandProvider>(provider.useClass)!;
+    const instance = inject<CommandProvider>(provider.token)!;
 
     data = this.mapData(cmdName, data, getContext()!);
 
-    return [
-      ...(instance.$postInstall ? await instance.$postInstall(data) : []),
-      ...(await this.hooks.emit(CommandStoreKeys.POST_INSTALL_HOOKS, cmdName, data)),
-      ...(instance.$afterPostInstall ? await instance.$afterPostInstall(data) : [])
-    ];
+    return concat(
+      await instance.$postInstall?.(data),
+      await $asyncAlter(`$alter${pascalCase(cmdName)}PostInstallTasks`, [] as Task[], [data]),
+      await instance.$afterPostInstall?.(data)
+    );
   }
 
   public createCommand(metadata: CommandMetadata) {
-    const {args, name, options, description, alias, allowUnknownOption} = metadata;
+    const {name, description, alias, inputSchema} = metadata;
 
     if (this.commands.has(name)) {
       return this.commands.get(name).command;
     }
 
-    let cmd = this.program.command(name);
+    const {args, options, allowUnknownOption} = metadata.getOptions();
 
     const onAction = (commandName: string) => {
       const [, ...rawArgs] = cmd.args;
+
       const mappedArgs = mapCommanderArgs(
         args,
         this.program.args.filter((arg) => commandName === arg)
       );
+
       const allOpts = mapCommanderOptions(commandName, this.program.commands);
 
-      const data = {
+      let data: CommandData = {
         ...allOpts,
         verbose: !!this.program.opts().verbose,
         ...mappedArgs,
         ...cmd.opts(),
         rawArgs
       };
+
+      if (inputSchema) {
+        const schema = isArrowFn(inputSchema) ? inputSchema() : inputSchema;
+        const {isValid, errors, value} = validate(data, schema);
+
+        if (isValid) {
+          data = value;
+        } else {
+          logger().error({
+            event: "VALIDATION_ERROR",
+            errors
+          });
+
+          throw new Error("Validation error");
+        }
+      }
 
       const $ctx = new DIContext({
         id: v4(),
@@ -229,6 +219,8 @@ export class CliService {
       return this.runLifecycle(name, data, $ctx);
     };
 
+    let cmd = this.program.command(name);
+
     if (alias) {
       cmd = cmd.alias(alias);
     }
@@ -245,16 +237,18 @@ export class CliService {
     return cmd;
   }
 
-  private load() {
+  load() {
     injector()
       .getProviders("command")
       .forEach((provider) => this.build(provider));
   }
 
-  private mapData(cmdName: string, data: any, $ctx: DIContext) {
+  private mapData(cmdName: string, data: CommandData, $ctx: DIContext) {
     const provider = this.commands.get(cmdName);
-    const instance = inject<CommandProvider>(provider.useClass)!;
+    const instance = inject<CommandProvider>(provider.token)!;
     const verbose = data.verbose;
+
+    data.commandName ||= cmdName;
 
     if (instance.$mapContext) {
       data = instance.$mapContext(JSON.parse(JSON.stringify(data)));
@@ -267,7 +261,8 @@ export class CliService {
       logger().level = "info";
     }
 
-    data.bindLogger = $ctx.get("command").bindLogger;
+    data.renderMode = $ctx.get("command")?.renderMode;
+    data.logger = logger();
 
     $ctx.set("data", data);
 
@@ -278,8 +273,8 @@ export class CliService {
    * Build command and sub-commands
    * @param provider
    */
-  private build(provider: Provider<any>) {
-    const metadata = getCommandMetadata(provider.useClass);
+  private build(provider: Provider) {
+    const metadata = getCommandMetadata(provider.token);
 
     if (metadata.name) {
       if (this.commands.has(metadata.name)) {
@@ -300,7 +295,7 @@ export class CliService {
    * @param options
    * @param allowUnknownOptions
    */
-  private buildOption(subCommand: Command, options: {[key: string]: CommandOptions}, allowUnknownOptions: boolean) {
+  private buildOption(subCommand: Command, options: {[key: string]: CommandOpts}, allowUnknownOptions: boolean) {
     Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
       const fn = (v: any) => {
         return parseOption(v, options);
@@ -337,3 +332,5 @@ export class CliService {
     }, cmd);
   }
 }
+
+injectable(CliService);

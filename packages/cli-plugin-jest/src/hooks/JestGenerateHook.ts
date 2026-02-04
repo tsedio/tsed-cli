@@ -1,67 +1,44 @@
-import {type GenerateCmdContext, SrcRendererService} from "@tsed/cli";
-import {inject, Injectable, OnExec, type Tasks} from "@tsed/cli-core";
-import {normalizePath} from "@tsed/normalize-path";
+import {type AlterGenerateTasks, CliProjectService, type GenerateCmdContext, render} from "@tsed/cli";
+import {inject, type Task} from "@tsed/cli-core";
+import {injectable} from "@tsed/di";
 
-import {TEMPLATE_DIR} from "../utils/templateDir.js";
+export class JestGenerateHook implements AlterGenerateTasks {
+  protected projectService = inject(CliProjectService);
 
-@Injectable()
-export class JestGenerateHook {
-  srcRenderService = inject(SrcRendererService);
-
-  @OnExec("generate")
-  onGenerateExec(ctx: GenerateCmdContext): Tasks {
-    const {symbolPath} = ctx;
-    const {specTemplate, integrationTemplate, relativeSrcPath} = this.mapOptions(ctx);
+  $alterGenerateTasks(tasks: Task[], data: GenerateCmdContext): Task[] {
+    const {symbolPath} = data;
 
     return [
+      ...tasks,
       {
-        title: `Generate ${ctx.type} spec file to '${symbolPath}.spec.ts'`,
+        title: `Generate ${data.type} spec file to '${symbolPath}.spec.ts'`,
         enabled() {
-          return !(ctx.type === "server" || ctx.type.includes(":dataSource") || ctx.type.includes(":connection"));
+          return !(data.type === "server" || data.type.includes(":dataSource") || data.type.includes(":connection"));
         },
-        task: () =>
-          this.srcRenderService.render(
-            specTemplate,
-            {...ctx, relativeSrcPath},
-            {
-              output: `${symbolPath}.spec.ts`,
-              templateDir: TEMPLATE_DIR
-            }
-          )
+        task: () => {
+          let specTemplateType = [data.type, data.templateType, "spec"].filter(Boolean).join(".");
+          specTemplateType = this.projectService.templates.get(specTemplateType) ? specTemplateType : "generic.spec";
+
+          render(specTemplateType, {
+            ...data,
+            symbolPath: data.symbolPath + ".spec"
+          });
+        }
       },
       {
-        title: `Generate ${ctx.type} integration file '${symbolPath}.integration.spec.ts'`,
+        title: `Generate ${data.type} integration file '${symbolPath}.integration.spec.ts'`,
         enabled() {
-          return ["controller", "server"].includes(ctx.type);
+          return ["controller", "server"].includes(data.type);
         },
-        task: () =>
-          this.srcRenderService.render(
-            integrationTemplate,
-            {...ctx, relativeSrcPath},
-            {
-              output: `${symbolPath}.integration.spec.ts`,
-              templateDir: TEMPLATE_DIR
-            }
-          )
+        task: () => {
+          render(data.type + ".integration", {
+            ...data,
+            symbolPath: data.symbolPath + ".integration.spec"
+          });
+        }
       }
     ];
   }
-
-  private mapOptions(options: GenerateCmdContext) {
-    const type = [options.type, options.templateType].filter(Boolean).join(".");
-
-    const specTemplate = this.srcRenderService.templateExists(`generate/${type}.spec.hbs`, {templateDir: TEMPLATE_DIR})
-      ? `generate/${type}.spec.hbs`
-      : "generate/generic.spec.hbs";
-
-    const integrationTemplate = this.srcRenderService.templateExists(`generate/${type}.integration.hbs`, {templateDir: TEMPLATE_DIR})
-      ? `generate/${type}.integration.hbs`
-      : "generate/generic.integration.hbs";
-
-    return {
-      specTemplate,
-      integrationTemplate,
-      relativeSrcPath: normalizePath(this.srcRenderService.relativeFrom(`${options.symbolPath}.integration.spec.ts`))
-    };
-  }
 }
+
+injectable(JestGenerateHook);

@@ -1,15 +1,16 @@
-import {Type} from "@tsed/core";
+import type {TokenProvider} from "@tsed/di";
 
 import type {CommandProvider} from "./CommandProvider.js";
 import type {PackageJson} from "./PackageJson.js";
 
 export * from "./CliDefaultOptions.js";
+export * from "./CommandData.js";
 export * from "./CommandMetadata.js";
-export * from "./CommandParameters.js";
+export * from "./CommandOptions.js";
 export * from "./CommandProvider.js";
 export * from "./PackageJson.js";
 export * from "./ProjectPreferences.js";
-export * from "./Tasks.js";
+export type {Task} from "@tsed/cli-tasks";
 
 declare global {
   namespace TsED {
@@ -17,7 +18,7 @@ declare global {
       /**
        * Load given commands
        */
-      commands: Type<CommandProvider>[];
+      commands: TokenProvider<CommandProvider>[];
       /**
        * Init Cli with defined argv
        */
@@ -35,7 +36,7 @@ declare global {
        */
       templateDir?: string;
       /**
-       *
+       * A function that return default projet settings set in fresh project.
        * @param pkg
        */
       defaultProjectPreferences?: (pkg?: any) => Record<string, any>;
@@ -52,6 +53,14 @@ declare global {
        * Enable plugins loading
        */
       plugins: boolean;
+      /**
+       * Check version and node version before running a command
+       */
+      checkPrecondition?: boolean;
+      /**
+       * Display available update on terminal before running a command
+       */
+      updateNotifier?: boolean;
     }
   }
 }

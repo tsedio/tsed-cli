@@ -1,74 +1,26 @@
 {
-  "name": "@tsed/docs",
-  "version": "7.62.1",
-  "description": "Documentation Ts.ED",
-  "private": true,
+  "name": "@tsed/docs-new",
+  "version": "8.17.0",
+  "type": "module",
   "scripts": {
-    "vuepress:build": "sh .vuepress/scripts/build.sh",
-    "vuepress:serve": "cross-env NODE_OPTIONS=--openssl-legacy-provider vuepress dev .",
-    "browserslist": "npx browserslist@latest --update-db"
+    "docs:dev": "yarn build:api:summary && vitepress dev .",
+    "docs:build": "yarn build:api:summary && vitepress build .",
+    "docs:preview": "vitepress preview .",
+    "build:api:summary": "node ./.vitepress/scripts/api-summary.js",
+    "serve": "npx serve ./.vitepress/dist"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tsedio/tsed.git"
-  },
-  "keywords": [
-    "Express",
-    "Koa",
-    "TypeScript",
-    "decorators",
-    "router",
-    "controllers",
-    "services",
-    "middlewares",
-    "models",
-    "mvc",
-    "injection",
-    "ioc",
-    "di",
-    "api",
-    "ajv",
-    "adapters",
-    "graphql",
-    "json-mapper",
-    "formio",
-    "objection",
-    "openspec",
-    "passport",
-    "awa",
-    "socketio",
-    "stripe",
-    "swagger",
-    "typeoprm",
-    "ES2015",
-    "ES6",
-    "server",
-    "rest",
-    "validation",
-    "multer"
-  ],
-  "author": "Romain Lenzotti",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/tsedio/tsed/issues"
-  },
-  "homepage": "http://tsed.dev/",
   "dependencies": {
-    "cross-env": "7.0.3"
+    "@tsed/vitepress-theme": "1.5.7",
+    "@vueuse/core": "10.11.0",
+    "axios": "1.12.0",
+    "lodash": "4.17.21",
+    "lucide-vue-next": "^0.436.0",
+    "vitepress": "1.5.0"
   },
   "devDependencies": {
-    "@tsed/markdown-it-symbols": "3.20.8",
-    "@vuepress/plugin-google-analytics": "1.9.9",
-    "@vuepress/plugin-html-redirect": "^0.1.4",
-    "@vuepress/plugin-medium-zoom": "1.9.7",
-    "axios": "0.28.0",
-    "vue-analytics": "5.22.1",
-    "vuepress": "1.9.7",
-    "vuepress-plugin-sitemap": "2.3.1",
-    "vuepress-theme-tsed": "3.20.8"
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.39",
+    "tailwindcss": "3.4.4"
   },
-  "directories": {
-    "packages": "packages",
-    "test": "test"
-  }
+  "packageManager": "yarn@4.1.1"
 }

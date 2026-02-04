@@ -1,7 +1,7 @@
 import {cleanObject, isFunction} from "@tsed/core";
 
-import {FeaturesMap, FeaturesPrompt, FrameworksPrompt} from "../config/FeaturesPrompt.js";
-import type {InitOptions} from "../interfaces/InitOptions.js";
+import type {InitOptions} from "../../../interfaces/index.js";
+import {FeaturesMap, FeaturesPrompt} from "../config/FeaturesPrompt.js";
 
 function mapChoices(item: any, options: Partial<InitOptions>) {
   return item.choices.map((choice: string) => {
@@ -22,17 +22,4 @@ export function getFeaturesPrompt(runtimes: string[], availablePackageManagers: 
       choices: item.choices?.length ? mapChoices(item, options) : undefined
     });
   });
-}
-
-export function getFrameworksPrompt() {
-  return {
-    ...FrameworksPrompt,
-    choices: FrameworksPrompt.choices.map((choice: string, index) => {
-      return cleanObject({
-        ...FeaturesMap[choice],
-        checked: index === 0,
-        value: choice
-      });
-    })
-  };
 }

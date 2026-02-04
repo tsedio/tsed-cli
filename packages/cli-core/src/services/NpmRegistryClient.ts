@@ -1,12 +1,12 @@
 import url from "node:url";
 
-import {inject, Injectable} from "@tsed/di";
+import {inject, injectable} from "@tsed/di";
+import registry_auth_token from "registry-auth-token";
 import registry_url from "registry-url";
 
 import type {PackageInfo} from "../interfaces/PackageJson.js";
 import {CliHttpClient} from "./CliHttpClient.js";
 
-const HOST = registry_url();
 const REGEX_REGISTRY_ENFORCED_HTTPS = /^https?:\/\/([^\/]+\.)?(yarnpkg\.com|npmjs\.(org|com))(\/|$)/;
 const REGEX_REGISTRY_PREFIX = /^(https?:)?\/\//i;
 
@@ -20,9 +20,9 @@ export function addSuffix(pattern: string, suffix: string): string {
 
 export const SCOPE_SEPARATOR = "%2f";
 
-@Injectable()
 export class NpmRegistryClient {
   private httpClient = inject(CliHttpClient);
+  private host = registry_url();
 
   static escapeName(name: string): string {
     // scoped packages contain slashes and the npm registry expects them to be escaped
@@ -30,13 +30,17 @@ export class NpmRegistryClient {
   }
 
   async request(pathname: string, opts: any = {}): Promise<any> {
-    const registry = opts.registry || HOST;
+    const registry = opts.registry || this.host;
     const requestUrl = this.getRequestUrl(registry, pathname);
 
     const headers = {
       Accept: opts.unfiltered ? "application/json" : "application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*",
       ...opts.headers
     };
+
+    if (!headers.Authorization) {
+      this.addAuthorization(registry, headers);
+    }
 
     try {
       return await this.httpClient.get(requestUrl, {
@@ -126,4 +130,14 @@ export class NpmRegistryClient {
       }
     };
   }
+
+  private addAuthorization(registry: string, headers: Record<string, string>) {
+    const authInfo = registry_auth_token(registry, {recursive: true});
+
+    if (authInfo) {
+      headers.Authorization = `${authInfo.type} ${authInfo.token}`;
+    }
+  }
 }
+
+injectable(NpmRegistryClient);

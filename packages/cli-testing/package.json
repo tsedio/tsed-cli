@@ -1,7 +1,7 @@
 {
   "name": "@tsed/cli-testing",
   "description": "Utils to test you CLI based on Ts.ED CLI",
-  "version": "6.4.3-rc.1",
+  "version": "7.0.0-alpha.6",
   "type": "module",
   "main": "./lib/esm/index.js",
   "source": "./src/index.ts",
@@ -37,6 +37,6 @@
     "@tsed/typescript": "workspace:*",
     "cross-env": "7.0.3",
     "typescript": "5.6.2",
-    "vitest": "3.0.9"
+    "vitest": "3.2.4"
   }
 }

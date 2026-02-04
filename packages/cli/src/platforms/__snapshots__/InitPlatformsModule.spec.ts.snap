@@ -1,0 +1,46 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`InitPlatformsModule > baseFiles() > should return base files for the project 1`] = `
+[
+  "/init/.swcrc.hbs",
+  "/init/nodemon.json.hbs",
+  "/init/.dockerignore.hbs",
+  "/init/.gitignore.hbs",
+  "/init/.barrels.json.hbs",
+  {
+    "output": "processes.config.cjs",
+    "path": "/init/pm2/node-loader/processes.config.cjs",
+    "replaces": [
+      "pm2/node-loader",
+    ],
+  },
+  "/init/docker-compose.yml.hbs",
+  {
+    "output": "Dockerfile",
+    "path": "/init/docker/yarn/Dockerfile.hbs",
+    "replaces": [
+      "docker/yarn",
+    ],
+  },
+  "/init/README.md.hbs",
+  "/init/tsconfig.json.hbs",
+  "/init/tsconfig.base.json.hbs",
+  "/init/tsconfig.node.json",
+  "/init/src/index.ts",
+  {
+    "basename": "Server.ts",
+    "path": "/init/src/server.ts",
+  },
+  "/init/src/config/utils/isProduction.ts",
+  "/init/src/config/logger/index.ts",
+  "/init/src/config/config.ts",
+  "/init/views/swagger.ejs",
+  {
+    "basename": "Index.ts",
+    "path": "/init/src/controllers/pages/IndexController.ts",
+    "replaces": [
+      null,
+    ],
+  },
+]
+`;

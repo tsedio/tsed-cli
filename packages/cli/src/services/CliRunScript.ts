@@ -1,7 +1,6 @@
 import {ProjectPackageJson} from "@tsed/cli-core";
-import {inject, Injectable} from "@tsed/di";
+import {inject, injectable} from "@tsed/di";
 
-@Injectable()
 export class CliRunScript {
   async run(cmd: string, args: string[], options: any = {}) {
     // @ts-ignore
@@ -18,3 +17,5 @@ export class CliRunScript {
     });
   }
 }
+
+injectable(CliRunScript);

@@ -1,9 +1,12 @@
-# Contributing 
+# Contributing
+
 ## Introduction
 
 First, thank you for considering contributing to Ts.ED! It is people like you that make the open source community such a great community! 😊
 
 We welcome any type of contribution, not just code. You can help with:
+
+- Repository-specific build, testing, and PR expectations are summarized in the [Repository Guidelines](AGENTS.md); please skim them before opening a pull request.
 
 - QA: file bug reports, the more details you can give the better (e.g. screenshots with the console open)
 - Marketing: writing blog posts, how to's, printing stickers, ...
@@ -23,6 +26,7 @@ Code review process
 The bigger the pull request, the longer it will take to review and merge. Try to break down large pull requests in smaller chunks that are easier to review and merge. It is also always helpful to have some context for your pull request. What was the purpose? Why does it matter to you?
 
 ---
+
 ### WARNING
 
 Ts.ED project uses [conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/) as format commit message.
@@ -30,8 +34,7 @@ Ts.ED project uses [conventional commits](https://www.conventionalcommits.org/en
 Release note and tagging version are based on the message commits.
 If you don't follow the format, our CI won't be able to increment the version correctly and your feature won't be released on NPM.
 
-To write your commit message, see [convention page here](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)
----
+## To write your commit message, see [convention page here](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)
 
 ## Financial contributions
 
@@ -42,6 +45,7 @@ We also welcome financial contributions in full transparency on our open collect
 If you have any questions, create an [issue](https://github.com/tsedio/tsed/issues) (protip: do a quick search first to see if someone else didn't ask the same question before!). You can also reach us at https://gitter.im/Tsed-io/community.
 
 ## How to work on Ts.ED
+
 ### Setup
 
 Clone your fork of the repository
@@ -51,6 +55,7 @@ $ git clone https://github.com/YOUR_USERNAME/tsed-cli.git
 ```
 
 Install npm dependencies with yarn (not with NPM!):
+
 ```bash
 yarn
 ```
@@ -59,7 +64,7 @@ Compile TypeScript:
 
 ```bash
 yarn build
-// or 
+// or
 npm run build
 ```
 
@@ -101,6 +106,7 @@ git commit -m "feat(domain): Your message"
 ```
 
 Then:
+
 ```bash
 npm run test
 git fetch
@@ -142,17 +148,16 @@ yarn vuepress:serve
 - Feel free to ask for help from other members of the Ts.ED team.
 
 ## Credits
+
 ### Contributors
 
 <a href="https://github.com/tsedio/ts-express-decorators/graphs/contributors"><img src="https://opencollective.com/tsed/contributors.svg?width=890" /></a>
-
 
 ### Backers
 
 Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/tsed#backer)]
 
 <a href="https://opencollective.com/tsed#backers" target="_blank"><img src="https://opencollective.com/tsed/backers.svg?width=890"></a>
-
 
 ### Sponsors
 

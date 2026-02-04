@@ -16,7 +16,7 @@ export class WebpackRuntime extends BabelRuntime {
   }
 
   files() {
-    return [...super.files(), "/init/webpack.config.js.hbs"];
+    return [...super.files(), "webpack.config.js"];
   }
 
   compile(src: string, out: string): string {

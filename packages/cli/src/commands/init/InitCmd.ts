@@ -6,170 +6,60 @@ import {
   CliLoadFile,
   cliPackageJson,
   CliPlugins,
-  CliService,
-  Command,
+  command,
   type CommandProvider,
   Configuration,
-  createSubTasks,
-  createTasksRunner,
   inject,
-  PackageManager,
   PackageManagersModule,
   ProjectPackageJson,
-  type QuestionOptions,
   type Task
 } from "@tsed/cli-core";
-import {kebabCase, pascalCase} from "change-case";
+import type {PromptQuestion} from "@tsed/cli-prompts";
+import {tasks} from "@tsed/cli-tasks";
+import {isString} from "@tsed/core";
+import {constant} from "@tsed/di";
+import {$asyncAlter} from "@tsed/hooks";
+import {kebabCase} from "change-case";
 
-import {DEFAULT_TSED_TAGS} from "../../constants/index.js";
-import {ArchitectureConvention} from "../../interfaces/ArchitectureConvention.js";
-import {PlatformType} from "../../interfaces/index.js";
-import {ProjectConvention} from "../../interfaces/ProjectConvention.js";
-import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe.js";
-import {InitPlatformsModule} from "../../platforms/InitPlatformsModule.js";
+import {TEMPLATE_DIR} from "../../constants/index.js";
+import {exec} from "../../fn/exec.js";
+import {render} from "../../fn/render.js";
+import {taskOutput} from "../../fn/taskOutput.js";
+import type {InitCmdContext} from "../../interfaces/index.js";
+import type {InitOptions} from "../../interfaces/InitCmdOptions.js";
+import {PlatformsModule} from "../../platforms/PlatformsModule.js";
 import {RuntimesModule} from "../../runtimes/RuntimesModule.js";
 import {BunRuntime} from "../../runtimes/supports/BunRuntime.js";
 import {NodeRuntime} from "../../runtimes/supports/NodeRuntime.js";
-import {RootRendererService} from "../../services/Renderer.js";
-import {fillImports} from "../../utils/fillImports.js";
+import {CliProjectService} from "../../services/CliProjectService.js";
 import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt.js";
-import {InitFileSchema} from "./config/InitFileSchema.js";
-import type {InitCmdContext} from "./interfaces/InitCmdContext.js";
-import type {InitOptions} from "./interfaces/InitOptions.js";
+import {InitSchema} from "./config/InitSchema.js";
 import {mapToContext} from "./mappers/mapToContext.js";
 import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt.js";
 
-@Command({
-  name: "init",
-  description: "Init a new Ts.ED project",
-  args: {
-    root: {
-      type: String,
-      defaultValue: ".",
-      description: "Root directory to initialize the Ts.ED project"
-    }
-  },
-  options: {
-    "-n, --project-name <projectName>": {
-      type: String,
-      defaultValue: "",
-      description: "Set the project name. By default, the project is the same as the name directory."
-    },
-    "-a, --arch <architecture>": {
-      type: String,
-      defaultValue: ArchitectureConvention.DEFAULT,
-      description: `Set the default architecture convention (${ArchitectureConvention.DEFAULT} or ${ArchitectureConvention.FEATURE})`
-    },
-    "-c, --convention <convention>": {
-      type: String,
-      defaultValue: ProjectConvention.DEFAULT,
-      description: `Set the default project convention (${ArchitectureConvention.DEFAULT} or ${ArchitectureConvention.FEATURE})`
-    },
-    "-p, --platform <platform>": {
-      type: String,
-      defaultValue: PlatformType.EXPRESS,
-      description: "Set the default platform for Ts.ED (express, koa or fastify)"
-    },
-    "--features <features...>": {
-      type: Array,
-      itemType: String,
-      defaultValue: [],
-      description: "List of the Ts.ED features."
-    },
-    "--runtime <runtime>": {
-      itemType: String,
-      defaultValue: "node",
-      description: "The default runtime used to run the project"
-    },
-    "-m, --package-manager <packageManager>": {
-      itemType: String,
-      defaultValue: PackageManager.YARN,
-      description: "The default package manager to install the project"
-    },
-    "-t, --tsed-version <version>": {
-      type: String,
-      defaultValue: DEFAULT_TSED_TAGS,
-      description: "Use a specific version of Ts.ED (format: 5.x.x)."
-    },
-    "-f, --file <path>": {
-      type: String,
-      description: "Location of a file in which the features are defined."
-    },
-    "-s, --skip-prompt": {
-      type: Boolean,
-      defaultValue: false,
-      description: "Skip the prompt."
-    }
-  },
-  disableReadUpPkg: true
-})
 export class InitCmd implements CommandProvider {
   protected configuration = inject(Configuration);
   protected cliPlugins = inject(CliPlugins);
   protected packageJson = inject(ProjectPackageJson);
   protected packageManagers = inject(PackageManagersModule);
   protected runtimes = inject(RuntimesModule);
-  protected platforms = inject(InitPlatformsModule);
+  protected platforms = inject(PlatformsModule);
   protected cliPackageJson = cliPackageJson();
-  protected cliService = inject(CliService);
   protected cliLoadFile = inject(CliLoadFile);
-  protected rootRenderer = inject(RootRendererService);
-  protected outputFilePathPipe = inject(OutputFilePathPipe);
+  protected project = inject(CliProjectService);
   protected execa = inject(CliExeca);
   protected fs = inject(CliFs);
 
-  checkPrecondition(ctx: InitCmdContext) {
-    const isValid = (types: any, value: any) => (value ? Object.values(types).includes(value) : true);
-
-    if (!isValid(PlatformType, ctx.platform)) {
-      throw new Error(`Invalid selected platform: ${ctx.platform}. Possible values: ${Object.values(PlatformType).join(", ")}.`);
-    }
-
-    if (!isValid(ArchitectureConvention, ctx.architecture)) {
-      throw new Error(
-        `Invalid selected architecture: ${ctx.architecture}. Possible values: ${Object.values(ArchitectureConvention).join(", ")}.`
-      );
-    }
-
-    if (!isValid(ProjectConvention, ctx.convention)) {
-      throw new Error(`Invalid selected convention: ${ctx.convention}. Possible values: ${Object.values(ProjectConvention).join(", ")}.`);
-    }
-
-    const runtimes = this.runtimes.list();
-    if (!runtimes.includes(ctx.runtime)) {
-      throw new Error(`Invalid selected runtime: ${ctx.runtime}. Possible values: ${runtimes.join(", ")}.`);
-    }
-
-    const managers = this.packageManagers.list();
-    if (!managers.includes(ctx.packageManager)) {
-      throw new Error(`Invalid selected package manager: ${ctx.packageManager}. Possible values: ${managers.join(", ")}.`);
-    }
-
-    if (ctx.features) {
-      ctx.features.forEach((value) => {
-        const feature = FeaturesMap[value.toLowerCase()];
-
-        if (!feature) {
-          throw new Error(`Invalid selected feature: ${value}. Possible values: ${Object.values(FeatureType).join(", ")}.`);
-        }
-      });
-    }
-  }
-
-  async $beforePrompt(initialOptions: Partial<InitOptions>) {
+  async $prompt(initialOptions: Partial<InitOptions>): Promise<PromptQuestion[]> {
     if (initialOptions.file) {
-      const file = join(this.packageJson.dir, initialOptions.file);
+      const file = join(this.packageJson.cwd, initialOptions.file);
 
-      return {
+      initialOptions = {
         ...initialOptions,
-        ...(await this.cliLoadFile.loadFile(file, InitFileSchema))
+        ...(await this.cliLoadFile.loadFile(file, InitSchema()))
       };
     }
 
-    return initialOptions;
-  }
-
-  $prompt(initialOptions: Partial<InitOptions>): QuestionOptions {
     if (initialOptions.skipPrompt) {
       return [];
     }
@@ -196,7 +86,7 @@ export class InitCmd implements CommandProvider {
     ];
   }
 
-  $mapContext(ctx: any): InitCmdContext {
+  $mapContext(ctx: any): InitOptions {
     this.resolveRootDir(ctx);
     ctx = mapToContext(ctx);
 
@@ -210,34 +100,32 @@ export class InitCmd implements CommandProvider {
       ctx[key] = ctx.packageManager === key;
     });
 
-    return fillImports({
+    return {
       ...ctx,
-      entryServer: ctx.convention !== ProjectConvention.ANGULAR ? "Server" : "server",
       cliVersion: ctx.cliVersion || this.cliPackageJson.version,
-      srcDir: this.configuration.project?.srcDir,
-      platformSymbol: ctx.platform && pascalCase(`Platform ${ctx.platform}`)
-    }) as InitCmdContext;
+      srcDir: constant("project.srcDir", "src")
+    } as InitOptions;
   }
 
-  async $beforeExec(ctx: InitCmdContext): Promise<any> {
-    this.fs.ensureDirSync(this.packageJson.dir);
-    this.packageJson.name = ctx.projectName;
+  preExec(ctx: InitOptions) {
+    this.fs.ensureDirSync(this.packageJson.cwd);
 
+    ctx.projectName && (this.packageJson.name = ctx.projectName);
     ctx.packageManager && this.packageJson.setPreference("packageManager", ctx.packageManager);
     ctx.runtime && this.packageJson.setPreference("runtime", ctx.runtime);
     ctx.architecture && this.packageJson.setPreference("architecture", ctx.architecture);
     ctx.convention && this.packageJson.setPreference("convention", ctx.convention);
+    ctx.platform && this.packageJson.setPreference("platform", ctx.platform);
     ctx.GH_TOKEN && this.packageJson.setGhToken(ctx.GH_TOKEN);
 
-    await createTasksRunner(
+    return tasks(
       [
         {
           title: "Write RC files",
-          skip: () => !ctx.GH_TOKEN,
-          task: () =>
-            this.rootRenderer.renderAll(["/init/.npmrc.hbs", "/init/.yarnrc.hbs"], ctx, {
-              baseDir: "/init"
-            })
+          skip: () => !ctx.premium,
+          task: () => {
+            return Promise.all([render(".npmrc", ctx), render(".yarnrc", ctx)]);
+          }
         },
         {
           title: "Initialize package.json",
@@ -250,69 +138,79 @@ export class InitCmd implements CommandProvider {
             this.addFeatures(ctx);
           }
         },
-        {
-          title: "Install plugins",
-          task: createSubTasks(() => this.packageManagers.install(ctx), {...ctx, concurrent: false})
-        },
+        this.packageManagers.task("Install plugins", ctx),
         {
           title: "Load plugins",
           task: () => this.cliPlugins.loadPlugins()
         },
         {
           title: "Install plugins dependencies",
-          task: createSubTasks(() => this.cliPlugins.addPluginsDependencies(ctx), {...ctx, concurrent: false})
+          task: () => this.cliPlugins.addPluginsDependencies(ctx)
         }
       ],
       ctx
     );
   }
 
-  async $exec(ctx: InitCmdContext): Promise<Task[]> {
-    this.checkPrecondition(ctx);
+  async $exec(ctx: InitOptions): Promise<Task[]> {
+    await this.preExec(ctx);
 
-    const subTasks = [
-      ...(await this.cliService.getTasks("generate", {
-        ...ctx,
-        type: "server",
-        name: "Server",
-        route: "/rest"
-      })),
-      ...(await this.cliService.getTasks("generate", {
-        type: "controller",
-        route: "hello-world",
-        name: "HelloWorld",
-        directory: "rest"
-      })),
-      ...(ctx.commands
-        ? await this.cliService.getTasks("generate", {
-            type: "command",
-            route: "hello",
-            name: "hello"
-          })
-        : [])
-    ];
+    const runtime = this.runtimes.get();
+
+    ctx = {
+      ...ctx,
+      node: runtime instanceof NodeRuntime,
+      bun: runtime instanceof BunRuntime,
+      compiled: runtime instanceof NodeRuntime && runtime.isCompiled()
+    };
 
     return [
       {
-        title: "Generate project files",
-        task: createSubTasks(
-          [
-            {
-              title: "Root files",
-              task: () => {
-                return this.generateFiles(ctx);
-              }
-            },
-            ...subTasks
-          ],
-          {...ctx, concurrent: false}
-        )
+        title: "Render base files",
+        task: () => this.renderFiles(ctx)
+      },
+      {
+        title: "Alter package json",
+        task: async () => {
+          await $asyncAlter("$alterPackageJson", this.packageJson, [ctx]);
+        }
+      },
+      {
+        title: "Generate additional project files",
+        task: async () => {
+          const subTasks = [
+            ...(await exec("generate", {
+              //...ctx,
+              type: "controller",
+              route: "rest",
+              name: "HelloWorld",
+              directory: "rest"
+            })),
+            ...(ctx.commands
+              ? await exec("generate", {
+                  //...ctx,
+                  type: "command",
+                  route: "hello",
+                  name: "hello"
+                })
+              : [])
+          ];
+
+          return $asyncAlter("$alterInitSubTasks", subTasks, [ctx]);
+        }
+      },
+      {
+        title: "transform generated files to the project configuration",
+        task: async () => {
+          return this.project.transformFiles(ctx);
+        }
       }
     ];
   }
 
   $afterPostInstall() {
     return [
+      this.packageManagers.task("Check installed dependencies"),
       {
         title: "Generate barrels files",
         task: () => {
@@ -324,10 +222,10 @@ export class InitCmd implements CommandProvider {
     ];
   }
 
-  resolveRootDir(ctx: Partial<InitCmdContext>) {
-    const rootDirName = kebabCase(ctx.projectName || basename(this.packageJson.dir));
+  resolveRootDir(ctx: Partial<InitOptions>) {
+    const rootDirName = kebabCase(ctx.projectName || basename(this.packageJson.cwd));
 
-    if (this.packageJson.dir.endsWith(rootDirName)) {
+    if (this.packageJson.cwd.endsWith(rootDirName)) {
       ctx.projectName = ctx.projectName || rootDirName;
       ctx.root = ".";
       return;
@@ -336,30 +234,31 @@ export class InitCmd implements CommandProvider {
     ctx.projectName = ctx.projectName || rootDirName;
 
     if (ctx.root && ctx.root !== ".") {
-      this.packageJson.dir = join(this.packageJson.dir, rootDirName);
+      this.packageJson.setCWD(join(this.packageJson.cwd, rootDirName));
       ctx.root = ".";
     }
   }
 
-  addScripts(ctx: InitCmdContext): void {
+  addScripts(ctx: InitOptions): void {
     this.packageJson.addScripts(this.runtimes.scripts(ctx));
 
     if (ctx.eslint || ctx.testing) {
       const runtime = this.runtimes.get();
 
       const scripts = {
-        test: [ctx.eslint && runtime.run("test:lint"), ctx.testing && runtime.run("test:coverage")].filter(Boolean).join("&&")
+        test: [ctx.eslint && runtime.run("test:lint"), ctx.testing && runtime.run("test:coverage")].filter(Boolean).join(" && ")
       };
 
       this.packageJson.addScripts(scripts);
     }
   }
 
-  addDependencies(ctx: InitCmdContext) {
+  addDependencies(ctx: InitOptions) {
     this.packageJson.addDependencies({
       "@tsed/core": ctx.tsedVersion,
       "@tsed/di": ctx.tsedVersion,
       "@tsed/ajv": ctx.tsedVersion,
+      "@tsed/config": ctx.tsedVersion,
       "@tsed/exceptions": ctx.tsedVersion,
       "@tsed/schema": ctx.tsedVersion,
       "@tsed/json-mapper": ctx.tsedVersion,
@@ -372,20 +271,19 @@ export class InitCmd implements CommandProvider {
       "@tsed/platform-params": ctx.tsedVersion,
       "@tsed/platform-response-filter": ctx.tsedVersion,
       "@tsed/platform-views": ctx.tsedVersion,
+      "@tsed/platform-multer": ctx.tsedVersion,
       "@tsed/logger": "latest",
+      "@tsed/logger-std": "latest",
       "@tsed/engines": "latest",
       "@tsed/barrels": "latest",
       ajv: "latest",
       "cross-env": "latest",
-      dotenv: "latest",
-      "dotenv-expand": "latest",
-      "dotenv-flow": "latest",
       ...this.runtimes.get().dependencies(),
       ...this.platforms.get(ctx.platform).dependencies(ctx)
     });
   }
 
-  addDevDependencies(ctx: InitCmdContext) {
+  addDevDependencies(ctx: InitOptions) {
     this.packageJson.addDevDependencies(
       {
         "@types/node": "latest",
@@ -398,8 +296,8 @@ export class InitCmd implements CommandProvider {
     );
   }
 
-  addFeatures(ctx: InitCmdContext) {
-    ctx.features.forEach((value) => {
+  addFeatures(ctx: InitOptions) {
+    ctx.features?.forEach((value) => {
       const feature = FeaturesMap[value.toLowerCase()];
 
       if (feature) {
@@ -413,7 +311,7 @@ export class InitCmd implements CommandProvider {
       }
     });
 
-    if (ctx.features.find((value) => value === FeatureType.GRAPHQL)) {
+    if (ctx.features?.find((value) => value === FeatureType.GRAPHQL)) {
       this.packageJson.addDependencies(
         {
           [`apollo-server-${ctx.platform}`]: "2.25.2"
@@ -423,65 +321,86 @@ export class InitCmd implements CommandProvider {
     }
   }
 
-  private generateFiles(ctx: InitCmdContext) {
-    const indexCtrlBaseName = basename(
-      `${this.outputFilePathPipe.transform({
-        name: "Index",
-        type: "controller",
-        format: ctx.convention
-      })}.ts`
-    );
-
-    const runtime = this.runtimes.get();
-    const packageManager = this.packageManagers.get();
-
-    ctx = {
-      ...ctx,
-      node: runtime instanceof NodeRuntime,
-      bun: runtime instanceof BunRuntime,
-      compiled: runtime instanceof NodeRuntime && runtime.isCompiled()
-    };
-
+  async baseFiles(ctx: InitCmdContext) {
+    const packageManager = inject(PackageManagersModule).get();
     const pm2 = ctx.bun ? "bun" : ctx.compiled ? "node-compiled" : "node-loader";
+    const runtimes = inject(RuntimesModule);
+    const runtime = runtimes.get();
 
-    return this.rootRenderer.renderAll(
-      [
-        ...runtime.files(),
-        "/init/.dockerignore.hbs",
-        "/init/.gitignore.hbs",
-        "/init/.barrels.json.hbs",
-        {
-          path: `/init/pm2/${pm2}/processes.config.cjs.hbs`,
-          output: `processes.config.cjs`,
-          replaces: [`pm2/${pm2}`]
-        },
-        "/init/docker-compose.yml.hbs",
-        {
-          path: `/init/docker/${packageManager.name}/Dockerfile.hbs`,
-          output: `Dockerfile`,
-          replaces: [`docker/${packageManager.name}`]
-        },
-        "/init/README.md.hbs",
-        "/init/tsconfig.json.hbs",
-        "/init/tsconfig.base.json.hbs",
-        "/init/tsconfig.node.json.hbs",
-        ctx.testing && "/init/tsconfig.spec.json.hbs",
-        "/init/src/index.ts.hbs",
-        "/init/src/config/envs/index.ts.hbs",
-        "/init/src/config/logger/index.ts.hbs",
-        "/init/src/config/index.ts.hbs",
-        ctx.commands && "/init/src/bin/index.ts.hbs",
-        ctx.swagger && "/init/views/swagger.ejs.hbs",
-        ctx.swagger && {
-          path: "/init/src/controllers/pages/IndexController.ts.hbs",
-          basename: indexCtrlBaseName,
-          replaces: [ctx.architecture === ArchitectureConvention.FEATURE ? "controllers" : null]
-        }
-      ].filter(Boolean),
-      ctx,
-      {
-        baseDir: "/init"
+    // files with higher priority
+    const promises = [
+      "tsconfig.base.json",
+      "tsconfig.json",
+      "tsconfig.spec.json",
+      "tsconfig.node.json",
+      "docker-compose.yml",
+      `dockerfile.${packageManager.name}`,
+      ".dockerignore",
+      ".gitignore",
+      "server",
+      "config",
+      "index",
+      "index.config.util",
+      "index.logger",
+      "index.controller",
+      ctx.commands && "index.command",
+      "barrels",
+      "readme",
+      "agents",
+      `pm2.${pm2}`,
+      "/views/home.ejs",
+      ...runtime.files()
+    ].map((id) => {
+      return id && render(id, ctx);
+    });
+
+    await Promise.all(promises);
+  }
+
+  async renderFiles(ctx: InitOptions) {
+    // base files
+    let startTime = Date.now();
+
+    await this.baseFiles(ctx);
+
+    taskOutput(`Base files rendered (${Date.now() - startTime}ms)`);
+
+    const files = await $asyncAlter("$alterRenderFiles", [] as any[], [ctx]);
+
+    startTime = Date.now();
+
+    const promises = files.map((option) => {
+      if (!option) {
+        return;
       }
-    );
+
+      if (isString(option)) {
+        const [id, name] = option.split(":");
+
+        return render(id, {
+          ...ctx,
+          from: TEMPLATE_DIR,
+          name: name || id
+        });
+      } else {
+        if ("id" in option) {
+          return render(option.id, {
+            ...ctx,
+            ...option
+          });
+        }
+      }
+    });
+
+    await Promise.all(promises);
+    taskOutput(`Plugins files rendered (${Date.now() - startTime}ms)`);
   }
 }
+
+command({
+  token: InitCmd,
+  name: "init",
+  description: "Init a new Ts.ED project",
+  inputSchema: InitSchema,
+  disableReadUpPkg: true
+});
