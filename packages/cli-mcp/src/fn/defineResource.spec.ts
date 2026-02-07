@@ -72,20 +72,6 @@ describe("defineResource", () => {
     expect(result.contents[0].text).toBe("Resource data");
   });
 
-  it("should support custom token", () => {
-    const customToken = Symbol("custom");
-    const handler = vi.fn();
-
-    const token = defineResource({
-      name: "test-resource",
-      uri: "test://resource",
-      token: customToken,
-      handler
-    });
-
-    expect(token).toBe(customToken);
-  });
-
   it("should execute handler within DI context", async () => {
     const handler = vi.fn().mockResolvedValue({
       contents: []
@@ -120,7 +106,7 @@ describe("defineResource", () => {
     const instance = injector().invoke(token);
 
     expect(typeof instance.handler).toBe("function");
-    expect(instance.handler).not.toBe(handler);
+    expect(instance.handler).toBe(handler);
   });
 
   it("should support resource templates", () => {

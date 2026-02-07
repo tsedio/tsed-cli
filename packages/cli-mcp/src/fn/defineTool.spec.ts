@@ -107,19 +107,6 @@ describe("defineTool", () => {
     expect(instance.name).toBe("test-tool");
   });
 
-  it("should support custom token", () => {
-    const customToken = Symbol("custom");
-    const handler = vi.fn();
-
-    const token = defineTool({
-      name: "test-tool",
-      token: customToken,
-      handler
-    });
-
-    expect(token).toBe(customToken);
-  });
-
   it("should execute handler within DI context", async () => {
     const handler = vi.fn().mockResolvedValue({
       content: []

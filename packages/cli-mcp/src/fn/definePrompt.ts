@@ -1,62 +1,62 @@
 import type {McpServer, PromptCallback} from "@modelcontextprotocol/sdk/server/mcp.js";
-import {injectable} from "@tsed/cli-core";
-import {DIContext, injector, logger, runInContext, type TokenProvider} from "@tsed/di";
-import {v4} from "uuid";
+import {type AbstractType, isArrowFn, type Type} from "@tsed/core";
+import {inject, injectable} from "@tsed/di";
+import {JsonEntityStore, JsonSchema} from "@tsed/schema";
 
-export type PromptProps = Parameters<McpServer["registerPrompt"]>[1] & {
-  token?: TokenProvider;
+import {MCP_PROVIDER_TYPES} from "../constants/constants.js";
+import {toZod} from "../utils/toZod.js";
+
+type BasePromptProps<Args> = Omit<Parameters<McpServer["registerPrompt"]>[1], "argsSchema"> & {
   name: string;
-  handler: PromptCallback;
+  argsSchema?: Parameters<McpServer["registerPrompt"]>[1]["argsSchema"] | JsonSchema<Args> | (() => JsonSchema<Args>);
 };
 
-/**
- * Prompts are reusable templates that help humans prompt models to interact with your server.
- * They're designed to be user-driven, and might appear as slash commands in a chat interface.
- *
- * ```ts
- * import {definePrompt} from "@tsed/cli-mcp";
- *
- * export default definePrompt({
- *   name: "review-code",
- *   title: 'Code review',
- *   description: 'Review code for best practices and potential issues',
- *   argsSchema: { code: z.string() }
- *   handler: ({ code }) => ({
- *     messages: [
- *       {
- *         role: 'user',
- *         content: {
- *           type: 'text',
- *           text: `Please review this code:\n\n${code}`
- *         }
- *       }
- *     ]
- *   })
- * });
- * ```
- *
- * @param options {PromptProps}
- */
-export function definePrompt(options: PromptProps) {
-  const provider = injectable(options.token || Symbol.for(`MCP:RESOURCE:${options.name}`))
-    .type("CLI_MCP_RESOURCES")
-    .factory(() => ({
-      ...options,
-      async handler(...args: any[]) {
-        const $ctx = new DIContext({
-          id: v4(),
-          injector: injector(),
-          logger: logger(),
-          level: logger().level,
-          maxStackSize: 0,
-          platform: "MCP"
-        });
+type FnPromptProps<Args extends undefined = any> = BasePromptProps<Args> & {
+  handler: PromptCallback<Args>;
+};
 
-        return runInContext($ctx, () => {
-          return (options.handler as any)(...args);
-        });
-      }
-    }));
+type ClassPromptProps<Args extends undefined = any> = BasePromptProps<Args> & {
+  token: Type | AbstractType<any>;
+  propertyKey: string | symbol;
+};
+
+export type PromptProps<Args extends undefined = any> = FnPromptProps<Args> | ClassPromptProps<Args>;
+
+function mapOptions<Args extends undefined = any>(options: PromptProps<Args>) {
+  let handler: PromptCallback<Args> = undefined as any;
+
+  if ("handler" in options) {
+    handler = options.handler;
+  }
+
+  if ("propertyKey" in options && options.propertyKey) {
+    const {token, propertyKey} = options;
+
+    handler = ((...args: any[]) => {
+      const instance = inject(options.token) as any;
+      return instance[propertyKey](...args);
+    }) as unknown as PromptCallback<Args>;
+
+    const methodStore = JsonEntityStore.fromMethod(token, propertyKey);
+    options.description = options.description || methodStore.operation.get("description");
+    options.title = options.title || methodStore.schema.get("title");
+  }
+
+  return {
+    ...options,
+    argsSchema: toZod(isArrowFn(options.argsSchema) ? options.argsSchema() : options.argsSchema),
+    handler: handler
+  };
+}
+
+export type PromptsSettings = ReturnType<typeof mapOptions>;
+
+export function definePrompt<Args extends undefined = any>(options: PromptProps<Args>) {
+  const provider = injectable(Symbol.for(`MCP:PROMPT:${options.name}`))
+    .type(MCP_PROVIDER_TYPES.PROMPT)
+    .factory(() => {
+      return mapOptions<Args>(options);
+    });
 
   return provider.token();
 }

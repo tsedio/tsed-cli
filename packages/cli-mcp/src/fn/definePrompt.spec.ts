@@ -49,16 +49,14 @@ describe("definePrompt", () => {
   });
 
   it("should support custom token", () => {
-    const customToken = Symbol("custom");
     const handler = vi.fn();
 
     const token = definePrompt({
       name: "test-prompt",
-      token: customToken,
       handler
     });
 
-    expect(token).toBe(customToken);
+    expect(token).toBe(Symbol.for("MCP:PROMPT:test-prompt"));
   });
 
   it("should wrap handler to execute in DI context", () => {

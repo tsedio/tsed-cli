@@ -10,6 +10,6 @@ describe("toZod", () => {
 
     const result = toZod(schema);
 
-    expect(result?.prop1?.parse).toBeDefined();
+    expect(result?.toJSONSchema).toBeDefined();
   });
 });
