@@ -50,7 +50,7 @@ export class EslintInitHook implements CliCommandHooks {
       {
         "@typescript-eslint/parser": "latest",
         "@typescript-eslint/eslint-plugin": "latest",
-        eslint: "latest",
+        eslint: "^9.39.2",
         "eslint-config-prettier": "latest",
         "eslint-plugin-prettier": "latest",
         "eslint-plugin-simple-import-sort": "latest",
