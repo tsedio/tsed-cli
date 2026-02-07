@@ -9,14 +9,15 @@ export class CliPrisma {
   protected projectPackageJson = inject(ProjectPackageJson);
 
   run(command: string, args: string[] = [], options: any = {}) {
-    return this.cliExeca.run("npx", ["prisma", command, ...args], {
+    return this.cliExeca.runSync("npx", ["prisma", command, ...args], {
       ...options,
-      cwd: this.projectPackageJson.dir
+      cwd: this.projectPackageJson.dir,
+      stdio: "inherit"
     });
   }
 
   init() {
-    return this.run("init");
+    return this.run("init", ["--db", "--output", "../generated/prisma"]);
   }
 
   async patchPrismaSchema() {

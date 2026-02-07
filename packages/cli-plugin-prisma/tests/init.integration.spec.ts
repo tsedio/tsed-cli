@@ -27,7 +27,7 @@ describe("Prisma: Init cmd", () => {
       devDependencies: {}
     });
 
-    $on("npx prisma init", () => {
+    $on("npx prisma init --db --output ../generated/prisma", () => {
       inject(CliFs).writeFileSync("project-name/prisma/schema.prisma", ``, {encoding: "utf8"});
     });
 
@@ -91,12 +91,17 @@ describe("Prisma: Init cmd", () => {
 
     expect([...FakeCliExeca.entries.keys()]).toMatchInlineSnapshot(`
       [
+        "bun --version",
+        "npm --version",
+        "pnpm --version",
+        "yarn --version",
+        "node --version",
         "yarn install",
         "yarn add --ignore-engines @tsed/logger @tsed/logger-std @tsed/engines @tsed/barrels ajv cross-env @swc/core @swc/cli @swc/helpers @swc-node/register typescript body-parser cors compression cookie-parser express method-override",
         "yarn add -D --ignore-engines @types/node @types/multer tslib nodemon @types/cors @types/express @types/compression @types/cookie-parser @types/method-override",
         "yarn add --ignore-engines @tsed/logger @tsed/logger-std @tsed/engines @tsed/barrels ajv cross-env @swc/core @swc/cli @swc/helpers @swc-node/register typescript body-parser cors compression cookie-parser express method-override @tsed/prisma @prisma/client",
         "yarn add -D --ignore-engines @types/node @types/multer tslib nodemon @types/cors @types/express @types/compression @types/cookie-parser @types/method-override prisma",
-        "npx prisma init",
+        "npx prisma init --db --output ../generated/prisma",
       ]
     `);
 

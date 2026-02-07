@@ -37,8 +37,14 @@ export class FakeCliExeca extends CliExeca {
   }
 
   runSync(cmd: string, args: string[], opts?: any): any {
+    const key = cmd + " " + args.join(" ");
+
+    $emit(key);
+
+    FakeCliExeca.entries.set(key, "executed");
+
     return {
-      stdout: FakeCliExeca.entries.get(cmd + " " + args.join(" "))
+      stdout: FakeCliExeca.entries.get(key)
     };
   }
 }
