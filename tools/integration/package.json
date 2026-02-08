@@ -11,7 +11,7 @@
   },
   "scripts": {
     "run-cmd": "cross-env NODE_ENV=development CLI_MODE=ts CI=true node --import @swc-node/register/esm-register index.ts",
-    "run-mcp-stdio": "npx @modelcontextprotocol/inspector node -e NODE_ENV=development -e CLI_MODE=ts -e CI=true -e LOG_SERVER_URL=http://localhost:3838 --import @swc-node/register/esm-register mcp.ts mcp",
+    "run-mcp-inspector": "npx @modelcontextprotocol/inspector node -e NODE_ENV=development -e CLI_MODE=ts -e CI=true -e LOG_SERVER_URL=http://localhost:3838 --import @swc-node/register/esm-register mcp.ts mcp",
     "run-mcp-stdio2": "npx @modelcontextprotocol/inspector npx -p @tsed/cli@beta -y tsed mcp",
     "run-mcp-http": "cross-env NODE_ENV=development CLI_MODE=ts CI=true USE_MCP_HTTP=true node --import @swc-node/register/esm-register index.ts mcp --http",
     "mcp:inspector": "npx @modelcontextprotocol/inspector",

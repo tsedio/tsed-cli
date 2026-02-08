@@ -17,7 +17,7 @@ export class CliPrisma {
   }
 
   init() {
-    return this.run("init", ["--db", "--output", "../generated/prisma"]);
+    return this.run("init", ["--db", "--generator-provider", "prisma-client-js"]);
   }
 
   async patchPrismaSchema() {
@@ -27,8 +27,11 @@ export class CliPrisma {
       let content = await this.cliFs.readFile(schemaPath, "utf8");
 
       if (!content.includes("generator tsed")) {
-        content += "\ngenerator tsed {\n" + '  provider = "tsed-prisma"\n' + "}\n";
         content +=
+          "\ngenerator tsed {\n" +
+          '  provider = "tsed-prisma"\n' +
+          '  output   = "../src/generated"\n' +
+          "}\n" +
           "\nmodel User {\n" +
           "  id    Int     @default(autoincrement()) @id\n" +
           "  email String  @unique\n" +

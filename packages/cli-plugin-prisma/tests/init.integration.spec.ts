@@ -27,7 +27,7 @@ describe("Prisma: Init cmd", () => {
       devDependencies: {}
     });
 
-    $on("npx prisma init --db --output ../generated/prisma", () => {
+    $on("npx prisma init --db --generator-provider prisma-client-js", () => {
       inject(CliFs).writeFileSync("project-name/prisma/schema.prisma", ``, {encoding: "utf8"});
     });
 
@@ -101,7 +101,7 @@ describe("Prisma: Init cmd", () => {
         "yarn add -D --ignore-engines @types/node @types/multer tslib nodemon @types/cors @types/express @types/compression @types/cookie-parser @types/method-override",
         "yarn add --ignore-engines @tsed/logger @tsed/logger-std @tsed/engines @tsed/barrels ajv cross-env @swc/core @swc/cli @swc/helpers @swc-node/register typescript body-parser cors compression cookie-parser express method-override @tsed/prisma @prisma/client",
         "yarn add -D --ignore-engines @types/node @types/multer tslib nodemon @types/cors @types/express @types/compression @types/cookie-parser @types/method-override prisma",
-        "npx prisma init --db --output ../generated/prisma",
+        "npx prisma init --db --generator-provider prisma-client-js",
       ]
     `);
 
@@ -111,6 +111,7 @@ describe("Prisma: Init cmd", () => {
       "
       generator tsed {
         provider = "tsed-prisma"
+        output   = "../src/generated"
       }
 
       model User {

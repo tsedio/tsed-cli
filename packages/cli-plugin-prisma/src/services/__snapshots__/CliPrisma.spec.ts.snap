@@ -12,6 +12,7 @@ generator client {
 
 generator tsed {
   provider = "tsed-prisma"
+  output   = "../src/generated"
 }
 
 model User {
