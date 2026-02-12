@@ -59,3 +59,20 @@ Define commands with the decorator API, register prompts/tasks, and optionally e
 All of the snippets referenced throughout the CLI documentation—prompts, tasks, MCP servers—work in both setups. Swap in your own providers during bootstrap to keep logic shared between multiple CLIs or between the CLI and your backend services.
 
 Need to run the CLI behind a corporate proxy or custom network stack? Check the [configuration guide](./configuration.md) for the supported npm config keys and environment variables.
+
+## Built-in commands
+
+The `tsed` binary ships with several commands across project scaffolding, generators, and maintenance tasks:
+
+| Command                                  | Description                                                               |
+| ---------------------------------------- | ------------------------------------------------------------------------- |
+| `tsed init [root]`                       | Scaffold a new Ts.ED project with prompts and templates.                  |
+| `tsed init-options`                      | Print every `tsed init` flag (handy for CI or tooling).                   |
+| `tsed generate [type] [name]` / `tsed g` | Run a generator template (controllers, services, custom templates, etc.). |
+| `tsed template [name]`                   | Create or scaffold a `defineTemplate()` file inside `.templates/`.        |
+| `tsed add [name]`                        | Install a CLI plugin (e.g., `@tsed/cli-plugin-<feature>`).                |
+| `tsed run <command>`                     | Proxy to project-level scripts (with SWC already wired).                  |
+| `tsed update`                            | Update Ts.ED packages used by the current project.                        |
+| `tsed mcp [options]`                     | Launch the bundled MCP server (stdio or HTTP).                            |
+
+See `tsed --help` for the latest list, or read the [Commands guide](/guide/cli/commands) for every decorator/`command()` option.

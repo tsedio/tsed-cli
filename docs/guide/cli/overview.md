@@ -95,6 +95,10 @@ Peeking at `packages/cli/src/bin/tsed.ts` in this repo shows the exact layout Ts
 
 :::
 
+::: tip
+The functional example shows how `inputSchema` replaces ad-hoc args/options. See the [Commands guide](/guide/cli/commands#input-schema) for every helper (`.prompt()`, `.choices()`, `.when()`, etc.).
+:::
+
 4. Bootstrap the runtime in `src/bin/index.ts` (or any entrypoint under `src/bin`). This mirrors the official `packages/cli/src/bin/tsed.ts` entrypoint without the module-alias hook:
 
 <<< @/examples/cli/bootstrap.ts
@@ -112,6 +116,7 @@ Peeking at `packages/cli/src/bin/tsed.ts` in this repo shows the exact layout Ts
 ## Where to go next
 
 - Learn how to configure `@Command`/`command()` in [Commands](/guide/cli/commands).
+- Build custom generators with [Templates](/guide/cli/templates).
 - Compose rich multi-step conversations in [Prompts](/guide/cli/prompts).
 - Stream progress, handle retries, and chain subtasks in [Tasks](/guide/cli/tasks).
 - Learn how to expose the CLI over MCP in [MCP servers](/guide/cli/mcp).

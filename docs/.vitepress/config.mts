@@ -13,6 +13,7 @@ const Introduction = [
     items: [
       {text: "Installation", link: "/introduction/getting-started"},
       {text: "Configuration", link: "/introduction/configuration"},
+      {text: "What's new in v7?", link: "/introduction/whats-new-v7"},
       {text: "What is Ts.ED?", link: "https://tsed.dev/introduction/what-is-tsed"},
       {text: "Capabilities", link: "https://tsed.dev/introduction/capabilities"},
       {text: "Api references", link: "/api"}
@@ -28,6 +29,7 @@ const CliGuide = [
       {text: "Commands", link: "/guide/cli/commands"},
       {text: "Prompts", link: "/guide/cli/prompts"},
       {text: "Tasks", link: "/guide/cli/tasks"},
+      {text: "Templates", link: "/guide/cli/templates"},
       {text: "MCP server", link: "/guide/cli/mcp"}
     ]
   }
