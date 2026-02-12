@@ -17,15 +17,7 @@ const Introduction = [
       {text: "Capabilities", link: "https://tsed.dev/introduction/capabilities"},
       {text: "Api references", link: "/api"}
     ]
-  },
-  // {
-  //   text: "Migration",
-  //   items: [
-  //     {text: "Migrate from v7", link: "/introduction/migrate-from-v7"},
-  //     {text: "Migrate v6 to v7", link: "/introduction/migrate-from-v6"},
-  //     {text: "Migrate from Express", link: "/introduction/migrate-from-express"}
-  //   ]
-  // }
+  }
 ];
 
 const CliGuide = [
@@ -33,145 +25,14 @@ const CliGuide = [
     text: "CLI",
     items: [
       {text: "Overview", link: "/guide/cli/overview"},
-      {text: "MCP server", link: "/guide/cli/mcp"},
+      {text: "Commands", link: "/guide/cli/commands"},
       {text: "Prompts", link: "/guide/cli/prompts"},
-      {text: "Tasks", link: "/guide/cli/tasks"}
+      {text: "Tasks", link: "/guide/cli/tasks"},
+      {text: "MCP server", link: "/guide/cli/mcp"}
     ]
   }
 ];
 
-// const Docs = [
-//   {
-//     text: "Configuration",
-//     items: [
-//       {text: "Introduction", link: "https://tsed.dev/docs/configuration/"},
-//       {text: "Configuration sources", link: "https://tsed.dev/docs/configuration/configuration-sources"},
-//       {text: "Server options", link: "https://tsed.dev/docs/configuration/server-options"},
-//       {text: "Express.js", link: "https://tsed.dev/docs/configuration/express"},
-//       {text: "Koa.js", link: "https://tsed.dev/docs/configuration/koa"},
-//       {text: "Fastify.js", link: "https://tsed.dev/docs/configuration/fastify"}
-//     ]
-//   },
-//   {
-//     text: "Fundamentals",
-//     items: [
-//       {
-//         text: "Introduction",
-//         link: `https://tsed.dev/docs/controllers`
-//       },
-//       {
-//         text: "Routing",
-//         link: `https://tsed.dev/docs/routing`
-//       },
-//       {
-//         text: "DI & Providers",
-//         link: `https://tsed.dev/docs/providers`
-//       },
-//       {
-//         text: "Models",
-//         link: `https://tsed.dev/docs/model`
-//       },
-//       {
-//         text: "Json Mapper",
-//         link: `https://tsed.dev/docs/json-mapper`
-//       },
-//       {
-//         text: "Middlewares",
-//         link: `https://tsed.dev/docs/middlewares`
-//       },
-//       {
-//         text: "Pipes",
-//         link: `https://tsed.dev/docs/pipes`
-//       },
-//       {
-//         text: "Interceptors",
-//         link: `https://tsed.dev/docs/interceptors`
-//       },
-//       {
-//         text: "Validation",
-//         link: `https://tsed.dev/docs/validation`
-//       },
-//       {
-//         text: "Authentication",
-//         link: `https://tsed.dev/docs/authentication`
-//       },
-//       {
-//         text: "Hooks",
-//         link: `https://tsed.dev/docs/hooks`
-//       },
-//       {
-//         text: "Response filter",
-//         link: `https://tsed.dev/docs/response-filter`
-//       },
-//       {
-//         text: "Exceptions",
-//         link: `https://tsed.dev/docs/exceptions`
-//       },
-//       {
-//         text: "Logger",
-//         link: `https://tsed.dev/docs/logger`
-//       },
-//       {
-//         text: "Context",
-//         link: `https://tsed.dev/docs/request-context`
-//       },
-//       {
-//         text: "Testing",
-//         link: `https://tsed.dev/docs/testing`
-//       }
-//     ]
-//   },
-//   {
-//     text: "Advanced",
-//     items: [
-//       {
-//         text: "Cache",
-//         link: `https://tsed.dev/docs/cache`
-//       },
-//       {
-//         text: "Platform API",
-//         link: `https://tsed.dev/docs/platform-api`
-//       },
-//       {
-//         text: "Platform Adapter",
-//         link: `https://tsed.dev/docs/platform-adapter`
-//       },
-//       {
-//         text: "Platform AWS",
-//         link: `https://tsed.dev/docs/platform-serverless`
-//       },
-//       {
-//         text: "Platform Serverless HTTP",
-//         link: `https://tsed.dev/docs/platform-serverless-http`
-//       },
-//       {
-//         text: "Command",
-//         link: `https://tsed.dev/docs/command`
-//       },
-//       {
-//         text: "Custom decorators",
-//         link: "https://tsed.dev/docs/custom-endpoint-decorators"
-//       },
-//       {
-//         text: "Custom providers",
-//         link: "https://tsed.dev/docs/custom-providers"
-//       },
-//       {
-//         text: "Templating",
-//         link: `https://tsed.dev/docs/templating`
-//       },
-//
-//       {
-//         text: "Session & Cookies",
-//         link: `https://tsed.dev/docs/session`
-//       },
-//       {text: "Upload files", link: "/docs/upload-files"},
-//       {text: "Customize 404", link: "/docs/not-found-page"},
-//       {text: "Api references", link: "/api"}
-//     ]
-//   }
-// ];
-//
 const Plugins = [
   {
     text: "Links",
@@ -248,8 +109,8 @@ export default defineConfig({
   ],
 
   themeConfig: {
-    logo: "/tsed.svg",
-    siteTitle: false,
+    logo: "https://tsed.dev/tsed.svg",
+    siteTitle: "CLI",
     apiUrl: "/api.json",
     team,
     apiRedirectUrl: "",

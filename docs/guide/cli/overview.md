@@ -91,7 +91,7 @@ Peeking at `packages/cli/src/bin/tsed.ts` in this repo shows the exact layout Ts
 ::: code-group
 
 <<< @/examples/cli/overview-quickstart.ts [Decorators]
-<<< @/examples/cli/overview-quickstart-functional.ts [Functional API]
+<<< @/examples/cli/overview-quickstart-functional.ts [Functional API + inputSchema]
 
 :::
 
@@ -111,6 +111,7 @@ Peeking at `packages/cli/src/bin/tsed.ts` in this repo shows the exact layout Ts
 
 ## Where to go next
 
-- Learn how to expose the CLI over MCP in [MCP servers](/guide/cli/mcp).
+- Learn how to configure `@Command`/`command()` in [Commands](/guide/cli/commands).
 - Compose rich multi-step conversations in [Prompts](/guide/cli/prompts).
 - Stream progress, handle retries, and chain subtasks in [Tasks](/guide/cli/tasks).
+- Learn how to expose the CLI over MCP in [MCP servers](/guide/cli/mcp).

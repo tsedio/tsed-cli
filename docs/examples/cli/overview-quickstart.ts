@@ -1,10 +1,10 @@
 import {mkdir, writeFile} from "node:fs/promises";
 import {join} from "node:path";
 
-import {Command, type CommandProvider} from "@tsed/cli-core";
+import {CliExeca, Command, type CommandProvider} from "@tsed/cli-core";
 import type {PromptQuestion} from "@tsed/cli-prompts";
 import type {Task} from "@tsed/cli-tasks";
-import {execa} from "execa";
+import {inject} from "@tsed/di";
 
 type Runtime = "node" | "bun";
 
@@ -19,6 +19,8 @@ export interface WelcomeContext {
   description: "Guide developers through project bootstrap with prompts and tasks"
 })
 export class InteractiveWelcome implements CommandProvider<WelcomeContext> {
+  protected cliExeca = inject(CliExeca);
+
   async $prompt(initial: Partial<WelcomeContext>): Promise<PromptQuestion[]> {
     return [
       {
@@ -73,17 +75,12 @@ export class InteractiveWelcome implements CommandProvider<WelcomeContext> {
         skip: (context) => (!context.installDeps ? "Skipped by --no-install flag" : false),
         task: async (context, logger) => {
           logger.message("Installing packages (this may take a minute)...");
+
           const packageManager = context.runtime === "bun" ? "bun" : "npm";
-          const installArgs = context.runtime === "bun" ? ["install"] : ["install"];
-          const subprocess = execa(packageManager, installArgs, {
+
+          return this.cliExeca.run(packageManager, ["install"], {
             cwd: join(process.cwd(), context.projectName)
           });
-
-          subprocess.stdout?.on("data", (chunk) => logger.info(chunk.toString().trim()));
-          subprocess.stderr?.on("data", (chunk) => logger.warn(chunk.toString().trim()));
-
-          await subprocess;
-          logger.message("Dependencies installed");
         }
       }
     ];
