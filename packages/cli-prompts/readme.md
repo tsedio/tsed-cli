@@ -70,7 +70,7 @@ const answers = await runner.run(questions);
 console.log(answers);
 ```
 
-> 📚 Want a larger multi-step flow? See [`docs/examples/cli/prompts-flow.ts`](../../docs/examples/cli/prompts-flow.ts) or the [CLI prompts guide](https://cli.tsed.dev/guide/cli/prompts) for a production-style walkthrough that stays in sync with this repository.
+> 📚 Want a larger multi-step flow? See [`docs/examples/cli/prompts-command-decorators.ts`](../../docs/examples/cli/prompts-command-decorators.ts) or the [CLI prompts guide](https://cli.tsed.dev/guide/cli/prompts) for a production-style walkthrough that stays in sync with this repository.
 
 ### Supported question types
 

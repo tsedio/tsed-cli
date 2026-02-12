@@ -12,7 +12,6 @@ Terminal-friendly task runner shared by every Ts.ED CLI command. Tasks return or
 ## Documentation
 
 - [CLI task guide](https://cli.tsed.dev/guide/cli/tasks) – explains lifecycle, progress tips, and cancellation patterns.
-- [`docs/examples/cli/task-runner.ts`](../../docs/examples/cli/task-runner.ts) – the TypeScript snippet that powers the public docs and stays type-checked via `yarn docs:check-cli-snippets`.
 
 ## Quick example
 

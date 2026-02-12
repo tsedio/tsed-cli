@@ -5,11 +5,11 @@ description: Compose conversational flows with @tsed/cli-prompts and the Ts.ED D
 
 # Prompts & flows
 
-`@tsed/cli-prompts` wraps `@clack/prompts` so every question runs inside the Ts.ED injector via the `PromptRunner` service. That means you can inject services, reuse providers, and share state while guiding users through generator wizards.
+`@tsed/cli-prompts` wraps `@clack/prompts` so every question runs inside the Ts.ED injector via the @@PromptRunner@@ service. That means you can inject services, reuse providers, and share state while guiding users through generator wizards.
 
 ## Prompt types
 
-Define prompts by returning a `PromptQuestion[]` (usually from the `$prompt` hook on a command). Each question sets its `type` field to one of:
+Define prompts by returning a `PromptQuestion[]` from the `$prompt` hook (decorators) or the `prompt()` option on @@command@@. Each question sets its `type` field to one of:
 
 - `input` / `password` for free-form data.
 - `confirm` for yes/no gating.
@@ -20,20 +20,19 @@ Because the `PromptRunner` is an injectable service, you can resolve other servi
 
 ## Validation and branching
 
-Use synchronous or async validation functions to reject invalid answers, then branch on the results with `when`. The snippet below chains multiple prompts, validates project names, loads autocomplete results, and toggles a confirm prompt based on previous answers:
+Use synchronous or async validation functions to reject invalid answers, then branch on the results with `when`. The snippets below show the same interactive command implemented with @@Command@@ and @@command@@ so prompts, tasks, and execution all live together:
 
-<<< @/examples/cli/prompts-flow.ts
+::: code-group
+
+<<< @/examples/cli/prompts-command-decorators.ts [Decorators]
+<<< @/examples/cli/prompts-command-functional.ts [Functional API]
+
+:::
 
 Highlights:
 
 - Validation returns either `true` or a string error. Throwing will mark the prompt as failed.
-- Branching is handled by `flow.when()`, letting you route users to custom subtasks or follow-up prompts.
-- Because flows run in DI, you can log metrics, hit APIs, or read project settings mid-conversation without juggling imports.
-
-## Reuse and testing
-
-- Export prompts as classes or factory functions so multiple commands can reuse them. For example, create a `ProjectMetadataPrompt` provider and inject it anywhere you need consistent metadata questions.
-- Use helpers from `@tsed/cli-testing` (e.g., `createPromptMock`) to stub user input in unit tests. This keeps generators deterministic and removes the need for brittle `stdin` hacks.
-- When prompts emit events that trigger tasks, keep the orchestration thin: prompts collect data, tasks perform work.
+- Branching is handled by `when`, letting you route users to follow-up prompts based on prior answers.
+- Because commands run inside Ts.ED DI, prompts can access services, log metrics, or read project settings without manual wiring.
 
 Next, combine these prompts with `@tsed/cli-tasks` to stream long-running operations back to the user.

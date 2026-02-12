@@ -1,6 +1,8 @@
+import {command} from "@tsed/cli-core";
 import type {PromptQuestion} from "@tsed/cli-prompts";
+import type {Task} from "@tsed/cli-tasks";
 
-export interface GeneratorAnswers {
+interface GeneratorAnswers {
   projectName: string;
   runtime: "node" | "bun";
   template: string;
@@ -13,7 +15,7 @@ const runtimeChoices = [
   {name: "Bun", value: "bun", short: "Bun"}
 ];
 
-export function createGeneratorPrompts(initial: Partial<GeneratorAnswers> = {}): PromptQuestion[] {
+function createPrompts(initial: Partial<GeneratorAnswers> = {}): PromptQuestion[] {
   return [
     {
       type: "input",
@@ -21,7 +23,7 @@ export function createGeneratorPrompts(initial: Partial<GeneratorAnswers> = {}):
       message: "Project name",
       default: initial.projectName || "awesome-cli",
       validate(value) {
-        return /^[a-z0-9-]+$/i.test(value || "") ? undefined : "Project name may only contain letters, numbers, and dashes.";
+        return /^[a-z0-9-]+$/i.test(value || "") ? true : "Project name may only contain letters, numbers, and dashes.";
       }
     },
     {
@@ -57,7 +59,36 @@ export function createGeneratorPrompts(initial: Partial<GeneratorAnswers> = {}):
       name: "installNow",
       message: "Install dependencies immediately?",
       default: initial.installNow ?? true,
-      when: (answers) => answers.runtime === "node" // Bun users often prefer manual install
+      when: (answers) => answers.runtime === "node"
     }
   ];
 }
+
+function createTasks(): Task<GeneratorAnswers>[] {
+  return [
+    {
+      title: "Generate files",
+      task: async (_ctx, logger) => {
+        logger.info("Writing project files...");
+      }
+    },
+    {
+      title: "Install dependencies",
+      skip: (ctx) => (!ctx.installNow ? "Skipped by prompt" : false),
+      task: async (_ctx, logger) => {
+        logger.info("Installing dependencies...");
+      }
+    }
+  ];
+}
+
+export const InteractiveInitCmd = command<GeneratorAnswers>({
+  name: "init:interactive",
+  description: "Guide developers through a multi-step scaffolding wizard",
+  prompt(initial) {
+    return createPrompts(initial);
+  },
+  handler() {
+    return createTasks();
+  }
+}).token();
