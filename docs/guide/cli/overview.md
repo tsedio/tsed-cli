@@ -26,12 +26,18 @@ The runtime ensures tasks and prompts always run inside a `DIContext`, so your g
 
 | Package             | Minimum version | Node.js recommendation | Notes                                                                                                  |
 | ------------------- | --------------- | ---------------------- | ------------------------------------------------------------------------------------------------------ |
-| `@tsed/cli-core`    | `7.0.0`         | 18+                    | Base runtime for custom CLIs and plugins.                                                              |
-| `@tsed/cli-prompts` | `7.0.0`         | 18+                    | Depends on `@tsed/di` and `@clack/prompts`.                                                            |
-| `@tsed/cli-tasks`   | `7.0.0`         | 18+                    | Uses WHATWG streams for log forwarding.                                                                |
+| `@tsed/cli-core`    | `7.0.0`         | 3+                     | Base runtime for custom CLIs and plugins.                                                              |
+| `@tsed/cli-prompts` | `7.0.0`         | 3+                     | Depends on `@tsed/di` and `@clack/prompts`.                                                            |
+| `@tsed/cli-tasks`   | `7.0.0`         | 3+                     | Uses WHATWG streams for log forwarding.                                                                |
 | `@tsed/cli-mcp`     | `7.0.0`         | 20+ recommended        | MCP transports lean on `@modelcontextprotocol/sdk` features that benefit from the Node 20 fetch stack. |
 
-> **Tip:** The CLI binaries still support Node 16, but interactive prompts/tasks rely on `Intl` APIs that work best on Node 18+. Running on Node 20 ensures the bundled MCP server can reuse `fetch` without polyfills.
+::: tip
+The CLI binaries still support Node 16, but interactive prompts/tasks rely on `Intl` APIs that work best on Node 18+. Running on Node 20 ensures the bundled MCP server can reuse `fetch` without polyfills.
+:::
+
+`@tsed/cli-core` provides a bunch of reusable Ts.ED injectable services to handle differents usecases:
+
+<ApiList query="symbolType.includes('class') && module === '@tsed/cli-core'" />
 
 ## Quickstart
 
@@ -95,25 +101,9 @@ Peeking at `packages/cli/src/bin/tsed.ts` in this repo shows the exact layout Ts
 
 5. Execute commands through Node + SWC so both the functional API and decorators work without a build step:
 
-::: code-group
-
-```bash [npm]
-npm exec node -- --import @swc-node/register/esm-register src/bin/index.ts interactive:welcome
+```bash
+ node --import @swc-node/register/esm-register src/bin/index.ts interactive:welcome
 ```
-
-```bash [yarn]
-yarn node --import @swc-node/register/esm-register src/bin/index.ts interactive:welcome
-```
-
-```bash [pnpm]
-pnpm exec node --import @swc-node/register/esm-register src/bin/index.ts interactive:welcome
-```
-
-```bash [bun]
-bunx node --import @swc-node/register/esm-register src/bin/index.ts interactive:welcome
-```
-
-:::
 
 - guides the user through a `PromptRunner`-powered conversation to collect inputs,
 - hands the data to `@tsed/cli-tasks` so each `Task<Context>` streams logs through the shared renderer,

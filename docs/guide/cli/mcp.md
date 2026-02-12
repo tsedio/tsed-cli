@@ -11,27 +11,64 @@ description: Use @tsed/cli-mcp to expose CLI features through the Model Context 
 
 Add the MCP package anywhere you build CLI commands or standalone servers:
 
-```bash
+::: code-group
+
+```bash [npm]
 npm install @tsed/cli-mcp @modelcontextprotocol/sdk
 ```
 
+```bash [yarn]
+yarn add @tsed/cli-mcp @modelcontextprotocol/sdk
+```
+
+```bash [pnpm]
+pnpm add @tsed/cli-mcp @modelcontextprotocol/sdk
+```
+
+```bash [bun]
+bun add @tsed/cli-mcp @modelcontextprotocol/sdk
+```
+
+:::
+
 The package has no global side effects. You opt-in by bootstrapping a server or by importing the helpers in your own CLI binary.
 
-## Define tools, resources, and prompts
+## Define tools
 
-The helpers `defineTool`, `defineResource`, and `definePrompt` mirror the standard MCP concepts while keeping Ts.ED DI available inside handlers. The example below registers a tool, exposes a resource, wires a prompt, and then boots the MCP server:
+Use @@defineTool@@ (functional) or @@Tool@@ (decorator) to register MCP tools with the Ts.ED DI container. Each handler still executes inside the CLI’s DI context, so you can reuse existing services, and the request/response shapes follow the [`@modelcontextprotocol/sdk`](https://www.npmjs.com/package/@modelcontextprotocol/sdk) contract.
 
-<<< @/examples/cli/mcp-server.ts
+::: code-group
 
-Key points:
+<<< @/examples/cli/mcp-tool-decorators.ts [Decorators]
+<<< @/examples/cli/mcp-tool-functional.ts [Functional API]
 
-- Every handler runs in a `CliDIContext`, so you can inject services (`inject(SomeService)`) without manual wiring.
-- `inputSchema` and `outputSchema` accept either `@tsed/schema` builders or raw Zod schemas. We automatically convert JsonSchema to Zod at runtime.
-- `MCP_SERVER` is an injectable token that wires tools/resources/prompts registered via `define*` helpers and exposes a `connect()` method for stdio or HTTP transports.
+:::
+
+## Define resources
+
+Expose immutable documents or live data streams by registering MCP resources through @@defineResource@@ or @@Resource@@. These helpers wrap the response models described in [`@modelcontextprotocol/sdk`](https://www.npmjs.com/package/@modelcontextprotocol/sdk) so you only need to return the `contents` array.
+
+::: code-group
+
+<<< @/examples/cli/mcp-resource-decorators.ts [Decorators]
+<<< @/examples/cli/mcp-resource-functional.ts [Functional API]
+
+:::
+
+## Define prompts
+
+@@definePrompt@@ and @@Prompt@@ let you publish reusable prompt templates that MCP clients can fill before invoking your CLI. Describe the arguments with `@tsed/schema` builders— they are converted automatically into the schema format expected by [`@modelcontextprotocol/sdk`](https://www.npmjs.com/package/@modelcontextprotocol/sdk).
+
+::: code-group
+
+<<< @/examples/cli/mcp-prompt-decorators.ts [Decorators]
+<<< @/examples/cli/mcp-prompt-functional.ts [Functional API]
+
+:::
 
 ## Wiring transports and authentication
 
-The CLI injects the `MCP_SERVER` token, which exposes `connect(mode)` to start stdio or HTTP transports:
+The CLI injects the @@MCP_SERVER@@ token, which exposes `connect(mode)` to start stdio or HTTP transports:
 
 ```ts
 import {inject} from "@tsed/di";
@@ -48,14 +85,63 @@ Use the HTTP/SSE/WS transports when you need to host an MCP server remotely. Alw
 
 ## Integrating with the CLI binary
 
-If you want to ship an MCP server with your CLI distribution, add an entrypoint (for example via `command({name: "dev:mcp"})`) that calls `inject(MCP_SERVER).connect(...)`, or rely on the bundled `tsed-mcp` binary shipped with `@tsed/cli`.
+If you want to ship an MCP server with your CLI distribution, add an entrypoint (for example via @@command@@) that calls @@inject@@(@@MCP_SERVER@@).connect(...). You can stick with decorators or the functional helper:
 
-```bash
-npx tsed-mcp
+::: code-group
+
+```ts [Decorators]
+import {Command, type CommandProvider} from "@tsed/cli-core";
+import {MCP_SERVER} from "@tsed/cli-mcp";
+import {inject} from "@tsed/di";
+import {s} from "@tsed/schema";
+
+const McpSchema = s.object({
+  http: s.boolean().default(false).description("Run MCP using HTTP server").opt("--http")
+});
+
+@Command({
+  name: "mcp",
+  description: "Run a MCP server",
+  inputSchema: McpSchema
+})
+export class McpCommand implements CommandProvider<{http: boolean}> {
+  async $exec({http}: {http: boolean}) {
+    return inject(MCP_SERVER).connect(http ? "streamable-http" : "stdio");
+  }
+}
 ```
 
-The CLI resolves installed plugins, loads their MCP tools, and starts stdio transport automatically. To make your custom tools available:
+```ts [Functional API]
+import {command} from "@tsed/cli-core";
+import {MCP_SERVER} from "@tsed/cli-mcp";
+import {inject} from "@tsed/di";
+import {s} from "@tsed/schema";
 
-1. Export them from your plugin/package.
-2. Ensure the plugin is listed in the consumer's `package.json`.
-3. Document the MCP URL (`stdio` or custom transport) so AI clients can point directly to it.
+const McpSchema = s.object({
+  http: s.boolean().default(false).description("Run MCP using HTTP server").opt("--http")
+});
+
+export const McpCommand = command({
+  name: "mcp",
+  description: "Run a MCP server",
+  inputSchema: McpSchema,
+  handler({http}) {
+    return inject(MCP_SERVER).connect(http ? "streamable-http" : "stdio");
+  }
+}).token();
+```
+
+:::
+
+Publish the command the same way you register other CLI commands, then launch it through Node + SWC:
+
+```bash
+node --import @swc-node/register/esm-register src/bin/index.ts mcp --http
+```
+
+Want to smoke-test your tools, prompts, and resources without wiring a full client?
+Run the MCP Inspector locally so you can call everything interactively:
+
+```bash
+npx @modelcontextprotocol/inspector node -e NODE_ENV=development --import @swc-node/register/esm-register bin/dev.ts mcp
+```

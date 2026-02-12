@@ -2,7 +2,6 @@ import {command} from "@tsed/cli-core";
 import {definePrompt, defineResource, defineTool, MCP_SERVER} from "@tsed/cli-mcp";
 import {inject} from "@tsed/di";
 import {s} from "@tsed/schema";
-import {z} from "zod";
 
 interface HelloToolInput {
   name: string;
@@ -52,10 +51,11 @@ export const planPrompt = definePrompt({
   name: "generate-plan",
   title: "Generation plan",
   description: "Summarize how the CLI will scaffold files",
-  argsSchema: {
-    name: z.string().min(1),
-    runtime: z.enum(["node", "bun"])
-  },
+  argsSchema: () =>
+    s.object({
+      name: s.string().description("Project name"),
+      runtime: s.enums(["node", "bun"] as const).description("Runtime selected by the developer")
+    }),
   handler({name, runtime}) {
     return {
       description: `Outline the steps to scaffold ${name} for ${runtime}.`,
