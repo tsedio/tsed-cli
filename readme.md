@@ -33,6 +33,7 @@ Please refer to the [documentation](https://cli.tsed.dev/) for more details.
 ## Recent Updates
 
 - Introduced `@tsed/cli-tasks`, a shared task-runner package powered by `@clack/prompts` so commands, plugins, and templates share a consistent renderer without pulling Listr directly.
+- Refreshed the VitePress docs with a dedicated CLI section covering MCP servers, prompts, and task orchestration, plus type-checked examples under `docs/examples/cli/`.
 
 ## Installation
 

@@ -11,9 +11,10 @@ const Introduction = [
   {
     text: "Introduction",
     items: [
+      {text: "Installation", link: "/introduction/getting-started"},
+      {text: "Configuration", link: "/introduction/configuration"},
       {text: "What is Ts.ED?", link: "https://tsed.dev/introduction/what-is-tsed"},
       {text: "Capabilities", link: "https://tsed.dev/introduction/capabilities"},
-      {text: "Installation", link: "/introduction/getting-started"},
       {text: "Api references", link: "/api"}
     ]
   },
@@ -25,6 +26,18 @@ const Introduction = [
   //     {text: "Migrate from Express", link: "/introduction/migrate-from-express"}
   //   ]
   // }
+];
+
+const CliGuide = [
+  {
+    text: "CLI",
+    items: [
+      {text: "Overview", link: "/guide/cli/overview"},
+      {text: "MCP server", link: "/guide/cli/mcp"},
+      {text: "Prompts", link: "/guide/cli/prompts"},
+      {text: "Tasks", link: "/guide/cli/tasks"}
+    ]
+  }
 ];
 
 // const Docs = [
@@ -260,6 +273,10 @@ export default defineConfig({
         text: "Getting started",
         items: Introduction
       },
+      {
+        text: "CLI",
+        items: CliGuide
+      },
       // {
       //   text: "Documentation",
       //   items: Docs
@@ -279,6 +296,7 @@ export default defineConfig({
     ],
     sidebar: {
       "/introduction/": Introduction,
+      "/guide/cli/": CliGuide,
       // "/docs/": Docs,
       // "/plugins/": Plugins,
       "/api/": referenceSidebar

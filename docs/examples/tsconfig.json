@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "baseUrl": ".",
+    "types": ["node"],
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "paths": {
+      "@tsed/cli-core": ["./stubs/cli-core.d.ts"],
+      "@tsed/cli-mcp": ["./stubs/cli-mcp.d.ts"],
+      "@tsed/cli-prompts": ["./stubs/cli-prompts.d.ts"],
+      "@tsed/cli-tasks": ["./stubs/cli-tasks.d.ts"],
+      "@tsed/schema": ["./stubs/tsed-schema.d.ts"],
+      "@tsed/di": ["./stubs/tsed-di.d.ts"]
+    }
+  },
+  "include": ["./cli/**/*.ts", "./stubs/**/*.d.ts"]
+}

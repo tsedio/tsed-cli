@@ -70,6 +70,8 @@ const answers = await runner.run(questions);
 console.log(answers);
 ```
 
+> 📚 Want a larger multi-step flow? See [`docs/examples/cli/prompts-flow.ts`](../../docs/examples/cli/prompts-flow.ts) or the [CLI prompts guide](https://cli.tsed.dev/guide/cli/prompts) for a production-style walkthrough that stays in sync with this repository.
+
 ### Supported question types
 
 | Type           | Description                                              |
@@ -101,12 +103,38 @@ try {
 }
 ```
 
-## Development
+## Contributors
 
-This package follows the same conventions as other Ts.ED workspaces:
+Please read [contributing guidelines here](https://tsed.dev/CONTRIBUTING.html)
 
-- `yarn workspace @tsed/cli-prompts build:ts` – compile to `lib/esm` + `lib/types`.
-- `yarn workspace @tsed/cli-prompts test` – run the Vitest suite.
-- `yarn lint` – run the monorepo ESLint config (covers this workspace automatically).
+<a href="https://github.com/tsedio/ts-express-decorators/graphs/contributors"><img src="https://opencollective.com/tsed/contributors.svg?width=890" /></a>
 
-Please read the [contributing guide](https://tsed.dev/CONTRIBUTING.html) before submitting changes.
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/tsed#backer)]
+
+<a href="https://opencollective.com/tsed#backers" target="_blank"><img src="https://opencollective.com/tsed/tiers/backer.svg?width=890"></a>
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your
+website. [[Become a sponsor](https://opencollective.com/tsed#sponsor)]
+
+## License
+
+The MIT License (MIT)
+
+Copyright (c) 2016 - Today Romain Lenzotti
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

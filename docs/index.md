@@ -12,7 +12,7 @@ head:
 hero:
   name: "Ts.ED CLI"
   text: "Build CLI using Ts.ED framework."
-  tagline: "@tsed/cli-core offers API and tools to create you own CLI using Ts.ED framework."
+  tagline: "@tsed/cli-core, @tsed/cli-mcp, @tsed/cli-prompts, and @tsed/cli-tasks team up to build interactive CLIs with Ts.ED."
   actions:
     - theme: brand
       text: What is Ts.ED?
@@ -20,6 +20,9 @@ hero:
     - theme: alt
       text: Getting started
       link: /introduction/getting-started
+    - theme: alt
+      text: Explore CLI docs
+      link: /guide/cli/overview
     - theme: alt
       text: Become sponsor
       link: https://github.com/sponsors/Romakita
@@ -37,7 +40,7 @@ features:
     details: Resources and integrations to supercharge your development with AI. Learn how to <a class='home-link' href='https://tsed.dev/introduction/ai/develop-with-ai.html'>develop with AI</a> and speed up your project setup with the AGENTS.md template (Codex, Junie, etc.).
   - title: CLI
     icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-terminal-icon lucide-square-terminal"><path d="m7 11 2-2-2-2"/><path d="M11 13h4"/><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/></svg>
-    details: Stop wasting time on configuration—your application comes preconfigured for a fast start! Try our <a class="home-link" href="https://tsed.dev/getting-started.html">CLI</a>.
+    details: Build interactive workflows with <code>@tsed/cli-mcp</code>, <code>@tsed/cli-prompts</code>, and <code>@tsed/cli-tasks</code>. Head to the <a class="home-link" href="/guide/cli/overview">CLI docs</a> to see how the runtime, prompts, and task orchestration fit together.
   - title: Plugins
     icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-unplug"><path d="m19 5 3-3"/><path d="m2 22 3-3"/><path d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z"/><path d="M7.5 13.5 10 11"/><path d="M10.5 16.5 13 14"/><path d="m12 6 6 6 2.3-2.3a2.4 2.4 0 0 0 0-3.4l-2.6-2.6a2.4 2.4 0 0 0-3.4 0Z"/></svg>
     details: Explore a variety of <a href="https://tsed.dev/plugins/index.html">plugins</a> (+100) to customize your application and build the perfect stack tailored to your needs. You can even <a href="/plugins/create-your-own-plugins.html">create your own plugins</a> to extend functionality further.

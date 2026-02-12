@@ -41,6 +41,8 @@ The fastest way to start an MCP server is to:
 1. Define one or more tools/resources/prompts with the helpers.
 2. Bootstrap the server with `CLIMCPServer.bootstrap`.
 
+> 📚 A complete, type-checked example lives at [`docs/examples/cli/mcp-server.ts`](../../docs/examples/cli/mcp-server.ts) and is surfaced in the public docs at [cli.tsed.dev/guide/cli/mcp](https://cli.tsed.dev/guide/cli/mcp).
+
 ### 1) Define a Tool
 
 ```ts

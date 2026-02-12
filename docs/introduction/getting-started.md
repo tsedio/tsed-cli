@@ -1,73 +1,61 @@
 # Getting started
 
-## CLI
+Ts.ED ships an opinionated CLI runtime that can scaffold full Ts.ED applications, automate everyday chores, and even expose its capabilities over MCP. If you want the bigger architectural picture before diving in, start with the [CLI overview](/guide/cli/overview) and then come back here to get hands-on.
 
-The Ts.ED CLI is a command-line interface tool that you use to initialize, develop, scaffold, and maintain Ts.ED applications.
+## Core building blocks
 
-## CLI Core
+The CLI runtime layers `@tsed/cli-core` with optional packages so you can dial in as much interactivity as you need:
 
-This package helps TypeScript developers build their own CLI with class and decorators. To do that,
-`@tsed/cli-core` uses the Ts.ED DI and its utils to declare a new Command via decorators.
+- `@tsed/cli-core` loads the Ts.ED DI container (or your own), resolves commands, and discovers plugins at runtime.
+- `@tsed/cli-prompts` lets you orchestrate conversational flows with shareable prompt providers.
+- `@tsed/cli-tasks` runs ordered task lists and streams progress/logs in the terminal.
+- `@tsed/cli-mcp` wraps the same DI context in a Model Context Protocol server so AI agents can call your tools safely.
 
-`@tsed/cli-core` also provides a plugin-ready architecture. You and your community will be able to develop your official cli-plugin and deploy it on npm registry.
+Every example in the CLI guides works in two contexts:
 
-## CLI Plugins
+- **Ts.ED projects** created via `tsed init` keep using the default DI container plus any framework services you register.
+- **Standalone CLIs** that import `@tsed/cli-core` can register identical commands/prompts/tasks without pulling in the rest of Ts.ED. You decide which packages to include.
 
-CLI Plugins are npm packages that provide optional features to your Ts.ED CLI projects, such as Mocha/Jest, TSLint integration, and unit testing.
-It's easy to spot a Ts.ED CLI plugin, as their names start with either `@tsed/cli-plugin-` (for built-in plugins) or `tsed-cli-plugin-` (for community plugins).
+## Install the CLI binary
 
-When you run the @tsed/cli binary inside your project, it automatically resolves and loads all CLI Plugins listed in your project's package.json.
-
-Plugins can be included as part of your project creation process or added into the project later.
-
-## Installing CLI
-
-Install the CLI using the npm package manager:
+Install globally or add it to your devDependencies:
 
 ```bash
 npm install -g @tsed/cli
+# or, inside a repository
+npm install --save-dev @tsed/cli
 ```
 
-## Basic workflow
+The binary exposes `tsed` for classic shell use and `tsed-mcp` for launching the bundled MCP server.
 
-Invoke the tool on the command line through the tsed executable.
-Online help is available on the command line. Enter the following to list commands or options for a given command (such as generate) with a short description:
+## Bootstrap a project quickly
+
+Use the `tsed` executable to explore commands or scaffold a new service:
 
 ```bash
 tsed -h
 tsed generate -h
-```
 
-To create a Ts.ED project, create a new directory and use the following commands:
-
-```bash
+mkdir my-api && cd my-api
 tsed init .
 npm start # or yarn start
 ```
 
-::: tip
-The `tsed init` command will generate the project with the selected choices. Out-of-the-box, CLI support
-Mocha, Jest, TSLint, Prettier, Passport, etc...
-:::
+The generator walks you through prompts (powered by `@tsed/cli-prompts`) and streams build steps through `@tsed/cli-tasks`. Popular integrations—Jest, Mocha, ESLint/Prettier, Passport, and more—are available out of the box via official CLI plugins, and you can install community plugins later simply by adding them to `package.json`.
 
-## Proxy configuration
+## Build your own CLI with `@tsed/cli-core`
 
-Ts.ED CLI uses the npm proxy configuration.
-Use these commands to configure the proxy:
+Want the runtime without the Ts.ED framework template? Install `@tsed/cli-core` (plus whichever companion packages you need) inside any TypeScript project:
 
-```sh
-npm config set proxy http://username:password@host:port
-npm config set https-proxy http://username:password@host:port
+```bash
+npm install @tsed/cli-core @tsed/cli-prompts @tsed/cli-tasks
 ```
 
-Or you can edit directly your ~/.npmrc file:
+Define commands with the decorator API, register prompts/tasks, and optionally expose the same tools through `@tsed/cli-mcp`. Because the DI container is configurable, you can:
 
-```
-proxy=http://username:password@host:port
-https-proxy=http://username:password@host:port
-https_proxy=http://username:password@host:port
-```
+- bootstrap a pure CLI that only relies on your own services, or
+- reuse the existing Ts.ED DI modules from a server project.
 
-::: tip
-The following environment variables can be also used to configure the proxy `HTTPS_PROXY`, `HTTP_PROXY` and `NODE_TLS_REJECT_UNAUTHORIZED`.
-:::
+All of the snippets referenced throughout the CLI documentation—prompts, tasks, MCP servers—work in both setups. Swap in your own providers during bootstrap to keep logic shared between multiple CLIs or between the CLI and your backend services.
+
+Need to run the CLI behind a corporate proxy or custom network stack? Check the [configuration guide](./configuration.md) for the supported npm config keys and environment variables.
