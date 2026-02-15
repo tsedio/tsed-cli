@@ -39,14 +39,15 @@ describe("TypeORM: Init cmd", () => {
       db: true,
       typeorm: true,
       mysql: true,
-      features: [FeatureType.DB, FeatureType.TYPEORM, FeatureType.TYPEORM_MYSQL],
+      features: [FeatureType.ORM, FeatureType.TYPEORM, FeatureType.TYPEORM_MYSQL],
       srcDir: "src",
       pnpm: false,
       npm: false,
       yarn: true,
       express: true,
       koa: false,
-      platformSymbol: "PlatformExpress"
+      platformSymbol: "PlatformExpress",
+      route: "/rest"
     });
 
     expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
@@ -56,38 +57,37 @@ describe("TypeORM: Init cmd", () => {
         "project-name/.dockerignore",
         "project-name/.gitignore",
         "project-name/.swcrc",
+        "project-name/AGENTS.md",
         "project-name/Dockerfile",
         "project-name/README.md",
         "project-name/docker-compose.yml",
         "project-name/nodemon.json",
         "project-name/package.json",
         "project-name/processes.config.cjs",
-        "project-name/src",
         "project-name/src/Server.ts",
-        "project-name/src/config",
-        "project-name/src/config/envs",
-        "project-name/src/config/envs/index.ts",
-        "project-name/src/config/index.ts",
-        "project-name/src/config/logger",
+        "project-name/src/config/config.ts",
         "project-name/src/config/logger/index.ts",
-        "project-name/src/controllers/rest",
+        "project-name/src/config/utils/index.ts",
+        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
-        "project-name/src/datasources",
         "project-name/src/datasources/MysqlDatasource.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
+        "project-name/tsconfig.spec.json",
+        "project-name/views",
+        "project-name/views/home.ejs",
       ]
     `);
 
-    const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
+    const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
     expect(content).toMatchSnapshot();
 
-    const datasource = FakeCliFs.entries.get("project-name/src/datasources/MysqlDatasource.ts")!;
+    const datasource = FakeCliFs.files.get("project-name/src/datasources/MysqlDatasource.ts")!;
     expect(datasource).toMatchSnapshot();
 
-    const spec = FakeCliFs.entries.get("project-name/src/datasources/MysqlDatasource.spec.ts")!;
+    const spec = FakeCliFs.files.get("project-name/src/datasources/MysqlDatasource.spec.ts")!;
     expect(spec).toMatchSnapshot();
   });
   it("should not generate database if any option is selected", async () => {
@@ -122,7 +122,8 @@ describe("TypeORM: Init cmd", () => {
       yarn: true,
       express: true,
       koa: false,
-      platformSymbol: "PlatformExpress"
+      platformSymbol: "PlatformExpress",
+      route: "/rest"
     });
 
     expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
@@ -132,26 +133,26 @@ describe("TypeORM: Init cmd", () => {
         "project-name/.dockerignore",
         "project-name/.gitignore",
         "project-name/.swcrc",
+        "project-name/AGENTS.md",
         "project-name/Dockerfile",
         "project-name/README.md",
         "project-name/docker-compose.yml",
         "project-name/nodemon.json",
         "project-name/package.json",
         "project-name/processes.config.cjs",
-        "project-name/src",
         "project-name/src/Server.ts",
-        "project-name/src/config",
-        "project-name/src/config/envs",
-        "project-name/src/config/envs/index.ts",
-        "project-name/src/config/index.ts",
-        "project-name/src/config/logger",
+        "project-name/src/config/config.ts",
         "project-name/src/config/logger/index.ts",
-        "project-name/src/controllers/rest",
+        "project-name/src/config/utils/index.ts",
+        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
         "project-name/src/index.ts",
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
+        "project-name/tsconfig.spec.json",
+        "project-name/views",
+        "project-name/views/home.ejs",
       ]
     `);
   });

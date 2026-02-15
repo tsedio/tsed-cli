@@ -1,13 +1,17 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`TypeORM: Init cmd > should generate a project with the right options 2`] = `
-"import {join} from "node:path";
-import {Configuration} from "@tsed/di";
-import {application} from "@tsed/platform-http";
-import "@tsed/platform-log-request"; // remove this import if you don&#x27;t want log request
-import "@tsed/platform-express"; // /!\\ keep this import
-import "@tsed/ajv";
-import {config} from "./config/index.js";
+"import "@tsed/ajv";
+import "@tsed/platform-log-request";
+
+import { Configuration } from "@tsed/di";
+import { application } from "@tsed/platform-http";
+import { join } from "node:path";
+
+import { config } from "@/config/config.js";
+import "@tsed/platform-express";
+import "@tsed/typeorm";
+import * as pages from "./controllers/pages/index.js";
 import * as rest from "./controllers/rest/index.js";
 
 @Configuration({
@@ -16,9 +20,14 @@ import * as rest from "./controllers/rest/index.js";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [
-      ...Object.values(rest)
-    ]
+    "/rest": [...Object.values(rest), ...Object.values(rest)],
+    "/": [...Object.values(pages), ...Object.values(pages)]
+  },
+  views: {
+    root: join(process.cwd(), "../views"),
+    extensions: {
+      ejs: "ejs"
+    }
   },
   middlewares: [
     "cors",
@@ -26,14 +35,13 @@ import * as rest from "./controllers/rest/index.js";
     "compression",
     "method-override",
     "json-parser",
-    { use: "urlencoded-parser", options: { extended: true }}
-  ],
-  views: {
-    root: join(process.cwd(), "../views"),
-    extensions: {
-      ejs: "ejs"
+    {
+      "use": "urlencoded-parser",
+      "options": {
+        "extended": true
+      }
     }
-  }
+  ]
 })
 export class Server {
   protected app = application();
@@ -42,12 +50,9 @@ export class Server {
 `;
 
 exports[`TypeORM: Init cmd > should generate a project with the right options 3`] = `
-"import {registerProvider} from "@tsed/di";
-import {DataSource} from "typeorm";
-import {Logger} from "@tsed/logger";
+"import { injectable, logger } from "@tsed/di";
+import { DataSource } from "typeorm";
 
-export const MysqlDatasource = Symbol.for("MysqlDatasource");
-export type MysqlDatasource = DataSource;
 export const mysqlDatasource = new DataSource({
   type: "mysql",
   entities: [],
@@ -58,24 +63,23 @@ export const mysqlDatasource = new DataSource({
   database: "test"
 });
 
-
-registerProvider<DataSource>({
-  provide: MysqlDatasource,
-  type: "typeorm:datasource",
-  deps: [Logger],
-  async useAsyncFactory(logger: Logger) {
+export const MysqlDatasource = injectable(Symbol.for("MysqlDatasource"))
+  .type("typeorm:datasource")
+  .asyncFactory(async () => {
     await mysqlDatasource.initialize();
 
-    logger.info("Connected with typeorm to database: Mysql");
+    logger().info("Connected with typeorm to database: Mysql");
 
     return mysqlDatasource;
-  },
-  hooks: {
+  })
+  .hooks({
     $onDestroy(dataSource) {
       return dataSource.isInitialized && dataSource.close();
     }
-  }
-});
+  })
+  .token();
+
+export type MysqlDatasource = DataSource;
 "
 `;
 

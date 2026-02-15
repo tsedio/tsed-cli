@@ -1,24 +1,11 @@
-import {type CliDefaultOptions, Command, type CommandProvider, inject} from "@tsed/cli-core";
+import {type CliDefaultOptions, Command, command, type CommandData, type CommandProvider, inject} from "@tsed/cli-core";
 
 import {CliPrisma} from "../services/CliPrisma.js";
 
-export interface PrismaContext extends CliDefaultOptions {
+export interface PrismaContext extends CommandData {
   command: string;
 }
 
-@Command({
-  name: "prisma",
-  description: "Run a prisma command",
-  args: {
-    command: {
-      description: "The prisma command",
-      type: String,
-      required: true
-    }
-  },
-  options: {},
-  allowUnknownOption: true
-})
 export class PrismaCmd implements CommandProvider {
   protected cli = inject(CliPrisma);
 
@@ -31,3 +18,18 @@ export class PrismaCmd implements CommandProvider {
     ];
   }
 }
+
+command({
+  token: PrismaCmd,
+  name: "prisma",
+  description: "Run a prisma command",
+  args: {
+    command: {
+      description: "The prisma command",
+      type: String,
+      required: true
+    }
+  },
+  options: {},
+  allowUnknownOption: true
+});

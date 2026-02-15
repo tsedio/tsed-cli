@@ -1,15 +1,16 @@
+import "../templates/index.js";
+
 import {ProjectPackageJson} from "@tsed/cli-core";
 import {DITest} from "@tsed/di";
 
 import {ProjectConvention} from "../interfaces/index.js";
-import {ProvidersInfoService} from "../services/ProvidersInfoService.js";
-import {ClassNamePipe} from "./ClassNamePipe.js";
+import {SymbolNamePipe} from "./SymbolNamePipe.js";
 
 describe("ClassNamePipe", () => {
   beforeEach(() => DITest.create());
   afterEach(() => DITest.reset());
   it("should return the className", async () => {
-    const pipe = await DITest.invoke(ClassNamePipe, [
+    const pipe = await DITest.invoke(SymbolNamePipe, [
       {
         token: ProjectPackageJson,
         use: {
@@ -17,34 +18,6 @@ describe("ClassNamePipe", () => {
         }
       }
     ]);
-
-    // @ts-ignore
-    pipe.providers.add({
-      name: "Controller",
-      value: "controller",
-      model: "{{symbolName}}.controller"
-    });
-
-    // @ts-ignore
-    pipe.providers.add({
-      name: "Factory",
-      value: "factory",
-      model: "{{symbolName}}.factory?"
-    });
-
-    // @ts-ignore
-    pipe.providers.add({
-      name: "Factory",
-      value: "factory",
-      model: "{{symbolName}}.factory?"
-    });
-
-    // @ts-ignore
-    pipe.providers.add({
-      name: "TypeORM Datasource",
-      value: "typeorm:datasource",
-      model: "{{symbolName}}.datasource"
-    });
 
     expect(pipe.transform({type: "controller", name: "test"})).toEqual("TestController");
     expect(
@@ -71,13 +44,5 @@ describe("ClassNamePipe", () => {
         format: ProjectConvention.ANGULAR
       })
     ).toEqual("connection.factory");
-    expect(pipe.transform({type: "typeorm:datasource", name: "MySQLDatasource"})).toEqual("MySqlDatasource");
-    expect(
-      pipe.transform({
-        type: "typeorm:datasource",
-        name: "MySQLDatasource",
-        format: ProjectConvention.ANGULAR
-      })
-    ).toEqual("my-sql.datasource");
   });
 });

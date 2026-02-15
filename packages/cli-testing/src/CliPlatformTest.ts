@@ -19,7 +19,7 @@ import {
   type TokenProvider
 } from "@tsed/cli-core";
 import {Type} from "@tsed/core";
-import {DIContext, runInContext} from "@tsed/di";
+import {DIContext, inject, runInContext} from "@tsed/di";
 import {$asyncEmit} from "@tsed/hooks";
 import {v4} from "uuid";
 
@@ -28,6 +28,16 @@ import {FakeCliFs} from "./FakeCliFs.js";
 import {FakeCliHttpClient} from "./FakeCliHttpClient.js";
 
 export class CliPlatformTest extends DITest {
+  static async reset() {
+    // Explicitly clear FakeCliFs static collections to prevent memory leaks
+    FakeCliFs.files.clear();
+    FakeCliFs.directories.clear();
+    FakeCliExeca.entries.clear();
+    FakeCliHttpClient.entries.clear();
+    // Call parent reset method
+    return super.reset();
+  }
+
   static async bootstrap(options: Partial<TsED.Configuration> = {}) {
     options = resolveConfiguration({
       name: "tsed",
@@ -37,6 +47,7 @@ export class CliPlatformTest extends DITest {
         scriptsDir: "scripts",
         ...(options.project || {})
       },
+      disableReadUpPkg: true,
       ...options
     });
 
@@ -51,8 +62,7 @@ export class CliPlatformTest extends DITest {
       })
       .addProvider(CliExeca, {
         useClass: FakeCliExeca
-      })
-      .addProvider(CliCore);
+      });
 
     await injector().load();
     await $asyncEmit("$onReady");
@@ -61,17 +71,35 @@ export class CliPlatformTest extends DITest {
     CliPlatformTest.get(CliService).load();
   }
 
-  static async create(options: Partial<TsED.Configuration> = {}, rootModule: Type = CliCore) {
+  static async initProject(options?: any) {
+    CliPlatformTest.setPackageJson({
+      name: "",
+      version: "1.0.0",
+      description: "",
+      scripts: {},
+      dependencies: {},
+      devDependencies: {}
+    });
+
+    return CliPlatformTest.exec("init", {
+      platform: "express",
+      rootDir: "./project-data",
+      projectName: "project-data",
+      tsedVersion: "5.58.1",
+      packageManager: "yarn",
+      runtime: "node",
+      ...options
+    });
+  }
+
+  static async create(options: Partial<TsED.Configuration> = {}) {
     options = resolveConfiguration({
       name: "tsed",
-      ...options
+      ...options,
+      disableReadUpPkg: true
     });
 
     CliPlatformTest.createInjector(options);
-
-    injector().addProvider(CliCore, {
-      useClass: rootModule
-    });
 
     await injector().load();
   }
@@ -103,6 +131,7 @@ export class CliPlatformTest extends DITest {
     const projectPackageJson = CliPlatformTest.get<ProjectPackageJson>(ProjectPackageJson);
 
     (projectPackageJson as any).setRaw(pkg);
+    inject(CliFs).writeJsonSync(projectPackageJson.path, pkg);
   }
 
   /**
@@ -110,7 +139,7 @@ export class CliPlatformTest extends DITest {
    * @param cmdName
    * @param initialData
    */
-  static exec(cmdName: string, initialData: any) {
+  static async exec(cmdName: string, initialData: any) {
     const $ctx = new DIContext({
       id: v4(),
       injector: injector(),
@@ -122,9 +151,14 @@ export class CliPlatformTest extends DITest {
       .map((token: TokenProvider) => getCommandMetadata(token))
       .find((commandOpts: any) => cmdName === commandOpts.name);
 
+    if (cmdName !== "init") {
+      initialData.platform ||= "express";
+      initialData = inject(ProjectPackageJson).fillWithPreferences(initialData);
+    }
+
     $ctx.set("data", initialData);
     $ctx.set("command", metadata);
 
-    return runInContext($ctx, () => this.injector.get<CliService>(CliService)!.exec(cmdName, initialData, $ctx));
+    await runInContext($ctx, () => this.injector.get<CliService>(CliService)!.exec(cmdName, initialData, $ctx));
   }
 }

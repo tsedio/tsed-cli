@@ -1,37 +1,37 @@
-import {CliExeca, CliFs, Inject, ProjectPackageJson} from "@tsed/cli-core";
-import {Injectable} from "@tsed/di";
+import {join} from "node:path";
 
-@Injectable()
+import {CliExeca, CliFs, ProjectPackageJson} from "@tsed/cli-core";
+import {inject, injectable} from "@tsed/di";
+
 export class CliPrisma {
-  @Inject()
-  protected cliExeca: CliExeca;
-
-  @Inject()
-  protected cliFs: CliFs;
-
-  @Inject()
-  protected projectPackageJson: ProjectPackageJson;
+  protected cliExeca = inject(CliExeca);
+  protected cliFs = inject(CliFs);
+  protected projectPackageJson = inject(ProjectPackageJson);
 
   run(command: string, args: string[] = [], options: any = {}) {
-    return this.cliExeca.run("npx", ["prisma", command, ...args], {
+    return this.cliExeca.runSync("npx", ["prisma", command, ...args], {
       ...options,
-      cwd: this.projectPackageJson.dir
+      cwd: this.projectPackageJson.dir,
+      stdio: "inherit"
     });
   }
 
   init() {
-    return this.run("init");
+    return this.run("init", ["--db", "--generator-provider", "prisma-client-js"]);
   }
 
   async patchPrismaSchema() {
-    const schemaPath = this.cliFs.join(this.projectPackageJson.dir, "prisma", "schema.prisma");
+    const schemaPath = join(this.projectPackageJson.dir, "prisma", "schema.prisma");
 
-    if (this.cliFs.exists(schemaPath)) {
+    if (this.cliFs.fileExistsSync(schemaPath)) {
       let content = await this.cliFs.readFile(schemaPath, "utf8");
 
       if (!content.includes("generator tsed")) {
-        content += "\ngenerator tsed {\n" + '  provider = "tsed-prisma"\n' + "}\n";
         content +=
+          "\ngenerator tsed {\n" +
+          '  provider = "tsed-prisma"\n' +
+          '  output   = "../src/generated"\n' +
+          "}\n" +
           "\nmodel User {\n" +
           "  id    Int     @default(autoincrement()) @id\n" +
           "  email String  @unique\n" +
@@ -43,3 +43,5 @@ export class CliPrisma {
     }
   }
 }
+
+injectable(CliPrisma);

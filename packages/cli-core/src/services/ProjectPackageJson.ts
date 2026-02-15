@@ -1,7 +1,7 @@
 import {dirname, join} from "node:path";
 
 import {getValue, setValue} from "@tsed/core";
-import {configuration, constant, inject, Injectable} from "@tsed/di";
+import {configuration, constant, inject, injectable} from "@tsed/di";
 import {readPackageUpSync} from "read-pkg-up";
 
 import type {PackageJson} from "../interfaces/PackageJson.js";
@@ -37,7 +37,6 @@ function mapPackages(deps: any) {
   );
 }
 
-@Injectable({})
 export class ProjectPackageJson {
   public rewrite = false;
   public reinstall = false;
@@ -61,14 +60,23 @@ export class ProjectPackageJson {
     return join(this.dir, "package.json");
   }
 
+  /**
+   * @deprecated
+   */
   get dir() {
-    return String(constant("project.rootDir"));
+    return this.cwd;
   }
 
+  /**
+   * @deprecated
+   * @param dir
+   */
   set dir(dir: string) {
-    configuration().set("project.rootDir", dir);
+    this.setCWD(dir);
+  }
 
-    this.read();
+  get cwd() {
+    return String(constant("project.rootDir", ""));
   }
 
   get name() {
@@ -111,6 +119,22 @@ export class ProjectPackageJson {
     return this.raw[constant<string>("name")!];
   }
 
+  setCWD(dir: string) {
+    configuration().set("project.rootDir", dir);
+
+    this.read();
+  }
+
+  fillWithPreferences<T extends {}>(ctx: T) {
+    return {
+      ...ctx,
+      packageManager: this.preferences.packageManager,
+      runtime: this.preferences.runtime,
+      architecture: this.preferences.architecture,
+      convention: this.preferences.convention
+    };
+  }
+
   $loadPackageJson() {
     return this.read();
   }
@@ -122,6 +146,7 @@ export class ProjectPackageJson {
   read() {
     const pkg = this.getPackageJson();
     this.setRaw(pkg);
+
     return this;
   }
 
@@ -277,7 +302,7 @@ export class ProjectPackageJson {
     this.reinstall = false;
     this.rewrite = false;
 
-    const cwd = constant<string>("project.rootDir");
+    const cwd = this.cwd;
     const pkgPath = join(String(cwd), "package.json");
 
     const pkg = this.fs.readJsonSync(pkgPath, {encoding: "utf8"});
@@ -311,11 +336,11 @@ export class ProjectPackageJson {
 
   protected getPackageJson() {
     const cwd = constant<string>("project.rootDir");
-    const disableReadUpPkg = constant<string>("command.metadata.disableReadUpPkg");
+    const disableReadUpPkg = constant<string>("command.metadata.disableReadUpPkg", constant("disableReadUpPkg"));
     const name = constant<string>("name")!;
 
     const pkgPath = join(String(cwd), "package.json");
-    const fileExists = this.fs.exists(pkgPath);
+    const fileExists = this.fs.fileExistsSync(pkgPath);
 
     if (fileExists) {
       const pkg = this.fs.readJsonSync(pkgPath, {encoding: "utf8"});
@@ -353,3 +378,5 @@ export class ProjectPackageJson {
     };
   }
 }
+
+injectable(ProjectPackageJson);

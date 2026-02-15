@@ -1,140 +1,143 @@
-import {type InitCmdContext, RootRendererService} from "@tsed/cli";
-import {inject, Injectable, OnExec, OnPostInstall, PackageManagersModule, ProjectPackageJson} from "@tsed/cli-core";
+import {type CliCommandHooks, type InitCmdContext, render, type RenderDataContext} from "@tsed/cli";
+import {PackageManagersModule, ProjectPackageJson, type Task, taskLogger} from "@tsed/cli-core";
+import {inject, injectable, logger} from "@tsed/di";
 
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
-@Injectable()
-export class EslintInitHook {
-  protected packageJson = inject(ProjectPackageJson);
-  protected packageManagers = inject(PackageManagersModule);
-  protected rootRenderer = inject(RootRendererService);
-
-  @OnExec("init")
-  onExec(ctx: InitCmdContext) {
-    if (!ctx.eslint) {
-      return [];
+export class EslintInitHook implements CliCommandHooks {
+  $alterRenderFiles(files: string[], data: RenderDataContext) {
+    if (!data.eslint) {
+      return files;
     }
 
     return [
-      {
-        title: "Generate files for eslint",
-        task: (ctx: any) => {
-          return this.rootRenderer.renderAll(
-            [
-              "eslint.config.mjs.hbs",
-              ctx.lintstaged && ".husky/_/.gitignore.hbs",
-              ctx.lintstaged && ".husky/_/husky.sh.hbs",
-              ctx.lintstaged && ".husky/.gitignore.hbs",
-              ctx.lintstaged && ".husky/post-commit.hbs",
-              ctx.lintstaged && ".husky/pre-commit.hbs",
-              ctx.lintstaged && ".lintstagedrc.json.hbs",
-              ctx.prettier && ".prettierignore.hbs",
-              ctx.prettier && ".prettierrc.hbs"
-            ],
-            ctx,
-            {
-              templateDir: `${TEMPLATE_DIR}/init`
-            }
-          );
-        }
-      },
-      {
-        title: "Add dependencies",
-        task: () => {
-          this.addScripts(ctx);
-          this.addDependencies(ctx);
-          this.addDevDependencies(ctx);
-        }
-      }
+      ...files,
+      ...[
+        data.lintstaged && ".husky/_/.gitignore",
+        data.lintstaged && ".husky/_/husky.sh",
+        data.lintstaged && ".husky/.gitignore",
+        data.lintstaged && ".husky/post-commit",
+        data.lintstaged && ".husky/pre-commit",
+        data.lintstaged && ".lintstagedrc.json",
+        data.prettier && ".prettierignore",
+        data.prettier && ".prettierrc"
+      ]
+        .filter(Boolean)
+        .map((path) => {
+          return {
+            id: "/" + path,
+            from: `${TEMPLATE_DIR}/init`
+          };
+        })
     ];
   }
 
-  @OnPostInstall("init")
-  onPostInstall(ctx: InitCmdContext) {
-    return [
-      {
-        title: "Add husky prepare task",
-        skip: !ctx.lintstaged,
-        task: async () => {
-          this.packageJson
-            .refresh()
-            .addScripts({
-              prepare: "is-ci || husky install"
-            })
-            .write();
+  $alterPackageJson(packageJson: ProjectPackageJson, data: RenderDataContext): ProjectPackageJson | Promise<ProjectPackageJson> {
+    taskLogger().info("Alter package.json dependencies by eslint plugin");
 
-          await this.packageManagers.runScript("prepare");
-        }
-      },
+    packageJson.addScripts({
+      "test:lint": "eslint",
+      "test:lint:fix": "eslint --fix"
+    });
+
+    if (data.prettier) {
+      packageJson.addScripts({
+        prettier: "prettier '**/*.{json,md,yml,yaml}' --write"
+      });
+    }
+
+    packageJson.addDevDependencies(
       {
-        title: "Run linter",
+        "@typescript-eslint/parser": "latest",
+        "@typescript-eslint/eslint-plugin": "latest",
+        eslint: "^9.39.2",
+        "eslint-config-prettier": "latest",
+        "eslint-plugin-prettier": "latest",
+        "eslint-plugin-simple-import-sort": "latest",
+        globals: "latest"
+      },
+      data
+    );
+
+    if (data.lintstaged) {
+      packageJson.addDevDependencies(
+        {
+          "is-ci": "latest",
+          husky: "latest",
+          "lint-staged": "latest"
+        },
+        data
+      );
+    }
+
+    if (data.vitest) {
+      packageJson.addDevDependencies(
+        {
+          "eslint-plugin-vitest": "latest"
+        },
+        data
+      );
+    }
+
+    if (data.prettier) {
+      packageJson.addDevDependencies(
+        {
+          prettier: "latest"
+        },
+        data
+      );
+    }
+
+    return packageJson;
+  }
+
+  $alterInitSubTasks(tasks: Task[], data: InitCmdContext) {
+    return [
+      ...tasks,
+      {
+        title: "Add eslint configuration",
         task: () => {
-          return this.packageManagers.runScript("test:lint:fix", {
-            ignoreError: true
+          return render("eslint.config", {
+            ...data,
+            name: "eslint.config"
           });
         }
       }
     ];
   }
 
-  addScripts(ctx: InitCmdContext) {
-    this.packageJson.addScripts({
-      "test:lint": "eslint",
-      "test:lint:fix": "eslint --fix"
-    });
+  $alterInitPostInstallTasks(tasks: Task[], data: InitCmdContext): Task[] | Promise<Task[]> {
+    const packageJson = inject(ProjectPackageJson);
+    const packageManagers = inject(PackageManagersModule);
 
-    if (ctx.prettier) {
-      this.packageJson.addScripts({
-        prettier: "prettier '**/*.{json,md,yml,yaml}' --write"
-      });
-    }
-  }
-
-  addDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDependencies({}, ctx);
-  }
-
-  addDevDependencies(ctx: InitCmdContext) {
-    this.packageJson.addDevDependencies(
+    return [
+      ...tasks,
       {
-        "@typescript-eslint/parser": "latest",
-        "@typescript-eslint/eslint-plugin": "latest",
-        eslint: "latest",
-        "eslint-config-prettier": "latest",
-        "eslint-plugin-prettier": "latest",
-        "eslint-plugin-simple-import-sort": "latest",
-        globals: "latest"
+        title: "Add husky prepare task",
+        skip: !data.lintstaged,
+        task: async () => {
+          packageJson
+            .refresh()
+            .addScripts({
+              prepare: "is-ci || husky install"
+            })
+            .write();
+
+          return packageManagers.runScript("prepare", {
+            ignoreError: true
+          });
+        }
       },
-      ctx
-    );
-
-    if (ctx.lintstaged) {
-      this.packageJson.addDevDependencies(
-        {
-          "is-ci": "latest",
-          husky: "latest",
-          "lint-staged": "latest"
-        },
-        ctx
-      );
-    }
-
-    if (ctx.vitest) {
-      this.packageJson.addDevDependencies(
-        {
-          "eslint-plugin-vitest": "latest"
-        },
-        ctx
-      );
-    }
-
-    if (ctx.prettier) {
-      this.packageJson.addDevDependencies(
-        {
-          prettier: "latest"
-        },
-        ctx
-      );
-    }
+      {
+        title: "Run linter",
+        task: () => {
+          return packageManagers.runScript("test:lint:fix", {
+            ignoreError: true
+          });
+        }
+      }
+    ];
   }
 }
+
+injectable(EslintInitHook);

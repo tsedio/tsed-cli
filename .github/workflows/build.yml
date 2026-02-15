@@ -12,48 +12,56 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20.x]
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22.x
       - name: Install dependencies
         run: yarn install --immutable
       - name: Run lint
         run: yarn lint
 
-  test:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        node-version: [20.x]
-        exclude:
-          #          - os: macos-latest
-          #            node-version: 12.x
-          #          - os: macos-latest
-          #            node-version: 15.x
-          #          - os: windows-latest
-          #            node-version: 12.x
-          - os: windows-latest
-            node-version: 20.x
-
+  test-cli-core:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22.x
       - name: Install dependencies
         run: yarn install --immutable
-      - name: Run test
-        run: yarn test
+      - name: Run tests for cli-core
+        run: yarn test --project=@tsed/cli-core
+
+  test-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Run tests for cli
+        run: yarn test run --project=@tsed/cli
+
+  test-plugins:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Run tests for other packages
+        run: yarn test --project="@tsed/cli-plugin-*"
 
   build:
     runs-on: ubuntu-latest
@@ -77,19 +85,15 @@ jobs:
 
   deploy-packages:
     runs-on: ubuntu-latest
-    needs: [lint, test, build]
+    needs: [lint, test-cli-core, test-cli, test-plugins, build]
     if: ${{ github.event_name != 'pull_request' && (contains(github.ref, 'master') || contains(github.ref, 'alpha')  || contains(github.ref, 'beta') || contains(github.ref, 'rc')) }}
-
-    strategy:
-      matrix:
-        node-version: [20.x]
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22.x
       - name: Install dependencies
         run: yarn install --frozen-lockfile --network-timeout 500000
       - name: Release packages
@@ -105,10 +109,9 @@ jobs:
           path: |
             package.json
             packages/*/package.json
-
-#      - name: "Trigger Website workflow"
-#        run: |
-#          curl -X POST  https://api.github.com/repos/tsedio/tsed-cli/actions/workflows/website.yml/dispatches \
-#          -H 'Accept: application/vnd.github.everest-preview+json' \
-#          -H 'Authorization: Bearer ${{secrets.GH_TOKEN}}' \
-#          --data '{"ref": "production"}'
+      - name: "Trigger Website workflow"
+        run: |
+          curl -X POST  https://api.github.com/repos/tsedio/tsed-cli/actions/workflows/website.yml/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -H 'Authorization: Bearer ${{secrets.GH_TOKEN}}' \
+          --data '{"ref": "${{github.ref_name}}"}'

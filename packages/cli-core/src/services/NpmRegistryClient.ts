@@ -1,6 +1,6 @@
 import url from "node:url";
 
-import {inject, Injectable} from "@tsed/di";
+import {inject, injectable} from "@tsed/di";
 import registry_auth_token from "registry-auth-token";
 import registry_url from "registry-url";
 
@@ -20,7 +20,6 @@ export function addSuffix(pattern: string, suffix: string): string {
 
 export const SCOPE_SEPARATOR = "%2f";
 
-@Injectable()
 export class NpmRegistryClient {
   private httpClient = inject(CliHttpClient);
   private host = registry_url();
@@ -140,3 +139,5 @@ export class NpmRegistryClient {
     }
   }
 }
+
+injectable(NpmRegistryClient);

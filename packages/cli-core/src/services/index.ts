@@ -1,4 +1,3 @@
-export * from "./CliConfiguration.js";
 export * from "./CliDockerComposeYaml.js";
 export * from "./CliExeca.js";
 export * from "./CliFs.js";

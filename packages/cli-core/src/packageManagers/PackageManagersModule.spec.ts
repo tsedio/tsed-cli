@@ -42,7 +42,7 @@ async function getModuleFixture() {
   };
 
   const cliFs = {
-    exists: vi.fn().mockReturnValue(true),
+    fileExistsSync: vi.fn().mockReturnValue(true),
     writeFileSync: vi.fn(),
     readJsonSync: vi.fn().mockReturnValue({
       scripts: {},
@@ -168,7 +168,7 @@ describe("PackageManagersModule", () => {
       const result = await module.install({});
 
       for (const item of result) {
-        await item.task();
+        await item.task({} as any, {} as any);
       }
 
       expect(yarnManager.install).toHaveBeenCalledWith({

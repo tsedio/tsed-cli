@@ -1,20 +1,22 @@
+// Import templates to register them with the DI container
+import "./templates/index.js";
+
 import {RuntimesModule} from "@tsed/cli";
-import {inject, Module, OnAdd, ProjectPackageJson} from "@tsed/cli-core";
+import {inject, ProjectPackageJson} from "@tsed/cli-core";
+import {injectable} from "@tsed/di";
 
 import {JestGenerateHook} from "./hooks/JestGenerateHook.js";
 import {JestInitHook} from "./hooks/JestInitHook.js";
 
-@Module({
-  imports: [JestInitHook, JestGenerateHook]
-})
 export class CliPluginJestModule {
   protected runtimes = inject(RuntimesModule);
   protected packageJson = inject(ProjectPackageJson);
 
-  @OnAdd("@tsed/cli-plugin-jest")
-  install() {
-    this.addScripts();
-    this.addDevDependencies();
+  $onAddPlugin(plugin: string) {
+    if (plugin === "@tsed/cli-plugin-jest") {
+      this.addScripts();
+      this.addDevDependencies();
+    }
   }
 
   addScripts() {
@@ -34,3 +36,5 @@ export class CliPluginJestModule {
     });
   }
 }
+
+injectable(CliPluginJestModule).imports([JestInitHook, JestGenerateHook]);

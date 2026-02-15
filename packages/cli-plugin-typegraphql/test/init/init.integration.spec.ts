@@ -1,6 +1,6 @@
 import "../../src/index.js";
 
-import {InitCmd, TEMPLATE_DIR} from "@tsed/cli";
+import {InitCmd, ProjectConvention, TEMPLATE_DIR} from "@tsed/cli";
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 
 describe("Init TypeGraphQL project", () => {
@@ -24,7 +24,7 @@ describe("Init TypeGraphQL project", () => {
 
     await CliPlatformTest.exec("init", {
       platform: "express",
-      convention: "conv_default",
+      convention: ProjectConvention.DEFAULT,
       rootDir: "./project-data",
       projectName: "project-data",
       tsedVersion: "5.58.1",
@@ -38,47 +38,152 @@ describe("Init TypeGraphQL project", () => {
         "project-name/.dockerignore",
         "project-name/.gitignore",
         "project-name/.swcrc",
+        "project-name/AGENTS.md",
         "project-name/Dockerfile",
         "project-name/README.md",
         "project-name/docker-compose.yml",
         "project-name/nodemon.json",
         "project-name/package.json",
         "project-name/processes.config.cjs",
-        "project-name/src",
         "project-name/src/Server.ts",
-        "project-name/src/config",
-        "project-name/src/config/envs",
-        "project-name/src/config/envs/index.ts",
-        "project-name/src/config/index.ts",
-        "project-name/src/config/logger",
+        "project-name/src/config/config.ts",
         "project-name/src/config/logger/index.ts",
-        "project-name/src/controllers/rest",
+        "project-name/src/config/utils/index.ts",
+        "project-name/src/controllers/pages/IndexController.ts",
         "project-name/src/controllers/rest/HelloWorldController.ts",
-        "project-name/src/datasources",
-        "project-name/src/datasources/MyDataSource.ts",
-        "project-name/src/datasources/index.ts",
+        "project-name/src/graphql/models/RecipeModel.ts",
+        "project-name/src/graphql/resolvers/RecipeResolver.ts",
         "project-name/src/index.ts",
-        "project-name/src/resolvers",
-        "project-name/src/resolvers/index.ts",
-        "project-name/src/resolvers/recipes",
-        "project-name/src/resolvers/recipes/Recipe.ts",
-        "project-name/src/resolvers/recipes/RecipeNotFoundError.ts",
-        "project-name/src/resolvers/recipes/RecipeResolver.ts",
-        "project-name/src/services",
         "project-name/src/services/RecipeService.ts",
         "project-name/tsconfig.base.json",
         "project-name/tsconfig.json",
         "project-name/tsconfig.node.json",
+        "project-name/tsconfig.spec.json",
+        "project-name/views",
+        "project-name/views/home.ejs",
       ]
     `);
 
-    const content = FakeCliFs.entries.get("project-name/src/Server.ts")!;
-    expect(content).toMatchSnapshot();
-    expect(content).toContain('import "@tsed/typegraphql"');
-    expect(content).toContain('import "./datasources/index.js";');
-    expect(content).toContain('import "./resolvers/index.js";');
+    const content = FakeCliFs.files.get("project-name/src/Server.ts")!;
+    expect(content).toMatchInlineSnapshot(`
+      "import "@tsed/ajv";
+      import "@tsed/platform-log-request";
 
-    const configContent = FakeCliFs.entries.get("project-name/src/config/index.ts")!;
-    expect(configContent).toMatchSnapshot();
+      import { Configuration } from "@tsed/di";
+      import { application } from "@tsed/platform-http";
+      import { join } from "node:path";
+
+      import { config } from "@/config/config.js";
+      import "@tsed/platform-express";
+      import "@tsed/typegraphql";
+      import * as pages from "./controllers/pages/index.js";
+      import * as rest from "./controllers/rest/index.js";
+      import "./graphql/datasources/index.js";
+      import "./graphql/resolvers/index.js";
+
+      @Configuration({
+        ...config,
+        acceptMimes: ["application/json"],
+        httpPort: process.env.PORT || 8083,
+        httpsPort: false, // CHANGE
+        mount: {
+          "/rest": [...Object.values(rest), ...Object.values(rest)],
+          "/": [...Object.values(pages), ...Object.values(pages)]
+        },
+        views: {
+          root: join(process.cwd(), "../views"),
+          extensions: {
+            ejs: "ejs"
+          }
+        },
+        middlewares: [
+          "cors",
+          "cookie-parser",
+          "compression",
+          "method-override",
+          "json-parser",
+          {
+            "use": "urlencoded-parser",
+            "options": {
+              "extended": true
+            }
+          }
+        ]
+      })
+      export class Server {
+        protected app = application();
+      }
+      "
+    `);
+
+    const configContent = FakeCliFs.files.get("project-name/src/config/config.ts")!;
+    expect(configContent).toMatchInlineSnapshot(`
+      "import { EnvsConfigSource } from "@tsed/config/envs";
+      import { readFileSync } from "node:fs";
+      import loggerConfig from "./logger/index.js";
+
+      const pkg = JSON.parse(readFileSync("./package.json", { encoding: "utf8" }));
+      /**
+       * This is the shared configuration for the application
+       */
+      export const config: Partial<TsED.Configuration> = {
+        version: pkg.version,
+        ajv: {
+          returnsCoercedValues: true
+        },
+        logger: loggerConfig,
+        extends: [
+          EnvsConfigSource],
+        graphql: {
+          default: {
+            path: "/graphql",
+            buildSchemaOptions: {}
+          }
+        }
+      };
+      "
+    `);
+
+    const recipeResolverContent = FakeCliFs.files.get("project-name/src/graphql/resolvers/RecipeResolver.ts")!;
+
+    expect(recipeResolverContent).toMatchInlineSnapshot(`
+      "import { ResolverService } from "@tsed/typegraphql";
+      import { Arg, Query } from "type-graphql";
+      import { RecipeService } from "../../services/RecipeService.js";
+      import { RecipeModel } from "../models/RecipeModel.js";
+
+      @ResolverService(RecipeModel)
+      export class RecipeResolver {
+        protected service = inject(RecipeService);
+
+        @Query((returns) => RecipeModel)
+        async recipe(@Arg("id") id: string) {
+          return this.service.getById(id);
+        }
+
+        @Query((returns) => [RecipeModel], { description: "Get all items" })
+        recipes(): Promise<RecipeModel[]> {
+          return this.service.findAll({});
+        }
+      }
+      "
+    `);
+
+    const recipeModelContent = FakeCliFs.files.get("project-name/src/graphql/models/RecipeModel.ts")!;
+
+    expect(recipeModelContent).toMatchInlineSnapshot(`
+      "import { Field, ID, ObjectType } from "type-graphql";
+
+      @ObjectType({ description: "Object representing cooking RecipeModel" })
+      export class RecipeModel {
+        @Field((type) => ID)
+        id: string;
+
+        constructor(options: Partial<RecipeModel> = {}) {
+          options.id && (this.id = options.id);
+        }
+      }
+      "
+    `);
   });
 });

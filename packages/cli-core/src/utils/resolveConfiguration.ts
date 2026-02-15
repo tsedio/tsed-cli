@@ -3,7 +3,7 @@ import type {TokenProvider} from "@tsed/di";
 
 import {getCommandMetadata} from "./getCommandMetadata.js";
 
-export function resolveConfiguration(settings: any) {
+export function resolveConfiguration(settings: Partial<TsED.Configuration>) {
   const argv = getValue(settings, "argv", process.argv);
   const configResolvers = getValue(settings, "configResolvers", []);
   const commands = getValue(settings, "commands", []);

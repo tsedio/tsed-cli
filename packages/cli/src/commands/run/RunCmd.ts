@@ -1,4 +1,6 @@
-import {CliFs, Command, type CommandProvider, inject, normalizePath, ProjectPackageJson, type Tasks} from "@tsed/cli-core";
+import {CliFs, command, type CommandProvider, inject, normalizePath, ProjectPackageJson} from "@tsed/cli-core";
+import {taskLogger} from "@tsed/cli-tasks";
+import {logger} from "@tsed/di";
 
 import {CliRunScript} from "../../services/CliRunScript.js";
 
@@ -8,7 +10,26 @@ export interface RunCmdContext {
   rawArgs: string[];
 }
 
-@Command({
+export class RunCmd implements CommandProvider {
+  protected fs = inject(CliFs);
+  protected projectPackageJson = inject(ProjectPackageJson);
+  protected runScript = inject(CliRunScript);
+
+  async $exec(ctx: RunCmdContext) {
+    const cmd = "node";
+    const args = ["--import", "@swc-node/register/esm-register"];
+    const path = normalizePath("src/bin/index.ts");
+
+    taskLogger().info(`Run ${cmd} ${[...args, path, ctx.command, ...ctx.rawArgs].join(" ")}`);
+
+    await this.runScript.run(cmd, [...args, path, ctx.command, ...ctx.rawArgs], {
+      env: process.env
+    });
+  }
+}
+
+command({
+  token: RunCmd,
   name: "run",
   description: "Run a project level command",
   args: {
@@ -26,21 +47,4 @@ export interface RunCmdContext {
     }
   },
   allowUnknownOption: true
-})
-export class RunCmd implements CommandProvider {
-  protected fs = inject(CliFs);
-  protected projectPackageJson = inject(ProjectPackageJson);
-  protected runScript = inject(CliRunScript);
-
-  async $exec(ctx: RunCmdContext): Promise<Tasks> {
-    const cmd = "node";
-    const args = ["--import", "@swc-node/register/esm-register"];
-    const path = normalizePath("src/bin/index.ts");
-
-    await this.runScript.run(cmd, [...args, path, ctx.command, ...ctx.rawArgs], {
-      env: process.env
-    });
-
-    return [];
-  }
-}
+});

@@ -1,12 +1,10 @@
-import {constant, inject, Injectable} from "@tsed/di";
+import {constant, inject, injectable} from "@tsed/di";
+import {$asyncEmit} from "@tsed/hooks";
 import chalk from "chalk";
 
-import {CommandStoreKeys} from "../domains/CommandStoreKeys.js";
 import type {Task} from "../interfaces/index.js";
 import {PackageManagersModule} from "../packageManagers/PackageManagersModule.js";
-import {createSubTasks} from "../utils/createTasksRunner.js";
 import {loadPlugins} from "../utils/loadPlugins.js";
-import {CliHooks} from "./CliHooks.js";
 import {NpmRegistryClient} from "./NpmRegistryClient.js";
 import {ProjectPackageJson} from "./ProjectPackageJson.js";
 
@@ -18,12 +16,10 @@ function mapPlugins({package: {name, description = "", ...otherProps}}: any) {
   };
 }
 
-@Injectable()
 export class CliPlugins {
   name = constant<string>("name", "");
   readonly loadPlugins = loadPlugins;
   private npmRegistryClient = inject(NpmRegistryClient);
-  private cliHooks = inject(CliHooks);
   private packageJson = inject(ProjectPackageJson);
   private packageManagers = inject(PackageManagersModule);
 
@@ -40,23 +36,12 @@ export class CliPlugins {
       return {
         title: `Run plugin '${chalk.cyan(plugin)}'`,
         task: () => {
-          return this.cliHooks.emit(CommandStoreKeys.ADD, plugin, ctx);
+          return $asyncEmit("$onAddPlugin", [plugin, ctx]);
         }
       };
     });
 
-    return [
-      ...tasks,
-      {
-        title: "Install",
-        task: createSubTasks(
-          () => {
-            return this.packageManagers.install(ctx);
-          },
-          {...ctx, concurrent: false}
-        )
-      }
-    ];
+    return [...tasks, this.packageManagers.task("Install dependencies", ctx)];
   }
 
   protected getKeyword(keyword: string) {
@@ -71,3 +56,5 @@ export class CliPlugins {
     return name.startsWith(`@${this.name}/cli-plugin`) || name.includes(`${this.name}-cli-plugin`);
   }
 }
+
+injectable(CliPlugins);

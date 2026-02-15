@@ -1,24 +1,26 @@
-import type {CommandArg, CommandOptions, CommandParameters} from "./CommandParameters.js";
+import type {TasksOptions} from "@tsed/cli-tasks";
 
-export interface CommandMetadata extends CommandParameters {
-  /**
-   * CommandProvider arguments
-   */
-  args: {
-    [key: string]: CommandArg;
-  };
-  /**
-   * CommandProvider options
-   */
-  options: {
-    [key: string]: CommandOptions;
-  };
+import type {BaseCommandOptions, CommandArg, CommandOpts} from "./CommandOptions.js";
 
-  allowUnknownOption: boolean;
-
+export interface CommandMetadata extends Omit<BaseCommandOptions<any>, "args" | "options" | "allowUnknownOption"> {
   enableFeatures: string[];
-
   disableReadUpPkg: boolean;
+  renderMode?: TasksOptions["renderMode"];
 
-  bindLogger: boolean;
+  getOptions(): {
+    /**
+     * CommandProvider arguments
+     */
+    args: {
+      [key: string]: CommandArg;
+    };
+    /**
+     * CommandProvider options
+     */
+    options: {
+      [key: string]: CommandOpts;
+    };
+
+    allowUnknownOption?: boolean;
+  };
 }

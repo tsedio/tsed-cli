@@ -1,41 +1,86 @@
 // @ts-ignore
 import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 
-import {GenerateCmd, TEMPLATE_DIR} from "../../../src/index.js";
+import {GenerateCmd} from "../../../src/index.js";
 
 describe("Generate AsyncFactory", () => {
   beforeEach(() =>
     CliPlatformTest.bootstrap({
-      templateDir: TEMPLATE_DIR,
       commands: [GenerateCmd]
     })
   );
   afterEach(() => CliPlatformTest.reset());
 
   it("should generate a template with the right options", async () => {
-    CliPlatformTest.setPackageJson({
-      name: "",
-      version: "1.0.0",
-      description: "",
-      scripts: {},
-      dependencies: {},
-      devDependencies: {}
-    });
+    await CliPlatformTest.initProject();
 
     await CliPlatformTest.exec("generate", {
       rootDir: "./project-data",
       type: "async.factory",
-      name: "Test"
+      name: "TestFactory"
     });
 
-    expect(FakeCliFs.getKeys()).toEqual(["project-name/src/services", "project-name/src/services/Test.ts"]);
+    expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
+      [
+        "project-name",
+        "project-name/.barrels.json",
+        "project-name/.dockerignore",
+        "project-name/.gitignore",
+        "project-name/.swcrc",
+        "project-name/AGENTS.md",
+        "project-name/Dockerfile",
+        "project-name/README.md",
+        "project-name/docker-compose.yml",
+        "project-name/nodemon.json",
+        "project-name/package.json",
+        "project-name/processes.config.cjs",
+        "project-name/src/Server.ts",
+        "project-name/src/config/config.ts",
+        "project-name/src/config/logger/index.ts",
+        "project-name/src/config/utils/index.ts",
+        "project-name/src/controllers/pages/IndexController.ts",
+        "project-name/src/controllers/rest/HelloWorldController.ts",
+        "project-name/src/index.ts",
+        "project-name/src/services/TestFactory.ts",
+        "project-name/tsconfig.base.json",
+        "project-name/tsconfig.json",
+        "project-name/tsconfig.node.json",
+        "project-name/tsconfig.spec.json",
+        "project-name/views",
+        "project-name/views/home.ejs",
+      ]
+    `);
 
-    const result = FakeCliFs.entries.get("project-name/src/services/Test.ts");
+    const result = FakeCliFs.files.get("project-name/src/services/TestFactory.ts");
 
-    expect(result).toContain('import {Configuration, Inject, registerProvider} from "@tsed/di";');
-    expect(result).toContain("export function Test()");
-    expect(result).toContain("Inject(Test)");
-    expect(result).toContain("registerProvider");
-    expect(result).toContain("provide: Test");
+    expect(result).toMatchInlineSnapshot(`
+      "import { constant, injectable } from "@tsed/di";
+
+      interface TestFactoryOptions {
+
+      }
+
+      declare global {
+        namespace TsED {
+          interface Configuration extends Record<string, any> {
+            testFactory: TestFactoryOptions;
+          }
+        }
+      }
+
+      export const TestFactory = injectable(Symbol.for("TestFactory"))
+        .factory(async () => {
+          const myConstant = constant<TestFactoryOptions>("testFactory");
+
+          // do something async
+          await Promise.resolve();
+
+          return {};
+        })
+        .token();
+
+      export type TestFactory = typeof TestFactory;
+      "
+    `);
   });
 });

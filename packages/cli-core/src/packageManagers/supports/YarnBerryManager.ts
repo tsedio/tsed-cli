@@ -35,7 +35,9 @@ export class YarnBerryManager extends BaseManager {
     });
 
     // then switch to berry
-    this.cliExeca.runSync(this.cmd, ["set", "version", "berry"]);
+    try {
+      this.cliExeca.runSync(this.cmd, ["set", "version", "berry"]);
+    } catch (er) {}
   }
 
   add(deps: string[], options: ManagerCmdOpts) {

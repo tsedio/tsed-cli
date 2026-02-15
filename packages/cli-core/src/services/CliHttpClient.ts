@@ -2,7 +2,7 @@ import {stringify} from "node:querystring";
 import {URL} from "node:url";
 
 import {cleanObject} from "@tsed/core";
-import {inject, Injectable} from "@tsed/di";
+import {inject, injectable} from "@tsed/di";
 import axios, {type AxiosRequestConfig, type Method} from "axios";
 
 import {CliHttpLogClient} from "./CliHttpLogClient.js";
@@ -13,7 +13,6 @@ export interface CliHttpClientOptions extends AxiosRequestConfig, Record<string,
   withHeaders?: boolean;
 }
 
-@Injectable()
 export class CliHttpClient extends CliHttpLogClient {
   protected cliProxyAgent = inject(CliProxyAgent);
 
@@ -64,10 +63,12 @@ export class CliHttpClient extends CliHttpLogClient {
   }
 
   protected getRequestParameters(method: Method, endpoint: string, options: CliHttpClientOptions) {
+    const url = (this.host || "") + endpoint.replace(this.host || "", "");
+
     options = {
       method,
-      url: (this.host || "") + endpoint.replace(this.host || "", ""),
       ...options,
+      url,
       params: options.params || options.qs,
       data: options.data,
       headers: {
@@ -77,7 +78,7 @@ export class CliHttpClient extends CliHttpLogClient {
       }
     };
 
-    this.configureProxy(endpoint, options);
+    this.configureProxy(url, options);
 
     return options;
   }
@@ -128,3 +129,5 @@ export class CliHttpClient extends CliHttpLogClient {
     return withHeaders ? {data, headers: result?.headers} : data;
   }
 }
+
+injectable(CliHttpClient);

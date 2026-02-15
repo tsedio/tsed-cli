@@ -1,13 +1,21 @@
 import {CliExeca} from "@tsed/cli-core";
+import {$emit} from "@tsed/hooks";
 import {Observable} from "rxjs";
 
 export class FakeCliExeca extends CliExeca {
   static entries = new Map<string, string>();
 
   run(cmd: string, args: string[], opts?: any): any {
-    const result = FakeCliExeca.entries.get(cmd + " " + args.join(" "));
+    const key = cmd + " " + args.join(" ");
+
+    const result = FakeCliExeca.entries.get(key);
+
+    if (!result) {
+      FakeCliExeca.entries.set(key, "executed");
+    }
 
     return new Observable((observer) => {
+      $emit(key);
       observer.next(result);
       observer.complete();
     });
@@ -23,13 +31,20 @@ export class FakeCliExeca extends CliExeca {
         })
       );
     }
-
-    return Promise.resolve(FakeCliExeca.entries.get(cmd + " " + args.join(" ")));
+    const key = cmd + " " + args.join(" ");
+    $emit(key);
+    return Promise.resolve(FakeCliExeca.entries.get(key));
   }
 
   runSync(cmd: string, args: string[], opts?: any): any {
+    const key = cmd + " " + args.join(" ");
+
+    $emit(key);
+
+    FakeCliExeca.entries.set(key, "executed");
+
     return {
-      stdout: FakeCliExeca.entries.get(cmd + " " + args.join(" "))
+      stdout: FakeCliExeca.entries.get(key)
     };
   }
 }

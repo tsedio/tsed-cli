@@ -1,22 +1,13 @@
-import type {Answers, QuestionCollection} from "inquirer";
-
-import type {Tasks} from "./Tasks.js";
-
-export type QuestionOptions<T extends Answers = Answers> = QuestionCollection<T>;
+import type {PromptQuestion} from "@tsed/cli-prompts";
+import type {MaybePromise, Task} from "@tsed/cli-tasks";
 
 export interface CommandProvider<Ctx = any> {
   /**
-   * Run a function before the main prompt. Useful for pre-loading data from the file system
+   * Hook to create the main prompt for the command. Refer to {@link PromptQuestion}
+   * for supported question attributes.
    * @param initialOptions
    */
-  $beforePrompt?(initialOptions: Partial<Ctx>): Partial<Ctx>;
-
-  /**
-   * Hook to create the main prompt for the command
-   * See https://github.com/enquirer/enquirer for more detail on question configuration.
-   * @param initialOptions
-   */
-  $prompt?<T extends Answers = Answers>(initialOptions: Partial<Ctx>): QuestionOptions<T> | Promise<QuestionOptions<T>>;
+  $prompt?(initialOptions: Partial<Ctx>): PromptQuestion[] | Promise<PromptQuestion[]>;
 
   /**
    * Hook to map options
@@ -25,22 +16,16 @@ export interface CommandProvider<Ctx = any> {
   $mapContext?(ctx: Partial<Ctx>): Ctx;
 
   /**
-   * Run something before the exec hook
-   * @param ctx
-   */
-  $beforeExec?(ctx: Ctx): Promise<any>;
-
-  /**
    * Run a command
    * @param ctx
    */
-  $exec(ctx: Ctx): Tasks | Promise<Tasks> | any | Promise<any>;
+  $exec(ctx: Ctx): MaybePromise<Task<Ctx>[] | void>;
 
   /**
    * Run commands after the npm/yarn install
    * @param ctx
    */
-  $postInstall?(ctx: Ctx): Tasks | Promise<Tasks> | any | Promise<any>;
+  $postInstall?(ctx: Ctx): MaybePromise<Task<Ctx>[] | void>;
 
-  $afterPostInstall?(ctx: Ctx): Tasks | Promise<Tasks> | any | Promise<any>;
+  $afterPostInstall?(ctx: Ctx): MaybePromise<Task<Ctx>[] | void>;
 }

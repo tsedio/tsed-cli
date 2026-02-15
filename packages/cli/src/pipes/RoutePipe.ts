@@ -1,7 +1,6 @@
-import {Injectable} from "@tsed/cli-core";
+import {injectable} from "@tsed/cli-core";
 import {kebabCase} from "change-case";
 
-@Injectable()
 export class RoutePipe {
   transform(route: string) {
     const r = route
@@ -20,3 +19,5 @@ export class RoutePipe {
     return `/${r}`.replace(/\/\//gi, "/");
   }
 }
+
+injectable(RoutePipe);

@@ -11,7 +11,7 @@ export class NodeRuntime extends BaseRuntime {
   readonly order: number = 0;
 
   files() {
-    return ["/init/.swcrc.hbs", "/init/nodemon.json.hbs"];
+    return [".swcrc", "nodemon.json"];
   }
 
   startDev(main: string) {

@@ -67,6 +67,24 @@ describe("getFeaturesPrompt", () => {
           "choices": [
             {
               "dependencies": {
+                "@tsed/cli-core": "{{cliVersion}}",
+              },
+              "name": "Commands",
+              "value": "commands",
+            },
+            {
+              "dependencies": {
+                "@tsed/config": "{{tsedVersion}}",
+              },
+              "name": "Configuration sources",
+              "value": "config",
+            },
+            {
+              "name": "Documentation",
+              "value": "doc",
+            },
+            {
+              "dependencies": {
                 "@tsed/typegraphql": "{{tsedVersion}}",
               },
               "devDependencies": {
@@ -76,8 +94,19 @@ describe("getFeaturesPrompt", () => {
               "value": "graphql",
             },
             {
+              "name": "Linter",
+              "value": "linter",
+            },
+            {
+              "devDependencies": {
+                "@tsed/cli-plugin-oidc-provider": "{{cliVersion}}",
+              },
+              "name": "OpenID Connect provider",
+              "value": "oidc",
+            },
+            {
               "name": "Database",
-              "value": "db",
+              "value": "orm",
             },
             {
               "devDependencies": {
@@ -96,17 +125,6 @@ describe("getFeaturesPrompt", () => {
               "value": "socketio",
             },
             {
-              "name": "Documentation",
-              "value": "doc",
-            },
-            {
-              "devDependencies": {
-                "@tsed/cli-plugin-oidc-provider": "{{cliVersion}}",
-              },
-              "name": "OpenID Connect provider",
-              "value": "oidc",
-            },
-            {
               "dependencies": {},
               "devDependencies": {
                 "@types/supertest": "latest",
@@ -115,24 +133,86 @@ describe("getFeaturesPrompt", () => {
               "name": "Testing",
               "value": "testing",
             },
+          ],
+          "message": "Choose the features needed for your project",
+          "name": "features",
+          "type": "checkbox",
+        },
+        {
+          "choices": [
             {
-              "name": "Linter",
-              "value": "linter",
+              "name": "Envs",
+              "value": "config:envs",
             },
             {
               "dependencies": {
-                "@tsed/cli-core": "{{cliVersion}}",
+                "dotenv": "latest",
+                "dotenv-expand": "latest",
+                "dotenv-flow": "latest",
+              },
+              "name": "Dotenv",
+              "value": "config:dotenv",
+            },
+            {
+              "name": "JSON",
+              "value": "config:json",
+            },
+            {
+              "dependencies": {
+                "js-yaml": "latest",
+              },
+              "name": "YAML",
+              "value": "config:yaml",
+            },
+            {
+              "dependencies": {
+                "@aws-sdk/client-secrets-manager": "latest",
+                "@tsedio/config-source-aws-secrets": "latest",
+              },
+              "name": "AWS Secrets Manager (Premium)",
+              "value": "config:aws_secrets:premium",
+            },
+            {
+              "dependencies": {
+                "@tsed/ioredis": "{{tsedVersion}}",
+                "@tsedio/config-ioredis": "{{tsedVersion}}",
+                "ioredis": "latest",
               },
               "devDependencies": {
-                "@types/inquirer": "^8.2.4",
+                "@tsedio/testcontainers-redis": "latest",
               },
-              "name": "Commands",
-              "value": "commands",
+              "name": "IORedis (Premium)",
+              "value": "config:ioredis:premium",
+            },
+            {
+              "dependencies": {
+                "@tsedio/config-mongo": "latest",
+                "mongodb": "latest",
+              },
+              "name": "MongoDB (Premium)",
+              "value": "config:mongo:premium",
+            },
+            {
+              "dependencies": {
+                "@tsedio/config-vault": "latest",
+                "node-vault": "latest",
+              },
+              "name": "Vault (Premium)",
+              "value": "config:vault:premium",
+            },
+            {
+              "dependencies": {
+                "@tsedio/config-postgres": "latest",
+                "pg": "latest",
+              },
+              "name": "Postgres (Premium)",
+              "value": "config:postgres:premium",
             },
           ],
-          "message": "Check the features needed for your project",
-          "name": "features",
+          "message": "Choose configuration sources",
+          "name": "featuresConfig",
           "type": "checkbox",
+          "when": [Function],
         },
         {
           "choices": [
@@ -141,14 +221,14 @@ describe("getFeaturesPrompt", () => {
                 "@tsed/swagger": "{{tsedVersion}}",
               },
               "name": "Swagger",
-              "value": "swagger",
+              "value": "doc:swagger",
             },
             {
               "dependencies": {
                 "@tsed/scalar": "{{tsedVersion}}",
               },
               "name": "Scalar",
-              "value": "scalar",
+              "value": "doc:scalar",
             },
           ],
           "message": "Choose a documentation plugin",
@@ -163,14 +243,14 @@ describe("getFeaturesPrompt", () => {
                 "@tsed/cli-plugin-prisma": "{{cliVersion}}",
               },
               "name": "Prisma",
-              "value": "prisma",
+              "value": "orm:prisma",
             },
             {
               "devDependencies": {
                 "@tsed/cli-plugin-mongoose": "{{cliVersion}}",
               },
               "name": "Mongoose",
-              "value": "mongoose",
+              "value": "orm:mongoose",
             },
             {
               "devDependencies": {
@@ -178,7 +258,7 @@ describe("getFeaturesPrompt", () => {
                 "typeorm": "latest",
               },
               "name": "TypeORM",
-              "value": "typeorm",
+              "value": "orm:typeorm",
             },
           ],
           "message": "Choose a ORM manager",
@@ -193,88 +273,101 @@ describe("getFeaturesPrompt", () => {
                 "mysql2": "latest",
               },
               "name": "MySQL",
-              "value": "typeorm:mysql",
+              "value": "orm:typeorm:mysql",
             },
             {
               "dependencies": {
                 "mariadb": "latest",
               },
               "name": "MariaDB",
-              "value": "typeorm:mariadb",
+              "value": "orm:typeorm:mariadb",
             },
             {
               "dependencies": {
                 "pg": "latest",
               },
               "name": "Postgres",
-              "value": "typeorm:postgres",
+              "value": "orm:typeorm:postgres",
             },
             {
               "dependencies": {
                 "cockroachdb": "latest",
               },
               "name": "CockRoachDB",
-              "value": "typeorm:cockroachdb",
+              "value": "orm:typeorm:cockroachdb",
             },
             {
               "dependencies": {
                 "sqlite3": "latest",
               },
               "name": "SQLite",
-              "value": "typeorm:sqlite",
+              "value": "orm:typeorm:sqlite",
             },
             {
               "dependencies": {
                 "better-sqlite3": "latest",
               },
               "name": "Better SQLite3",
-              "value": "typeorm:better-sqlite3",
+              "value": "orm:typeorm:better-sqlite3",
             },
             {
               "name": "Cordova",
-              "value": "typeorm:cordova",
+              "value": "orm:typeorm:cordova",
             },
             {
               "name": "NativeScript",
-              "value": "typeorm:nativescript",
+              "value": "orm:typeorm:nativescript",
             },
             {
               "dependencies": {
                 "oracledb": "latest",
               },
               "name": "Oracle",
-              "value": "typeorm:oracle",
+              "value": "orm:typeorm:oracle",
             },
             {
               "dependencies": {
                 "mssql": "latest",
               },
               "name": "MsSQL",
-              "value": "typeorm:mssql",
+              "value": "orm:typeorm:mssql",
             },
             {
               "dependencies": {
                 "mongodb": "latest",
               },
               "name": "MongoDB",
-              "value": "typeorm:mongodb",
+              "value": "orm:typeorm:mongodb",
             },
             {
               "name": "SQL.js",
-              "value": "typeorm:sqljs",
+              "value": "orm:typeorm:sqljs",
             },
             {
               "name": "ReactNative",
-              "value": "typeorm:reactnative",
+              "value": "orm:typeorm:reactnative",
             },
             {
               "name": "Expo",
-              "value": "typeorm:expo",
+              "value": "orm:typeorm:expo",
             },
           ],
           "message": "Which TypeORM you want to install?",
           "name": "featuresTypeORM",
           "type": "list",
+          "when": [Function],
+        },
+        {
+          "message": "Which passport package ?",
+          "name": "passportPackage",
+          "source": [Function],
+          "type": "autocomplete",
+          "when": [Function],
+        },
+        {
+          "message": "Enter GH_TOKEN to use the premium @tsedio package or leave blank (see https://tsed.dev/plugins/premium/install-premium-plugins.html)",
+          "name": "GH_TOKEN",
+          "type": "password",
           "when": [Function],
         },
         {
@@ -284,14 +377,14 @@ describe("getFeaturesPrompt", () => {
                 "@tsed/cli-plugin-vitest": "{{cliVersion}}",
               },
               "name": "Vitest",
-              "value": "vitest",
+              "value": "testing:vitest",
             },
             {
               "devDependencies": {
                 "@tsed/cli-plugin-jest": "{{cliVersion}}",
               },
               "name": "Jest (unstable with ESM)",
-              "value": "jest",
+              "value": "testing:jest",
             },
           ],
           "message": "Choose unit framework",
@@ -307,7 +400,7 @@ describe("getFeaturesPrompt", () => {
                 "@tsed/cli-plugin-eslint": "{{cliVersion}}",
               },
               "name": "EsLint",
-              "value": "eslint",
+              "value": "linter:eslint",
             },
           ],
           "message": "Choose linter tools framework",
@@ -319,11 +412,11 @@ describe("getFeaturesPrompt", () => {
           "choices": [
             {
               "name": "Prettier",
-              "value": "prettier",
+              "value": "linter:prettier",
             },
             {
               "name": "Lint on commit",
-              "value": "lintstaged",
+              "value": "linter:lintstaged",
             },
           ],
           "message": "Choose extra linter tools",
