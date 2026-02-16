@@ -33,6 +33,7 @@ export class CliStats extends CliHttpClient {
 
   sendInit(opts: Partial<InitStatPayload>) {
     if (!this.disabled) {
+      console.log();
       const data = {
         features: [],
         is_success: true,
@@ -43,13 +44,13 @@ export class CliStats extends CliHttpClient {
         package_manager: this.projectPackage.preferences.packageManager,
         runtime: this.projectPackage.preferences.runtime,
         channel: opts.channel || "cli",
-        cli_version: constant<string>("version", ""),
+        cli_version: constant<string>("pkg.version", ""),
         tsed_version: this.projectPackage.dependencies["@tsed/platform-http"]
       } satisfies InitStatPayload;
 
       return this.post("/rest/cli/stats", {
         data
-      }).catch((er) => {
+      }).catch(() => {
         return null;
       });
     }
