@@ -8,49 +8,57 @@ import {transformMarkdown} from "./markdown.js";
 
 const {copy, ensureDir, pathExists, readFile, remove, writeFile} = fsExtra;
 
-export async function syncAiReferences(docsRoot) {
-  const apiSourceDir = join(docsRoot, "api");
-  const aiReferencesDir = join(docsRoot, "public/ai/references");
-  const aiReferencesApiDir = join(aiReferencesDir, "api");
+export async function copyDocSection({docsRoot, sourceRelative, destinationRelative, progressLabel}) {
+  return copyDocsDirectory({
+    docsRoot,
+    sourceRelative,
+    destinationRelative,
+    progressLabel
+  });
+}
 
-  if (!(await pathExists(apiSourceDir))) {
-    log.warn(`[build-llm-contents] Skip AI references sync: missing ${apiSourceDir}`);
+async function copyDocsDirectory({docsRoot, sourceRelative, destinationRelative, progressLabel}) {
+  const sourceDir = join(docsRoot, sourceRelative);
+  const destinationDir = join(docsRoot, destinationRelative);
+
+  if (!(await pathExists(sourceDir))) {
+    log.warn(`[build-llm-contents] Skip ${progressLabel.toLowerCase()}: missing ${sourceDir}`);
     return false;
   }
 
-  await ensureDir(aiReferencesDir);
-  await remove(aiReferencesApiDir);
-  await ensureDir(aiReferencesApiDir);
+  await remove(destinationDir).catch(() => undefined);
+  await ensureDir(destinationDir);
 
-  const files = await globby(["**/*"], {cwd: apiSourceDir, dot: true, onlyFiles: true});
+  const files = await globby(["**/*"], {cwd: sourceDir, dot: true, onlyFiles: true});
 
   if (files.length === 0) {
-    log.warn("[build-llm-contents] No API markdown files found to sync");
+    log.warn(`[build-llm-contents] No files found to sync for ${progressLabel.toLowerCase()}`);
     return false;
   }
 
-  const copyProgress = progress({
-    style: "block",
-    max: files.length,
-    size: 40
-  });
+  const copyProgress = progress({style: "heavy", max: files.length, size: 40});
 
-  copyProgress.start("Syncing AI reference markdown");
+  copyProgress.start(`Syncing ${progressLabel}`);
 
   try {
     for (const relativePath of files) {
-      await copyFile(apiSourceDir, aiReferencesApiDir, relativePath, copyProgress);
+      await copyFile({
+        sourceRoot: sourceDir,
+        destinationRoot: destinationDir,
+        relativePath,
+        progressLogger: copyProgress
+      });
     }
   } catch (error) {
-    copyProgress.stop("AI references failed");
+    copyProgress.stop(`${progressLabel} failed`);
     throw error;
   }
 
-  copyProgress.stop("AI references updated");
+  copyProgress.stop(`${progressLabel} updated`);
   return true;
 }
 
-async function copyFile(sourceRoot, destinationRoot, relativePath, progressLogger) {
+async function copyFile({sourceRoot, destinationRoot, relativePath, progressLogger}) {
   const sourcePath = join(sourceRoot, relativePath);
   const destinationPath = join(destinationRoot, relativePath);
 
