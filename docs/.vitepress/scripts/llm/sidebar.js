@@ -1,9 +1,17 @@
-import {writeFile} from "node:fs/promises";
+import {join} from "node:path";
 
 import {mapApiReferences} from "@tsed/vitepress-theme/composables/api/mappers/mapApiReferences.js";
+import fsExtra from "fs-extra";
 
-import api from "../../public/api.json" with {type: "json"};
+import api from "../../../public/api.json" with {type: "json"};
+
 const IS_CORES = /cli-core|@tsed\/cli|cli-tasks|cli-prompts|cli-testing/;
+const {writeFile} = fsExtra;
+
+export async function buildReferenceSidebar(docsRoot) {
+  const sidebarPath = join(docsRoot, "public/reference-sidebar.json");
+  await writeFile(sidebarPath, JSON.stringify(getSidebar(), null, 2));
+}
 
 export function getSidebar() {
   const coreModules = ["cli-core"];
@@ -39,5 +47,3 @@ export function getSidebar() {
     }
   ];
 }
-
-await writeFile(import.meta.dirname + "/../../public/reference-sidebar.json", JSON.stringify(getSidebar(), null, 2));

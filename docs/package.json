@@ -3,18 +3,24 @@
   "version": "8.17.0",
   "type": "module",
   "scripts": {
-    "docs:dev": "yarn build:api:summary && vitepress dev .",
-    "docs:build": "yarn build:api:summary && vitepress build .",
+    "docs:dev": "yarn docs:build:ai && vitepress dev .",
+    "docs:build": "yarn docs:build:ai && vitepress build .",
     "docs:preview": "vitepress preview .",
-    "build:api:summary": "node ./.vitepress/scripts/api-summary.js",
+    "docs:build:ai": "node ./.vitepress/scripts/build-llm-contents.js",
     "serve": "npx serve ./.vitepress/dist"
   },
   "dependencies": {
+    "@clack/prompts": "^1.0.0-alpha.10",
     "@tsed/vitepress-theme": "1.5.7",
     "@vueuse/core": "10.11.0",
     "axios": "1.12.0",
     "lodash": "4.17.21",
     "lucide-vue-next": "^0.436.0",
+    "fs-extra": "^11.2.0",
+    "globby": "^14.0.1",
+    "remark-parse": "^9.0.0",
+    "remark-stringify": "^9.0.1",
+    "unified": "^9.2.2",
     "vitepress": "1.5.0"
   },
   "devDependencies": {
