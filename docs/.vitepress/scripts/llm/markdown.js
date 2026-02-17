@@ -1,17 +1,78 @@
+import {extname, join} from "node:path";
+
+import fsExtra from "fs-extra";
 import remarkParse from "remark-parse";
 import remarkStringify from "remark-stringify";
 import unified from "unified";
 
+const {readFile} = fsExtra;
 const markdownProcessor = unified()
   .use(remarkParse)
   .use(remarkStringify, {fences: true, bullet: "-"})
   .use(remarkCleanApiMarkdown);
+const INLINE_SNIPPET_RE = /^<<<\s+@\/([^\s]+?)(?:\s+\[(.+?)\])?\s*$/gm;
 
-export async function transformMarkdown(content) {
-  const {frontmatter, body} = extractFrontmatter(content);
+export async function transformMarkdown(content, options = {}) {
+  const {docsRoot} = options;
+  let nextContent = content;
+
+  if (docsRoot) {
+    nextContent = await inlineExampleBlocks(nextContent, docsRoot);
+  }
+
+  const {frontmatter, body} = extractFrontmatter(nextContent);
   const processed = await markdownProcessor.process(body.trimStart());
   const cleanedBody = String(processed).trimStart();
   return frontmatter ? `${frontmatter}\n${cleanedBody}` : cleanedBody;
+}
+
+async function inlineExampleBlocks(content, docsRoot) {
+  const matches = [];
+  let match;
+
+  while ((match = INLINE_SNIPPET_RE.exec(content)) !== null) {
+    matches.push({
+      start: match.index,
+      end: match.index + match[0].length,
+      relativePath: match[1],
+      label: match[2] ?? "",
+      original: match[0]
+    });
+  }
+
+  if (!matches.length) {
+    return content;
+  }
+
+  let result = "";
+  let lastIndex = 0;
+
+  for (const entry of matches) {
+    result += content.slice(lastIndex, entry.start);
+    result += await loadSnippetBlock(entry, docsRoot);
+    lastIndex = entry.end;
+  }
+
+  result += content.slice(lastIndex);
+  return result;
+}
+
+async function loadSnippetBlock(entry, docsRoot) {
+  const absolutePath = join(docsRoot, entry.relativePath);
+
+  try {
+    const code = await readFile(absolutePath, "utf8");
+    const language = getLanguageFromExtension(extname(absolutePath));
+    const labelSuffix = entry.label ? ` [${entry.label}]` : "";
+    return `\`\`\`${language}${labelSuffix}\n${code.trimEnd()}\n\`\`\``;
+  } catch (error) {
+    console.warn(`[build-llm-contents] Unable to inline snippet ${absolutePath}: ${error.message}`);
+    return entry.original;
+  }
+}
+
+function getLanguageFromExtension(extension) {
+  return extension ? extension.replace(/^\./, "") : "";
 }
 
 function remarkCleanApiMarkdown() {

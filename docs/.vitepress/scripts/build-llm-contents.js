@@ -2,8 +2,8 @@ import {join} from "node:path";
 
 import {intro, log, outro, spinner} from "@clack/prompts";
 
+import {copyFiles} from "./llm/copy-files.js";
 import {buildReferenceSidebar} from "./llm/sidebar.js";
-import {copyDocSection} from "./llm/sync-ai-references.js";
 
 const DOCS_ROOT = join(import.meta.dirname, "..", "..");
 const DOC_SECTIONS = [
@@ -31,11 +31,11 @@ async function run() {
 
   try {
     for (const section of DOC_SECTIONS) {
-      const completed = await copyDocSection({
-        docsRoot: DOCS_ROOT,
-        sourceRelative: section.source,
-        destinationRelative: section.destination,
-        progressLabel: section.label
+      const completed = await copyFiles({
+        cwd: DOCS_ROOT,
+        src: section.source,
+        dest: section.destination,
+        label: section.label
       });
 
       if (!completed) {

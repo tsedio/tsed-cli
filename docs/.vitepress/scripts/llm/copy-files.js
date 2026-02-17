@@ -8,21 +8,12 @@ import {transformMarkdown} from "./markdown.js";
 
 const {copy, ensureDir, pathExists, readFile, remove, writeFile} = fsExtra;
 
-export async function copyDocSection({docsRoot, sourceRelative, destinationRelative, progressLabel}) {
-  return copyDocsDirectory({
-    docsRoot,
-    sourceRelative,
-    destinationRelative,
-    progressLabel
-  });
-}
-
-async function copyDocsDirectory({docsRoot, sourceRelative, destinationRelative, progressLabel}) {
-  const sourceDir = join(docsRoot, sourceRelative);
-  const destinationDir = join(docsRoot, destinationRelative);
+export async function copyFiles({cwd, src, dest, label}) {
+  const sourceDir = join(cwd, src);
+  const destinationDir = join(cwd, dest);
 
   if (!(await pathExists(sourceDir))) {
-    log.warn(`[build-llm-contents] Skip ${progressLabel.toLowerCase()}: missing ${sourceDir}`);
+    log.warn(`[build-llm-contents] Skip ${label.toLowerCase()}: missing ${sourceDir}`);
     return false;
   }
 
@@ -32,17 +23,18 @@ async function copyDocsDirectory({docsRoot, sourceRelative, destinationRelative,
   const files = await globby(["**/*"], {cwd: sourceDir, dot: true, onlyFiles: true});
 
   if (files.length === 0) {
-    log.warn(`[build-llm-contents] No files found to sync for ${progressLabel.toLowerCase()}`);
+    log.warn(`[build-llm-contents] No files found to sync for ${label.toLowerCase()}`);
     return false;
   }
 
   const copyProgress = progress({style: "heavy", max: files.length, size: 40});
 
-  copyProgress.start(`Syncing ${progressLabel}`);
+  copyProgress.start(`Syncing ${label}`);
 
   try {
     for (const relativePath of files) {
       await copyFile({
+        cwd,
         sourceRoot: sourceDir,
         destinationRoot: destinationDir,
         relativePath,
@@ -50,15 +42,15 @@ async function copyDocsDirectory({docsRoot, sourceRelative, destinationRelative,
       });
     }
   } catch (error) {
-    copyProgress.stop(`${progressLabel} failed`);
+    copyProgress.stop(`${label} failed`);
     throw error;
   }
 
-  copyProgress.stop(`${progressLabel} updated`);
+  copyProgress.stop(`${label} updated`);
   return true;
 }
 
-async function copyFile({sourceRoot, destinationRoot, relativePath, progressLogger}) {
+async function copyFile({cwd, sourceRoot, destinationRoot, relativePath, progressLogger}) {
   const sourcePath = join(sourceRoot, relativePath);
   const destinationPath = join(destinationRoot, relativePath);
 
@@ -66,7 +58,7 @@ async function copyFile({sourceRoot, destinationRoot, relativePath, progressLogg
 
   if (relativePath.endsWith(".md")) {
     const fileContent = await readFile(sourcePath, "utf8");
-    const cleaned = await transformMarkdown(fileContent);
+    const cleaned = await transformMarkdown(fileContent, {docsRoot: cwd});
     await writeFile(destinationPath, cleaned);
     progressLogger.advance(1, `Formatted ${relativePath}`);
     return;
