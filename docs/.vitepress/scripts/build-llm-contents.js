@@ -6,6 +6,11 @@ import {copyFiles} from "./llm/copy-files.js";
 import {buildReferenceSidebar} from "./llm/sidebar.js";
 
 const DOCS_ROOT = join(import.meta.dirname, "..", "..");
+/**
+ * Each entry describes a docs directory to copy into /public/ai.
+ * Markdown is normalized (remark), snippet directives are inlined,
+ * and @@Symbol@@ tokens are rewritten to /ai/api links.
+ */
 const DOC_SECTIONS = [
   {
     source: "guide",

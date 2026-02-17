@@ -11,6 +11,8 @@ const markdownProcessor = unified()
   .use(remarkStringify, {fences: true, bullet: "-"})
   .use(remarkCleanApiMarkdown);
 const INLINE_SNIPPET_RE = /^<<<\s+@\/([^\s]+?)(?:\s+\[(.+?)\])?\s*$/gm;
+const SYMBOL_TOKEN_RE = /@@([A-Za-z0-9_.-]+)@@/g;
+const symbolIndexCache = new Map();
 
 export async function transformMarkdown(content, options = {}) {
   const {docsRoot} = options;
@@ -18,6 +20,7 @@ export async function transformMarkdown(content, options = {}) {
 
   if (docsRoot) {
     nextContent = await inlineExampleBlocks(nextContent, docsRoot);
+    nextContent = await replaceSymbolLinks(nextContent, docsRoot);
   }
 
   const {frontmatter, body} = extractFrontmatter(nextContent);
@@ -55,6 +58,41 @@ async function inlineExampleBlocks(content, docsRoot) {
 
   result += content.slice(lastIndex);
   return result;
+}
+
+async function replaceSymbolLinks(content, docsRoot) {
+  const index = await loadSymbolIndex(docsRoot);
+  return content.replace(SYMBOL_TOKEN_RE, (match, symbolName) => {
+    const entry = index.get(symbolName);
+
+    if (!entry) {
+      console.warn(`[build-llm-contents] Unable to resolve symbol ${symbolName}`);
+      return match;
+    }
+
+    return `[${symbolName}](/ai${entry.path}.md)`;
+  });
+}
+
+async function loadSymbolIndex(docsRoot) {
+  if (symbolIndexCache.has(docsRoot)) {
+    return symbolIndexCache.get(docsRoot);
+  }
+
+  const apiPath = join(docsRoot, "public/api.json");
+  const data = JSON.parse(await readFile(apiPath, "utf8"));
+  const map = new Map();
+
+  Object.values(data.modules ?? {}).forEach((module) => {
+    module.symbols?.forEach((symbol) => {
+      if (symbol.symbolName && symbol.path) {
+        map.set(symbol.symbolName, symbol);
+      }
+    });
+  });
+
+  symbolIndexCache.set(docsRoot, map);
+  return map;
 }
 
 async function loadSnippetBlock(entry, docsRoot) {
