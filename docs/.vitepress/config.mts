@@ -117,9 +117,9 @@ export default defineConfig({
     team,
     apiRedirectUrl: "",
     repo: "tsedio/tsed",
-    githubProxyUrl: "https://api.tsed.dev/rest/github/tsedio/tsed",
+    githubProxyUrl: "https://api.tsed.dev/rest/github/tsedio/tsed-cli",
     editLink: {
-      pattern: "https://github.com/tsedio/tsed/edit/production/docs/:path"
+      pattern: "https://github.com/tsedio/tsed-cli/edit/master/docs/:path"
     },
     search: {
       provider: "algolia",
