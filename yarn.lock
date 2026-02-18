@@ -3180,7 +3180,7 @@ __metadata:
     "@tsed/normalize-path": "npm:>=8.21.0"
     "@tsed/openspec": "npm:>=8.21.0"
     "@tsed/schema": "npm:>=8.21.0"
-    "@tsed/ts-doc": "npm:5.0.0"
+    "@tsed/ts-doc": "npm:5.0.3"
     "@types/node": "npm:22.7.4"
     "@typescript-eslint/eslint-plugin": "npm:8.7.0"
     "@typescript-eslint/parser": "npm:8.7.0"
@@ -3495,9 +3495,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsed/ts-doc@npm:5.0.0":
-  version: 5.0.0
-  resolution: "@tsed/ts-doc@npm:5.0.0"
+"@tsed/ts-doc@npm:5.0.3":
+  version: 5.0.3
+  resolution: "@tsed/ts-doc@npm:5.0.3"
   dependencies:
     chalk: "npm:3.0.0"
     ejs: "npm:2.7.1"
@@ -3511,7 +3511,7 @@ __metadata:
     read-pkg-up: "npm:7.0.0"
   bin:
     tsdoc: bin/tsdoc.js
-  checksum: 10/0e726341daae5fcc1e6cf86e9be23b384e9348c1b1d5591b1185f3f26afb39c2e163855a05b123179aa82a91698d6fc1e1dc6ad6808d39641e4f7d08d817118a
+  checksum: 10/ca9f434219e2a57ebe7d640dd798aff80c931989fbdce161bff45f9ce47ae913eea12c53e3ea06a85449c3402911fd4bc45b589ab14b615bcca5db2d7fd056b7
   languageName: node
   linkType: hard
 
