@@ -17,6 +17,7 @@ type InitStatPayload = {
   tsed_version: string;
   platform: string;
   convention: string;
+  style: string;
   package_manager: string;
   runtime: string;
   features: string[];
@@ -24,6 +25,8 @@ type InitStatPayload = {
   cli_version: string;
   os: string;
   is_success: boolean;
+  error_message?: string;
+  error_name?: string;
 };
 
 export class CliStats extends CliHttpClient {
@@ -33,13 +36,13 @@ export class CliStats extends CliHttpClient {
 
   sendInit(opts: Partial<InitStatPayload>) {
     if (!this.disabled) {
-      console.log();
       const data = {
         features: [],
         is_success: true,
         ...opts,
         os: os.type(),
         convention: this.projectPackage.preferences.convention === "conv_default" ? "tsed" : "angular",
+        style: this.projectPackage.preferences.architecture === "arc_default" ? "tsed" : "angular",
         platform: this.projectPackage.preferences.platform,
         package_manager: this.projectPackage.preferences.packageManager,
         runtime: this.projectPackage.preferences.runtime,
@@ -61,6 +64,8 @@ export class CliStats extends CliHttpClient {
       return this.sendInit({
         channel: "cli",
         is_success: !er,
+        error_name: er?.name || "",
+        error_message: er?.message,
         features: data.features as string[]
       });
     }

@@ -73,9 +73,9 @@ export class CliService {
 
         await this.exec(cmdName, data, $ctx);
 
-        await $asyncEmit("$onFinish", [data]);
+        await $asyncEmit("$onFinish", [$ctx.get("data")]);
       } catch (er) {
-        await $asyncEmit("$onFinish", [data, er]);
+        await $asyncEmit("$onFinish", [$ctx.get("data"), er]);
         throw er;
       } finally {
         await destroyInjector();
