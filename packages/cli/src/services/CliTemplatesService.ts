@@ -1,7 +1,7 @@
 import {join} from "node:path";
 
 import {CliFs} from "@tsed/cli-core";
-import {constant, context, inject, injectable, injectMany, logger} from "@tsed/di";
+import {constant, context, inject, injectable, injectMany, lazyInject, logger} from "@tsed/di";
 import {globby} from "globby";
 import type {SourceFile} from "ts-morph";
 
@@ -59,24 +59,22 @@ export class CliTemplatesService {
 
       const promises = files.map(async (file) => {
         try {
-          const files = join(this.templatesDir, file);
-          const {default: token} = await import(files.replace(".ts", ".js"));
-
-          if (token) {
-            return inject(token);
-          }
+          const modulePath = join(this.templatesDir, file);
+          return await lazyInject(() => import(modulePath));
         } catch (er) {
           logger().warn("Unable to load custom template %s: %s", file, (er as Error).message);
         }
       });
 
       let customs = await Promise.all(promises);
-      this.#customTemplates = customs.map((template) => {
-        return {
-          ...template,
-          label: template.label + " (custom)"
-        };
-      });
+      this.#customTemplates = customs
+        .filter((template) => !!template)
+        .map((template: DefineTemplateOptions) => {
+          return {
+            ...template,
+            label: template.label + " (custom)"
+          } as DefineTemplateOptions;
+        });
     }
   }
 

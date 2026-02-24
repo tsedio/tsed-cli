@@ -73,7 +73,9 @@ export class CreateTemplateCommand implements CommandProvider {
   }
 
   $exec(ctx: CreateTemplateCmdContext & {symbolName: string; symbolPath: string}) {
-    this.projectPackageJson.addDevDependencies({"@tsed/cli": PKG.version});
+    if (this.projectPackageJson.devDependencies["@tsed/cli"] === undefined) {
+      this.projectPackageJson.addDevDependencies({"@tsed/cli": PKG.version});
+    }
 
     return [
       {

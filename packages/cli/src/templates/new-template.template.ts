@@ -28,7 +28,7 @@ export default defineTemplate({
   fileName: "{{symbolName}}.services",
   outputDir: "{{srcDir}}/services",
   render(symbolName, context) {
-    return \`export class \${symbolName} {}\`
+    return \`export class \${symbolName} {}\`;
   }
 });`;
     }
