@@ -1,6 +1,6 @@
-import {Get, PathParams} from "@tsed/platform-http";
 import {Interactions, OidcCtx} from "@tsed/oidc-provider";
-import {Name} from "@tsed/schema";
+import {Get, Name} from "@tsed/schema";
+import {PathParams} from "@tsed/platform-params";
 import * as interactions from "../../interactions/index.js";
 
 @Name("Oidc")

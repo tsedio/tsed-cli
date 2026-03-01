@@ -5,6 +5,12 @@ import {SyntaxKind} from "ts-morph";
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
 export class OidcProviderInitHook implements CliCommandHooks {
+  $alterBarrels(barrels: any) {
+    barrels.directory.push("./src/interactions");
+
+    return barrels;
+  }
+
   $alterRenderFiles(files: string[], data: RenderDataContext) {
     if (!data.oidc) {
       return files;
