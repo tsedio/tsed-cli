@@ -10,7 +10,6 @@ import { join } from "node:path";
 
 import { config } from "@/config/config.js";
 import "@tsed/platform-express";
-import "@tsed/typeorm";
 import * as pages from "./controllers/pages/index.js";
 import * as rest from "./controllers/rest/index.js";
 

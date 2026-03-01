@@ -20,17 +20,6 @@ export class TypeORMInitHook implements CliCommandHooks {
     return packageJson;
   }
 
-  $alterProjectFiles(project: ProjectClient, data: RenderDataContext): ProjectClient {
-    if (data.typeorm) {
-      //set that in config.ts
-      project.serverSourceFile?.addImportDeclaration({
-        moduleSpecifier: "@tsed/typeorm"
-      });
-    }
-
-    return project;
-  }
-
   async $alterInitSubTasks(tasks: Task[], data: RenderDataContext) {
     const database = getDatabase(data);
 
