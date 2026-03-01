@@ -97,7 +97,11 @@ export class CliService {
 
       $ctx.set("data", data);
 
-      return tasksRunner(tasks, data);
+      const result = await tasksRunner(tasks, data);
+
+      $ctx.set("data", data);
+
+      return result;
     }
   }
 
