@@ -227,6 +227,19 @@ export class ProjectClient extends Project {
 
       extendsConfig.addElement("\n" + content);
     }
+
+    if (content.match("withOptions")) {
+      if (
+        !sourceFile.getImportDeclarations().some((imp) => {
+          return imp.getText().match("withOptions");
+        })
+      ) {
+        sourceFile.addImportDeclaration({
+          moduleSpecifier: "@tsed/config",
+          namedImports: [{name: "withOptions"}]
+        });
+      }
+    }
   }
 
   protected findConfigurationDecorationOptions() {
