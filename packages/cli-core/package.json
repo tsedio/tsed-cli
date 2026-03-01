@@ -55,6 +55,7 @@
     "rxjs": "^7.8.1",
     "semver": "^7.6.3",
     "split": "^1.0.1",
+    "ts-morph": "^27.0.2",
     "tslib": "^2.7.0",
     "tunnel": "^0.0.6",
     "update-notifier": "^7.3.1",

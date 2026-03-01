@@ -53,7 +53,7 @@ export class CliStats extends CliHttpClient {
 
       return this.post("/rest/cli/stats", {
         data
-      }).catch(() => {
+      }).catch((er) => {
         return null;
       });
     }
