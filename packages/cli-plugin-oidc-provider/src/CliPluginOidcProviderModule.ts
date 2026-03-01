@@ -1,13 +1,11 @@
 import "./templates/index.template.js";
 
 import type {RenderDataContext} from "@tsed/cli";
-import {Module, ProjectPackageJson} from "@tsed/cli-core";
+import {ProjectPackageJson} from "@tsed/cli-core";
+import {injectable} from "@tsed/di";
 
 import {OidcProviderInitHook} from "./hooks/OidcProviderInitHook.js";
 
-@Module({
-  imports: [OidcProviderInitHook]
-})
 export class CliPluginOidcProviderModule {
   $alterPackageJson(packageJson: ProjectPackageJson, data: RenderDataContext) {
     if (data.oidc) {
@@ -26,3 +24,5 @@ export class CliPluginOidcProviderModule {
     return packageJson;
   }
 }
+
+injectable(CliPluginOidcProviderModule).imports([OidcProviderInitHook]);
