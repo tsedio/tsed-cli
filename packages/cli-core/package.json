@@ -32,7 +32,7 @@
     "clack"
   ],
   "dependencies": {
-    "@ts-morph/common": "0.28.0",
+    "@ts-morph/common": "0.28.1",
     "@tsed/cli-prompts": "workspace:*",
     "@tsed/cli-tasks": "workspace:*",
     "@tsed/logger": ">=8.0.3",
