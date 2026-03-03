@@ -3,6 +3,7 @@ import {join, resolve} from "node:path";
 import {CliFs, command, type CommandProvider, constant, inject, Type} from "@tsed/cli-core";
 import {isString} from "@tsed/core";
 import {InjectorService} from "@tsed/di";
+import {$alter} from "@tsed/hooks";
 import {camelCase} from "change-case";
 import {generateApi, type Hooks, type RawRouteInfo, type RouteNameInfo} from "swagger-typescript-api";
 
@@ -126,7 +127,9 @@ export class GenerateHttpClientCmd implements CommandProvider {
         .replace("requestParams.headers.put = {};", "")
         .replace("(this.instance.defaults.headers || {})", "((this.instance.defaults.headers || {}) as any)");
 
-      return this.fs.writeFile(`${$ctx.output}/${name}.ts`, file.fileContent, {encoding: "utf8"});
+      const finalContent = $alter("$alterGeneratedClientFile", [file.fileContent]);
+
+      return this.fs.writeFile(`${$ctx.output}/${$ctx.name}.ts`, finalContent, {encoding: "utf8"});
     });
 
     return Promise.all(promises);
