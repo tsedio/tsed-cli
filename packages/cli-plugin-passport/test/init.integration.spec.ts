@@ -113,9 +113,9 @@ describe("Init integration", () => {
       import { application } from "@tsed/platform-http";
       import { join } from "node:path";
 
-      import { config } from "@/config/config.js";
       import "@tsed/passport";
       import "@tsed/platform-express";
+      import { config } from "./config/config.js";
       import * as pages from "./controllers/pages/index.js";
       import * as rest from "./controllers/rest/index.js";
 

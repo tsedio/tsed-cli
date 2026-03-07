@@ -73,9 +73,9 @@ describe("Init TypeGraphQL project", () => {
       import { application } from "@tsed/platform-http";
       import { join } from "node:path";
 
-      import { config } from "@/config/config.js";
       import "@tsed/platform-express";
       import "@tsed/typegraphql";
+      import { config } from "./config/config.js";
       import * as pages from "./controllers/pages/index.js";
       import * as rest from "./controllers/rest/index.js";
       import "./graphql/datasources/index.js";

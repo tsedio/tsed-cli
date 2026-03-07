@@ -12,8 +12,8 @@ export default defineTemplate({
   render() {
     return `#!/usr/bin/env node
 import {CliCore} from "@tsed/cli-core";
-import {config} from "@/config/config.js";
-import * as commands from "@/bin/commands/index.js";
+import {config} from "./config/config.js";
+import * as commands from "./bin/commands/index.js";
 
 CliCore.bootstrap({
   ...config,

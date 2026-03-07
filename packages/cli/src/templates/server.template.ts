@@ -16,7 +16,7 @@ import {join} from "node:path";
 import {Configuration} from "@tsed/di";
 import {application} from "@tsed/platform-http";
 
-import {config} from "@/config/config.js";
+import {config} from "./config/config.js";
 
 @Configuration({
   ...config,
