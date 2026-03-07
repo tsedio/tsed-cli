@@ -182,7 +182,7 @@ export class InitCmd implements CommandProvider {
             ...(await exec("generate", {
               //...ctx,
               type: "controller",
-              route: "rest",
+              route: "hello",
               name: "HelloWorld",
               directory: "rest"
             })),
