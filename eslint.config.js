@@ -1,14 +1,14 @@
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import typescriptParser from "@typescript-eslint/parser";
+import vitest from "@vitest/eslint-plugin";
 import pluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import pluginSimpleImportSort from "eslint-plugin-simple-import-sort";
-import vitest from "eslint-plugin-vitest";
 import pluginWorkspaces from "eslint-plugin-workspaces";
 import globals from "globals";
 
 export default [
   {
-    ignores: ["coverage", "dist", "processes.config.js", "**/templates"]
+    ignores: ["coverage", "**/cache/**", "**/dist/**", "**/lib/**", "**/coverage/**", "processes.config.js", "**/templates", "**/.tmp/**"]
   },
   {
     files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"],

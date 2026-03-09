@@ -11,6 +11,6 @@ describe("mcpStreamableServer", () => {
   it("should accept a McpServer instance", () => {
     const mockServer = {} as McpServer;
 
-    expect(() => mcpStreamableServer(mockServer)).not.toThrow();
+    expect(() => mcpStreamableServer(mockServer)).not.toThrowError();
   });
 });

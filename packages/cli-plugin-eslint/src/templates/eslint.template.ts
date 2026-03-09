@@ -31,7 +31,7 @@ export default defineTemplate({
       'import typescriptParser from "@typescript-eslint/parser";',
       data.prettier ? 'import pluginPrettierRecommended from "eslint-plugin-prettier/recommended";' : "",
       'import pluginSimpleImportSort from "eslint-plugin-simple-import-sort";',
-      data.vitest ? 'import vitest from "eslint-plugin-vitest";' : "",
+      data.vitest ? 'import vitest from "@vitest/eslint-plugin";' : "",
       'import globals from "globals";'
     ];
 

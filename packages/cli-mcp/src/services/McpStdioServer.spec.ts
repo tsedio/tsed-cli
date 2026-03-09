@@ -53,7 +53,7 @@ describe("mcpStdioServer", () => {
     const error = new Error("Connection failed");
     mockConnect.mockRejectedValue(error);
 
-    await expect(mcpStdioServer(mockServer)).rejects.toThrow("Connection failed");
+    await expect(mcpStdioServer(mockServer)).rejects.toThrowError("Connection failed");
   });
 
   it("should dynamically import StdioServerTransport", async () => {

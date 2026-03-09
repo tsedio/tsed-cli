@@ -214,7 +214,7 @@ describe("Eslint: Init cmd", () => {
       import typescriptParser from "@typescript-eslint/parser";
       import pluginPrettierRecommended from "eslint-plugin-prettier/recommended";
       import pluginSimpleImportSort from "eslint-plugin-simple-import-sort";
-      import vitest from "eslint-plugin-vitest";
+      import vitest from "@vitest/eslint-plugin";
       import globals from "globals";
 
       export default [

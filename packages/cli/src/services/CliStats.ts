@@ -42,7 +42,7 @@ export class CliStats extends CliHttpClient {
         ...opts,
         os: os.type(),
         convention: this.projectPackage.preferences.convention === "conv_default" ? "tsed" : "angular",
-        style: this.projectPackage.preferences.architecture === "arc_default" ? "tsed" : "angular",
+        style: this.projectPackage.preferences.architecture === "arc_default" ? "tsed" : "feature",
         platform: this.projectPackage.preferences.platform,
         package_manager: this.projectPackage.preferences.packageManager,
         runtime: this.projectPackage.preferences.runtime,

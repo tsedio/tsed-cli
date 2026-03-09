@@ -123,8 +123,7 @@ export interface PromptListQuestion<Value = any> extends PromptBaseQuestion<Valu
  * Multi-select prompt where the result is an array of chosen values.
  */
 export interface PromptCheckboxQuestion<Value = any>
-  extends PromptBaseQuestion<Value[]>,
-    Omit<MultiSelectOptions<Value>, "message" | "options"> {
+  extends PromptBaseQuestion<Value[]>, Omit<MultiSelectOptions<Value>, "message" | "options"> {
   type: "checkbox";
   /**
    * Available choices displayed to the user.
@@ -136,8 +135,7 @@ export interface PromptCheckboxQuestion<Value = any>
  * Searchable prompt that fetches choices dynamically.
  */
 export interface PromptAutocompleteQuestion<Value = any>
-  extends PromptBaseQuestion<Value>,
-    Omit<AutocompleteOptions<Value>, "message" | "options" | "filter"> {
+  extends PromptBaseQuestion<Value>, Omit<AutocompleteOptions<Value>, "message" | "options" | "filter"> {
   type: "autocomplete";
   /**
    * Async loader returning the set of choices filtered by the keyword.

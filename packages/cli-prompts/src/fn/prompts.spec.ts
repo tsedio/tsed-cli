@@ -140,7 +140,7 @@ describe("prompt handlers", () => {
         message: "Empty",
         choices: []
       })
-    ).rejects.toThrow('Question "empty" does not provide any choices');
+    ).rejects.toThrowError('Question "empty" does not provide any choices');
   });
 
   it("autocomplete should delegate to clack autocomplete with normalized choices", async () => {

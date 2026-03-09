@@ -47,7 +47,7 @@ describe("prompt utils", () => {
   it("ensureNotCancelled should throw PromptCancelledError when clack cancels", () => {
     clack.isCancel.mockReturnValue(true);
 
-    expect(() => ensureNotCancelled(Symbol("cancel"))).toThrow(PromptCancelledError);
+    expect(() => ensureNotCancelled(Symbol("cancel"))).toThrowError(PromptCancelledError);
     expect(clack.cancel).toHaveBeenCalled();
   });
 

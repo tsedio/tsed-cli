@@ -111,7 +111,7 @@ describe("CliService", () => {
 
     expect(() =>
       built.parse(["node", "cli", "--feature", "http", "--toggle", "-r", "./repo", "--verbose", "--custom"], {from: "user"})
-    ).not.toThrow();
+    ).not.toThrowError();
 
     const opts = built.opts();
     expect(opts.feature).toBe("http");
@@ -167,7 +167,7 @@ describe("CliService", () => {
     };
     Store.from(duplicateProvider.token).set("command", {name: "generate", description: "dup"} as any);
 
-    expect(() => service["build"](duplicateProvider)).toThrow("The generate command is already registered");
+    expect(() => service["build"](duplicateProvider)).toThrowError("The generate command is already registered");
   });
 
   it("should merge answers provided by the PromptRunner", async () => {
@@ -283,7 +283,7 @@ describe("CliService", () => {
     cmd.args = ["deploy"];
     service.program.args = [];
 
-    expect(() => (cmd as any)._actionHandler(["missing-required"])).toThrow("Validation error");
+    expect(() => (cmd as any)._actionHandler(["missing-required"])).toThrowError("Validation error");
 
     expect(runLifecycle).not.toHaveBeenCalled();
     expect(errorSpy).toHaveBeenCalledWith({

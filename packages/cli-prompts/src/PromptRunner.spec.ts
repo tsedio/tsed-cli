@@ -59,6 +59,8 @@ describe("PromptRunner", () => {
     const runner = new PromptRunner();
     (handlerMap as any).unknown = undefined;
 
-    await expect(runner.run([{type: "unknown" as any, name: "noop", message: "Noop"}])).rejects.toThrow("Unsupported prompt type: unknown");
+    await expect(runner.run([{type: "unknown" as any, name: "noop", message: "Noop"}])).rejects.toThrowError(
+      "Unsupported prompt type: unknown"
+    );
   });
 });

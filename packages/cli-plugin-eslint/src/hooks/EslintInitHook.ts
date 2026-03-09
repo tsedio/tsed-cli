@@ -50,7 +50,7 @@ export class EslintInitHook implements CliCommandHooks {
       {
         "@typescript-eslint/parser": "latest",
         "@typescript-eslint/eslint-plugin": "latest",
-        eslint: "^9.39.2",
+        eslint: "latest",
         "eslint-config-prettier": "latest",
         "eslint-plugin-prettier": "latest",
         "eslint-plugin-simple-import-sort": "latest",
@@ -73,7 +73,7 @@ export class EslintInitHook implements CliCommandHooks {
     if (data.vitest) {
       packageJson.addDevDependencies(
         {
-          "eslint-plugin-vitest": "latest"
+          "@vitest/eslint-plugin": "latest"
         },
         data
       );

@@ -7,8 +7,9 @@ import type {AlterProjectFiles} from "./AlterProjectFiles.js";
 import type {AlterRenderFiles} from "./AlterRenderFiles.js";
 import type {InitCmdContext} from "./InitCmdOptions.js";
 
-export interface CliCommandHooks
-  extends Partial<AlterInitSubTasks & AlterPackageJson & AlterRenderFiles & AlterProjectFiles & AlterGenerateTasks> {
+export interface CliCommandHooks extends Partial<
+  AlterInitSubTasks & AlterPackageJson & AlterRenderFiles & AlterProjectFiles & AlterGenerateTasks
+> {
   $alterInitPostInstallTasks?(tasks: Task[], data: InitCmdContext): Task[] | Promise<Task[]>;
   $alterGeneratePostInstallTasks?(tasks: Task[], data: InitCmdContext): Task[] | Promise<Task[]>;
 }
