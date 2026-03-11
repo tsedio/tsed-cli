@@ -1,3 +1,4 @@
+import * as os from "node:os";
 import {basename, join} from "node:path";
 
 import {
@@ -32,10 +33,13 @@ import {RuntimesModule} from "../../runtimes/RuntimesModule.js";
 import {BunRuntime} from "../../runtimes/supports/BunRuntime.js";
 import {NodeRuntime} from "../../runtimes/supports/NodeRuntime.js";
 import {CliProjectService} from "../../services/CliProjectService.js";
+import {anonymizePaths} from "../../services/mappers/anonymizePaths.js";
 import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt.js";
 import {InitSchema} from "./config/InitSchema.js";
 import {mapToContext} from "./mappers/mapToContext.js";
 import {getFeaturesPrompt} from "./prompts/getFeaturesPrompt.js";
+
+const ISSUE_URL = "https://github.com/tsedio/tsed-cli/issues/new";
 
 export class InitCmd implements CommandProvider {
   protected configuration = inject(Configuration);
@@ -394,6 +398,61 @@ export class InitCmd implements CommandProvider {
 
     await Promise.all(promises);
     taskOutput(`Plugins files rendered (${Date.now() - startTime}ms)`);
+  }
+
+  $onFinish(data: {commandName?: string; rawArgs?: string[]; features?: string[]}, er?: Error) {
+    if (data.commandName !== "init" || !er) {
+      return;
+    }
+
+    console.error(
+      ["", `Init failed. Please open an issue: ${ISSUE_URL}`, "", "Copy/paste this report:", this.buildIssueReport(data, er)].join("\n")
+    );
+  }
+
+  private buildIssueReport(data: {rawArgs?: string[]; features?: string[]}, er: Error) {
+    const sanitizedMessage = anonymizePaths(er.message || "");
+    const sanitizedStack = anonymizePaths(er.stack || "");
+    const command = ["tsed", "init", ...(data.rawArgs || [])].join(" ");
+    const convention = this.packageJson.preferences.convention === "conv_default" ? "tsed" : "angular";
+    const style = this.packageJson.preferences.architecture === "arc_default" ? "tsed" : "feature";
+    const platform = this.packageJson.preferences.platform || "";
+    const packageManager = this.packageJson.preferences.packageManager || "";
+    const runtime = this.packageJson.preferences.runtime || "";
+    const tsedVersion = this.packageJson.dependencies["@tsed/platform-http"] || "";
+    const channel = "cli";
+    const cliVersion = this.cliPackageJson.version || "";
+    const osType = os.type();
+    const features = data.features || [];
+
+    return [
+      "## Environment",
+      `- @tsed/cli version: ${this.cliPackageJson.version}`,
+      `- Node.js version: ${process.version}`,
+      `- Platform: ${process.platform} ${process.arch}`,
+      `- Command: \`${command}\``,
+      "",
+      "## Init Stats",
+      `- tsed_version: ${tsedVersion}`,
+      `- platform: ${platform}`,
+      `- convention: ${convention}`,
+      `- style: ${style}`,
+      `- package_manager: ${packageManager}`,
+      `- runtime: ${runtime}`,
+      `- features: ${features.join(", ")}`,
+      `- channel: ${channel}`,
+      `- cli_version: ${cliVersion}`,
+      `- os: ${osType}`,
+      "",
+      "## Error",
+      `- Name: ${er.name || "Error"}`,
+      `- Message: ${sanitizedMessage || "(empty)"}`,
+      "",
+      "## Stack",
+      "```txt",
+      sanitizedStack || "(empty)",
+      "```"
+    ].join("\n");
   }
 }
 
