@@ -2,6 +2,8 @@ import {CliHttpClient, ProjectPackageJson} from "@tsed/cli-core";
 import {constant, inject, injectable} from "@tsed/di";
 import * as os from "os";
 
+import {anonymizePaths} from "./mappers/anonymizePaths.js";
+
 declare global {
   namespace TsED {
     interface Configuration {
@@ -61,11 +63,14 @@ export class CliStats extends CliHttpClient {
 
   $onFinish(data: {commandName?: string; features?: string[]}, er?: Error) {
     if (data.commandName === "init") {
+      const sanitizedMessage = anonymizePaths(er?.message || "");
+      const sanitizedStack = anonymizePaths(er?.stack || "");
+
       return this.sendInit({
         channel: "cli",
         is_success: !er,
         error_name: er?.name || "",
-        error_message: er?.message,
+        error_message: [sanitizedMessage, sanitizedStack].filter(Boolean).join(" "),
         features: data.features as string[]
       });
     }
