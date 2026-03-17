@@ -197,8 +197,8 @@ describe("Generate Controller", () => {
     expect(result).toMatchInlineSnapshot(`
       "import { PlatformTest } from "@tsed/platform-http/testing";
       import SuperTest from "supertest";
-      import { Server } from "../../../../server.js";
       import { UserController } from "./UserController.js";
+      import { Server } from "../../../../server.js";
 
       describe("UserController", () => {
         beforeAll(PlatformTest.bootstrap(Server, {

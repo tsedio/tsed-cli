@@ -74,7 +74,6 @@ export class ProjectClient extends Project {
     if (path.endsWith(".ts") || path.endsWith(".mts")) {
       const source = this.createSourceFile(path, sourceFileText, options);
 
-      source.organizeImports();
       await source.save();
 
       return source;

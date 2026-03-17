@@ -120,37 +120,30 @@ describe("Generate AsyncFactory", () => {
         fileName: "{{symbolName}}.controller",
         outputDir: "{{srcDir}}/controllers",
         prompts(context) {
-          return [
-            {
-              type: "list",
-              name: "directory",
-              message: "Which directory?",
-              when(state) {
-                return !!([
-                  "controller"
-                ].includes(state.type || context.type) || context.directory);
-              },
-              choices: context.getDirectories("controllers").map((value) => {
-                return {
-                  label: value,
-                  value
-                };
-              })
+          return [{
+            type: "list",
+            name: "directory",
+            message: "Which directory?",
+            when(state) {
+              return !!(["controller"].includes(state.type || context.type) || context.directory);
             },
-            {
-              type: "input",
-              name: "route",
-              message: "Which route?",
-              when(state) {
-                return !!([
-                  "controller"
-                ].includes(state.type || context.type) || context.route);
-              },
-              default: (state) => {
-                return context.getRoute(state);
-              }
+            choices: context.getDirectories("controllers").map((value) => {
+              return {
+                label: value,
+                value
+              };
+            })
+          }, {
+            type: "input",
+            name: "route",
+            message: "Which route?",
+            when(state) {
+              return !!(["controller"].includes(state.type || context.type) || context.route);
+            },
+            default: (state) => {
+              return context.getRoute(state);
             }
-          ];
+          }];
         },
         render(symbolName, context) {
           const route = context.getRoute(context.route);
@@ -222,37 +215,30 @@ describe("Generate AsyncFactory", () => {
         fileName: "{{symbolName}}.controller",
         outputDir: "{{srcDir}}/controllers",
         prompts(context) {
-          return [
-            {
-              type: "list",
-              name: "directory",
-              message: "Which directory?",
-              when(state) {
-                return !!([
-                  "controller"
-                ].includes(state.type || context.type) || context.directory);
-              },
-              choices: context.getDirectories("controllers").map((value) => {
-                return {
-                  label: value,
-                  value
-                };
-              })
+          return [{
+            type: "list",
+            name: "directory",
+            message: "Which directory?",
+            when(state) {
+              return !!(["controller"].includes(state.type || context.type) || context.directory);
             },
-            {
-              type: "input",
-              name: "route",
-              message: "Which route?",
-              when(state) {
-                return !!([
-                  "controller"
-                ].includes(state.type || context.type) || context.route);
-              },
-              default: (state) => {
-                return context.getRoute(state);
-              }
+            choices: context.getDirectories("controllers").map((value) => {
+              return {
+                label: value,
+                value
+              };
+            })
+          }, {
+            type: "input",
+            name: "route",
+            message: "Which route?",
+            when(state) {
+              return !!(["controller"].includes(state.type || context.type) || context.route);
+            },
+            default: (state) => {
+              return context.getRoute(state);
             }
-          ];
+          }];
         },
         render(symbolName, context) {
           const route = context.getRoute(context.route);
