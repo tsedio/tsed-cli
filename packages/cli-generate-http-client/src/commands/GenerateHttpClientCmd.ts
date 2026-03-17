@@ -118,7 +118,6 @@ export class GenerateHttpClientCmd implements CommandProvider {
     } as any);
 
     const promises = files.map((file) => {
-      const name = file.fileName;
       file.fileContent = file.fileContent
         .replace("class Api", `class ${$ctx.name}`)
         .replace(".then((response) => response.data)", ".then((response) => response.data as T)")
@@ -127,9 +126,7 @@ export class GenerateHttpClientCmd implements CommandProvider {
         .replace("requestParams.headers.put = {};", "")
         .replace("(this.instance.defaults.headers || {})", "((this.instance.defaults.headers || {}) as any)");
 
-      const finalContent = $alter("$alterGeneratedClientFile", [file.fileContent]);
-
-      return this.fs.writeFile(`${$ctx.output}/${$ctx.name}.ts`, finalContent, {encoding: "utf8"});
+      return this.fs.writeFile(`${$ctx.output}/${$ctx.name}.ts`, file.fileContent, {encoding: "utf8"});
     });
 
     return Promise.all(promises);
