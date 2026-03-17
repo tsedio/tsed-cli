@@ -332,7 +332,7 @@ export class InitCmd implements CommandProvider {
     const runtime = runtimes.get();
 
     // files with higher priority
-    const promises = [
+    const files = [
       "tsconfig.base.json",
       "tsconfig.json",
       "tsconfig.spec.json",
@@ -354,11 +354,13 @@ export class InitCmd implements CommandProvider {
       `pm2.${pm2}`,
       "/views/home.ejs",
       ...runtime.files()
-    ].map((id) => {
-      return id && render(id, ctx);
-    });
+    ];
 
-    await Promise.all(promises);
+    for (const id of files) {
+      if (id) {
+        await render(id, ctx);
+      }
+    }
   }
 
   async renderFiles(ctx: InitOptions) {
@@ -373,30 +375,30 @@ export class InitCmd implements CommandProvider {
 
     startTime = Date.now();
 
-    const promises = files.map((option) => {
+    for (const option of files) {
       if (!option) {
-        return;
+        continue;
       }
 
       if (isString(option)) {
         const [id, name] = option.split(":");
 
-        return render(id, {
+        await render(id, {
           ...ctx,
           from: TEMPLATE_DIR,
           name: name || id
         });
-      } else {
-        if ("id" in option) {
-          return render(option.id, {
-            ...ctx,
-            ...option
-          });
-        }
+        continue;
       }
-    });
 
-    await Promise.all(promises);
+      if ("id" in option) {
+        await render(option.id, {
+          ...ctx,
+          ...option
+        });
+      }
+    }
+
     taskOutput(`Plugins files rendered (${Date.now() - startTime}ms)`);
   }
 
