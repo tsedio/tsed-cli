@@ -1,4 +1,3 @@
-import swc from "unplugin-swc";
 import {defineConfig} from "vitest/config";
 
 import {resolveWorkspaceFiles} from "../plugins/resolveWorkspaceFiles.js";
@@ -16,7 +15,6 @@ export const presets = defineConfig({
       enabled: true,
       provider: "v8",
       reporter: ["text", "json", "html"],
-      all: true,
       include: ["src/**/*.{tsx,ts}"],
       exclude: [
         "**/*.spec.{ts,tsx}",
@@ -32,30 +30,5 @@ export const presets = defineConfig({
       ]
     }
   },
-  plugins: [
-    resolveWorkspaceFiles(),
-    swc.vite({
-      //tsconfigFile: "./tsconfig.spec.json",
-      // Explicitly set the module type to avoid inheriting this value from a `.swcrc` config file
-      jsc: {
-        parser: {
-          syntax: "typescript",
-          decorators: true,
-          dynamicImport: true,
-          tsx: true
-        },
-        target: "esnext",
-        externalHelpers: true,
-        keepClassNames: true,
-        transform: {
-          useDefineForClassFields: false,
-          legacyDecorator: true,
-          decoratorMetadata: true
-        }
-      },
-      module: {
-        type: "es6"
-      }
-    })
-  ]
+  plugins: [resolveWorkspaceFiles()]
 });
