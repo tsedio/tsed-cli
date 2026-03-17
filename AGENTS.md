@@ -21,6 +21,7 @@ Author TypeScript ES modules with 2-space indentation, double quotes, and traili
 Vitest powers both unit and integration coverage. Co-locate fast tests next to implementation files, while scenario-heavy suites live under `packages/*/test/**`. Use `yarn vitest packages/cli/src/commands/init/InitCmd.spec.ts` to focus a file, prefer `.integration.spec.ts` when exercising generators end-to-end, and ship PRs with `yarn test --coverage` so CI can enforce thresholds. Mock filesystem access via helpers in `cli-testing` instead of touching the real disk.
 
 - Favor targeted commands (`yarn workspace <pkg> vitest run path/to/spec.ts`) to keep feedback tight before running the full `yarn test`.
+- When an agent runs unit tests, append `--reporter=agent` (for example: `yarn workspace <pkg> vitest run path/to/spec.ts --reporter=agent`).
 - When code touches DI helpers (e.g., `context()`, `runInContext`), spin up a scoped container with `DITest.create()`/`DITest.reset()` instead of mocking `@tsed/di`, and wrap async work in `runInContext`.
 - Keep specs deterministic: stub process spawning through `CliExeca`, fake filesystem writes via `cli-testing`, and avoid live network access.
 - Assert observable/logging side effects explicitly so task orchestration regressions (skips, nested tasks, streaming logs) are caught in unit suites.
