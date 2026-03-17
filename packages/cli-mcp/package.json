@@ -47,9 +47,6 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": ">=1.26.0",
-    "@swc-node/register": "^1.10.9",
-    "@swc/core": "1.7.26",
-    "@swc/helpers": "^0.5.13",
     "@tsed/cli-core": "workspace:*",
     "@tsed/core": ">=8.21.0",
     "@tsed/di": ">=8.21.0",
@@ -70,16 +67,19 @@
     "semver": "^7.6.3",
     "ts-morph": "27.0.0",
     "tslib": "^2.7.0",
-    "zod": "4.3.6"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@swc-node/register": "^1.10.9",
+    "@swc/core": "1.7.26",
+    "@swc/helpers": "^0.5.13",
     "@tsed/typescript": "workspace:*",
     "@types/change-case": "^2.3.1",
     "@types/consolidate": "0.14.4",
     "cross-env": "7.0.3",
     "express": "5.1.0",
     "typescript": "5.6.2",
-    "vitest": "3.2.4"
+    "vitest": "4.1.0"
   },
   "peerDependencies": {
     "@tsed/core": ">=8.0.0",
