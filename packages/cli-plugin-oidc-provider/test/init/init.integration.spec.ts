@@ -5,6 +5,9 @@ import {CliPlatformTest, FakeCliFs} from "@tsed/cli-testing";
 
 describe(
   "Init OIDC Provider project",
+  {
+    timeout: 15000
+  },
   () => {
     beforeEach(() =>
       CliPlatformTest.bootstrap({
@@ -127,8 +130,5 @@ describe(
 
       expect(configContent).toContain('path: "/oidc"');
     });
-  },
-  {
-    timeout: 15000
   }
 );

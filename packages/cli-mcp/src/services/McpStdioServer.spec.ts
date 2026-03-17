@@ -6,10 +6,12 @@ import {mcpStdioServer} from "./McpStdioServer.js";
 
 // Mock the SDK
 vi.mock("@modelcontextprotocol/sdk/server/stdio.js", () => ({
-  StdioServerTransport: vi.fn().mockImplementation(() => ({
-    connect: vi.fn(),
-    close: vi.fn()
-  }))
+  StdioServerTransport: vi.fn(function StdioServerTransport() {
+    return {
+      connect: vi.fn(),
+      close: vi.fn()
+    };
+  })
 }));
 
 describe("mcpStdioServer", () => {

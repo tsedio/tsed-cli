@@ -112,11 +112,11 @@ describe("cli-plugin-vitest", () => {
 
     const result = FakeCliFs.files.get("project-name/src/controllers/users/UserController.integration.spec.ts");
     expect(result).toMatchInlineSnapshot(`
-      "import { PlatformTest } from "@tsed/platform-http/testing";
+      "import { expect, describe, it, afterAll, beforeAll } from "vitest";
+      import { PlatformTest } from "@tsed/platform-http/testing";
       import SuperTest from "supertest";
-      import { afterAll, beforeAll, describe, expect, it } from "vitest";
-      import { Server } from "../../../../server.js";
       import { UserController } from "./UserController.js";
+      import { Server } from "../../../../server.js";
 
       describe("UserController", () => {
         beforeAll(PlatformTest.bootstrap(Server, {
