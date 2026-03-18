@@ -7,6 +7,7 @@ describe("InitCmd", () => {
   beforeEach(() => CliPlatformTest.create());
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.unstubAllGlobals();
     return CliPlatformTest.reset();
   });
 
@@ -60,5 +61,39 @@ describe("InitCmd", () => {
     });
 
     expect(spy).not.toHaveBeenCalled();
+  });
+
+  it("should only expose bun runtime and package manager when running with bunx", async () => {
+    vi.stubGlobal("Bun", {});
+
+    const command = await CliPlatformTest.invoke<InitCmd>(InitCmd);
+    vi.spyOn((command as any).runtimes, "list").mockReturnValue(["node", "bun"]);
+    vi.spyOn((command as any).packageManagers, "list").mockReturnValue(["yarn", "npm", "pnpm", "bun"]);
+
+    const prompts = await command.$prompt({
+      root: "."
+    });
+
+    const runtime = prompts.find((prompt: any) => prompt.name === "runtime");
+    const packageManager = prompts.find((prompt: any) => prompt.name === "packageManager");
+
+    expect(runtime.choices.map((choice: any) => choice.value)).toEqual(["bun"]);
+    expect(packageManager.choices.map((choice: any) => choice.value)).toEqual(["bun"]);
+  });
+
+  it("should force bun runtime and package manager in bunx mode", async () => {
+    vi.stubGlobal("Bun", {});
+
+    const command = await CliPlatformTest.invoke<InitCmd>(InitCmd);
+    const mapped = command.$mapContext({
+      root: ".",
+      projectName: "project",
+      features: [],
+      runtime: "node",
+      packageManager: "npm"
+    });
+
+    expect(mapped.runtime).toEqual("bun");
+    expect(mapped.packageManager).toEqual("bun");
   });
 });

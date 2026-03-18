@@ -33,6 +33,7 @@ import {RuntimesModule} from "../../runtimes/RuntimesModule.js";
 import {BunRuntime} from "../../runtimes/supports/BunRuntime.js";
 import {NodeRuntime} from "../../runtimes/supports/NodeRuntime.js";
 import {CliProjectService} from "../../services/CliProjectService.js";
+import type {TemplateRenderOptions} from "../../services/CliTemplatesService.js";
 import {anonymizePaths} from "../../services/mappers/anonymizePaths.js";
 import {FeaturesMap, FeatureType} from "./config/FeaturesPrompt.js";
 import {InitSchema} from "./config/InitSchema.js";
@@ -61,15 +62,23 @@ export class InitCmd implements CommandProvider {
       initialOptions = {
         ...initialOptions,
         ...(await this.cliLoadFile.loadFile(file, InitSchema()))
-      };
+      } as InitOptions;
     }
 
     if (initialOptions.skipPrompt) {
       return [];
     }
 
-    const packageManagers = this.packageManagers.list();
-    const runtimes = this.runtimes.list();
+    const forceBunRuntime = this.isLaunchedWithBunx();
+    const packageManagers = forceBunRuntime ? this.filterOnlyBun(this.packageManagers.list()) : this.packageManagers.list();
+    const runtimes = forceBunRuntime ? this.filterOnlyBun(this.runtimes.list()) : this.runtimes.list();
+    const promptOptions = forceBunRuntime
+      ? {
+          ...initialOptions,
+          runtime: "bun",
+          packageManager: "bun"
+        }
+      : initialOptions;
 
     return [
       {
@@ -82,17 +91,18 @@ export class InitCmd implements CommandProvider {
           return kebabCase(input);
         }
       },
-      ...getFeaturesPrompt(
-        runtimes,
-        packageManagers.filter((o: string) => o !== "bun"),
-        initialOptions
-      )
+      ...getFeaturesPrompt(runtimes, forceBunRuntime ? packageManagers : packageManagers.filter((o: string) => o !== "bun"), promptOptions)
     ];
   }
 
   $mapContext(ctx: any): InitOptions {
     this.resolveRootDir(ctx);
     ctx = mapToContext(ctx);
+
+    if (this.isLaunchedWithBunx()) {
+      ctx.runtime = "bun";
+      ctx.packageManager = "bun";
+    }
 
     this.runtimes.init(ctx);
 
@@ -109,6 +119,16 @@ export class InitCmd implements CommandProvider {
       cliVersion: ctx.cliVersion || this.cliPackageJson.version,
       srcDir: constant("project.srcDir", "src")
     } as InitOptions;
+  }
+
+  protected isLaunchedWithBunx() {
+    return Boolean((globalThis as any).Bun);
+  }
+
+  protected filterOnlyBun(values: string[]) {
+    const filtered = values.filter((value) => value === "bun");
+
+    return filtered.length ? filtered : values;
   }
 
   preExec(ctx: InitOptions) {
@@ -387,7 +407,7 @@ export class InitCmd implements CommandProvider {
           ...ctx,
           from: TEMPLATE_DIR,
           name: name || id
-        });
+        } as TemplateRenderOptions);
         continue;
       }
 
