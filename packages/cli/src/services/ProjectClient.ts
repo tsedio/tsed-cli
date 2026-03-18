@@ -72,9 +72,16 @@ export class ProjectClient extends Project {
     path = join(this.rootDir, path);
 
     if (path.endsWith(".ts") || path.endsWith(".mts")) {
-      const source = this.createSourceFile(path, sourceFileText, options);
+      await this.fs.mkdir(dirname(path));
 
-      await source.save();
+      if (typeof sourceFileText === "string") {
+        await this.fs.writeFile(path, sourceFileText, {encoding: "utf-8"});
+
+        return this.getSourceFile(path) || this.addSourceFileAtPath(path);
+      }
+
+      const source = this.createSourceFile(path, sourceFileText, options);
+      await this.fs.writeFile(path, source.getFullText(), {encoding: "utf-8"});
 
       return source;
     }
