@@ -33,6 +33,7 @@ import {PlatformsModule} from "../../platforms/PlatformsModule.js";
 import {RuntimesModule} from "../../runtimes/RuntimesModule.js";
 import {BunRuntime} from "../../runtimes/supports/BunRuntime.js";
 import {NodeRuntime} from "../../runtimes/supports/NodeRuntime.js";
+import {ViteRuntime} from "../../runtimes/supports/ViteRuntime.js";
 import {CliProjectService} from "../../services/CliProjectService.js";
 import type {TemplateRenderOptions} from "../../services/CliTemplatesService.js";
 import {anonymizePaths} from "../../services/mappers/anonymizePaths.js";
@@ -188,7 +189,8 @@ export class InitCmd implements CommandProvider {
       ...ctx,
       node: runtime instanceof NodeRuntime,
       bun: runtime instanceof BunRuntime,
-      compiled: runtime instanceof NodeRuntime && runtime.isCompiled()
+      vite: runtime instanceof ViteRuntime,
+      compiled: runtime.isCompiled()
     };
 
     return [

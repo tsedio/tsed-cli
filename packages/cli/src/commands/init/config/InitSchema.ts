@@ -279,6 +279,10 @@ export const InitSchema = () => {
         .choices(
           [
             {
+              label: "Node.js + Vite",
+              value: "vite"
+            },
+            {
               label: "Node.js + SWC",
               value: "node"
             },
