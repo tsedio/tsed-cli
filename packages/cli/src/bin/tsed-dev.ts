@@ -4,9 +4,9 @@ import path from "node:path";
 import process from "node:process";
 import {fileURLToPath, pathToFileURL} from "node:url";
 
-const runnerFile = fileURLToPath(import.meta.url);
-const configFile = path.resolve(path.dirname(runnerFile), "../../vite.config.ts");
 const RUN_MODE = "TSED_VITE_RUN_MODE";
+const runnerFile = fileURLToPath(import.meta.url);
+const configFile = path.resolve(process.cwd(), "vite.config.ts");
 
 function parseWatchValue(args: string[]) {
   if (args.includes("--no-watch")) {
