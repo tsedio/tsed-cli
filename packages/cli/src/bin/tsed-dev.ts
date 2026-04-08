@@ -88,7 +88,9 @@ async function runViteController(rawArgs: string[]) {
   let queued = false;
 
   const startChild = () => {
-    childProcess = spawn(process.execPath, [runnerFile, ...rawArgs], {
+    const cliEntry = process.argv[1];
+
+    childProcess = spawn(process.execPath, cliEntry ? [cliEntry, "dev", ...rawArgs] : [runnerFile, ...rawArgs], {
       env: {
         ...process.env,
         [RUN_MODE]: "app"
