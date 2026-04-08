@@ -1,11 +1,11 @@
 import {spawn} from "node:child_process";
 import {existsSync} from "node:fs";
+import path from "node:path";
 import process from "node:process";
-import {fileURLToPath} from "node:url";
+import {fileURLToPath, pathToFileURL} from "node:url";
 
-import {normalizePath} from "@tsed/cli-core";
-import {logger} from "@tsed/di";
-
+const runnerFile = fileURLToPath(import.meta.url);
+const configFile = path.resolve(path.dirname(runnerFile), "../../vite.config.ts");
 const RUN_MODE = "TSED_VITE_RUN_MODE";
 
 function parseWatchValue(args: string[]) {
@@ -43,8 +43,6 @@ function parseWatchValue(args: string[]) {
 }
 
 function assertViteProject() {
-  const configFile = normalizePath("vite.config.ts");
-
   if (!existsSync(configFile)) {
     throw new Error("tsed dev is only available for ViteRuntime projects. Missing vite.config.ts in the current directory.");
   }
@@ -55,13 +53,9 @@ async function createViteDevServer() {
   const {createServer} = await import("vite");
 
   return createServer({
-    configFile: normalizePath("vite.config.ts"),
-    optimizeDeps: {
-      noDiscovery: true,
-      include: []
-    },
+    configFile,
     server: {
-      middlewareMode: true,
+      middlewareMode: "ssr" as any,
       hmr: false,
       ws: false
     }
@@ -84,7 +78,6 @@ async function runViteApp() {
 }
 
 async function runViteController(rawArgs: string[]) {
-  const runnerFile = fileURLToPath(import.meta.url);
   const watch = parseWatchValue(rawArgs);
   const vite = await createViteDevServer();
   let childProcess: ReturnType<typeof spawn> | undefined;
@@ -98,9 +91,7 @@ async function runViteController(rawArgs: string[]) {
     }
 
     childStarted = true;
-    const cliEntry = process.argv[1];
-
-    childProcess = spawn(process.execPath, cliEntry ? [cliEntry, "dev", ...rawArgs] : [runnerFile, ...rawArgs], {
+    childProcess = spawn(process.execPath, [runnerFile, ...rawArgs], {
       env: {
         ...process.env,
         [RUN_MODE]: "app"
@@ -137,8 +128,7 @@ async function runViteController(rawArgs: string[]) {
 
     restarting = true;
     const suffix = file ? `: ${file}` : "";
-
-    logger().info(`[tsed-dev] restart (${reason})${suffix}`);
+    vite.config.logger.info(`[tsed-dev] restart (${reason})${suffix}`);
 
     await stopChild();
     startChild();
@@ -162,7 +152,16 @@ async function runViteController(rawArgs: string[]) {
     });
   }
 
-  startChild();
+  vite.watcher.once("ready", () => {
+    startChild();
+  });
+
+  // Fallback: some environments can miss/lag watcher "ready" when Vite re-optimizes deps.
+  setTimeout(() => {
+    if (!childStarted) {
+      startChild();
+    }
+  }, 2500);
 
   const shutdown = async () => {
     await stopChild();
@@ -183,4 +182,11 @@ export async function dev(rawArgs: string[] = process.argv.slice(2)) {
   }
 
   await runViteController(rawArgs);
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  dev().catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
 }
