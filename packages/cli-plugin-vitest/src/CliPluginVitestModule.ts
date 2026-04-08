@@ -23,9 +23,7 @@ export class CliPluginVitestModule implements AlterInitSubTasks, AlterPackageJso
       });
       packageJson.addDevDependencies({
         vitest: "latest",
-        "unplugin-swc": "latest",
-        "@vitest/coverage-v8": "latest",
-        "@swc/core": "latest"
+        "@vitest/coverage-v8": "latest"
       });
     }
 
