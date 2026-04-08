@@ -63,4 +63,4 @@ export class RuntimesModule {
   }
 }
 
-injectable(RuntimesModule).imports([ViteRuntime, NodeRuntime, BabelRuntime, WebpackRuntime, , BunRuntime]);
+injectable(RuntimesModule).imports([ViteRuntime, NodeRuntime, BabelRuntime, WebpackRuntime, BunRuntime]);
