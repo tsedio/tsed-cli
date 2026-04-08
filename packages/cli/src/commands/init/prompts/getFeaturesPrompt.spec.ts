@@ -1,6 +1,25 @@
 import {getFeaturesPrompt} from "./getFeaturesPrompt.js";
 
 describe("getFeaturesPrompt", () => {
+  it("should throw with an explicit message when a choice is unknown", () => {
+    expect(() => getFeaturesPrompt(["unknown-runtime"], ["yarn"], {})).toThrowError(
+      'Unknown init prompt choice "unknown-runtime" for prompt "runtime"'
+    );
+  });
+
+  it("should map vite runtime choice without throwing", () => {
+    const prompt = getFeaturesPrompt(["node", "vite"], ["yarn", "npm"], {});
+    const runtimePrompt = prompt.find((item: any) => item.name === "runtime");
+
+    expect(runtimePrompt).toBeDefined();
+    expect((runtimePrompt as any).choices).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({value: "node", name: "Node.js + SWC"}),
+        expect.objectContaining({value: "vite", name: "Node.js + Vite"})
+      ])
+    );
+  });
+
   it("should add a provider info", () => {
     const prompt = getFeaturesPrompt(["node", "bun"], ["yarn", "npm", "pnpm", "bun"], {});
 

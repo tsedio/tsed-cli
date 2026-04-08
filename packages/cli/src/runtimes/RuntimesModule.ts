@@ -5,6 +5,7 @@ import {BabelRuntime} from "./supports/BabelRuntime.js";
 import {BaseRuntime} from "./supports/BaseRuntime.js";
 import {BunRuntime} from "./supports/BunRuntime.js";
 import {NodeRuntime} from "./supports/NodeRuntime.js";
+import {ViteRuntime} from "./supports/ViteRuntime.js";
 import {WebpackRuntime} from "./supports/WebpackRuntime.js";
 
 export interface RuntimeInitOptions {
@@ -62,4 +63,4 @@ export class RuntimesModule {
   }
 }
 
-injectable(RuntimesModule).imports([NodeRuntime, BabelRuntime, WebpackRuntime, BunRuntime]);
+injectable(RuntimesModule).imports([ViteRuntime, NodeRuntime, BabelRuntime, WebpackRuntime, , BunRuntime]);

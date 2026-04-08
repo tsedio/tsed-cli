@@ -10,8 +10,8 @@ export const ProjectPreferenceSchema = s
     packageManager: s.string().enum(PackageManager).description("Used project manager to install dependencies"),
     runtime: s
       .string()
-      .enum("node", "babel", "swc", "webpack", "bun")
-      .description("The javascript runtime used to start application (node, node + webpack, node + swc, node + babel, bun)"),
+      .enum("vite", "node", "babel", "swc", "webpack", "bun")
+      .description("The javascript runtime used to start application (node, node + webpack, node + swc, node + babel, bun, vite)"),
     platform: s.string().enum(PlatformType).description("Node.js framework used to run server (Express, Koa, Fastify)")
   })
   .optional()

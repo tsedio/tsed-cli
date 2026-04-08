@@ -5,10 +5,16 @@ import {FeaturesMap, FeaturesPrompt} from "../config/FeaturesPrompt.js";
 
 function mapChoices(item: any, options: Partial<InitOptions>) {
   return item.choices.map((choice: string) => {
-    const {checked} = FeaturesMap[choice];
+    const config = FeaturesMap[choice];
+
+    if (!config) {
+      throw new Error(`Unknown init prompt choice "${choice}" for prompt "${item.name}"`);
+    }
+
+    const {checked} = config;
 
     return cleanObject({
-      ...FeaturesMap[choice],
+      ...config,
       value: choice,
       checked: isFunction(checked) ? checked(options) : checked
     });
