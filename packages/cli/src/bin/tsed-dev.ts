@@ -56,6 +56,10 @@ async function createViteDevServer() {
 
   return createServer({
     configFile: normalizePath("vite.config.ts"),
+    optimizeDeps: {
+      noDiscovery: true,
+      include: []
+    },
     server: {
       middlewareMode: true,
       hmr: false,
@@ -84,10 +88,16 @@ async function runViteController(rawArgs: string[]) {
   const watch = parseWatchValue(rawArgs);
   const vite = await createViteDevServer();
   let childProcess: ReturnType<typeof spawn> | undefined;
+  let childStarted = false;
   let restarting = false;
   let queued = false;
 
   const startChild = () => {
+    if (childStarted) {
+      return;
+    }
+
+    childStarted = true;
     const cliEntry = process.argv[1];
 
     childProcess = spawn(process.execPath, cliEntry ? [cliEntry, "dev", ...rawArgs] : [runnerFile, ...rawArgs], {
@@ -97,10 +107,17 @@ async function runViteController(rawArgs: string[]) {
       },
       stdio: "inherit"
     });
+
+    childProcess.once("exit", () => {
+      childStarted = false;
+      childProcess = undefined;
+    });
   };
 
   const stopChild = async () => {
-    if (!childProcess || childProcess.killed) {
+    if (!childProcess || childProcess.killed || childProcess.exitCode !== null || childProcess.signalCode !== null) {
+      childStarted = false;
+      childProcess = undefined;
       return;
     }
 
@@ -108,6 +125,8 @@ async function runViteController(rawArgs: string[]) {
       childProcess!.once("exit", resolve);
       childProcess!.kill("SIGTERM");
     });
+
+    childStarted = false;
   };
 
   const restartChild = async (reason: string, file = "") => {
@@ -143,9 +162,7 @@ async function runViteController(rawArgs: string[]) {
     });
   }
 
-  vite.watcher.once("ready", () => {
-    startChild();
-  });
+  startChild();
 
   const shutdown = async () => {
     await stopChild();
