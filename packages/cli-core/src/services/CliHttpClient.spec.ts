@@ -9,10 +9,12 @@ describe("CliHttpClient", () => {
   beforeEach(() => DITest.create());
   afterEach(() => DITest.reset());
 
-  describe("$afterInit()", () => {
-    it("should call $afterInit method", async () => {
+  describe("proxy settings", () => {
+    it("should resolve proxy settings once for non-local HTTP endpoints", async () => {
       const cliProxyAgent = {
-        resolveProxySettings: vi.fn()
+        resolveProxySettings: vi.fn().mockResolvedValue(undefined),
+        hasProxy: vi.fn().mockReturnValue(false),
+        get: vi.fn().mockReturnValue(null)
       };
       const client = await DITest.invoke<CliHttpClient>(CliHttpClient, [
         {
@@ -21,9 +23,15 @@ describe("CliHttpClient", () => {
         }
       ]);
 
-      await client.$afterInit();
+      (axios as any).mockResolvedValue({
+        headers: {},
+        data: {}
+      });
 
-      expect(cliProxyAgent.resolveProxySettings).toHaveBeenCalled();
+      await client.get("https://api.tsed.dev/test");
+      await client.get("https://api.tsed.dev/test");
+
+      expect(cliProxyAgent.resolveProxySettings).toHaveBeenCalledTimes(1);
     });
   });
   describe("head()", () => {

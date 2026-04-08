@@ -16,18 +16,14 @@ export class CliProxyAgent {
   readonly proxySettings = refValue<CliProxySettings>("proxy", {} as never);
   protected projectPackageJson = inject(ProjectPackageJson);
   protected cliExeca = inject(CliExeca);
-  protected tunnel: typeof import("tunnel");
-
-  async $onInit() {
-    this.tunnel = await import("tunnel");
-  }
 
   hasProxy() {
     return !!this.proxySettings.value.url;
   }
 
-  get(type: "http" | "https") {
+  async get(type: "http" | "https") {
     if (this.hasProxy()) {
+      const tunnel = await import("tunnel");
       const {strictSsl = true} = this.proxySettings.value;
       const url = new URL(this.proxySettings.value.url);
       const protocol = url.protocol.replace(":", "");
@@ -43,8 +39,8 @@ export class CliProxyAgent {
 
       const method = camelCase([type, "over", protocol].join(" "));
 
-      if ((this.tunnel as any)[method]) {
-        return (this.tunnel as any)[method](options);
+      if ((tunnel as any)[method]) {
+        return (tunnel as any)[method](options);
       }
     }
 
