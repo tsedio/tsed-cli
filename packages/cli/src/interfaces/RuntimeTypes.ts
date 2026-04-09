@@ -1,4 +1,4 @@
-export type RuntimeTypes = "node" | "babel" | "swc" | "webpack" | "bun" | "vite";
+export type RuntimeTypes = "node" | "babel" | "swc" | "webpack" | "bun" | "vite" | "bun-vite";
 
 declare global {
   namespace TsED {

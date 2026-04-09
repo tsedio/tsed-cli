@@ -20,6 +20,19 @@ describe("getFeaturesPrompt", () => {
     );
   });
 
+  it("should map bun-vite runtime choice without throwing", () => {
+    const prompt = getFeaturesPrompt(["bun", "bun-vite"], ["bun"], {});
+    const runtimePrompt = prompt.find((item: any) => item.name === "runtime");
+
+    expect(runtimePrompt).toBeDefined();
+    expect((runtimePrompt as any).choices).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({value: "bun", name: "Bun.js"}),
+        expect.objectContaining({value: "bun-vite", name: "Bun + Vite"})
+      ])
+    );
+  });
+
   it("should add a provider info", () => {
     const prompt = getFeaturesPrompt(["node", "bun"], ["yarn", "npm", "pnpm", "bun"], {});
 

@@ -283,6 +283,10 @@ export const InitSchema = () => {
               value: "vite"
             },
             {
+              label: "Bun.js + Vite",
+              value: "bun-vite"
+            },
+            {
               label: "Node.js + SWC",
               value: "node"
             },
@@ -295,7 +299,7 @@ export const InitSchema = () => {
               value: "webpack"
             },
             {
-              label: "Bun",
+              label: "Bun.js",
               value: "bun"
             }
           ].filter((o) => availableRuntimes.includes(o.value))
@@ -306,7 +310,7 @@ export const InitSchema = () => {
       packageManager: s
         .enums<PackageManager[]>(availablePackageManagers as any[])
         .prompt("Choose the package manager:")
-        .when((answers) => answers.runtime !== "bun")
+        .when((answers) => !["bun", "bun-vite"].includes(answers.runtime))
         .default(PackageManager.NPM)
         .choices(
           [
