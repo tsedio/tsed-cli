@@ -67,7 +67,7 @@ describe("InitCmd", () => {
     vi.stubGlobal("Bun", {});
 
     const command = await CliPlatformTest.invoke<InitCmd>(InitCmd);
-    vi.spyOn((command as any).runtimes, "list").mockReturnValue(["node", "bun"]);
+    vi.spyOn((command as any).runtimes, "list").mockReturnValue(["node", "bun", "bun-vite"]);
     vi.spyOn((command as any).packageManagers, "list").mockReturnValue(["yarn", "npm", "pnpm", "bun"]);
 
     const prompts = await command.$prompt({
@@ -79,7 +79,7 @@ describe("InitCmd", () => {
 
     expect(runtime).toBeDefined();
     expect(packageManager).toBeDefined();
-    expect((runtime as any).choices.map((choice: any) => choice.value)).toEqual(["bun"]);
+    expect((runtime as any).choices.map((choice: any) => choice.value)).toEqual(["bun", "bun-vite"]);
     expect((packageManager as any).choices.map((choice: any) => choice.value)).toEqual(["bun"]);
   });
 
@@ -96,6 +96,22 @@ describe("InitCmd", () => {
     });
 
     expect(mapped.runtime).toEqual("bun");
+    expect(mapped.packageManager).toEqual("bun");
+  });
+
+  it("should preserve bun-vite runtime in bunx mode", async () => {
+    vi.stubGlobal("Bun", {});
+
+    const command = await CliPlatformTest.invoke<InitCmd>(InitCmd);
+    const mapped = command.$mapContext({
+      root: ".",
+      projectName: "project",
+      features: [],
+      runtime: "bun-vite",
+      packageManager: "npm"
+    });
+
+    expect(mapped.runtime).toEqual("bun-vite");
     expect(mapped.packageManager).toEqual("bun");
   });
 

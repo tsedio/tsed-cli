@@ -4,6 +4,7 @@ import {inject, injectable, injectMany} from "@tsed/di";
 import {BabelRuntime} from "./supports/BabelRuntime.js";
 import {BaseRuntime} from "./supports/BaseRuntime.js";
 import {BunRuntime} from "./supports/BunRuntime.js";
+import {BunViteRuntime} from "./supports/BunViteRuntime.js";
 import {NodeRuntime} from "./supports/NodeRuntime.js";
 import {ViteRuntime} from "./supports/ViteRuntime.js";
 import {WebpackRuntime} from "./supports/WebpackRuntime.js";
@@ -24,7 +25,7 @@ export class RuntimesModule {
   init(ctx: RuntimeInitOptions) {
     ctx.runtime = ctx.runtime || this.get().name;
 
-    if (ctx.runtime === "bun") {
+    if (ctx.runtime.startsWith("bun")) {
       ctx.packageManager = "bun";
     }
   }
@@ -63,4 +64,4 @@ export class RuntimesModule {
   }
 }
 
-injectable(RuntimesModule).imports([ViteRuntime, NodeRuntime, BabelRuntime, WebpackRuntime, BunRuntime]);
+injectable(RuntimesModule).imports([ViteRuntime, BunViteRuntime, NodeRuntime, BabelRuntime, WebpackRuntime, BunRuntime]);

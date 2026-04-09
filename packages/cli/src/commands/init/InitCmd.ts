@@ -32,6 +32,7 @@ import type {InitOptions} from "../../interfaces/InitCmdOptions.js";
 import {PlatformsModule} from "../../platforms/PlatformsModule.js";
 import {RuntimesModule} from "../../runtimes/RuntimesModule.js";
 import {BunRuntime} from "../../runtimes/supports/BunRuntime.js";
+import {BunViteRuntime} from "../../runtimes/supports/BunViteRuntime.js";
 import {NodeRuntime} from "../../runtimes/supports/NodeRuntime.js";
 import {ViteRuntime} from "../../runtimes/supports/ViteRuntime.js";
 import {CliProjectService} from "../../services/CliProjectService.js";
@@ -102,7 +103,7 @@ export class InitCmd implements CommandProvider {
     ctx = mapToContext(ctx);
 
     if (this.isLaunchedWithBunx()) {
-      ctx.runtime = "bun";
+      ctx.runtime ??= "bun";
       ctx.packageManager = "bun";
     }
 
@@ -128,7 +129,7 @@ export class InitCmd implements CommandProvider {
   }
 
   protected filterOnlyBun(values: string[]) {
-    const filtered = values.filter((value) => value === "bun");
+    const filtered = values.filter((value) => ["bun", "bun-vite"].includes(value));
 
     return filtered.length ? filtered : values;
   }
@@ -188,8 +189,9 @@ export class InitCmd implements CommandProvider {
     ctx = {
       ...ctx,
       node: runtime instanceof NodeRuntime,
-      bun: runtime instanceof BunRuntime,
-      vite: runtime instanceof ViteRuntime,
+      bun: runtime instanceof BunRuntime || runtime instanceof BunViteRuntime,
+      bunVite: runtime instanceof BunViteRuntime,
+      vite: runtime instanceof ViteRuntime || runtime instanceof BunViteRuntime,
       compiled: runtime.isCompiled()
     };
 
