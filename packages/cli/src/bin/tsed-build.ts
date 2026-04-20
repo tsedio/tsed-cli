@@ -23,10 +23,15 @@ function runNode(cmd: string, args: string[]) {
   });
 }
 
-type ResolveFn = (specifier: string) => string | Promise<string>;
+function toPath(value: string) {
+  if (value.startsWith("file://")) {
+    return fileURLToPath(value);
+  }
 
-export async function resolveViteBin(resolve: ResolveFn = import.meta.resolve) {
-  const packageJsonPath = fileURLToPath(await resolve("vite/package.json"));
+  return value;
+}
+
+export async function resolveViteBinFromPackageJsonPath(packageJsonPath: string) {
   const packageJson = JSON.parse(await readFile(packageJsonPath, "utf-8")) as {
     bin?: string | Record<string, string>;
   };
@@ -37,6 +42,12 @@ export async function resolveViteBin(resolve: ResolveFn = import.meta.resolve) {
   }
 
   return path.resolve(path.dirname(packageJsonPath), binRelativePath);
+}
+
+export async function resolveViteBin() {
+  const packageJsonPath = toPath(await import.meta.resolve("vite/package.json"));
+
+  return resolveViteBinFromPackageJsonPath(packageJsonPath);
 }
 
 export async function build(rawArgs: string[] = process.argv.slice(2)) {
