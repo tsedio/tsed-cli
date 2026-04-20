@@ -808,7 +808,7 @@ __metadata:
   resolution: "@tsed/docs-new@workspace:."
   dependencies:
     "@clack/prompts": "npm:^1.0.0-alpha.10"
-    "@tsed/vitepress-theme": "npm:^1.7.0"
+    "@tsed/vitepress-theme": "npm:1.7.2"
     "@vueuse/core": "npm:10.11.0"
     autoprefixer: "npm:^10.4.19"
     axios: "npm:1.12.0"
@@ -825,14 +825,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@tsed/vitepress-theme@npm:^1.7.0":
-  version: 1.7.0
-  resolution: "@tsed/vitepress-theme@npm:1.7.0"
+"@tsed/vitepress-theme@npm:1.7.2":
+  version: 1.7.2
+  resolution: "@tsed/vitepress-theme@npm:1.7.2"
   dependencies:
     "@vueuse/core": "npm:10.11.0"
     axios: "npm:1.7.7"
     lucide-vue-next: "npm:0.577.0"
-  checksum: 10/e8bf5e42fb04f32dcf6cac977dc58faa85a19fec4bd3a5de9a1c37b7e5c81829c9a89200d3c892d30cc008a6ac5c0718478941fd59713aea34cf591651b05327
+  checksum: 10/65bfb8b508e065767b436f3883ebd97ceb4b68b737cb9628e26f4da2189fc7807a5be260daab67947f1c936393fdaa1ee700ae3054ae4bbc373159cf769b3ecd
   languageName: node
   linkType: hard
 
