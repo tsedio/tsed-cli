@@ -113,6 +113,7 @@ export default defineConfig({
   themeConfig: {
     logo: "https://tsed.dev/tsed.svg",
     siteTitle: "CLI",
+    siteUrl: "https://cli.tsed.dev",
     apiUrl: "/api.json",
     team,
     apiRedirectUrl: "",
