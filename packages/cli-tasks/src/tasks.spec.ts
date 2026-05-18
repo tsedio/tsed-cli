@@ -238,6 +238,26 @@ describe("tasks()", () => {
     expect(getLevelLabel(diLogger.level)).toBe("WARN");
     diLogger.level = originalLevel;
   });
+
+  it("ignores undefined tasks from a list", async () => {
+    const activeSpy = vi.fn();
+    const ctx = DITest.createDIContext();
+
+    await runInContext(ctx, () =>
+      tasks(
+        [
+          undefined as unknown as Task,
+          {
+            title: "Active task",
+            task: activeSpy
+          }
+        ],
+        {}
+      )
+    );
+
+    expect(activeSpy).toHaveBeenCalledTimes(1);
+  });
 });
 
 describe("concat()", () => {
