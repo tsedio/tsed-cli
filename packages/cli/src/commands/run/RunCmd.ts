@@ -1,6 +1,5 @@
 import {CliFs, command, type CommandProvider, inject, normalizePath, ProjectPackageJson} from "@tsed/cli-core";
 import {taskLogger} from "@tsed/cli-tasks";
-import {logger} from "@tsed/di";
 
 import {CliRunScript} from "../../services/CliRunScript.js";
 

@@ -362,6 +362,14 @@ export const FeaturesMap: Record<string, Feature> = {
     name: "Lint on commit"
   },
 
+  vite: {
+    name: "Node.js + Vite",
+    checked: false
+  },
+  "bun-vite": {
+    name: "Bun + Vite",
+    checked: false
+  },
   node: {
     name: "Node.js + SWC",
     checked: true
@@ -378,17 +386,17 @@ export const FeaturesMap: Record<string, Feature> = {
     name: "Bun.js",
     checked: false
   },
-  yarn: {
-    name: "Yarn",
-    checked: true
+  npm: {
+    name: "NPM",
+    checked: false
   },
   yarn_berry: {
     name: "Yarn Berry",
     checked: false
   },
-  npm: {
-    name: "NPM",
-    checked: false
+  yarn: {
+    name: "Yarn",
+    checked: true
   },
   pnpm: {
     name: "PNPM",
@@ -549,7 +557,7 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
       message: "Choose the package manager:",
       type: "list",
       name: "packageManager",
-      when: hasValue("runtime", ["node", "babel", "swc", "webpack"]),
+      when: hasValue("runtime", ["vite", "node", "babel", "swc", "webpack"]),
       choices: availablePackageManagers
     }
   ] satisfies PromptQuestion[];

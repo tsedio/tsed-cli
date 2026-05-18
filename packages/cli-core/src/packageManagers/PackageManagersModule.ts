@@ -163,4 +163,4 @@ export class PackageManagersModule {
   }
 }
 
-injectable(PackageManagersModule).imports([YarnBerryManager, YarnManager, NpmManager, PNpmManager, BunManager]);
+injectable(PackageManagersModule).imports([NpmManager, YarnBerryManager, PNpmManager, BunManager, YarnManager]);

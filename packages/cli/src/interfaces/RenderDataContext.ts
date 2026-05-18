@@ -50,6 +50,8 @@ export interface RenderDataContext extends CommandData, TsED.RenderDataContext {
   configPostgres?: boolean;
   barrels?: string;
   bun?: boolean;
+  bunVite?: boolean;
+  vite?: boolean;
   node?: boolean;
   compiled?: boolean;
   testing?: boolean;

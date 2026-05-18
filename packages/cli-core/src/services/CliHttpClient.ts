@@ -15,55 +15,54 @@ export interface CliHttpClientOptions extends AxiosRequestConfig, Record<string,
 
 export class CliHttpClient extends CliHttpLogClient {
   protected cliProxyAgent = inject(CliProxyAgent);
-
   protected host: string;
+  private proxySettingsInitialized = false;
+  private proxySettingsPromise?: Promise<void>;
 
   static getParamsSerializer(params: any) {
     return stringify(cleanObject(params));
   }
 
-  async $afterInit() {
-    await this.cliProxyAgent.resolveProxySettings();
-  }
-
   async head<T = Record<string, any>>(endpoint: string, options: CliHttpClientOptions = {}): Promise<T> {
-    const {headers} = await axios(this.getRequestParameters("HEAD", endpoint, options));
+    const {headers} = await axios(await this.getRequestParameters("HEAD", endpoint, options));
 
     return headers as any;
   }
 
   async get<T = unknown>(endpoint: string, options: CliHttpClientOptions = {}): Promise<T> {
-    const result = await this.send(this.getRequestParameters("GET", endpoint, options));
+    const result = await this.send(await this.getRequestParameters("GET", endpoint, options));
 
     return this.mapResponse(result, options);
   }
 
   async post<T = unknown>(endpoint: string, options: CliHttpClientOptions = {}): Promise<T> {
-    const result = await this.send(this.getRequestParameters("POST", endpoint, options));
+    const result = await this.send(await this.getRequestParameters("POST", endpoint, options));
 
     return this.mapResponse(result, options);
   }
 
   async put<T = any>(endpoint: string, options: CliHttpClientOptions = {}): Promise<T> {
-    const result = await this.send(this.getRequestParameters("PUT", endpoint, options));
+    const result = await this.send(await this.getRequestParameters("PUT", endpoint, options));
 
     return this.mapResponse(result, options);
   }
 
   async patch<T = any>(endpoint: string, options: CliHttpClientOptions = {}): Promise<T> {
-    const result = await this.send(this.getRequestParameters("PATCH", endpoint, options));
+    const result = await this.send(await this.getRequestParameters("PATCH", endpoint, options));
 
     return this.mapResponse(result, options);
   }
 
   async delete<T = any>(endpoint: string, options: CliHttpClientOptions = {}): Promise<T> {
-    const result = await this.send(this.getRequestParameters("DELETE", endpoint, options));
+    const result = await this.send(await this.getRequestParameters("DELETE", endpoint, options));
 
     return this.mapResponse(result, options);
   }
 
-  protected getRequestParameters(method: Method, endpoint: string, options: CliHttpClientOptions) {
+  protected async getRequestParameters(method: Method, endpoint: string, options: CliHttpClientOptions) {
     const url = (this.host || "") + endpoint.replace(this.host || "", "");
+
+    await this.resolveProxySettingsOnce();
 
     options = {
       method,
@@ -78,23 +77,42 @@ export class CliHttpClient extends CliHttpLogClient {
       }
     };
 
-    this.configureProxy(url, options);
+    await this.configureProxy(url, options);
 
     return options;
   }
 
-  protected configureProxy(endpoint: string, options: CliHttpClientOptions) {
+  private async resolveProxySettingsOnce() {
+    if (this.proxySettingsInitialized) {
+      return;
+    }
+
+    if (!this.proxySettingsPromise) {
+      this.proxySettingsPromise = this.cliProxyAgent
+        .resolveProxySettings()
+        .catch(() => {
+          return;
+        })
+        .finally(() => {
+          this.proxySettingsInitialized = true;
+        });
+    }
+
+    await this.proxySettingsPromise;
+  }
+
+  protected async configureProxy(endpoint: string, options: CliHttpClientOptions) {
     const url = new URL(endpoint);
 
     if (this.cliProxyAgent.hasProxy()) {
       const protocol = url.protocol.replace(":", "");
       switch (protocol) {
         case "https":
-          options.httpsAgent = this.cliProxyAgent.get(protocol);
+          options.httpsAgent = await this.cliProxyAgent.get(protocol);
           options.proxy = false;
           break;
         case "http":
-          options.httpAgent = this.cliProxyAgent.get(protocol);
+          options.httpAgent = await this.cliProxyAgent.get(protocol);
           options.proxy = false;
           break;
         default:

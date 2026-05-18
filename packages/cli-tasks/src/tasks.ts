@@ -113,7 +113,11 @@ export async function concat(...args: (Task[] | void | undefined)[]) {
   return tasks;
 }
 
-function isEnabled(item: Task<any>) {
+function isEnabled(item: Task<any> | undefined | null) {
+  if (!item) {
+    return false;
+  }
+
   return isBoolean(item.enabled) ? item.enabled : true;
 }
 
