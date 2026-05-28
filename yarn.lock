@@ -2791,6 +2791,7 @@ __metadata:
     express: "npm:5.1.0"
     fs-extra: "npm:^11.2.0"
     globby: "npm:^14.0.2"
+    json-schema-to-zod: "npm:^2.8.1"
     read-pkg-up: "npm:^11.0.0"
     rxjs: "npm:^7.8.1"
     semver: "npm:^7.6.3"
@@ -10119,6 +10120,15 @@ __metadata:
   bin:
     json-schema-to-zod: dist/cjs/cli.js
   checksum: 10/08eb873512762a74ce073458f47e865931b1a7f7cff0a31fbce9b9d43841a85d05a718ca491909845179900cda981b1fe198ba46063fcd554185214ce29083c9
+  languageName: node
+  linkType: hard
+
+"json-schema-to-zod@npm:^2.8.1":
+  version: 2.8.1
+  resolution: "json-schema-to-zod@npm:2.8.1"
+  bin:
+    json-schema-to-zod: dist/cjs/cli.js
+  checksum: 10/9104332bf005b57133c257ca6a686b0ef52b1323f6aff9e55686bd33c6eeb1a6da8fbc6db564367ef35ebd1959a342025c03c880d14582f7d3e961891e6fa8e2
   languageName: node
   linkType: hard
 
