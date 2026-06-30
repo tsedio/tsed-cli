@@ -2823,9 +2823,6 @@ __metadata:
       optional: false
     "@tsed/schema":
       optional: false
-  bin:
-    tsed: lib/esm/bin/tsed.js
-    tsed-mcp: lib/esm/bin/tsed-mcp.js
   languageName: unknown
   linkType: soft
 
