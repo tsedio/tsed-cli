@@ -21,14 +21,7 @@
     "test": "vitest run",
     "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
-  "bin": {
-    "tsed": "lib/esm/bin/tsed.js",
-    "tsed-mcp": "lib/esm/bin/tsed-mcp.js"
-  },
   "files": [
-    "lib/esm/bin/tsed.js",
-    "lib/esm/bin/tsed-mcp.js",
-    "lib/esm/bin",
     "lib",
     "templates"
   ],
