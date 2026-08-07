@@ -1,9 +1,8 @@
-import {readFile} from "node:fs/promises";
 import {isAbsolute, normalize, resolve} from "node:path";
 
-import {CliFs, PackageManager, ProjectPackageJson} from "@tsed/cli-core";
-import {defineTool} from "@tsed/cli-mcp";
+import {CliFs, ProjectPackageJson} from "@tsed/cli-core";
 import {inject} from "@tsed/di";
+import {defineTool} from "@tsed/platform-mcp/cli";
 import {s} from "@tsed/schema";
 
 import {ProjectPreferenceSchema} from "../schema/ProjectPreferencesSchema.js";

@@ -109,6 +109,8 @@ export class CliCore {
       const cliService = inject(CliService);
       constant("plugins") && (await loadPlugins());
 
+      injector().settings.set("lazyProviders", true);
+
       await injector().load();
       await $asyncEmit("$afterInit");
 

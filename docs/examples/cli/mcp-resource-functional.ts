@@ -1,4 +1,4 @@
-import {defineResource} from "@tsed/cli-mcp";
+import {defineResource} from "@tsed/platform-mcp/cli";
 
 export const changelogResource = defineResource({
   name: "changelog",

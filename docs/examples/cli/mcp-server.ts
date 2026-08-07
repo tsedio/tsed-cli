@@ -1,6 +1,5 @@
 import {command} from "@tsed/cli-core";
-import {definePrompt, defineResource, defineTool, MCP_SERVER} from "@tsed/cli-mcp";
-import {inject} from "@tsed/di";
+import {definePrompt, defineResource, defineTool, mcpServerConnect} from "@tsed/platform-mcp/cli";
 import {s} from "@tsed/schema";
 
 interface HelloToolInput {
@@ -81,7 +80,6 @@ export const ServeMcpCommand = command({
     })
     .description("MCP command options"),
   handler(options) {
-    const server = inject(MCP_SERVER);
-    return server.connect(options.http ? "streamable-http" : "stdio");
+    return mcpServerConnect(options.http ? "streamable-http" : "stdio");
   }
 }).token();

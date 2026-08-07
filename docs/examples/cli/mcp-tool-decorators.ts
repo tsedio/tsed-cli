@@ -1,5 +1,5 @@
-import {Tool} from "@tsed/cli-mcp";
 import {Injectable} from "@tsed/di";
+import {Tool} from "@tsed/platform-mcp/cli";
 import {Description, Property, Returns} from "@tsed/schema";
 
 class HelloInput {

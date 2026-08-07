@@ -1,6 +1,5 @@
 import {command} from "@tsed/cli-core";
-import {MCP_SERVER} from "@tsed/cli-mcp";
-import {inject} from "@tsed/di";
+import {mcpServerConnect} from "@tsed/platform-mcp/cli";
 import {s} from "@tsed/schema";
 
 const McpSchema = s.object({
@@ -11,7 +10,9 @@ export const McpCommand = command({
   name: "mcp",
   description: "Run a MCP server",
   inputSchema: McpSchema,
-  handler(data) {
-    return inject(MCP_SERVER).connect(data.http ? "streamable-http" : "stdio");
+  async handler(data) {
+    const mode = data.http ? "streamable-http" : "stdio";
+
+    await mcpServerConnect(mode);
   }
 }).token();

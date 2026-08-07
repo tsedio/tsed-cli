@@ -1,4 +1,4 @@
-import {definePrompt} from "@tsed/cli-mcp";
+import {definePrompt} from "@tsed/platform-mcp/cli";
 import {s} from "@tsed/schema";
 
 interface PlanArgs {

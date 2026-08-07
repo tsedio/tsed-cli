@@ -1,12 +1,8 @@
-import {readFile} from "node:fs/promises";
 import {isAbsolute, normalize, resolve} from "node:path";
 
 import {ProjectPackageJson} from "@tsed/cli-core";
-import {defineResource, defineTool} from "@tsed/cli-mcp";
-import {constant, inject} from "@tsed/di";
-import {array, object, s, string} from "@tsed/schema";
-
-import {ProjectPreferenceSchema} from "../schema/ProjectPreferencesSchema.js";
+import {inject} from "@tsed/di";
+import {defineResource} from "@tsed/platform-mcp/cli";
 
 function resolveCwd(cwd?: string) {
   const projectPackage = inject(ProjectPackageJson);
