@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "@clack/prompts": ">=1.0.0-alpha.10",
-    "@tsed/core": ">=8.21.0",
-    "@tsed/di": ">=8.21.0",
-    "@tsed/hooks": ">=8.21.0",
+    "@tsed/core": ">=8.38.0-beta.2",
+    "@tsed/di": ">=8.38.0-beta.2",
+    "@tsed/hooks": ">=8.38.0-beta.2",
     "@tsed/logger": ">=8.0.3"
   },
   "devDependencies": {

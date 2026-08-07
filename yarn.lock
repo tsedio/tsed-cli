@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 8
+  version: 10
   cacheKey: 10
 
 "@apidevtools/json-schema-ref-parser@npm:14.0.1":
@@ -2772,14 +2772,14 @@ __metadata:
     "@swc/core": "npm:1.7.26"
     "@swc/helpers": "npm:^0.5.13"
     "@tsed/cli-core": "workspace:*"
-    "@tsed/core": "npm:>=8.21.0"
-    "@tsed/di": "npm:>=8.21.0"
-    "@tsed/hooks": "npm:>=8.21.0"
+    "@tsed/core": "npm:>=8.38.0-beta.2"
+    "@tsed/di": "npm:>=8.38.0-beta.2"
+    "@tsed/hooks": "npm:>=8.38.0-beta.2"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/logger-std": "npm:>=8.0.3"
-    "@tsed/normalize-path": "npm:>=8.21.0"
-    "@tsed/openspec": "npm:>=8.21.0"
-    "@tsed/schema": "npm:>=8.21.0"
+    "@tsed/normalize-path": "npm:>=8.38.0-beta.2"
+    "@tsed/openspec": "npm:>=8.38.0-beta.2"
+    "@tsed/schema": "npm:>=8.38.0-beta.2"
     "@tsed/typescript": "workspace:*"
     "@types/change-case": "npm:^2.3.1"
     "@types/consolidate": "npm:0.14.4"
@@ -2970,9 +2970,9 @@ __metadata:
   resolution: "@tsed/cli-prompts@workspace:packages/cli-prompts"
   dependencies:
     "@clack/prompts": "npm:>=1.0.0-alpha.10"
-    "@tsed/core": "npm:>=8.21.0"
-    "@tsed/di": "npm:>=8.21.0"
-    "@tsed/hooks": "npm:>=8.21.0"
+    "@tsed/core": "npm:>=8.38.0-beta.2"
+    "@tsed/di": "npm:>=8.38.0-beta.2"
+    "@tsed/hooks": "npm:>=8.38.0-beta.2"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
     typescript: "npm:5.6.2"
@@ -2989,15 +2989,15 @@ __metadata:
     "@commitlint/config-conventional": "npm:19.5.0"
     "@swc/core": "npm:1.7.26"
     "@swc/helpers": "npm:0.5.13"
-    "@tsed/core": "npm:>=8.21.0"
-    "@tsed/di": "npm:>=8.21.0"
+    "@tsed/core": "npm:>=8.38.0-beta.2"
+    "@tsed/di": "npm:>=8.38.0-beta.2"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/logger-std": "npm:>=8.0.3"
     "@tsed/markdown-it-symbols": "npm:3.20.8"
     "@tsed/monorepo-utils": "npm:3.0.0"
-    "@tsed/normalize-path": "npm:>=8.21.0"
-    "@tsed/openspec": "npm:>=8.21.0"
-    "@tsed/schema": "npm:>=8.21.0"
+    "@tsed/normalize-path": "npm:>=8.38.0-beta.2"
+    "@tsed/openspec": "npm:>=8.38.0-beta.2"
+    "@tsed/schema": "npm:>=8.38.0-beta.2"
     "@tsed/ts-doc": "npm:5.0.4"
     "@types/node": "npm:22.7.4"
     "@typescript-eslint/eslint-plugin": "npm:8.56.1"
@@ -3048,9 +3048,9 @@ __metadata:
   resolution: "@tsed/cli-tasks@workspace:packages/cli-tasks"
   dependencies:
     "@clack/prompts": "npm:>=1.0.0-alpha.10"
-    "@tsed/core": "npm:>=8.21.0"
-    "@tsed/di": "npm:>=8.21.0"
-    "@tsed/hooks": "npm:>=8.21.0"
+    "@tsed/core": "npm:>=8.38.0-beta.2"
+    "@tsed/di": "npm:>=8.38.0-beta.2"
+    "@tsed/hooks": "npm:>=8.38.0-beta.2"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
     typescript: "npm:5.6.2"
@@ -3084,14 +3084,14 @@ __metadata:
     "@tsed/cli-mcp": "workspace:*"
     "@tsed/cli-prompts": "workspace:*"
     "@tsed/cli-tasks": "workspace:*"
-    "@tsed/core": "npm:>=8.21.0"
-    "@tsed/di": "npm:>=8.21.0"
-    "@tsed/hooks": "npm:>=8.21.0"
+    "@tsed/core": "npm:>=8.38.0-beta.2"
+    "@tsed/di": "npm:>=8.38.0-beta.2"
+    "@tsed/hooks": "npm:>=8.38.0-beta.2"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/logger-std": "npm:>=8.0.3"
-    "@tsed/normalize-path": "npm:>=8.21.0"
-    "@tsed/openspec": "npm:>=8.21.0"
-    "@tsed/schema": "npm:>=8.21.0"
+    "@tsed/normalize-path": "npm:>=8.38.0-beta.2"
+    "@tsed/openspec": "npm:>=8.38.0-beta.2"
+    "@tsed/schema": "npm:>=8.38.0-beta.2"
     "@tsed/typescript": "workspace:*"
     "@types/change-case": "npm:^2.3.1"
     "@types/consolidate": "npm:0.14.4"
@@ -3139,22 +3139,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@tsed/core@npm:>=8.21.0":
-  version: 8.21.0
-  resolution: "@tsed/core@npm:8.21.0"
+"@tsed/core@npm:>=8.38.0-beta.2":
+  version: 8.38.0-beta.2
+  resolution: "@tsed/core@npm:8.38.0-beta.2"
   dependencies:
     reflect-metadata: "npm:^0.2.2"
-    tslib: "npm:2.7.0"
-  checksum: 10/0f99142c739644bb469934ec4693e1dc613582b9074106a0755c7bf18cf087a4f5724f9f599cbf9a9af4ae84d2d5c891ce4a6ca23a67c223b04f7a84933345c8
+    tslib: "npm:>=2.7.0"
+  checksum: 10/2ad84a50cefcd620552ebef116476c447b08dd639b0888eaa4e38bbe4d47719ad5c45b43cd22f793f8c87b68778f4b22bf90394ed129f9b1dc53e46c3cb2a94f
   languageName: node
   linkType: hard
 
-"@tsed/di@npm:>=8.21.0":
-  version: 8.21.0
-  resolution: "@tsed/di@npm:8.21.0"
+"@tsed/di@npm:>=8.38.0-beta.2":
+  version: 8.38.0-beta.2
+  resolution: "@tsed/di@npm:8.38.0-beta.2"
   dependencies:
-    tslib: "npm:2.7.0"
-    uuid: "npm:^10.0.0"
+    tslib: "npm:>=2.7.0"
+    uuid: "npm:^14.0.0"
   peerDependencies:
     "@tsed/core": ">=8.0.0"
     "@tsed/hooks": ">=8.0.0"
@@ -3166,17 +3166,17 @@ __metadata:
       optional: false
     "@tsed/logger":
       optional: false
-  checksum: 10/ee8836d53548a985cfe472f395c1117e6c96117c6343cb51ee0f50d245893f8bade860754f78b24dcd09ff875372c7b328ca95456e1f94c11e935874b29b1cbe
+  checksum: 10/072898a146bf23061e98d251ecf2e55fb334b0bef6d9e862a56c02d5dbf47fc09177f5a37924094b87bf379307cca49e68bc8e680a684d001b3b9b05c6b1f828
   languageName: node
   linkType: hard
 
-"@tsed/hooks@npm:>=8.21.0":
-  version: 8.21.0
-  resolution: "@tsed/hooks@npm:8.21.0"
+"@tsed/hooks@npm:>=8.38.0-beta.2":
+  version: 8.38.0-beta.2
+  resolution: "@tsed/hooks@npm:8.38.0-beta.2"
   dependencies:
     reflect-metadata: "npm:^0.2.2"
-    tslib: "npm:2.7.0"
-  checksum: 10/58002cfeaf23ecedfdf90f527058a1f25c4346973ea2e201a3e5d9842fe9c4d093fc584cd52be562752b957f1a7b01848c8a0bbdea4de94f8e9e8e353e60ee77
+    tslib: "npm:>=2.7.0"
+  checksum: 10/8b00055ec3af21f1492acb0b1adb37da175ae55954d7e34a3bf28820747c2044621178e54672cfc24320e3e519b893b0a89c4ae868f1086fe635522b89a893bc
   languageName: node
   linkType: hard
 
@@ -3273,33 +3273,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsed/normalize-path@npm:>=8.21.0":
-  version: 8.21.0
-  resolution: "@tsed/normalize-path@npm:8.21.0"
+"@tsed/normalize-path@npm:>=8.38.0-beta.2":
+  version: 8.38.0-beta.2
+  resolution: "@tsed/normalize-path@npm:8.38.0-beta.2"
   dependencies:
     normalize-path: "npm:3.0.0"
-    tslib: "npm:2.7.0"
-  checksum: 10/90ec188403435ebdd587d7baace397697b703ca61720d1fa14077a5cb6590bd889a63ade3ea2ebb0e11db8c016d525a16ed9a946bef15b6a62b0984fd229551f
+    tslib: "npm:>=2.7.0"
+  checksum: 10/1b4a1b93ec08a886835f0489292d3db0ac5b83d28660deeba2be30b8f6f187731b1fe9567c277fb9d467810ae72fe96ad6335f7652a991ed7c687eb5db1c49d0
   languageName: node
   linkType: hard
 
-"@tsed/openspec@npm:8.21.0, @tsed/openspec@npm:>=8.21.0":
-  version: 8.21.0
-  resolution: "@tsed/openspec@npm:8.21.0"
-  checksum: 10/f4dd87f9007721fb8e71d7efada10197378f9e22d1bfcf6acb6442c40181d708820ab313a807c23c7e6a0ddedfb85f3084954ee64918ce00f7b6dce45dce1f43
+"@tsed/openspec@npm:8.38.0-beta.2, @tsed/openspec@npm:>=8.38.0-beta.2":
+  version: 8.38.0-beta.2
+  resolution: "@tsed/openspec@npm:8.38.0-beta.2"
+  checksum: 10/b6a94179263b5258ef4f22724e1a9d6b2b44858c45e9ebe4675edb6170ed9c78a6cf2abe7bc4689d23f335ca2a1f0cf6a682337e3ea08f9bfc2df6205a2211d3
   languageName: node
   linkType: hard
 
-"@tsed/schema@npm:>=8.21.0":
-  version: 8.21.0
-  resolution: "@tsed/schema@npm:8.21.0"
+"@tsed/schema@npm:>=8.38.0-beta.2":
+  version: 8.38.0-beta.2
+  resolution: "@tsed/schema@npm:8.38.0-beta.2"
   dependencies:
-    "@tsed/openspec": "npm:8.21.0"
+    "@tsed/openspec": "npm:8.38.0-beta.2"
     change-case: "npm:^5.4.4"
     json-schema: "npm:0.4.0"
-    picomatch: "npm:4.0.2"
+    picomatch: "npm:4.0.4"
     statuses: "npm:^2.0.1"
-    tslib: "npm:2.7.0"
+    tslib: "npm:>=2.7.0"
   peerDependencies:
     "@tsed/core": ">=8.0.0"
     "@tsed/hooks": ">=8.0.0"
@@ -3309,7 +3309,7 @@ __metadata:
       optional: false
     "@tsed/openspec":
       optional: false
-  checksum: 10/c9db92abe934059259798e233147166488dd9255e15a0a1876453821c2441996d039bb5719c33e8837166f0873b6e9b3c354b86b375924b28a187bb398a4b301
+  checksum: 10/44ab19fc5396d438caf48040031eee2c4bf29fd1627ccfedec01b1c2ce97e1d71edfc644e3709d00db3b6fce7c4bed409e705c4b23ae432a903d187fae116277
   languageName: node
   linkType: hard
 
@@ -13600,10 +13600,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picomatch@npm:4.0.2, picomatch@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "picomatch@npm:4.0.2"
-  checksum: 10/ce617b8da36797d09c0baacb96ca8a44460452c89362d7cb8f70ca46b4158ba8bc3606912de7c818eb4a939f7f9015cef3c766ec8a0c6bfc725fdc078e39c717
+"picomatch@npm:4.0.4":
+  version: 4.0.4
+  resolution: "picomatch@npm:4.0.4"
+  checksum: 10/f6ef80a3590827ce20378ae110ac78209cc4f74d39236370f1780f957b7ee41c12acde0e4651b90f39983506fd2f5e449994716f516db2e9752924aff8de93ce
   languageName: node
   linkType: hard
 
@@ -13611,6 +13611,13 @@ __metadata:
   version: 2.3.1
   resolution: "picomatch@npm:2.3.1"
   checksum: 10/60c2595003b05e4535394d1da94850f5372c9427ca4413b71210f437f7b2ca091dbd611c45e8b37d10036fa8eade25c1b8951654f9d3973bfa66a2ff4d3b08bc
+  languageName: node
+  linkType: hard
+
+"picomatch@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "picomatch@npm:4.0.2"
+  checksum: 10/ce617b8da36797d09c0baacb96ca8a44460452c89362d7cb8f70ca46b4158ba8bc3606912de7c818eb4a939f7f9015cef3c766ec8a0c6bfc725fdc078e39c717
   languageName: node
   linkType: hard
 
@@ -14422,14 +14429,14 @@ __metadata:
 
 "resolve@patch:resolve@npm%3A^1.10.0#optional!builtin<compat/resolve>":
   version: 1.22.1
-  resolution: "resolve@patch:resolve@npm%3A1.22.1#optional!builtin<compat/resolve>::version=1.22.1&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A1.22.1#optional!builtin<compat/resolve>::version=1.22.1&hash=9bd1a5"
   dependencies:
     is-core-module: "npm:^2.9.0"
     path-parse: "npm:^1.0.7"
     supports-preserve-symlinks-flag: "npm:^1.0.0"
   bin:
     resolve: bin/resolve
-  checksum: 10/551dd500765cce767c583747f5f21ceb51d437f539b01aee96d6ec39eb2c68a8ff5d646b083d690fe428a81329856bc1bbdb094379b8df4b3f10e7e1f6aa3839
+  checksum: 10/af66203356dffd62ccf2089ccb2fa62b12de11574ec63145e88af5641087fe413da9f402c3eafa8faf246c61618b3c117b4aac34029e908f503594eea641e8d0
   languageName: node
   linkType: hard
 
@@ -16335,7 +16342,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.8.1, tslib@npm:^2.8.0, tslib@npm:^2.8.1":
+"tslib@npm:2.8.1, tslib@npm:>=2.7.0, tslib@npm:^2.8.0, tslib@npm:^2.8.1":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10/3e2e043d5c2316461cb54e5c7fe02c30ef6dccb3384717ca22ae5c6b5bc95232a6241df19c622d9c73b809bea33b187f6dbc73030963e29950c2141bc32a79f7
