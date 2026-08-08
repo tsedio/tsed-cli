@@ -1,9 +1,9 @@
 import {dirname, join} from "node:path";
 import {fileURLToPath} from "node:url";
 
-import readPkgUp from "read-pkg-up";
+import {readPackageUpSync} from "read-package-up";
 
-const {path, packageJson} = readPkgUp.sync({
+const {path, packageJson} = readPackageUpSync({
   cwd: join(fileURLToPath(import.meta.url), "..", "..")
 });
 export const PKG = packageJson;

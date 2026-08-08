@@ -2,7 +2,7 @@ import {dirname, join} from "node:path";
 
 import {getValue, setValue} from "@tsed/core";
 import {configuration, constant, inject, injectable} from "@tsed/di";
-import {readPackageUpSync} from "read-pkg-up";
+import {readPackageUpSync} from "read-package-up";
 
 import type {PackageJson} from "../interfaces/PackageJson.js";
 import type {ProjectPreferences} from "../interfaces/ProjectPreferences.js";

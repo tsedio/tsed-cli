@@ -49,7 +49,7 @@
     "fs-extra": "^11.2.0",
     "globby": "^14.0.2",
     "js-yaml": "^4.1.0",
-    "read-pkg-up": "^11.0.0",
+    "read-package-up": "^12.0.0",
     "registry-auth-token": "^5.1.0",
     "registry-url": "^6.0.1",
     "rxjs": "^7.8.1",
