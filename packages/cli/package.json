@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.25.1",
-    "@npmcli/run-script": "9.0.0",
+    "@npmcli/run-script": "11.0.0",
     "@swc-node/register": "^1.11.1",
     "@swc/core": "^1.15.7",
     "@swc/helpers": "^0.5.17",
