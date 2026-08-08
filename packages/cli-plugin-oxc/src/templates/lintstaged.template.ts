@@ -10,7 +10,7 @@ export default defineTemplate({
   ext: "json",
   render(_: string, data: RenderDataContext) {
     const config: Record<string, string[]> = {
-      "**/*.{ts,js}": ["oxlint --fix"]
+      "**/*.{ts,js}": ["oxlint --fix --no-error-on-unmatched-pattern"]
     };
 
     if (data.oxfmt) {

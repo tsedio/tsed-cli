@@ -14,11 +14,14 @@ export default defineTemplate({
     const tsconfig = {
       extends: "./tsconfig.base.json",
       compilerOptions: {
-        baseUrl: ".",
         rootDir: ".",
-        noEmit: true,
+        composite: true,
+        noEmit: false,
+        declaration: true,
+        emitDeclarationOnly: true,
+        outDir: "./dist/types-spec",
         paths: {
-          "@/*": ["src/*"]
+          "@/*": ["./src/*"]
         },
         types: ["node"]
       },

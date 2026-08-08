@@ -71,7 +71,7 @@ describe("OXC: Init cmd", () => {
     expect(FakeCliFs.files.get("project-name/.oxfmtrc.json")).toContain('"$schema": "./node_modules/oxfmt/configuration_schema.json"');
     expect(FakeCliFs.files.get("project-name/.lintstagedrc.json")).toBe(`{
   "**/*.{ts,js}": [
-    "oxlint --fix"
+    "oxlint --fix --no-error-on-unmatched-pattern"
   ],
   "*": [
     "oxfmt --no-error-on-unmatched-pattern"

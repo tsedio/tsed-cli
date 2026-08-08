@@ -6,7 +6,6 @@
     "emitDecoratorMetadata": true,
     "moduleResolution": "NodeNext",
     "isolatedModules": false,
-    "suppressImplicitAnyIndexErrors": false,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noUnusedLocals": false,
