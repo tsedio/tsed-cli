@@ -2928,7 +2928,7 @@ __metadata:
     js-yaml: "npm:^4.1.0"
     read-package-up: "npm:^12.0.0"
     registry-auth-token: "npm:^5.1.0"
-    registry-url: "npm:^6.0.1"
+    registry-url: "npm:^7.2.0"
     rxjs: "npm:^7.8.1"
     semver: "npm:^7.6.3"
     split: "npm:^1.0.1"
@@ -3262,7 +3262,7 @@ __metadata:
     oxlint: "npm:latest"
     read-package-up: "npm:^12.0.0"
     registry-auth-token: "npm:^5.1.0"
-    registry-url: "npm:^6.0.1"
+    registry-url: "npm:^7.2.0"
     rxjs: "npm:^7.8.1"
     semantic-release: "npm:24.1.2"
     semantic-release-slack-bot: "npm:4.0.2"
@@ -9057,6 +9057,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ini@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "ini@npm:5.0.0"
+  checksum: 10/76e5567b46504b2b12650878ba6277204500a6ead3fe69eef419ee570456b364b39c040ee545846053f6d8a15797a82fc6d9efe06e392b9b6093935f4a2f2c30
+  languageName: node
+  linkType: hard
+
 "ini@npm:^7.0.0":
   version: 7.0.0
   resolution: "ini@npm:7.0.0"
@@ -14326,6 +14333,16 @@ __metadata:
   dependencies:
     rc: "npm:1.2.8"
   checksum: 10/33712aa1b489aab7aba2191c1cdadfdd71f5bf166d4792d81744a6be332c160bd7d9273af8269d8a01284b9562f14a5b31b7abcf7ad9306c44887ecff51c89ab
+  languageName: node
+  linkType: hard
+
+"registry-url@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "registry-url@npm:7.2.0"
+  dependencies:
+    find-up-simple: "npm:^1.0.1"
+    ini: "npm:^5.0.0"
+  checksum: 10/4a08d0d9eaf0a77ce2010e9ec296ca2ec187cf6102ac3d4d92f01e69904118a866847313c7d0b7ee3a1779be03f070df9378415c01003c682bcd2f6705f490ee
   languageName: node
   linkType: hard
 
