@@ -53,9 +53,9 @@ describe("CliExeca", () => {
       const events: string[] = [];
       await new Promise<void>((resolve, reject) => {
         service.run("node", ["--version"], {cwd: "/repo"}).subscribe({
-          next: (value) => events.push(value),
+          next: (value: string) => events.push(value),
           complete: () => resolve(),
-          error: (err) => reject(err)
+          error: (err: unknown) => reject(err)
         });
       });
 
