@@ -1,4 +1,4 @@
-import {type CliCommandHooks, ProjectClient, type RenderDataContext} from "@tsed/cli";
+import {type CliCommandHooks, type RenderDataContext} from "@tsed/cli";
 import {type CliDatabases, CliService, inject, ProjectPackageJson, type Task} from "@tsed/cli-core";
 import {injectable} from "@tsed/di";
 import {pascalCase} from "change-case";

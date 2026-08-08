@@ -7,8 +7,8 @@ const root = join(import.meta.dirname, "../../..");
 
 function deps(pkg, pkgs, set = new Set()) {
   Object.keys({
-    ...(pkg.dependencies || {}),
-    ...(pkg.devDependencies || {})
+    ...pkg.dependencies,
+    ...pkg.devDependencies
   }).forEach((name) => {
     if (pkgs.has(name)) {
       deps(pkgs.get(name).pkg, pkgs, set);

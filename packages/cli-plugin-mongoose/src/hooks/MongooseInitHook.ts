@@ -15,7 +15,7 @@ export class MongooseInitHook implements CliCommandHooks {
       await project.dockerCompose.addDatabaseService("mongodb", "mongodb");
 
       await this.cliMongoose.createMongooseConnection(project, "MONGOOSE_DEFAULT");
-      this.cliMongoose.updateConfigFile(project, data);
+      this.cliMongoose.updateConfigFile(project);
     }
 
     return project;

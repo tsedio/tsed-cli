@@ -19,7 +19,9 @@ export async function tasks<T = any>(list: Task[], ctx: T & TasksOptions, parent
   const muteLogger = renderMode === "default" && !parent;
   const items = list.filter((task) => isEnabled(task));
 
-  parent && (parent.max = items.length);
+  if (parent) {
+    parent.max = items.length;
+  }
 
   const level = context().logger.level;
 

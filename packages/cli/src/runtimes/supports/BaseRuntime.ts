@@ -29,7 +29,7 @@ export abstract class BaseRuntime {
       this.cliExeca.runSync(this.cmd, ["--version"]);
 
       return true;
-    } catch (er) {
+    } catch {
       return false;
     }
   }

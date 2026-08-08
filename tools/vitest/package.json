@@ -1,17 +1,17 @@
 {
   "name": "@tsed/vitest",
-  "type": "module",
   "version": "7.0.0-alpha.6",
   "private": true,
+  "type": "module",
   "exports": {
     ".": "./index.js",
     "./plugins/*": "./plugins/*",
     "./presets": "./presets/index.js"
   },
-  "devDependencies": {
-    "vitest": "4.1.0"
-  },
   "scripts": {
     "generate": "node index.js"
+  },
+  "devDependencies": {
+    "vitest": "4.1.0"
   }
 }

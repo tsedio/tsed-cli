@@ -141,13 +141,13 @@ export class InitCmd implements CommandProvider {
   preExec(ctx: InitOptions) {
     this.fs.ensureDirSync(this.packageJson.cwd);
 
-    ctx.projectName && (this.packageJson.name = ctx.projectName);
-    ctx.packageManager && this.packageJson.setPreference("packageManager", ctx.packageManager);
-    ctx.runtime && this.packageJson.setPreference("runtime", ctx.runtime);
-    ctx.architecture && this.packageJson.setPreference("architecture", ctx.architecture);
-    ctx.convention && this.packageJson.setPreference("convention", ctx.convention);
-    ctx.platform && this.packageJson.setPreference("platform", ctx.platform);
-    ctx.GH_TOKEN && this.packageJson.setGhToken(ctx.GH_TOKEN);
+    void (ctx.projectName && (this.packageJson.name = ctx.projectName));
+    void (ctx.packageManager && this.packageJson.setPreference("packageManager", ctx.packageManager));
+    void (ctx.runtime && this.packageJson.setPreference("runtime", ctx.runtime));
+    void (ctx.architecture && this.packageJson.setPreference("architecture", ctx.architecture));
+    void (ctx.convention && this.packageJson.setPreference("convention", ctx.convention));
+    void (ctx.platform && this.packageJson.setPreference("platform", ctx.platform));
+    void (ctx.GH_TOKEN && this.packageJson.setGhToken(ctx.GH_TOKEN));
 
     return tasks(
       [

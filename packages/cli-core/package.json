@@ -1,10 +1,20 @@
 {
   "name": "@tsed/cli-core",
-  "description": "Build your CLI with TypeScript and Decorators",
   "version": "7.0.0-alpha.6",
+  "description": "Build your CLI with TypeScript and Decorators",
+  "keywords": [
+    "api",
+    "clack",
+    "cli",
+    "commander.js",
+    "decorators",
+    "framework",
+    "prompts",
+    "typescript"
+  ],
+  "source": "./src/index.ts",
   "type": "module",
   "main": "./lib/esm/index.js",
-  "source": "./src/index.ts",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {
@@ -21,16 +31,6 @@
     "test": "vitest run",
     "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
-  "keywords": [
-    "cli",
-    "typescript",
-    "framework",
-    "api",
-    "decorators",
-    "commander.js",
-    "prompts",
-    "clack"
-  ],
   "dependencies": {
     "@ts-morph/common": "0.28.0",
     "@tsed/cli-prompts": "workspace:*",

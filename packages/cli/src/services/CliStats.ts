@@ -76,9 +76,9 @@ export class CliStats extends CliHttpClient {
     }
   }
 
-  protected onSuccess(options: Record<string, unknown>): void {}
+  protected onSuccess(): void {}
 
-  protected onError(error: any, options: any) {}
+  protected onError() {}
 }
 
 injectable(CliStats);

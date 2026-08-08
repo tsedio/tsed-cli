@@ -22,7 +22,7 @@ function mapChoices(item: any, options: Partial<InitOptions>) {
 }
 
 export function getFeaturesPrompt(runtimes: string[], availablePackageManagers: string[], options: Partial<InitOptions>) {
-  return FeaturesPrompt(runtimes, availablePackageManagers).map((item: any, index) => {
+  return FeaturesPrompt(runtimes, availablePackageManagers).map((item: any) => {
     return cleanObject({
       ...item,
       choices: item.choices?.length ? mapChoices(item, options) : undefined

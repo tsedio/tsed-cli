@@ -9,13 +9,11 @@ async function getManagerFixture() {
     runSync: vi.fn(),
     run: vi.fn()
   };
-  const [manager] = await Promise.all([
-    CliPlatformTest.invoke<PNpmManager>(PNpmManager, [
-      {
-        token: CliExeca,
-        use: cliExeca
-      }
-    ])
+  const manager = await CliPlatformTest.invoke<PNpmManager>(PNpmManager, [
+    {
+      token: CliExeca,
+      use: cliExeca
+    }
   ]);
   return {cliExeca, manager};
 }

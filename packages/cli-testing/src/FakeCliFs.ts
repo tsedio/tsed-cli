@@ -45,7 +45,7 @@ export class FakeCliFs implements FileSystemHost {
           return fs.readFileSync(file, encoding) as any as string;
         }
       }
-    } catch (er) {}
+    } catch {}
 
     const standardizedFilePath = this.normalizePath(file);
     const parentDir = this.normalizePath(dirname(standardizedFilePath));
@@ -84,7 +84,7 @@ export class FakeCliFs implements FileSystemHost {
     this.writeFileSync(file, JSON.stringify(data, null, 2), options || ({encoding: "utf8"} as any));
   }
 
-  writeFileSync(path: PathLike | number, data: any, options?: WriteFileOptions): void {
+  writeFileSync(path: PathLike | number, data: any, _?: WriteFileOptions): void {
     path = this.normalizePath(path) as string;
 
     this.mkdirSync(dirname(path));
@@ -103,7 +103,7 @@ export class FakeCliFs implements FileSystemHost {
     return Promise.resolve();
   }
 
-  ensureDirSync(path: string, options?: EnsureDirOptions | number) {
+  ensureDirSync(path: string, _?: EnsureDirOptions | number) {
     this.mkdirSync(this.normalizePath(path));
     FakeCliFs.files.set(this.normalizePath(path), path);
   }

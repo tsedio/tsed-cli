@@ -1,10 +1,10 @@
 {
   "name": "@tsed/cli-prompts",
-  "description": "Prompt runner and schema shared across Ts.ED CLIs",
   "version": "7.0.0-alpha.6",
+  "description": "Prompt runner and schema shared across Ts.ED CLIs",
+  "source": "./src/index.ts",
   "type": "module",
   "main": "./lib/esm/index.js",
-  "source": "./src/index.ts",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {

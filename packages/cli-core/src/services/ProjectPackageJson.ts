@@ -110,8 +110,8 @@ export class ProjectPackageJson {
 
   get allDependencies(): {[key: string]: string} {
     return {
-      ...(this.dependencies || {}),
-      ...(this.devDependencies || {})
+      ...this.dependencies,
+      ...this.devDependencies
     };
   }
 
@@ -256,8 +256,8 @@ export class ProjectPackageJson {
       ...this.raw,
       type: "module",
       scripts: {
-        ...(originalPkg.scripts || {}),
-        ...(this.raw.scripts || {})
+        ...originalPkg.scripts,
+        ...this.raw.scripts
       },
       dependencies: sortKeys({
         ...originalPkg.dependencies,

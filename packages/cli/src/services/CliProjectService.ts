@@ -73,7 +73,7 @@ export class CliProjectService {
 
     transformServerFile(project, data);
     transformConfigFile(project, data);
-    transformBinFile(project, data);
+    transformBinFile(project);
 
     if (data.platform) {
       const platform = inject(PlatformsModule).get(data.platform);
@@ -103,7 +103,7 @@ export class CliProjectService {
         overwrite: true
       });
 
-      sourceFile && this.templates.get(templateId)?.hooks?.$afterCreateSourceFile?.(sourceFile, data);
+      void (sourceFile && this.templates.get(templateId)?.hooks?.$afterCreateSourceFile?.(sourceFile, data));
 
       return {
         ...obj,

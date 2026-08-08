@@ -1,4 +1,4 @@
-import {type CliDefaultOptions, Command, command, type CommandData, type CommandProvider, inject} from "@tsed/cli-core";
+import {command, type CommandData, type CommandProvider, inject} from "@tsed/cli-core";
 
 import {CliPrisma} from "../services/CliPrisma.js";
 

@@ -73,7 +73,7 @@ export class CliHttpClient extends CliHttpLogClient {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        ...(options.headers || {})
+        ...options.headers
       }
     };
 

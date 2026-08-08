@@ -3,7 +3,6 @@ import {join, resolve} from "node:path";
 import {CliFs, command, type CommandProvider, constant, inject, Type} from "@tsed/cli-core";
 import {isString} from "@tsed/core";
 import {InjectorService} from "@tsed/di";
-import {$alter} from "@tsed/hooks";
 import {camelCase} from "change-case";
 import {generateApi, type Hooks, type RawRouteInfo, type RouteNameInfo} from "swagger-typescript-api";
 
@@ -46,7 +45,7 @@ export class GenerateHttpClientCmd implements CommandProvider {
       if (platform) {
         return platform.PlatformExpress;
       }
-    } catch (er) {}
+    } catch {}
 
     try {
       // @ts-ignore
@@ -55,7 +54,7 @@ export class GenerateHttpClientCmd implements CommandProvider {
       if (platform) {
         return platform.PlatformKoa;
       }
-    } catch (er) {}
+    } catch {}
 
     try {
       // @ts-ignore
@@ -64,7 +63,7 @@ export class GenerateHttpClientCmd implements CommandProvider {
       if (platform) {
         return platform.PlatformFastify;
       }
-    } catch (er) {}
+    } catch {}
     throw new Error("Unsupported platform. Please use Express.js, Koa.js or Fastify.js platform.");
   }
 

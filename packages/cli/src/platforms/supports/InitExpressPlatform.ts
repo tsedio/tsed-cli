@@ -44,7 +44,7 @@ export class InitExpressPlatform implements InitBasePlatform {
     };
   }
 
-  devDependencies(ctx: any) {
+  devDependencies() {
     return {
       "@types/cors": "latest",
       "@types/express": "latest",

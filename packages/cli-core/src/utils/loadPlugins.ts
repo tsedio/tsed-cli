@@ -1,7 +1,5 @@
 import {taskLogger} from "@tsed/cli-tasks";
-import {injector, lazyInject, logger} from "@tsed/di";
-import chalk from "chalk";
-import figures from "figures";
+import {injector, lazyInject} from "@tsed/di";
 
 import {CliFs} from "../services/CliFs.js";
 import {ProjectPackageJson} from "../services/ProjectPackageJson.js";

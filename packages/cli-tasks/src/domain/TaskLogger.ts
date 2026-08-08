@@ -229,46 +229,51 @@ export class TaskLogger {
 
     if (this.isRawRender()) {
       const success = (message: string) => {
-        !this.isEnvTest() &&
+        if (!this.isEnvTest()) {
           contextLogger()?.info({
             state: "SUCCESS",
             title,
             message
           });
+        }
       };
       const start = (message: string) => {
-        !this.isEnvTest() &&
+        if (!this.isEnvTest()) {
           contextLogger()?.info({
             title,
             message
           });
+        }
       };
       const defaultLogger = {
         message: (message: string) => {
-          !this.isEnvTest() &&
+          if (!this.isEnvTest()) {
             contextLogger()?.info({
               state: "MSG",
               title,
               message
             });
+          }
         },
         stop: success,
         success,
         info: start,
         start,
         warn: (message: string) => {
-          !this.isEnvTest() &&
+          if (!this.isEnvTest()) {
             contextLogger()?.warn({
               title,
               message
             });
+          }
         },
         error: (message: string) => {
-          !this.isEnvTest() &&
+          if (!this.isEnvTest()) {
             contextLogger()?.error({
               title,
               message
             });
+          }
         }
       };
 

@@ -1,15 +1,6 @@
-import {isAbsolute, normalize, resolve} from "node:path";
-
 import {ProjectPackageJson} from "@tsed/cli-core";
 import {inject} from "@tsed/di";
 import {defineResource} from "@tsed/platform-mcp/cli";
-
-function resolveCwd(cwd?: string) {
-  const projectPackage = inject(ProjectPackageJson);
-  const base = cwd || projectPackage.cwd || process.cwd();
-  const abs = isAbsolute(base) ? base : resolve(process.cwd(), base);
-  return normalize(abs);
-}
 
 export const projectInfoResource = defineResource({
   name: "project-info",

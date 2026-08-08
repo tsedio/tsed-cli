@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "eslint/no-unused-expressions": "error",
+    "eslint/no-unused-vars": "error",
+    "unicorn/no-single-promise-in-promise-methods": "error",
+    "unicorn/no-useless-fallback-in-spread": "error"
+  },
+  "ignorePatterns": [
+    "coverage",
+    "**/cache/**",
+    "**/dist/**",
+    "**/lib/**",
+    "**/coverage/**",
+    "processes.config.js",
+    "**/templates/**",
+    "**/.tmp/**"
+  ]
+}

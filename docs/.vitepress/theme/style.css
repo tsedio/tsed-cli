@@ -1,11 +1,10 @@
 .is-home .vp-doc.container .VPContainer {
-    padding-left: 0;
-    padding-right: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
-
 .box a {
-    color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
 }
 
 /*.VPNavBarMenu > div:nth-child(3),*/

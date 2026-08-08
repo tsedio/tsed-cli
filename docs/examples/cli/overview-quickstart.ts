@@ -59,7 +59,7 @@ export class InteractiveWelcome implements CommandProvider<WelcomeContext> {
     };
   }
 
-  async $exec(ctx: WelcomeContext): Promise<Task<WelcomeContext>[]> {
+  async $exec(): Promise<Task<WelcomeContext>[]> {
     return [
       {
         title: "Create workspace",

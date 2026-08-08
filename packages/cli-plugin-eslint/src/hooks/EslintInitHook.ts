@@ -1,6 +1,6 @@
 import {type CliCommandHooks, type InitCmdContext, render, type RenderDataContext} from "@tsed/cli";
 import {PackageManagersModule, ProjectPackageJson, type Task, taskLogger} from "@tsed/cli-core";
-import {inject, injectable, logger} from "@tsed/di";
+import {inject, injectable} from "@tsed/di";
 
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
 

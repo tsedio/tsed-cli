@@ -7,7 +7,7 @@ import registry_url from "registry-url";
 import type {PackageInfo} from "../interfaces/PackageJson.js";
 import {CliHttpClient} from "./CliHttpClient.js";
 
-const REGEX_REGISTRY_ENFORCED_HTTPS = /^https?:\/\/([^\/]+\.)?(yarnpkg\.com|npmjs\.(org|com))(\/|$)/;
+const REGEX_REGISTRY_ENFORCED_HTTPS = /^https?:\/\/([^/]+\.)?(yarnpkg\.com|npmjs\.(org|com))(\/|$)/;
 const REGEX_REGISTRY_PREFIX = /^(https?:)?\/\//i;
 
 export function addSuffix(pattern: string, suffix: string): string {
@@ -107,7 +107,7 @@ export class NpmRegistryClient {
         unfiltered: false,
         retry
       });
-    } catch (er) {
+    } catch {
       return retry == 0 ? this.fallback(packageName) : null;
     }
   }

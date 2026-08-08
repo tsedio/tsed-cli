@@ -1,10 +1,16 @@
 {
   "name": "@tsed/cli-tasks",
-  "description": "Task runner helpers shared across Ts.ED CLI packages",
   "version": "7.0.0-alpha.6",
+  "description": "Task runner helpers shared across Ts.ED CLI packages",
+  "keywords": [
+    "clack",
+    "cli",
+    "tasks",
+    "tsed"
+  ],
+  "source": "./src/index.ts",
   "type": "module",
   "main": "./lib/esm/index.js",
-  "source": "./src/index.ts",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {
@@ -21,12 +27,6 @@
     "test": "vitest run",
     "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
-  "keywords": [
-    "cli",
-    "tasks",
-    "clack",
-    "tsed"
-  ],
   "dependencies": {
     "@clack/prompts": ">=1.0.0-alpha.10",
     "@tsed/core": ">=8.38.0-beta.3",

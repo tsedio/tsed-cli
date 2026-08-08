@@ -43,7 +43,7 @@ export class CliPlatformTest extends DITest {
         rootDir: options.rootDir || "./project-name",
         srcDir: "src",
         scriptsDir: "scripts",
-        ...(options.project || {})
+        ...options.project
       },
       disableReadUpPkg: true,
       ...options
@@ -119,7 +119,7 @@ export class CliPlatformTest extends DITest {
       project: {
         rootDir: "./tmp",
         srcDir: "src",
-        ...(options.project || {})
+        ...options.project
       },
       disableReadUpPkg: true
     });

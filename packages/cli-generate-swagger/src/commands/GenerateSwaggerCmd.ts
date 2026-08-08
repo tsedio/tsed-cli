@@ -34,7 +34,7 @@ export class GenerateSwaggerCmd implements CommandProvider {
       if (platform) {
         return platform.PlatformExpress;
       }
-    } catch (er) {}
+    } catch {}
 
     try {
       // @ts-ignore
@@ -43,7 +43,7 @@ export class GenerateSwaggerCmd implements CommandProvider {
       if (platform) {
         return platform.PlatformKoa;
       }
-    } catch (er) {}
+    } catch {}
 
     try {
       // @ts-ignore
@@ -52,7 +52,7 @@ export class GenerateSwaggerCmd implements CommandProvider {
       if (platform) {
         return platform.PlatformFastify;
       }
-    } catch (er) {}
+    } catch {}
 
     throw new Error("Unsupported platform. Please use Express.js or Koa.js platform.");
   }

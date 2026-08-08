@@ -1,14 +1,24 @@
 {
   "name": "@tsed/cli-mcp",
-  "description": "MCP CLI for Ts.ED.",
-  "deprecated": "This package is deprecated. Use @tsed/platform-mcp/cli instead.",
   "version": "7.0.0-alpha.6",
-  "publishConfig": {
-    "tag": "deprecated"
-  },
+  "description": "MCP CLI for Ts.ED.",
+  "keywords": [
+    "Ts.ED",
+    "api",
+    "cli",
+    "decorators",
+    "express",
+    "framework",
+    "rest",
+    "typescript"
+  ],
+  "source": "./src/index.ts",
+  "files": [
+    "lib",
+    "templates"
+  ],
   "type": "module",
   "main": "./lib/esm/index.js",
-  "source": "./src/index.ts",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {
@@ -19,28 +29,14 @@
       "default": "./lib/esm/index.js"
     }
   },
+  "publishConfig": {
+    "tag": "deprecated"
+  },
   "scripts": {
     "build": "yarn build:ts",
     "build:ts": "tsc --build tsconfig.esm.json",
     "test": "vitest run",
     "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
-  },
-  "files": [
-    "lib",
-    "templates"
-  ],
-  "keywords": [
-    "Ts.ED",
-    "cli",
-    "typescript",
-    "framework",
-    "rest",
-    "api",
-    "express",
-    "decorators"
-  ],
-  "engines": {
-    "node": ">=14"
   },
   "dependencies": {
     "@modelcontextprotocol/node": "^2.0.0-beta.4",
@@ -98,5 +94,9 @@
     "@tsed/schema": {
       "optional": false
     }
-  }
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "deprecated": "This package is deprecated. Use @tsed/platform-mcp/cli instead."
 }

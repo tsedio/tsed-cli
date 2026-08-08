@@ -1,12 +1,10 @@
-import {dirname, join, relative} from "node:path";
+import {dirname, relative} from "node:path";
 
 import {normalizePath} from "@tsed/normalize-path";
 import {SyntaxKind} from "ts-morph";
-
-import type {RenderDataContext} from "../interfaces/RenderDataContext.js";
 import type {ProjectClient} from "../services/ProjectClient.js";
 
-export function transformBinFile(project: ProjectClient, data: RenderDataContext) {
+export function transformBinFile(project: ProjectClient) {
   const binSourceFile = project.binSourceFile;
   const options = project.findConfiguration("bin");
 

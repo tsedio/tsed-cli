@@ -6,11 +6,7 @@ import {LoginInteraction, ConsentInteraction, CustomInteraction} from "../../int
 @Name("Oidc")
 @Interactions({
   path: "/interaction/:uid",
-  children: [
-    LoginInteraction,
-    ConsentInteraction,
-    CustomInteraction,
-  ]
+  children: [LoginInteraction, ConsentInteraction, CustomInteraction]
 })
 export class InteractionsController {
   @Get("/:name?")

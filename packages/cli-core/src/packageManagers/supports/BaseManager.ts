@@ -19,12 +19,12 @@ export abstract class BaseManager {
       this.cliExeca.runSync(this.cmd, ["--version"]);
 
       return true;
-    } catch (er) {
+    } catch {
       return false;
     }
   }
 
-  async init(opts: ManagerCmdOpts): Promise<void> {}
+  async init(_: ManagerCmdOpts): Promise<void> {}
 
   abstract install(options: ManagerCmdOpts): Observable<any>;
 

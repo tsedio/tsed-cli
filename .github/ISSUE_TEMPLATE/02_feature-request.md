@@ -1,13 +1,12 @@
 ---
 name: "\U0001F680 Feature request"
 about: Suggest an idea for this project
-title: ''
+title: ""
 labels: ":sparkles: enhancement"
 assignees: Romakita
-
 ---
 
-<!-- 
+<!--
 
 /!\ IMPORTANT
 
@@ -16,8 +15,7 @@ assignees: Romakita
 - The Ts.ED team will work on the requested feature if:
     - The community vote massively for it.
     - The you are a premium sponsors (individual or company sponsors).
---> 
-
+-->
 
 ## Information
 

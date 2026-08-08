@@ -1,10 +1,14 @@
 {
   "name": "@tsed/cli-plugin-typegraphql",
-  "description": "Ts.ED CLI plugin. Add TypeGraphql support.",
   "version": "7.0.0-alpha.6",
+  "description": "Ts.ED CLI plugin. Add TypeGraphql support.",
+  "source": "./src/index.ts",
+  "files": [
+    "lib",
+    "templates"
+  ],
   "type": "module",
   "main": "./lib/esm/index.js",
-  "source": "./src/index.ts",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {
@@ -21,10 +25,6 @@
     "test": "vitest run",
     "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
-  "files": [
-    "lib",
-    "templates"
-  ],
   "dependencies": {
     "tslib": "2.7.0"
   },

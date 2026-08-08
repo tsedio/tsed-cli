@@ -48,24 +48,25 @@ Ts.ED CLI is the official project generator and automation toolkit for Ts.ED app
 | `packages/cli/templates` | Handlebars/EJS templates that power `tsed init`, `add`, and plugin generators.                             |
 | `docs/`                  | VitePress site, TSDoc output, and guides served via `yarn docs:serve` or published through `docs:publish`. |
 | `dist/`                  | Build artifacts produced by `yarn build` and published to npm.                                             |
-| `tools/*`                | Automation helpers (TypeScript references, ESLint/Vitest installers, CI glue) invoked by `yarn build:*`.   |
+| `tools/*`                | Automation helpers (TypeScript references, Vitest installers, CI glue) invoked by `yarn build:*`.          |
 
 ## Development scripts
 
-| Command                                   | Description                                                                                             |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `yarn configure`                          | Prepares CI metadata via `monorepo ci configure`.                                                       |
-| `yarn clean`                              | Removes build output across every workspace with `monorepo clean workspace`.                            |
-| `yarn build`                              | Runs `monorepo build --verbose`, compiling every package and depositing artifacts in `dist/`.           |
-| `yarn build:references`                   | Refreshes TypeScript project references through `tools/typescript`. Run after adding/renaming packages. |
-| `yarn build:eslint` / `yarn build:vitest` | Installs pinned ESLint and Vitest binaries inside `tools/`.                                             |
-| `yarn sync:packages`                      | Aligns dependency versions between packages with `monorepo sync packages`.                              |
-| `yarn lint` / `yarn lint:fix`             | Applies the flat ESLint + Prettier setup (with `eslint-plugin-simple-import-sort`) across the repo.     |
-| `yarn test [--coverage]`                  | Executes the Vitest suite once. Add `--coverage` for the V8 report enforced in CI.                      |
-| `yarn docs:serve` / `yarn docs:build`     | Generates API docs with `tsdoc`, builds the VitePress site, then serves or builds the static output.    |
-| `yarn docs:publish`                       | Publishes the VitePress build to `cli.tsed.dev` via the configured `gh-pages` target.                   |
-| `yarn api:build` / `yarn api:build:dev`   | Rebuilds `docs/api` with `tsc -b` + `tsdoc`; the `:dev` variant watches templates with `chokidar`.      |
-| `yarn release` / `yarn release:dryRun`    | Triggers `semantic-release` to publish packages (or simulate the process).                              |
+| Command                                 | Description                                                                                             |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `yarn configure`                        | Prepares CI metadata via `monorepo ci configure`.                                                       |
+| `yarn clean`                            | Removes build output across every workspace with `monorepo clean workspace`.                            |
+| `yarn build`                            | Runs `monorepo build --verbose`, compiling every package and depositing artifacts in `dist/`.           |
+| `yarn build:references`                 | Refreshes TypeScript project references through `tools/typescript`. Run after adding/renaming packages. |
+| `yarn build:vitest`                     | Installs the pinned Vitest binary inside `tools/`.                                                      |
+| `yarn sync:packages`                    | Aligns dependency versions between packages with `monorepo sync packages`.                              |
+| `yarn lint` / `yarn lint:fix`           | Checks or fixes code with Oxlint, then checks or formats supported files with Oxfmt.                    |
+| `yarn format` / `yarn format:fix`       | Checks or formats supported files with Oxfmt only.                                                      |
+| `yarn test [--coverage]`                | Executes the Vitest suite once. Add `--coverage` for the V8 report enforced in CI.                      |
+| `yarn docs:serve` / `yarn docs:build`   | Generates API docs with `tsdoc`, builds the VitePress site, then serves or builds the static output.    |
+| `yarn docs:publish`                     | Publishes the VitePress build to `cli.tsed.dev` via the configured `gh-pages` target.                   |
+| `yarn api:build` / `yarn api:build:dev` | Rebuilds `docs/api` with `tsc -b` + `tsdoc`; the `:dev` variant watches templates with `chokidar`.      |
+| `yarn release` / `yarn release:dryRun`  | Triggers `semantic-release` to publish packages (or simulate the process).                              |
 
 > Tip: run package-scoped commands with `yarn workspace <pkg> <script>` (for example, `yarn workspace @tsed/cli vitest run packages/cli/src/commands/init/InitCmd.spec.ts`).
 
