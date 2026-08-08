@@ -11,11 +11,11 @@ export interface TaskLoggerOptions {
 
 export class TaskLogger {
   readonly type: TaskLoggerOptions["type"];
-  public max: number;
+  public max?: number;
   #title: string;
   #logger: any;
   #parent: TaskLogger | undefined;
-  #index: number;
+  #index?: number;
   #renderMode: TaskLoggerOptions["renderMode"];
 
   constructor(opts: TaskLoggerOptions) {
@@ -95,7 +95,7 @@ export class TaskLogger {
       if (this.isRawRender()) {
         this.info(`${this.title} [${this.#index}/${this.parent!.max}]`);
       } else {
-        const it = Math.round((1 / this.parent!.max) * 100);
+        const it = Math.round((1 / this.parent!.max!) * 100);
         this.#logger.advance(it, this.title);
       }
     }

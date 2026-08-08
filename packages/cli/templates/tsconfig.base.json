@@ -5,7 +5,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "NodeNext",
-    "downlevelIteration": false,
     "isolatedModules": false,
     "suppressImplicitAnyIndexErrors": false,
     "noImplicitAny": true,

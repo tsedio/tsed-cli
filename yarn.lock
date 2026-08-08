@@ -2870,7 +2870,7 @@ __metadata:
     split: "npm:^1.0.1"
     tslib: "npm:^2.7.0"
     tunnel: "npm:^0.0.6"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     update-notifier: "npm:^7.3.1"
     url-parse: "npm:^1.5.10"
     uuid: "npm:^14.0.0"
@@ -2900,7 +2900,7 @@ __metadata:
     cross-env: "npm:7.0.3"
     swagger-typescript-api: "npm:13.6.5"
     tslib: "npm:2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   peerDependencies:
     "@tsed/platform-http": ">=7.14.2"
@@ -2924,7 +2924,7 @@ __metadata:
     change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   peerDependencies:
     "@tsed/platform-http": ">=7.14.2"
@@ -2960,7 +2960,7 @@ __metadata:
     cross-env: "npm:7.0.3"
     express: "npm:5.1.0"
     tslib: "npm:^2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   peerDependencies:
     "@tsed/core": ">=8.0.0"
@@ -2997,7 +2997,7 @@ __metadata:
     "@tsed/typescript": "workspace:*"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   languageName: unknown
   linkType: soft
@@ -3011,7 +3011,7 @@ __metadata:
     "@tsed/typescript": "workspace:*"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   languageName: unknown
   linkType: soft
@@ -3027,7 +3027,7 @@ __metadata:
     cross-env: "npm:7.0.3"
     pluralize: "npm:8.0.0"
     tslib: "npm:2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   languageName: unknown
   linkType: soft
@@ -3042,7 +3042,7 @@ __metadata:
     cross-env: "npm:7.0.3"
     ts-morph: "npm:27.0.0"
     tslib: "npm:2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   peerDependencies:
     "@tsed/cli": "workspace:*"
@@ -3061,7 +3061,7 @@ __metadata:
     change-case: "npm:^5.4.4"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   languageName: unknown
   linkType: soft
@@ -3076,7 +3076,7 @@ __metadata:
     change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   languageName: unknown
   linkType: soft
@@ -3090,7 +3090,7 @@ __metadata:
     "@tsed/typescript": "workspace:*"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   peerDependencies:
     "@tsed/cli": "workspace:*"
@@ -3108,7 +3108,7 @@ __metadata:
     change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   languageName: unknown
   linkType: soft
@@ -3122,7 +3122,7 @@ __metadata:
     "@tsed/typescript": "workspace:*"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   languageName: unknown
   linkType: soft
@@ -3137,7 +3137,7 @@ __metadata:
     "@tsed/hooks": "npm:>=8.38.0-beta.3"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   languageName: unknown
   linkType: soft
@@ -3191,7 +3191,7 @@ __metadata:
     split: "npm:^1.0.1"
     ts-node: "npm:^10.9.2"
     tslib: "npm:^2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     update-notifier: "npm:^7.3.1"
     vitest: "npm:4.1.0"
   languageName: unknown
@@ -3207,7 +3207,7 @@ __metadata:
     "@tsed/hooks": "npm:>=8.38.0-beta.3"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   languageName: unknown
   linkType: soft
@@ -3220,7 +3220,7 @@ __metadata:
     "@tsed/typescript": "workspace:*"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   languageName: unknown
   linkType: soft
@@ -3264,7 +3264,7 @@ __metadata:
     semver: "npm:^7.6.3"
     ts-morph: "npm:27.0.0"
     tslib: "npm:^2.7.0"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
     zod: "npm:3.25.76"
   peerDependencies:
@@ -3341,7 +3341,7 @@ __metadata:
   resolution: "@tsed/integration@workspace:tools/integration"
   dependencies:
     cross-env: "npm:7.0.3"
-    typescript: "npm:5.6.2"
+    typescript: "npm:6.0.3"
     vitest: "npm:4.1.0"
   languageName: unknown
   linkType: soft
@@ -16167,7 +16167,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.6.2, typescript@npm:>=3 < 6":
+"typescript@npm:6.0.3":
+  version: 6.0.3
+  resolution: "typescript@npm:6.0.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/0ef2357a4cffd916b52b683a021cdab0f81eea4e9aa35f2d254581c9a5106da02224e3392e1b0ed42b7a48f80c966e5f52b8e1a27941fa0523c1705a9c2e0330
+  languageName: node
+  linkType: hard
+
+"typescript@npm:>=3 < 6":
   version: 5.6.2
   resolution: "typescript@npm:5.6.2"
   bin:
@@ -16197,7 +16207,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A6.0.3#optional!builtin<compat/typescript>":
+  version: 6.0.3
+  resolution: "typescript@patch:typescript@npm%3A6.0.3#optional!builtin<compat/typescript>::version=6.0.3&hash=5786d5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/22b67a18dafedf9b1468b64ca20d9aa02ea61d449b65413d8aa6552aeb63f52ef369e86beb25b6b4c91a803d9726ee5c196f391a9b64201263263410a4223ee6
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>":
   version: 5.6.2
   resolution: "typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>::version=5.6.2&hash=8c6c40"
   bin:

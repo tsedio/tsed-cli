@@ -12,7 +12,7 @@ import {PNpmManager} from "./supports/PNpmManager.js";
 import {YarnBerryManager} from "./supports/YarnBerryManager.js";
 import {YarnManager} from "./supports/YarnManager.js";
 
-function mapPackagesWithInvalidVersion(deps: any) {
+function mapPackagesWithInvalidVersion(deps: Record<string, string>) {
   const toString = (info: [string, string]) => {
     return info[1] === "latest" ? info[0] : info.join("@");
   };

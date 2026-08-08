@@ -68,8 +68,8 @@ export class CliTemplatesService {
 
       let customs = await Promise.all(promises);
       this.#customTemplates = customs
-        .filter((template) => !!template)
-        .map((template: DefineTemplateOptions) => {
+        .filter((template): template is DefineTemplateOptions => !!template)
+        .map((template) => {
           return {
             ...template,
             label: template.label + " (custom)"

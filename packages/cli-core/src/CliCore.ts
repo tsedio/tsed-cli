@@ -127,7 +127,7 @@ export class CliCore {
         return this;
       }
 
-      throw new CliError({origin: er, cli: this});
+      throw new CliError({origin: er instanceof Error ? er : new Error(String(er)), cli: this});
     }
 
     return this;

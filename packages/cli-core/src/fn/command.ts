@@ -24,19 +24,19 @@ declare module "@tsed/schema" {
   }
 }
 
-JsonSchema.add("prompt", function prompt(label: string) {
+JsonSchema.add("prompt", function prompt(this: JsonSchema, label: string) {
   this.customKey("x-label", label);
   return this;
 })
-  .add("when", function when(fn: (ctx: any) => boolean) {
+  .add("when", function when(this: JsonSchema, fn: (ctx: any) => boolean) {
     this.customKey("x-when", fn);
     return this;
   })
-  .add("opt", function opt(v: string) {
+  .add("opt", function opt(this: JsonSchema, v: string) {
     this.customKey("x-opt", v);
     return this;
   })
-  .add("choices", function choices(choices: SchemaChoice[]) {
+  .add("choices", function choices(this: JsonSchema, choices: SchemaChoice[]) {
     this.customKey("x-choices", choices);
     return this;
   });

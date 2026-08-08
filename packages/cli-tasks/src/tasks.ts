@@ -60,7 +60,7 @@ export async function tasks<T = any>(list: Task[], ctx: T & TasksOptions, parent
 
       taskLogger.done();
     } catch (er) {
-      taskLogger.error(er);
+      taskLogger.error(er as Error);
       throw er;
     }
   }

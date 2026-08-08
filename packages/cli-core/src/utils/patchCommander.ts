@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import {Command} from "commander";
 
-function at(n: number) {
+function at(this: {length: number; [index: number]: unknown}, n: number) {
   // ToInteger() abstract op
   n = Math.trunc(n) || 0;
   // Allow negative indexing from the end

@@ -23,7 +23,7 @@ export async function loadPlugins() {
 
         taskLogger().info(`${mod} module loaded`);
       } catch (er) {
-        taskLogger().warn(`Fail to load plugin ${mod} ${er.message}`);
+        taskLogger().warn(`Fail to load plugin ${mod} ${er instanceof Error ? er.message : String(er)}`);
       }
     });
 

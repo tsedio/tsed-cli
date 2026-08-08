@@ -40,8 +40,8 @@ export class OidcProviderInitHook implements CliCommandHooks {
         "/views/repost.ejs",
         "/views/select_account.ejs"
       ]
-        .filter(Boolean)
-        .map((path: string) => {
+        .filter((path): path is string => Boolean(path))
+        .map((path) => {
           return {
             id: path,
             from: TEMPLATE_DIR

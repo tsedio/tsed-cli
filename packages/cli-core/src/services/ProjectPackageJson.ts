@@ -22,7 +22,7 @@ function sortKeys(obj: any) {
     }, {});
 }
 
-function mapPackages(deps: any) {
+function mapPackages(deps: Record<string, string>) {
   return Object.entries(deps).reduce(
     (deps, [key, version]: [string, string]) => {
       if (isValidVersion(version)) {

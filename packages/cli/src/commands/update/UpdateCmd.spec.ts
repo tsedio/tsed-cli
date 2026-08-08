@@ -99,7 +99,13 @@ describe.skip("UpdateCmd", () => {
         }
       };
 
-      const projectPackageJson = {
+      const projectPackageJson: {
+        dependencies: Record<string, string>;
+        devDependencies: Record<string, string>;
+        addDependency(name: string, version: string): void;
+        addDevDependency(name: string, version: string): void;
+        install(): void;
+      } = {
         dependencies: {
           "@tsed/core": "5.50.1",
           "@tsed/di": "5.50.1",

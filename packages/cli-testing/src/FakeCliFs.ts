@@ -64,13 +64,13 @@ export class FakeCliFs implements FileSystemHost {
     return fileText;
   }
 
-  async readJson(file: string | Buffer | number, encoding?: any): Promise<string> {
+  async readJson(file: string | Buffer | number, encoding?: any): Promise<any> {
     const content = await this.readFile(file, encoding);
 
     return content ? JSON.parse(content) : {};
   }
 
-  readJsonSync(file: string | Buffer | number, encoding?: any): Promise<string> {
+  readJsonSync(file: string | Buffer | number, encoding?: any): any {
     const content = this.readFileSync(file, encoding);
 
     return content ? JSON.parse(content) : {};

@@ -98,7 +98,7 @@ export class NpmRegistryClient {
     return result;
   }
 
-  async info(packageName: string, retry = 0): Promise<PackageInfo> {
+  async info(packageName: string, retry = 0): Promise<PackageInfo | null> {
     try {
       return await this.request(packageName, {
         headers: {

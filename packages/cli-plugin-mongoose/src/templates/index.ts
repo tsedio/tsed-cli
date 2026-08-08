@@ -1,4 +1,4 @@
-import "./index.template";
-import "./connection.template";
-import "./mongooseModel.template";
-import "./mongooseSchema.template";
+import "./index.template.js";
+import "./connection.template.js";
+import "./mongooseModel.template.js";
+import "./mongooseSchema.template.js";
