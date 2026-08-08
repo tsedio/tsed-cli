@@ -57,6 +57,7 @@
     "@tsed/core": ">=8.38.0-beta.3",
     "@tsed/di": ">=8.38.0-beta.3",
     "@tsed/hooks": ">=8.38.0-beta.3",
+    "@tsed/json-mapper": ">=8.38.0-beta.3",
     "@tsed/logger": ">=8.0.3",
     "@tsed/logger-std": ">=8.0.3",
     "@tsed/normalize-path": ">=8.38.0-beta.3",

@@ -1,14 +1,13 @@
-import type {TokenProvider} from "@tsed/di";
+import type {PlatformMcpSettings} from "@tsed/platform-mcp/cli";
 
-declare global {
+interface CliMCPSettings extends PlatformMcpSettings {
+  mode: "streamable-http" | "stdio";
+}
+
+declare module "@tsed/platform-mcp/cli" {
   namespace TsED {
     interface Configuration {
-      prompts?: TokenProvider[];
-      resources?: TokenProvider[];
-      tools?: TokenProvider[];
-      mcp?: {
-        mode: "streamable-http" | "stdio";
-      };
+      mcp?: CliMCPSettings;
     }
   }
 }

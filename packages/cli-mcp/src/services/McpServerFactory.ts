@@ -1,58 +1,77 @@
-import type {ResourceTemplate} from "@modelcontextprotocol/sdk/server/mcp.js";
-import {McpServer} from "@modelcontextprotocol/sdk/server/mcp.js";
+import {McpServer, type ResourceTemplate} from "@modelcontextprotocol/server";
 import {constant, inject, injectable, injector, logger, type TokenProvider} from "@tsed/di";
-
-import {MCP_PROVIDER_TYPES} from "../constants/constants.js";
-import type {PromptsSettings} from "../fn/definePrompt.js";
-import type {ResourceProps} from "../fn/defineResource.js";
-import type {ToolProps} from "../fn/defineTool.js";
-import {mcpStdioServer} from "./McpStdioServer.js";
-import {mcpStreamableServer} from "./McpStreamableServer.js";
+import {
+  MCP_PROVIDER_TYPES,
+  mcpStdioServer,
+  mcpStreamableServer,
+  type PlatformMcpSettings,
+  type PromptsSettings,
+  type ResourceSettings,
+  type ToolProps
+} from "@tsed/platform-mcp/cli";
 
 function collectTokens(type: string, configured: TokenProvider[] = []): TokenProvider[] {
   const tokens = new Set<TokenProvider>(configured);
 
   injector()
-    .getProviders(type)
+    .getMany(type)
     .forEach((provider) => tokens.add(provider.token));
 
   return [...tokens];
 }
 
+function createMcpServer() {
+  const settings = constant<PlatformMcpSettings>("mcp", {}) || {};
+  const name = settings.name || constant<string>("name") || "tsed-mcp";
+  const version = settings.version || constant<string>("version") || "0.0.0";
+  const {websiteUrl, description, title, icons} = settings;
+
+  const server = new McpServer(
+    {
+      websiteUrl,
+      description,
+      icons,
+      title,
+      name,
+      version
+    },
+    settings?.serverOptions
+  );
+
+  const toolTokens = collectTokens(MCP_PROVIDER_TYPES.TOOL, settings.tools);
+  toolTokens.forEach((token) => {
+    const definition = inject<ToolProps<any, any> & {handler: any}>(token);
+    const {name, handler, ...opts} = definition;
+    server.registerTool(name!, opts as any, handler as any);
+  });
+
+  const resourceTokens = collectTokens(MCP_PROVIDER_TYPES.RESOURCE, settings.resources);
+  resourceTokens.forEach((token) => {
+    const definition = inject<ResourceSettings & {uri?: string; template?: ResourceTemplate}>(token);
+    const {name, handler, uri, template, ...opts} = definition;
+    const resourceName = name || String(token);
+
+    if (uri) {
+      server.registerResource(resourceName, uri, opts, handler as any);
+    } else {
+      server.registerResource(resourceName, template as ResourceTemplate, opts, handler as any);
+    }
+  });
+
+  const promptTokens = collectTokens(MCP_PROVIDER_TYPES.PROMPT, settings.prompts);
+  promptTokens.forEach((token) => {
+    const definition = inject<PromptsSettings>(token);
+    const {name, handler, ...opts} = definition;
+    server.registerPrompt(name || String(token), opts as any, handler as any);
+  });
+
+  return server;
+}
+
 export const MCP_SERVER = injectable(McpServer)
   .factory(() => {
     const defaultMode = constant<"streamable-http" | "stdio">("mcp.mode");
-    const name = constant<string>("name", "tsed-mcp");
-    const version = constant<string>("version", "0.0.0");
-
-    const server = new McpServer({
-      name,
-      version
-    });
-
-    const toolTokens = collectTokens(MCP_PROVIDER_TYPES.TOOL, constant<TokenProvider[]>("tools", []));
-
-    toolTokens.forEach((token) => {
-      const definition = inject<ToolProps<any, any> & {handler: any}>(token);
-      const {name, handler, ...opts} = definition;
-      server.registerTool(name!, opts as any, handler as any);
-    });
-
-    const resourceTokens = collectTokens(MCP_PROVIDER_TYPES.RESOURCE, constant<TokenProvider[]>("resources", []));
-
-    resourceTokens.forEach((token) => {
-      const definition = inject<ResourceProps & {uri?: string; template?: ResourceTemplate}>(token);
-      const {name, handler, uri, template, ...opts} = definition;
-      server.registerResource(name, (uri || template)! as any, opts, handler as any);
-    });
-
-    const promptTokens = collectTokens(MCP_PROVIDER_TYPES.PROMPT, constant<TokenProvider[]>("prompts", []));
-
-    promptTokens.forEach((token) => {
-      const definition = inject<PromptsSettings>(token);
-      const {name, handler, ...opts} = definition;
-      server.registerPrompt(name, opts, handler as any);
-    });
+    const server = createMcpServer();
 
     return {
       server,
