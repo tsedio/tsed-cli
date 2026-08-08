@@ -21,7 +21,33 @@ describe("OXC: Init cmd", () => {
     });
 
     expect(FakeCliFs.files.get("project-name/.oxlintrc.json")).toContain('"$schema": "./node_modules/oxlint/configuration_schema.json"');
+    expect(FakeCliFs.files.get("project-name/.oxlintrc.json")).toContain('"node_modules"');
     expect(FakeCliFs.files.get("project-name/.oxfmtrc.json")).toBeUndefined();
+    expect(FakeCliFs.files.get("project-name/.gitignore")).toContain("node_modules");
+
+    const baseTsconfig = JSON.parse(FakeCliFs.files.get("project-name/tsconfig.base.json")!);
+    const nodeTsconfig = JSON.parse(FakeCliFs.files.get("project-name/tsconfig.node.json")!);
+    const specTsconfig = JSON.parse(FakeCliFs.files.get("project-name/tsconfig.spec.json")!);
+    const tsconfig = JSON.parse(FakeCliFs.files.get("project-name/tsconfig.json")!);
+
+    expect(baseTsconfig.compilerOptions.suppressImplicitAnyIndexErrors).toBeUndefined();
+    expect(nodeTsconfig.compilerOptions.paths["@/*"]).toEqual(["./src/*"]);
+    expect(specTsconfig.compilerOptions.baseUrl).toBeUndefined();
+    expect(specTsconfig.compilerOptions.paths["@/*"]).toEqual(["./src/*"]);
+    expect(tsconfig.references).toEqual([{path: "./tsconfig.node.json"}, {path: "./tsconfig.spec.json"}]);
+    expect(nodeTsconfig.compilerOptions).toMatchObject({
+      composite: true,
+      emitDeclarationOnly: true,
+      outDir: "./dist/types"
+    });
+    expect(specTsconfig.compilerOptions).toMatchObject({
+      composite: true,
+      emitDeclarationOnly: true,
+      outDir: "./dist/types-spec"
+    });
+    expect(FakeCliFs.files.get("project-name/src/index.ts")).toContain(
+      "const err = error instanceof Error ? error : new Error(String(error));"
+    );
 
     const packageJson = inject(ProjectPackageJson);
 

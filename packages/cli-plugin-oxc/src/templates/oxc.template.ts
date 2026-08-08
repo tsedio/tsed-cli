@@ -12,7 +12,7 @@ export default defineTemplate({
     return `${JSON.stringify(
       {
         $schema: "./node_modules/oxlint/configuration_schema.json",
-        ignorePatterns: ["coverage", "dist", "processes.config.js", "**/templates"],
+        ignorePatterns: ["coverage", "dist", "node_modules", "processes.config.js", "**/templates"],
         env: {
           node: true
         }
