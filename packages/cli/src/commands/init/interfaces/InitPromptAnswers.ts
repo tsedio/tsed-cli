@@ -11,6 +11,9 @@ export interface InitPromptAnswers {
   featuresDB: string[];
   featuresTypeORM: string;
   featuresTesting: string;
+  featuresLinter: string;
+  featuresEslintFormatter: string[];
+  featuresOxlintFormatter: string[];
   featuresExtraLinter: string[];
   featuresBundler: string;
   oidcBasePath: string;

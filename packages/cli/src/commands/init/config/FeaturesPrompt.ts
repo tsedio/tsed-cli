@@ -67,8 +67,10 @@ export enum FeatureType {
   VITEST = "testing:vitest",
   LINTER = "linter",
   ESLINT = "linter:eslint",
+  OXLINT = "linter:oxlint",
   LINT_STAGED = "linter:lintstaged",
-  PRETTIER = "linter:prettier"
+  PRETTIER = "linter:prettier",
+  OXFMT = "linter:oxfmt"
 }
 
 export const FeaturesMap: Record<string, Feature> = {
@@ -81,7 +83,7 @@ export const FeaturesMap: Record<string, Feature> = {
     checked: (options: any) => options.platform === PlatformType.KOA
   },
   [PlatformType.FASTIFY]: {
-    name: "Fastify.js (beta)",
+    name: "Fastify.js",
     checked: (options: any) => options.platform === PlatformType.FASTIFY
   },
   [FeatureType.GRAPHQL]: {
@@ -355,8 +357,17 @@ export const FeaturesMap: Record<string, Feature> = {
       "@tsed/cli-plugin-eslint": "{{cliVersion}}"
     }
   },
+  [FeatureType.OXLINT]: {
+    name: "Oxlint",
+    devDependencies: {
+      "@tsed/cli-plugin-oxc": "{{cliVersion}}"
+    }
+  },
   [FeatureType.PRETTIER]: {
     name: "Prettier"
+  },
+  [FeatureType.OXFMT]: {
+    name: "Oxfmt"
   },
   [FeatureType.LINT_STAGED]: {
     name: "Lint on commit"
@@ -531,14 +542,28 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
       type: "list",
       name: "featuresLinter",
       when: hasFeature(FeatureType.LINTER),
-      choices: [FeatureType.ESLINT]
+      choices: [FeatureType.ESLINT, FeatureType.OXLINT]
+    },
+    {
+      message: "Choose formatter tools",
+      type: "checkbox",
+      name: "featuresEslintFormatter",
+      when: hasValue("featuresLinter", FeatureType.ESLINT),
+      choices: [FeatureType.PRETTIER]
+    },
+    {
+      message: "Choose formatter tools",
+      type: "checkbox",
+      name: "featuresOxlintFormatter",
+      when: hasValue("featuresLinter", FeatureType.OXLINT),
+      choices: [FeatureType.OXFMT]
     },
     {
       message: "Choose extra linter tools",
       type: "checkbox",
       name: "featuresExtraLinter",
       when: hasFeature(FeatureType.LINTER),
-      choices: [FeatureType.PRETTIER, FeatureType.LINT_STAGED]
+      choices: [FeatureType.LINT_STAGED]
     },
     {
       message: "Choose the OIDC base path server",

@@ -18,7 +18,6 @@ export class EslintInitHook implements CliCommandHooks {
         data.lintstaged && ".husky/.gitignore",
         data.lintstaged && ".husky/post-commit",
         data.lintstaged && ".husky/pre-commit",
-        data.lintstaged && ".lintstagedrc.json",
         data.prettier && ".prettierignore",
         data.prettier && ".prettierrc"
       ]
@@ -101,6 +100,13 @@ export class EslintInitHook implements CliCommandHooks {
             ...data,
             name: "eslint.config"
           });
+        }
+      },
+      {
+        title: "Add lint-staged configuration",
+        skip: !data.lintstaged,
+        task: () => {
+          return render("eslint.lintstagedrc", data);
         }
       }
     ];

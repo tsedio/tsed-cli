@@ -18,7 +18,7 @@ import {CliTemplatesService, type TemplateRenderOptions, type TemplateRenderRetu
 
 export class CliProjectService {
   readonly templates = inject(CliTemplatesService);
-  private project: ProjectClient;
+  private project!: ProjectClient;
 
   get rootDir() {
     return constant("project.rootDir", "");

@@ -279,4 +279,17 @@ describe("Eslint: Init cmd", () => {
       "
     `);
   });
+
+  it("should not configure Prettier in lint-staged when Prettier is not selected", async () => {
+    await CliPlatformTest.initProject({
+      eslint: true,
+      lintstaged: true
+    });
+
+    expect(FakeCliFs.files.get("project-name/.lintstagedrc.json")).toBe(`{
+  "**/*.{ts,js}": [
+    "eslint --fix"
+  ]
+}\n`);
+  });
 });

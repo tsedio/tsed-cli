@@ -31,9 +31,7 @@ export type TemplateRenderReturnType = {
 
 export class CliTemplatesService {
   readonly fs = inject(CliFs);
-  // readonly renderedFiles: TemplateRenderReturnType[] = [];
-
-  #customTemplates: DefineTemplateOptions[];
+  #customTemplates!: DefineTemplateOptions[];
 
   get rootDir() {
     return constant("project.rootDir", "");

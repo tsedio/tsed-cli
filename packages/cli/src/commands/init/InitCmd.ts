@@ -273,11 +273,17 @@ export class InitCmd implements CommandProvider {
   addScripts(ctx: InitOptions): void {
     this.packageJson.addScripts(this.runtimes.scripts(ctx));
 
-    if (ctx.eslint || ctx.testing) {
+    if (ctx.eslint || ctx.oxlint || ctx.testing) {
       const runtime = this.runtimes.get();
 
       const scripts = {
-        test: [ctx.eslint && runtime.run("test:lint"), ctx.testing && runtime.run("test:coverage")].filter(Boolean).join(" && ")
+        test: [
+          (ctx.eslint || ctx.oxlint) && runtime.run("test:lint"),
+          ctx.oxfmt && runtime.run("test:format"),
+          ctx.testing && runtime.run("test:coverage")
+        ]
+          .filter(Boolean)
+          .join(" && ")
       };
 
       this.packageJson.addScripts(scripts);

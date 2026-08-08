@@ -3050,6 +3050,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@tsed/cli-plugin-oxc@workspace:packages/cli-plugin-oxc":
+  version: 0.0.0-use.local
+  resolution: "@tsed/cli-plugin-oxc@workspace:packages/cli-plugin-oxc"
+  dependencies:
+    "@tsed/cli": "workspace:*"
+    "@tsed/cli-core": "workspace:*"
+    "@tsed/cli-testing": "workspace:*"
+    "@tsed/typescript": "workspace:*"
+    cross-env: "npm:7.0.3"
+    tslib: "npm:2.7.0"
+    typescript: "npm:5.6.2"
+    vitest: "npm:4.1.0"
+  languageName: unknown
+  linkType: soft
+
 "@tsed/cli-plugin-passport@workspace:packages/cli-plugin-passport":
   version: 0.0.0-use.local
   resolution: "@tsed/cli-plugin-passport@workspace:packages/cli-plugin-passport"
@@ -3212,7 +3227,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@tsed/cli-testing@workspace:packages/cli-testing":
+"@tsed/cli-testing@workspace:*, @tsed/cli-testing@workspace:packages/cli-testing":
   version: 0.0.0-use.local
   resolution: "@tsed/cli-testing@workspace:packages/cli-testing"
   dependencies:
@@ -16167,6 +16182,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:5.6.2, typescript@npm:>=3 < 6":
+  version: 5.6.2
+  resolution: "typescript@npm:5.6.2"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/f95365d4898f357823e93d334ecda9fcade54f009b397c7d05b7621cd9e865981033cf89ccde0f3e3a7b73b1fdbae18e92bc77db237b43e912f053fef0f9a53b
+  languageName: node
+  linkType: hard
+
 "typescript@npm:6.0.3":
   version: 6.0.3
   resolution: "typescript@npm:6.0.3"
@@ -16174,16 +16199,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10/0ef2357a4cffd916b52b683a021cdab0f81eea4e9aa35f2d254581c9a5106da02224e3392e1b0ed42b7a48f80c966e5f52b8e1a27941fa0523c1705a9c2e0330
-  languageName: node
-  linkType: hard
-
-"typescript@npm:>=3 < 6":
-  version: 5.6.2
-  resolution: "typescript@npm:5.6.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10/f95365d4898f357823e93d334ecda9fcade54f009b397c7d05b7621cd9e865981033cf89ccde0f3e3a7b73b1fdbae18e92bc77db237b43e912f053fef0f9a53b
   languageName: node
   linkType: hard
 
@@ -16207,6 +16222,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>":
+  version: 5.6.2
+  resolution: "typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>::version=5.6.2&hash=8c6c40"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/8bfc7ca0d9feca4c3fcbd6c70741abfcd714197d6448e68225ae71e462447d904d3bfba49759a8fbe4956d87f054e2d346833c8349c222daa594a2626d4e1be8
+  languageName: node
+  linkType: hard
+
 "typescript@patch:typescript@npm%3A6.0.3#optional!builtin<compat/typescript>":
   version: 6.0.3
   resolution: "typescript@patch:typescript@npm%3A6.0.3#optional!builtin<compat/typescript>::version=6.0.3&hash=5786d5"
@@ -16214,16 +16239,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10/22b67a18dafedf9b1468b64ca20d9aa02ea61d449b65413d8aa6552aeb63f52ef369e86beb25b6b4c91a803d9726ee5c196f391a9b64201263263410a4223ee6
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>":
-  version: 5.6.2
-  resolution: "typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>::version=5.6.2&hash=8c6c40"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10/8bfc7ca0d9feca4c3fcbd6c70741abfcd714197d6448e68225ae71e462447d904d3bfba49759a8fbe4956d87f054e2d346833c8349c222daa594a2626d4e1be8
   languageName: node
   linkType: hard
 

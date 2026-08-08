@@ -73,4 +73,16 @@ describe("mapToContext", () => {
       }
     `);
   });
+
+  it("should map Oxlint and Oxfmt features", () => {
+    const result = mapToContext({
+      features: [FeatureType.LINTER, FeatureType.OXLINT, FeatureType.OXFMT]
+    });
+
+    expect(result).toMatchObject({
+      linter: true,
+      oxlint: true,
+      oxfmt: true
+    });
+  });
 });

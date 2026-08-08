@@ -40,9 +40,9 @@ function mapPackages(deps: Record<string, string>) {
 export class ProjectPackageJson {
   public rewrite = false;
   public reinstall = false;
-  public GH_TOKEN: string;
+  public GH_TOKEN?: string;
   protected fs = inject(CliFs);
-  private raw: PackageJson;
+  private raw!: PackageJson;
 
   constructor() {
     this.setRaw({

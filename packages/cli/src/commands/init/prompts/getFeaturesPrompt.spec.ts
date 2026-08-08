@@ -33,6 +33,20 @@ describe("getFeaturesPrompt", () => {
     );
   });
 
+  it("should offer the formatter that matches the selected linter", () => {
+    const prompt = getFeaturesPrompt(["node"], ["yarn"], {});
+    const linterPrompt = prompt.find((item: any) => item.name === "featuresLinter") as any;
+    const eslintFormatterPrompt = prompt.find((item: any) => item.name === "featuresEslintFormatter") as any;
+    const oxlintFormatterPrompt = prompt.find((item: any) => item.name === "featuresOxlintFormatter") as any;
+
+    expect(linterPrompt.choices.map((choice: any) => choice.value)).toEqual(["linter:eslint", "linter:oxlint"]);
+    expect(eslintFormatterPrompt.choices.map((choice: any) => choice.value)).toEqual(["linter:prettier"]);
+    expect(oxlintFormatterPrompt.choices.map((choice: any) => choice.value)).toEqual(["linter:oxfmt"]);
+    expect(eslintFormatterPrompt.when({featuresLinter: "linter:eslint"})).toBe(true);
+    expect(eslintFormatterPrompt.when({featuresLinter: "linter:oxlint"})).toBe(false);
+    expect(oxlintFormatterPrompt.when({featuresLinter: "linter:oxlint"})).toBe(true);
+  });
+
   it("should add a provider info", () => {
     const prompt = getFeaturesPrompt(["node", "bun"], ["yarn", "npm", "pnpm", "bun"], {});
 
@@ -53,7 +67,7 @@ describe("getFeaturesPrompt", () => {
             },
             {
               "checked": false,
-              "name": "Fastify.js (beta)",
+              "name": "Fastify.js",
               "value": "fastify",
             },
           ],
@@ -434,6 +448,13 @@ describe("getFeaturesPrompt", () => {
               "name": "EsLint",
               "value": "linter:eslint",
             },
+            {
+              "devDependencies": {
+                "@tsed/cli-plugin-oxc": "{{cliVersion}}",
+              },
+              "name": "Oxlint",
+              "value": "linter:oxlint",
+            },
           ],
           "message": "Choose linter tools framework",
           "name": "featuresLinter",
@@ -446,6 +467,26 @@ describe("getFeaturesPrompt", () => {
               "name": "Prettier",
               "value": "linter:prettier",
             },
+          ],
+          "message": "Choose formatter tools",
+          "name": "featuresEslintFormatter",
+          "type": "checkbox",
+          "when": [Function],
+        },
+        {
+          "choices": [
+            {
+              "name": "Oxfmt",
+              "value": "linter:oxfmt",
+            },
+          ],
+          "message": "Choose formatter tools",
+          "name": "featuresOxlintFormatter",
+          "type": "checkbox",
+          "when": [Function],
+        },
+        {
+          "choices": [
             {
               "name": "Lint on commit",
               "value": "linter:lintstaged",

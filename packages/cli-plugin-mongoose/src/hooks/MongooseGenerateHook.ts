@@ -7,7 +7,7 @@ import {CliMongoose} from "../services/CliMongoose.js";
 export class MongooseGenerateHook implements AlterGenerateTasks, AlterProjectFiles {
   protected projectPackageJson = inject(ProjectPackageJson);
   protected cliMongoose = inject(CliMongoose);
-  protected packages: any[];
+  protected packages!: any[];
   protected cliDockerComposeYaml = inject(CliDockerComposeYaml);
 
   $alterGenerateTasks(tasks: Task[], data: GenerateCmdContext): Task[] | Promise<Task[]> {
