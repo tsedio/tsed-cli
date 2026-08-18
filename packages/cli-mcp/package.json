@@ -39,16 +39,16 @@
     "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
   "dependencies": {
-    "@modelcontextprotocol/node": "^2.0.0-beta.4",
-    "@modelcontextprotocol/server": "^2.0.0-beta.4",
-    "@tsed/core": ">=8.38.0-beta.2",
-    "@tsed/di": ">=8.38.0-beta.2",
-    "@tsed/hooks": ">=8.38.0-beta.2",
-    "@tsed/json-mapper": ">=8.38.0-beta.3",
+    "@modelcontextprotocol/node": "^2.0.0",
+    "@modelcontextprotocol/server": "^2.0.0",
+    "@tsed/core": ">=8.38.0",
+    "@tsed/di": ">=8.38.0",
+    "@tsed/hooks": ">=8.38.0",
+    "@tsed/json-mapper": ">=8.38.0",
     "@tsed/logger": ">=8.0.3",
     "@tsed/logger-std": ">=8.0.3",
-    "@tsed/platform-mcp": ">=8.38.0-beta.3",
-    "@tsed/schema": ">=8.38.0-beta.3",
+    "@tsed/platform-mcp": ">=8.38.0",
+    "@tsed/schema": ">=8.38.0",
     "tslib": "^2.7.0"
   },
   "devDependencies": {
