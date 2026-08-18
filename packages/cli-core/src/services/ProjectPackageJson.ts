@@ -2,7 +2,7 @@ import {dirname, join} from "node:path";
 
 import {getValue, setValue} from "@tsed/core";
 import {configuration, constant, inject, injectable} from "@tsed/di";
-import {readPackageUpSync} from "read-pkg-up";
+import {readPackageUpSync} from "read-package-up";
 
 import type {PackageJson} from "../interfaces/PackageJson.js";
 import type {ProjectPreferences} from "../interfaces/ProjectPreferences.js";
@@ -22,7 +22,7 @@ function sortKeys(obj: any) {
     }, {});
 }
 
-function mapPackages(deps: any) {
+function mapPackages(deps: Record<string, string>) {
   return Object.entries(deps).reduce(
     (deps, [key, version]: [string, string]) => {
       if (isValidVersion(version)) {
@@ -40,9 +40,9 @@ function mapPackages(deps: any) {
 export class ProjectPackageJson {
   public rewrite = false;
   public reinstall = false;
-  public GH_TOKEN: string;
+  public GH_TOKEN?: string;
   protected fs = inject(CliFs);
-  private raw: PackageJson;
+  private raw!: PackageJson;
 
   constructor() {
     this.setRaw({
@@ -110,8 +110,8 @@ export class ProjectPackageJson {
 
   get allDependencies(): {[key: string]: string} {
     return {
-      ...(this.dependencies || {}),
-      ...(this.devDependencies || {})
+      ...this.dependencies,
+      ...this.devDependencies
     };
   }
 
@@ -256,8 +256,8 @@ export class ProjectPackageJson {
       ...this.raw,
       type: "module",
       scripts: {
-        ...(originalPkg.scripts || {}),
-        ...(this.raw.scripts || {})
+        ...originalPkg.scripts,
+        ...this.raw.scripts
       },
       dependencies: sortKeys({
         ...originalPkg.dependencies,

@@ -11,11 +11,11 @@ export interface TaskLoggerOptions {
 
 export class TaskLogger {
   readonly type: TaskLoggerOptions["type"];
-  public max: number;
+  public max?: number;
   #title: string;
   #logger: any;
   #parent: TaskLogger | undefined;
-  #index: number;
+  #index?: number;
   #renderMode: TaskLoggerOptions["renderMode"];
 
   constructor(opts: TaskLoggerOptions) {
@@ -95,7 +95,7 @@ export class TaskLogger {
       if (this.isRawRender()) {
         this.info(`${this.title} [${this.#index}/${this.parent!.max}]`);
       } else {
-        const it = Math.round((1 / this.parent!.max) * 100);
+        const it = Math.round((1 / this.parent!.max!) * 100);
         this.#logger.advance(it, this.title);
       }
     }
@@ -229,46 +229,51 @@ export class TaskLogger {
 
     if (this.isRawRender()) {
       const success = (message: string) => {
-        !this.isEnvTest() &&
+        if (!this.isEnvTest()) {
           contextLogger()?.info({
             state: "SUCCESS",
             title,
             message
           });
+        }
       };
       const start = (message: string) => {
-        !this.isEnvTest() &&
+        if (!this.isEnvTest()) {
           contextLogger()?.info({
             title,
             message
           });
+        }
       };
       const defaultLogger = {
         message: (message: string) => {
-          !this.isEnvTest() &&
+          if (!this.isEnvTest()) {
             contextLogger()?.info({
               state: "MSG",
               title,
               message
             });
+          }
         },
         stop: success,
         success,
         info: start,
         start,
         warn: (message: string) => {
-          !this.isEnvTest() &&
+          if (!this.isEnvTest()) {
             contextLogger()?.warn({
               title,
               message
             });
+          }
         },
         error: (message: string) => {
-          !this.isEnvTest() &&
+          if (!this.isEnvTest()) {
             contextLogger()?.error({
               title,
               message
             });
+          }
         }
       };
 

@@ -1,14 +1,10 @@
 import {inject, ProjectPackageJson} from "@tsed/cli-core";
-import {isString} from "@tsed/core";
 import {normalizePath} from "@tsed/normalize-path";
-import {pascalCase} from "change-case";
 
 import type {GenerateCmdContext} from "../../interfaces/GenerateCmdContext.js";
 import {ProjectConvention} from "../../interfaces/ProjectConvention.js";
 import {OutputFilePathPipe} from "../../pipes/OutputFilePathPipe.js";
-import {RoutePipe} from "../../pipes/RoutePipe.js";
 import {SymbolNamePipe} from "../../pipes/SymbolNamePipe.js";
-import {CliProjectService} from "../CliProjectService.js";
 import {addContextMethods} from "./addContextMethods.js";
 
 type TemplateOptions = {

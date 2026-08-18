@@ -34,7 +34,7 @@ export function createInjector(settings: Partial<TsED.Configuration> = {}) {
     project: {
       // root: process.cwd(),
       srcDir: "src",
-      ...(settings.project || {})
+      ...settings.project
     }
   } as TsED.Configuration);
 

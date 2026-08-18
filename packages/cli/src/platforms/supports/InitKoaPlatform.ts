@@ -34,7 +34,7 @@ export class InitKoaPlatform implements InitBasePlatform {
     };
   }
 
-  devDependencies(ctx: any) {
+  devDependencies() {
     return {
       "@types/koa": "latest",
       "@types/koa-qs": "latest",

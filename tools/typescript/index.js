@@ -57,9 +57,9 @@ async function main() {
       const deps = new Set();
 
       Object.keys({
-        ...(pkg.pkg.peerDependencies || {}),
-        ...(pkg.pkg.devDependencies || {}),
-        ...(pkg.pkg.dependencies || {})
+        ...pkg.pkg.peerDependencies,
+        ...pkg.pkg.devDependencies,
+        ...pkg.pkg.dependencies
       })
         .filter((peer) => {
           return packagesRefsMap.has(peer);

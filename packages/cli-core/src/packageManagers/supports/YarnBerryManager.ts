@@ -27,7 +27,7 @@ export class YarnBerryManager extends BaseManager {
     // init yarn v1
     try {
       await this.install(options).toPromise();
-    } catch (er) {}
+    } catch {}
 
     // then switch write file
     await this.cliYaml.write(join(String(options.cwd!), ".yarnrc.yml"), {
@@ -37,7 +37,7 @@ export class YarnBerryManager extends BaseManager {
     // then switch to berry
     try {
       this.cliExeca.runSync(this.cmd, ["set", "version", "berry"]);
-    } catch (er) {}
+    } catch {}
   }
 
   add(deps: string[], options: ManagerCmdOpts) {

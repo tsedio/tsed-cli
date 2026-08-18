@@ -48,7 +48,7 @@ describe("CliFs", () => {
     const service = await CliPlatformTest.invoke<CliFs>(CliFs);
     const hits = new Set<string>(["/repo/a/file.yml", "/repo/file.yml"]);
 
-    vi.spyOn(service, "fileExistsSync").mockImplementation((path) => hits.has(path));
+    vi.spyOn(service, "fileExistsSync").mockImplementation((path: string) => hits.has(path));
     vi.spyOn(service.raw, "existsSync").mockReturnValue(false);
 
     const result = service.findUpFile("/repo/a/b", "file.yml");

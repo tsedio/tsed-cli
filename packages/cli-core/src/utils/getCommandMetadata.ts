@@ -17,6 +17,7 @@ export function getCommandMetadata(token: TokenProvider): CommandMetadata {
     inputSchema,
     renderMode,
     ...opts
+    // oxlint-disable-next-line no-unsafe-optional-chaining
   } = Store.from(token)?.get("command") as CommandOptions<any>;
 
   return {

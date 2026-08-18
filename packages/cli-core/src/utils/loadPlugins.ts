@@ -1,7 +1,5 @@
 import {taskLogger} from "@tsed/cli-tasks";
-import {injector, lazyInject, logger} from "@tsed/di";
-import chalk from "chalk";
-import figures from "figures";
+import {injector, lazyInject} from "@tsed/di";
 
 import {CliFs} from "../services/CliFs.js";
 import {ProjectPackageJson} from "../services/ProjectPackageJson.js";
@@ -25,7 +23,7 @@ export async function loadPlugins() {
 
         taskLogger().info(`${mod} module loaded`);
       } catch (er) {
-        taskLogger().warn(`Fail to load plugin ${mod} ${er.message}`);
+        taskLogger().warn(`Fail to load plugin ${mod} ${er instanceof Error ? er.message : String(er)}`);
       }
     });
 

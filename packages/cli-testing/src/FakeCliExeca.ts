@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 export class FakeCliExeca extends CliExeca {
   static entries = new Map<string, string>();
 
-  run(cmd: string, args: string[], opts?: any): any {
+  run(cmd: string, args: string[], _?: any): any {
     const key = cmd + " " + args.join(" ");
 
     const result = FakeCliExeca.entries.get(key);
@@ -21,7 +21,7 @@ export class FakeCliExeca extends CliExeca {
     });
   }
 
-  getAsync(cmd: string, args: string[], opts?: any): Promise<any> {
+  getAsync(cmd: string, args: string[], _?: any): Promise<any> {
     if (["npm"].includes(cmd) && args.includes("view")) {
       return Promise.resolve(
         JSON.stringify({
@@ -36,7 +36,7 @@ export class FakeCliExeca extends CliExeca {
     return Promise.resolve(FakeCliExeca.entries.get(key));
   }
 
-  runSync(cmd: string, args: string[], opts?: any): any {
+  runSync(cmd: string, args: string[], _?: any): any {
     const key = cmd + " " + args.join(" ");
 
     $emit(key);

@@ -3,4 +3,4 @@ platform: express
 architecture: default
 convention: default
 features:
- - babel
+  - babel

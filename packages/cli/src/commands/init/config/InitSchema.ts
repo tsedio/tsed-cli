@@ -37,9 +37,9 @@ export const InitSchema = () => {
             checked: (options: any) => options.platform === PlatformType.KOA || !options.platform
           },
           {
-            label: "Fastify.js (beta)",
-            value: PlatformType.KOA,
-            checked: (options: any) => options.platform === PlatformType.KOA || !options.platform
+            label: "Fastify.js",
+            value: PlatformType.FASTIFY,
+            checked: (options: any) => options.platform === PlatformType.FASTIFY || !options.platform
           }
         ])
         .description("Set the default platform for Ts.ED (Express.js, Koa.js or Fastify.js)")
@@ -233,8 +233,16 @@ export const InitSchema = () => {
                 value: FeatureType.ESLINT
               },
               {
+                label: "Oxlint",
+                value: FeatureType.OXLINT
+              },
+              {
                 label: "Prettier",
                 value: FeatureType.PRETTIER
+              },
+              {
+                label: "Oxfmt",
+                value: FeatureType.OXFMT
               },
               {
                 label: "Lint on commit",

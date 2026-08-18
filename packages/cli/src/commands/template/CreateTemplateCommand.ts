@@ -15,11 +15,11 @@ export interface CreateTemplateCmdContext extends RenderDataContext {
   template?: DefineTemplateOptions;
 }
 
-export class CreateTemplateCommand implements CommandProvider {
+export class CreateTemplateCommand implements CommandProvider<CreateTemplateCmdContext> {
   protected projectPackageJson = inject(ProjectPackageJson);
   protected templates = inject(CliTemplatesService);
 
-  async $prompt(data: Partial<CreateTemplateCmdContext>) {
+  async $prompt(data: Partial<CreateTemplateCmdContext>): Promise<PromptQuestion[]> {
     return [
       {
         type: "list",
@@ -37,7 +37,7 @@ export class CreateTemplateCommand implements CommandProvider {
         name: "templateId",
         message: "Select the template to use as base",
         default: data.from,
-        when: (ctx: CreateTemplateCmdContext) => {
+        when: (ctx: Record<string, any>) => {
           return ctx.from === "existing";
         },
         source: () => this.templates.find().map((item) => ({name: item.label, value: item.id}))
@@ -46,7 +46,7 @@ export class CreateTemplateCommand implements CommandProvider {
         type: "confirm",
         name: "override",
         message: "Would you like to override the selected Ts.ED default template?",
-        when: (ctx: CreateTemplateCmdContext) => ctx.from !== "new",
+        when: (ctx: Record<string, any>) => ctx.from !== "new",
         default: !!data.override
       },
       {
@@ -88,7 +88,7 @@ export class CreateTemplateCommand implements CommandProvider {
   }
 }
 
-command({
+command<CreateTemplateCmdContext>({
   token: CreateTemplateCommand,
   name: "template",
   description: "Create a custom template that can be selected in tsed generate command",

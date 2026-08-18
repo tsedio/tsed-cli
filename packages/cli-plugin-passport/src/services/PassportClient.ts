@@ -7,7 +7,7 @@ type PassportPackage = {name: string; description: string; "dist-tags": Record<s
 
 export class PassportClient {
   protected httpClient = inject(CliHttpClient);
-  private cache: PassportPackage[];
+  private cache!: PassportPackage[];
 
   async getPackages() {
     if (!this.cache) {

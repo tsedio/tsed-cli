@@ -76,7 +76,7 @@ export class CliFs extends RealFileSystemHost {
       if (process.env.NODE_ENV === "development") {
         return await import(mod);
       }
-    } catch (er) {}
+    } catch {}
 
     const path = this.findUpFile(root, join("node_modules", mod));
 

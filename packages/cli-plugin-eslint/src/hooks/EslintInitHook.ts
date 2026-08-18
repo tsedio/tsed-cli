@@ -1,6 +1,6 @@
 import {type CliCommandHooks, type InitCmdContext, render, type RenderDataContext} from "@tsed/cli";
 import {PackageManagersModule, ProjectPackageJson, type Task, taskLogger} from "@tsed/cli-core";
-import {inject, injectable, logger} from "@tsed/di";
+import {inject, injectable} from "@tsed/di";
 
 import {TEMPLATE_DIR} from "../utils/templateDir.js";
 
@@ -18,7 +18,6 @@ export class EslintInitHook implements CliCommandHooks {
         data.lintstaged && ".husky/.gitignore",
         data.lintstaged && ".husky/post-commit",
         data.lintstaged && ".husky/pre-commit",
-        data.lintstaged && ".lintstagedrc.json",
         data.prettier && ".prettierignore",
         data.prettier && ".prettierrc"
       ]
@@ -101,6 +100,13 @@ export class EslintInitHook implements CliCommandHooks {
             ...data,
             name: "eslint.config"
           });
+        }
+      },
+      {
+        title: "Add lint-staged configuration",
+        skip: !data.lintstaged,
+        task: () => {
+          return render("eslint.lintstagedrc", data);
         }
       }
     ];

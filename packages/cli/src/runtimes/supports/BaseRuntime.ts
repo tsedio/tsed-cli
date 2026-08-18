@@ -7,10 +7,10 @@ export abstract class BaseRuntime {
   readonly order: number = 10;
 
   @Inject(PackageManagersModule)
-  protected packageManagers: PackageManagersModule;
+  protected packageManagers!: PackageManagersModule;
 
   @Inject(CliExeca)
-  protected cliExeca: CliExeca;
+  protected cliExeca!: CliExeca;
 
   get packageManager() {
     return this.packageManagers.get();
@@ -29,7 +29,7 @@ export abstract class BaseRuntime {
       this.cliExeca.runSync(this.cmd, ["--version"]);
 
       return true;
-    } catch (er) {
+    } catch {
       return false;
     }
   }

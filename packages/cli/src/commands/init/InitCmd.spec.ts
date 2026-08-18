@@ -91,8 +91,8 @@ describe("InitCmd", () => {
       root: ".",
       projectName: "project",
       features: [],
-      runtime: "node",
-      packageManager: "npm"
+      runtime: "bun",
+      packageManager: "bun"
     });
 
     expect(mapped.runtime).toEqual("bun");

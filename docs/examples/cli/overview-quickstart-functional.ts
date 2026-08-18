@@ -31,7 +31,7 @@ export const InteractiveWelcome = command<WelcomeContext>({
   name: "interactive:welcome",
   description: "Guide developers through project bootstrap with prompts and tasks",
   inputSchema: WelcomeSchema,
-  async handler(context): Promise<Task<WelcomeContext>[]> {
+  async handler(): Promise<Task<WelcomeContext>[]> {
     const cliExeca = inject(CliExeca);
 
     return [

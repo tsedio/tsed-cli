@@ -1,10 +1,24 @@
 {
   "name": "@tsed/cli-mcp",
-  "description": "MCP CLI for Ts.ED.",
   "version": "7.0.0-alpha.6",
+  "description": "MCP CLI for Ts.ED.",
+  "keywords": [
+    "Ts.ED",
+    "api",
+    "cli",
+    "decorators",
+    "express",
+    "framework",
+    "rest",
+    "typescript"
+  ],
+  "source": "./src/index.ts",
+  "files": [
+    "lib",
+    "templates"
+  ],
   "type": "module",
   "main": "./lib/esm/index.js",
-  "source": "./src/index.ts",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {
@@ -15,53 +29,27 @@
       "default": "./lib/esm/index.js"
     }
   },
+  "publishConfig": {
+    "tag": "deprecated"
+  },
   "scripts": {
     "build": "yarn build:ts",
     "build:ts": "tsc --build tsconfig.esm.json",
     "test": "vitest run",
     "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
-  "files": [
-    "lib",
-    "templates"
-  ],
-  "keywords": [
-    "Ts.ED",
-    "cli",
-    "typescript",
-    "framework",
-    "rest",
-    "api",
-    "express",
-    "decorators"
-  ],
-  "engines": {
-    "node": ">=14"
-  },
   "dependencies": {
-    "@modelcontextprotocol/sdk": ">=1.26.0",
-    "@tsed/cli-core": "workspace:*",
-    "@tsed/core": ">=8.21.0",
-    "@tsed/di": ">=8.21.0",
-    "@tsed/hooks": ">=8.21.0",
+    "@modelcontextprotocol/node": "^2.0.0",
+    "@modelcontextprotocol/server": "^2.0.0",
+    "@tsed/core": ">=8.38.0",
+    "@tsed/di": ">=8.38.0",
+    "@tsed/hooks": ">=8.38.0",
+    "@tsed/json-mapper": ">=8.38.0",
     "@tsed/logger": ">=8.0.3",
     "@tsed/logger-std": ">=8.0.3",
-    "@tsed/normalize-path": ">=8.21.0",
-    "@tsed/openspec": ">=8.21.0",
-    "@tsed/schema": ">=8.21.0",
-    "chalk": "^5.3.0",
-    "change-case": "^5.4.4",
-    "consolidate": "^1.0.4",
-    "create-frame": "^1.0.0",
-    "fs-extra": "^11.2.0",
-    "globby": "^14.0.2",
-    "json-schema-to-zod": "^2.8.1",
-    "read-pkg-up": "^11.0.0",
-    "rxjs": "^7.8.1",
-    "semver": "^7.6.3",
-    "ts-morph": "27.0.0",
-    "tslib": "^2.7.0",
-    "zod": "^4.3.6"
+    "@tsed/platform-mcp": ">=8.38.0",
+    "@tsed/schema": ">=8.38.0",
+    "tslib": "^2.7.0"
   },
   "devDependencies": {
     "@swc-node/register": "^1.10.9",
@@ -72,7 +60,7 @@
     "@types/consolidate": "0.14.4",
     "cross-env": "7.0.3",
     "express": "5.1.0",
-    "typescript": "5.6.2",
+    "typescript": "6.0.3",
     "vitest": "4.1.0"
   },
   "peerDependencies": {
@@ -106,5 +94,9 @@
     "@tsed/schema": {
       "optional": false
     }
-  }
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "deprecated": "This package is deprecated. Use @tsed/platform-mcp/cli instead."
 }

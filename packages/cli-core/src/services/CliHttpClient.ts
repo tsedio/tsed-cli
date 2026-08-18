@@ -15,7 +15,7 @@ export interface CliHttpClientOptions extends AxiosRequestConfig, Record<string,
 
 export class CliHttpClient extends CliHttpLogClient {
   protected cliProxyAgent = inject(CliProxyAgent);
-  protected host: string;
+  protected host?: string;
   private proxySettingsInitialized = false;
   private proxySettingsPromise?: Promise<void>;
 
@@ -73,7 +73,7 @@ export class CliHttpClient extends CliHttpLogClient {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        ...(options.headers || {})
+        ...options.headers
       }
     };
 

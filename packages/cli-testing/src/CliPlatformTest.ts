@@ -1,7 +1,6 @@
 import "@tsed/logger-std";
 
 import {
-  CliCore,
   CliExeca,
   CliFs,
   CliHttpClient,
@@ -18,7 +17,6 @@ import {
   resolveConfiguration,
   type TokenProvider
 } from "@tsed/cli-core";
-import {Type} from "@tsed/core";
 import {DIContext, inject, runInContext} from "@tsed/di";
 import {$asyncEmit} from "@tsed/hooks";
 import {v4} from "uuid";
@@ -45,11 +43,13 @@ export class CliPlatformTest extends DITest {
         rootDir: options.rootDir || "./project-name",
         srcDir: "src",
         scriptsDir: "scripts",
-        ...(options.project || {})
+        ...options.project
       },
       disableReadUpPkg: true,
       ...options
     });
+
+    injector().settings.set("lazyProviders", true);
 
     CliPlatformTest.createInjector(options);
 
@@ -101,6 +101,8 @@ export class CliPlatformTest extends DITest {
 
     CliPlatformTest.createInjector(options);
 
+    injector().settings.set("lazyProviders", true);
+
     await injector().load();
   }
 
@@ -117,7 +119,7 @@ export class CliPlatformTest extends DITest {
       project: {
         rootDir: "./tmp",
         srcDir: "src",
-        ...(options.project || {})
+        ...options.project
       },
       disableReadUpPkg: true
     });

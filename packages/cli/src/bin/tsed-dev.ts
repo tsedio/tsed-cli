@@ -1,5 +1,4 @@
 import {spawn} from "node:child_process";
-import {existsSync} from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import {fileURLToPath, pathToFileURL} from "node:url";
@@ -79,12 +78,6 @@ export function shouldIgnoreWatchFile(file: string | undefined, watcher?: unknow
   const isIgnored = (watcher as WatcherWithIgnored | undefined)?._isIgnored;
 
   return typeof isIgnored === "function" ? isIgnored(file) : false;
-}
-
-function assertViteProject() {
-  if (!existsSync(configFile)) {
-    throw new Error("tsed dev is only available for ViteRuntime projects. Missing vite.config.ts in the current directory.");
-  }
 }
 
 async function createViteDevServer() {

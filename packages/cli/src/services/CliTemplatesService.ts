@@ -31,9 +31,7 @@ export type TemplateRenderReturnType = {
 
 export class CliTemplatesService {
   readonly fs = inject(CliFs);
-  // readonly renderedFiles: TemplateRenderReturnType[] = [];
-
-  #customTemplates: DefineTemplateOptions[];
+  #customTemplates!: DefineTemplateOptions[];
 
   get rootDir() {
     return constant("project.rootDir", "");
@@ -68,8 +66,8 @@ export class CliTemplatesService {
 
       let customs = await Promise.all(promises);
       this.#customTemplates = customs
-        .filter((template) => !!template)
-        .map((template: DefineTemplateOptions) => {
+        .filter((template): template is DefineTemplateOptions => !!template)
+        .map((template) => {
           return {
             ...template,
             label: template.label + " (custom)"

@@ -19,7 +19,7 @@ export class WebpackRuntime extends BabelRuntime {
     return [...super.files(), "webpack.config.js"];
   }
 
-  compile(src: string, out: string): string {
+  compile(): string {
     return "tsc && cross-env NODE_ENV=production webpack";
   }
 

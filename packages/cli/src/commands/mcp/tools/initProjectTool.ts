@@ -1,6 +1,6 @@
 import {CliService, ProjectPackageJson} from "@tsed/cli-core";
-import {defineTool} from "@tsed/cli-mcp";
 import {context, inject} from "@tsed/di";
+import {defineTool} from "@tsed/platform-mcp/cli";
 import {s} from "@tsed/schema";
 
 import {CliTemplatesService} from "../../../services/CliTemplatesService.js";

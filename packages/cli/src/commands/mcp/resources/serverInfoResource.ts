@@ -1,6 +1,6 @@
 import {ProjectPackageJson} from "@tsed/cli-core";
-import {defineResource} from "@tsed/cli-mcp";
 import {constant, inject} from "@tsed/di";
+import {defineResource} from "@tsed/platform-mcp/cli";
 
 async function getMcpVersion() {
   try {

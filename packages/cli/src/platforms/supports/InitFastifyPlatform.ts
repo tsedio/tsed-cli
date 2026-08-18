@@ -46,7 +46,7 @@ export class InitFastifyPlatform implements InitBasePlatform {
     };
   }
 
-  devDependencies(ctx: any) {
+  devDependencies() {
     return {
       "@types/content-disposition": "latest"
     };

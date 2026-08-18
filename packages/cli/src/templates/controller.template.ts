@@ -38,8 +38,8 @@ export default defineTemplate({
         when(state) {
           return !!(["controller"].includes(state.type || context.type) || context.route);
         },
-        default: (state: GenerateCmdContext) => {
-          return context.getRoute(state);
+        default: (state: Record<string, any>) => {
+          return context.getRoute(state as GenerateCmdContext);
         }
       }
     ];

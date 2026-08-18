@@ -95,7 +95,7 @@ export class UpdateCmd implements CommandProvider {
   }
 
   private async getAvailableVersions() {
-    const {versions} = await this.npmRegistryClient.info("@tsed/platform-http", 10);
+    const {versions} = (await this.npmRegistryClient.info("@tsed/platform-http", 10)) ?? {versions: {}};
     this.versions = versions;
 
     return Object.keys(versions)

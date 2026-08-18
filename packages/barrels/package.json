@@ -1,20 +1,20 @@
 {
   "name": "@tsed/barrels",
-  "description": "A simple tool to generate barrels for your TypeScript project",
   "version": "7.0.0-alpha.6",
-  "type": "module",
-  "bin": "bin/barrels.js",
+  "description": "A simple tool to generate barrels for your TypeScript project",
   "keywords": [
     "Ts.ED",
     "barrels"
   ],
-  "engines": {
-    "node": ">=20"
+  "bin": "bin/barrels.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/barrels.integration.spec.js"
   },
   "dependencies": {
     "globby": "14.0.2"
   },
-  "scripts": {
-    "test": "node --test test/barrels.integration.spec.js"
+  "engines": {
+    "node": ">=20"
   }
 }

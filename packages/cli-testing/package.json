@@ -1,10 +1,20 @@
 {
   "name": "@tsed/cli-testing",
-  "description": "Utils to test you CLI based on Ts.ED CLI",
   "version": "7.0.0-alpha.6",
+  "description": "Utils to test you CLI based on Ts.ED CLI",
+  "keywords": [
+    "Ts.ED",
+    "api",
+    "cli",
+    "decorators",
+    "express",
+    "framework",
+    "rest",
+    "typescript"
+  ],
+  "source": "./src/index.ts",
   "type": "module",
   "main": "./lib/esm/index.js",
-  "source": "./src/index.ts",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {
@@ -19,16 +29,6 @@
     "build": "yarn build:ts",
     "build:ts": "tsc --build tsconfig.esm.json"
   },
-  "keywords": [
-    "Ts.ED",
-    "cli",
-    "typescript",
-    "framework",
-    "rest",
-    "api",
-    "express",
-    "decorators"
-  ],
   "dependencies": {
     "@tsed/cli-core": "workspace:*",
     "tslib": "2.7.0"
@@ -36,7 +36,7 @@
   "devDependencies": {
     "@tsed/typescript": "workspace:*",
     "cross-env": "7.0.3",
-    "typescript": "5.6.2",
+    "typescript": "6.0.3",
     "vitest": "4.1.0"
   }
 }

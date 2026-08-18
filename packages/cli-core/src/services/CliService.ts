@@ -300,6 +300,7 @@ export class CliService {
    * @param allowUnknownOptions
    */
   private buildOption(subCommand: Command, options: {[key: string]: CommandOpts}, allowUnknownOptions: boolean) {
+    // oxlint-disable-next-line no-unused-vars
     Object.entries(options).reduce((subCommand, [flags, {description, required, customParser, defaultValue, ...options}]) => {
       const fn = (v: any) => {
         return parseOption(v, options);

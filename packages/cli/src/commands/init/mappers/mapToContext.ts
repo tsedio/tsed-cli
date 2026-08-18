@@ -15,8 +15,8 @@ export function mapToContext(options: any): InitOptions {
     }
 
     options[camelCase(base)] = true;
-    type && (options[camelCase(type)] = true);
-    feature && (options[camelCase(feature)] = true);
+    void (type && (options[camelCase(type)] = true));
+    void (feature && (options[camelCase(feature)] = true));
   });
 
   return options;

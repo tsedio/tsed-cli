@@ -1,4 +1,4 @@
-import {defineTool} from "@tsed/cli-mcp";
+import {defineTool} from "@tsed/platform-mcp/cli";
 import {s} from "@tsed/schema";
 
 interface HelloArgs {

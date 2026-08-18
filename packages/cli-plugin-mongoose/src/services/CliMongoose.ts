@@ -1,4 +1,4 @@
-import {ProjectClient, render, type RenderDataContext} from "@tsed/cli";
+import {ProjectClient, render} from "@tsed/cli";
 import {inject, injectable, ProjectPackageJson} from "@tsed/cli-core";
 import {camelCase} from "change-case";
 import {SyntaxKind} from "ts-morph";
@@ -44,7 +44,7 @@ export class CliMongoose {
     return {source, options: defaultExport?.getFirstDescendantByKind(SyntaxKind.ArrayLiteralExpression)};
   }
 
-  updateConfigFile(project: ProjectClient, data: RenderDataContext) {
+  updateConfigFile(project: ProjectClient) {
     const options = project.findConfiguration("config");
     const configFile = project.configSourceFile;
 

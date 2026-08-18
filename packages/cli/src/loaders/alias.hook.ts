@@ -1,4 +1,4 @@
-function generateAliasesResolver(aliases: Record<string, string>, options?: any) {
+function generateAliasesResolver(aliases: Record<string, string>) {
   return (specifier: any, parentModuleURL: any, defaultResolve: any) => {
     if (aliases[specifier]) {
       return defaultResolve(aliases[specifier], parentModuleURL);

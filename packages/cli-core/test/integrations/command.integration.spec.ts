@@ -27,7 +27,7 @@ describe("Command", () => {
       }
     })
     class TestCommand implements CommandProvider {
-      $exec(options: any): Promise<Task[]> {
+      $exec(): Promise<Task[]> {
         return Promise.resolve([]);
       }
     }

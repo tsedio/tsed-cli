@@ -6,6 +6,7 @@ import "./controller.template.js";
 import "./decorator.template.js";
 import "./exception-filter.template.js";
 import "./factory.template.js";
+import "./gitignore.template.js";
 import "./interface.template.js";
 import "./interceptor.template.js";
 import "./middleware.template.js";

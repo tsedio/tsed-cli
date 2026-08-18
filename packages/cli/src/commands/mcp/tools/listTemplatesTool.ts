@@ -1,5 +1,5 @@
-import {defineTool} from "@tsed/cli-mcp";
 import {inject} from "@tsed/di";
+import {defineTool} from "@tsed/platform-mcp/cli";
 import {array, object, string} from "@tsed/schema";
 
 import {CliTemplatesService} from "../../../services/CliTemplatesService.js";

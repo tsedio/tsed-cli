@@ -1,19 +1,47 @@
 {
   "name": "@tsed/cli-root",
-  "version": "7.5.2",
-  "description": "CLI to bootstrap your Ts.ED project",
+  "version": "7.6.0-beta.7",
   "private": true,
+  "description": "CLI to bootstrap your Ts.ED project",
+  "keywords": [
+    "debug",
+    "log",
+    "trace",
+    "ts",
+    "typescript"
+  ],
+  "homepage": "https://github.com/tsedio/tsed-cli",
+  "bugs": {
+    "url": "https://github.com/tsedio/tsed-cli/issues"
+  },
+  "license": "MIT",
+  "author": "Romain Lenzotti",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tsedio/tsed-cli.git"
+  },
+  "directories": {
+    "test": "test",
+    "packages": "packages"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "tools/*"
+    ]
+  },
   "type": "module",
   "scripts": {
     "postinstall": "cd docs && yarn install",
     "configure": "monorepo ci configure",
     "clean": "monorepo clean workspace",
     "test": "vitest run",
-    "lint": "eslint '**/*.{ts,js}'",
-    "lint:fix": "eslint '**/*.{ts,js}' --fix",
+    "lint": "oxlint && oxfmt --check",
+    "lint:fix": "oxlint --fix && oxfmt --write",
+    "format": "oxfmt --check",
+    "format:fix": "oxfmt --write",
     "build": "monorepo build --verbose",
     "build:references": "node ./tools/typescript",
-    "build:eslint": "node ./tools/eslint",
     "build:vitest": "node ./tools/vitest/install.js",
     "sync:packages": "monorepo sync packages",
     "api:build": "rm -rf ./docs/api && tsc -b && tsdoc && cd docs && yarn docs:build:ai",
@@ -28,32 +56,15 @@
     "release:dryRun": "semantic-release --dry-run",
     "prepare": "is-ci || husky install"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tsedio/tsed-cli.git"
-  },
-  "keywords": [
-    "ts",
-    "log",
-    "debug",
-    "typescript",
-    "trace"
-  ],
-  "author": "Romain Lenzotti",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/tsedio/tsed-cli/issues"
-  },
-  "homepage": "https://github.com/tsedio/tsed-cli",
   "dependencies": {
     "@clack/prompts": "^1.0.0-alpha.10",
-    "@tsed/core": ">=8.21.0",
-    "@tsed/di": ">=8.21.0",
+    "@tsed/core": ">=8.38.0",
+    "@tsed/di": ">=8.38.0",
     "@tsed/logger": ">=8.0.3",
     "@tsed/logger-std": ">=8.0.3",
-    "@tsed/normalize-path": ">=8.21.0",
-    "@tsed/openspec": ">=8.21.0",
-    "@tsed/schema": ">=8.21.0",
+    "@tsed/normalize-path": ">=8.38.0",
+    "@tsed/openspec": ">=8.38.0",
+    "@tsed/schema": ">=8.38.0",
     "axios": "^1.7.7",
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
@@ -63,9 +74,9 @@
     "fs-extra": "^11.2.0",
     "js-yaml": "^4.1.0",
     "lerna": "^8.1.8",
-    "read-pkg-up": "^11.0.0",
+    "read-package-up": "^12.0.0",
     "registry-auth-token": "^5.1.0",
-    "registry-url": "^6.0.1",
+    "registry-url": "^7.2.0",
     "rxjs": "^7.8.1",
     "semver": "7.6.3",
     "split": "^1.0.1",
@@ -78,50 +89,31 @@
     "@swc/core": "1.7.26",
     "@swc/helpers": "0.5.13",
     "@tsed/markdown-it-symbols": "3.20.8",
-    "@tsed/monorepo-utils": "3.0.0",
+    "@tsed/monorepo-utils": "3.2.3",
     "@tsed/ts-doc": "5.0.4",
-    "@types/node": "22.7.4",
-    "@typescript-eslint/eslint-plugin": "8.56.1",
-    "@typescript-eslint/parser": "8.56.1",
+    "@types/node": "^24.1.0",
     "@vitest/coverage-v8": "4.1.0",
-    "@vitest/eslint-plugin": "1.6.9",
     "concurrently": "9.0.1",
     "cross-env": "7.0.3",
-    "eslint": "9.39.4",
-    "eslint-config-prettier": "10.1.8",
-    "eslint-plugin-prettier": "5.5.5",
-    "eslint-plugin-simple-import-sort": "12.1.1",
-    "eslint-plugin-workspaces": "0.12.1",
     "gflow": "^5.1.4",
-    "globals": "17.4.0",
     "husky": "9.1.6",
     "is-ci": "3.0.1",
     "lint-staged": "15.2.10",
     "markdown-it": "14.1.0",
-    "prettier": "3.8.1",
+    "oxfmt": "latest",
+    "oxlint": "latest",
     "semantic-release": "24.1.2",
     "semantic-release-slack-bot": "4.0.2",
     "ts-node": "^10.9.2",
-    "typescript": "5.6.2",
+    "typescript": "6.0.3",
     "vitest": "4.1.0"
   },
-  "directories": {
-    "packages": "packages",
-    "test": "test"
-  },
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "tools/*"
-    ],
-    "nohoist": [
-      "read-pkg-up"
-    ]
-  },
+  "packageManager": "yarn@4.18.0",
   "monorepo": {
     "productionBranch": "master",
     "developBranch": "master",
     "npmAccess": "public",
+    "trustedPublishing": true,
     "ignoreSyncDependencies": [],
     "ghpages": [
       {
@@ -132,6 +124,5 @@
         "if": "master"
       }
     ]
-  },
-  "packageManager": "yarn@4.7.0"
+  }
 }

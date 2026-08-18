@@ -1,6 +1,6 @@
 import {ProjectPackageJson, validate} from "@tsed/cli-core";
-import {defineTool} from "@tsed/cli-mcp";
 import {inject} from "@tsed/di";
+import {defineTool} from "@tsed/platform-mcp/cli";
 import {array, number, object, string} from "@tsed/schema";
 
 import {CliProjectService} from "../../../services/CliProjectService.js";

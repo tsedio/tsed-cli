@@ -1,5 +1,5 @@
-import {Prompt} from "@tsed/cli-mcp";
 import {Injectable} from "@tsed/di";
+import {Prompt} from "@tsed/platform-mcp/cli";
 import {Description, s} from "@tsed/schema";
 
 @Injectable()

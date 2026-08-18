@@ -45,7 +45,7 @@ export class FakeCliFs implements FileSystemHost {
           return fs.readFileSync(file, encoding) as any as string;
         }
       }
-    } catch (er) {}
+    } catch {}
 
     const standardizedFilePath = this.normalizePath(file);
     const parentDir = this.normalizePath(dirname(standardizedFilePath));
@@ -64,13 +64,13 @@ export class FakeCliFs implements FileSystemHost {
     return fileText;
   }
 
-  async readJson(file: string | Buffer | number, encoding?: any): Promise<string> {
+  async readJson(file: string | Buffer | number, encoding?: any): Promise<any> {
     const content = await this.readFile(file, encoding);
 
     return content ? JSON.parse(content) : {};
   }
 
-  readJsonSync(file: string | Buffer | number, encoding?: any): Promise<string> {
+  readJsonSync(file: string | Buffer | number, encoding?: any): any {
     const content = this.readFileSync(file, encoding);
 
     return content ? JSON.parse(content) : {};
@@ -84,7 +84,7 @@ export class FakeCliFs implements FileSystemHost {
     this.writeFileSync(file, JSON.stringify(data, null, 2), options || ({encoding: "utf8"} as any));
   }
 
-  writeFileSync(path: PathLike | number, data: any, options?: WriteFileOptions): void {
+  writeFileSync(path: PathLike | number, data: any, _?: WriteFileOptions): void {
     path = this.normalizePath(path) as string;
 
     this.mkdirSync(dirname(path));
@@ -103,7 +103,7 @@ export class FakeCliFs implements FileSystemHost {
     return Promise.resolve();
   }
 
-  ensureDirSync(path: string, options?: EnsureDirOptions | number) {
+  ensureDirSync(path: string, _?: EnsureDirOptions | number) {
     this.mkdirSync(this.normalizePath(path));
     FakeCliFs.files.set(this.normalizePath(path), path);
   }

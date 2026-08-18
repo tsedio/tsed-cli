@@ -1,10 +1,10 @@
 {
   "name": "@tsed/cli-plugin-typeorm",
-  "description": "Ts.ED CLI plugin. Add TypeORM support",
   "version": "7.0.0-alpha.6",
+  "description": "Ts.ED CLI plugin. Add TypeORM support",
+  "source": "./src/index.ts",
   "type": "module",
   "main": "./lib/esm/index.js",
-  "source": "./src/index.ts",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {
@@ -30,7 +30,7 @@
     "@tsed/cli-core": "workspace:*",
     "@tsed/typescript": "workspace:*",
     "cross-env": "7.0.3",
-    "typescript": "5.6.2",
+    "typescript": "6.0.3",
     "vitest": "4.1.0"
   }
 }

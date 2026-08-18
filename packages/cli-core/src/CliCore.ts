@@ -82,7 +82,7 @@ export class CliCore {
         rootDir: this.getProjectRoot(argv),
         srcDir: "src",
         scriptsDir: "scripts",
-        ...(settings.project || {})
+        ...settings.project
       }
     }).bootstrap();
   }
@@ -107,7 +107,11 @@ export class CliCore {
   async bootstrap() {
     try {
       const cliService = inject(CliService);
-      constant("plugins") && (await loadPlugins());
+      if (constant("plugins")) {
+        await loadPlugins();
+      }
+
+      injector().settings.set("lazyProviders", true);
 
       await injector().load();
       await $asyncEmit("$afterInit");
@@ -123,7 +127,7 @@ export class CliCore {
         return this;
       }
 
-      throw new CliError({origin: er, cli: this});
+      throw new CliError({origin: er instanceof Error ? er : new Error(String(er)), cli: this});
     }
 
     return this;

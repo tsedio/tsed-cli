@@ -1,4 +1,4 @@
-import {log, progress, spinner, taskLog} from "@clack/prompts";
+import {progress} from "@clack/prompts";
 
 async function extracted() {
   // const log1 = taskLog({title: "Starting task..."});

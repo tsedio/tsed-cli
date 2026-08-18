@@ -57,8 +57,10 @@ export interface RenderDataContext extends CommandData, TsED.RenderDataContext {
   testing?: boolean;
   commands?: boolean;
   eslint?: boolean;
+  oxlint?: boolean;
   jest?: boolean;
   prettier?: boolean;
+  oxfmt?: boolean;
   vitest?: boolean;
   lintstaged?: boolean;
   prisma?: boolean;

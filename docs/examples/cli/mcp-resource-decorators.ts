@@ -1,5 +1,5 @@
-import {Resource} from "@tsed/cli-mcp";
 import {Injectable} from "@tsed/di";
+import {Resource} from "@tsed/platform-mcp/cli";
 
 @Injectable()
 export class ChangelogResource {

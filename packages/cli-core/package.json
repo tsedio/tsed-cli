@@ -1,10 +1,20 @@
 {
   "name": "@tsed/cli-core",
-  "description": "Build your CLI with TypeScript and Decorators",
   "version": "7.0.0-alpha.6",
+  "description": "Build your CLI with TypeScript and Decorators",
+  "keywords": [
+    "api",
+    "clack",
+    "cli",
+    "commander.js",
+    "decorators",
+    "framework",
+    "prompts",
+    "typescript"
+  ],
+  "source": "./src/index.ts",
   "type": "module",
   "main": "./lib/esm/index.js",
-  "source": "./src/index.ts",
   "module": "./lib/esm/index.js",
   "typings": "./lib/types/index.d.ts",
   "exports": {
@@ -21,16 +31,6 @@
     "test": "vitest run",
     "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
-  "keywords": [
-    "cli",
-    "typescript",
-    "framework",
-    "api",
-    "decorators",
-    "commander.js",
-    "prompts",
-    "clack"
-  ],
   "dependencies": {
     "@ts-morph/common": "0.28.0",
     "@tsed/cli-prompts": "workspace:*",
@@ -49,9 +49,9 @@
     "fs-extra": "^11.2.0",
     "globby": "^14.0.2",
     "js-yaml": "^4.1.0",
-    "read-pkg-up": "^11.0.0",
+    "read-package-up": "^12.0.0",
     "registry-auth-token": "^5.1.0",
-    "registry-url": "^6.0.1",
+    "registry-url": "^7.2.0",
     "rxjs": "^7.8.1",
     "semver": "^7.6.3",
     "split": "^1.0.1",
@@ -75,7 +75,7 @@
     "@types/uuid": "10.0.0",
     "cross-env": "7.0.3",
     "deps": "^1.0.0",
-    "typescript": "5.6.2",
+    "typescript": "6.0.3",
     "vitest": "4.1.0"
   },
   "peerDependencies": {

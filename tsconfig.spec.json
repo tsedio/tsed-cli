@@ -1,17 +1,19 @@
 {
   "extends": "@tsed/typescript/tsconfig.node.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "strictPropertyInitialization": false,
     "noEmit": true,
     "composite": false,
     "declarationMap": false,
     "types": ["vitest/globals", "vitest/importMeta", "vite/client", "node", "vitest"],
     "paths": {
       "@tsed/cli": ["./packages/cli/src/index.ts"],
+      "@tsed/cli/bin": ["./packages/cli/src/bin/tsed.ts"],
       "@tsed/cli-core": ["./packages/cli-core/src/index.ts"],
       "@tsed/cli-mcp": ["./packages/cli-mcp/src/index.ts"],
-      "@tsed/cli-testing": ["./packages/cli-testing/src/index.ts"],
+      "@tsed/cli/bin/mcp": ["./packages/cli/src/bin/tsed-mcp.ts"],
       "@tsed/cli-prompts": ["./packages/cli-prompts/src/index.ts"],
+      "@tsed/cli-testing": ["./packages/cli-testing/src/index.ts"],
       "@tsed/cli-tasks": ["./packages/cli-tasks/src/index.ts"]
     }
   },
