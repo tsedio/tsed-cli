@@ -3235,7 +3235,7 @@ __metadata:
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/logger-std": "npm:>=8.0.3"
     "@tsed/markdown-it-symbols": "npm:3.20.8"
-    "@tsed/monorepo-utils": "npm:3.2.3"
+    "@tsed/monorepo-utils": "npm:3.3.1"
     "@tsed/normalize-path": "npm:>=8.38.0"
     "@tsed/openspec": "npm:>=8.38.0"
     "@tsed/schema": "npm:>=8.38.0"
@@ -3481,9 +3481,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsed/monorepo-utils@npm:3.2.3":
-  version: 3.2.3
-  resolution: "@tsed/monorepo-utils@npm:3.2.3"
+"@tsed/monorepo-utils@npm:3.3.1":
+  version: 3.3.1
+  resolution: "@tsed/monorepo-utils@npm:3.3.1"
   dependencies:
     "@samverschueren/stream-to-observable": "npm:>=0.3.1"
     "@typescript-eslint/typescript-estree": "npm:>=6.20.0"
@@ -3511,7 +3511,7 @@ __metadata:
     semantic-release: ">=19"
   bin:
     monorepo: bin/monorepo.js
-  checksum: 10/9497364b5c9f0ede7f6826588f34dcc039bb1dd6c4a701c120eb3005c8ea93197d24df18f94739d8a1d0f725323569accf5859d12e42f24514a6e9337544a4a9
+  checksum: 10/6f518498be082872a487dae742863ab57722c1be90b9e59e46a608fb55f7853bab60b2a429babd5154c14f95bbc6a6c2eb8f46bcd2e7349f5010fd2c4854cd46
   languageName: node
   linkType: hard
 
