@@ -75,9 +75,9 @@ export function shouldIgnoreWatchFile(file: string | undefined, watcher?: unknow
     return true;
   }
 
-  const isIgnored = (watcher as WatcherWithIgnored | undefined)?._isIgnored;
+  const watcherWithIgnored = watcher as WatcherWithIgnored | undefined;
 
-  return typeof isIgnored === "function" ? isIgnored(file) : false;
+  return typeof watcherWithIgnored?._isIgnored === "function" ? watcherWithIgnored._isIgnored(file) : false;
 }
 
 async function createViteDevServer() {
