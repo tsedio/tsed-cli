@@ -9,9 +9,40 @@ const {readFile} = fsExtra;
 const markdownProcessor = unified().use(remarkParse).use(remarkStringify, {fences: true, bullet: "-"}).use(remarkCleanApiMarkdown);
 const INLINE_SNIPPET_RE = /^<<<\s+@\/([^\s]+?)(?:\s+\[(.+?)\])?\s*$/gm;
 const SYMBOL_TOKEN_RE = /@@([A-Za-z0-9_.-]+)@@/g;
-const symbolIndexCache = new Map();
 
-export async function transformMarkdown(content, options = {}) {
+interface ApiData {
+  modules?: Record<string, ApiModule>;
+}
+
+interface ApiModule {
+  symbols?: ApiSymbol[];
+}
+
+interface ApiSymbol {
+  path?: string;
+  symbolName: string;
+}
+
+interface ExampleBlock {
+  end: number;
+  label: string;
+  original: string;
+  relativePath: string;
+  start: number;
+}
+
+interface HeadingInfo {
+  module: string;
+  title: string;
+}
+
+const symbolIndexCache = new Map<string, Map<string, ApiSymbol>>();
+
+export interface TransformMarkdownOptions {
+  docsRoot?: string;
+}
+
+export async function transformMarkdown(content: string, options: TransformMarkdownOptions = {}) {
   const {docsRoot} = options;
   let nextContent = content;
 
@@ -26,8 +57,8 @@ export async function transformMarkdown(content, options = {}) {
   return frontmatter ? `${frontmatter}\n${cleanedBody}` : cleanedBody;
 }
 
-async function inlineExampleBlocks(content, docsRoot) {
-  const matches = [];
+async function inlineExampleBlocks(content: string, docsRoot: string) {
+  const matches: ExampleBlock[] = [];
   let match;
 
   while ((match = INLINE_SNIPPET_RE.exec(content)) !== null) {
@@ -57,9 +88,9 @@ async function inlineExampleBlocks(content, docsRoot) {
   return result;
 }
 
-async function replaceSymbolLinks(content, docsRoot) {
+async function replaceSymbolLinks(content: string, docsRoot: string) {
   const index = await loadSymbolIndex(docsRoot);
-  return content.replace(SYMBOL_TOKEN_RE, (match, symbolName) => {
+  return content.replace(SYMBOL_TOKEN_RE, (match: string, symbolName: string) => {
     const entry = index.get(symbolName);
 
     if (!entry) {
@@ -71,17 +102,18 @@ async function replaceSymbolLinks(content, docsRoot) {
   });
 }
 
-async function loadSymbolIndex(docsRoot) {
-  if (symbolIndexCache.has(docsRoot)) {
-    return symbolIndexCache.get(docsRoot);
+async function loadSymbolIndex(docsRoot: string) {
+  const cachedIndex = symbolIndexCache.get(docsRoot);
+  if (cachedIndex) {
+    return cachedIndex;
   }
 
   const apiPath = join(docsRoot, "public/api.json");
-  const data = JSON.parse(await readFile(apiPath, "utf8"));
-  const map = new Map();
+  const data = JSON.parse(await readFile(apiPath, "utf8")) as ApiData;
+  const map = new Map<string, ApiSymbol>();
 
-  Object.values(data.modules ?? {}).forEach((module) => {
-    module.symbols?.forEach((symbol) => {
+  Object.values(data.modules ?? {}).forEach((module: ApiModule) => {
+    module.symbols?.forEach((symbol: ApiSymbol) => {
       if (symbol.symbolName && symbol.path) {
         map.set(symbol.symbolName, symbol);
       }
@@ -92,7 +124,7 @@ async function loadSymbolIndex(docsRoot) {
   return map;
 }
 
-async function loadSnippetBlock(entry, docsRoot) {
+async function loadSnippetBlock(entry: ExampleBlock, docsRoot: string) {
   const absolutePath = join(docsRoot, entry.relativePath);
 
   try {
@@ -101,20 +133,22 @@ async function loadSnippetBlock(entry, docsRoot) {
     const labelSuffix = entry.label ? ` [${entry.label}]` : "";
     return `\`\`\`${language}${labelSuffix}\n${code.trimEnd()}\n\`\`\``;
   } catch (error) {
-    console.warn(`[build-llm-contents] Unable to inline snippet ${absolutePath}: ${error.message}`);
+    console.warn(
+      `[build-llm-contents] Unable to inline snippet ${absolutePath}: ${error instanceof Error ? error.message : String(error)}`
+    );
     return entry.original;
   }
 }
 
-function getLanguageFromExtension(extension) {
+function getLanguageFromExtension(extension: string) {
   return extension ? extension.replace(/^\./, "") : "";
 }
 
 function remarkCleanApiMarkdown() {
-  return (tree) => {
-    let headingInfo;
+  return (tree: any) => {
+    let headingInfo: HeadingInfo | undefined;
 
-    tree.children = tree.children.filter((node) => {
+    tree.children = tree.children.filter((node: any) => {
       if (node.type === "html") {
         const trimmed = node.value.trim();
 
@@ -143,14 +177,14 @@ function remarkCleanApiMarkdown() {
         ]
       };
 
-      const insertIndex = tree.children.findIndex((node) => node.type !== "yaml");
+      const insertIndex = tree.children.findIndex((node: any) => node.type !== "yaml");
       const targetIndex = insertIndex === -1 ? tree.children.length : insertIndex;
       tree.children.splice(targetIndex, 0, headingNode);
     }
   };
 }
 
-function extractFrontmatter(content) {
+function extractFrontmatter(content: string) {
   if (!content.startsWith("---")) {
     return {frontmatter: "", body: content};
   }
@@ -167,7 +201,7 @@ function extractFrontmatter(content) {
   return {frontmatter, body};
 }
 
-function extractHeading(value) {
+function extractHeading(value: string): HeadingInfo {
   const titleMatch = value.match(/<h1>([\s\S]*?)<\/h1>/i);
   const moduleMatch = value.match(/<div class="module-name">([\s\S]*?)<\/div>/i);
 

@@ -53,6 +53,16 @@ describe("TypeORM: Init cmd", () => {
     expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
       [
         "project-name",
+        "project-name/.agents/skills/docker",
+        "project-name/.agents/skills/docker/SKILL.md",
+        "project-name/.agents/skills/express",
+        "project-name/.agents/skills/express/SKILL.md",
+        "project-name/.agents/skills/node",
+        "project-name/.agents/skills/node/SKILL.md",
+        "project-name/.agents/skills/tsed",
+        "project-name/.agents/skills/tsed/SKILL.md",
+        "project-name/.agents/skills/typeorm",
+        "project-name/.agents/skills/typeorm/SKILL.md",
         "project-name/.barrels.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",
@@ -129,6 +139,16 @@ describe("TypeORM: Init cmd", () => {
     expect(FakeCliFs.getKeys()).toMatchInlineSnapshot(`
       [
         "project-name",
+        "project-name/.agents/skills/docker",
+        "project-name/.agents/skills/docker/SKILL.md",
+        "project-name/.agents/skills/express",
+        "project-name/.agents/skills/express/SKILL.md",
+        "project-name/.agents/skills/node",
+        "project-name/.agents/skills/node/SKILL.md",
+        "project-name/.agents/skills/tsed",
+        "project-name/.agents/skills/tsed/SKILL.md",
+        "project-name/.agents/skills/typeorm",
+        "project-name/.agents/skills/typeorm/SKILL.md",
         "project-name/.barrels.json",
         "project-name/.dockerignore",
         "project-name/.gitignore",

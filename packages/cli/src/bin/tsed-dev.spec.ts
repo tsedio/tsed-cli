@@ -44,6 +44,17 @@ describe("tsed-dev", () => {
       ).toBe(true);
     });
 
+    it("should preserve the Vite watcher context when checking ignored files", () => {
+      expect(
+        shouldIgnoreWatchFile("/project/.swp", {
+          options: {atomic: true},
+          _isIgnored(this: {options: {atomic: boolean}}, file: string) {
+            return this.options.atomic && file.endsWith(".swp");
+          }
+        })
+      ).toBe(true);
+    });
+
     it("should keep non-ignored files watchable", () => {
       expect(
         shouldIgnoreWatchFile("/project/server/index.ts", {
