@@ -832,7 +832,7 @@ __metadata:
     tailwindcss: "npm:3.4.4"
     unified: "npm:^9.2.2"
     vitepress: "npm:1.6.4"
-    vitepress-plugin-llms: "npm:^1.13.5"
+    vitepress-plugin-llms: "npm:1.13.5"
   languageName: unknown
   linkType: soft
 
@@ -4479,7 +4479,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitepress-plugin-llms@npm:^1.13.5":
+"vitepress-plugin-llms@npm:1.13.5":
   version: 1.13.5
   resolution: "vitepress-plugin-llms@npm:1.13.5"
   dependencies:
