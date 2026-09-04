@@ -2,11 +2,16 @@
 import {apiAnchor} from "@tsed/vitepress-theme/markdown/api-anchor/api-anchor.js";
 import {defineConfig} from "vitepress";
 import pkg from "../../package.json" with {type: "json"};
-import referenceSidebar from "../public/reference-sidebar.json" with {type: "json"};
 import team from "../team.json" with {type: "json"};
 import llmstxt from "vitepress-plugin-llms";
 import {apiLlmLinks} from "./plugins/apiLllmLinks.js";
 import {buildLlmContentsPlugin} from "./plugins/buildLlmContents.js";
+import {getSidebar} from "./plugins/utils/sidebar.js";
+
+const apiSidebar = {
+  coreModulePattern: /cli-core|@tsed\/cli|cli-tasks|cli-prompts|cli-testing/,
+  coreModules: ["cli-core"]
+};
 
 const Introduction = [
   {
@@ -94,10 +99,7 @@ export default defineConfig({
             label: "API references"
           }
         ],
-        sidebar: {
-          coreModulePattern: /cli-core|@tsed\/cli|cli-tasks|cli-prompts|cli-testing/,
-          coreModules: ["cli-core"]
-        }
+        sidebar: apiSidebar
       }),
       apiLlmLinks,
       llmstxt({
@@ -198,7 +200,7 @@ export default defineConfig({
       "/guide/cli/": CliGuide,
       // "/docs/": Docs,
       // "/plugins/": Plugins,
-      "/api/": referenceSidebar
+      "/api/": getSidebar(apiSidebar)
     } as any,
     socialLinks: [
       {
