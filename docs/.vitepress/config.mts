@@ -1,9 +1,12 @@
 // @ts-ignore
 import {apiAnchor} from "@tsed/vitepress-theme/markdown/api-anchor/api-anchor.js";
 import {defineConfig} from "vitepress";
-import pkg from "../../package.json";
-import referenceSidebar from "../public/reference-sidebar.json";
-import team from "../team.json";
+import pkg from "../../package.json" with {type: "json"};
+import referenceSidebar from "../public/reference-sidebar.json" with {type: "json"};
+import team from "../team.json" with {type: "json"};
+import llmstxt from "vitepress-plugin-llms";
+import {apiLlmLinks} from "./plugins/apiLllmLinks.js";
+import {buildLlmContentsPlugin} from "./plugins/buildLlmContents.js";
 
 const Introduction = [
   {
@@ -71,6 +74,39 @@ const Releases = [
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Ts.ED CLI a modern Node.js/Bun.js framework built with TypeScript to create interactive CLI applications",
+  vite: {
+    plugins: [
+      buildLlmContentsPlugin({
+        sections: [
+          {
+            source: "guide",
+            destination: "public/ai/guides",
+            label: "Guides"
+          },
+          {
+            source: "introduction",
+            destination: "public/ai/introduction",
+            label: "Introduction"
+          },
+          {
+            source: "api",
+            destination: "public/ai/api",
+            label: "API references"
+          }
+        ],
+        sidebar: {
+          coreModulePattern: /cli-core|@tsed\/cli|cli-tasks|cli-prompts|cli-testing/,
+          coreModules: ["cli-core"]
+        }
+      }),
+      apiLlmLinks,
+      llmstxt({
+        ignoreFilesPerOutput: {
+          llmsTxt: ["api/**"]
+        }
+      })
+    ]
+  },
   lastUpdated: true,
   description:
     "Ts.ED offers a flexible and easy-to-learn structure designed to enhance the developer experience. It provides decorators, guidelines, and supports Node.js, Bun.js, Express.js, Koa.js, Fastify.js, CLI, and serverless architectures (e.g., AWS).",

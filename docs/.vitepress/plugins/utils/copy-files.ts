@@ -8,7 +8,22 @@ import {transformMarkdown} from "./markdown.js";
 
 const {copy, ensureDir, pathExists, readFile, remove, writeFile} = fsExtra;
 
-export async function copyFiles({cwd, src, dest, label}) {
+export interface CopyFilesOptions {
+  cwd: string;
+  dest: string;
+  label: string;
+  src: string;
+}
+
+interface CopyFileOptions {
+  cwd: string;
+  destinationRoot: string;
+  progressLogger: Pick<ReturnType<typeof progress>, "advance" | "stop">;
+  relativePath: string;
+  sourceRoot: string;
+}
+
+export async function copyFiles({cwd, src, dest, label}: CopyFilesOptions) {
   const sourceDir = join(cwd, src);
   const destinationDir = join(cwd, dest);
 
@@ -50,7 +65,7 @@ export async function copyFiles({cwd, src, dest, label}) {
   return true;
 }
 
-async function copyFile({cwd, sourceRoot, destinationRoot, relativePath, progressLogger}) {
+async function copyFile({cwd, sourceRoot, destinationRoot, relativePath, progressLogger}: CopyFileOptions) {
   const sourcePath = join(sourceRoot, relativePath);
   const destinationPath = join(destinationRoot, relativePath);
 
