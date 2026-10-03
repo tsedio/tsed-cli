@@ -27,7 +27,7 @@ export const setWorkspaceTool = defineTool({
   }),
   outputSchema: s.object({
     cwd: s.string().description("Resolved project root (nearest package.json directory or the provided path)."),
-    packageJson: s.object().optional().description("Resolved package json"),
+    pkg: s.object().optional().description("Resolved package.json content"),
     preferences: ProjectPreferenceSchema
   }),
   async handler(args) {

@@ -56,7 +56,7 @@ export default defineTemplate({
 ```
 
 - Hooks (`$afterCreateSourceFile`) integrate with `ts-morph` to auto-format or inject imports post-generation.
-- `tsed generate template` scaffolds boilerplate TypeScript templates in `.templates/`, replacing legacy Handlebars snippets with native template literals.
+- `tsed template` scaffolds boilerplate TypeScript templates in `.templates/`, replacing legacy Handlebars snippets with native template literals.
 
 Templates currently target the functional API exclusively; decorate classes aren’t required.
 
