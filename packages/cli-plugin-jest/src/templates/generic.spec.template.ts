@@ -8,12 +8,13 @@ export default defineTemplate({
   hidden: true,
 
   render(symbolName: string, data: GenerateCmdContext) {
-    return `import { PlatformTest, inject } from "@tsed/platform-http/testing";
+    return `import { inject } from "@tsed/di";
+import { PlatformTest } from "@tsed/platform-http/testing";
 import { ${symbolName} } from "./${data.symbolPathBasename}.js";
 
 describe("${symbolName}", () => {
-  beforeEach(PlatformTest.create);
-  afterEach(PlatformTest.reset);
+  beforeEach(() => PlatformTest.create());
+  afterEach(() => PlatformTest.reset());
 
   it("should do something", () => {
     const instance = inject(${symbolName});
