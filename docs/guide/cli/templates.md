@@ -23,13 +23,13 @@ export default defineTemplate({
 });
 ```
 
-Run it with `tsed generate service --name Logger`.
+Run it with `tsed generate service Logger`.
 
 ::: tip Need a starting point?
 To scaffold a boilerplate file in `.templates/`, run:
 
 ```bash
-tsed generate template
+tsed template
 ```
 
 :::
