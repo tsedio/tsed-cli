@@ -30,9 +30,9 @@
     "@tsed/cli-core": "workspace:*",
     "@tsed/typescript": "workspace:*",
     "cross-env": "7.0.3",
-    "swagger-typescript-api": "13.6.5",
+    "swagger-typescript-api": "13.12.2",
     "typescript": "6.0.3",
-    "vitest": "4.1.0"
+    "vitest": "4.1.11"
   },
   "peerDependencies": {
     "@tsed/platform-http": ">=7.14.2",
