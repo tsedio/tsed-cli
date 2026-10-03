@@ -1,12 +1,14 @@
 import {PackageManager} from "@tsed/cli-core";
 import {s} from "@tsed/schema";
 
+import {ArchitectureConvention} from "../../../interfaces/ArchitectureConvention.js";
 import {PlatformType} from "../../../interfaces/PlatformType.js";
 import {ProjectConvention} from "../../../interfaces/ProjectConvention.js";
 
 export const ProjectPreferenceSchema = s
   .object({
     convention: s.string().enum(ProjectConvention).description("Project convention (Ts.ED or Angular style)"),
+    architecture: s.string().enum(ArchitectureConvention).description("Directory architecture (by type or by feature)"),
     packageManager: s.string().enum(PackageManager).description("Used project manager to install dependencies"),
     runtime: s
       .string()

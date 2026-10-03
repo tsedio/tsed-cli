@@ -17,6 +17,7 @@ export const projectInfoResource = defineResource({
       isInitialized: !!projectPackage.preferences?.packageManager,
       preferences: {
         convention: projectPackage.preferences.convention,
+        architecture: projectPackage.preferences.architecture,
         packageManager: projectPackage.preferences.packageManager,
         platform: projectPackage.preferences.platform,
         runtime: projectPackage.preferences.runtime
