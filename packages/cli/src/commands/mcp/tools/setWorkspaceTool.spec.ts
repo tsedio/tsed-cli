@@ -18,6 +18,7 @@ describe("setWorkspaceTool", () => {
       cwd: "/project",
       preferences: {
         convention: "conv_default",
+        architecture: "feature",
         packageManager: "yarn",
         platform: "express",
         runtime: "node"
@@ -49,6 +50,7 @@ describe("setWorkspaceTool", () => {
       pkg: {name: "tsed-app"},
       preferences: {
         convention: "conv_default",
+        architecture: "feature",
         packageManager: "yarn",
         platform: "express",
         runtime: "node"

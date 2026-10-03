@@ -50,6 +50,7 @@ export const setWorkspaceTool = defineTool({
           pkg: projectPackage.toJSON(),
           preferences: {
             convention: projectPackage.preferences.convention,
+            architecture: projectPackage.preferences.architecture,
             packageManager: projectPackage.preferences.packageManager,
             platform: projectPackage.preferences.platform,
             runtime: projectPackage.preferences.runtime
