@@ -18,7 +18,6 @@
   "source": "./src/index.ts",
   "files": [
     "lib/esm/bin/tsed.js",
-    "lib/esm/bin/tsed-mcp.js",
     "lib/esm/bin",
     "lib",
     "templates"

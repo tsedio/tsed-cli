@@ -162,4 +162,4 @@ defineTemplate({
 
 ## Using templates via MCP
 
-Any template registered through `defineTemplate()` is automatically exposed to the MCP tooling (`tsed-mcp`, `@tsed/cli-mcp`). Pair templates with schema metadata so AI clients receive structured descriptions and validations without any extra wiring.
+Any template registered through `defineTemplate()` is automatically exposed to the MCP tooling (`tsed mcp`). Pair templates with schema metadata so AI clients receive structured descriptions and validations without any extra wiring.

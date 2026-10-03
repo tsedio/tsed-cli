@@ -26,8 +26,10 @@ CliCore.bootstrap({
   updateNotifier: true,
   checkPrecondition: true,
   commands,
-  tools,
-  resources,
+  mcp: {
+    tools,
+    resources
+  },
   defaultProjectPreferences() {
     return {
       convention: ProjectConvention.DEFAULT,
