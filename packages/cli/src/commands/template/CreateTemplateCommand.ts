@@ -67,7 +67,7 @@ export class CreateTemplateCommand implements CommandProvider<CreateTemplateCmdC
       symbolPath: `./.templates/${symbolName}.template`,
       symbolPathBasename: ".",
       symbolName: symbolName,
-      templateId: ctx.orverride ? ctx.templateId : symbolName,
+      templateId: ctx.override ? ctx.templateId : symbolName,
       template: ctx.templateId && this.templates.get(ctx.templateId)
     };
   }

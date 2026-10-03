@@ -29,7 +29,7 @@ Prefer this schema-first approach over legacy `args`/`options`. See [Command con
 
 ## MCP server baked in
 
-Run `tsed mcp` (or `tsed-mcp`) to expose commands, templates, and resources via the Model Context Protocol. V7 bundles stdio plus streamable HTTP transports, making it easy to point AI tooling at your CLI without shell access.
+Run `tsed mcp` to expose commands, templates, and resources via the Model Context Protocol. V7 bundles stdio plus streamable HTTP transports, making it easy to point AI tooling at your CLI without shell access.
 
 ```bash
 node --import @swc-node/register/esm-register src/bin/index.ts mcp --http

@@ -26,7 +26,34 @@ npm install -g @tsed/cli
 npm install --save-dev @tsed/cli
 ```
 
-The binary exposes `tsed` for classic shell use and `tsed-mcp` for launching the bundled MCP server.
+The package exposes a single `tsed` binary: use it for classic shell commands and run `tsed mcp` to launch the bundled MCP server.
+
+## Connect an AI agent to the MCP server
+
+`tsed mcp` starts the server over stdio (add `--http` for streamable HTTP on `POST /mcp`). It requires Node.js 22 or newer. When the CLI is not installed yet, launch it through `npx` with the package and the binary named separately:
+
+```bash
+npx -y -p @tsed/cli tsed mcp
+```
+
+::: warning
+`npx -y @tsed/cli mcp` fails on a first install because the package name is not the binary name. Always use `-p @tsed/cli tsed mcp`.
+:::
+
+Most MCP clients accept the following declaration (for example in a project `.mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "tsed": {
+      "command": "npx",
+      "args": ["-y", "-p", "@tsed/cli", "tsed", "mcp"]
+    }
+  }
+}
+```
+
+The [Ts.ED agent plugin](https://tsed.dev/introduction/ai/agent-plugins.html) for Claude Code and Codex ships this configuration together with skills for building Ts.ED applications.
 
 ## Bootstrap a project quickly
 

@@ -5,7 +5,7 @@ description: Configure network proxies and environment variables used by the Ts.
 
 # CLI configuration
 
-Most teams can run `tsed` and `tsed-mcp` with zero setup, but locked-down networks sometimes need explicit proxy values. The CLI reuses npm's config files and environment variables, so anything that works for npm also works here.
+Most teams can run `tsed` and `tsed mcp` with zero setup, but locked-down networks sometimes need explicit proxy values. The CLI reuses npm's config files and environment variables, so anything that works for npm also works here.
 
 ## Proxy settings via npm config
 
@@ -32,4 +32,4 @@ When scripting inside CI pipelines (where editing `.npmrc` is inconvenient), exp
 - `NO_PROXY`: comma-separated hostnames to bypass the proxy (useful for `localhost` or internal registries).
 - `NODE_TLS_REJECT_UNAUTHORIZED=0`: opt-out of TLS verification for self-signed certs. Use only in trusted environments.
 
-Because the CLI spins up HTTP clients for prompts, tasks, and MCP transports, make sure whichever method you choose (npm config or env vars) is in place before running `tsed ...` or `tsed-mcp`.
+Because the CLI spins up HTTP clients for prompts, tasks, and MCP transports, make sure whichever method you choose (npm config or env vars) is in place before running `tsed ...` or `tsed mcp`.

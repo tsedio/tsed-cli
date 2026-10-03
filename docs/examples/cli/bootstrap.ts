@@ -8,9 +8,11 @@ CliCore.bootstrap({
   name: "awesome",
   pkg: pkg as PackageJson,
   commands: [InteractiveWelcome],
-  tools: [],
-  resources: [],
-  prompts: [],
+  mcp: {
+    tools: [],
+    resources: [],
+    prompts: []
+  },
   updateNotifier: false,
   checkPrecondition: false,
   logger: {

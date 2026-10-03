@@ -66,6 +66,26 @@ Expose immutable documents or live data streams by registering MCP resources thr
 
 :::
 
+## Register tools, resources, and prompts
+
+The MCP server only exposes the definitions listed under the `mcp` key of the bootstrap configuration. Anything declared at the root of the configuration is ignored:
+
+```ts
+CliCore.bootstrap({
+  name: "awesome",
+  commands: [ServeMcpCommand],
+  mcp: {
+    tools: [helloTool],
+    resources: [changelogResource],
+    prompts: [planPrompt]
+  }
+});
+```
+
+::: warning
+Since `@tsed/platform-mcp` v8.39, `tools`, `resources`, and `prompts` set at the root of the configuration are no longer loaded. A server bootstrapped that way starts but advertises no capabilities.
+:::
+
 ## Wiring transports and authentication
 
 Call @@mcpServerConnect@@ after the CLI bootstrap has initialized the Ts.ED injector to start the shared MCP server with stdio or Streamable HTTP:
