@@ -28,6 +28,10 @@
   "devDependencies": {
     "@tsed/cli": "workspace:*",
     "@tsed/cli-core": "workspace:*",
+    "@tsed/core": ">=8.38.0",
+    "@tsed/di": ">=8.38.0",
+    "@tsed/hooks": ">=8.38.0",
+    "@tsed/logger": ">=8.0.3",
     "@tsed/typescript": "workspace:*",
     "cross-env": "7.0.3",
     "swagger-typescript-api": "13.12.2",
@@ -35,16 +39,24 @@
     "vitest": "4.1.11"
   },
   "peerDependencies": {
-    "@tsed/platform-http": ">=7.14.2",
-    "@tsed/swagger": ">=7.14.2",
-    "swagger-typescript-api": "^9.3.1"
+    "@tsed/cli-core": ">=7.0.0",
+    "@tsed/core": ">=8.38.0",
+    "@tsed/di": ">=8.38.0",
+    "@tsed/platform-express": ">=8.38.0",
+    "@tsed/platform-fastify": ">=8.38.0",
+    "@tsed/platform-koa": ">=8.38.0",
+    "@tsed/swagger": ">=8.38.0",
+    "swagger-typescript-api": ">=13.0.0"
   },
   "peerDependenciesMeta": {
-    "@tsed/swagger": {
-      "optional": false
+    "@tsed/platform-express": {
+      "optional": true
     },
-    "swagger-typescript-api": {
-      "optional": false
+    "@tsed/platform-fastify": {
+      "optional": true
+    },
+    "@tsed/platform-koa": {
+      "optional": true
     }
   }
 }

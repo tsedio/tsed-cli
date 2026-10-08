@@ -11,6 +11,8 @@ register(pathToFileURL(join(import.meta.dirname, `../loaders/alias.hook.${EXT}`)
   data: {
     "@tsed/core": import.meta.resolve("@tsed/core"),
     "@tsed/di": import.meta.resolve("@tsed/di"),
+    "@tsed/hooks": import.meta.resolve("@tsed/hooks"),
+    "@tsed/logger": import.meta.resolve("@tsed/logger"),
     "@tsed/schema": import.meta.resolve("@tsed/schema"),
     "@tsed/cli-core": import.meta.resolve("@tsed/cli-core"),
     "@tsed/cli": import.meta.resolve("@tsed/cli")

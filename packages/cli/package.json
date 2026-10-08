@@ -82,35 +82,11 @@
     "vitest": "4.1.11"
   },
   "peerDependencies": {
-    "@tsed/core": ">=8.0.0",
-    "@tsed/di": ">=8.0.0",
-    "@tsed/hooks": ">=8.0.0",
-    "@tsed/logger": ">=8.0.2",
-    "@tsed/logger-std": ">=8.0.2",
-    "@tsed/openspec": ">=8.0.0",
-    "@tsed/schema": ">=8.0.0"
+    "vite": ">=6.0.0"
   },
   "peerDependenciesMeta": {
-    "@tsed/core": {
-      "optional": false
-    },
-    "@tsed/di": {
-      "optional": false
-    },
-    "@tsed/hooks": {
-      "optional": false
-    },
-    "@tsed/logger": {
-      "optional": false
-    },
-    "@tsed/logger-std": {
-      "optional": false
-    },
-    "@tsed/openspec": {
-      "optional": false
-    },
-    "@tsed/schema": {
-      "optional": false
+    "vite": {
+      "optional": true
     }
   },
   "engines": {
