@@ -15,6 +15,8 @@ declare global {
   }
 }
 
+const UNKNOWN = "unknown";
+
 type InitStatPayload = {
   tsed_version: string;
   platform: string;
@@ -45,12 +47,14 @@ export class CliStats extends CliHttpClient {
         os: os.type(),
         convention: this.projectPackage.preferences.convention === "conv_default" ? "tsed" : "angular",
         style: this.projectPackage.preferences.architecture === "arc_default" ? "tsed" : "feature",
-        platform: this.projectPackage.preferences.platform,
-        package_manager: this.projectPackage.preferences.packageManager,
-        runtime: this.projectPackage.preferences.runtime,
+        // the stats API rejects the payload when a required field is missing or empty,
+        // which happens when the init command fails before the preferences are resolved
+        platform: this.projectPackage.preferences.platform || UNKNOWN,
+        package_manager: this.projectPackage.preferences.packageManager || UNKNOWN,
+        runtime: this.projectPackage.preferences.runtime || UNKNOWN,
         channel: opts.channel || "cli",
-        cli_version: constant<string>("pkg.version", ""),
-        tsed_version: this.projectPackage.dependencies["@tsed/platform-http"]
+        cli_version: constant<string>("pkg.version", "") || UNKNOWN,
+        tsed_version: this.projectPackage.dependencies["@tsed/platform-http"] || UNKNOWN
       } satisfies InitStatPayload;
 
       return this.post("/rest/cli/stats", {
@@ -63,6 +67,11 @@ export class CliStats extends CliHttpClient {
 
   $onFinish(data: {commandName?: string; features?: string[]}, er?: Error) {
     if (data.commandName === "init") {
+      // prevent the bin from reporting the same error a second time
+      if (er) {
+        Object.assign(er, {reported: true});
+      }
+
       const sanitizedMessage = anonymizePaths(er?.message || "");
       const sanitizedStack = anonymizePaths(er?.stack || "");
 

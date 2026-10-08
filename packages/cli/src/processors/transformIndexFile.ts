@@ -1,9 +1,8 @@
-import {ts} from "@ts-morph/common";
 import {pascalCase} from "change-case";
+import {SyntaxKind} from "ts-morph";
 
 import type {RenderDataContext} from "../interfaces/RenderDataContext.js";
 import type {ProjectClient} from "../services/ProjectClient.js";
-import SyntaxKind = ts.SyntaxKind;
 
 export function transformIndexFile(project: ProjectClient, data: RenderDataContext) {
   const sourceFile = project.indexSourceFile!;

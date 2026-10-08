@@ -30,13 +30,28 @@
     "build:ts": "tsc --build tsconfig.esm.json"
   },
   "dependencies": {
+    "@ts-morph/common": "0.28.0",
     "@tsed/cli-core": "workspace:*",
-    "tslib": "2.7.0"
+    "@tsed/logger-std": ">=8.0.3",
+    "@tsed/normalize-path": ">=8.38.0",
+    "fs-extra": "^11.2.0",
+    "rxjs": "^7.8.1",
+    "tslib": "2.7.0",
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
+    "@tsed/core": ">=8.38.0",
+    "@tsed/di": ">=8.38.0",
+    "@tsed/hooks": ">=8.38.0",
+    "@tsed/logger": ">=8.0.3",
     "@tsed/typescript": "workspace:*",
     "cross-env": "7.0.3",
     "typescript": "6.0.3",
     "vitest": "4.1.11"
+  },
+  "peerDependencies": {
+    "@tsed/core": ">=8.38.0",
+    "@tsed/di": ">=8.38.0",
+    "@tsed/hooks": ">=8.38.0"
   }
 }

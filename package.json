@@ -60,6 +60,7 @@
     "@clack/prompts": "^1.0.0-alpha.10",
     "@tsed/core": ">=8.38.0",
     "@tsed/di": ">=8.38.0",
+    "@tsed/hooks": ">=8.38.0",
     "@tsed/logger": ">=8.0.3",
     "@tsed/logger-std": ">=8.0.3",
     "@tsed/normalize-path": ">=8.38.0",

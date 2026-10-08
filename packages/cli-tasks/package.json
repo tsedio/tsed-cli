@@ -28,15 +28,19 @@
     "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
   "dependencies": {
-    "@clack/prompts": ">=1.0.0-alpha.10",
+    "@clack/prompts": ">=1.0.0-alpha.10"
+  },
+  "devDependencies": {
     "@tsed/core": ">=8.38.0",
     "@tsed/di": ">=8.38.0",
     "@tsed/hooks": ">=8.38.0",
-    "@tsed/logger": ">=8.0.3"
-  },
-  "devDependencies": {
+    "@tsed/logger": ">=8.0.3",
     "@tsed/typescript": "workspace:*",
     "typescript": "6.0.3",
     "vitest": "4.1.11"
+  },
+  "peerDependencies": {
+    "@tsed/core": ">=8.38.0",
+    "@tsed/di": ">=8.38.0"
   }
 }

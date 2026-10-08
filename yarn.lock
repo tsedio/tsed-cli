@@ -3300,10 +3300,15 @@ __metadata:
     "@ts-morph/common": "npm:0.28.0"
     "@tsed/cli-prompts": "workspace:*"
     "@tsed/cli-tasks": "workspace:*"
+    "@tsed/core": "npm:>=8.38.0"
+    "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/logger-pattern-layout": "npm:>=8.0.3"
     "@tsed/logger-std": "npm:>=8.0.3"
-    "@tsed/normalize-path": "npm:>=8.0.0"
+    "@tsed/normalize-path": "npm:>=8.38.0"
+    "@tsed/openspec": "npm:>=8.38.0"
+    "@tsed/schema": "npm:>=8.38.0"
     "@tsed/typescript": "workspace:*"
     "@types/commander": "npm:2.12.2"
     "@types/figures": "npm:3.0.1"
@@ -3341,16 +3346,12 @@ __metadata:
     uuid: "npm:^14.0.0"
     vitest: "npm:4.1.11"
   peerDependencies:
-    "@tsed/core": ">=8.3.1"
-    "@tsed/di": ">=8.3.1"
-    "@tsed/hooks": ">=8.3.1"
-  peerDependenciesMeta:
-    "@tsed/core":
-      optional: false
-    "@tsed/di":
-      optional: false
-    "@tsed/hooks":
-      optional: false
+    "@tsed/core": ">=8.38.0"
+    "@tsed/di": ">=8.38.0"
+    "@tsed/hooks": ">=8.38.0"
+    "@tsed/logger": ">=8.0.3"
+    "@tsed/openspec": ">=8.38.0"
+    "@tsed/schema": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3360,6 +3361,10 @@ __metadata:
   dependencies:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
+    "@tsed/core": "npm:>=8.38.0"
+    "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
+    "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
     change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
@@ -3368,14 +3373,21 @@ __metadata:
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
   peerDependencies:
-    "@tsed/platform-http": ">=7.14.2"
-    "@tsed/swagger": ">=7.14.2"
-    swagger-typescript-api: ^9.3.1
+    "@tsed/cli-core": ">=7.0.0"
+    "@tsed/core": ">=8.38.0"
+    "@tsed/di": ">=8.38.0"
+    "@tsed/platform-express": ">=8.38.0"
+    "@tsed/platform-fastify": ">=8.38.0"
+    "@tsed/platform-koa": ">=8.38.0"
+    "@tsed/swagger": ">=8.38.0"
+    swagger-typescript-api: ">=13.0.0"
   peerDependenciesMeta:
-    "@tsed/swagger":
-      optional: false
-    swagger-typescript-api:
-      optional: false
+    "@tsed/platform-express":
+      optional: true
+    "@tsed/platform-fastify":
+      optional: true
+    "@tsed/platform-koa":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -3392,13 +3404,18 @@ __metadata:
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
   peerDependencies:
-    "@tsed/platform-http": ">=7.14.2"
-    "@tsed/swagger": ">=7.14.2"
+    "@tsed/cli-core": ">=7.0.0"
+    "@tsed/platform-express": ">=8.38.0"
+    "@tsed/platform-fastify": ">=8.38.0"
+    "@tsed/platform-koa": ">=8.38.0"
+    "@tsed/swagger": ">=8.38.0"
   peerDependenciesMeta:
-    "@tsed/swagger":
-      optional: false
-    swagger-typescript-api:
-      optional: false
+    "@tsed/platform-express":
+      optional: true
+    "@tsed/platform-fastify":
+      optional: true
+    "@tsed/platform-koa":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -3417,6 +3434,7 @@ __metadata:
     "@tsed/json-mapper": "npm:>=8.38.0"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/logger-std": "npm:>=8.0.3"
+    "@tsed/openspec": "npm:>=8.38.0"
     "@tsed/platform-mcp": "npm:>=8.38.0"
     "@tsed/schema": "npm:>=8.38.0"
     "@tsed/typescript": "workspace:*"
@@ -3428,28 +3446,13 @@ __metadata:
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
   peerDependencies:
-    "@tsed/core": ">=8.0.0"
-    "@tsed/di": ">=8.0.0"
-    "@tsed/hooks": ">=8.0.0"
-    "@tsed/logger": ">=8.0.2"
-    "@tsed/logger-std": ">=8.0.2"
-    "@tsed/openspec": ">=8.0.0"
-    "@tsed/schema": ">=8.0.0"
-  peerDependenciesMeta:
-    "@tsed/core":
-      optional: false
-    "@tsed/di":
-      optional: false
-    "@tsed/hooks":
-      optional: false
-    "@tsed/logger":
-      optional: false
-    "@tsed/logger-std":
-      optional: false
-    "@tsed/openspec":
-      optional: false
-    "@tsed/schema":
-      optional: false
+    "@tsed/core": ">=8.38.0"
+    "@tsed/di": ">=8.38.0"
+    "@tsed/hooks": ">=8.38.0"
+    "@tsed/json-mapper": ">=8.38.0"
+    "@tsed/logger": ">=8.0.3"
+    "@tsed/openspec": ">=8.38.0"
+    "@tsed/schema": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3459,11 +3462,19 @@ __metadata:
   dependencies:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
+    "@tsed/core": "npm:>=8.38.0"
+    "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
+    "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
+  peerDependencies:
+    "@tsed/cli": ">=7.0.0"
+    "@tsed/cli-core": ">=7.0.0"
+    "@tsed/di": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3473,11 +3484,19 @@ __metadata:
   dependencies:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
+    "@tsed/core": "npm:>=8.38.0"
+    "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
+    "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
+  peerDependencies:
+    "@tsed/cli": ">=7.0.0"
+    "@tsed/cli-core": ">=7.0.0"
+    "@tsed/di": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3487,13 +3506,22 @@ __metadata:
   dependencies:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
+    "@tsed/core": "npm:>=8.38.0"
+    "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
+    "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
     change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
     pluralize: "npm:8.0.0"
+    ts-morph: "npm:27.0.0"
     tslib: "npm:2.7.0"
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
+  peerDependencies:
+    "@tsed/cli": ">=7.0.0"
+    "@tsed/cli-core": ">=7.0.0"
+    "@tsed/di": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3503,6 +3531,10 @@ __metadata:
   dependencies:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
+    "@tsed/core": "npm:>=8.38.0"
+    "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
+    "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
     cross-env: "npm:7.0.3"
     ts-morph: "npm:27.0.0"
@@ -3510,8 +3542,9 @@ __metadata:
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
   peerDependencies:
-    "@tsed/cli": "workspace:*"
-    "@tsed/cli-core": "workspace:*"
+    "@tsed/cli": ">=7.0.0"
+    "@tsed/cli-core": ">=7.0.0"
+    "@tsed/di": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3522,11 +3555,19 @@ __metadata:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
     "@tsed/cli-testing": "workspace:*"
+    "@tsed/core": "npm:>=8.38.0"
+    "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
+    "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
     typescript: "npm:5.6.2"
     vitest: "npm:4.1.11"
+  peerDependencies:
+    "@tsed/cli": ">=7.0.0"
+    "@tsed/cli-core": ">=7.0.0"
+    "@tsed/di": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3536,6 +3577,12 @@ __metadata:
   dependencies:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
+    "@tsed/core": "npm:>=8.38.0"
+    "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
+    "@tsed/logger": "npm:>=8.0.3"
+    "@tsed/openspec": "npm:>=8.38.0"
+    "@tsed/schema": "npm:>=8.38.0"
     "@tsed/typescript": "workspace:*"
     "@types/change-case": "npm:^2.3.1"
     change-case: "npm:^5.4.4"
@@ -3543,6 +3590,11 @@ __metadata:
     tslib: "npm:2.7.0"
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
+  peerDependencies:
+    "@tsed/cli": ">=7.0.0"
+    "@tsed/cli-core": ">=7.0.0"
+    "@tsed/di": ">=8.38.0"
+    "@tsed/schema": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3552,12 +3604,20 @@ __metadata:
   dependencies:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
+    "@tsed/core": "npm:>=8.38.0"
+    "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
+    "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
     change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
+  peerDependencies:
+    "@tsed/cli": ">=7.0.0"
+    "@tsed/cli-core": ">=7.0.0"
+    "@tsed/di": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3567,14 +3627,22 @@ __metadata:
   dependencies:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
+    "@tsed/core": "npm:>=8.38.0"
+    "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
+    "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
+    change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
+    pluralize: "npm:8.0.0"
+    ts-morph: "npm:27.0.0"
     tslib: "npm:2.7.0"
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
   peerDependencies:
-    "@tsed/cli": "workspace:*"
-    "@tsed/cli-core": "workspace:*"
+    "@tsed/cli": ">=7.0.0"
+    "@tsed/cli-core": ">=7.0.0"
+    "@tsed/di": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3584,12 +3652,20 @@ __metadata:
   dependencies:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
+    "@tsed/core": "npm:>=8.38.0"
+    "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
+    "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
     change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
+  peerDependencies:
+    "@tsed/cli": ">=7.0.0"
+    "@tsed/cli-core": ">=7.0.0"
+    "@tsed/di": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3599,11 +3675,19 @@ __metadata:
   dependencies:
     "@tsed/cli": "workspace:*"
     "@tsed/cli-core": "workspace:*"
+    "@tsed/core": "npm:>=8.38.0"
+    "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
+    "@tsed/logger": "npm:>=8.0.3"
     "@tsed/typescript": "workspace:*"
     cross-env: "npm:7.0.3"
     tslib: "npm:2.7.0"
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
+  peerDependencies:
+    "@tsed/cli": ">=7.0.0"
+    "@tsed/cli-core": ">=7.0.0"
+    "@tsed/di": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3619,6 +3703,9 @@ __metadata:
     "@tsed/typescript": "workspace:*"
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
+  peerDependencies:
+    "@tsed/core": ">=8.38.0"
+    "@tsed/di": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3633,6 +3720,7 @@ __metadata:
     "@swc/helpers": "npm:0.5.13"
     "@tsed/core": "npm:>=8.38.0"
     "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
     "@tsed/logger": "npm:>=8.0.3"
     "@tsed/logger-std": "npm:>=8.0.3"
     "@tsed/markdown-it-symbols": "npm:3.20.8"
@@ -3689,6 +3777,9 @@ __metadata:
     "@tsed/typescript": "workspace:*"
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
+  peerDependencies:
+    "@tsed/core": ">=8.38.0"
+    "@tsed/di": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3696,12 +3787,26 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@tsed/cli-testing@workspace:packages/cli-testing"
   dependencies:
+    "@ts-morph/common": "npm:0.28.0"
     "@tsed/cli-core": "workspace:*"
+    "@tsed/core": "npm:>=8.38.0"
+    "@tsed/di": "npm:>=8.38.0"
+    "@tsed/hooks": "npm:>=8.38.0"
+    "@tsed/logger": "npm:>=8.0.3"
+    "@tsed/logger-std": "npm:>=8.0.3"
+    "@tsed/normalize-path": "npm:>=8.38.0"
     "@tsed/typescript": "workspace:*"
     cross-env: "npm:7.0.3"
+    fs-extra: "npm:^11.2.0"
+    rxjs: "npm:^7.8.1"
     tslib: "npm:2.7.0"
     typescript: "npm:6.0.3"
+    uuid: "npm:^14.0.0"
     vitest: "npm:4.1.11"
+  peerDependencies:
+    "@tsed/core": ">=8.38.0"
+    "@tsed/di": ">=8.38.0"
+    "@tsed/hooks": ">=8.38.0"
   languageName: unknown
   linkType: soft
 
@@ -3747,28 +3852,10 @@ __metadata:
     vitest: "npm:4.1.11"
     zod: "npm:3.25.76"
   peerDependencies:
-    "@tsed/core": ">=8.0.0"
-    "@tsed/di": ">=8.0.0"
-    "@tsed/hooks": ">=8.0.0"
-    "@tsed/logger": ">=8.0.2"
-    "@tsed/logger-std": ">=8.0.2"
-    "@tsed/openspec": ">=8.0.0"
-    "@tsed/schema": ">=8.0.0"
+    vite: ">=6.0.0"
   peerDependenciesMeta:
-    "@tsed/core":
-      optional: false
-    "@tsed/di":
-      optional: false
-    "@tsed/hooks":
-      optional: false
-    "@tsed/logger":
-      optional: false
-    "@tsed/logger-std":
-      optional: false
-    "@tsed/openspec":
-      optional: false
-    "@tsed/schema":
-      optional: false
+    vite:
+      optional: true
   bin:
     tsed: lib/esm/bin/tsed.js
   languageName: unknown
@@ -3913,16 +4000,6 @@ __metadata:
   bin:
     monorepo: bin/monorepo.js
   checksum: 10/cc9c6ffec8d29e4ca8e66a8a43e1679320ace7f3e877a0a136cf1930debc2742f8622a4dc086a66bba3ce5da2530d773c55fd99e7fd3d0d49a7fe9c139980da5
-  languageName: node
-  linkType: hard
-
-"@tsed/normalize-path@npm:>=8.0.0":
-  version: 8.8.0
-  resolution: "@tsed/normalize-path@npm:8.8.0"
-  dependencies:
-    normalize-path: "npm:3.0.0"
-    tslib: "npm:2.7.0"
-  checksum: 10/25c67fdb536f2af513825bfa2cce59f92c3ba30c27fc343fe2b6d12486e589b76752969ba10174a31c55800eba1fd9980c53e0d73da5a31a57a15436d33d821c
   languageName: node
   linkType: hard
 

@@ -34,15 +34,21 @@
     "vitest": "4.1.11"
   },
   "peerDependencies": {
-    "@tsed/platform-http": ">=7.14.2",
-    "@tsed/swagger": ">=7.14.2"
+    "@tsed/cli-core": ">=7.0.0",
+    "@tsed/platform-express": ">=8.38.0",
+    "@tsed/platform-fastify": ">=8.38.0",
+    "@tsed/platform-koa": ">=8.38.0",
+    "@tsed/swagger": ">=8.38.0"
   },
   "peerDependenciesMeta": {
-    "@tsed/swagger": {
-      "optional": false
+    "@tsed/platform-express": {
+      "optional": true
     },
-    "swagger-typescript-api": {
-      "optional": false
+    "@tsed/platform-fastify": {
+      "optional": true
+    },
+    "@tsed/platform-koa": {
+      "optional": true
     }
   }
 }

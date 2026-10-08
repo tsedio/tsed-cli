@@ -27,9 +27,18 @@
   "devDependencies": {
     "@tsed/cli": "workspace:*",
     "@tsed/cli-core": "workspace:*",
+    "@tsed/core": ">=8.38.0",
+    "@tsed/di": ">=8.38.0",
+    "@tsed/hooks": ">=8.38.0",
+    "@tsed/logger": ">=8.0.3",
     "@tsed/typescript": "workspace:*",
     "cross-env": "7.0.3",
     "typescript": "6.0.3",
     "vitest": "4.1.11"
+  },
+  "peerDependencies": {
+    "@tsed/cli": ">=7.0.0",
+    "@tsed/cli-core": ">=7.0.0",
+    "@tsed/di": ">=8.38.0"
   }
 }
