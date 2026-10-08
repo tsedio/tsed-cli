@@ -30,6 +30,7 @@
     "build:ts": "tsc --build tsconfig.esm.json"
   },
   "dependencies": {
+    "@ts-morph/common": "0.28.0",
     "@tsed/cli-core": "workspace:*",
     "tslib": "2.7.0"
   },

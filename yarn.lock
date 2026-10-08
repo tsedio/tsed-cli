@@ -3491,6 +3491,7 @@ __metadata:
     change-case: "npm:5.4.4"
     cross-env: "npm:7.0.3"
     pluralize: "npm:8.0.0"
+    ts-morph: "npm:27.0.0"
     tslib: "npm:2.7.0"
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
@@ -3569,6 +3570,7 @@ __metadata:
     "@tsed/cli-core": "workspace:*"
     "@tsed/typescript": "workspace:*"
     cross-env: "npm:7.0.3"
+    ts-morph: "npm:27.0.0"
     tslib: "npm:2.7.0"
     typescript: "npm:6.0.3"
     vitest: "npm:4.1.11"
@@ -3696,6 +3698,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@tsed/cli-testing@workspace:packages/cli-testing"
   dependencies:
+    "@ts-morph/common": "npm:0.28.0"
     "@tsed/cli-core": "workspace:*"
     "@tsed/typescript": "workspace:*"
     cross-env: "npm:7.0.3"

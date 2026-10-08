@@ -26,6 +26,7 @@
     "test:ci": "vitest run --coverage.thresholds.autoUpdate=true"
   },
   "dependencies": {
+    "ts-morph": "27.0.0",
     "tslib": "2.7.0"
   },
   "devDependencies": {

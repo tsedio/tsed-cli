@@ -2,6 +2,8 @@ import {register} from "node:module";
 import {join} from "node:path";
 import {pathToFileURL} from "node:url";
 
+import {reportBootError} from "./reportBootError.js";
+
 const EXT = process.env.CLI_MODE === "ts" ? "ts" : "js";
 
 register(pathToFileURL(join(import.meta.dirname, `../loaders/alias.hook.${EXT}`)), {
@@ -16,33 +18,43 @@ register(pathToFileURL(join(import.meta.dirname, `../loaders/alias.hook.${EXT}`)
   transferList: []
 });
 
-const {tools, commands, resources, CliCore, PKG, TEMPLATE_DIR, ArchitectureConvention, ProjectConvention} = await import("../index.js");
+try {
+  const {tools, commands, resources, CliCore, PKG, TEMPLATE_DIR, ArchitectureConvention, ProjectConvention} = await import("../index.js");
 
-CliCore.bootstrap({
-  name: "tsed",
-  pkg: PKG as any,
-  templateDir: TEMPLATE_DIR,
-  plugins: true,
-  updateNotifier: true,
-  checkPrecondition: true,
-  commands,
-  mcp: {
-    tools,
-    resources
-  },
-  defaultProjectPreferences() {
-    return {
-      convention: ProjectConvention.DEFAULT,
-      architecture: ArchitectureConvention.DEFAULT
-    };
-  },
-  project: {
-    reinstallAfterRun: true
-  },
-  logger: {
-    level: "info"
-  }
-}).catch((error) => {
+  await CliCore.bootstrap({
+    name: "tsed",
+    pkg: PKG as any,
+    templateDir: TEMPLATE_DIR,
+    plugins: true,
+    updateNotifier: true,
+    checkPrecondition: true,
+    commands,
+    mcp: {
+      tools,
+      resources
+    },
+    defaultProjectPreferences() {
+      return {
+        convention: ProjectConvention.DEFAULT,
+        architecture: ArchitectureConvention.DEFAULT
+      };
+    },
+    project: {
+      reinstallAfterRun: true
+    },
+    logger: {
+      level: "info"
+    }
+  });
+} catch (error) {
   console.error(error);
+
+  const origin = (error as {origin?: unknown})?.origin ?? error;
+
+  // errors raised by a command are already reported by CliStats.$onFinish
+  if (!(origin as {reported?: boolean})?.reported) {
+    await reportBootError(origin, process.argv[2]);
+  }
+
   process.exit(-1);
-});
+}
