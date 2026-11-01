@@ -34,7 +34,9 @@ export const streamToObservable = <Result = any>(stream: Stream, opts: any) => {
   const completion = new Promise((resolve, reject) => {
     function onEnd(result?: Result) {
       if (awaited) {
-        awaited.then(resolve);
+        // handle the rejection here too: an unhandled rejection kills the process
+        // before the error can be reported (e.g. CliStats.$onFinish)
+        awaited.then(resolve, reject);
       } else {
         resolve(result);
       }
