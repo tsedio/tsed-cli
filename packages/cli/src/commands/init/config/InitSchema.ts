@@ -312,7 +312,7 @@ export const InitSchema = () => {
             }
           ].filter((o) => availableRuntimes.includes(o.value))
         )
-        .default("node")
+        .default("vite")
         .description("Runtime (node, bun, ...).")
         .opt("--runtime <runtime>"),
       packageManager: s

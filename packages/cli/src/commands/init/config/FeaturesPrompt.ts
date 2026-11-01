@@ -375,7 +375,7 @@ export const FeaturesMap: Record<string, Feature> = {
 
   vite: {
     name: "Node.js + Vite",
-    checked: false
+    checked: true
   },
   "bun-vite": {
     name: "Bun + Vite",
@@ -383,7 +383,7 @@ export const FeaturesMap: Record<string, Feature> = {
   },
   node: {
     name: "Node.js + SWC",
-    checked: true
+    checked: false
   },
   babel: {
     name: "Node.js + Babel",

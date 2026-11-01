@@ -507,7 +507,7 @@ describe("getFeaturesPrompt", () => {
         {
           "choices": [
             {
-              "checked": true,
+              "checked": false,
               "name": "Node.js + SWC",
               "value": "node",
             },
