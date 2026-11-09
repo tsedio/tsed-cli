@@ -71,7 +71,7 @@
     "semver": "^7.6.3",
     "ts-morph": "27.0.0",
     "tslib": "^2.7.0",
-    "zod": "3.25.76"
+    "zod": "4.6.6"
   },
   "devDependencies": {
     "@tsed/typescript": "workspace:*",
