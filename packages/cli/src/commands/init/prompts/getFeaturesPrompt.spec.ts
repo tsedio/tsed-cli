@@ -70,6 +70,11 @@ describe("getFeaturesPrompt", () => {
               "name": "Fastify.js",
               "value": "fastify",
             },
+            {
+              "checked": false,
+              "name": "fulmine.js",
+              "value": "fulmine",
+            },
           ],
           "message": "Choose the target Framework:",
           "name": "platform",

@@ -1,7 +1,8 @@
 export enum PlatformType {
   EXPRESS = "express",
   KOA = "koa",
-  FASTIFY = "fastify"
+  FASTIFY = "fastify",
+  FULMINE = "fulmine"
 }
 
 declare global {

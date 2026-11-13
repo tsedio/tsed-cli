@@ -29,6 +29,7 @@ import {render} from "../../fn/render.js";
 import {taskOutput} from "../../fn/taskOutput.js";
 import type {InitCmdContext} from "../../interfaces/index.js";
 import type {InitOptions} from "../../interfaces/InitCmdOptions.js";
+import {PlatformType} from "../../interfaces/PlatformType.js";
 import {PlatformsModule} from "../../platforms/PlatformsModule.js";
 import {RuntimesModule} from "../../runtimes/RuntimesModule.js";
 import {BunRuntime} from "../../runtimes/supports/BunRuntime.js";
@@ -351,7 +352,8 @@ export class InitCmd implements CommandProvider {
     if (ctx.features?.find((value) => value === FeatureType.GRAPHQL)) {
       this.packageJson.addDependencies(
         {
-          [`apollo-server-${ctx.platform}`]: "2.25.2"
+          // fulmine.js runs the Express middlewares
+          [`apollo-server-${ctx.platform === PlatformType.FULMINE ? PlatformType.EXPRESS : ctx.platform}`]: "2.25.2"
         },
         ctx
       );
@@ -388,6 +390,7 @@ export class InitCmd implements CommandProvider {
       "docker-skill",
       "express-skill",
       "fastify-skill",
+      "fulmine-skill",
       "scalar-skill",
       "prisma-skill",
       "mongoose-skill",

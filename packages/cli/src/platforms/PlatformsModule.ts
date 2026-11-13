@@ -4,6 +4,7 @@ import {injectable} from "@tsed/di";
 import type {InitBasePlatform} from "./supports/InitBasePlatform.js";
 import {InitExpressPlatform} from "./supports/InitExpressPlatform.js";
 import {InitFastifyPlatform} from "./supports/InitFastifyPlatform.js";
+import {InitFulminePlatform} from "./supports/InitFulminePlatform.js";
 import {InitKoaPlatform} from "./supports/InitKoaPlatform.js";
 
 export class PlatformsModule {
@@ -14,4 +15,4 @@ export class PlatformsModule {
   }
 }
 
-injectable(PlatformsModule).imports([InitExpressPlatform, InitKoaPlatform, InitFastifyPlatform]);
+injectable(PlatformsModule).imports([InitExpressPlatform, InitKoaPlatform, InitFastifyPlatform, InitFulminePlatform]);

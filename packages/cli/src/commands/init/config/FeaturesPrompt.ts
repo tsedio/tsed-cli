@@ -86,6 +86,10 @@ export const FeaturesMap: Record<string, Feature> = {
     name: "Fastify.js",
     checked: (options: any) => options.platform === PlatformType.FASTIFY
   },
+  [PlatformType.FULMINE]: {
+    name: "fulmine.js",
+    checked: (options: any) => options.platform === PlatformType.FULMINE
+  },
   [FeatureType.GRAPHQL]: {
     name: "TypeGraphQL",
     dependencies: {
@@ -421,7 +425,7 @@ export const FeaturesPrompt = (availableRuntimes: string[], availablePackageMana
       message: "Choose the target Framework:",
       type: "list",
       name: "platform",
-      choices: [PlatformType.EXPRESS, PlatformType.KOA, PlatformType.FASTIFY]
+      choices: [PlatformType.EXPRESS, PlatformType.KOA, PlatformType.FASTIFY, PlatformType.FULMINE]
     },
     {
       message: "Choose the architecture for your project:",
