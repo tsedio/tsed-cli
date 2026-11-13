@@ -1,3 +1,5 @@
+import type {GenerateCmdContext} from "../interfaces/GenerateCmdContext.js";
+import {PlatformType} from "../interfaces/PlatformType.js";
 import {defineTemplate} from "../utils/defineTemplate.js";
 
 function dockerHeader() {
@@ -20,7 +22,34 @@ function dockerHeader() {
 `;
 }
 
-function dockerDevTools() {
+// fulmine.js loads the native uWebSockets.js binary, built for glibc 2.38 or newer (no Alpine) and installed from GitHub
+function isFulmine(data?: Partial<GenerateCmdContext>) {
+  return data?.platform === PlatformType.FULMINE;
+}
+
+function dockerNodeVersion(data?: Partial<GenerateCmdContext>) {
+  return isFulmine(data) ? "24" : "20.11.0";
+}
+
+function dockerImage(data?: Partial<GenerateCmdContext>) {
+  return isFulmine(data) ? "trixie-slim" : "alpine";
+}
+
+function dockerGit(data?: Partial<GenerateCmdContext>) {
+  return isFulmine(data)
+    ? `
+RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
+`
+    : "";
+}
+
+function dockerDevTools(data?: Partial<GenerateCmdContext>) {
+  if (isFulmine(data)) {
+    return `RUN apt-get update && apt-get install -y --no-install-recommends build-essential git curl ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN npm install -g pm2
+`;
+  }
+
   return `RUN apk update && apk add build-base git curl
 RUN npm install -g pm2
 `;
@@ -42,14 +71,14 @@ defineTemplate({
   outputDir: ".",
   ext: null,
   preserveCase: true,
-  render() {
+  render(_, data) {
     return `${dockerHeader()}
 
-ARG NODE_VERSION=20.11.0
+ARG NODE_VERSION=${dockerNodeVersion(data)}
 
-FROM node:\${NODE_VERSION}-alpine AS build
+FROM node:\${NODE_VERSION}-${dockerImage(data)} AS build
 WORKDIR /opt
-
+${dockerGit(data)}
 COPY package.json yarn.lock tsconfig.json tsconfig.base.json tsconfig.node.json tsconfig.spec.json .barrels.json .swcrc ./
 
 RUN yarn install --pure-lockfile
@@ -58,11 +87,11 @@ COPY ./src ./src
 
 RUN yarn build
 
-FROM node:\${NODE_VERSION}-alpine AS runtime
+FROM node:\${NODE_VERSION}-${dockerImage(data)} AS runtime
 ENV WORKDIR /opt
 WORKDIR $WORKDIR
 
-${dockerDevTools()}
+${dockerDevTools(data)}
 
 COPY --from=build /opt .
 
@@ -82,14 +111,14 @@ defineTemplate({
   outputDir: ".",
   ext: null,
   preserveCase: true,
-  render() {
+  render(_, data) {
     return `${dockerHeader()}
 
-ARG NODE_VERSION=20.11.0
+ARG NODE_VERSION=${dockerNodeVersion(data)}
 
-FROM node:\${NODE_VERSION}-alpine AS build
+FROM node:\${NODE_VERSION}-${dockerImage(data)} AS build
 WORKDIR /opt
-
+${dockerGit(data)}
 COPY package.json yarn.lock tsconfig.json tsconfig.base.json tsconfig.node.json tsconfig.spec.json .barrels.json .swcrc ./
 
 RUN yarn set version berry
@@ -99,11 +128,11 @@ COPY ./src ./src
 
 RUN yarn build
 
-FROM node:\${NODE_VERSION}-alpine AS runtime
+FROM node:\${NODE_VERSION}-${dockerImage(data)} AS runtime
 ENV WORKDIR /opt
 WORKDIR $WORKDIR
 
-${dockerDevTools()}
+${dockerDevTools(data)}
 
 COPY --from=build /opt .
 
@@ -126,14 +155,14 @@ defineTemplate({
   outputDir: ".",
   ext: null,
   preserveCase: true,
-  render() {
+  render(_, data) {
     return `${dockerHeader()}
 
-ARG NODE_VERSION=20.11.0
+ARG NODE_VERSION=${dockerNodeVersion(data)}
 
-FROM node:\${NODE_VERSION}-alpine AS build
+FROM node:\${NODE_VERSION}-${dockerImage(data)} AS build
 WORKDIR /opt
-
+${dockerGit(data)}
 COPY package.json package-lock.json tsconfig.json tsconfig.base.json tsconfig.node.json tsconfig.spec.json .barrels.json .swcrc ./
 
 RUN npm ci
@@ -142,11 +171,11 @@ COPY ./src ./src
 
 RUN npm run build
 
-FROM node:\${NODE_VERSION}-alpine AS runtime
+FROM node:\${NODE_VERSION}-${dockerImage(data)} AS runtime
 ENV WORKDIR /opt
 WORKDIR $WORKDIR
 
-${dockerDevTools()}
+${dockerDevTools(data)}
 
 COPY --from=build /opt .
 
@@ -166,14 +195,14 @@ defineTemplate({
   outputDir: ".",
   ext: null,
   preserveCase: true,
-  render() {
+  render(_, data) {
     return `${dockerHeader()}
 
-ARG NODE_VERSION=20.11.0
+ARG NODE_VERSION=${dockerNodeVersion(data)}
 
-FROM node:\${NODE_VERSION}-alpine AS build
+FROM node:\${NODE_VERSION}-${dockerImage(data)} AS build
 WORKDIR /opt
-
+${dockerGit(data)}
 COPY package.json pnpm-lock.yaml tsconfig.json tsconfig.base.json tsconfig.node.json tsconfig.spec.json .barrels.json .swcrc ./
 
 RUN pnpm install --frozen-lockfile
@@ -182,11 +211,11 @@ COPY ./src ./src
 
 RUN pnpm run build
 
-FROM node:\${NODE_VERSION}-alpine AS runtime
+FROM node:\${NODE_VERSION}-${dockerImage(data)} AS runtime
 ENV WORKDIR /opt
 WORKDIR $WORKDIR
 
-${dockerDevTools()}
+${dockerDevTools(data)}
 
 COPY --from=build /opt .
 

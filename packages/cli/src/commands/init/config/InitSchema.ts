@@ -40,9 +40,14 @@ export const InitSchema = () => {
             label: "Fastify.js",
             value: PlatformType.FASTIFY,
             checked: (options: any) => options.platform === PlatformType.FASTIFY || !options.platform
+          },
+          {
+            label: "fulmine.js",
+            value: PlatformType.FULMINE,
+            checked: (options: any) => options.platform === PlatformType.FULMINE || !options.platform
           }
         ])
-        .description("Set the default platform for Ts.ED (Express.js, Koa.js or Fastify.js)")
+        .description("Set the default platform for Ts.ED (Express.js, Koa.js, Fastify.js or fulmine.js)")
         .opt("-p, --platform <platform>"),
       architecture: s
         .string()

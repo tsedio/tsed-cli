@@ -68,6 +68,14 @@ defineSkillTemplate({
 });
 
 defineSkillTemplate({
+  id: "fulmine-skill",
+  name: "fulmine",
+  description: "fulmine.js",
+  llmsUrl: "https://fulmine.sndesign.it/llms.txt",
+  when: ({platform}) => platform === PlatformType.FULMINE
+});
+
+defineSkillTemplate({
   id: "scalar-skill",
   name: "scalar",
   description: "Scalar",

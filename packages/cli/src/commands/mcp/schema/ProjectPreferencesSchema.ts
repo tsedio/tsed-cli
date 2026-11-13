@@ -16,7 +16,7 @@ export const ProjectPreferenceSchema = s
       .description(
         "The javascript runtime used to start application (node + vite, bun + vite, node + webpack, node + swc, node + babel, bun)"
       ),
-    platform: s.string().enum(PlatformType).description("Node.js framework used to run server (Express, Koa, Fastify)")
+    platform: s.string().enum(PlatformType).description("Node.js framework used to run server (Express, Koa, Fastify, fulmine.js)")
   })
   .optional()
   .description("Resolved project preferences");
